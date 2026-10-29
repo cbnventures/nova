@@ -1,5 +1,7 @@
+import type { TSESLint } from '@typescript-eslint/utils';
 import type { vi } from 'vitest';
 
+import type { Rules_Vitest_Index_TypeDeclarationToggleKey } from '../../../../rules/vitest/index.d.ts';
 import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../../toolkit/logger.d.ts';
 
 /**
@@ -40,7 +42,45 @@ export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAg
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath = string;
 
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_GoMdPath = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_NovaMdPath = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RustMdPath = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdPath = string;
+
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdContent = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdContent = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleKeys = readonly [
+  'inspector-cross-section-references',
+  'inspector-dts-import-verbatim',
+  'inspector-no-inline-import-types',
+  'inspector-section-alphabetical',
+  'inspector-first-come-first-serve-order',
+  'inspector-object-property-types',
+  'inspector-section-coverage',
+  'inspector-variable-type-symmetry',
+  'inspector-identifier-vs-filename',
+  'inspector-filename-validation',
+  'inspector-standalone-type-files',
+];
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleCoverage = Exclude<Rules_Vitest_Index_TypeDeclarationToggleKey, Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleKeys[number]> extends never
+  ? Exclude<Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleKeys[number], Rules_Vitest_Index_TypeDeclarationToggleKey> extends never
+    ? true
+    : false
+  : false;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Config = TSESLint.FlatConfig.Config;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Rules = TSESLint.FlatConfig.Config['rules'];
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RuleName = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentedRuleName = string;
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdExists = boolean;
 

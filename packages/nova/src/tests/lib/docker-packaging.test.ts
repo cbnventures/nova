@@ -264,7 +264,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('apk add'), false);
     strictEqual(dockerfileContent.includes('ENTRYPOINT ["/init"]'), true);
     strictEqual(dockerfileContent.includes('[__'), false);
-    strictEqual(dockerfileContent.includes('RUN corepack enable npm && npm install'), true);
+    strictEqual(dockerfileContent.includes('RUN npm install'), true);
+    strictEqual(dockerfileContent.includes('corepack enable npm'), false);
     strictEqual(dockerfileContent.includes('COPY nova.config.json ./nova.config.json'), true);
     strictEqual(dockerfileContent.includes('COPY package-lock.json'), false);
     strictEqual(dockerfileContent.includes('COPY packages/docker/yarnrc.yml ./.yarnrc.yml'), false);
@@ -294,6 +295,7 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerignoreLines.includes('**/.env'), true);
     strictEqual(dockerignoreLines.includes('**/.env.*'), true);
     strictEqual(dockerignoreLines.includes('!**/.env.sample'), true);
+    strictEqual(dockerignoreLines.includes('!**/.env.*.sample'), true);
     strictEqual(dockerignoreLines.includes('!**/.env.example'), true);
     strictEqual(dockerignoreLines.indexOf('**/.env.*') < dockerignoreLines.indexOf('!**/.env.sample'), true);
     strictEqual(dockerignoreLines.includes('.secrets'), true);
@@ -893,7 +895,8 @@ describe('LibDockerPackaging', async () => {
     const dockerfileContent: Tests_Lib_DockerPackaging_LibDockerPackaging_UsesYarnClassicNodeModulesWithoutBerryConfiguration_DockerfileContent = await readFile(join(projectDirectory, 'Dockerfile'), 'utf-8');
     const syntheticPackage: Tests_Lib_DockerPackaging_LibDockerPackaging_UsesYarnClassicNodeModulesWithoutBerryConfiguration_SyntheticPackage = JSON.parse(await readFile(join(projectDirectory, 'packages', 'docker', 'workspace-manifests', 'apps', 'api', 'package.json'), 'utf-8'));
 
-    strictEqual(dockerfileContent.includes('RUN corepack enable yarn && yarn install'), true);
+    strictEqual(dockerfileContent.includes('RUN npm install --global corepack@'), true);
+    strictEqual(dockerfileContent.includes('&& corepack enable yarn && yarn install'), true);
     strictEqual(dockerfileContent.includes('RUN yarn install --production && yarn cache clean'), true);
     strictEqual(dockerfileContent.includes('RUN yarn workspaces focus --all --production'), false);
     strictEqual(dockerfileContent.includes('COPY packages/docker/yarnrc.yml ./.yarnrc.yml'), false);
@@ -930,7 +933,8 @@ describe('LibDockerPackaging', async () => {
 
     const pnpmDockerfileContent: Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_PnpmDockerfileContent = await readFile(join(pnpmProjectDirectory, 'Dockerfile'), 'utf-8');
 
-    strictEqual(pnpmDockerfileContent.includes('RUN corepack enable pnpm && pnpm install'), true);
+    strictEqual(pnpmDockerfileContent.includes('RUN npm install --global corepack@'), true);
+    strictEqual(pnpmDockerfileContent.includes('&& corepack enable pnpm && pnpm install'), true);
     strictEqual(pnpmDockerfileContent.includes('RUN pnpm --filter \'fixture-package-shared\' run build'), true);
     strictEqual(pnpmDockerfileContent.includes('RUN pnpm --filter \'fixture-app-api\' run build'), true);
     strictEqual(pnpmDockerfileContent.includes('RUN pnpm install --prod'), true);
@@ -965,7 +969,8 @@ describe('LibDockerPackaging', async () => {
     const shellVariableMarker: Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_ShellVariableMarker = '$';
 
     strictEqual(yarnDockerfileContent.includes('COPY packages/docker/yarnrc.yml ./.yarnrc.yml'), true);
-    strictEqual(yarnDockerfileContent.includes('RUN corepack enable yarn && yarn install'), true);
+    strictEqual(yarnDockerfileContent.includes('RUN npm install --global corepack@'), true);
+    strictEqual(yarnDockerfileContent.includes('&& corepack enable yarn && yarn install'), true);
     strictEqual(yarnDockerfileContent.includes('RUN yarn workspace \'fixture-package-shared\' build'), true);
     strictEqual(yarnDockerfileContent.includes('RUN yarn workspace \'fixture-app-api\' build'), true);
     strictEqual(yarnDockerfileContent.includes('RUN yarn workspaces focus --all --production'), true);

@@ -10,8 +10,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import [__ANDROID_APPLICATION_ID__].theme.[__WORKSPACE_IDENTIFIER__]Theme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+/**
+ * Main Activity.
+ *
+ * Hosts the generated Compose application.
+ *
+ * @since UNRELEASED
+ */
+public class MainActivity : ComponentActivity() {
+    /**
+     * Main Activity - On Create.
+     *
+     * @param savedInstanceState - Saved instance state.
+     *
+     * @since UNRELEASED
+     */
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()

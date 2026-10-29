@@ -7,6 +7,7 @@ import prompts from 'prompts';
 import { libEnvGithub } from '../../lib/env-github.js';
 import { libEnvManagedSet } from '../../lib/env-managed-set.js';
 import { libEnvNamespace } from '../../lib/env-namespace.js';
+import { migrateEnvironmentProfiles } from '../../lib/env-profiles.js';
 import { libEnvReconcile } from '../../lib/env-reconcile.js';
 import { libEnvStatus } from '../../lib/env-status.js';
 import {
@@ -243,11 +244,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironment_AppVariables,
   Cli_Utility_Configure_Runner_PromptEnvironment_Choices,
   Cli_Utility_Configure_Runner_PromptEnvironment_Config,
+  Cli_Utility_Configure_Runner_PromptEnvironment_CurrentProfilesEnabled,
   Cli_Utility_Configure_Runner_PromptEnvironment_Environment,
   Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutput,
   Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey,
   Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult,
   Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptEnvironment_NextEnvironment,
+  Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutput,
+  Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputKey,
+  Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputResult,
+  Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesSummary,
   Cli_Utility_Configure_Runner_PromptEnvironment_ProjectScope,
   Cli_Utility_Configure_Runner_PromptEnvironment_ProjectSummary,
   Cli_Utility_Configure_Runner_PromptEnvironment_ProjectVariables,
@@ -977,6 +984,12 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetType,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_EditIndex,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutput,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutput,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleResolved,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleWorkingDir,
@@ -985,6 +998,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix,
@@ -1013,7 +1027,9 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Parts,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Paths,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ProfilesEnabled,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_PromptMessage,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggerName,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggers,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns,
@@ -1030,6 +1046,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableTargetTypes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedEnvironmentSelection,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix,
@@ -1051,6 +1068,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SupportsEnvironmentSelection,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Tags,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEditIndex,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetIsDuplicate,
@@ -1208,11 +1226,13 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedRecipes,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedRole,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Config,
+  Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvFileName,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Environment,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvPath,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Filled,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Inner,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_KeyMatch,
+  Cli_Utility_Configure_Runner_ReadLocalFilledKeys_ProfilesEnabled,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Raw,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_RawValue,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Result,
@@ -1220,11 +1240,14 @@ import type {
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_SeparatorIndex,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Workspaces,
   Cli_Utility_Configure_Runner_Run_CurrentDirectory,
+  Cli_Utility_Configure_Runner_Run_CurrentProfilesEnabled,
   Cli_Utility_Configure_Runner_Run_CurrentStrategy,
   Cli_Utility_Configure_Runner_Run_IsDryRun,
   Cli_Utility_Configure_Runner_Run_IsProjectRoot,
   Cli_Utility_Configure_Runner_Run_IsReplaceFile,
+  Cli_Utility_Configure_Runner_Run_MigrationEnvironment,
   Cli_Utility_Configure_Runner_Run_MigrationPlan,
+  Cli_Utility_Configure_Runner_Run_NextProfilesEnabled,
   Cli_Utility_Configure_Runner_Run_NextStrategy,
   Cli_Utility_Configure_Runner_Run_NovaConfig,
   Cli_Utility_Configure_Runner_Run_Options,
@@ -1286,6 +1309,9 @@ export class Runner {
 
     const novaConfig: Cli_Utility_Configure_Runner_Run_NovaConfig = new LibNovaConfig();
     const workingFile: Cli_Utility_Configure_Runner_Run_WorkingFile = await novaConfig.load();
+    const currentProfilesEnabled: Cli_Utility_Configure_Runner_Run_CurrentProfilesEnabled = workingFile['environment'] !== undefined
+      && workingFile['environment']['profiles'] !== undefined
+      && workingFile['environment']['profiles']['enabled'] === true;
     const currentStrategy: Cli_Utility_Configure_Runner_Run_CurrentStrategy = (workingFile['settings'] === undefined) ? 'semver' : workingFile['settings']['versionStrategy'] ?? 'semver';
 
     try {
@@ -1321,6 +1347,9 @@ export class Runner {
     }
 
     const nextStrategy: Cli_Utility_Configure_Runner_Run_NextStrategy = (workingFile['settings'] === undefined) ? 'semver' : workingFile['settings']['versionStrategy'] ?? 'semver';
+    const nextProfilesEnabled: Cli_Utility_Configure_Runner_Run_NextProfilesEnabled = workingFile['environment'] !== undefined
+      && workingFile['environment']['profiles'] !== undefined
+      && workingFile['environment']['profiles']['enabled'] === true;
     let migrationPlan: Cli_Utility_Configure_Runner_Run_MigrationPlan = undefined;
 
     try {
@@ -1348,6 +1377,15 @@ export class Runner {
     }
 
     await novaConfig.save(isReplaceFile);
+
+    const migrationEnvironment: Cli_Utility_Configure_Runner_Run_MigrationEnvironment = workingFile['environment'] ?? {};
+
+    await migrateEnvironmentProfiles({
+      rootDirectory: currentDirectory,
+      currentEnabled: currentProfilesEnabled,
+      nextEnabled: nextProfilesEnabled,
+      environment: migrationEnvironment,
+    });
 
     await LibVersionStrategyMigration.apply(migrationPlan);
 
@@ -5953,6 +5991,14 @@ export class Runner {
           clonedWorkflow.build = [...configWorkflow['build']];
         }
 
+        // Workflows - Environment Selection.
+        if (configWorkflow['environmentSelection'] !== undefined) {
+          clonedWorkflow.environmentSelection = {
+            versionTags: { ...configWorkflow['environmentSelection']['versionTags'] },
+            manual: configWorkflow['environmentSelection']['manual'],
+          };
+        }
+
         // Workflows - Deploy.
         if (configWorkflow['deploy'] !== undefined) {
           clonedWorkflow.deploy = configWorkflow['deploy'].map((target) => {
@@ -6037,6 +6083,16 @@ export class Runner {
             normalizedWorkflow.build = [...workflow['build']];
           } else {
             Reflect.deleteProperty(normalizedWorkflow, 'build');
+          }
+
+          // Workflows - Environment Selection.
+          if (workflow['environmentSelection'] !== undefined) {
+            normalizedWorkflow.environmentSelection = {
+              versionTags: { ...workflow['environmentSelection']['versionTags'] },
+              manual: workflow['environmentSelection']['manual'],
+            };
+          } else {
+            Reflect.deleteProperty(normalizedWorkflow, 'environmentSelection');
           }
 
           // Workflows - Deploy.
@@ -6305,6 +6361,7 @@ export class Runner {
     const existingTemplate: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
     const existingSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = (workflow !== undefined && typeof workflow['name'] === 'string') ? workflow['name'] : '';
     const existingTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = (workflow !== undefined && typeof workflow['timeoutMinutes'] === 'number') ? workflow['timeoutMinutes'] : undefined;
+    const existingEnvironmentSelection: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection = (workflow !== undefined) ? workflow['environmentSelection'] : undefined;
     const existingContainerPlatforms: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms = (
       workflow !== undefined
       && Array.isArray(workflow['containerPlatforms']) === true
@@ -6932,6 +6989,70 @@ export class Runner {
       }
     }
 
+    const profilesEnabled: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ProfilesEnabled = config['environment'] !== undefined
+      && config['environment']['profiles'] !== undefined
+      && config['environment']['profiles']['enabled'] === true;
+    const supportsEnvironmentSelection: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SupportsEnvironmentSelection = selectedTemplate === 'publish'
+      && selectedTargets.length > 0
+      && selectedTargets.every((target) => target['to'] === 'cloudflare-workers')
+      && resolvedTriggers.length > 0
+      && resolvedTriggers.every((trigger) => {
+        const resolvedTriggerName: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggerName = (typeof trigger === 'string') ? trigger : trigger['name'];
+
+        return resolvedTriggerName === 'release' || resolvedTriggerName === 'tag-push';
+      });
+    let selectedEnvironmentSelection: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedEnvironmentSelection = undefined;
+
+    if (supportsEnvironmentSelection === true && profilesEnabled === true) {
+      const environmentSelectionEnabledOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputResult>({
+        type: 'select',
+        name: 'environmentSelectionEnabled',
+        message: 'Select deployment environments from release tags?',
+        choices: [
+          {
+            title: 'Disable',
+            description: 'Keep the workflow in the original unknown/default environment mode.',
+            value: false,
+          },
+          {
+            title: 'Enable',
+            description: 'Prereleases deploy to staging and stable releases deploy to production.',
+            value: true,
+          },
+        ],
+        initial: (existingEnvironmentSelection === undefined) ? 0 : 1,
+      });
+
+      if (environmentSelectionEnabledOutput['cancelled'] === true) {
+        return {
+          action: 'back',
+        };
+      }
+
+      if (environmentSelectionEnabledOutput['result'].environmentSelectionEnabled === true) {
+        const environmentSelectionManualOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputResult>({
+          type: 'confirm',
+          name: 'manual',
+          message: 'Allow manual staging or production deployments from GitHub?',
+          initial: existingEnvironmentSelection !== undefined && existingEnvironmentSelection['manual'] === true,
+        });
+
+        if (environmentSelectionManualOutput['cancelled'] === true) {
+          return {
+            action: 'back',
+          };
+        }
+
+        selectedEnvironmentSelection = {
+          versionTags: {
+            prerelease: 'staging',
+            stable: 'production',
+          },
+          manual: environmentSelectionManualOutput['result'].manual,
+        };
+      }
+    }
+
     const hasContainerTarget: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTarget = selectedTargets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
     let selectedContainerPlatforms: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms = [];
 
@@ -7191,7 +7312,7 @@ export class Runner {
     Object.assign(settings, reviewedSettings);
 
     // Build the resolved workflow (locked field order: template, name,
-    // triggers, runsOn, timeoutMinutes, containerPlatforms, build, deploy, with).
+    // triggers, runsOn, timeoutMinutes, environmentSelection, containerPlatforms, build, deploy, with).
     const resolvedWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow = {
       template: selectedTemplate,
       name: selectedSuffix,
@@ -7202,6 +7323,11 @@ export class Runner {
     // Workflow - Timeout Minutes.
     if (selectedTimeoutMinutes !== undefined) {
       Reflect.set(resolvedWorkflow, 'timeoutMinutes', selectedTimeoutMinutes);
+    }
+
+    // Workflow - Environment Selection.
+    if (selectedEnvironmentSelection !== undefined) {
+      Reflect.set(resolvedWorkflow, 'environmentSelection', selectedEnvironmentSelection);
     }
 
     // Workflow - Container Platforms.
@@ -7832,6 +7958,8 @@ export class Runner {
       const workflowsGroup: Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowsGroup = (environment['workflows'] !== undefined) ? environment['workflows'] : {};
       const workspaces: Cli_Utility_Configure_Runner_PromptEnvironment_Workspaces = (config['workspaces'] !== undefined) ? config['workspaces'] : {};
       const appPaths: Cli_Utility_Configure_Runner_PromptEnvironment_AppPaths = [];
+      const currentProfilesEnabled: Cli_Utility_Configure_Runner_PromptEnvironment_CurrentProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
+      const profilesSummary: Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesSummary = (currentProfilesEnabled === true) ? 'Enabled · development locally, staging for prereleases, production for stable releases.' : 'Disabled · use the original plain .env and .env.sample files.';
 
       // Every configured workspace can carry environment values.
       for (const workspaceEntry of Object.entries(workspaces)) {
@@ -7847,6 +7975,15 @@ export class Runner {
       }
 
       const choices: Cli_Utility_Configure_Runner_PromptEnvironment_Choices = [];
+
+      choices.push({
+        title: 'Deployment profiles',
+        description: profilesSummary,
+        value: {
+          kind: 'profiles',
+        },
+      });
+
       const projectVariables: Cli_Utility_Configure_Runner_PromptEnvironment_ProjectVariables = (projectScope !== undefined && projectScope['variables'] !== undefined) ? projectScope['variables'] : [];
       const projectSummary: Cli_Utility_Configure_Runner_PromptEnvironment_ProjectSummary = (projectScope !== undefined) ? `${projectScope['prefix']} · ${projectVariables.length} value(s)` : 'Not configured yet.';
 
@@ -7960,6 +8097,36 @@ export class Runner {
         continue;
       }
 
+      if (menuOutputResultValue.action['kind'] === 'profiles') {
+        const profilesConfirmOutput: Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputResult>({
+          type: 'confirm',
+          name: 'confirm',
+          message: (currentProfilesEnabled === true) ? 'Disable deployment profiles? The development pair will be restored to .env and .env.sample; staging and production files will remain untouched but inactive.' : 'Enable deployment profiles? Nova will preserve the plain files, migrate their contents to development, and create empty staging and production pairs.',
+          initial: false,
+        });
+
+        if (profilesConfirmOutput['cancelled'] === true || profilesConfirmOutput['result'].confirm !== true) {
+          continue;
+        }
+
+        const nextEnvironment: Cli_Utility_Configure_Runner_PromptEnvironment_NextEnvironment = {
+          ...environment,
+          profiles: {
+            enabled: currentProfilesEnabled === false,
+          },
+        };
+
+        Object.assign(config, { environment: nextEnvironment });
+
+        if (currentProfilesEnabled === true && config['workflows'] !== undefined) {
+          for (const workflow of config['workflows']) {
+            Reflect.deleteProperty(workflow, 'environmentSelection');
+          }
+        }
+
+        continue;
+      }
+
       if (menuOutputResultValue.action['kind'] === 'scope') {
         if (menuOutputResultValue.action['scope'] === 'workflow') {
           const workflowName: Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowName = menuOutputResultValue.action['workflowName'] ?? '';
@@ -8039,8 +8206,8 @@ export class Runner {
   /**
    * CLI - Utility - Configure - Read Local Filled Keys.
    *
-   * Reads each configured app's local ".env" and returns the keys whose value is non-empty, so
-   * the status view can flag filled lines no longer declared as local-orphans without a value.
+   * Reads each configured app's active local environment file and returns the
+   * non-empty keys so status can flag undeclared local values.
    *
    * @param {Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Config} config - Config.
    *
@@ -8053,11 +8220,13 @@ export class Runner {
   private static async readLocalFilledKeys(config: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Config): Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Returns {
     const environment: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Environment = config['environment'] ?? {};
     const workspaces: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Workspaces = environment['workspaces'] ?? {};
+    const profilesEnabled: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_ProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
+    const envFileName: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvFileName = (profilesEnabled === true) ? '.env.development' : '.env';
     const result: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Result = {};
 
     for (const appPath of Object.keys(workspaces)) {
       const filled: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Filled = [];
-      const envPath: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvPath = join(process.cwd(), appPath, '.env');
+      const envPath: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvPath = join(process.cwd(), appPath, envFileName);
 
       try {
         const raw: Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Raw = await fs.readFile(envPath, 'utf-8');

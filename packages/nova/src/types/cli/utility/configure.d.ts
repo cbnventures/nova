@@ -18,6 +18,7 @@ import type {
   Shared_BlueprintConfigWorkflow_Build,
   Shared_BlueprintConfigWorkflow_ContainerPlatforms,
   Shared_BlueprintConfigWorkflow_Deploy,
+  Shared_BlueprintConfigWorkflow_EnvironmentSelection,
   Shared_BlueprintConfigWorkflow_RunsOn,
   Shared_BlueprintConfigWorkflow_TimeoutMinutes,
   Shared_BlueprintConfigWorkflow_Triggers,
@@ -744,6 +745,12 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueReconcile 
   kind: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueReconcile_Kind;
 };
 
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueProfiles_Kind = 'profiles';
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueProfiles = {
+  kind: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueProfiles_Kind;
+};
+
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueBack_Kind = 'back';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueBack = {
@@ -754,6 +761,7 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice_Value =
   Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope
   | Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueStatus
   | Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueReconcile
+  | Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueProfiles
   | Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueBack;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice = {
@@ -763,6 +771,10 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice = {
 };
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_AppPaths = string[];
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_CurrentProfilesEnabled = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesSummary = string;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_Choices = Cli_Utility_Configure_Runner_PromptEnvironment_Choice[];
 
@@ -789,6 +801,14 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult = Cl
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult>;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputKey = 'confirm';
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_ProfilesConfirmOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_NextEnvironment = Shared_NovaConfigEnvironment;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowName = string;
 
@@ -2792,6 +2812,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = st
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection = Shared_BlueprintConfigWorkflow_EnvironmentSelection | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = Shared_BlueprintConfigWorkflow_Triggers;
@@ -3163,6 +3185,26 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry = {
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget = Shared_BlueprintConfigDeployTarget;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ProfilesEnabled = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SupportsEnvironmentSelection = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggerName = Shared_NovaConfigWorkflowTrigger;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedEnvironmentSelection = Shared_BlueprintConfigWorkflow_EnvironmentSelection | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputKey = 'environmentSelectionEnabled';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionEnabledOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputKey = 'manual';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_EnvironmentSelectionManualOutputResult> | Shared_PromptWithCancelReject;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTarget = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
@@ -3532,6 +3574,10 @@ export type Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Environment = Share
 
 export type Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
 
+export type Cli_Utility_Configure_Runner_ReadLocalFilledKeys_ProfilesEnabled = boolean;
+
+export type Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvFileName = '.env' | '.env.development';
+
 export type Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Result = {
   [key: string]: string[];
 };
@@ -3583,11 +3629,15 @@ export type Cli_Utility_Configure_Runner_Run_NovaConfig = LibNovaConfig;
 
 export type Cli_Utility_Configure_Runner_Run_WorkingFile = Shared_NovaConfig;
 
+export type Cli_Utility_Configure_Runner_Run_CurrentProfilesEnabled = boolean;
+
 export type Cli_Utility_Configure_Runner_Run_CurrentStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Utility_Configure_Runner_Run_PromptFlowResult = Exclude<Shared_DialogAction, 'back'>;
 
 export type Cli_Utility_Configure_Runner_Run_NextStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Configure_Runner_Run_NextProfilesEnabled = boolean;
 
 export type Cli_Utility_Configure_Runner_Run_MigrationPlan_CurrentStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
@@ -3609,3 +3659,5 @@ export type Cli_Utility_Configure_Runner_Run_MigrationPlan = {
   nextStrategy: Cli_Utility_Configure_Runner_Run_MigrationPlan_NextStrategy;
   writes: Cli_Utility_Configure_Runner_Run_MigrationPlan_Writes;
 } | undefined;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationEnvironment = Shared_NovaConfigEnvironment;

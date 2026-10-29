@@ -12,6 +12,7 @@ import type {
   Shared_CorepackPackageManagerDescriptor,
   Shared_CorepackSpawnInvocation,
   Shared_MonorepoContext,
+  Shared_NovaConfig,
   Shared_NovaConfig_IgnoreFile,
   Shared_NovaConfig_IgnoreFile_Bundles,
   Shared_NovaConfig_IgnoreFile_Patterns,
@@ -22,6 +23,7 @@ import type {
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfig_Urls,
+  Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkspace_Policy,
@@ -1046,6 +1048,12 @@ export type Lib_Scaffold_RunScaffold_RootPackageJsonPath = string;
 export type Lib_Scaffold_RunScaffold_RootPackageJsonContents = string;
 
 export type Lib_Scaffold_RunScaffold_ProjectFinalizerError = unknown;
+
+export type Lib_Scaffold_RunScaffold_RegisteredConfig = Shared_NovaConfig;
+
+export type Lib_Scaffold_RunScaffold_Environment = Shared_NovaConfigEnvironment | undefined;
+
+export type Lib_Scaffold_RunScaffold_ProfilesEnabled = boolean;
 
 export type Lib_Scaffold_RunScaffold_InstallSucceeded = boolean;
 

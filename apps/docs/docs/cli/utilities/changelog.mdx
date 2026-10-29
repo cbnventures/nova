@@ -126,10 +126,10 @@ The validation and preview steps finish before Nova writes any release files. Ve
 7. **Bump version** — Updates the `version` field in each affected `package.json`. Android app workspaces also synchronize Gradle `versionName` and advance `versionCode` once for every released changelog entry. Apple app workspaces synchronize `MARKETING_VERSION` in the root `project.yml` when present, otherwise in checked-in `.xcodeproj` files; `CURRENT_PROJECT_VERSION` advances by the same entry count.
 8. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist. Android and Apple app headings include the resulting native build number as `## X.Y.Z (build) - YYYY-MM-DD`.
 9. **Sync exact package references** — Updates exact-pinned references to co-released packages in workspace and template `package.json` files. Ranges and workspace protocols are left unchanged.
-10. **Stamp sentinels** — Replaces `@since UNRELEASED` and `@deprecated UNRELEASED` tags in supported code files directly inside each workspace root and recursively within Nova's known source trees: `src/`, `scripts/`, `bin/`, `api/`, Android `app/src/`, Apple `Sources/` and `Tests/`, and pfSense `port/files/usr/local/`. Supported files include JavaScript and TypeScript module variants, CSS, Astro, Java, Kotlin, PHP, Svelte, Swift, and Vue source. Releasing non-freezable workspaces use their new version, while freezable workspaces use `0.0.0` without a version bump or changelog. The curated source-tree list prevents a parent workspace from stamping nested workspaces, templates, or documentation examples. Prerelease versions (containing a hyphen) are skipped. A scanning or stamping failure leaves pending entries in place.
+10. **Stamp sentinels** — Recursively discovers files owned by each configured workspace and replaces the documentation sentinel for each supported language. JavaScript, TypeScript, CSS, Astro, Java, Kotlin, PHP, Svelte, and Vue use `@since UNRELEASED` or `@deprecated UNRELEASED`; C# uses `<remarks>Since: UNRELEASED</remarks>`; Go and Rust use `Since: UNRELEASED` documentation comments; Python uses a `Since:` docstring section; and Swift DocC uses `- Since: UNRELEASED`. Extensionless scripts with a shebang are supported for JSDoc-style tags as well. Releasing non-freezable workspaces use their new version, while freezable workspaces use `0.0.0` without a version bump or changelog. Workspace boundaries, templates, documentation examples, project assets, fixtures, symlinks, embedded repositories, dependencies, caches, and generated output remain untouched. Prerelease versions (containing a hyphen) are skipped. A scanning or stamping failure leaves pending entries in place.
 11. **Clean up** — Deletes consumed entry files from `.changelog/` only after every workspace has completed successfully.
 
-When `.changelog/` has no entries, `--release` still stamps freezable workspaces at `0.0.0`. This includes supported files at the project root and in its known source trees; it does not scan into sibling `apps/` or `packages/` workspaces. A dry run writes nothing.
+When `.changelog/` has no entries, `--release` still stamps freezable workspaces at `0.0.0`. This includes every supported file owned by the workspace without crossing into declared child workspaces. A dry run writes nothing.
 
 :::danger Non-Zero Exit Code
 The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
@@ -137,9 +137,14 @@ The command exits with code **1** when validation fails (invalid flags, missing 
 
 ### UNRELEASED Sentinel Convention
 
-When you add or change a public API member, tag it with the literal sentinel `@since UNRELEASED` (or `@deprecated UNRELEASED`) rather than a hand-written version number. The release step stamps the real version at release time, so you never have to guess or update the tag manually.
+When you add or change a public API member, use the language's literal `UNRELEASED` documentation sentinel rather than a hand-written version number. The release step stamps the real version at release time, so you never have to guess or update the tag manually.
 
-- Write `@since UNRELEASED` for new members and `@deprecated UNRELEASED` for members being deprecated.
+- JavaScript, TypeScript, CSS, Astro, Java, Kotlin, PHP, Svelte, and Vue use `@since UNRELEASED`; supported JSDoc-style languages may also use `@deprecated UNRELEASED`.
+- C# XML documentation uses `<remarks>Since: UNRELEASED</remarks>`.
+- Go declaration documentation uses `// Since: UNRELEASED`.
+- Python docstrings use a `Since:` section whose indented value is `UNRELEASED`.
+- Rustdoc uses `/// Since: UNRELEASED`.
+- Swift DocC uses `/// - Since: UNRELEASED`.
 - Never write a concrete version (e.g., `@since 1.3.0`) for unreleased code — it will be wrong if the bump type changes before release.
 - Concrete versions are only appropriate for members that have already shipped in a published release.
 

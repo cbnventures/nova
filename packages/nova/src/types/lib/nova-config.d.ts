@@ -52,6 +52,7 @@ import type {
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentProfiles,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentValue_Reach,
@@ -80,6 +81,7 @@ import type {
   Shared_NovaConfigWorkflow_RunsOn,
   Shared_NovaConfigWorkflow_TimeoutMinutes,
   Shared_NovaConfigWorkflow_Triggers,
+  Shared_NovaConfigWorkflowEnvironmentSelection,
   Shared_NovaConfigWorkflowTriggerObject,
   Shared_NovaConfigWorkflowTriggerObject_Branches,
   Shared_NovaConfigWorkflowTriggerObject_Paths,
@@ -889,6 +891,12 @@ export type Lib_NovaConfig_Runner_ParseEnvironment_WorkflowNames = string[];
 
 export type Lib_NovaConfig_Runner_ParseEnvironment_CollectedPrefixes = string[];
 
+export type Lib_NovaConfig_Runner_ParseEnvironment_ProfilesValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseEnvironment_ProfilesEnabled = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_ParseEnvironment_ProfilesResult = Shared_NovaConfigEnvironmentProfiles;
+
 export type Lib_NovaConfig_Runner_ParseEnvironment_ProjectValue = unknown;
 
 export type Lib_NovaConfig_Runner_ParseEnvironment_ProjectPrefix = string | undefined;
@@ -1371,6 +1379,12 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = Shared_NovaConfigWorkf
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelectionVersionTags = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms = unknown;
 

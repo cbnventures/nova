@@ -18,19 +18,31 @@ import {
 } from 'vitest';
 
 import { Runner as CliGenerateMustHavesAgentConventions } from '../../../../cli/generate/must-haves/agent-conventions.js';
+import { novaRules } from '../../../../presets/eslint/index.js';
 import * as toolkit from '../../../../toolkit/index.js';
 
 import type {
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdExists,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ClaudeMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Config,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ConfigPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdContent,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentedRuleName,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_GoMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_NovaMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJson,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJsonPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectDirectory,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectRulesMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RuleName,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Rules,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RustMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleCoverage,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleKeys,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdContent,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_UniversalMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_VisionMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesCodexOnly_AgentsMdPath,
@@ -160,6 +172,10 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
     const projectRulesMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectRulesMdPath = join(projectDirectory, 'PROJECT_RULES.md');
     const universalMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_UniversalMdPath = join(projectDirectory, 'conventions', 'universal.md');
     const documentationMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath = join(projectDirectory, 'conventions', 'documentation.md');
+    const goMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_GoMdPath = join(projectDirectory, 'conventions', 'go.md');
+    const novaMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_NovaMdPath = join(projectDirectory, 'conventions', 'nova.md');
+    const rustMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RustMdPath = join(projectDirectory, 'conventions', 'rust.md');
+    const typescriptMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdPath = join(projectDirectory, 'conventions', 'typescript.md');
 
     await access(claudeMdPath);
 
@@ -169,11 +185,61 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
 
     await access(universalMdPath);
 
+    await access(goMdPath);
+
+    await access(novaMdPath);
+
+    await access(rustMdPath);
+
+    await access(typescriptMdPath);
+
     const documentationMdContent: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdContent = await readFile(documentationMdPath, 'utf-8');
+    const typescriptMdContent: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdContent = await readFile(typescriptMdPath, 'utf-8');
+    const typeDeclarationToggleKeys: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleKeys = [
+      'inspector-cross-section-references',
+      'inspector-dts-import-verbatim',
+      'inspector-no-inline-import-types',
+      'inspector-section-alphabetical',
+      'inspector-first-come-first-serve-order',
+      'inspector-object-property-types',
+      'inspector-section-coverage',
+      'inspector-variable-type-symmetry',
+      'inspector-identifier-vs-filename',
+      'inspector-filename-validation',
+      'inspector-standalone-type-files',
+    ];
+    const typeDeclarationToggleCoverage: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypeDeclarationToggleCoverage = true;
 
     strictEqual(documentationMdContent.includes('import { novaRules } from \'@cbnventures/nova/presets/eslint\';'), true);
 
     strictEqual(documentationMdContent.includes('import { novaRules } from \'@cbnventures/nova\';'), false);
+
+    strictEqual(typeDeclarationToggleCoverage, true);
+
+    for (const toggleKey of typeDeclarationToggleKeys) {
+      strictEqual(typescriptMdContent.includes(`\`${toggleKey}\``), true, `Generated TypeScript conventions must document the enabled Vitest toggle "${toggleKey}".`);
+    }
+
+    for (const configValue of novaRules) {
+      const config: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Config = configValue;
+      const rules: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_Rules = config['rules'];
+
+      if (rules === undefined) {
+        continue;
+      }
+
+      for (const ruleNameValue of Object.keys(rules)) {
+        const ruleName: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RuleName = ruleNameValue;
+
+        if (ruleName.startsWith('@cbnventures/nova/') === false) {
+          continue;
+        }
+
+        const documentedRuleName: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentedRuleName = `\`${ruleName}\``;
+
+        strictEqual(typescriptMdContent.includes(documentedRuleName), true, `Generated TypeScript conventions must document the enabled ESLint rule "${ruleName}".`);
+      }
+    }
 
     let agentsMdExists: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdExists = true;
 

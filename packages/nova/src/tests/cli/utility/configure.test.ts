@@ -347,6 +347,13 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       },
       runsOn: 'promptWorkflowsForm',
       timeoutMinutes: 'promptWorkflowsForm',
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'promptWorkflowsForm',
+          stable: 'promptWorkflowsForm',
+        },
+        manual: 'promptWorkflowsForm',
+      },
       containerPlatforms: { $item: 'promptWorkflowsForm' },
       build: { $item: 'promptWorkflowsForm' },
       deploy: {
@@ -518,6 +525,9 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
     },
   },
   environment: {
+    profiles: {
+      enabled: 'promptEnvironment',
+    },
     project: {
       prefix: 'promptEnvironmentProject',
       variables: {
@@ -1923,7 +1933,7 @@ describe('prompt workflows', () => {
       { targetSettings: '' },
       { targetRequiredLiteral: 'nova' },
       { targetAction: { kind: 'add' } },
-      { targetType: 'github-pages-docusaurus' },
+      { targetType: 'github-pages' },
       { targetWorkingDir: './apps/docs' },
       { targetSettings: '' },
       { targetAction: { kind: 'done' } },
@@ -2009,7 +2019,7 @@ describe('prompt workflows', () => {
             },
           },
           {
-            to: 'github-pages-docusaurus',
+            to: 'github-pages',
             path: './apps/docs',
           },
         ],
@@ -2044,7 +2054,7 @@ describe('prompt workflows', () => {
       { triggers: ['release'] },
       { advancedTriggers: [] },
       { targetAction: { kind: 'add' } },
-      { targetType: 'github-pages-docusaurus' },
+      { targetType: 'github-pages' },
       { targetWorkingDir: './apps/docs' },
       { targetSettings: '' },
       { targetAction: { kind: 'done' } },
@@ -2112,7 +2122,7 @@ describe('prompt workflows', () => {
         runsOn: 'ubuntu-latest',
         build: ['./apps/docs'],
         deploy: [{
-          to: 'github-pages-docusaurus',
+          to: 'github-pages',
           path: './apps/docs',
         }],
       },

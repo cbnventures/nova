@@ -145,27 +145,11 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RealWorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingFiles,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingMdFiles,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_SourcePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_OriginalCwd,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ChangelogDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigContents,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_EntryContents,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_EntryPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_PackageJsonContents,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_PackageJsonPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ProjectDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceAfterRelease,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceFileContents,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceFilePath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SrcDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_StampWasApplied,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspaceDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspacePackageContents,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_ConfigPath,
@@ -284,25 +268,48 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_CsharpSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_CsharpSourceFilePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EmbeddedRepositorySourcePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EntryContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ExtensionlessSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ExtensionlessSourceFilePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_GoSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_GoSourceFilePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasDeprecated,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasSince,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_IgnoredSourceFixturePaths,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_InlineSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_InlineSourceFilePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_NonSourceExtensionlessPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageConfigPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonSourceFilePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonStampedSentinel,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonStringSentinel,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RustSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RustSourceFilePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFileContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFilePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFixturePaths,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SrcDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_StringLiteralPreserved,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SwiftSourceFileContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SwiftSourceFixturePaths,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedCsharpSource,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedGoSource,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedInlineSource,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedPythonSource,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedRustSource,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedSource,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspacePackageContents,
@@ -384,6 +391,11 @@ describe('CliUtilityChangelog.run', async () => {
       workspaces: {
         './packages/core': {
           name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './packages/core/packages/nested': {
+          name: '@test/nested',
           role: 'package',
           policy: 'distributable',
         },
@@ -1128,6 +1140,11 @@ describe('CliUtilityChangelog.run', async () => {
           role: 'package',
           policy: 'distributable',
         },
+        './packages/core/packages/nested': {
+          name: '@test/nested',
+          role: 'package',
+          policy: 'distributable',
+        },
       },
     }, null, 2);
 
@@ -1167,12 +1184,11 @@ describe('CliUtilityChangelog.run', async () => {
       join(workspaceDirectory, 'src', 'component.vue'),
       join(workspaceDirectory, 'src', 'server.java'),
       join(workspaceDirectory, 'src', 'server.php'),
-      join(workspaceDirectory, 'app', 'src', 'main', 'Main.kt'),
       join(workspaceDirectory, 'app', 'src', 'main', 'build.gradle.kts'),
-      join(workspaceDirectory, 'Sources', 'App.swift'),
-      join(workspaceDirectory, 'Tests', 'AppTests.swift'),
       join(workspaceDirectory, 'api', 'index.ts'),
       join(workspaceDirectory, 'bin', 'cli.mjs'),
+      join(workspaceDirectory, 'tests', 'lowercase.test.ts'),
+      join(workspaceDirectory, 'worker', 'index.ts'),
       join(workspaceDirectory, 'port', 'files', 'usr', 'local', 'pkg', 'service.inc'),
     ];
 
@@ -1181,16 +1197,131 @@ describe('CliUtilityChangelog.run', async () => {
       await writeFile(sourceFixturePath, sourceFileContents, 'utf-8');
     }
 
+    const swiftSourceFixturePaths: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SwiftSourceFixturePaths = [
+      join(workspaceDirectory, 'Sources', 'App.swift'),
+      join(workspaceDirectory, 'Tests', 'AppTests.swift'),
+      join(workspaceDirectory, 'UITests', 'AppUITests.swift'),
+    ];
+    const swiftSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SwiftSourceFileContents = [
+      '///',
+      '/// App.',
+      '///',
+      '/// - Since: UNRELEASED',
+      '///',
+      'struct App {}',
+      '',
+    ].join('\n');
+
+    for (const swiftSourceFixturePath of swiftSourceFixturePaths) {
+      await mkdir(dirname(swiftSourceFixturePath), { recursive: true });
+      await writeFile(swiftSourceFixturePath, swiftSourceFileContents, 'utf-8');
+    }
+
+    const csharpSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_CsharpSourceFilePath = join(workspaceDirectory, 'src', 'Service.cs');
+    const csharpSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_CsharpSourceFileContents = [
+      '/// <summary>Service.</summary>',
+      '/// <remarks>Since: UNRELEASED</remarks>',
+      'public sealed class Service {}',
+      'public const string Sentinel = "/// <remarks>Since: UNRELEASED</remarks>";',
+      '',
+    ].join('\n');
+    const goSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_GoSourceFilePath = join(workspaceDirectory, 'src', 'service.go');
+    const goSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_GoSourceFileContents = [
+      '// Service coordinates requests.',
+      '//',
+      '// Since: UNRELEASED',
+      'type Service struct {}',
+      'const sentinel = "// Since: UNRELEASED"',
+      '',
+    ].join('\n');
+    const pythonSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonSourceFilePath = join(workspaceDirectory, 'src', 'service.py');
+    const pythonSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonSourceFileContents = [
+      'def run() -> None:',
+      '    """Run the service.',
+      '',
+      '    Coordinates one validated service operation for command callers.',
+      '',
+      '    Since:',
+      '        UNRELEASED',
+      '    """',
+      '',
+      '    return None',
+      '',
+      'sentinel = """Since:',
+      '    UNRELEASED',
+      '"""',
+      '',
+    ].join('\n');
+    const rustSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RustSourceFilePath = join(workspaceDirectory, 'src', 'service.rs');
+    const rustSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RustSourceFileContents = [
+      '/// Service coordinates requests.',
+      '///',
+      '/// Since: UNRELEASED',
+      'pub struct Service {}',
+      'const SENTINEL: &str = "/// Since: UNRELEASED";',
+      '',
+    ].join('\n');
+
+    await writeFile(csharpSourceFilePath, csharpSourceFileContents, 'utf-8');
+    await writeFile(goSourceFilePath, goSourceFileContents, 'utf-8');
+    await writeFile(pythonSourceFilePath, pythonSourceFileContents, 'utf-8');
+    await writeFile(rustSourceFilePath, rustSourceFileContents, 'utf-8');
+
+    const inlineSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_InlineSourceFilePath = join(workspaceDirectory, 'app', 'src', 'main', 'Main.kt');
+    const inlineSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_InlineSourceFileContents = [
+      '/** Main. @since UNRELEASED */',
+      'class Main',
+      '',
+      '/** Old Main. @deprecated UNRELEASED */',
+      'class OldMain',
+      '',
+      'val sentinelDoc = "/** @since UNRELEASED */"',
+      '',
+    ].join('\n');
+
+    await mkdir(dirname(inlineSourceFilePath), { recursive: true });
+    await writeFile(inlineSourceFilePath, inlineSourceFileContents, 'utf-8');
+
+    const extensionlessSourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ExtensionlessSourceFilePath = join(workspaceDirectory, 'port', 'files', 'usr', 'local', 'sbin', 'service');
+    const extensionlessSourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ExtensionlessSourceFileContents = [
+      '#!/usr/local/bin/php',
+      '<?php',
+      '/**',
+      ' * @since UNRELEASED',
+      ' */',
+      'function run(): void {}',
+      '',
+    ].join('\n');
+
+    await mkdir(dirname(extensionlessSourceFilePath), { recursive: true });
+    await writeFile(extensionlessSourceFilePath, extensionlessSourceFileContents, 'utf-8');
+
+    const nonSourceExtensionlessPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_NonSourceExtensionlessPath = join(workspaceDirectory, 'NOTICE');
+
+    await writeFile(nonSourceExtensionlessPath, sourceFileContents, 'utf-8');
+
     const ignoredSourceFixturePaths: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_IgnoredSourceFixturePaths = [
       join(workspaceDirectory, 'docs', 'example.astro'),
+      join(workspaceDirectory, 'assets', 'example.ts'),
+      join(workspaceDirectory, 'fixtures', 'example.ts'),
       join(workspaceDirectory, 'templates', 'example.kt'),
       join(workspaceDirectory, 'packages', 'nested', 'src', 'index.ts'),
+      join(workspaceDirectory, 'build', 'index.ts'),
+      join(workspaceDirectory, 'dist', 'index.ts'),
+      join(workspaceDirectory, '.next', 'index.ts'),
+      join(workspaceDirectory, '.build', 'index.swift'),
     ];
 
     for (const ignoredSourceFixturePath of ignoredSourceFixturePaths) {
       await mkdir(dirname(ignoredSourceFixturePath), { recursive: true });
       await writeFile(ignoredSourceFixturePath, sourceFileContents, 'utf-8');
     }
+
+    const embeddedRepositorySourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EmbeddedRepositorySourcePath = join(workspaceDirectory, 'embedded-repository', 'src', 'index.ts');
+
+    await mkdir(dirname(embeddedRepositorySourcePath), { recursive: true });
+    await writeFile(join(workspaceDirectory, 'embedded-repository', '.git'), 'gitdir: ../.git/modules/embedded-repository\n', 'utf-8');
+    await writeFile(embeddedRepositorySourcePath, sourceFileContents, 'utf-8');
 
     const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath = join(rootScriptDirectory, 'root.mjs');
     const rootScriptContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptContents = [
@@ -1254,9 +1385,45 @@ describe('CliUtilityChangelog.run', async () => {
       strictEqual((await readFile(sourceFixturePath, 'utf-8')).includes('@since 0.20.0'), true);
     }
 
+    for (const swiftSourceFixturePath of swiftSourceFixturePaths) {
+      strictEqual((await readFile(swiftSourceFixturePath, 'utf-8')).includes('- Since: 0.20.0'), true);
+    }
+
+    const updatedCsharpSource: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedCsharpSource = await readFile(csharpSourceFilePath, 'utf-8');
+    const updatedGoSource: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedGoSource = await readFile(goSourceFilePath, 'utf-8');
+    const updatedPythonSource: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedPythonSource = await readFile(pythonSourceFilePath, 'utf-8');
+    const updatedRustSource: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedRustSource = await readFile(rustSourceFilePath, 'utf-8');
+    const pythonStampedSentinel: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonStampedSentinel = [
+      'Since:',
+      '        0.20.0',
+    ].join('\n');
+    const pythonStringSentinel: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PythonStringSentinel = [
+      'sentinel = """Since:',
+      '    UNRELEASED',
+    ].join('\n');
+
+    strictEqual(updatedCsharpSource.includes('<remarks>Since: 0.20.0</remarks>'), true);
+    strictEqual(updatedCsharpSource.includes('"/// <remarks>Since: UNRELEASED</remarks>"'), true);
+    strictEqual(updatedGoSource.includes('// Since: 0.20.0'), true);
+    strictEqual(updatedGoSource.includes('"// Since: UNRELEASED"'), true);
+    strictEqual(updatedPythonSource.includes(pythonStampedSentinel), true);
+    strictEqual(updatedPythonSource.includes(pythonStringSentinel), true);
+    strictEqual(updatedRustSource.includes('/// Since: 0.20.0'), true);
+    strictEqual(updatedRustSource.includes('"/// Since: UNRELEASED"'), true);
+
+    const updatedInlineSource: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedInlineSource = await readFile(inlineSourceFilePath, 'utf-8');
+
+    strictEqual(updatedInlineSource.includes('@since 0.20.0'), true);
+    strictEqual(updatedInlineSource.includes('@deprecated 0.20.0'), true);
+    strictEqual(updatedInlineSource.includes('"/** @since UNRELEASED */"'), true);
+    strictEqual((await readFile(extensionlessSourceFilePath, 'utf-8')).includes('@since 0.20.0'), true);
+    strictEqual((await readFile(nonSourceExtensionlessPath, 'utf-8')).includes('@since UNRELEASED'), true);
+
     for (const ignoredSourceFixturePath of ignoredSourceFixturePaths) {
       strictEqual((await readFile(ignoredSourceFixturePath, 'utf-8')).includes('@since UNRELEASED'), true);
     }
+
+    strictEqual((await readFile(embeddedRepositorySourcePath, 'utf-8')).includes('@since UNRELEASED'), true);
 
     strictEqual(await readFile(packageJsonPath, 'utf-8'), packageJsonContents);
 
@@ -1268,11 +1435,13 @@ describe('CliUtilityChangelog.run', async () => {
   it('keeps pending entries when stamping fails', async () => {
     const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ProjectDirectory = join(sandboxRoot, 'stamp-failure');
     const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const realWorkspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RealWorkspaceDirectory = join(projectDirectory, 'workspace-target');
     const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ChangelogDirectory = join(projectDirectory, '.changelog');
-    const sourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_SourcePath = join(workspaceDirectory, 'src');
 
-    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(dirname(workspaceDirectory), { recursive: true });
+    await mkdir(realWorkspaceDirectory, { recursive: true });
     await mkdir(changelogDirectory, { recursive: true });
+    await symlink(realWorkspaceDirectory, workspaceDirectory, 'dir');
 
     await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
       name: 'test-stamp-failure',
@@ -1292,9 +1461,6 @@ describe('CliUtilityChangelog.run', async () => {
       name: '@test/core',
       version: '1.0.0',
     }, null, 2), 'utf-8');
-
-    // A non-directory src path makes the stamp preflight fail with ENOTDIR.
-    await writeFile(sourcePath, 'not a directory', 'utf-8');
 
     await writeFile(join(changelogDirectory, 'failed-stamp.md'), [
       '---',
@@ -1645,93 +1811,6 @@ describe('CliUtilityChangelog.run', async () => {
     });
 
     strictEqual(process.exitCode, undefined);
-
-    return;
-  });
-
-  // Limitation: stampUnreleased's prerelease guard checks newVersion.includes('-').
-  // The normal bump arithmetic (currentVersion.split('.').map(Number)) always produces
-  // clean semver (e.g. '1.0.1'), never a prerelease suffix. There is no way to inject
-  // a '-' into the computed newVersion through the public run() API, so the guard
-  // cannot be directly exercised here. This test instead verifies the guard's inverse:
-  // a non-prerelease release stamps @since UNRELEASED, proving the guard does not
-  // block normal releases.
-  it('prerelease version skips stamp', async () => {
-    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ProjectDirectory = join(sandboxRoot, 'prerelease-skip');
-    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
-    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ChangelogDirectory = join(projectDirectory, '.changelog');
-    const srcDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SrcDirectory = join(workspaceDirectory, 'src');
-
-    await mkdir(srcDirectory, { recursive: true });
-    await mkdir(changelogDirectory, { recursive: true });
-
-    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_PackageJsonContents = JSON.stringify({
-      name: 'test-prerelease-skip',
-    }, null, 2);
-
-    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
-
-    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigContents = JSON.stringify({
-      workspaces: {
-        './packages/core': {
-          name: '@test/core',
-          role: 'package',
-          policy: 'distributable',
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
-    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_WorkspacePackageContents = JSON.stringify({
-      name: '@test/core',
-      version: '2.0.0',
-    }, null, 2);
-
-    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
-
-    const sourceFilePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceFilePath = join(srcDirectory, 'index.ts');
-    const sourceFileContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceFileContents = [
-      '/**',
-      ' * @since UNRELEASED',
-      ' */',
-      'export const z = 1;',
-      '',
-    ].join('\n');
-
-    await writeFile(sourceFilePath, sourceFileContents, 'utf-8');
-
-    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_EntryPath = join(changelogDirectory, 'prerelease-test.md');
-    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_EntryContents = [
-      '---',
-      'package: "@test/core"',
-      'category: added',
-      'bump: patch',
-      '---',
-      '',
-      'Added something new',
-      '',
-    ].join('\n');
-
-    await writeFile(entryPath, entryContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    await CliUtilityChangelog.run({
-      release: true,
-    });
-
-    strictEqual(process.exitCode, undefined);
-
-    const sourceAfterRelease: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_SourceAfterRelease = await readFile(sourceFilePath, 'utf-8');
-
-    // A non-prerelease version ('2.0.1') does NOT trigger the guard, so the stamp runs.
-    const stampWasApplied: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_StampWasApplied = sourceAfterRelease.includes('@since 2.0.1') === true && sourceAfterRelease.includes('UNRELEASED') === false;
-
-    strictEqual(stampWasApplied, true);
 
     return;
   });

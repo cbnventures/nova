@@ -6,7 +6,6 @@ import { Logger } from '../toolkit/index.js';
 import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
-  LIB_REGEX_PATTERN_LEADING_DOT,
 } from './regex.js';
 import { saveGeneratedFile } from './utility.js';
 
@@ -72,12 +71,14 @@ import type {
   Lib_Dotenv_WriteDotenvFiles_IsPrune,
   Lib_Dotenv_WriteDotenvFiles_IsPruneConfirmed,
   Lib_Dotenv_WriteDotenvFiles_IsReplaceFile,
+  Lib_Dotenv_WriteDotenvFiles_IsSample,
   Lib_Dotenv_WriteDotenvFiles_KeyMatch,
   Lib_Dotenv_WriteDotenvFiles_Options,
   Lib_Dotenv_WriteDotenvFiles_OriginalLine,
   Lib_Dotenv_WriteDotenvFiles_OrphanKeys,
   Lib_Dotenv_WriteDotenvFiles_OrphanLines,
   Lib_Dotenv_WriteDotenvFiles_PreservedLines,
+  Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled,
   Lib_Dotenv_WriteDotenvFiles_Returns,
   Lib_Dotenv_WriteDotenvFiles_SampleLines,
   Lib_Dotenv_WriteDotenvFiles_SeenKeys,
@@ -368,9 +369,17 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
   const isReplaceFile: Lib_Dotenv_WriteDotenvFiles_IsReplaceFile = options['replaceFile'] === true;
   const isPrune: Lib_Dotenv_WriteDotenvFiles_IsPrune = options['prune'] === true;
   const shouldReport: Lib_Dotenv_WriteDotenvFiles_ShouldReport = options['report'] !== false;
+  const profilesEnabled: Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled = options['profilesEnabled'] === true;
   const currentDirectory: Lib_Dotenv_WriteDotenvFiles_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
   const templateDirectory: Lib_Dotenv_WriteDotenvFiles_TemplateDirectory = resolve(currentDirectory, '../../templates/generators/must-haves/dotenv');
-  const files: Lib_Dotenv_WriteDotenvFiles_Files = [
+  const files: Lib_Dotenv_WriteDotenvFiles_Files = (profilesEnabled === true) ? [
+    '.env.development',
+    '.env.development.sample',
+    '.env.staging',
+    '.env.staging.sample',
+    '.env.production',
+    '.env.production.sample',
+  ] : [
     '.env',
     '.env.sample',
   ];
@@ -408,13 +417,14 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
 
   const customSection: Lib_Dotenv_WriteDotenvFiles_CustomSection = envLines.join('\n');
   const customSectionSample: Lib_Dotenv_WriteDotenvFiles_CustomSectionSample = sampleLines.join('\n');
-  const existingEnvPath: Lib_Dotenv_WriteDotenvFiles_ExistingEnvPath = join(targetDirectory, '.env');
-  const existingEnv: Lib_Dotenv_WriteDotenvFiles_ExistingEnv = await parseExistingEnv(existingEnvPath);
 
   for (const fileName of files) {
-    const templateFileName: Lib_Dotenv_WriteDotenvFiles_TemplateFileName = fileName.replace(LIB_REGEX_PATTERN_LEADING_DOT, '');
+    const isSample: Lib_Dotenv_WriteDotenvFiles_IsSample = fileName.endsWith('.sample');
+    const templateFileName: Lib_Dotenv_WriteDotenvFiles_TemplateFileName = (isSample === true) ? 'env.sample' : 'env';
     const templatePath: Lib_Dotenv_WriteDotenvFiles_TemplatePath = join(templateDirectory, templateFileName);
     const targetPath: Lib_Dotenv_WriteDotenvFiles_TargetPath = join(targetDirectory, fileName);
+    const existingEnvPath: Lib_Dotenv_WriteDotenvFiles_ExistingEnvPath = targetPath;
+    const existingEnv: Lib_Dotenv_WriteDotenvFiles_ExistingEnv = (isSample === true) ? new Map() : await parseExistingEnv(existingEnvPath);
     let content: Lib_Dotenv_WriteDotenvFiles_Content = undefined;
 
     try {
@@ -428,13 +438,13 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
       continue;
     }
 
-    const appendSection: Lib_Dotenv_WriteDotenvFiles_AppendSection = (fileName === '.env.sample') ? customSectionSample : customSection;
+    const appendSection: Lib_Dotenv_WriteDotenvFiles_AppendSection = (isSample === true) ? customSectionSample : customSection;
 
     if (appendSection !== '') {
       content = `${content}${appendSection}\n`;
     }
 
-    if (fileName === '.env' && existingEnv.size > 0) {
+    if (isSample === false && existingEnv.size > 0) {
       const contentLines: Lib_Dotenv_WriteDotenvFiles_ContentLines = content.split('\n');
       const seenKeys: Lib_Dotenv_WriteDotenvFiles_SeenKeys = new Set();
       const preservedLines: Lib_Dotenv_WriteDotenvFiles_PreservedLines = contentLines.map((contentLine) => {
@@ -483,7 +493,7 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
     await saveGeneratedFile(targetPath, content, isReplaceFile, {
       command: 'nova generate must-haves dotenv',
       docsSlug: 'cli/generators/must-haves/dotenv',
-      mode: (fileName === '.env') ? 'fillable' : 'strict',
+      mode: (isSample === false) ? 'fillable' : 'strict',
     }, shouldReport);
   }
 

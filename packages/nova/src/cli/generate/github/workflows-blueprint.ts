@@ -21,6 +21,7 @@ import {
   pathExists,
   renameFileWithDate,
   saveGeneratedFile,
+  shellQuote,
 } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 import { Runner as Validator } from './workflows-blueprint-validate.js';
@@ -31,6 +32,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_BuildValue,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Results,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspace,
@@ -38,10 +40,18 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Results,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_RuntimeValue,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspaces,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_AllowedRoot,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_ArtifactPaths,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Name,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_RootLines,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Env,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Environment,
@@ -57,20 +67,53 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_WorkflowEnvironments,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_WorkflowId,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_WorkflowSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_AppPath,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Context,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Environment,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Metadata,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Returns,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_TargetSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Variables,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildExpression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_CredentialExpression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Entry,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Env,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_EnvKey,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Index,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_LabelKey,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValue,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeExpression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeTargetPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_SeenValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Targets,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSlug,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_ValidationTargetPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableMeta,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_EnvironmentSelection,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_AppPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelection,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelectionStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps,
@@ -136,13 +179,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_WorkflowSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Context,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Metadata,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_PagesStatusRun,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Returns,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_TargetSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Variables,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_PagesStatusRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildIssueCommentTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildIssuesTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildLockInactiveIssues_DispatchInput,
@@ -170,6 +213,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactUploadSteps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
@@ -186,6 +231,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Env,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget,
@@ -201,6 +248,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_On,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_OnNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Reference,
@@ -210,9 +259,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RootDir,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RootWorkingDirMeta,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameEnvironmentSuffix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameLabel,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameParts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix,
@@ -225,6 +276,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadArtifactPaths,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadMetadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadResolvedArtifactPaths,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadWorkingDir,
@@ -265,6 +317,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Workflows,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_CorepackVersion,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName,
@@ -367,6 +422,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Namespace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Value,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_Type,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_WorkingDir,
@@ -375,9 +433,21 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Needs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Target,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_IsPrefixable,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Namespace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_ProductionName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_StagingName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableMeta,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Project,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProjectPrefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Returns,
@@ -561,7 +631,7 @@ export class Runner {
 
     // Validate the raw workflows. Diagnostics report each rejected workflow;
     // any diagnostic sets a non-zero exit while valid workflows still build.
-    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces, (config['settings'] === undefined) ? 'semver' : config['settings']['versionStrategy']);
+    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces, (config['settings'] === undefined) ? 'semver' : config['settings']['versionStrategy'], environment);
     const validatedWorkflows: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows = validation['workflows'];
 
     for (const diagnosticEntry of validation['diagnostics']) {
@@ -1168,6 +1238,9 @@ export class Runner {
     const runNameParts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameParts = [];
     const triggers: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers = entry['triggers'];
     const targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = entry['deploy'] ?? [];
+    const environmentSelection: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection = entry['environmentSelection'];
+    const profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = environmentSelection !== undefined;
+    const selectedEnvironmentExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = 'github.event_name == \'workflow_dispatch\' && (inputs.environment || \'staging\') || github.event_name == \'release\' && github.event.release.prerelease && \'staging\' || github.event_name == \'release\' && \'production\' || \'from tag\'';
     const hasContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = targets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
     const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = entry['containerPlatforms'] ?? [
       'linux/amd64',
@@ -1343,6 +1416,20 @@ export class Runner {
       });
     }
 
+    if (environmentSelection !== undefined && environmentSelection['manual'] === true) {
+      dispatchInputs.push({
+        name: 'environment',
+        description: 'Deployment environment',
+        required: true,
+        type: 'choice',
+        default: 'staging',
+        options: [
+          'staging',
+          'production',
+        ],
+      });
+    }
+
     mergedOn.push({
       event: 'workflow_dispatch',
       inputs: dispatchInputs,
@@ -1353,13 +1440,14 @@ export class Runner {
     // release-only strings reproduce today's output byte-for-byte.
     const publishCondition: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition = [
       ...publishConditionParts.map((part) => ((part.includes('&&') === true) ? `(${part})` : part)),
-      '(github.event_name == \'workflow_dispatch\' && !inputs.dry-run)',
+      ...((environmentSelection === undefined || environmentSelection['manual'] === true) ? ['(github.event_name == \'workflow_dispatch\' && !inputs.dry-run)'] : []),
     ].join(' || ');
     const runNameLabel: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameLabel = [
       ...runNameParts.map((part) => ((part.includes('&&') === true) ? `(${part})` : part)),
       '\'manually\'',
     ].join(' || ');
-    const runName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunName = `Publishing ${Runner.expr(runNameLabel)}${workflowId}\${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}`;
+    const runNameEnvironmentSuffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameEnvironmentSuffix = (profileAware === true) ? ` [${Runner.expr(selectedEnvironmentExpression)}]` : '';
+    const runName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunName = `Publishing ${Runner.expr(runNameLabel)}${workflowId}${runNameEnvironmentSuffix}\${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}`;
 
     // Resolve the ROOT_WORKING_DIR literal through the shared metadata. The
     // defensive fallback stays since the validator guarantees the setting.
@@ -1428,12 +1516,23 @@ export class Runner {
       },
     ];
 
+    const preflightStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep = Runner.buildCloudflareEnvironmentPreflight(entry, environment, packageManager);
+    const environmentSelectionStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep = Runner.buildCloudflareEnvironmentSelectionStep(environmentSelection);
+
+    if (environmentSelectionStep !== undefined) {
+      steps.splice(1, 0, environmentSelectionStep);
+    }
+
+    if (preflightStep !== undefined) {
+      steps.push(preflightStep);
+    }
+
     // Bake each scope's reach-build environment values into that scope's .env
     // before the shared check/build. Each value derives its GitHub name from
     // the app prefix; a Variable reads from vars, a Secret from secrets. A
     // scope with no reach-build values adds no step.
     for (const scope of scopes) {
-      const buildValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues = Runner.appBuildValues(environment, scope);
+      const buildValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues = Runner.appBuildValues(environment, scope, profileAware);
 
       if (buildValues.length === 0) {
         continue;
@@ -1443,7 +1542,7 @@ export class Runner {
         name: `Write environment file (${Runner.slugifyWorkingDir(scope)})`,
         env: buildValues.map((buildValue) => ({
           key: buildValue['key'],
-          value: (buildValue['secret'] === true) ? Runner.expr(`secrets.${buildValue['name']}`) : Runner.expr(`vars.${buildValue['name']}`),
+          value: Runner.resolveDeliveryValueExpr(buildValue),
         })),
         run: Runner.writeEnvRun(buildValues),
         runBlock: true,
@@ -1489,6 +1588,8 @@ export class Runner {
 
     // One upload-artifact step per target with declared artifact paths, in
     // target order. Container targets share the one OCI handoff appended below.
+    const artifactPreflightPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths = [];
+    const artifactUploadSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactUploadSteps = [];
 
     for (const target of targets) {
       const uploadTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget = target;
@@ -1501,8 +1602,9 @@ export class Runner {
 
       // The declared paths substitute the working directory with the leading
       // dot-slash removed, one uploaded path per block-scalar line.
-      const uploadWorkingDir: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadWorkingDir = uploadTarget['path'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
-      const uploadPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadPath = uploadArtifactPaths.map((artifactPath) => artifactPath.replace('{workingDir}', uploadWorkingDir)).join('\n');
+      const uploadWorkingDir: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadWorkingDir = (uploadTarget['path'] === './') ? '.' : uploadTarget['path'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
+      const uploadResolvedArtifactPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadResolvedArtifactPaths = uploadArtifactPaths.map((artifactPath) => artifactPath.replace('{workingDir}', uploadWorkingDir));
+      const uploadPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadPath = uploadResolvedArtifactPaths.join('\n');
       const artifactName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactName = `build-${uploadTarget['to']}-${Runner.slugifyWorkingDir(uploadTarget['path'])}`;
 
       const uploadStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep = {
@@ -1518,6 +1620,14 @@ export class Runner {
             value: 1,
           },
           {
+            key: 'include-hidden-files',
+            value: true,
+          },
+          {
+            key: 'if-no-files-found',
+            value: 'error',
+          },
+          {
             key: 'path',
             value: uploadPath,
             block: true,
@@ -1525,7 +1635,24 @@ export class Runner {
         ],
       };
 
-      steps.push(uploadStep);
+      for (const uploadResolvedArtifactPath of uploadResolvedArtifactPaths) {
+        if (artifactPreflightPaths.includes(uploadResolvedArtifactPath) === false) {
+          artifactPreflightPaths.push(uploadResolvedArtifactPath);
+        }
+      }
+
+      artifactUploadSteps.push(uploadStep);
+    }
+
+    if (artifactPreflightPaths.length > 0) {
+      steps.push(
+        Runner.buildArtifactPreflightStep(
+          'Validate build artifacts',
+          artifactPreflightPaths,
+          Runner.expr('github.workspace'),
+        ),
+        ...artifactUploadSteps,
+      );
     }
 
     if (hasContainerTarget === true) {
@@ -1559,6 +1686,7 @@ export class Runner {
         workspace: workspaces[deployTarget['path']],
         environment,
         packageManager,
+        ...((environmentSelection === undefined) ? {} : { environmentSelection }),
       };
 
       // Every buildable deploy destination gets an explicit branch. There is no
@@ -1567,16 +1695,16 @@ export class Runner {
         jobs.push(Runner.buildNpmTarget(context));
       } else if (deployTarget['to'] === 'github-packages') {
         jobs.push(Runner.buildGithubPackagesTarget(context));
-      } else if (deployTarget['to'] === 'cloudflare-pages-docusaurus') {
-        jobs.push(Runner.buildCloudflarePagesDocusaurusTarget(context));
+      } else if (deployTarget['to'] === 'cloudflare-pages') {
+        jobs.push(Runner.buildCloudflarePagesTarget(context));
       } else if (deployTarget['to'] === 'cloudflare-workers') {
         jobs.push(Runner.buildCloudflareWorkersTarget(context));
       } else if (deployTarget['to'] === 'docker-hub') {
         jobs.push(Runner.buildDockerHubTarget(context));
       } else if (deployTarget['to'] === 'ghcr') {
         jobs.push(Runner.buildGhcrTarget(context));
-      } else if (deployTarget['to'] === 'github-pages-docusaurus') {
-        jobs.push(Runner.buildGithubPagesDocusaurusTarget(context));
+      } else if (deployTarget['to'] === 'github-pages') {
+        jobs.push(Runner.buildGithubPagesTarget(context));
       } else if (deployTarget['to'] === 'github-action') {
         jobs.push(Runner.buildGithubActionTarget(context));
       } else if (deployTarget['to'] === 'vercel-nextjs') {
@@ -1613,6 +1741,236 @@ export class Runner {
       },
       env,
       jobs,
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Environment Selection Step.
+   *
+   * Selects the profile from the workflow event.
+   * Distinguishes prerelease suffixes from hyphens in project and package names.
+   * Exports both variables for every subsequent Wrangler and delivery step.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_EnvironmentSelection} environmentSelection - Environment selection.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static buildCloudflareEnvironmentSelectionStep(environmentSelection: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_EnvironmentSelection): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Returns {
+    if (environmentSelection === undefined) {
+      return undefined;
+    }
+
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Lines = [
+      'set -euo pipefail',
+      '',
+      'case "$GITHUB_EVENT_NAME" in',
+      '  workflow_dispatch)',
+      String.raw`    deploy_environment="${'$'}{MANUAL_ENVIRONMENT:-staging}"`,
+      '    ;;',
+      '  release)',
+      '    if [ "$IS_PRERELEASE" = "true" ]; then',
+      '      deploy_environment="staging"',
+      '    else',
+      '      deploy_environment="production"',
+      '    fi',
+      '    ;;',
+      '  push)',
+      '    if [[ "$GITHUB_REF_NAME" =~ [0-9]+\\.[0-9]+\\.[0-9]+-[0-9A-Za-z.-]+(\\+[0-9A-Za-z.-]+)?$ ]]; then',
+      '      deploy_environment="staging"',
+      '    else',
+      '      deploy_environment="production"',
+      '    fi',
+      '    ;;',
+      '  *)',
+      '    echo "Unable to select a deployment environment for event: $GITHUB_EVENT_NAME" >&2',
+      '    exit 1',
+      '    ;;',
+      'esac',
+      '',
+      '{',
+      '  echo "DEPLOY_ENVIRONMENT=$deploy_environment"',
+      '  echo "CLOUDFLARE_ENV=$deploy_environment"',
+      '} >> "$GITHUB_ENV"',
+      '',
+      'echo "Selected Cloudflare deployment environment: $deploy_environment"',
+    ];
+
+    return {
+      name: 'Select Cloudflare deployment environment',
+      env: [
+        {
+          key: 'MANUAL_ENVIRONMENT',
+          value: Runner.expr('inputs.environment || \'\''),
+        },
+        {
+          key: 'IS_PRERELEASE',
+          value: Runner.expr('github.event.release.prerelease || false'),
+        },
+      ],
+      run: lines.join('\n'),
+      runBlock: true,
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Environment Preflight.
+   *
+   * Builds a preflight for environment-aware Workers workflows.
+   * Validates every Wrangler profile and selected GitHub value before deployment.
+   * Stops all targets together when validation fails.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Entry}          entry          - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Environment}    environment    - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_PackageManager} packageManager - Package manager.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static buildCloudflareEnvironmentPreflight(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Entry, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Environment, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Returns {
+    if (entry['environmentSelection'] === undefined) {
+      return undefined;
+    }
+
+    const requiredValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValues = [];
+    const seenValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_SeenValues = new Set();
+    const targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Targets = entry['deploy'] ?? [];
+    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_WorkflowSettings = entry['with'];
+
+    for (const scope of entry['build'] ?? []) {
+      const buildValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildValues = Runner.appBuildValues(environment, scope, true);
+
+      for (const buildValue of buildValues) {
+        if (buildValue['defaultValue'] !== undefined) {
+          continue;
+        }
+
+        const buildExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildExpression = Runner.resolveDeliveryValueExpr(buildValue);
+
+        if (seenValues.has(buildExpression) === true) {
+          continue;
+        }
+
+        seenValues.add(buildExpression);
+
+        requiredValues.push({
+          label: `${scope}:${buildValue['key']}`,
+          value: buildExpression,
+        });
+      }
+    }
+
+    for (const target of targets) {
+      const runtimeTargetPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeTargetPath = target['path'];
+      const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeValues = Runner.appRuntimeValues(environment, runtimeTargetPath, true);
+
+      for (const runtimeValue of runtimeValues) {
+        if (runtimeValue['defaultValue'] !== undefined) {
+          continue;
+        }
+
+        const runtimeExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeExpression = Runner.resolveDeliveryValueExpr(runtimeValue);
+
+        if (seenValues.has(runtimeExpression) === true) {
+          continue;
+        }
+
+        seenValues.add(runtimeExpression);
+
+        requiredValues.push({
+          label: `${runtimeTargetPath}:${runtimeValue['key']}`,
+          value: runtimeExpression,
+        });
+      }
+
+      const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Metadata = Variables.getTargetMetadata('publish', 'cloudflare-workers');
+      const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Variables = (metadata === undefined) ? {} : metadata['variables'];
+      const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSettings = target['with'];
+
+      for (const variableEntry of Object.entries(variables)) {
+        const variableName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableName = variableEntry[0];
+        const variableMeta: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableMeta = variableEntry[1];
+
+        if (
+          variableMeta['auto'] === true
+          || variableMeta['format'] === 'literal'
+          || variableMeta['optional'] === true
+        ) {
+          continue;
+        }
+
+        const credentialExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_CredentialExpression = Runner.resolveScopedCredExpr(variables, variableName, targetSettings, workflowSettings, environment, runtimeTargetPath, true);
+
+        if (seenValues.has(credentialExpression) === true) {
+          continue;
+        }
+
+        seenValues.add(credentialExpression);
+
+        requiredValues.push({
+          label: `${runtimeTargetPath}:${variableName}`,
+          value: credentialExpression,
+        });
+      }
+    }
+
+    const env: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Env = [];
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Lines = [
+      'set -euo pipefail',
+      '',
+      'if [ "$PUBLISH" = "true" ]; then',
+      '  missing=0',
+    ];
+    let index: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Index = 0;
+
+    for (const requiredValueEntry of requiredValues) {
+      const requiredValue: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValue = requiredValueEntry;
+
+      index += 1;
+
+      const envKey: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_EnvKey = `NOVA_REQUIRED_${index}`;
+      const labelKey: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_LabelKey = `NOVA_REQUIRED_LABEL_${index}`;
+
+      env.push({
+        key: envKey,
+        value: requiredValue['value'],
+      });
+      env.push({
+        key: labelKey,
+        value: requiredValue['label'],
+      });
+
+      lines.push(`  if [ -z "\${${envKey}:-}" ]; then`);
+      lines.push(`    echo "::error::Missing selected deployment value: \$${labelKey}"`);
+      lines.push('    missing=1');
+      lines.push('  fi');
+    }
+
+    lines.push('  if [ "$missing" -ne 0 ]; then');
+    lines.push('    exit 1');
+    lines.push('  fi');
+    lines.push('fi');
+    lines.push('');
+    lines.push('echo "Validating Cloudflare environment: $CLOUDFLARE_ENV"');
+
+    for (const target of targets) {
+      const validationTargetPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_ValidationTargetPath = target['path'];
+      const targetSlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSlug = Runner.slugifyWorkingDir(validationTargetPath);
+
+      lines.push(`(cd ${shellQuote(validationTargetPath)} && ${Runner.corepackExecuteCommand(packageManager, 'wrangler')} types "$RUNNER_TEMP/nova-wrangler-${targetSlug}.d.ts" --env "$CLOUDFLARE_ENV")`);
+    }
+
+    return {
+      name: 'Validate Cloudflare deployment environment',
+      env,
+      run: lines.join('\n'),
+      runBlock: true,
     };
   }
 
@@ -1905,27 +2263,27 @@ export class Runner {
   }
 
   /**
-   * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Pages Docusaurus Target.
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Pages Target.
    *
    * Returns the Cloudflare Pages deploy job that downloads the target
-   * artifact and deploys the built Docusaurus site with wrangler.
+   * artifact and deploys the built static site with wrangler.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Context} context - Context.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Context} context - Context.
    *
-   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Returns}
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Returns}
    *
    * @since 0.21.0
    */
-  public static buildCloudflarePagesDocusaurusTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Returns {
-    const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_TargetSettings = context['targetSettings'];
-    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_WorkflowSettings = context['workflowSettings'];
-    const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Metadata = Variables.getTargetMetadata('publish', 'cloudflare-pages-docusaurus');
-    const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
-    const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Environment = context['environment'];
-    const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_AppPath = context['workingDir'];
+  public static buildCloudflarePagesTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Returns {
+    const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_TargetSettings = context['targetSettings'];
+    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_WorkflowSettings = context['workflowSettings'];
+    const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Metadata = Variables.getTargetMetadata('publish', 'cloudflare-pages');
+    const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
+    const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Environment = context['environment'];
+    const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_AppPath = context['workingDir'];
 
     return {
-      id: `publish-cloudflare-pages-docusaurus-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      id: `publish-cloudflare-pages-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
       timeoutMinutes: 10,
@@ -1951,10 +2309,10 @@ export class Runner {
             },
           ],
         },
-        {
-          name: 'Enable Corepack',
-          run: `corepack enable ${context['packageManager']}`,
-        },
+        ...((context['packageManager'] === 'npm') ? [] : [{
+          name: 'Install Corepack',
+          run: Runner.corepackBootstrapRun(context['packageManager']),
+        }]),
         {
           name: 'Download build artifacts',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
@@ -2014,17 +2372,19 @@ export class Runner {
     const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Metadata = Variables.getTargetMetadata('publish', 'cloudflare-workers');
     const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment = context['environment'];
+    const environmentSelection: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelection = context['environmentSelection'];
+    const profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_ProfileAware = environmentSelection !== undefined;
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = context['workingDir'];
-    const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Runner.appRuntimeValues(environment, appPath);
+    const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Runner.appRuntimeValues(environment, appPath, profileAware);
 
     const deployEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv = [
       {
         key: 'CLOUDFLARE_API_TOKEN',
-        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
+        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath, profileAware),
       },
       {
         key: 'CLOUDFLARE_ACCOUNT_ID',
-        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
+        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath, profileAware),
       },
     ];
 
@@ -2076,6 +2436,11 @@ export class Runner {
         workingDirectory: context['workingDir'],
       },
     ];
+    const environmentSelectionStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelectionStep = Runner.buildCloudflareEnvironmentSelectionStep(environmentSelection);
+
+    if (environmentSelectionStep !== undefined) {
+      steps.splice(1, 0, environmentSelectionStep);
+    }
 
     // Runtime values sync via a separate step: secrets through wrangler
     // secret bulk, non-secret vars through a direct wrangler deploy --var.
@@ -2089,11 +2454,11 @@ export class Runner {
       extraEnv: [
         {
           key: 'CLOUDFLARE_API_TOKEN',
-          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
+          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath, profileAware),
         },
         {
           key: 'CLOUDFLARE_ACCOUNT_ID',
-          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
+          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath, profileAware),
         },
       ],
     });
@@ -2210,26 +2575,26 @@ export class Runner {
   }
 
   /**
-   * CLI - Generate - GitHub - Workflows Blueprint - Build GitHub Pages Docusaurus Target.
+   * CLI - Generate - GitHub - Workflows Blueprint - Build GitHub Pages Target.
    *
    * Returns the GitHub Pages deploy job that downloads the target artifact,
-   * checks that Pages is enabled, then deploys the built Docusaurus site.
+   * checks that Pages is enabled, then deploys the built static site.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Context} context - Context.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Context} context - Context.
    *
-   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Returns}
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Returns}
    *
    * @since 0.21.0
    */
-  public static buildGithubPagesDocusaurusTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Returns {
-    const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_TargetSettings = context['targetSettings'];
-    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_WorkflowSettings = context['workflowSettings'];
-    const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Metadata = Variables.getTargetMetadata('publish', 'github-pages-docusaurus');
-    const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
+  public static buildGithubPagesTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Returns {
+    const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_TargetSettings = context['targetSettings'];
+    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_WorkflowSettings = context['workflowSettings'];
+    const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Metadata = Variables.getTargetMetadata('publish', 'github-pages');
+    const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
 
     // Probe the repository's Pages status so every deploy step can skip
     // cleanly when GitHub Pages has not been enabled for the repository.
-    const pagesStatusRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_PagesStatusRun = [
+    const pagesStatusRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_PagesStatusRun = [
       `if gh api "repos/${Runner.expr('github.repository')}/pages" > /dev/null 2>&1; then`,
       '  echo "[Pages] GitHub Pages is enabled."',
       '  echo "PAGES_ENABLED=true" >> "$GITHUB_ENV"',
@@ -2240,7 +2605,7 @@ export class Runner {
     ].join('\n');
 
     return {
-      id: `publish-github-pages-docusaurus-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      id: `publish-github-pages-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
       timeoutMinutes: 10,
@@ -2671,6 +3036,126 @@ export class Runner {
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Artifact Preflight Step.
+   *
+   * Validates declared artifact roots before upload, including file presence,
+   * sensitive hidden paths, and symlinks that escape their artifact root.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Name}          name          - Name.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_ArtifactPaths} artifactPaths - Artifact paths.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_AllowedRoot}   allowedRoot   - Allowed root.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static buildArtifactPreflightStep(name: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Name, artifactPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_ArtifactPaths, allowedRoot: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_AllowedRoot): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Returns {
+    const rootLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_RootLines = artifactPaths.map((artifactPath) => `validate_artifact_root ${shellQuote(artifactPath)}`);
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Lines = [
+      'set -euo pipefail',
+      '',
+      `ALLOWED_ROOT="${allowedRoot}"`,
+      'ALLOWED_ROOT="$(realpath "$ALLOWED_ROOT")"',
+      'cd "$ALLOWED_ROOT"',
+      '',
+      'validate_artifact_root() {',
+      '  local artifact_root="$1"',
+      '  local candidate',
+      '  local candidate_parent',
+      '  local first_file',
+      '  local relative_candidate',
+      '  local resolved_candidate',
+      '  local resolved_root',
+      '',
+      '  if [ ! -e "$artifact_root" ] && [ ! -L "$artifact_root" ]; then',
+      '    echo "Artifact root does not exist: $artifact_root" >&2',
+      '    exit 1',
+      '  fi',
+      '',
+      '  if ! resolved_root="$(realpath "$artifact_root")"; then',
+      '    echo "Artifact root cannot be resolved: $artifact_root" >&2',
+      '    exit 1',
+      '  fi',
+      '',
+      '  case "$resolved_root" in',
+      '    "$ALLOWED_ROOT"|"$ALLOWED_ROOT"/*) ;;',
+      '    *)',
+      '      echo "Artifact root escapes its allowed boundary: $artifact_root -> $resolved_root" >&2',
+      '      exit 1',
+      '      ;;',
+      '  esac',
+      '',
+      '  while IFS= read -r -d \'\' candidate; do',
+      '    if ! resolved_candidate="$(realpath "$candidate")"; then',
+      '      echo "Artifact contains a broken symlink: $candidate" >&2',
+      '      exit 1',
+      '    fi',
+      '',
+      '    case "$resolved_candidate" in',
+      '      "$resolved_root"|"$resolved_root"/*) ;;',
+      '      *)',
+      '        echo "Artifact symlink escapes its root: $candidate -> $resolved_candidate" >&2',
+      '        exit 1',
+      '        ;;',
+      '    esac',
+      '',
+      '    candidate_parent="$(realpath "$(dirname "$candidate")")"',
+      '',
+      '    case "$candidate_parent/" in',
+      '      "$resolved_candidate"/*)',
+      '        echo "Artifact contains a recursive symlink: $candidate -> $resolved_candidate" >&2',
+      '        exit 1',
+      '        ;;',
+      '    esac',
+      '  done < <(find -H "$artifact_root" -type l -print0)',
+      '',
+      '  while IFS= read -r -d \'\' candidate; do',
+      '    if [ "$candidate" = "$artifact_root" ]; then',
+      '      relative_candidate="$(basename "$candidate")"',
+      '    else',
+      [
+        '      relative_candidate="',
+        '$',
+        '{candidate#"$artifact_root"/}"',
+      ].join(''),
+      '    fi',
+      '',
+      '    case "/$relative_candidate" in',
+      '      */.env|*/.env.*|*/.npmrc|*/.netrc|*/.ssh|*/.ssh/*|*/.aws|*/.aws/*|*/.git|*/.git/*)',
+      '        echo "Artifact contains a sensitive hidden path: $candidate" >&2',
+      '        exit 1',
+      '        ;;',
+      '    esac',
+      '  done < <(find -H "$artifact_root" -print0)',
+      '',
+      '  if [ -d "$artifact_root" ]; then',
+      '    if ! first_file="$(find -L "$artifact_root" -type f -print -quit)"; then',
+      '      echo "Artifact root could not be traversed safely: $artifact_root" >&2',
+      '      exit 1',
+      '    fi',
+      '  else',
+      '    first_file="$resolved_root"',
+      '  fi',
+      '',
+      '  if [ -z "$first_file" ]; then',
+      '    echo "Artifact root contains no files: $artifact_root" >&2',
+      '    exit 1',
+      '  fi',
+      '}',
+      '',
+      ...rootLines,
+    ];
+
+    return {
+      name,
+      run: lines.join('\n'),
+      runBlock: true,
+    };
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Container Artifact Steps.
    *
    * Builds the repository-root Dockerfile once for every selected platform,
@@ -2739,6 +3224,11 @@ export class Runner {
         name: 'Record OCI digest',
         run: `printf '%s' '${Runner.expr('steps.build-oci.outputs.digest')}' > "$RUNNER_TEMP/container-oci/container-image.digest"`,
       },
+      Runner.buildArtifactPreflightStep(
+        'Validate immutable OCI artifact',
+        ['container-oci'],
+        Runner.expr('runner.temp'),
+      ),
       {
         name: 'Upload immutable OCI artifact',
         uses: getScaffoldVersion('workflowActionUploadArtifact'),
@@ -2750,6 +3240,14 @@ export class Runner {
           {
             key: 'retention-days',
             value: 1,
+          },
+          {
+            key: 'include-hidden-files',
+            value: true,
+          },
+          {
+            key: 'if-no-files-found',
+            value: 'error',
           },
           {
             key: 'path',
@@ -3223,6 +3721,29 @@ export class Runner {
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Corepack Bootstrap Run.
+   *
+   * Installs Nova's tested Corepack release before enabling pnpm or Yarn.
+   * Generated runners stay independent of Node.js bundling changes.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_PackageManager} packageManager - Package manager.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static corepackBootstrapRun(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_Returns {
+    const corepackVersion: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_CorepackVersion = getScaffoldVersion('corepack');
+
+    return [
+      `npm install --global corepack@${corepackVersion}`,
+      `corepack enable ${packageManager}`,
+    ].join('\n');
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows Blueprint - Corepack Download Command.
    *
    * Returns a one-off package download command through the selected
@@ -3280,8 +3801,8 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Install Packages Run.
    *
-   * Enables the selected Corepack client and installs project dependencies.
-   * Corepack reads the exact client version from the root package descriptor.
+   * Installs npm projects directly. pnpm and Yarn projects first install Nova's
+   * pinned Corepack release, then enable the exact client from the root package descriptor.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager} packageManager - Package manager.
    *
@@ -3292,8 +3813,12 @@ export class Runner {
    * @since 0.26.0
    */
   private static installPackagesRun(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns {
+    if (packageManager === 'npm') {
+      return 'npm install';
+    }
+
     return [
-      `corepack enable ${packageManager}`,
+      Runner.corepackBootstrapRun(packageManager),
       `${packageManager} install`,
     ].join('\n');
   }
@@ -3538,7 +4063,7 @@ export class Runner {
       ...extraEnv,
       ...runtimeValues.map((value) => ({
         key: value['key'],
-        value: (value['secret'] === true) ? Runner.expr(`secrets.${value['name']}`) : Runner.expr(`vars.${value['name']}`),
+        value: Runner.resolveDeliveryValueExpr(value),
       })),
     ];
 
@@ -3638,7 +4163,7 @@ export class Runner {
    *
    * @since 0.21.0
    */
-  public static appBuildValues(environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath): Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns {
+  public static appBuildValues(environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath, profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_ProfileAware = false): Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns {
     const results: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Results = [];
 
     if (environment === undefined) {
@@ -3670,6 +4195,11 @@ export class Runner {
         secret: variable['secret'],
       };
 
+      if (profileAware === true) {
+        buildValue.stagingName = libEnvNamespace.githubProfileName(prefix, 'staging', variable['key']);
+        buildValue.productionName = libEnvNamespace.githubProfileName(prefix, 'production', variable['key']);
+      }
+
       // A non-secret build value carries its declared default so the CI write can
       // fall back to it when the GitHub Variable is unset (spec 5.4).
       if (variable['defaultValue'] !== undefined) {
@@ -3696,7 +4226,7 @@ export class Runner {
    *
    * @since 0.21.0
    */
-  public static appRuntimeValues(environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_AppPath): Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Returns {
+  public static appRuntimeValues(environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_AppPath, profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_ProfileAware = false): Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Returns {
     const results: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Results = [];
 
     if (environment === undefined) {
@@ -3722,11 +4252,22 @@ export class Runner {
         continue;
       }
 
-      results.push({
+      const runtimeValue: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_RuntimeValue = {
         key: variable['key'],
         name: libEnvNamespace.githubName(prefix, variable['key']),
         secret: variable['secret'],
-      });
+      };
+
+      if (profileAware === true) {
+        runtimeValue.stagingName = libEnvNamespace.githubProfileName(prefix, 'staging', variable['key']);
+        runtimeValue.productionName = libEnvNamespace.githubProfileName(prefix, 'production', variable['key']);
+      }
+
+      if (variable['defaultValue'] !== undefined) {
+        runtimeValue.defaultValue = variable['defaultValue'];
+      }
+
+      results.push(runtimeValue);
     }
 
     return results;
@@ -4040,6 +4581,14 @@ export class Runner {
           lines.push(`        type: ${Runner.quote(input['type'])}`);
 
           lines.push(`        default: ${Runner.serializeScalar(input['default'])}`);
+
+          if (input['options'] !== undefined) {
+            lines.push('        options:');
+
+            for (const option of input['options']) {
+              lines.push(`          - ${Runner.quote(option)}`);
+            }
+          }
         }
       }
     }
@@ -4463,6 +5012,31 @@ export class Runner {
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Delivery Value Expr.
+   *
+   * Resolves a declared delivery value from its GitHub Variable or Secret. A
+   * profile-aware value selects the isolated staging or production name from
+   * DEPLOY_ENVIRONMENT; an original-mode value keeps its existing name.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static resolveDeliveryValueExpr(value: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Value): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns {
+    const namespace: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Namespace = (value['secret'] === true) ? 'secrets' : 'vars';
+
+    if (value['stagingName'] !== undefined && value['productionName'] !== undefined) {
+      return Runner.expr(`env.DEPLOY_ENVIRONMENT == 'staging' && ${namespace}.${value['stagingName']} || ${namespace}.${value['productionName']}`);
+    }
+
+    return Runner.expr(`${namespace}.${value['name']}`);
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows Blueprint - Resolve Scoped Cred Expr.
    *
    * Resolves a deploy-credential variable to its GitHub expression, choosing
@@ -4482,7 +5056,7 @@ export class Runner {
    *
    * @since 0.21.0
    */
-  private static resolveScopedCredExpr(variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Variables, variableName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_VariableName, targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_TargetSettings, workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkflowSettings, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPath): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Returns {
+  private static resolveScopedCredExpr(variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Variables, variableName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_VariableName, targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_TargetSettings, workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkflowSettings, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Environment, appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPath, profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProfileAware = false): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Returns {
     const variableMeta: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_VariableMeta = variables[variableName] ?? { format: 'literal' };
     const scope: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Scope = variableMeta['scope'];
     let prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix = undefined;
@@ -4504,7 +5078,47 @@ export class Runner {
       }
     }
 
+    if (profileAware === true) {
+      return Runner.resolveProfiledVariableExpr(variables, variableName, targetSettings, workflowSettings, prefix);
+    }
+
     return Runner.resolveVariableExpr(variables, variableName, targetSettings, workflowSettings, prefix);
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Profiled Variable Expr.
+   *
+   * Resolves a scoped workflow credential from isolated staging or production
+   * GitHub storage while preserving automatic and literal resolver behavior.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Variables}        variables        - Variables.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableName}     variableName     - Variable name.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_TargetSettings}   targetSettings   - Target settings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_WorkflowSettings} workflowSettings - Workflow settings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Prefix}           prefix           - Prefix.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Returns}
+   *
+   * @since 0.36.0
+   */
+  private static resolveProfiledVariableExpr(variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Variables, variableName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableName, targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_TargetSettings, workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_WorkflowSettings, prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Prefix): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Returns {
+    const variableMeta: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableMeta = variables[variableName] ?? { format: 'literal' };
+    const isPrefixable: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_IsPrefixable = prefix !== undefined
+      && prefix !== ''
+      && variableMeta['auto'] !== true
+      && variableMeta['format'] !== 'literal';
+
+    if (isPrefixable === false || prefix === undefined) {
+      return Runner.resolveVariableExpr(variables, variableName, targetSettings, workflowSettings, prefix);
+    }
+
+    const stagingName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_StagingName = libEnvNamespace.githubProfileName(prefix, 'staging', variableName);
+    const productionName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_ProductionName = libEnvNamespace.githubProfileName(prefix, 'production', variableName);
+    const namespace: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Namespace = (variableMeta['format'] === 'secret') ? 'secrets' : 'vars';
+
+    return Runner.expr(`env.DEPLOY_ENVIRONMENT == 'staging' && ${namespace}.${stagingName} || ${namespace}.${productionName}`);
   }
 
   /**

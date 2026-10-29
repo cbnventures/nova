@@ -1,4 +1,5 @@
 import type { Dirent } from 'node:fs';
+import type { FileHandle } from 'node:fs/promises';
 
 import type { PromptObject } from 'prompts';
 
@@ -209,6 +210,8 @@ export type Cli_Utility_Changelog_Runner_Release_Entries = Shared_ChangelogEntry
 export type Cli_Utility_Changelog_Runner_Release_Config = Shared_NovaConfigConfig;
 
 export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Utility_Changelog_Runner_Release_WorkspaceDirectories = string[];
 
 export type Cli_Utility_Changelog_Runner_Release_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
@@ -473,21 +476,25 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory = stri
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion = string;
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceDirectories = string[];
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_Returns = Promise<boolean>;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = boolean;
-
-export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = string[];
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = string[];
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions = string[];
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries = Dirent[];
+export type Cli_Utility_Changelog_Runner_StampUnreleased_LanguageSincePatterns = Record<string, RegExp>;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath = string;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_NestedWorkspaceDirectories = Set<string>;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = string;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SkipDirectories = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedRootDirectories = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedNestedDirectories = Set<string>;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = string[];
 
@@ -495,25 +502,51 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory = stri
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries = Dirent[];
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasEmbeddedRepository = boolean;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_DiscoveredExtension = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CandidateFileHandle = FileHandle;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePrefix = Buffer;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CandidateBytesRead = number;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = unknown;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = unknown;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorMessage = string;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = RegExp;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern = RegExp;
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_InlineSincePattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_InlineDeprecatedPattern = RegExp;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_Fp = string;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StampExtension = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSincePattern = RegExp | undefined;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = boolean;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = boolean;
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineSince = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineDeprecated = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasLanguageSince = boolean;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSinceReplacePattern = RegExp;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_StampError = unknown;
 
@@ -525,9 +558,19 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = string;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = string;
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckExtension = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckLanguageSincePattern = RegExp | undefined;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = boolean;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineSince = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineDeprecated = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasLanguageSince = boolean;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckError = unknown;
 

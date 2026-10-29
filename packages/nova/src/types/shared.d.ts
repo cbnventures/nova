@@ -550,12 +550,15 @@ export type Shared_BlueprintDispatchInput_Type = string;
 
 export type Shared_BlueprintDispatchInput_Default = boolean | string;
 
+export type Shared_BlueprintDispatchInput_Options = string[];
+
 export type Shared_BlueprintDispatchInput = {
   name: Shared_BlueprintDispatchInput_Name;
   description: Shared_BlueprintDispatchInput_Description;
   required: Shared_BlueprintDispatchInput_Required;
   type: Shared_BlueprintDispatchInput_Type;
   default: Shared_BlueprintDispatchInput_Default;
+  options?: Shared_BlueprintDispatchInput_Options;
 };
 
 export type Shared_BlueprintDispatchInputs = Shared_BlueprintDispatchInput[];
@@ -1367,6 +1370,24 @@ export type Shared_NovaConfigWorkflow_RunsOn = 'ubuntu-latest';
 
 export type Shared_NovaConfigWorkflow_TimeoutMinutes = number;
 
+export type Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags_Prerelease = 'staging';
+
+export type Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags_Stable = 'production';
+
+export type Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags = {
+  prerelease: Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags_Prerelease;
+  stable: Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags_Stable;
+};
+
+export type Shared_NovaConfigWorkflowEnvironmentSelection_VersionTags = Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags;
+
+export type Shared_NovaConfigWorkflowEnvironmentSelection_Manual = boolean;
+
+export type Shared_NovaConfigWorkflowEnvironmentSelection = {
+  versionTags: Shared_NovaConfigWorkflowEnvironmentSelection_VersionTags;
+  manual: Shared_NovaConfigWorkflowEnvironmentSelection_Manual;
+};
+
 export type Shared_NovaConfigWorkflowContainerPlatform = 'linux/amd64' | 'linux/arm64';
 
 export type Shared_NovaConfigWorkflow_ContainerPlatforms = Shared_NovaConfigWorkflowContainerPlatform[];
@@ -1410,6 +1431,7 @@ export type Shared_NovaConfigWorkflow = {
   'triggers': Shared_NovaConfigWorkflow_Triggers;
   'runsOn'?: Shared_NovaConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_NovaConfigWorkflow_TimeoutMinutes;
+  'environmentSelection'?: Shared_NovaConfigWorkflowEnvironmentSelection;
   'containerPlatforms'?: Shared_NovaConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_NovaConfigWorkflow_Build;
   'deploy'?: Shared_NovaConfigWorkflow_Deploy;
@@ -1549,6 +1571,8 @@ export type Shared_BlueprintConfigWorkflow_RunsOn = Shared_NovaConfigWorkflow_Ru
 
 export type Shared_BlueprintConfigWorkflow_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes;
 
+export type Shared_BlueprintConfigWorkflow_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection;
+
 export type Shared_BlueprintConfigWorkflow_ContainerPlatforms = Shared_NovaConfigWorkflow_ContainerPlatforms;
 
 export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Build;
@@ -1578,6 +1602,7 @@ export type Shared_BlueprintConfigWorkflow = {
   'triggers': Shared_BlueprintConfigWorkflow_Triggers;
   'runsOn'?: Shared_BlueprintConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_BlueprintConfigWorkflow_TimeoutMinutes;
+  'environmentSelection'?: Shared_BlueprintConfigWorkflow_EnvironmentSelection;
   'containerPlatforms'?: Shared_BlueprintConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_BlueprintConfigWorkflow_Build;
   'deploy'?: Shared_BlueprintConfigWorkflow_Deploy;
@@ -1625,6 +1650,8 @@ export type Shared_BlueprintPublishTargetContext_Environment = Shared_NovaConfig
 
 export type Shared_BlueprintPublishTargetContext_PackageManager = Shared_CorepackPackageManager;
 
+export type Shared_BlueprintPublishTargetContext_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
+
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
   artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
@@ -1634,6 +1661,7 @@ export type Shared_BlueprintPublishTargetContext = {
   workspace?: Shared_BlueprintPublishTargetContext_Workspace;
   environment?: Shared_BlueprintPublishTargetContext_Environment;
   packageManager: Shared_BlueprintPublishTargetContext_PackageManager;
+  environmentSelection?: Shared_BlueprintPublishTargetContext_EnvironmentSelection;
 };
 
 /**
@@ -1697,11 +1725,17 @@ export type Shared_BlueprintDeliveryValue_Secret = boolean;
 
 export type Shared_BlueprintDeliveryValue_DefaultValue = string;
 
+export type Shared_BlueprintDeliveryValue_StagingName = string;
+
+export type Shared_BlueprintDeliveryValue_ProductionName = string;
+
 export type Shared_BlueprintDeliveryValue = {
   key: Shared_BlueprintDeliveryValue_Key;
   name: Shared_BlueprintDeliveryValue_Name;
   secret: Shared_BlueprintDeliveryValue_Secret;
   defaultValue?: Shared_BlueprintDeliveryValue_DefaultValue;
+  stagingName?: Shared_BlueprintDeliveryValue_StagingName;
+  productionName?: Shared_BlueprintDeliveryValue_ProductionName;
 };
 
 export type Shared_BlueprintDeliveryValues = Shared_BlueprintDeliveryValue[];
@@ -1712,6 +1746,18 @@ export type Shared_BlueprintDeliveryValues = Shared_BlueprintDeliveryValue[];
  * @since 0.21.0
  */
 export type Shared_NovaConfigEnvironmentValue_Key = string;
+
+export type Shared_NovaConfigEnvironmentProfile = 'development' | 'staging' | 'production';
+
+export type Shared_NovaConfigEnvironmentDeployProfile = 'staging' | 'production';
+
+export type Shared_NovaConfigEnvironmentProfiles_Enabled = boolean;
+
+export type Shared_NovaConfigEnvironmentProfiles = {
+  enabled: Shared_NovaConfigEnvironmentProfiles_Enabled;
+};
+
+export type Shared_NovaConfigEnvironment_Profiles = Shared_NovaConfigEnvironmentProfiles;
 
 export type Shared_NovaConfigEnvironmentValue_Secret = boolean;
 
@@ -1850,6 +1896,7 @@ export type Shared_NovaConfigEnvironment_Workflows = {
 };
 
 export type Shared_NovaConfigEnvironment = {
+  profiles?: Shared_NovaConfigEnvironment_Profiles;
   project?: Shared_NovaConfigEnvironment_Project;
   workspaces?: Shared_NovaConfigEnvironment_Workspaces;
   workflows?: Shared_NovaConfigEnvironment_Workflows;

@@ -209,7 +209,7 @@ export class Runner {
       projectFinalizer: async (workspaceDirectory, workspaceName, configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
           await LibDockerPackaging.generateForTarget({
-            buildDirectory: 'dist',
+            buildDirectory: 'build',
             profile: 'static-site',
             projectDirectory: configRoot,
             reportFiles: false,

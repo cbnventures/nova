@@ -131,6 +131,7 @@ describe('CliGenerateMustHavesIgnoreFiles.run', () => {
     ok(dockerignoreCall[1].includes('**/.env'));
     ok(dockerignoreCall[1].includes('**/.env.*'));
     ok(dockerignoreCall[1].includes('!**/.env.sample'));
+    ok(dockerignoreCall[1].includes('!**/.env.*.sample'));
     ok(dockerignoreCall[1].includes('!**/.env.example'));
     ok(dockerignoreCall[1].includes('**/.secrets'));
     ok(dockerignoreCall[1].includes('**/build'));

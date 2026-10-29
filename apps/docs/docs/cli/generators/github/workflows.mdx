@@ -84,7 +84,7 @@ The project root's `packageManager` field selects how generated `publish` workfl
 | `pnpm@<exact-version>` | `pnpm install` | `pnpm exec <tool>` | `pnpm run <script>` |
 | `yarn@<exact-version>` | `yarn install` | `yarn exec <tool>` | `yarn run <script>` |
 
-Each install job first runs `corepack enable <client>`. Corepack then reads the full descriptor from the checked-out root `package.json`, so the workflow uses the pinned version instead of installing a floating `latest` release. Root scripts that orchestrate workspaces share the client-independent command `nova utility run-workspaces <script>`. Nova reads the workspace graph from `nova.config.json` and executes each child through the pinned client.
+For npm, the workflow uses the client bundled with Node.js directly. For pnpm and Yarn, each install job first installs Nova's pinned Corepack release and enables the selected client. Corepack then reads the full descriptor from the checked-out root `package.json`, so the workflow uses the pinned package-manager version instead of a floating `latest` release. This explicit bootstrap keeps Node.js 26 and later frictionless even though Node.js no longer bundles Corepack. Root scripts that orchestrate workspaces share the client-independent command `nova utility run-workspaces <script>`. Nova reads the workspace graph from `nova.config.json` and executes each child through the pinned client.
 
 This selection governs project tooling; it does not rename deploy destinations. The `npm` and `github-packages` targets still use the npm publishing protocol and commands even when pnpm or Yarn manages the repository.
 
@@ -203,7 +203,7 @@ The `preset` destination waits for `core` to finish publishing before it starts,
       "path": "./packages/sdk"
     },
     {
-      "to": "cloudflare-pages-docusaurus",
+      "to": "cloudflare-pages",
       "path": "./apps/docs"
     }
   ]
@@ -211,6 +211,10 @@ The `preset` destination waits for `core` to finish publishing before it starts,
 ```
 
 Each destination becomes its own publish job. Jobs run in parallel off a shared `build` job, except where `after` declares an explicit ordering.
+
+Before the build job hands files to GitHub, Nova validates every declared artifact root. Missing or empty roots, sensitive hidden paths such as `.env` and `.npmrc`, broken symlinks, and symlinks that escape their artifact root fail the job. Valid deployment files such as `.well-known/`, `.assetsignore`, `.nojekyll`, `.gitignore`, and `.gitattributes` remain included in the uploaded artifact.
+
+The `cloudflare-pages` and `github-pages` targets are framework-neutral. They deploy the static files produced in a workspace's `build/` directory, whether the workspace uses Docusaurus, Astro, Vite, or another static-site framework.
 
 ### Publishing Container Images
 
@@ -288,17 +292,17 @@ The remaining values are `var`-format, not `literal` - they resolve to `${{ vars
 
 The `publish` template supports the following `to` values for each entry in `deploy`. Each type declares its own secrets and variables.
 
-| `to` value                    | Description                                               | Secrets / Variables                                                                                                                                                                                                               |
-|-------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `npm`                         | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                   |
-| `github-action`               | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)). |
-| `github-packages`             | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
-| `docker-hub`                  | Publish the repository image to Docker Hub                | `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` (`literal`) name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate the push only.                                                                    |
-| `ghcr`                        | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                         |
-| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages              | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.           |
-| `cloudflare-workers`          | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                            |
-| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages                  | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
-| `vercel-nextjs`               | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                       |
+| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                               |
+|----------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                   |
+| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)). |
+| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
+| `docker-hub`         | Publish the repository image to Docker Hub                | `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` (`literal`) name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate the push only.                                                                    |
+| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                         |
+| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.           |
+| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                            |
+| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
+| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                       |
 
 ### Available Triggers
 
@@ -413,6 +417,54 @@ A build value exists only while the build runs on the <Terminology title="contin
 A runtime value is reconciled into a running server's environment and read by reference (`env.X` or `process.env.X`). A managed value is tracked locally and on GitHub but is intentionally delivered to neither destination.
 
 Every GitHub name is the workspace's `prefix` joined to the `key` (e.g. `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
+
+### Deployment Environment Selection
+
+Environment profiles are optional. If [`environment.profiles`](/docs/quickstart/nova-config#environment-profiles) is not enabled, Nova treats the project as being in **implicit development mode**: local commands use `.env`, generated publish workflows keep their original environment-agnostic behavior, and `.env.development` is not used.
+
+When profiles are enabled, local commands use the explicit `development` profile. A Cloudflare Workers publish workflow can additionally select `staging` for prerelease tags or manual staging runs and `production` for stable tags or manual production runs. The selected profile is isolated: Nova never falls back from staging to production, from production to staging, or to an unselected profile when a required value is missing.
+
+Configure the selection on a dedicated Cloudflare Workers publish workflow:
+
+```json
+{
+  "workflows": [
+    {
+      "template": "publish",
+      "name": "workers",
+      "triggers": [
+        "release",
+        "tag-push"
+      ],
+      "environmentSelection": {
+        "versionTags": {
+          "prerelease": "staging",
+          "stable": "production"
+        },
+        "manual": true
+      },
+      "build": [
+        "./apps/workers"
+      ],
+      "deploy": [
+        {
+          "to": "cloudflare-workers",
+          "path": "./apps/workers"
+        }
+      ]
+    }
+  ]
+}
+```
+
+| Invocation                          | Selected profile     | Associated dotenv file |
+|-------------------------------------|----------------------|------------------------|
+| Profiles are not configured         | Implicit development | `.env`                 |
+| Local command with profiles enabled | `development`        | `.env.development`     |
+| Prerelease tag or manual selection  | `staging`            | `.env.staging`         |
+| Stable tag or manual selection      | `production`         | `.env.production`      |
+
+The generated workflow sets `CLOUDFLARE_ENV` for Wrangler and validates every Workers target before any project check or build begins. Missing profile-specific GitHub variables or secrets fail that preflight; Nova does not reuse values from another profile.
 
 ### Build Delivery
 
@@ -667,16 +719,16 @@ Each action gets its own publish workflow with a distinct `RELEASE_BRANCH_NAME`,
 
 Consumers reference each action via its prefixed tag: `uses: owner/repo@primary-v1`, `uses: owner/repo@secondary-v1`.
 
-Similarly, only one `github-pages-docusaurus` destination may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
+Similarly, only one `github-pages` destination may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
 
 The same cross-workflow uniqueness check applies to these other publish targets:
 
-| Target                        | Uniqueness check                                                               |
-|-------------------------------|--------------------------------------------------------------------------------|
-| `cloudflare-pages-docusaurus` | `CLOUDFLARE_PROJECT_NAME` must not be duplicated across workflows.             |
-| `vercel-nextjs`               | `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` must not be duplicated across workflows. |
-| `github-action`               | `RELEASE_BRANCH_NAME` must not be duplicated across workflows.                 |
-| `github-pages-docusaurus`     | At most one destination across all workflows (GitHub Pages is repo-scoped).    |
+| Target             | Uniqueness check                                                               |
+|--------------------|--------------------------------------------------------------------------------|
+| `cloudflare-pages` | `CLOUDFLARE_PROJECT_NAME` must not be duplicated across workflows.             |
+| `vercel-nextjs`    | `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` must not be duplicated across workflows. |
+| `github-action`    | `RELEASE_BRANCH_NAME` must not be duplicated across workflows.                 |
+| `github-pages`     | At most one destination across all workflows (GitHub Pages is repo-scoped).    |
 
 :::note Tag protection rules
 

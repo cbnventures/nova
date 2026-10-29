@@ -7,7 +7,24 @@ import {
   pathToFileURL,
 } from 'node:url';
 
+/**
+ * Nova - Root.
+ *
+ * Stores this module-level value in one named location.
+ * Related code reuses it instead of duplicating the definition.
+ *
+ * @since 0.36.0
+ */
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+/**
+ * Nova - CLI.
+ *
+ * Stores this module-level value in one named location.
+ * Related code reuses it instead of duplicating the definition.
+ *
+ * @since 0.36.0
+ */
 const cli = resolve(root, 'build', 'src', 'cli', 'index.js');
 
 if (existsSync(cli) === false) {

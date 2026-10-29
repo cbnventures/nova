@@ -17,6 +17,11 @@ import { Runner as WorkflowsBlueprint } from '../../../../cli/generate/github/wo
 import { libEnvManagedSet } from '../../../../lib/env-managed-set.js';
 
 import type {
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Committed,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_FixturePath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Generated,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Returns,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_UpdateWorkflowFixtures,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitCount,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitSubjects,
@@ -138,6 +143,41 @@ import type {
 } from '../../../../types/tests/cli/generate/github/workflows-blueprint-publish-parity.test.d.ts';
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Update Workflow Fixtures.
+ *
+ * Allows explicit fixture refreshes while keeping ordinary test runs strict.
+ *
+ * @since 0.36.0
+ */
+const updateWorkflowFixtures: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_UpdateWorkflowFixtures = process.env['NOVA_UPDATE_WORKFLOW_FIXTURES'] === 'true';
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Assert Workflow Fixture.
+ *
+ * Refreshes a requested fixture or compares the generated workflow byte for
+ * byte during ordinary test runs.
+ *
+ * @param {Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Generated}   generated   - Generated.
+ * @param {Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Committed}   committed   - Committed.
+ * @param {Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_FixturePath} fixturePath - Fixture path.
+ *
+ * @returns {Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Returns}
+ *
+ * @since 0.36.0
+ */
+async function assertWorkflowFixture(generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Generated, committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Committed, fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_FixturePath): Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Returns {
+  if (updateWorkflowFixtures === true) {
+    await writeFile(fixturePath, generated, 'utf-8');
+
+    return;
+  }
+
+  strictEqual(generated, committed);
+
+  return;
+}
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Project.
  *
  * @since 0.21.0
@@ -190,7 +230,7 @@ describe('WorkflowsBlueprintPublishParity.project', () => {
         after: ['./packages/nova'],
       },
       {
-        to: 'cloudflare-pages-docusaurus',
+        to: 'cloudflare-pages',
         path: './apps/docs',
       },
     ],
@@ -208,7 +248,7 @@ describe('WorkflowsBlueprintPublishParity.project', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath = join(fixturesDir, 'nova-publish-project.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -355,7 +395,7 @@ describe('WorkflowsBlueprintPublishParity.sites', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_FixturePath = join(fixturesDir, 'nova-publish-sites.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -418,7 +458,7 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-cloudflare-workers-secret-sync.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -493,11 +533,11 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
         },
       },
       {
-        to: 'github-pages-docusaurus',
+        to: 'github-pages',
         path: './apps/docs',
       },
       {
-        to: 'cloudflare-pages-docusaurus',
+        to: 'cloudflare-pages',
         path: './apps/docs',
       },
     ],
@@ -510,10 +550,16 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-docker-hub-ghcr.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('artifact-metadata: "write"'), true);
     strictEqual(generated.split('uses: "docker/build-push-action@v7"').length - 1, 1);
+    strictEqual(generated.split('include-hidden-files: true').length - 1, 3, 'every build and OCI artifact upload preserves hidden files');
+    strictEqual(generated.split('if-no-files-found: "error"').length - 1, 3, 'every artifact upload rejects an empty handoff');
+    strictEqual(generated.split('name: "Validate build artifacts"').length - 1, 1, 'the build handoffs share one preflight');
+    strictEqual(generated.split('name: "Validate immutable OCI artifact"').length - 1, 1, 'the OCI handoff receives its own preflight');
+    strictEqual(generated.includes('Artifact contains a sensitive hidden path'), true);
+    strictEqual(generated.includes('Artifact symlink escapes its root'), true);
     strictEqual(generated.split('platforms: "linux/arm64"').length - 1, 2);
     strictEqual(generated.includes('linux/amd64'), false);
     strictEqual(generated.split('name: "Download immutable OCI artifact"').length - 1, 2);
@@ -521,8 +567,8 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     strictEqual(generated.includes('context: "./"'), true);
     strictEqual(generated.includes('uses: "oras-project/setup-oras@v2.0.1"'), true);
     strictEqual(generated.includes('oras cp --from-oci-layout'), true);
-    strictEqual(generated.includes('publish-github-pages-docusaurus-apps-docs:'), true);
-    strictEqual(generated.includes('publish-cloudflare-pages-docusaurus-apps-docs:'), true);
+    strictEqual(generated.includes('publish-github-pages-apps-docs:'), true);
+    strictEqual(generated.includes('publish-cloudflare-pages-apps-docs:'), true);
     strictEqual(generated.includes('branch-$(normalize_channel "$REF_NAME")'), true);
     strictEqual(generated.includes('workflow-$(normalize_channel "$WORKFLOW_BRANCH")'), true);
     strictEqual(generated.includes('The exact $source image tag latest is reserved for stable releases.'), true);
@@ -581,7 +627,7 @@ describe('WorkflowsBlueprintPublishParity.nativeWorkspaces', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-native-workspaces.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -609,7 +655,7 @@ describe('WorkflowsBlueprintPublishParity.pages', () => {
     triggers: ['release'],
     build: ['./apps/docs'],
     deploy: [{
-      to: 'github-pages-docusaurus',
+      to: 'github-pages',
       path: './apps/docs',
     }],
   };
@@ -621,7 +667,7 @@ describe('WorkflowsBlueprintPublishParity.pages', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-github-pages.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -667,7 +713,7 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-github-action.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
     strictEqual(generated.includes('git commit --allow-empty -m "Release $TAG_NAME"'), true, 'Every published version must receive its own action release commit, even when the runtime bytes are unchanged');
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('actions/attest-build-provenance@v2'), false);
@@ -935,7 +981,7 @@ describe('WorkflowsBlueprintPublishParity.vercel', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -986,7 +1032,7 @@ describe('WorkflowsBlueprintPublishParity.vercelScope', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel-scope.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -1046,7 +1092,7 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel-secret-sync.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -1141,7 +1187,7 @@ describe('WorkflowsBlueprintPublishParity.runtimeSyncFanOut', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-runtime-sync-fan-out.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -1221,7 +1267,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-workflow-run-core.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -1233,7 +1279,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-workflow-run-success.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
-    strictEqual(generated, committed);
+    await assertWorkflowFixture(generated, committed, fixturePath);
 
     return;
   });
@@ -1277,7 +1323,7 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
     triggers: ['release'],
     build: ['./apps/docs'],
     deploy: [{
-      to: 'cloudflare-pages-docusaurus',
+      to: 'cloudflare-pages',
       path: './apps/docs',
     }],
   };
@@ -1292,7 +1338,7 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
         name: 'invariant',
         triggers: ['release'],
         deploy: [{
-          to: 'cloudflare-pages-docusaurus',
+          to: 'cloudflare-pages',
           path: './apps/docs',
         }],
       }],

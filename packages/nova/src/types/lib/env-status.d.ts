@@ -2,6 +2,7 @@ import type {
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentDeployProfile,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentWorkspace,
 } from '../shared.d.ts';
@@ -63,6 +64,10 @@ export type Lib_EnvStatus_ManagedNames = Set<string>;
 
 export type Lib_EnvStatus_Project = Shared_NovaConfigEnvironmentProject | undefined;
 
+export type Lib_EnvStatus_ProfilesEnabled = boolean;
+
+export type Lib_EnvStatus_DeployProfiles = Shared_NovaConfigEnvironmentDeployProfile[];
+
 export type Lib_EnvStatus_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
 
 export type Lib_EnvStatus_WorkflowEnvironments = Shared_NovaConfigEnvironment_Workflows;
@@ -71,7 +76,11 @@ export type Lib_EnvStatus_Prefixes = string[];
 
 export type Lib_EnvStatus_DeclaredDefaults = Set<string>;
 
+export type Lib_EnvStatus_ProjectProfile = Shared_NovaConfigEnvironmentDeployProfile;
+
 export type Lib_EnvStatus_Workspace = Shared_NovaConfigEnvironmentWorkspace;
+
+export type Lib_EnvStatus_WorkspaceProfile = Shared_NovaConfigEnvironmentDeployProfile;
 
 export type Lib_EnvStatus_Name = string;
 

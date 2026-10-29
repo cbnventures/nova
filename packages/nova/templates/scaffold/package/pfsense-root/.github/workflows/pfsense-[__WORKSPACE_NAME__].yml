@@ -53,6 +53,7 @@ jobs:
           path: "./[__WORKSPACE_RELATIVE_PATH__]/build/release/*"
           if-no-files-found: "error"
           retention-days: 7
+          include-hidden-files: true
 
       - name: "Upload GitHub Release Assets"
         env:

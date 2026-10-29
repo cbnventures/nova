@@ -6,6 +6,17 @@ import type {
 } from '../shared.d.ts';
 
 /**
+ * Lib - Corepack.
+ *
+ * @since 0.36.0
+ */
+export type Lib_Corepack_CorepackPackageJsonUrl = string;
+
+export type Lib_Corepack_CorepackPackageJsonPath = string;
+
+export type Lib_Corepack_DefaultCorepackScriptPath = string;
+
+/**
  * Lib - Corepack - Runner - Parse Package Manager.
  *
  * @since 0.26.0
@@ -32,6 +43,8 @@ export type Lib_Corepack_Runner_ResolveSpawnInvocation_CommandArguments = string
 export type Lib_Corepack_Runner_ResolveSpawnInvocation_CurrentPlatform = NodeJS.Platform;
 
 export type Lib_Corepack_Runner_ResolveSpawnInvocation_NodeExecutable = string;
+
+export type Lib_Corepack_Runner_ResolveSpawnInvocation_CorepackScriptPath = string;
 
 export type Lib_Corepack_Runner_ResolveSpawnInvocation_Returns = Shared_CorepackSpawnInvocation;
 

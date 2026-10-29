@@ -10,18 +10,54 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class MainScreenViewModel(dataRepository: DataRepository) : ViewModel() {
-  val uiState: StateFlow<MainScreenUiState> =
+/**
+ * Main Screen View Model.
+ *
+ * @param dataRepository - Data repository.
+ *
+ * @since UNRELEASED
+ */
+public class MainScreenViewModel(dataRepository: DataRepository) : ViewModel() {
+  /**
+   * Main Screen View Model - UI State.
+   *
+   * @since UNRELEASED
+   */
+  public val uiState: StateFlow<MainScreenUiState> =
     dataRepository.data
       .map<List<String>, MainScreenUiState>(::Success)
       .catch { emit(MainScreenUiState.Error(it)) }
       .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MainScreenUiState.Loading)
 }
 
-sealed interface MainScreenUiState {
-  object Loading : MainScreenUiState
+/**
+ * Main Screen UI State.
+ *
+ * @since UNRELEASED
+ */
+public sealed interface MainScreenUiState {
+  /**
+   * Main Screen UI State - Loading.
+   *
+   * @since UNRELEASED
+   */
+  public object Loading : MainScreenUiState
 
-  data class Error(val throwable: Throwable) : MainScreenUiState
+  /**
+   * Main Screen UI State - Error.
+   *
+   * @param throwable - Throwable.
+   *
+   * @since UNRELEASED
+   */
+  public data class Error(public val throwable: Throwable) : MainScreenUiState
 
-  data class Success(val data: List<String>) : MainScreenUiState
+  /**
+   * Main Screen UI State - Success.
+   *
+   * @param data - Data.
+   *
+   * @since UNRELEASED
+   */
+  public data class Success(public val data: List<String>) : MainScreenUiState
 }

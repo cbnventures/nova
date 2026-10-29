@@ -22,6 +22,7 @@ import { libEnvNamespace } from './env-namespace.js';
 import { renderIgnoreFile } from './ignore-files.js';
 import { libItemAllowedRecipes } from './item.js';
 import { normalizeNovaConfigTopLevelOrder } from './nova-config-order.js';
+import { Runner as LibNovaConfig } from './nova-config.js';
 import {
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
@@ -312,6 +313,7 @@ import type {
   Lib_Scaffold_RunScaffold_CurrentDirectory,
   Lib_Scaffold_RunScaffold_Definition,
   Lib_Scaffold_RunScaffold_Destination,
+  Lib_Scaffold_RunScaffold_Environment,
   Lib_Scaffold_RunScaffold_EnvironmentVariables,
   Lib_Scaffold_RunScaffold_ErrorMessage,
   Lib_Scaffold_RunScaffold_ExistingRoot,
@@ -340,11 +342,13 @@ import type {
   Lib_Scaffold_RunScaffold_Platforms,
   Lib_Scaffold_RunScaffold_PresentationOptions,
   Lib_Scaffold_RunScaffold_PrimaryScript,
+  Lib_Scaffold_RunScaffold_ProfilesEnabled,
   Lib_Scaffold_RunScaffold_Progress,
   Lib_Scaffold_RunScaffold_ProgressTotal,
   Lib_Scaffold_RunScaffold_ProjectFinalizerError,
   Lib_Scaffold_RunScaffold_ProjectRoot,
   Lib_Scaffold_RunScaffold_ProjectSlug,
+  Lib_Scaffold_RunScaffold_RegisteredConfig,
   Lib_Scaffold_RunScaffold_ReplacementResolution,
   Lib_Scaffold_RunScaffold_Replacements,
   Lib_Scaffold_RunScaffold_ResolvedReplacements,
@@ -2875,10 +2879,17 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   progress.start('Generating environment files', destination);
 
+  const registeredConfig: Lib_Scaffold_RunScaffold_RegisteredConfig = await new LibNovaConfig().load(configRoot);
+  const environment: Lib_Scaffold_RunScaffold_Environment = registeredConfig['environment'];
+  const profilesEnabled: Lib_Scaffold_RunScaffold_ProfilesEnabled = environment !== undefined
+    && environment['profiles'] !== undefined
+    && environment['profiles']['enabled'] === true;
+
   await writeDotenvFiles({
     report: false,
     targetDirectory: workspaceDirectory,
     variables: environmentVariables,
+    profilesEnabled,
   });
 
   await progress.complete();

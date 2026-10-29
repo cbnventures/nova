@@ -81,6 +81,7 @@ export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
   'promptAgents'
   | 'promptEmails'
   | 'promptEntities'
+  | 'promptEnvironment'
   | 'promptEnvironmentProject'
   | 'promptEnvironmentValueForm'
   | 'promptEnvironmentWorkflow'

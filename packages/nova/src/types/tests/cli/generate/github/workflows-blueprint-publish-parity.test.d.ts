@@ -6,6 +6,26 @@ import type {
 } from '../../../../shared.d.ts';
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Update Workflow Fixtures.
+ *
+ * @since 0.36.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_UpdateWorkflowFixtures = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Assert Workflow Fixture.
+ *
+ * @since 0.36.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Generated = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Committed = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_FixturePath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Returns = Promise<void>;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Action.
  *
  * @since 0.21.0

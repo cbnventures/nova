@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "entries": {
     "nodeEngine": {
-      "value": "^22 || ^24",
+      "value": "^22 || ^24 || ^26",
       "placeholder": "[__SCAFFOLD_VERSION_NODE_ENGINE__]",
       "group": "javascript",
       "source": {
@@ -11,7 +11,7 @@
       }
     },
     "nodeEnginePfsense": {
-      "value": ">=22.3 <23 || ^24",
+      "value": ">=22.3 <23 || ^24 || ^26",
       "placeholder": "[__SCAFFOLD_VERSION_NODE_ENGINE_PFSENSE__]",
       "group": "pfsense",
       "source": {
@@ -19,8 +19,18 @@
         "reason": "The pfSense tooling baseline preserves its tested Node 22.3 minimum."
       }
     },
+    "corepack": {
+      "value": "0.36.0",
+      "placeholder": "[__SCAFFOLD_VERSION_COREPACK__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "corepack",
+        "strategy": "same-major"
+      }
+    },
     "npmPackageManager": {
-      "value": "npm@11.18.0",
+      "value": "npm@11.21.1",
       "placeholder": "[__SCAFFOLD_VERSION_NPM_PACKAGE_MANAGER__]",
       "group": "javascript",
       "source": {
@@ -31,7 +41,7 @@
       }
     },
     "typesNode24": {
-      "value": "24.9.1",
+      "value": "24.19.2",
       "placeholder": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
       "group": "javascript",
       "source": {
@@ -41,7 +51,7 @@
       }
     },
     "typesNode22": {
-      "value": "22.15.17",
+      "value": "22.20.5",
       "placeholder": "[__SCAFFOLD_VERSION_TYPES_NODE_22__]",
       "group": "javascript",
       "source": {
@@ -91,7 +101,7 @@
       }
     },
     "vitest": {
-      "value": "4.1.11",
+      "value": "4.1.12",
       "placeholder": "[__SCAFFOLD_VERSION_VITEST__]",
       "group": "javascript",
       "source": {

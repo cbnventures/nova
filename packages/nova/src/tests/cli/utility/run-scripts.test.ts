@@ -101,6 +101,18 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJsonPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_RealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ConfigPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutput,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitRealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutput,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitRealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_OriginalCloudflareEnvironment,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJsonPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_MissingFilePath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_PackageJson,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_PackageJsonPath,
@@ -290,6 +302,80 @@ describe('CliUtilityRunScripts.run', async () => {
     const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_Output = await readFile(outputPath, 'utf-8');
 
     strictEqual(output, 'development');
+
+    return;
+  });
+
+  it('sets Cloudflare environment only for explicit profiles', async () => {
+    const explicitProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitProjectRoot = join(sandboxRoot, 'cloudflare-explicit');
+    const implicitProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitProjectRoot = join(sandboxRoot, 'cloudflare-implicit');
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJson = JSON.stringify({
+      name: 'test-cloudflare-environment',
+      scripts: {
+        'show:cloudflare': 'node -e "require(\'fs\').writeFileSync(\'cloudflare.txt\', process.env.CLOUDFLARE_ENV ?? \'\')"',
+      },
+    }, null, 2);
+    const originalCloudflareEnvironment: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_OriginalCloudflareEnvironment = process.env['CLOUDFLARE_ENV'];
+
+    await mkdir(explicitProjectRoot, { recursive: true });
+    await mkdir(implicitProjectRoot, { recursive: true });
+
+    try {
+      Reflect.deleteProperty(process.env, 'CLOUDFLARE_ENV');
+
+      for (const projectRoot of [
+        explicitProjectRoot,
+        implicitProjectRoot,
+      ]) {
+        const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJsonPath = join(projectRoot, 'package.json');
+
+        await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+      }
+
+      const configPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ConfigPath = join(explicitProjectRoot, 'nova.config.json');
+
+      await writeFile(configPath, `${JSON.stringify({
+        environment: {
+          profiles: {
+            enabled: true,
+          },
+        },
+      }, null, 2)}\n`, 'utf-8');
+
+      const explicitRealProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitRealProjectRoot = await realpath(explicitProjectRoot);
+
+      process.chdir(explicitRealProjectRoot);
+
+      await CliUtilityRunScripts.run({
+        pattern: 'show:*',
+        sequential: true,
+      });
+
+      const explicitOutputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutputPath = join(explicitRealProjectRoot, 'cloudflare.txt');
+      const explicitOutput: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutput = await readFile(explicitOutputPath, 'utf-8');
+
+      strictEqual(explicitOutput, 'development');
+
+      const implicitRealProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitRealProjectRoot = await realpath(implicitProjectRoot);
+
+      process.chdir(implicitRealProjectRoot);
+
+      await CliUtilityRunScripts.run({
+        pattern: 'show:*',
+        sequential: true,
+      });
+
+      const implicitOutputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutputPath = join(implicitRealProjectRoot, 'cloudflare.txt');
+      const implicitOutput: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutput = await readFile(implicitOutputPath, 'utf-8');
+
+      strictEqual(implicitOutput, '');
+    } finally {
+      if (originalCloudflareEnvironment === undefined) {
+        Reflect.deleteProperty(process.env, 'CLOUDFLARE_ENV');
+      } else {
+        Reflect.set(process.env, 'CLOUDFLARE_ENV', originalCloudflareEnvironment);
+      }
+    }
 
     return;
   });

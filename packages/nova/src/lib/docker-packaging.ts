@@ -16,7 +16,10 @@ import {
   LIB_REGEX_PATTERN_DOCKER_RUNTIME_PATH,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
 } from './regex.js';
-import { applyScaffoldVersionReplacements } from './scaffold-versions.js';
+import {
+  applyScaffoldVersionReplacements,
+  getScaffoldVersion,
+} from './scaffold-versions.js';
 import {
   isPlainObject,
   pathExists,
@@ -53,6 +56,7 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder,
   Lib_DockerPackaging_Runner_BuildDockerfile_BuildScriptValue,
   Lib_DockerPackaging_Runner_BuildDockerfile_Content,
+  Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion,
   Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives,
   Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand,
   Lib_DockerPackaging_Runner_BuildDockerfile_IsSelectedWorkspace,
@@ -1189,15 +1193,16 @@ export class Runner {
     const isYarnClassic: Lib_DockerPackaging_Runner_BuildDockerfile_IsYarnClassic = packageManager === 'yarn' && packageManagerVersion.startsWith('1.');
     const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests = packageManager === 'npm' || isYarnClassic === true;
     const packageManagerConfigCopies: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies = (packageManager === 'yarn' && isYarnClassic === false) ? 'COPY packages/docker/yarnrc.yml ./.yarnrc.yml' : '# This package manager does not need generated build configuration.';
-    let installCommand: Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand = 'RUN corepack enable npm && npm install';
+    const corepackVersion: Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion = getScaffoldVersion('corepack');
+    let installCommand: Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand = 'RUN npm install';
     let pruneCommand: Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand = 'RUN npm prune --omit=dev && npm cache clean --force';
     const buildCommands: Lib_DockerPackaging_Runner_BuildDockerfile_BuildCommands = [];
 
     if (packageManager === 'pnpm') {
-      installCommand = 'RUN corepack enable pnpm && pnpm install';
+      installCommand = `RUN npm install --global corepack@${corepackVersion} && corepack enable pnpm && pnpm install`;
       pruneCommand = 'RUN pnpm install --prod';
     } else if (packageManager === 'yarn') {
-      installCommand = 'RUN corepack enable yarn && yarn install';
+      installCommand = `RUN npm install --global corepack@${corepackVersion} && corepack enable yarn && yarn install`;
       pruneCommand = (isYarnClassic === true) ? 'RUN yarn install --production && yarn cache clean' : 'RUN yarn workspaces focus --all --production';
     }
 

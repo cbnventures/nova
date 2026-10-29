@@ -17,12 +17,15 @@ import {
   tmpdir,
 } from 'node:os';
 import {
+  dirname,
   join,
   sep,
-  win32,
 } from 'node:path';
 import { setTimeout as wait } from 'node:timers/promises';
-import { pathToFileURL } from 'node:url';
+import {
+  fileURLToPath,
+  pathToFileURL,
+} from 'node:url';
 
 import { ensureDockerEngine } from './lib/docker-engine.mjs';
 import { PATTERN_APPLE_SCAFFOLD_SMOKE_CHANGELOG_RELEASE_HEADING } from './lib/regex.mjs';
@@ -31,6 +34,26 @@ import {
   removeScaffoldTemporaryDirectory,
 } from './lib/scaffold-temporary-directory.mjs';
 import { verifyBundlerLoad } from './lib/verify-scaffold-install.mjs';
+
+/**
+ * Check Scaffolds - Corepack package.json Path.
+ *
+ * Locates Nova's installed Corepack package without depending on a global executable.
+ * The package boundary remains stable across supported operating systems.
+ *
+ * @since 0.0.0
+ */
+const corepackPackageJsonPath = fileURLToPath(import.meta.resolve('corepack/package.json'));
+
+/**
+ * Check Scaffolds - Corepack Script Path.
+ *
+ * Resolves the JavaScript entry point launched by every scaffold package-manager probe.
+ * Node executes that entry point directly when Corepack is absent from PATH.
+ *
+ * @since 0.0.0
+ */
+const corepackScriptPath = join(dirname(corepackPackageJsonPath), 'dist', 'corepack.js');
 
 /**
  * Check Scaffolds - Corepack Invocation.
@@ -153,8 +176,8 @@ function runCommand(command, args, cwd) {
 /**
  * Check Scaffolds - Resolve Corepack Invocation.
  *
- * Keeps POSIX execution direct while bypassing Windows command shims through
- * Corepack's JavaScript entry point and the active Node.js executable.
+ * Launches Nova's installed Corepack JavaScript entry point through the active
+ * Node.js executable so Node 26 does not require a global Corepack installation.
  *
  * @param {string[]} args - Args.
  *
@@ -163,17 +186,10 @@ function runCommand(command, args, cwd) {
  * @since 0.0.0
  */
 function resolveCorepackInvocation(args) {
-  if (process.platform !== 'win32') {
-    return {
-      command: 'corepack',
-      commandArguments: args,
-    };
-  }
-
   return {
     command: process.execPath,
     commandArguments: [
-      win32.join(win32.dirname(process.execPath), 'node_modules', 'corepack', 'dist', 'corepack.js'),
+      corepackScriptPath,
       ...args,
     ],
   };

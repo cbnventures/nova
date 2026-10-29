@@ -235,6 +235,35 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitP
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_Output = string;
 
 /**
+ * Tests - CLI - Utility - Run Scripts - Run - Sets Cloudflare Environment Only For Explicit Profiles.
+ *
+ * @since 0.36.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_OriginalCloudflareEnvironment = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ConfigPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitRealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutputPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ExplicitOutput = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitRealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutputPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsCloudflareEnvironmentOnlyForExplicitProfiles_ImplicitOutput = string;
+
+/**
  * Tests - CLI - Utility - Run Scripts - Run - Stops On First Failure In Sequential Mode.
  *
  * @since 0.14.0

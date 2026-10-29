@@ -3,6 +3,7 @@ import { libItemReservedDotenvKeys } from './item.js';
 
 import type {
   Lib_EnvStatus_DeclaredDefaults,
+  Lib_EnvStatus_DeployProfiles,
   Lib_EnvStatus_InSecrets,
   Lib_EnvStatus_InVariables,
   Lib_EnvStatus_LibEnvStatus,
@@ -16,7 +17,9 @@ import type {
   Lib_EnvStatus_OrphanWorkspacePath,
   Lib_EnvStatus_OrphanWorkspaces,
   Lib_EnvStatus_Prefixes,
+  Lib_EnvStatus_ProfilesEnabled,
   Lib_EnvStatus_Project,
+  Lib_EnvStatus_ProjectProfile,
   Lib_EnvStatus_Results,
   Lib_EnvStatus_Secrets,
   Lib_EnvStatus_State,
@@ -26,6 +29,7 @@ import type {
   Lib_EnvStatus_VariableValues,
   Lib_EnvStatus_WorkflowEnvironments,
   Lib_EnvStatus_Workspace,
+  Lib_EnvStatus_WorkspaceProfile,
   Lib_EnvStatus_Workspaces,
 } from '../types/lib/env-status.d.ts';
 
@@ -46,6 +50,11 @@ export const libEnvStatus: Lib_EnvStatus_LibEnvStatus = {
     const variableValues: Lib_EnvStatus_VariableValues = githubState['variableValues'];
     const managedNames: Lib_EnvStatus_ManagedNames = new Set(managedSet.map((entry) => entry['name']));
     const project: Lib_EnvStatus_Project = environment['project'];
+    const profilesEnabled: Lib_EnvStatus_ProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
+    const deployProfiles: Lib_EnvStatus_DeployProfiles = [
+      'staging',
+      'production',
+    ];
     const workspaces: Lib_EnvStatus_Workspaces = environment['workspaces'] ?? {};
     const workflowEnvironments: Lib_EnvStatus_WorkflowEnvironments = environment['workflows'] ?? {};
     const prefixes: Lib_EnvStatus_Prefixes = [];
@@ -62,7 +71,15 @@ export const libEnvStatus: Lib_EnvStatus_LibEnvStatus = {
           && projectVariable['defaultValue'] !== undefined
           && projectVariable['defaultValue'] !== ''
         ) {
-          declaredDefaults.add(libEnvNamespace.githubName(project['prefix'], projectVariable['key']));
+          if (profilesEnabled === true) {
+            for (const projectProfileValue of deployProfiles) {
+              const projectProfile: Lib_EnvStatus_ProjectProfile = projectProfileValue;
+
+              declaredDefaults.add(libEnvNamespace.githubProfileName(project['prefix'], projectProfile, projectVariable['key']));
+            }
+          } else {
+            declaredDefaults.add(libEnvNamespace.githubName(project['prefix'], projectVariable['key']));
+          }
         }
       }
     }
@@ -78,7 +95,15 @@ export const libEnvStatus: Lib_EnvStatus_LibEnvStatus = {
           && workspaceVariable['defaultValue'] !== undefined
           && workspaceVariable['defaultValue'] !== ''
         ) {
-          declaredDefaults.add(libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']));
+          if (profilesEnabled === true) {
+            for (const workspaceProfileValue of deployProfiles) {
+              const workspaceProfile: Lib_EnvStatus_WorkspaceProfile = workspaceProfileValue;
+
+              declaredDefaults.add(libEnvNamespace.githubProfileName(workspace['prefix'], workspaceProfile, workspaceVariable['key']));
+            }
+          } else {
+            declaredDefaults.add(libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']));
+          }
         }
       }
     }

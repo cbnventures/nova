@@ -10,8 +10,20 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
+/**
+ * Dark Color Scheme.
+ *
+ * @private
+ * @since UNRELEASED
+ */
 private val DarkColorScheme = darkColorScheme(primary = Purple80, secondary = PurpleGrey80, tertiary = Pink80)
 
+/**
+ * Light Color Scheme.
+ *
+ * @private
+ * @since UNRELEASED
+ */
 private val LightColorScheme =
   lightColorScheme(
     primary = Purple40,
@@ -29,8 +41,17 @@ private val LightColorScheme =
     */
   )
 
+/**
+ * [__WORKSPACE_TITLE__] Theme.
+ *
+ * @param darkTheme - Dark theme.
+ * @param dynamicColor - Dynamic color.
+ * @param content - Content.
+ *
+ * @since UNRELEASED
+ */
 @Composable
-fun [__WORKSPACE_IDENTIFIER__]Theme(
+public fun [__WORKSPACE_IDENTIFIER__]Theme(
   darkTheme: Boolean = isSystemInDarkTheme(),
   // Dynamic color is available on Android 12+
   dynamicColor: Boolean = true,

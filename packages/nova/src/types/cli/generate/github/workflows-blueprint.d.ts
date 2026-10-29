@@ -57,6 +57,7 @@ import type {
   Shared_NovaConfigWorkflow_Settings,
   Shared_NovaConfigWorkflow_Suffix,
   Shared_NovaConfigWorkflow_Template,
+  Shared_NovaConfigWorkflowEnvironmentSelection,
   Shared_NovaConfigWorkflowTarget_Settings,
   Shared_NovaConfigWorkflowTargetNeedsEntry,
   Shared_NovaConfigWorkflowTriggerObject_Tags,
@@ -83,6 +84,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environ
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_ProfileAware = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns = Shared_BlueprintDeliveryValues;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Results = Shared_BlueprintDeliveryValues;
@@ -104,6 +107,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Envir
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_AppPath = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_ProfileAware = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Returns = Shared_BlueprintDeliveryValues;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Results = Shared_BlueprintDeliveryValues;
@@ -113,6 +118,25 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Works
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = Shared_NovaConfigEnvironmentWorkspace_Prefix;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_RuntimeValue = Shared_BlueprintDeliveryValue;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Artifact Preflight Step.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Name = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_ArtifactPaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_AllowedRoot = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Returns = Shared_BlueprintStep;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_RootLines = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildArtifactPreflightStep_Lines = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -150,25 +174,102 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGated
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Job = Shared_BlueprintJob;
 
 /**
- * CLI - Generate - GitHub - Workflows Blueprint.
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Environment Preflight.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Entry = Shared_BlueprintConfigWorkflow;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Environment = Shared_NovaConfigEnvironment;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Returns = Shared_BlueprintStep | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValueLabel = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValueValue = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValue = {
+  label: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValueLabel;
+  value: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValueValue;
+};
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValues = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RequiredValue[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_SeenValues = Set<string>;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Targets = Shared_BlueprintConfigWorkflow_Deploy;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildValues = Shared_BlueprintDeliveryValues;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_BuildExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeTargetPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeValues = Shared_BlueprintDeliveryValues;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_RuntimeExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Metadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Variables = Shared_WorkflowTemplateVariables;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableName = Shared_WorkflowTemplateVariableName;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_VariableMeta = Shared_WorkflowTemplateVariable;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_CredentialExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Env = Shared_BlueprintEnvMap;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Lines = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_Index = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_EnvKey = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_LabelKey = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_ValidationTargetPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentPreflight_TargetSlug = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Environment Selection Step.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Returns = Shared_BlueprintStep | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareEnvironmentSelectionStep_Lines = string[];
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Cloudflare Pages Target.
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Context = Shared_BlueprintPublishTargetContext;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Context = Shared_BlueprintPublishTargetContext;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Returns = Shared_BlueprintJob;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Returns = Shared_BlueprintJob;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Variables = Shared_WorkflowTemplateVariables;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Variables = Shared_WorkflowTemplateVariables;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_Environment = Shared_NovaConfigEnvironment | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_Environment = Shared_NovaConfigEnvironment | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_AppPath = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_AppPath = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -189,6 +290,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkers
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment = Shared_NovaConfigEnvironment | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_ProfileAware = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Shared_BlueprintDeliveryValues;
@@ -198,6 +303,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkers
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = Shared_BlueprintSteps;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_EnvironmentSelectionStep = Shared_BlueprintStep | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep = Shared_BlueprintStep | undefined;
 
@@ -213,7 +320,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifact
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList = string;
 
 /**
- * CLI - Generate - GitHub - Workflows Blueprint.
+ * CLI - Generate - GitHub - Workflows Blueprint - Build GitHub Pages Target.
  *
  * @since 0.23.0
  */
@@ -371,19 +478,19 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTar
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Context = Shared_BlueprintPublishTargetContext;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Context = Shared_BlueprintPublishTargetContext;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Returns = Shared_BlueprintJob;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Returns = Shared_BlueprintJob;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_Variables = Shared_WorkflowTemplateVariables;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Variables = Shared_WorkflowTemplateVariables;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesDocusaurusTarget_PagesStatusRun = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_PagesStatusRun = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -492,6 +599,12 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = Shared_BlueprintConfigWorkflow_Deploy;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
@@ -534,6 +647,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCo
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameLabel = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameEnvironmentSuffix = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunName = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
@@ -562,9 +677,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildComm
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = Shared_BlueprintSteps;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep = Shared_BlueprintStep | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep = Shared_BlueprintStep | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues = Shared_BlueprintDeliveryValues;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WriteEnvStep = Shared_BlueprintStep;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactUploadSteps = Shared_BlueprintSteps;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget = Shared_BlueprintConfigDeployTarget;
 
@@ -573,6 +696,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadMet
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadArtifactPaths = Shared_WorkflowTemplateTarget_ArtifactPaths;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadWorkingDir = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadResolvedArtifactPaths = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadPath = string;
 
@@ -707,6 +832,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigge
  * @since 0.26.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Corepack Bootstrap Run.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_Returns = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_CorepackVersion = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Corepack Download Command.
@@ -1035,6 +1171,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcR
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns = string;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Resolve Delivery Value Expr.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Value = Shared_BlueprintDeliveryValue;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Namespace = 'secrets' | 'vars';
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -1061,6 +1208,33 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Dep
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Dependency = Shared_NovaConfigWorkflowTargetNeedsEntry;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Resolve Profiled Variable Expr.
+ *
+ * @since 0.36.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Variables = Shared_WorkflowTemplateVariables;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableName = Shared_WorkflowTemplateVariableName;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Prefix = Shared_NovaConfigEnvironmentWorkflow_Prefix | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Returns = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_VariableMeta = Shared_WorkflowTemplateVariable;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_IsPrefixable = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_StagingName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_ProductionName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveProfiledVariableExpr_Namespace = 'secrets' | 'vars';
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -1076,6 +1250,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Environment = Shared_NovaConfigEnvironment | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProfileAware = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Returns = string;
 

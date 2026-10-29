@@ -9,6 +9,15 @@ import { defineConfig } from 'vitest/config';
  * @since 0.20.0
  */
 const currentFilePath = fileURLToPath(import.meta.url);
+
+/**
+ * Vitest Configuration - Root directory.
+ *
+ * Stores this module-level value in one named location.
+ * Related code reuses it instead of duplicating the definition.
+ *
+ * @since UNRELEASED
+ */
 const rootDirectory = dirname(currentFilePath);
 
 export default defineConfig({

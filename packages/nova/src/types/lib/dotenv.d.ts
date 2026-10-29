@@ -142,6 +142,8 @@ export type Lib_Dotenv_WriteDotenvFiles_Options_Prune = boolean;
 
 export type Lib_Dotenv_WriteDotenvFiles_Options_Report = boolean;
 
+export type Lib_Dotenv_WriteDotenvFiles_Options_ProfilesEnabled = boolean;
+
 export type Lib_Dotenv_WriteDotenvFiles_Options_ConfirmPrune = (filePath: string, keys: string[]) => Promise<boolean>;
 
 export type Lib_Dotenv_WriteDotenvFiles_Options = {
@@ -151,6 +153,7 @@ export type Lib_Dotenv_WriteDotenvFiles_Options = {
   replaceFile?: Lib_Dotenv_WriteDotenvFiles_Options_ReplaceFile;
   prune?: Lib_Dotenv_WriteDotenvFiles_Options_Prune;
   report?: Lib_Dotenv_WriteDotenvFiles_Options_Report;
+  profilesEnabled?: Lib_Dotenv_WriteDotenvFiles_Options_ProfilesEnabled;
   confirmPrune?: Lib_Dotenv_WriteDotenvFiles_Options_ConfirmPrune;
 };
 
@@ -167,6 +170,8 @@ export type Lib_Dotenv_WriteDotenvFiles_IsReplaceFile = boolean;
 export type Lib_Dotenv_WriteDotenvFiles_IsPrune = boolean;
 
 export type Lib_Dotenv_WriteDotenvFiles_ShouldReport = boolean;
+
+export type Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled = boolean;
 
 export type Lib_Dotenv_WriteDotenvFiles_CurrentDirectory = string;
 
@@ -192,15 +197,17 @@ export type Lib_Dotenv_WriteDotenvFiles_CustomSection = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_CustomSectionSample = string;
 
-export type Lib_Dotenv_WriteDotenvFiles_ExistingEnvPath = string;
-
-export type Lib_Dotenv_WriteDotenvFiles_ExistingEnv = Map<string, string>;
+export type Lib_Dotenv_WriteDotenvFiles_IsSample = boolean;
 
 export type Lib_Dotenv_WriteDotenvFiles_TemplateFileName = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_TemplatePath = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_TargetPath = string;
+
+export type Lib_Dotenv_WriteDotenvFiles_ExistingEnvPath = string;
+
+export type Lib_Dotenv_WriteDotenvFiles_ExistingEnv = Map<string, string>;
 
 export type Lib_Dotenv_WriteDotenvFiles_Content = string | undefined;
 

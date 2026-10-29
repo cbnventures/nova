@@ -357,12 +357,12 @@ See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#co
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field   | Type       | Description                                                                                                                                                                                 |
-|---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `to`    | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"cloudflare-workers"`, `"github-pages-docusaurus"`, `"vercel-nextjs"`. |
-| `path`  | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                                            |
-| `after` | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                         |
-| `with`  | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                             |
+| Field   | Type       | Description                                                                                                                                                           |
+|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `to`    | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"vercel-nextjs"`. |
+| `path`  | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                      |
+| `after` | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                   |
+| `with`  | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                       |
 
 Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
 
@@ -415,7 +415,7 @@ Generated files follow the pattern `nova-{template}-{name}.yml` under `.github/w
           "after": ["./packages/core"]
         },
         {
-          "to": "cloudflare-pages-docusaurus",
+          "to": "cloudflare-pages",
           "path": "./apps/docs"
         }
       ]
@@ -686,6 +686,7 @@ Every environment value in the repository lives here, grouped by namespace and c
 
 | Field        | Type     | Description                                                                                                                                          |
 |--------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `profiles`   | `object` | Optional. Enables explicit development, staging, and production environment profiles. See [Environment Profiles](#environment-profiles).             |
 | `project`    | `object` | Optional. Project-wide managed keys, such as deploy credentials, under one shared `prefix`. See [Project Fields](#project-fields).                   |
 | `workspaces` | `object` | Optional. Per-workspace environment values, keyed by the workspace path (including the repo root `./`). See [Workspaces Fields](#workspaces-fields). |
 | `workflows`  | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                               |
@@ -693,6 +694,28 @@ Every environment value in the repository lives here, grouped by namespace and c
 Every declared `environment.project`, `environment.workspaces.<path>` (including the repo root `./`), and `environment.workflows.<name>` entry must declare a `prefix` — there is no exception for a group whose keys are all `local`. Nova joins that `prefix` to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
 
 Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
+
+### Environment Profiles
+
+Environment profiles are opt-in. When `environment.profiles` is absent or `enabled` is `false`, Nova considers the project to be in **implicit development mode**. Nova continues using the original, fully supported `.env` and `.env.sample` files in that mode; it does not read `.env.development`.
+
+Set `environment.profiles.enabled` to `true` when the project needs explicit environments:
+
+```json
+{
+  "environment": {
+    "profiles": {
+      "enabled": true
+    }
+  }
+}
+```
+
+Explicit profiles use `.env.development`, `.env.staging`, and `.env.production`, with matching `.sample` files. Development remains local. A compatible Cloudflare Workers publish workflow may map prerelease tags and manual staging runs to `staging`, and stable tags and manual production runs to `production`.
+
+| Field     | Type      | Description                                                                   |
+|-----------|-----------|-------------------------------------------------------------------------------|
+| `enabled` | `boolean` | Required. Enables explicit development, staging, and production env profiles. |
 
 ### Project Fields
 

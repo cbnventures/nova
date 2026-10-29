@@ -1,0 +1,20 @@
+import type { Shared_NovaConfigEnvironment } from '../../shared.d.ts';
+
+/**
+ * Tests - Lib - Env Profiles - Migrate Environment Profiles.
+ *
+ * @since 0.36.0
+ */
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_SandboxRoot = string;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_WorkspaceDirectory = string;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_OriginalEnv = string;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_OriginalSample = string;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_Environment = Shared_NovaConfigEnvironment;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_StagingContents = string;
+
+export type Tests_Lib_EnvProfiles_MigrateEnvironmentProfiles_PreservesOriginalModeWhileProfileFilesRoundTripReversibly_WorkspaceEntries = string[];

@@ -243,8 +243,8 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
         },
         uniquenessKey: ['IMAGE_REPOSITORY'],
       },
-      'cloudflare-pages-docusaurus': {
-        description: 'Deploy Docusaurus to Cloudflare Pages',
+      'cloudflare-pages': {
+        description: 'Deploy a static site to Cloudflare Pages',
         artifactPaths: ['{workingDir}/build'],
         variables: {
           'CLOUDFLARE_API_TOKEN': {
@@ -293,8 +293,8 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
         },
         supportsRuntimeSecretSync: true,
       },
-      'github-pages-docusaurus': {
-        description: 'Deploy Docusaurus to GitHub Pages',
+      'github-pages': {
+        description: 'Deploy a static site to GitHub Pages',
         artifactPaths: ['{workingDir}/build'],
         variables: {
           'GITHUB_TOKEN': {

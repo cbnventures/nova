@@ -6,8 +6,10 @@
 **/.env
 **/.env.*
 !.env.sample
+!.env.*.sample
 !.env.example
 !**/.env.sample
+!**/.env.*.sample
 !**/.env.example
 .secrets
 **/.secrets

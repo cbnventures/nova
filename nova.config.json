@@ -233,7 +233,7 @@
           ]
         },
         {
-          "to": "cloudflare-pages-docusaurus",
+          "to": "cloudflare-pages",
           "path": "./apps/docs"
         }
       ]

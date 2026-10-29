@@ -10,6 +10,8 @@ require_once('services.inc');
  * Returns the saved package settings.
  *
  * @return array<string, mixed> Package settings.
+ *
+ * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetSettings(): array
 {
@@ -24,6 +26,8 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetSettings(): array
  * @param string $frequency Selected frequency.
  *
  * @return array{string, string, string, string, string} Cron fields.
+ *
+ * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetCronFields(string $frequency): array
 {
@@ -37,6 +41,8 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetCronFields(string $frequency
 
 /**
  * Synchronizes the package cron job with the saved WebGUI settings.
+ *
+ * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
 {
@@ -63,6 +69,8 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
 
 /**
  * Removes the package cron job.
+ *
+ * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove(): void
 {
@@ -74,6 +82,8 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove(): void
  *
  * @param array<string, mixed> $post        Submitted values.
  * @param string[]             $inputErrors Validation errors.
+ *
+ * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]Validate(array $post, array &$inputErrors): void
 {

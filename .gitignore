@@ -13,6 +13,7 @@ local.properties
 .env
 .env.*
 !.env.sample
+!.env.*.sample
 
 ##################################
 #### Operating System - Linux ####

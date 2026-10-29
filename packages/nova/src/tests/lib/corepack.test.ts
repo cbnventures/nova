@@ -114,21 +114,14 @@ describe('LibCorepack.resolveSpawnInvocation', () => {
     return;
   });
 
-  it('runs Windows Corepack through its JavaScript entry point', () => {
+  it('runs bundled Corepack through its JavaScript entry point', () => {
     deepStrictEqual(LibCorepack.resolveSpawnInvocation('corepack', [
       'pnpm',
       'install',
-    ], 'win32', 'C:/node/node.exe'), {
-      command: 'C:/node/node.exe',
+    ], 'linux', '/usr/local/bin/node', '/project/node_modules/corepack/dist/corepack.js'), {
+      command: '/usr/local/bin/node',
       commandArguments: [
-        [
-          'C:',
-          'node',
-          'node_modules',
-          'corepack',
-          'dist',
-          'corepack.js',
-        ].join('\\'),
+        '/project/node_modules/corepack/dist/corepack.js',
         'pnpm',
         'install',
       ],

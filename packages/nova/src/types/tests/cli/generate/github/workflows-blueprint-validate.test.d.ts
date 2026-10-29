@@ -2,8 +2,22 @@ import type {
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintValidationResult,
   Shared_NovaConfig_Workspaces,
+  Shared_NovaConfigEnvironment,
   Shared_NovaConfigWorkspace,
 } from '../../../../shared.d.ts';
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Environment Selection.
+ *
+ * @since 0.36.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Environment = Shared_NovaConfigEnvironment;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
@@ -287,6 +301,14 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultDiagnostics;
 };
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Environment = Shared_NovaConfigEnvironment;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.

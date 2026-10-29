@@ -54,7 +54,7 @@ When `agents` is absent or empty, the generator writes nothing and warns `No AI 
 
 - Gives coding assistants consistent instructions so generated code follows your project conventions.
 - Emits only the tool files you select — `CLAUDE.md` for Claude Code, `AGENTS.md` for Codex — alongside the shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
-- Convention files cover universal rules, documentation style, plus per-language guides for TypeScript, CSS, Swift, Java, Kotlin, C#, PHP, Python, Shell, and Docker.
+- Convention files cover universal and Nova workflow rules, documentation style, plus per-language guides for C#, CSS, Docker, Go, Java, Kotlin, PHP, Python, Rust, Shell, Swift, and TypeScript / JavaScript.
 
 ## Requirements
 
@@ -115,19 +115,22 @@ The following shared files are written whenever at least one agent is selected:
 | `conventions/csharp.md`        | C# conventions                           |
 | `conventions/docker.md`        | Docker conventions                       |
 | `conventions/documentation.md` | Documentation site page conventions      |
+| `conventions/go.md`            | Go conventions                           |
 | `conventions/java.md`          | Java conventions                         |
 | `conventions/kotlin.md`        | Kotlin conventions                       |
+| `conventions/nova.md`          | Nova configuration and workflow rules    |
 | `conventions/php.md`           | PHP conventions                          |
 | `conventions/python.md`        | Python conventions                       |
+| `conventions/rust.md`          | Rust conventions                         |
 | `conventions/shell.md`         | Shell conventions                        |
 | `conventions/swift.md`         | Swift conventions                        |
 | `conventions/typescript.md`    | TypeScript and JavaScript conventions    |
 
-The language convention files (such as `conventions/typescript.md`) instruct authors to tag new or changed API with `@since UNRELEASED` rather than a hard-coded version number. The real version is stamped automatically when you run `nova utility changelog --release` at release time.
+The language convention files instruct authors to tag new or changed API with an unreleased sentinel rather than a hard-coded version number. JSDoc, Javadoc, KDoc, and PHPDoc use `@since UNRELEASED`; Swift DocC uses `- Since: UNRELEASED`; Go and Rust use `Since: UNRELEASED` in their native documentation comments; C# uses `<remarks>Since: UNRELEASED</remarks>`; and Python uses a Google-style `Since:` section containing `UNRELEASED`. The real version is stamped automatically when you run `nova utility changelog --release` at release time.
 
 :::info
 
-Never write a concrete version in `@since` or `@deprecated` by hand. Using `@since UNRELEASED` keeps the tag accurate until the release tooling fills it in.
+Never write a concrete version in a supported since or deprecated annotation by hand. Using the language convention's `UNRELEASED` sentinel keeps the tag accurate until the release tooling fills it in.
 
 :::
 

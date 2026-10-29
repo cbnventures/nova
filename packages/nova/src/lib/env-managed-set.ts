@@ -7,11 +7,17 @@ import type {
   Lib_EnvManagedSet_CredMeta,
   Lib_EnvManagedSet_CredName,
   Lib_EnvManagedSet_CredPrefix,
+  Lib_EnvManagedSet_CredProfile,
   Lib_EnvManagedSet_CredWorkspace,
+  Lib_EnvManagedSet_DeployProfiles,
   Lib_EnvManagedSet_Environment,
+  Lib_EnvManagedSet_IsProfiledWorkflow,
   Lib_EnvManagedSet_LibEnvManagedSet,
   Lib_EnvManagedSet_ManagedCred,
+  Lib_EnvManagedSet_ProfiledManagedCred,
+  Lib_EnvManagedSet_ProfilesEnabled,
   Lib_EnvManagedSet_Project,
+  Lib_EnvManagedSet_ProjectProfile,
   Lib_EnvManagedSet_ResolvedCred,
   Lib_EnvManagedSet_ResolvedVariable,
   Lib_EnvManagedSet_Results,
@@ -27,6 +33,7 @@ import type {
   Lib_EnvManagedSet_Workflows,
   Lib_EnvManagedSet_Workspace,
   Lib_EnvManagedSet_WorkspacePath,
+  Lib_EnvManagedSet_WorkspaceProfile,
   Lib_EnvManagedSet_Workspaces,
 } from '../types/lib/env-managed-set.d.ts';
 
@@ -45,6 +52,11 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
     const environment: Lib_EnvManagedSet_Environment = config['environment'] ?? {};
     const project: Lib_EnvManagedSet_Project = environment['project'];
     const workspaces: Lib_EnvManagedSet_Workspaces = environment['workspaces'] ?? {};
+    const profilesEnabled: Lib_EnvManagedSet_ProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
+    const deployProfiles: Lib_EnvManagedSet_DeployProfiles = [
+      'staging',
+      'production',
+    ];
 
     // Project managed keys carry the project prefix; a reach "local" key never reaches GitHub.
     if (project !== undefined) {
@@ -53,11 +65,23 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
           continue;
         }
 
-        candidates.push({
-          name: libEnvNamespace.githubName(project['prefix'], projectVariable['key']),
-          secret: projectVariable['secret'],
-          kind: 'project',
-        });
+        if (profilesEnabled === true) {
+          for (const projectProfileValue of deployProfiles) {
+            const projectProfile: Lib_EnvManagedSet_ProjectProfile = projectProfileValue;
+
+            candidates.push({
+              name: libEnvNamespace.githubProfileName(project['prefix'], projectProfile, projectVariable['key']),
+              secret: projectVariable['secret'],
+              kind: 'project',
+            });
+          }
+        } else {
+          candidates.push({
+            name: libEnvNamespace.githubName(project['prefix'], projectVariable['key']),
+            secret: projectVariable['secret'],
+            kind: 'project',
+          });
+        }
       }
     }
 
@@ -71,11 +95,23 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
           continue;
         }
 
-        candidates.push({
-          name: libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']),
-          secret: workspaceVariable['secret'],
-          kind: 'workspace',
-        });
+        if (profilesEnabled === true) {
+          for (const workspaceProfileValue of deployProfiles) {
+            const workspaceProfile: Lib_EnvManagedSet_WorkspaceProfile = workspaceProfileValue;
+
+            candidates.push({
+              name: libEnvNamespace.githubProfileName(workspace['prefix'], workspaceProfile, workspaceVariable['key']),
+              secret: workspaceVariable['secret'],
+              kind: 'workspace',
+            });
+          }
+        } else {
+          candidates.push({
+            name: libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']),
+            secret: workspaceVariable['secret'],
+            kind: 'workspace',
+          });
+        }
       }
     }
 
@@ -85,6 +121,7 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
     const workflowEnvironments: Lib_EnvManagedSet_WorkflowEnvironments = environment['workflows'] ?? {};
 
     for (const workflow of workflows) {
+      const isProfiledWorkflow: Lib_EnvManagedSet_IsProfiledWorkflow = profilesEnabled === true && workflow['environmentSelection'] !== undefined;
       const templateMeta: Lib_EnvManagedSet_TemplateMeta = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === workflow['template']);
 
       if (templateMeta === undefined) {
@@ -158,7 +195,23 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
             Reflect.set(managedCred, 'optional', true);
           }
 
-          candidates.push(managedCred);
+          if (
+            isProfiledWorkflow === true
+            && credPrefix !== undefined
+            && credPrefix !== ''
+          ) {
+            for (const credProfileValue of deployProfiles) {
+              const credProfile: Lib_EnvManagedSet_CredProfile = credProfileValue;
+              const profiledManagedCred: Lib_EnvManagedSet_ProfiledManagedCred = {
+                ...managedCred,
+                name: libEnvNamespace.githubProfileName(credPrefix, credProfile, credName),
+              };
+
+              candidates.push(profiledManagedCred);
+            }
+          } else {
+            candidates.push(managedCred);
+          }
         }
       }
     }

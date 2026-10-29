@@ -1,5 +1,11 @@
 import { promises as fs } from 'node:fs';
-import { basename, join, resolve } from 'node:path';
+import {
+  basename,
+  extname,
+  join,
+  resolve,
+  sep,
+} from 'node:path';
 
 import chalk from 'chalk';
 import prompts from 'prompts';
@@ -13,6 +19,7 @@ import {
   libItemChangelogValidBumps,
   libItemChangelogValidCategories,
   libItemChangelogVerbs,
+  libItemSkipDirectories,
 } from '../../lib/item.js';
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import {
@@ -22,10 +29,17 @@ import {
   LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION,
   LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION,
   LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION,
+  LIB_REGEX_PATTERN_CSHARP_SINCE_UNRELEASED,
   LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED,
   LIB_REGEX_PATTERN_EXACT_SEMVER,
+  LIB_REGEX_PATTERN_GO_SINCE_UNRELEASED,
+  LIB_REGEX_PATTERN_INLINE_DEPRECATED_UNRELEASED,
+  LIB_REGEX_PATTERN_INLINE_SINCE_UNRELEASED,
   LIB_REGEX_PATTERN_LEADING_NEWLINES,
+  LIB_REGEX_PATTERN_PYTHON_SINCE_UNRELEASED,
+  LIB_REGEX_PATTERN_RUST_SINCE_UNRELEASED,
   LIB_REGEX_PATTERN_SINCE_UNRELEASED,
+  LIB_REGEX_PATTERN_SWIFT_SINCE_UNRELEASED,
 } from '../../lib/regex.js';
 import { Runner as LibReleaseHistory } from '../../lib/release-history.js';
 import { Runner as LibVersionContract } from '../../lib/version-contract.js';
@@ -189,6 +203,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ValidationAndroidBuild,
   Cli_Utility_Changelog_Runner_Release_ValidationAppleBuild,
   Cli_Utility_Changelog_Runner_Release_VersionStrategy,
+  Cli_Utility_Changelog_Runner_Release_WorkspaceDirectories,
   Cli_Utility_Changelog_Runner_Release_WorkspaceEntry,
   Cli_Utility_Changelog_Runner_Release_WorkspacePath,
   Cli_Utility_Changelog_Runner_Release_Workspaces,
@@ -199,38 +214,58 @@ import type {
   Cli_Utility_Changelog_Runner_Run_ModeOutputValue,
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CandidateBytesRead,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CandidateFileHandle,
   Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePrefix,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckError,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckExtension,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckLanguageSincePattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries,
+  Cli_Utility_Changelog_Runner_StampUnreleased_DiscoveredExtension,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedNestedDirectories,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedRootDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_Fp,
   Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasEmbeddedRepository,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasLanguageSince,
   Cli_Utility_Changelog_Runner_StampUnreleased_HasSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_InlineDeprecatedPattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_InlineSincePattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease,
+  Cli_Utility_Changelog_Runner_StampUnreleased_LanguageSincePatterns,
+  Cli_Utility_Changelog_Runner_StampUnreleased_NestedWorkspaceDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion,
   Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent,
   Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError,
-  Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_Returns,
-  Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern,
-  Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SkipDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles,
   Cli_Utility_Changelog_Runner_StampUnreleased_StampError,
   Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StampExtension,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSincePattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSinceReplacePattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StillHasLanguageSince,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince,
   Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions,
   Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles,
   Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent,
-  Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath,
-  Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries,
+  Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceDirectories,
   Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersion,
   Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionCode,
   Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionName,
@@ -851,6 +886,7 @@ export class Runner {
     // Load "nova.config.json" for workspace paths.
     const config: Cli_Utility_Changelog_Runner_Release_Config = await new LibNovaConfig().load();
     const workspaces: Cli_Utility_Changelog_Runner_Release_Workspaces = config['workspaces'] ?? {};
+    const workspaceDirectories: Cli_Utility_Changelog_Runner_Release_WorkspaceDirectories = Object.keys(workspaces).map((workspacePath) => resolve(process.cwd(), workspacePath));
     const versionStrategy: Cli_Utility_Changelog_Runner_Release_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
 
     try {
@@ -878,7 +914,7 @@ export class Runner {
         for (const freezableWorkspace of freezableWorkspaces) {
           const emptyFreezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = freezableWorkspace[0];
           const emptyFreezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = resolve(process.cwd(), emptyFreezableWorkspacePath);
-          const emptyFreezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = await Runner.stampUnreleased(emptyFreezableWorkspaceDirectory, '0.0.0');
+          const emptyFreezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = await Runner.stampUnreleased(emptyFreezableWorkspaceDirectory, '0.0.0', workspaceDirectories);
 
           if (emptyFreezableStampSucceeded === false) {
             process.exitCode = 1;
@@ -1392,7 +1428,7 @@ export class Runner {
       }).info(`Updated "CHANGELOG.md" for ${applyReleasePackageName}.`);
 
       // Stamp @since UNRELEASED / @deprecated UNRELEASED tokens in source files.
-      const stampSucceeded: Cli_Utility_Changelog_Runner_Release_StampSucceeded = await Runner.stampUnreleased(applyReleasePackageDirectory, applyReleaseNewVersion);
+      const stampSucceeded: Cli_Utility_Changelog_Runner_Release_StampSucceeded = await Runner.stampUnreleased(applyReleasePackageDirectory, applyReleaseNewVersion, workspaceDirectories);
 
       if (stampSucceeded === false) {
         process.exitCode = 1;
@@ -1406,7 +1442,7 @@ export class Runner {
     for (const freezableWorkspace of freezableWorkspaces) {
       const freezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_FreezableWorkspacePath = freezableWorkspace[0];
       const freezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_FreezableWorkspaceDirectory = resolve(process.cwd(), freezableWorkspacePath);
-      const freezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_FreezableStampSucceeded = await Runner.stampUnreleased(freezableWorkspaceDirectory, '0.0.0');
+      const freezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_FreezableStampSucceeded = await Runner.stampUnreleased(freezableWorkspaceDirectory, '0.0.0', workspaceDirectories);
 
       if (freezableStampSucceeded === false) {
         process.exitCode = 1;
@@ -1553,11 +1589,12 @@ export class Runner {
    * CLI - Utility - Changelog - Stamp Unreleased.
    *
    * Replaces unreleased documentation sentinels throughout each workspace's
-   * supported source trees with the workspace's release version, then verifies
-   * that every scanned source file is fully stamped.
+   * owned source files with the workspace's release version, then verifies that
+   * every scanned source file is fully stamped.
    *
-   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory} packageDirectory - Package directory.
-   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}       newVersion       - New version.
+   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory}     packageDirectory     - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}           newVersion           - New version.
+   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceDirectories} workspaceDirectories - Workspace directories.
    *
    * @private
    *
@@ -1565,23 +1602,17 @@ export class Runner {
    *
    * @since 0.20.0
    */
-  private static async stampUnreleased(packageDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory, newVersion: Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion): Cli_Utility_Changelog_Runner_StampUnreleased_Returns {
+  private static async stampUnreleased(
+    packageDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory,
+    newVersion: Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion,
+    workspaceDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceDirectories,
+  ): Cli_Utility_Changelog_Runner_StampUnreleased_Returns {
     const isPrerelease: Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = newVersion.includes('-');
 
     if (isPrerelease === true) {
       return true;
     }
 
-    const sourceDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = [
-      join(packageDirectory, 'src'),
-      join(packageDirectory, 'scripts'),
-      join(packageDirectory, 'bin'),
-      join(packageDirectory, 'api'),
-      join(packageDirectory, 'app', 'src'),
-      join(packageDirectory, 'Sources'),
-      join(packageDirectory, 'Tests'),
-      join(packageDirectory, 'port', 'files', 'usr', 'local'),
-    ];
     const sourceFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = [];
     const supportedExtensions: Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions = [
       '.ts',
@@ -1592,118 +1623,177 @@ export class Runner {
       '.jsx',
       '.mjs',
       '.cjs',
+      '.cs',
       '.css',
       '.astro',
+      '.go',
       '.inc',
       '.java',
       '.kt',
       '.kts',
       '.php',
+      '.py',
+      '.rs',
       '.svelte',
       '.swift',
       '.vue',
     ];
+    const languageSincePatterns: Cli_Utility_Changelog_Runner_StampUnreleased_LanguageSincePatterns = {
+      '.cs': LIB_REGEX_PATTERN_CSHARP_SINCE_UNRELEASED,
+      '.go': LIB_REGEX_PATTERN_GO_SINCE_UNRELEASED,
+      '.py': LIB_REGEX_PATTERN_PYTHON_SINCE_UNRELEASED,
+      '.rs': LIB_REGEX_PATTERN_RUST_SINCE_UNRELEASED,
+      '.swift': LIB_REGEX_PATTERN_SWIFT_SINCE_UNRELEASED,
+    };
+    const nestedWorkspaceDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_NestedWorkspaceDirectories = new Set(workspaceDirectories.filter((workspaceDirectory) => {
+      return workspaceDirectory !== packageDirectory && workspaceDirectory.startsWith(`${packageDirectory}${sep}`);
+    }));
+    const skipDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_SkipDirectories = new Set(libItemSkipDirectories);
+    const excludedRootDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedRootDirectories = new Set([
+      '.changelog',
+      '.git',
+      'assets',
+      'docs',
+      'examples',
+      'templates',
+    ]);
+    const excludedNestedDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_ExcludedNestedDirectories = new Set([
+      '__fixtures__',
+      'fixtures',
+    ]);
 
     try {
-      const workspaceEntries: Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries = await fs.readdir(packageDirectory, { withFileTypes: true });
+      if ((await fs.lstat(packageDirectory)).isSymbolicLink() === true) {
+        Logger.customize({
+          name: 'Runner.stampUnreleased',
+          purpose: 'workspaceBoundary',
+        }).error(`Refusing to stamp symbolic-link workspace "${packageDirectory}".`);
 
-      for (const workspaceEntry of workspaceEntries) {
-        if (workspaceEntry.isSymbolicLink() === true || workspaceEntry.isFile() === false) {
+        return false;
+      }
+
+      const pendingDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = [packageDirectory];
+
+      while (pendingDirectories.length > 0) {
+        const currentDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory = pendingDirectories.pop();
+
+        if (currentDirectory === undefined || nestedWorkspaceDirectories.has(currentDirectory) === true) {
           continue;
         }
 
-        const workspaceCandidatePath: Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath = join(packageDirectory, workspaceEntry.name);
+        const directoryEntries: Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries = await fs.readdir(currentDirectory, { withFileTypes: true });
+        const hasEmbeddedRepository: Cli_Utility_Changelog_Runner_StampUnreleased_HasEmbeddedRepository = currentDirectory !== packageDirectory && directoryEntries.some((directoryEntry) => directoryEntry.name === '.git');
 
-        if (supportedExtensions.some((supportedExtension) => workspaceCandidatePath.endsWith(supportedExtension)) === true) {
-          sourceFiles.push(workspaceCandidatePath);
+        if (hasEmbeddedRepository === true) {
+          continue;
+        }
+
+        for (const directoryEntry of directoryEntries) {
+          if (directoryEntry.isSymbolicLink() === true) {
+            continue;
+          }
+
+          const candidatePath: Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath = join(currentDirectory, directoryEntry.name);
+
+          if (directoryEntry.isDirectory() === true) {
+            if (
+              nestedWorkspaceDirectories.has(candidatePath) === true
+              || skipDirectories.has(directoryEntry.name) === true
+              || excludedNestedDirectories.has(directoryEntry.name) === true
+              || (
+                currentDirectory === packageDirectory
+                && excludedRootDirectories.has(directoryEntry.name) === true
+              )
+            ) {
+              continue;
+            }
+
+            pendingDirectories.push(candidatePath);
+
+            continue;
+          }
+
+          if (directoryEntry.isFile() === false) {
+            continue;
+          }
+
+          const discoveredExtension: Cli_Utility_Changelog_Runner_StampUnreleased_DiscoveredExtension = extname(candidatePath);
+
+          if (supportedExtensions.includes(discoveredExtension) === true) {
+            sourceFiles.push(candidatePath);
+
+            continue;
+          }
+
+          if (discoveredExtension !== '') {
+            continue;
+          }
+
+          const candidateFileHandle: Cli_Utility_Changelog_Runner_StampUnreleased_CandidateFileHandle = await fs.open(candidatePath, 'r');
+
+          try {
+            const candidatePrefix: Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePrefix = Buffer.alloc(2);
+            const candidateBytesRead: Cli_Utility_Changelog_Runner_StampUnreleased_CandidateBytesRead = (await candidateFileHandle.read(candidatePrefix, 0, 2, 0)).bytesRead;
+
+            if (candidateBytesRead === 2 && candidatePrefix.toString('utf-8') === '#!') {
+              sourceFiles.push(candidatePath);
+            }
+          } finally {
+            await candidateFileHandle.close();
+          }
         }
       }
-    } catch {
+    } catch (error) {
+      const readdirError: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = error;
+      const readdirErrorMessage: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorMessage = (readdirError instanceof Error) ? readdirError.message : String(readdirError);
+
       Logger.customize({
         name: 'Runner.stampUnreleased',
         purpose: 'readdir',
-      }).error(`Unable to read workspace directory "${packageDirectory}".`);
+      }).error(`Unable to discover source files in "${packageDirectory}": ${readdirErrorMessage}`);
 
       return false;
     }
 
-    for (const sourceDirectory of sourceDirectories) {
-      const scanSourceDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = sourceDirectory;
-
-      try {
-        // Neither the source root nor any child symlink may lead into another workspace.
-        if ((await fs.lstat(scanSourceDirectory)).isSymbolicLink() === true) {
-          continue;
-        }
-
-        const pendingDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = [scanSourceDirectory];
-
-        while (pendingDirectories.length > 0) {
-          const currentDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory = pendingDirectories.pop();
-
-          if (currentDirectory === undefined) {
-            continue;
-          }
-
-          const directoryEntries: Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries = await fs.readdir(currentDirectory, { withFileTypes: true });
-
-          for (const directoryEntry of directoryEntries) {
-            if (directoryEntry.isSymbolicLink() === true) {
-              continue;
-            }
-
-            const candidatePath: Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath = join(currentDirectory, directoryEntry.name);
-
-            if (directoryEntry.isDirectory() === true) {
-              pendingDirectories.push(candidatePath);
-
-              continue;
-            }
-
-            if (
-              directoryEntry.isFile() === true
-              && supportedExtensions.some((supportedExtension) => candidatePath.endsWith(supportedExtension)) === true
-            ) {
-              sourceFiles.push(candidatePath);
-            }
-          }
-        }
-      } catch (error) {
-        const readdirError: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = error;
-        const readdirErrorCode: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = (readdirError instanceof Error && 'code' in readdirError) ? readdirError.code : undefined;
-
-        // A missing source directory is a legitimate no-op; other failures must surface.
-        if (readdirErrorCode === 'ENOENT') {
-          continue;
-        }
-
-        Logger.customize({
-          name: 'Runner.stampUnreleased',
-          purpose: 'readdir',
-        }).error(`Unable to read source directory "${scanSourceDirectory}".`);
-
-        return false;
-      }
-    }
-
     const sincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = new RegExp(LIB_REGEX_PATTERN_SINCE_UNRELEASED.source, 'g');
     const deprecatedPattern: Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern = new RegExp(LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.source, 'g');
+    const inlineSincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_InlineSincePattern = new RegExp(LIB_REGEX_PATTERN_INLINE_SINCE_UNRELEASED.source, 'g');
+    const inlineDeprecatedPattern: Cli_Utility_Changelog_Runner_StampUnreleased_InlineDeprecatedPattern = new RegExp(LIB_REGEX_PATTERN_INLINE_DEPRECATED_UNRELEASED.source, 'g');
 
     try {
       for (const filePath of sourceFiles) {
         const fp: Cli_Utility_Changelog_Runner_StampUnreleased_Fp = filePath;
         const originalContent: Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = await fs.readFile(fp, 'utf-8');
+        const stampExtension: Cli_Utility_Changelog_Runner_StampUnreleased_StampExtension = extname(fp);
+        const stampLanguageSincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSincePattern = languageSincePatterns[stampExtension];
 
         const hasSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(originalContent);
         const hasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(originalContent);
+        const hasInlineSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineSince = LIB_REGEX_PATTERN_INLINE_SINCE_UNRELEASED.test(originalContent);
+        const hasInlineDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_HasInlineDeprecated = LIB_REGEX_PATTERN_INLINE_DEPRECATED_UNRELEASED.test(originalContent);
+        const hasLanguageSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasLanguageSince = stampLanguageSincePattern !== undefined && stampLanguageSincePattern.test(originalContent);
 
-        if (hasSince === false && hasDeprecated === false) {
+        if (
+          hasSince === false
+          && hasDeprecated === false
+          && hasInlineSince === false
+          && hasInlineDeprecated === false
+          && hasLanguageSince === false
+        ) {
           continue;
         }
 
-        const updatedContent: Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = originalContent
+        let updatedContent: Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = originalContent
           .replace(sincePattern, `$1@since ${newVersion}`)
-          .replace(deprecatedPattern, `$1@deprecated ${newVersion}`);
+          .replace(deprecatedPattern, `$1@deprecated ${newVersion}`)
+          .replace(inlineSincePattern, `$1${newVersion}`)
+          .replace(inlineDeprecatedPattern, `$1${newVersion}`);
+
+        if (stampLanguageSincePattern !== undefined) {
+          const stampLanguageSinceReplacePattern: Cli_Utility_Changelog_Runner_StampUnreleased_StampLanguageSinceReplacePattern = new RegExp(stampLanguageSincePattern.source, 'g');
+
+          updatedContent = updatedContent.replace(stampLanguageSinceReplacePattern, `$1${newVersion}`);
+        }
 
         await fs.writeFile(fp, updatedContent, 'utf-8');
       }
@@ -1719,22 +1809,31 @@ export class Runner {
       return false;
     }
 
-    // Self-check: verify no UNRELEASED sentinel survived stamping. This reuses the same
-    // star-line-anchored patterns as the stamp, so it catches every multi-line JSDoc
-    // sentinel the stamp should have rewritten. Nova always writes multi-line JSDoc; a
-    // one-line `/** @since UNRELEASED */` is intentionally out of scope here, since an
-    // unanchored check would false-positive on string-literal fixtures the stamp preserves.
+    // Self-check: verify no recognized UNRELEASED sentinel survived stamping. Reusing
+    // the syntax-specific patterns keeps the check aligned with the mutation pass while
+    // preserving string literals and prose that merely mention the sentinel text.
     const survivingFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles = [];
 
     try {
       for (const filePath of sourceFiles) {
         const checkFp: Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = filePath;
         const checkContent: Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = await fs.readFile(checkFp, 'utf-8');
+        const checkExtension: Cli_Utility_Changelog_Runner_StampUnreleased_CheckExtension = extname(checkFp);
+        const checkLanguageSincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_CheckLanguageSincePattern = languageSincePatterns[checkExtension];
 
         const stillHasSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(checkContent);
         const stillHasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(checkContent);
+        const stillHasInlineSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineSince = LIB_REGEX_PATTERN_INLINE_SINCE_UNRELEASED.test(checkContent);
+        const stillHasInlineDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasInlineDeprecated = LIB_REGEX_PATTERN_INLINE_DEPRECATED_UNRELEASED.test(checkContent);
+        const stillHasLanguageSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasLanguageSince = checkLanguageSincePattern !== undefined && checkLanguageSincePattern.test(checkContent);
 
-        if (stillHasSince === true || stillHasDeprecated === true) {
+        if (
+          stillHasSince === true
+          || stillHasDeprecated === true
+          || stillHasInlineSince === true
+          || stillHasInlineDeprecated === true
+          || stillHasLanguageSince === true
+        ) {
           survivingFiles.push(checkFp);
         }
       }

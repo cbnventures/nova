@@ -4,6 +4,7 @@ import type {
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentDeployProfile,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
@@ -47,11 +48,21 @@ export type Lib_EnvManagedSet_Project = Shared_NovaConfigEnvironmentProject | un
 
 export type Lib_EnvManagedSet_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
 
+export type Lib_EnvManagedSet_ProfilesEnabled = boolean;
+
+export type Lib_EnvManagedSet_DeployProfiles = Shared_NovaConfigEnvironmentDeployProfile[];
+
+export type Lib_EnvManagedSet_ProjectProfile = Shared_NovaConfigEnvironmentDeployProfile;
+
 export type Lib_EnvManagedSet_Workspace = Shared_NovaConfigEnvironmentWorkspace;
+
+export type Lib_EnvManagedSet_WorkspaceProfile = Shared_NovaConfigEnvironmentDeployProfile;
 
 export type Lib_EnvManagedSet_Workflows = Shared_NovaConfig_Workflows;
 
 export type Lib_EnvManagedSet_WorkflowEnvironments = Shared_NovaConfigEnvironment_Workflows;
+
+export type Lib_EnvManagedSet_IsProfiledWorkflow = boolean;
 
 export type Lib_EnvManagedSet_TemplateMeta = Lib_WorkflowTemplates_Entry | undefined;
 
@@ -82,6 +93,10 @@ export type Lib_EnvManagedSet_CredPrefix = string | undefined;
 export type Lib_EnvManagedSet_ResolvedCred = string;
 
 export type Lib_EnvManagedSet_ManagedCred = Lib_EnvManagedSet_LibEnvManagedSet_ManagedKey;
+
+export type Lib_EnvManagedSet_CredProfile = Shared_NovaConfigEnvironmentDeployProfile;
+
+export type Lib_EnvManagedSet_ProfiledManagedCred = Lib_EnvManagedSet_LibEnvManagedSet_ManagedKey;
 
 export type Lib_EnvManagedSet_Seen = Set<string>;
 

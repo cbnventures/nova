@@ -56,10 +56,26 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Entry,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EntryKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentProfiles,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelection,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionEntry,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTagKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTags,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTagsEntry,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTrigger,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerObject,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvMigration,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Existing,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasEnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasError,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionVersionTagKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasUnsupportedEnvironmentTrigger,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasVersionTagTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWorkflowRunTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository,
@@ -78,7 +94,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralVariableName,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Metadata,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MissingLiterals,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_NonCloudflareTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawKeyEntry,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Reference,
@@ -162,11 +180,11 @@ const buildableTargetTypes: Cli_Generate_Github_WorkflowsBlueprintValidate_Build
   'npm',
   'github-action',
   'github-packages',
-  'cloudflare-pages-docusaurus',
+  'cloudflare-pages',
   'cloudflare-workers',
   'docker-hub',
   'ghcr',
-  'github-pages-docusaurus',
+  'github-pages',
   'vercel-nextjs',
 ];
 
@@ -229,12 +247,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}    rawWorkflows    - Raw workflows.
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}      workspaces      - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy} versionStrategy - Version strategy.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}     environment     - Environment.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
    * @since 0.26.0
    */
-  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver'): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
+  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
     const workflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows = [];
     const seenKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = new Set();
@@ -361,8 +380,11 @@ export class Runner {
       const workflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey = `${templateName}-${suffixValue}`;
       const runsOn: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn = entry['runsOn'];
       const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = entry['timeoutMinutes'];
+      const rawEnvironmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection = entry['environmentSelection'];
       const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms = entry['containerPlatforms'];
       const validTriggers: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = validTriggersByTemplate[templateName];
+      let environmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelection = undefined;
+      let hasEnvironmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasEnvironmentSelection = false;
 
       if (runsOn !== undefined && runsOn !== 'ubuntu-latest') {
         diagnostics.push({
@@ -388,6 +410,80 @@ export class Runner {
         });
 
         hasError = true;
+      }
+
+      if (rawEnvironmentSelection !== undefined) {
+        hasEnvironmentSelection = true;
+
+        if (Runner.isPlainObject(rawEnvironmentSelection) === false) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" has an invalid "environmentSelection" value. Configure exact "versionTags" and "manual" fields. Skipping.`,
+          });
+
+          hasError = true;
+        } else {
+          const environmentSelectionEntry: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionEntry = rawEnvironmentSelection as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionEntry;
+          const environmentSelectionKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionKeys = Object.keys(environmentSelectionEntry);
+          const environmentSelectionVersionTags: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTags = environmentSelectionEntry['versionTags'];
+          const hasExactEnvironmentSelectionKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionKeys = environmentSelectionKeys.length === 2
+            && environmentSelectionKeys.includes('versionTags') === true
+            && environmentSelectionKeys.includes('manual') === true;
+
+          if (
+            hasExactEnvironmentSelectionKeys === false
+            || Runner.isPlainObject(environmentSelectionVersionTags) === false
+            || typeof environmentSelectionEntry['manual'] !== 'boolean'
+          ) {
+            diagnostics.push({
+              severity: 'error',
+              message: `Workflow "${workflowKey}" must configure environmentSelection as { "versionTags": { "prerelease": "staging", "stable": "production" }, "manual": <boolean> }. Skipping.`,
+            });
+
+            hasError = true;
+          } else {
+            const environmentSelectionVersionTagsEntry: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTagsEntry = environmentSelectionVersionTags as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTagsEntry;
+            const environmentSelectionVersionTagKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionVersionTagKeys = Object.keys(environmentSelectionVersionTagsEntry);
+            const hasExactEnvironmentSelectionVersionTagKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionVersionTagKeys = environmentSelectionVersionTagKeys.length === 2
+              && environmentSelectionVersionTagKeys.includes('prerelease') === true
+              && environmentSelectionVersionTagKeys.includes('stable') === true;
+
+            if (
+              hasExactEnvironmentSelectionVersionTagKeys === false
+              || environmentSelectionVersionTagsEntry['prerelease'] !== 'staging'
+              || environmentSelectionVersionTagsEntry['stable'] !== 'production'
+            ) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Workflow "${workflowKey}" must map prerelease tags to "staging" and stable tags to "production". Skipping.`,
+              });
+
+              hasError = true;
+            } else {
+              environmentSelection = rawEnvironmentSelection as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelection;
+            }
+          }
+        }
+
+        if (templateName !== 'publish') {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares "environmentSelection", but only publish workflows targeting Cloudflare Workers support deployment environments. Skipping.`,
+          });
+
+          hasError = true;
+        }
+
+        const environmentProfiles: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentProfiles = environment['profiles'];
+
+        if (environmentProfiles === undefined || environmentProfiles['enabled'] !== true) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares "environmentSelection", but environment.profiles.enabled is not true. Enable profiles before selecting deployment environments. Skipping.`,
+          });
+
+          hasError = true;
+        }
       }
 
       if (containerPlatforms !== undefined) {
@@ -575,6 +671,41 @@ export class Runner {
         }
       }
 
+      if (hasEnvironmentSelection === true && environmentSelection !== undefined) {
+        let hasVersionTagTrigger: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasVersionTagTrigger = false;
+        let hasUnsupportedEnvironmentTrigger: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasUnsupportedEnvironmentTrigger = false;
+
+        for (const environmentTriggerValue of triggerList) {
+          const environmentTrigger: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTrigger = environmentTriggerValue;
+          const environmentTriggerObject: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerObject = (typeof environmentTrigger === 'string') ? {} : environmentTrigger as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerObject;
+          const environmentTriggerName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerName = (typeof environmentTrigger === 'string') ? environmentTrigger as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerName : environmentTriggerObject['name'] as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerName;
+
+          if (environmentTriggerName === 'release' || environmentTriggerName === 'tag-push') {
+            hasVersionTagTrigger = true;
+          } else {
+            hasUnsupportedEnvironmentTrigger = true;
+          }
+        }
+
+        if (hasVersionTagTrigger === false) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" selects deployment environments from version tags, but it has no "release" or "tag-push" trigger. Skipping.`,
+          });
+
+          hasError = true;
+        }
+
+        if (hasUnsupportedEnvironmentTrigger === true) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares "environmentSelection" with a branch or workflow-run trigger that cannot identify staging versus production. Use only release and tag-push triggers. Skipping.`,
+          });
+
+          hasError = true;
+        }
+      }
+
       if (hasError === true) {
         continue;
       }
@@ -631,6 +762,7 @@ export class Runner {
         const scopes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes = entry['build'];
         let dockerHubTargetCount: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount = 0;
         let ghcrTargetCount: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount = 0;
+        let nonCloudflareTargetCount: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_NonCloudflareTargetCount = 0;
 
         if (Array.isArray(scopes) === true) {
           for (const scopeValue of scopes) {
@@ -677,6 +809,10 @@ export class Runner {
 
             if (targetTypeName === 'ghcr') {
               ghcrTargetCount += 1;
+            }
+
+            if (targetTypeName !== 'cloudflare-workers') {
+              nonCloudflareTargetCount += 1;
             }
 
             if (typeof targetType !== 'string' || buildableTargetTypes.includes(targetTypeName) === false) {
@@ -771,6 +907,24 @@ export class Runner {
                 }
               }
             }
+          }
+        }
+
+        if (hasEnvironmentSelection === true) {
+          if (Array.isArray(targets) === false || targets.length === 0) {
+            diagnostics.push({
+              severity: 'error',
+              message: `Workflow "${workflowKey}" declares "environmentSelection" without a Cloudflare Workers deploy target. Skipping.`,
+            });
+
+            hasError = true;
+          } else if (nonCloudflareTargetCount > 0) {
+            diagnostics.push({
+              severity: 'error',
+              message: `Workflow "${workflowKey}" mixes Cloudflare Workers environment selection with another deploy target. Keep environment-aware Workers in a dedicated publish workflow. Skipping.`,
+            });
+
+            hasError = true;
           }
         }
 

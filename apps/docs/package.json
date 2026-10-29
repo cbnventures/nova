@@ -25,7 +25,7 @@
     "i18n:coverage": "theme-nova i18n coverage"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "^22 || ^24 || ^26"
   },
   "dependencies": {
     "@cbnventures/docusaurus-preset-nova": "file:../../packages/docusaurus-preset-nova",

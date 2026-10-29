@@ -249,6 +249,9 @@ import type {
   Lib_NovaConfig_Runner_ParseEnvironment_MatchCount,
   Lib_NovaConfig_Runner_ParseEnvironment_PrefixA,
   Lib_NovaConfig_Runner_ParseEnvironment_PrefixB,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProfilesEnabled,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProfilesResult,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProfilesValue,
   Lib_NovaConfig_Runner_ParseEnvironment_ProjectPrefix,
   Lib_NovaConfig_Runner_ParseEnvironment_ProjectResult,
   Lib_NovaConfig_Runner_ParseEnvironment_ProjectValue,
@@ -400,6 +403,8 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTo,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployWith,
+  Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection,
+  Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelectionVersionTags,
   Lib_NovaConfig_Runner_ParseWorkflows_Name,
   Lib_NovaConfig_Runner_ParseWorkflows_NameA,
   Lib_NovaConfig_Runner_ParseWorkflows_NameB,
@@ -410,6 +415,7 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection,
   Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers,
@@ -1438,6 +1444,20 @@ export class Runner {
     const workflowNames: Lib_NovaConfig_Runner_ParseEnvironment_WorkflowNames = (workflows !== undefined) ? workflows.map((workflow) => workflow['name']) : [];
     const collectedPrefixes: Lib_NovaConfig_Runner_ParseEnvironment_CollectedPrefixes = [];
 
+    const profilesValue: Lib_NovaConfig_Runner_ParseEnvironment_ProfilesValue = value['profiles'];
+
+    if (isPlainObject(profilesValue) === true) {
+      const profilesEnabled: Lib_NovaConfig_Runner_ParseEnvironment_ProfilesEnabled = (typeof profilesValue['enabled'] === 'boolean') ? profilesValue['enabled'] : undefined;
+
+      if (profilesEnabled === undefined) {
+        this.pushError('Runner.parseEnvironment', 'environment', 'Environment "profiles" has no boolean "enabled" value. Skipping ...');
+      } else {
+        const profilesResult: Lib_NovaConfig_Runner_ParseEnvironment_ProfilesResult = { enabled: profilesEnabled };
+
+        result.profiles = profilesResult;
+      }
+    }
+
     // Project keys carry a prefix and optional values; in practice they are reach "managed".
     const projectValue: Lib_NovaConfig_Runner_ParseEnvironment_ProjectValue = value['project'];
 
@@ -2043,6 +2063,27 @@ export class Runner {
         && rawTimeoutMinutes >= 1
         && rawTimeoutMinutes <= 360
       ) ? rawTimeoutMinutes : undefined;
+      const rawEnvironmentSelection: Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection = castItem['environmentSelection'];
+      let environmentSelection: Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection = undefined;
+
+      if (isPlainObject(rawEnvironmentSelection) === true) {
+        const environmentSelectionVersionTags: Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelectionVersionTags = rawEnvironmentSelection['versionTags'];
+
+        if (
+          isPlainObject(environmentSelectionVersionTags) === true
+          && environmentSelectionVersionTags['prerelease'] === 'staging'
+          && environmentSelectionVersionTags['stable'] === 'production'
+          && typeof rawEnvironmentSelection['manual'] === 'boolean'
+        ) {
+          environmentSelection = {
+            versionTags: {
+              prerelease: 'staging',
+              stable: 'production',
+            },
+            manual: rawEnvironmentSelection['manual'],
+          };
+        }
+      }
       const rawContainerPlatforms: Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms = castItem['containerPlatforms'];
       const containerPlatforms: Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms = (Array.isArray(rawContainerPlatforms) === true) ? rawContainerPlatforms.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms : [];
       const rawBuild: Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = castItem['build'];
@@ -2091,7 +2132,7 @@ export class Runner {
       const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
       // Build workflow object with properties in type-definition order: template, name, triggers,
-      // runsOn, timeoutMinutes, containerPlatforms, build, deploy, with.
+      // runsOn, timeoutMinutes, environmentSelection, containerPlatforms, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
         name,
@@ -2104,6 +2145,10 @@ export class Runner {
 
       if (timeoutMinutes !== undefined) {
         Reflect.set(workflow, 'timeoutMinutes', timeoutMinutes);
+      }
+
+      if (environmentSelection !== undefined) {
+        Reflect.set(workflow, 'environmentSelection', environmentSelection);
       }
 
       if (containerPlatforms.length > 0) {

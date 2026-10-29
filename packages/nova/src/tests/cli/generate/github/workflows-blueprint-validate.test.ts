@@ -5,6 +5,10 @@ import { describe, it } from 'vitest';
 import { Runner as Validator } from '../../../../cli/generate/github/workflows-blueprint-validate.js';
 
 import type {
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Environment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_Workspaces,
@@ -45,6 +49,10 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Environment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_Workspaces,
@@ -136,6 +144,83 @@ import type {
  * @since 0.21.0
  */
 describe('Validator.validate', () => {
+  it('accepts deployment environment selection when profiles are enabled', () => {
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Workspaces = {
+      './apps/worker': {
+        name: 'worker-app',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_RawWorkflows = [{
+      template: 'publish',
+      name: 'project',
+      triggers: [
+        'release',
+        'tag-push',
+      ],
+      build: ['./apps/worker'],
+      deploy: [{
+        to: 'cloudflare-workers',
+        path: './apps/worker',
+      }],
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'staging',
+          stable: 'production',
+        },
+        manual: true,
+      },
+    }];
+    const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Environment = {
+      profiles: {
+        enabled: true,
+      },
+    };
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcceptsDeploymentEnvironmentSelectionWhenProfilesAreEnabled_Result = Validator.validate(rawWorkflows, workspaces, 'semver', environment);
+
+    strictEqual(result['diagnostics'].length, 0);
+
+    strictEqual(result['workflows'].length, 1);
+
+    return;
+  });
+
+  it('flags deployment environment selection without profiles', () => {
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Workspaces = {
+      './apps/worker': {
+        name: 'worker-app',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_RawWorkflows = [{
+      template: 'publish',
+      name: 'project',
+      triggers: ['release'],
+      build: ['./apps/worker'],
+      deploy: [{
+        to: 'cloudflare-workers',
+        path: './apps/worker',
+      }],
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'staging',
+          stable: 'production',
+        },
+        manual: false,
+      },
+    }];
+    const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Environment = {};
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Result = Validator.validate(rawWorkflows, workspaces, 'semver', environment);
+
+    strictEqual(result['workflows'].length, 0);
+
+    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('environment.profiles.enabled is not true'), true);
+
+    return;
+  });
+
   it('clean config produces no diagnostics and keeps all workflows', () => {
     const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_Workspaces = {
       './packages/pkg-a': {
@@ -757,7 +842,7 @@ describe('Validator.validate', () => {
         name: 'one',
         triggers: ['release'],
         deploy: [{
-          to: 'cloudflare-pages-docusaurus',
+          to: 'cloudflare-pages',
           path: './packages/pkg-a',
         }],
         with: {},
@@ -767,7 +852,7 @@ describe('Validator.validate', () => {
         name: 'two',
         triggers: ['release'],
         deploy: [{
-          to: 'cloudflare-pages-docusaurus',
+          to: 'cloudflare-pages',
           path: './packages/pkg-b',
         }],
         with: {},
@@ -803,11 +888,11 @@ describe('Validator.validate', () => {
       triggers: ['release'],
       deploy: [
         {
-          to: 'github-pages-docusaurus',
+          to: 'github-pages',
           path: './packages/pkg-a',
         },
         {
-          to: 'github-pages-docusaurus',
+          to: 'github-pages',
           path: './packages/pkg-b',
         },
       ],
@@ -819,7 +904,7 @@ describe('Validator.validate', () => {
 
     strictEqual(result['diagnostics'].length, 1);
 
-    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Singleton target violation: workflow "publish-project" declares multiple "github-pages-docusaurus" targets, but only one is allowed.'), true);
+    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Singleton target violation: workflow "publish-project" declares multiple "github-pages" targets, but only one is allowed.'), true);
 
     return;
   });
@@ -843,7 +928,7 @@ describe('Validator.validate', () => {
         name: 'one',
         triggers: ['release'],
         deploy: [{
-          to: 'github-pages-docusaurus',
+          to: 'github-pages',
           path: './packages/pkg-a',
         }],
         with: {},
@@ -853,7 +938,7 @@ describe('Validator.validate', () => {
         name: 'two',
         triggers: ['release'],
         deploy: [{
-          to: 'github-pages-docusaurus',
+          to: 'github-pages',
           path: './packages/pkg-b',
         }],
         with: {},
@@ -865,7 +950,7 @@ describe('Validator.validate', () => {
 
     strictEqual(result['diagnostics'].length, 1);
 
-    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Singleton target collision: only one "github-pages-docusaurus" target may be declared across all workflows. Found in workflow "publish-one" and again in workflow "publish-two".'), true);
+    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Singleton target collision: only one "github-pages" target may be declared across all workflows. Found in workflow "publish-one" and again in workflow "publish-two".'), true);
 
     return;
   });
@@ -889,11 +974,11 @@ describe('Validator.validate', () => {
       triggers: ['release'],
       deploy: [
         {
-          to: 'cloudflare-pages-docusaurus',
+          to: 'cloudflare-pages',
           path: './packages/pkg-a',
         },
         {
-          to: 'cloudflare-pages-docusaurus',
+          to: 'cloudflare-pages',
           path: './packages/pkg-b',
         },
       ],
@@ -905,7 +990,7 @@ describe('Validator.validate', () => {
 
     strictEqual(result['diagnostics'].length, 1);
 
-    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Destination collision in workflow "publish-project": multiple "cloudflare-pages-docusaurus" targets declare the same destination'), true);
+    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Destination collision in workflow "publish-project": multiple "cloudflare-pages" targets declare the same destination'), true);
 
     return;
   });

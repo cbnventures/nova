@@ -79,6 +79,7 @@ export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerVersion = s
 export type Lib_DockerPackaging_Runner_BuildDockerfile_IsYarnClassic = boolean;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests = boolean;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_BuildCommands = string[];

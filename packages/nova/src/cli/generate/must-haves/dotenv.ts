@@ -97,6 +97,7 @@ export class Runner {
         confirmPrune: Runner['confirmPrune'],
         dryRun: isDryRun,
         prune: isPrune,
+        profilesEnabled: environment['profiles'] !== undefined && environment['profiles']['enabled'] === true,
         replaceFile: isReplaceFile,
         targetDirectory: join(currentDirectory, workspacePath),
         variables,

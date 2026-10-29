@@ -58,6 +58,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_NodeVersionEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_SetupStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_LeavesOriginalModeEnvironmentAgnostic_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndPushTriggersInConfigOrder_DollarBrace,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndPushTriggersInConfigOrder_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndPushTriggersInConfigOrder_PublishEntry,
@@ -78,6 +79,13 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheWorkflowRunPublishConditionAndRunName_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheWorkflowRunPublishConditionAndRunName_PublishEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheWorkflowRunPublishConditionAndRunName_WorkflowRunNode,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_CheckIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_OrderedJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_PreflightIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleasePushEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleasePushEntryForBuild,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleaseWorkflowRunEntry,
@@ -572,6 +580,122 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       },
     },
   };
+
+  it('leaves original mode environment agnostic', () => {
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_LeavesOriginalModeEnvironmentAgnostic_Result = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(entry, workspaces, environment));
+
+    strictEqual(result.includes('DEPLOY_ENVIRONMENT'), false);
+
+    strictEqual(result.includes('CLOUDFLARE_ENV'), false);
+
+    strictEqual(result.includes('Validate Cloudflare deployment environment'), false);
+
+    strictEqual(result.includes('Select Cloudflare deployment environment'), false);
+
+    return;
+  });
+
+  it('profiles Cloudflare publishing by release channel', () => {
+    const profiledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEntry = {
+      template: 'publish',
+      name: 'project',
+      triggers: [
+        'release',
+        'tag-push',
+      ],
+      build: [
+        './apps/public-app',
+        './apps/plain-app',
+      ],
+      deploy: [
+        {
+          to: 'cloudflare-workers',
+          path: './apps/public-app',
+        },
+        {
+          to: 'cloudflare-workers',
+          path: './apps/plain-app',
+          after: ['./apps/public-app'],
+        },
+      ],
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'staging',
+          stable: 'production',
+        },
+        manual: true,
+      },
+    };
+    const profiledEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEnvironment = {
+      profiles: {
+        enabled: true,
+      },
+      project: {
+        prefix: 'PROJECT_',
+      },
+      workspaces: {
+        './apps/public-app': {
+          prefix: 'PUBLIC_',
+          variables: [{
+            key: 'PUBLIC_SITE_KEY',
+            secret: false,
+            reach: 'build',
+          }],
+        },
+        './apps/plain-app': {
+          prefix: 'PLAIN_',
+          variables: [{
+            key: 'PRIVATE_TOKEN',
+            secret: true,
+            reach: 'runtime',
+          }],
+        },
+      },
+    };
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_Ir = WorkflowsBlueprint.buildPublish(profiledEntry, workspaces, profiledEnvironment);
+    const orderedJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_OrderedJob = ir['jobs'].find((job) => job['id'] === 'publish-cloudflare-workers-apps-plain-app');
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_Result = WorkflowsBlueprint.serialize(ir);
+    const preflightIndex: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_PreflightIndex = result.indexOf('Validate Cloudflare deployment environment');
+    const checkIndex: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_CheckIndex = result.indexOf('Check project');
+
+    ok(result.includes('DEPLOY_ENVIRONMENT'));
+
+    ok(result.includes('CLOUDFLARE_ENV'));
+
+    strictEqual(result.split('Select Cloudflare deployment environment').length - 1, 3, 'the build job and both deploy jobs select the environment independently');
+
+    ok(result.includes('$GITHUB_REF_NAME'), 'tag-triggered runs inspect the version suffix');
+
+    strictEqual(result.includes('contains(github.ref_name, \'-\')'), false, 'hyphens in project and package names do not imply a prerelease');
+
+    ok(result.includes('PROJECT_STAGING_CLOUDFLARE_API_TOKEN'));
+
+    ok(result.includes('PROJECT_PRODUCTION_CLOUDFLARE_API_TOKEN'));
+
+    ok(result.includes('PUBLIC_STAGING_PUBLIC_SITE_KEY'));
+
+    ok(result.includes('PLAIN_PRODUCTION_PRIVATE_TOKEN'));
+
+    ok(result.includes('wrangler types'));
+
+    ok(result.includes('--env "$CLOUDFLARE_ENV"'));
+
+    ok(
+      preflightIndex >= 0
+      && checkIndex >= 0
+      && preflightIndex < checkIndex,
+      'the all-target preflight runs before checks and builds',
+    );
+
+    ok(orderedJob !== undefined, 'the ordered Cloudflare deploy job exists');
+
+    deepStrictEqual(orderedJob['needs'], [
+      'build',
+      'publish-cloudflare-workers-apps-public-app',
+    ], 'the configured deploy order remains intact');
+
+    return;
+  });
 
   it('adds no step for a dotenv-less scope', () => {
     const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);

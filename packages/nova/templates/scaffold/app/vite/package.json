@@ -16,13 +16,13 @@
     "build:types": "nova utility type-check --project tsconfig.json",
     "build:app": "vite build",
     "clean": "nova utility run-scripts --parallel \"clean:*\"",
-    "clean:build": "shx rm -rf ./dist"
+    "clean:build": "shx rm -rf ./build"
   },
   "engines": {
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.35.0"
+    "@cbnventures/nova": "0.36.0"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_22__]",

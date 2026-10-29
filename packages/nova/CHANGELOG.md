@@ -1,5 +1,21 @@
 # @cbnventures/nova
 
+## 0.36.0 - 2026-10-29
+
+### UPDATED
+- Refreshed universal agent conventions with explicit Claude Code and Codex workflows, authorization boundaries, scoped output caching, and project-native release guidance.
+- Renamed the Cloudflare Pages and GitHub Pages publish targets to framework-neutral identifiers for static build output.
+- Added Node.js 26 support with bundled Corepack execution and pinned pnpm or Yarn bootstrapping in generated workflows and Docker builds.
+
+### FIXED
+- Fixed generated publish workflows dropping hidden files such as .well-known/ and .assetsignore, while rejecting missing, empty, sensitive, or unsafe-symlink artifact handoffs before upload.
+- Aligned Vite output with Nova's build directory convention and seeded Apple, Android, and pfSense scaffolds with releasable documentation sentinels.
+
+### ADDED
+- Added optional development, staging, and production environment profiles with isolated Cloudflare Workers deployment selection, profile-specific dotenv files, preflight validation, and implicit development mode when profiles are not configured.
+- Added idiomatic Go and Rust conventions, Nova-specific agent guidance, and changelog sentinel stamping for C#, Go, Python, and Rust documentation.
+- Expanded changelog sentinel stamping to recursively cover workspace-owned source, Swift DocC, one-line documentation, and extensionless scripts while preserving nested workspaces, templates, caches, generated output, and embedded repositories.
+
 ## 0.35.0 - 2026-10-27
 
 ### ADDED

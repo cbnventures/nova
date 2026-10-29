@@ -18,6 +18,22 @@ export type Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv = 'development' |
 
 export type Lib_RunScripts_Runner_GetScriptEnvironment_Returns = NodeJS.ProcessEnv;
 
+export type Lib_RunScripts_Runner_GetScriptEnvironment_CloudflareEnvironment = string | undefined;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_ProjectRoot = string | undefined;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_ConfigPath = string;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_RawConfig = Record<string, unknown>;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironmentValue = unknown;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironment = Record<string, unknown>;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_RawProfilesValue = unknown;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_RawProfiles = Record<string, unknown>;
+
 /**
  * Lib - Run Scripts - Match Scripts.
  *

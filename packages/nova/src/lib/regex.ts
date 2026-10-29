@@ -251,6 +251,16 @@ export const LIB_REGEX_PATTERN_CHANGELOG_SEMVER_HEADING = /^## (?:0|[1-9]\d*)\.(
 export const LIB_REGEX_PATTERN_CODE_BLOCK = /```[^\n]*\n([\s\S]*?)```/;
 
 /**
+ * Lib - Regex - Pattern Csharp Since Unreleased.
+ *
+ * Matches C# XML documentation remarks shaped as `Since: UNRELEASED` and
+ * captures the complete prefix while leaving ordinary strings untouched.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_CSHARP_SINCE_UNRELEASED = /((?:^|\n)[ \t]*\/\/\/[ \t]*<remarks>[ \t]*Since:[ \t]+)UNRELEASED\b(?=[ \t]*<\/remarks>)/;
+
+/**
  * Lib - Regex - Pattern Complex Type Rhs Chars.
  *
  * Matches any character that signals a composite type (union, intersection, object,
@@ -270,6 +280,28 @@ export const LIB_REGEX_PATTERN_COMPLEX_TYPE_RHS_CHARS = /[|&{}();,]/;
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED = /(\n\s*\*\s*)@deprecated\s+UNRELEASED\b/;
+
+/**
+ * Lib - Regex - Pattern Inline Deprecated Unreleased.
+ *
+ * Matches an inline `@deprecated UNRELEASED` documentation sentinel.
+ * The complete block must start and end on one physical line so strings remain untouched.
+ * This keeps replacement limited to documentation.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_INLINE_DEPRECATED_UNRELEASED = /((?:^|\n)[ \t]*\/\*\*(?=[^\r\n]*\*\/)[^\r\n]*?@deprecated[ \t]+)UNRELEASED\b/;
+
+/**
+ * Lib - Regex - Pattern Inline Since Unreleased.
+ *
+ * Matches an `@since UNRELEASED` sentinel inside a single-line documentation
+ * block whose opening delimiter begins the physical line. Requiring the complete
+ * block on that line prevents stampUnreleased from rewriting strings and prose.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_INLINE_SINCE_UNRELEASED = /((?:^|\n)[ \t]*\/\*\*(?=[^\r\n]*\*\/)[^\r\n]*?@since[ \t]+)UNRELEASED\b/;
 
 /**
  * Lib - Regex - Pattern Description Line.
@@ -300,6 +332,16 @@ export const LIB_REGEX_PATTERN_DIGITS = /\d+/;
  * @since 0.11.0
  */
 export const LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE = /^"(.*)"$/;
+
+/**
+ * Lib - Regex - Pattern Go Since Unreleased.
+ *
+ * Matches Go declaration documentation shaped as `// Since: UNRELEASED` at
+ * the start of a physical line and captures the prefix for version replacement.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_GO_SINCE_UNRELEASED = /((?:^|\n)[ \t]*\/\/[ \t]*Since:[ \t]+)UNRELEASED\b/;
 
 /**
  * Lib - Regex - Pattern Dts Array Alias.
@@ -957,6 +999,17 @@ export const LIB_REGEX_PATTERN_PASCAL_CASE_SEGMENT = /^[A-Z][A-Za-z0-9]*$/;
 export const LIB_REGEX_PATTERN_PASCAL_CASE_UNDERSCORE_TYPE_NAME = /^[A-Z][A-Za-z0-9]*(_[A-Z][A-Za-z0-9]*)*$/;
 
 /**
+ * Lib - Regex - Pattern Python Since Unreleased.
+ *
+ * Matches a Google-style `Since:` section inside one Python docstring.
+ * The matching triple-quote delimiter keeps the scan within that documentation
+ * block instead of crossing into neighboring source text.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_PYTHON_SINCE_UNRELEASED = /((?:^|\n)[ \t]*(["']{3})(?:(?!\2)[\s\S])*?(?:^|\n)[ \t]*Since:[ \t]*\r?\n[ \t]+)UNRELEASED\b(?=(?:(?!\2)[\s\S])*?\2)/;
+
+/**
  * Lib - Regex - Pattern Range Capture Remainder.
  *
  * Strips a version range operator such as ^, ~, >=, or similar and captures the
@@ -1077,6 +1130,16 @@ export const LIB_REGEX_PATTERN_ROUTE_SEGMENT_WORD_CHARACTER = /[A-Za-z0-9_]/;
 export const LIB_REGEX_PATTERN_RUSTC_VERSION_LINE = /^rustc\s+(\d+\.\d+\.\d+)\s+\((\w+)\s+([\d-]+)\)(?:\s+\(([^)]+)\))?$/;
 
 /**
+ * Lib - Regex - Pattern Rust Since Unreleased.
+ *
+ * Matches Rustdoc declaration documentation shaped as
+ * `/// Since: UNRELEASED` and captures the prefix for version replacement.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_RUST_SINCE_UNRELEASED = /((?:^|\n)[ \t]*\/\/\/[ \t]*Since:[ \t]+)UNRELEASED\b/;
+
+/**
  * Lib - Regex - Pattern Semver.
  *
  * Captures a semver version from within a larger string. Used by the version utility
@@ -1147,6 +1210,16 @@ export const LIB_REGEX_PATTERN_SETUP_INSTRUCTIONS_BLOCK = /^[\s\S]*# ={3,}\n/;
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_SINCE_UNRELEASED = /(\n\s*\*\s*)@since\s+UNRELEASED\b/;
+
+/**
+ * Lib - Regex - Pattern Swift Since Unreleased.
+ *
+ * Matches Swift DocC `/// - Since: UNRELEASED` fields at the start of a physical
+ * line and captures the complete field prefix for version replacement.
+ *
+ * @since 0.36.0
+ */
+export const LIB_REGEX_PATTERN_SWIFT_SINCE_UNRELEASED = /((?:^|\n)[ \t]*\/\/\/[ \t]*-[ \t]+Since:[ \t]+)UNRELEASED\b/;
 
 /**
  * Lib - Regex - Pattern Single Pascal Type.

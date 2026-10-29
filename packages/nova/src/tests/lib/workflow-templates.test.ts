@@ -65,8 +65,8 @@ describe('publish targets', () => {
       'github-packages',
       'docker-hub',
       'ghcr',
-      'cloudflare-pages-docusaurus',
-      'github-pages-docusaurus',
+      'cloudflare-pages',
+      'github-pages',
     ];
 
     for (const otherTargetName of otherTargetNames) {

@@ -1,13 +1,23 @@
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 import chalk from 'chalk';
 
+import { Bootstrap } from '../toolkit/index.js';
 import { Runner as LibCorepack } from './corepack.js';
 
 import type {
+  Lib_RunScripts_Runner_GetScriptEnvironment_CloudflareEnvironment,
+  Lib_RunScripts_Runner_GetScriptEnvironment_ConfigPath,
   Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv,
+  Lib_RunScripts_Runner_GetScriptEnvironment_ProjectRoot,
+  Lib_RunScripts_Runner_GetScriptEnvironment_RawConfig,
+  Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironment,
+  Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironmentValue,
+  Lib_RunScripts_Runner_GetScriptEnvironment_RawProfiles,
+  Lib_RunScripts_Runner_GetScriptEnvironment_RawProfilesValue,
   Lib_RunScripts_Runner_GetScriptEnvironment_Returns,
   Lib_RunScripts_Runner_MatchScripts_Pattern,
   Lib_RunScripts_Runner_MatchScripts_Prefix,
@@ -289,10 +299,37 @@ export class Runner {
    * @since 0.28.0
    */
   private static getScriptEnvironment(nodeEnv: Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv): Lib_RunScripts_Runner_GetScriptEnvironment_Returns {
+    let cloudflareEnvironment: Lib_RunScripts_Runner_GetScriptEnvironment_CloudflareEnvironment = process.env['CLOUDFLARE_ENV'];
+
+    if (cloudflareEnvironment === undefined) {
+      const projectRoot: Lib_RunScripts_Runner_GetScriptEnvironment_ProjectRoot = Bootstrap.getProjectRoot();
+
+      if (projectRoot !== undefined) {
+        const configPath: Lib_RunScripts_Runner_GetScriptEnvironment_ConfigPath = resolve(projectRoot, 'nova.config.json');
+
+        try {
+          const rawConfig: Lib_RunScripts_Runner_GetScriptEnvironment_RawConfig = JSON.parse(readFileSync(configPath, 'utf-8')) as Lib_RunScripts_Runner_GetScriptEnvironment_RawConfig;
+          const rawEnvironmentValue: Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironmentValue = rawConfig['environment'];
+          const rawEnvironment: Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironment = (typeof rawEnvironmentValue === 'object' && rawEnvironmentValue !== null) ? rawEnvironmentValue as Lib_RunScripts_Runner_GetScriptEnvironment_RawEnvironment : {};
+          const rawProfilesValue: Lib_RunScripts_Runner_GetScriptEnvironment_RawProfilesValue = rawEnvironment['profiles'];
+          const rawProfiles: Lib_RunScripts_Runner_GetScriptEnvironment_RawProfiles = (typeof rawProfilesValue === 'object' && rawProfilesValue !== null) ? rawProfilesValue as Lib_RunScripts_Runner_GetScriptEnvironment_RawProfiles : {};
+
+          if (rawProfiles['enabled'] === true) {
+            cloudflareEnvironment = 'development';
+          }
+        } catch {
+          /* Original mode: missing or invalid config adds no Cloudflare environment. */
+        }
+      }
+    }
+
     return {
       ...process.env,
       ...(nodeEnv === undefined) ? {} : {
         'NODE_ENV': nodeEnv,
+      },
+      ...(cloudflareEnvironment === undefined) ? {} : {
+        'CLOUDFLARE_ENV': cloudflareEnvironment,
       },
     };
   }

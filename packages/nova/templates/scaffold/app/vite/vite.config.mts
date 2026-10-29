@@ -4,6 +4,9 @@ import frameworkPlugins from './config/framework-plugins.js';
 import pwaPlugins from './config/pwa-plugins.js';
 
 export default defineConfig({
+  build: {
+    outDir: 'build',
+  },
   plugins: [
     ...frameworkPlugins,
     ...pwaPlugins,
