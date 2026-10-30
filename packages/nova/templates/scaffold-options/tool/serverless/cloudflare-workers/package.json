@@ -49,7 +49,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.36.0",
+    "@cbnventures/nova": "0.37.0",
     "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
     "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
     "wrangler": "[__SCAFFOLD_VERSION_WRANGLER__]"

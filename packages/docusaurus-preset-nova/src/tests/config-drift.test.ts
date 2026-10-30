@@ -11,12 +11,14 @@ import {
   LIB_REGEX_NOVA_PRESET_OVERRIDES_TYPE_REFERENCE,
   LIB_REGEX_TYPE_DECLARATION_FIELD,
 } from '../lib/regex.js';
-import { validateOptions, validateThemeConfig } from '../options.js';
+import {
+  pluginOptionsSchema,
+  validateOptions,
+  validateThemeConfig,
+} from '../options.js';
 
-import type { Options_ValidateOptions_Returns } from '../types/options.d.ts';
 import type {
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description,
-  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema,
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_MissingInSchema,
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_ParityMessage,
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves,
@@ -800,20 +802,7 @@ describe('configDrift overridesSchemaParity', () => {
     const typeFilePath: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
     const publicLeaves: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves = await derivePublicOverrideLeafPaths(typeFilePath);
 
-    let description: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description = {};
-
-    validateOptions({
-      validate: (schema) => {
-        const joiSchema: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema = schema as Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema;
-
-        description = joiSchema.describe();
-
-        return schema as Options_ValidateOptions_Returns;
-      },
-      options: {
-        preset: 'sentinel',
-      },
-    });
+    const description: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description = pluginOptionsSchema.describe();
 
     const schemaLeaves: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaLeaves = deriveSchemaOverrideLeafPaths(description);
     const publicSet: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicSet = new Set(publicLeaves);

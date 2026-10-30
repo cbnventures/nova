@@ -1,5 +1,19 @@
 # @cbnventures/nova
 
+## 0.37.0 - 2026-10-30
+
+### UPDATED
+- Updated generated Android applications to compile against API 37 so current AndroidX and Compose releases remain compatible.
+- Made the Docusaurus scaffold name its build folder explicitly, building with docusaurus build --out-dir build and serving with docusaurus serve --dir build.
+- Refreshed generated scaffold dependencies, platform tooling, container bases, and GitHub Actions to their current stable releases.
+
+### FIXED
+- Fixed Apple app scaffolds omitting the generated iOS launch screen declaration.
+- Fixed scaffold version updates failing to regenerate Android's Gradle wrapper while application identifiers were still templated.
+
+### REMOVED
+- Removed the Docker packaging build directory option, so generated Dockerfiles always copy each workspace's build folder and existing assembly manifests drop their retired buildDirectory field when Nova next rewrites them.
+
 ## 0.36.0 - 2026-10-29
 
 ### UPDATED

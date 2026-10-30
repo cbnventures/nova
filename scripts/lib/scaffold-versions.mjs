@@ -764,16 +764,36 @@ async function renderDirectory(directory, catalog) {
       continue;
     }
 
-    let content = await readFile(entryPath, 'utf-8');
+    const content = await readFile(entryPath, 'utf-8');
+    const renderedContent = renderScaffoldVersionTemplateContent(content, catalog);
 
-    for (const catalogEntry of Object.values(catalog['entries'])) {
-      content = content.replaceAll(catalogEntry['placeholder'], catalogEntry['value']);
-    }
-
-    await writeFile(entryPath, content, 'utf-8');
+    await writeFile(entryPath, renderedContent, 'utf-8');
   }
 
   return;
+}
+
+/**
+ * Lib - Scaffold Versions - Render Scaffold Version Template Content.
+ *
+ * Resolves catalog placeholders and supplies a valid fixture application ID
+ * so Gradle can configure the isolated wrapper-regeneration project.
+ *
+ * @param {string}                 content - Content.
+ * @param {ScaffoldVersionCatalog} catalog - Catalog.
+ *
+ * @returns {string}
+ *
+ * @since 0.0.0
+ */
+export function renderScaffoldVersionTemplateContent(content, catalog) {
+  let renderedContent = content;
+
+  for (const catalogEntry of Object.values(catalog['entries'])) {
+    renderedContent = renderedContent.replaceAll(catalogEntry['placeholder'], catalogEntry['value']);
+  }
+
+  return renderedContent.replaceAll('[__ANDROID_APPLICATION_ID__]', 'io.cbnventures.nova.scaffoldversions');
 }
 
 /**

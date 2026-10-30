@@ -21,6 +21,7 @@ import {
 } from 'vitest';
 
 import { Runner as LibDockerPackaging } from '../../lib/docker-packaging.js';
+import { getScaffoldVersion } from '../../lib/scaffold-versions.js';
 
 import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_AddsASecondWorkspaceToTheSameImageAndBuildsItsInternalDependencyClosure_ApiDirectory,
@@ -37,6 +38,14 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_AssemblesMixedStaticNextAndContainerNativeProfilesInsideTheNodeRuntimeClosure_NativeWorkspaceDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_AssemblesMixedStaticNextAndContainerNativeProfilesInsideTheNodeRuntimeClosure_ProjectDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_AssemblesMixedStaticNextAndContainerNativeProfilesInsideTheNodeRuntimeClosure_WebWorkspaceDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DockerfileContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DocsWorkspaceDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_GeneratedManifestContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestPath,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ProjectDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_WebWorkspaceDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_AssemblyPackage,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ComposeContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ContainerBuildPackage,
@@ -256,8 +265,8 @@ describe('LibDockerPackaging', async () => {
     const shellVariableMarker: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ShellVariableMarker = '$';
     const dockerignoreLines: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_DockerignoreLines = dockerignoreContent.split('\n');
 
-    strictEqual(dockerfileContent.includes('FROM debian:trixie-20261005-slim AS s6-overlay'), true);
-    strictEqual(dockerfileContent.includes('ARG S6_OVERLAY_VERSION="3.2.3.2"'), true);
+    strictEqual(dockerfileContent.includes(`FROM debian:${getScaffoldVersion('dockerDebian')} AS s6-overlay`), true);
+    strictEqual(dockerfileContent.includes(`ARG S6_OVERLAY_VERSION="${getScaffoldVersion('dockerS6Overlay')}"`), true);
     strictEqual(dockerfileContent.includes('"amd64") s6_architecture="x86_64"'), true);
     strictEqual(dockerfileContent.includes('"arm64") s6_architecture="aarch64"'), true);
     strictEqual(dockerfileContent.includes('COPY --from=s6-overlay /s6-rootfs/ /'), true);
@@ -461,7 +470,6 @@ describe('LibDockerPackaging', async () => {
       workspaceName: 'api',
     });
     await LibDockerPackaging.generateForTarget({
-      buildDirectory: 'dist',
       profile: 'static-site',
       projectDirectory,
       replaceFile: false,
@@ -469,7 +477,6 @@ describe('LibDockerPackaging', async () => {
       workspaceName: 'docs',
     });
     await LibDockerPackaging.generateForTarget({
-      buildDirectory: '.next',
       profile: 'nextjs-standalone',
       projectDirectory,
       replaceFile: false,
@@ -486,14 +493,14 @@ describe('LibDockerPackaging', async () => {
 
     const dockerfileContent: Tests_Lib_DockerPackaging_LibDockerPackaging_AssemblesMixedStaticNextAndContainerNativeProfilesInsideTheNodeRuntimeClosure_DockerfileContent = await readFile(join(projectDirectory, 'Dockerfile'), 'utf-8');
 
-    strictEqual(dockerfileContent.includes('FROM node:24.22.0-trixie-slim AS runtime'), true);
+    strictEqual(dockerfileContent.includes(`FROM node:${getScaffoldVersion('dockerNode')} AS runtime`), true);
     strictEqual(dockerfileContent.includes('COPY ["packages/native","packages/native"]'), true);
     strictEqual(dockerfileContent.includes('fixture-app-unrelated'), false);
-    strictEqual(dockerfileContent.includes('cp -a \'/workspace/apps/docs/dist/.\' \'/runtime/sites/docs/\''), true);
-    strictEqual(dockerfileContent.includes('cp -a \'/workspace/apps/web/.next/standalone/.\' \'/runtime/apps/web/\''), true);
+    strictEqual(dockerfileContent.includes('cp -a \'/workspace/apps/docs/build/.\' \'/runtime/sites/docs/\''), true);
+    strictEqual(dockerfileContent.includes('cp -a \'/workspace/apps/web/build/standalone/.\' \'/runtime/apps/web/\''), true);
     strictEqual(dockerfileContent.split('COPY --from=build /runtime/ /app/').length - 1, 1);
-    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/dist /app/sites/docs'), false);
-    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/web/.next/standalone /app/apps/web'), false);
+    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), false);
+    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/web/build/standalone /app/apps/web'), false);
 
     return;
   });
@@ -797,7 +804,6 @@ describe('LibDockerPackaging', async () => {
     const workspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_WorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/docs', 'fixture-docs');
 
     await LibDockerPackaging.generateForTarget({
-      buildDirectory: 'build',
       profile: 'static-site',
       projectDirectory,
       replaceFile: true,
@@ -810,7 +816,6 @@ describe('LibDockerPackaging', async () => {
     const composeContent: Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_ComposeContent = await readFile(join(projectDirectory, 'compose.yml'), 'utf-8');
 
     deepStrictEqual(manifest['workspaces'], [{
-      buildDirectory: 'build',
       packageName: 'fixture-docs',
       path: 'apps/docs',
       profile: 'static-site',
@@ -821,6 +826,52 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
     strictEqual(composeContent.includes('"8080:8080"'), true);
     strictEqual(composeContent.includes('read_only: true'), true);
+
+    return;
+  });
+
+  it('drops the legacy build directory field from existing manifest workspaces', async () => {
+    const projectDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ProjectDirectory = join(sandboxRoot, 'legacy-build-directory');
+
+    await writeProject(projectDirectory);
+
+    const docsWorkspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DocsWorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/docs', 'fixture-app-docs');
+    const webWorkspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_WebWorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/web', 'fixture-app-web');
+
+    await LibDockerPackaging.generateForTarget({
+      profile: 'static-site',
+      projectDirectory,
+      replaceFile: true,
+      workspaceDirectory: docsWorkspaceDirectory,
+      workspaceName: 'docs',
+    });
+
+    const manifestPath: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestPath = join(projectDirectory, 'packages', 'docker', 'manifest.json');
+    const generatedManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_GeneratedManifestContent = await readFile(manifestPath, 'utf-8');
+    const legacyManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent = generatedManifestContent.replace('"packageName": "fixture-app-docs"', [
+      '"buildDirectory": "dist",',
+      '      "packageName": "fixture-app-docs"',
+    ].join('\n'));
+
+    await writeFile(manifestPath, legacyManifestContent, 'utf-8');
+
+    await LibDockerPackaging.generateForTarget({
+      profile: 'static-site',
+      projectDirectory,
+      replaceFile: true,
+      workspaceDirectory: webWorkspaceDirectory,
+      workspaceName: 'web',
+    });
+
+    const manifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestContent = await readFile(manifestPath, 'utf-8');
+    const dockerfileContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DockerfileContent = await readFile(join(projectDirectory, 'Dockerfile'), 'utf-8');
+
+    strictEqual(generatedManifestContent.includes('buildDirectory'), false);
+    strictEqual(legacyManifestContent.includes('"buildDirectory": "dist"'), true);
+    strictEqual(manifestContent.includes('buildDirectory'), false);
+    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
+    strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/web/build /app/sites/web'), true);
+    strictEqual(dockerfileContent.includes('/workspace/apps/docs/dist'), false);
 
     return;
   });

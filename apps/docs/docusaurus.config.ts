@@ -236,7 +236,7 @@ const config: DocusaurusNovaConfig = {
       logo: {
         alt: 'Nova',
         src: {
-          light: '/images/logo.svg',
+          light: '/images/navbar.svg',
           dark: undefined,
         },
         href: '/',

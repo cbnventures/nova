@@ -26,7 +26,7 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 
 ## Why Use This Command?
 
-1. Creates iOS and macOS targets together so one workspace can serve both Apple platforms.
+1. Creates iOS and macOS targets together with a generated iOS launch screen so one workspace can serve both Apple platforms.
 2. Includes a Swift Testing target so the generated app starts with a working verification path.
 3. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
 4. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
@@ -81,20 +81,20 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 
 ## Output Files
 
-| File                                    | Description                                                                   |
-|-----------------------------------------|-------------------------------------------------------------------------------|
-| `project.yml`                           | XcodeGen definition for the universal app, test target, scheme, and app icon. |
-| `Sources/App.swift`                     | SwiftUI application entry point.                                              |
-| `Sources/Assets.xcassets/`              | Nova app icon, launchpad mark, and social-link vector assets.                 |
-| `Sources/ContentView.swift`             | Starter interface shared by iOS and macOS.                                    |
-| `Sources/Localizable.xcstrings`         | English String Catalog shared by the iOS and macOS targets.                   |
-| `Tests/AppTests.swift`                  | Swift Testing smoke test.                                                     |
-| `package.json`                          | Nova script groups for project generation, checking, and building.            |
-| `eslint.config.mts`                     | Nova ESLint presets and custom rules for the Node.js lifecycle helper.        |
-| `tsconfig.scripts.json`                 | Strict Node.js type-checking for generated lifecycle scripts.                 |
-| `tsconfig.tests.json`                   | Strict type-checking for future helper tests and Vitest configuration.        |
-| `vitest.config.mts`                     | Helper-test discovery with an empty-suite-safe starting point.                |
-| `assets/app-store-connect/{workspace}/` | Root-owned App Store Connect metadata, screenshots, and creative assets.      |
+| File                                    | Description                                                                  |
+|-----------------------------------------|------------------------------------------------------------------------------|
+| `project.yml`                           | XcodeGen definition for the app, tests, scheme, icon, and iOS launch screen. |
+| `Sources/App.swift`                     | SwiftUI application entry point.                                             |
+| `Sources/Assets.xcassets/`              | Nova app icon, launchpad mark, and social-link vector assets.                |
+| `Sources/ContentView.swift`             | Starter interface shared by iOS and macOS.                                   |
+| `Sources/Localizable.xcstrings`         | English String Catalog shared by the iOS and macOS targets.                  |
+| `Tests/AppTests.swift`                  | Swift Testing smoke test.                                                    |
+| `package.json`                          | Nova script groups for project generation, checking, and building.           |
+| `eslint.config.mts`                     | Nova ESLint presets and custom rules for the Node.js lifecycle helper.       |
+| `tsconfig.scripts.json`                 | Strict Node.js type-checking for generated lifecycle scripts.                |
+| `tsconfig.tests.json`                   | Strict type-checking for future helper tests and Vitest configuration.       |
+| `vitest.config.mts`                     | Helper-test discovery with an empty-suite-safe starting point.               |
+| `assets/app-store-connect/{workspace}/` | Root-owned App Store Connect metadata, screenshots, and creative assets.     |
 
 ## Localization
 

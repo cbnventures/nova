@@ -1,28 +1,18 @@
+import { fail } from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 /**
- * Verify Docusaurus Module Loading - Validate.
+ * Verify Docusaurus Module Loading - Reject External Validation.
  *
- * Runs a value through a Joi schema using the same callback contract exposed
- * by Docusaurus to plugin validation functions.
+ * Throws when a validator delegates schema normalization across module
+ * boundaries instead of using the normalizer that owns its Joi schema.
  *
- * @param {import('joi').Schema}    schema  - Schema.
- * @param {Record<string, unknown>} options - Options.
- *
- * @returns {Record<string, unknown>}
+ * @returns {never}
  *
  * @since 0.0.0
  */
-function validate(schema, options) {
-  const result = schema.validate(options);
-
-  if (result['error'] !== undefined) {
-    throw result['error'];
-  }
-
-  return result['value'];
-}
+const rejectExternalValidation = () => fail('Nova delegated schema normalization to an external validation callback.');
 
 /**
  * Verify Docusaurus Module Loading - Run.
@@ -58,7 +48,7 @@ async function run() {
   }
 
   const nativeOptions = optionsModule.validateOptions({
-    validate,
+    validate: rejectExternalValidation,
     options: {
       preset: 'foundry',
     },
@@ -87,6 +77,7 @@ async function run() {
   }
 
   const loadedPluginConfigs = await loadPluginConfigs({
+    siteDir: fileURLToPath(packageUrl),
     siteConfigPath: fileURLToPath(new URL('package.json', packageUrl)),
     siteConfig: {
       plugins: [],
@@ -142,7 +133,7 @@ async function run() {
   }
 
   const jitiOptions = themeValidateOptions({
-    validate,
+    validate: rejectExternalValidation,
     options: {
       preset: 'foundry',
     },

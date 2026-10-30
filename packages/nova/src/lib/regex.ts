@@ -1566,16 +1566,6 @@ export const LIB_REGEX_PLACEHOLDER_CUSTOM_DONATION = /\[__CUSTOM_DONATION__\]/;
 export const LIB_REGEX_PLACEHOLDER_DOCKER_RUNTIME_DIRECTIVES = /\[__DOCKER_RUNTIME_DIRECTIVES__\]/;
 
 /**
- * Lib - Regex - Placeholder Docker Build Directory.
- *
- * Matches the compiled-site directory inserted into static-site Dockerfiles.
- * Different framework scaffolds can therefore share one runtime template.
- *
- * @since 0.29.0
- */
-export const LIB_REGEX_PLACEHOLDER_DOCKER_BUILD_DIRECTORY = /\[__DOCKER_BUILD_DIRECTORY__\]/;
-
-/**
  * Lib - Regex - Placeholder Docker Architectures.
  *
  * Matches the architecture list used by generated container publishing

@@ -248,8 +248,6 @@ export type Shared_DockerPackagingServiceInput = {
 
 export type Shared_DockerPackagingServiceInputs = Shared_DockerPackagingServiceInput[];
 
-export type Shared_DockerPackagingWorkspace_BuildDirectory = string;
-
 export type Shared_DockerPackagingWorkspace_PackageName = string;
 
 export type Shared_DockerPackagingWorkspace_Path = string;
@@ -261,7 +259,6 @@ export type Shared_DockerPackagingWorkspace_RuntimePath = string;
 export type Shared_DockerPackagingWorkspace_RuntimePaths = Shared_DockerPackagingWorkspace_RuntimePath[];
 
 export type Shared_DockerPackagingWorkspace = {
-  buildDirectory: Shared_DockerPackagingWorkspace_BuildDirectory;
   packageName: Shared_DockerPackagingWorkspace_PackageName;
   path: Shared_DockerPackagingWorkspace_Path;
   profile: Shared_DockerPackagingWorkspace_Profile;
@@ -281,8 +278,6 @@ export type Shared_DockerPackagingManifest = {
   services: Shared_DockerPackagingManifest_Services;
   workspaces: Shared_DockerPackagingManifest_Workspaces;
 };
-
-export type Shared_DockerPackagingGenerateOptions_BuildDirectory = string;
 
 export type Shared_DockerPackagingGenerateOptions_DryRun = boolean;
 
@@ -307,7 +302,6 @@ export type Shared_DockerPackagingGenerateOptions_WorkspaceDirectory = string;
 export type Shared_DockerPackagingGenerateOptions_WorkspaceName = string;
 
 export type Shared_DockerPackagingGenerateOptions = {
-  buildDirectory?: Shared_DockerPackagingGenerateOptions_BuildDirectory;
   dryRun?: Shared_DockerPackagingGenerateOptions_DryRun;
   ignoreFileEntry?: Shared_DockerPackagingGenerateOptions_IgnoreFileEntry;
   profile: Shared_DockerPackagingGenerateOptions_Profile;

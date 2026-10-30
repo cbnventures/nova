@@ -1,4 +1,8 @@
-import { joi } from './lib/docusaurus-utils-validation.js';
+import {
+  joi,
+  normalizePluginOptions,
+  normalizeThemeConfig,
+} from './lib/docusaurus-utils-validation.js';
 import { progressBarDefaults } from './lib/progress-bar.js';
 import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
@@ -38,9 +42,9 @@ import type {
  * including preset name, hex color values, optional overrides
  * for each preset configuration category, and custom CSS paths.
  *
- * @since 0.15.0
+ * @since 0.37.0
  */
-const pluginOptionsSchema = joi.object({
+export const pluginOptionsSchema = joi.object({
   preset: joi.string()
     .valid(...presetsIndexNames)
     .required(),
@@ -248,34 +252,33 @@ const themeConfigSchema = joi.object({
 /**
  * Options - Validate Options.
  *
- * Validates the raw plugin options object against the schema and
- * returns the normalized result with defaults applied for any
- * omitted fields.
+ * Validates raw plugin options with the normalizer that owns the schema's Joi
+ * instance, preventing linked consumers from mixing incompatible schemas.
  *
  * @param {Options_ValidateOptions_Data} data - Data.
  *
  * @returns {Options_ValidateOptions_Returns}
  *
- * @since 0.15.0
+ * @since 0.37.0
  */
 export function validateOptions(data: Options_ValidateOptions_Data): Options_ValidateOptions_Returns {
-  return data.validate(pluginOptionsSchema, data['options']);
+  return normalizePluginOptions(pluginOptionsSchema, data['options']) as Options_ValidateOptions_Returns;
 }
 
 /**
  * Options - Validate Theme Config.
  *
- * Validates the theme configuration section and merges it with the existing site-wide theme
- * configuration object.
+ * Validates theme configuration with the normalizer that owns the schema's Joi
+ * instance while retaining unknown configuration owned by other themes.
  *
  * @param {Options_ValidateThemeConfig_Data} data - Data.
  *
  * @returns {Options_ValidateThemeConfig_Returns}
  *
- * @since 0.15.0
+ * @since 0.37.0
  */
 export function validateThemeConfig(data: Options_ValidateThemeConfig_Data): Options_ValidateThemeConfig_Returns {
-  return data.validate(themeConfigSchema, data['themeConfig']);
+  return normalizeThemeConfig(themeConfigSchema, data['themeConfig']) as Options_ValidateThemeConfig_Returns;
 }
 
 /**

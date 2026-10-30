@@ -18,6 +18,7 @@ import {
 } from 'vitest';
 
 import { Runner as CliScaffoldToolServerless } from '../../../../cli/scaffold/tool/serverless.js';
+import { getScaffoldVersion } from '../../../../lib/scaffold-versions.js';
 
 import type {
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_Config,
@@ -137,7 +138,7 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
     }
 
     strictEqual(apiSource.includes('export function GET'), true);
-    strictEqual(packageJson.includes('"vercel": "64.4.0"'), true);
+    strictEqual(packageJson.includes(`"vercel": "${getScaffoldVersion('vercel')}"`), true);
     strictEqual(wranglerExists, false);
 
     return;

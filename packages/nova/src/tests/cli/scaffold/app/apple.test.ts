@@ -257,6 +257,7 @@ describe.sequential('CliScaffoldAppApple.run', async () => {
 
     strictEqual(projectYml.includes('PRODUCT_BUNDLE_IDENTIFIER: io.cbnventures.branded-short-links'), true);
     strictEqual(projectYml.includes('PRODUCT_BUNDLE_IDENTIFIER: io.cbnventures.branded-short-links.tests'), true);
+    strictEqual(projectYml.includes('INFOPLIST_KEY_UILaunchScreen_Generation: YES'), true);
     strictEqual(projectYml.includes('bundleIdPrefix'), false);
     strictEqual(projectYml.includes('com.example'), false);
     strictEqual(gitignore.includes('/assets/'), false);

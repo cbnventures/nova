@@ -33,6 +33,7 @@ import type {
   Lib_DockerPackaging_DockerManifestSchemaVersion,
   Lib_DockerPackaging_DockerProtectedWritablePaths,
   Lib_DockerPackaging_DockerReservedServiceNames,
+  Lib_DockerPackaging_DockerWorkspaceBuildDirectory,
   Lib_DockerPackaging_Runner_BuildCompose_Content,
   Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock,
   Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles,
@@ -383,6 +384,16 @@ const dockerReservedServiceNames: Lib_DockerPackaging_DockerReservedServiceNames
 ]);
 
 /**
+ * Lib - Docker Packaging - Docker Workspace Build Directory.
+ *
+ * Names the workspace folder every generated Dockerfile copies build output from.
+ * Nova builds every workspace into this folder, so no workspace can choose another.
+ *
+ * @since 0.37.0
+ */
+const dockerWorkspaceBuildDirectory: Lib_DockerPackaging_DockerWorkspaceBuildDirectory = 'build';
+
+/**
  * Lib - Docker Packaging.
  *
  * Maintains one repository-level, manifest-driven s6 appliance. Every Docker-enabled
@@ -448,7 +459,6 @@ export class Runner {
     }
 
     const workspaceDefinition: Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceDefinition = {
-      buildDirectory: options['buildDirectory'] ?? 'build',
       packageName: workspacePackageNameValue,
       path: workspacePathValue,
       profile: options['profile'],
@@ -682,7 +692,8 @@ export class Runner {
    * Lib - Docker Packaging - Normalize Manifest.
    *
    * Validates the repository Docker assembly manifest or initializes an empty
-   * manifest for the first Docker-enabled scaffold.
+   * manifest for the first Docker-enabled scaffold. Workspace entries are rebuilt
+   * from their known keys, which drops the retired buildDirectory field.
    *
    * @param {Lib_DockerPackaging_Runner_NormalizeManifest_Value} value - Value.
    *
@@ -726,7 +737,9 @@ export class Runner {
     return {
       ...manifest,
       workspaces: manifest['workspaces'].map((workspace) => ({
-        ...workspace,
+        packageName: workspace['packageName'],
+        path: workspace['path'],
+        profile: workspace['profile'],
         runtimePaths: Runner.normalizeRuntimePaths(workspace['runtimePaths'] ?? [], workspace['path']),
       })),
     };
@@ -1281,30 +1294,30 @@ export class Runner {
 
           runtimeAssemblyCommands.push(
             `mkdir -p ${Runner.shellQuote(runtimeSitePath)}`,
-            `cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${workspace['buildDirectory']}/.`)} ${Runner.shellQuote(`${runtimeSitePath}/`)}`,
+            `cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/.`)} ${Runner.shellQuote(`${runtimeSitePath}/`)}`,
           );
         }
       } else if (needsNodeRuntime === true && workspace['profile'] === 'nextjs-standalone') {
         const runtimeAssemblyWorkspacePath: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspacePath = `/runtime/${workspace['path']}`;
 
-        runtimeAssemblyCommands.push(`cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${workspace['buildDirectory']}/standalone/.`)} ${Runner.shellQuote(`${runtimeAssemblyWorkspacePath}/`)}`);
+        runtimeAssemblyCommands.push(`cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/standalone/.`)} ${Runner.shellQuote(`${runtimeAssemblyWorkspacePath}/`)}`);
       } else if (needsNodeRuntime === true) {
         continue;
       } else if (workspace['profile'] === 'static-site') {
         const workspaceServices: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceServices = manifest['services'].filter((manifestService) => manifestService['workspace'] === workspace['path']);
 
         for (const service of workspaceServices) {
-          runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${workspace['buildDirectory']} /app/sites/${service['name']}`);
+          runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory} /app/sites/${service['name']}`);
         }
       } else if (workspace['profile'] === 'container-native') {
         runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']} ${runtimeWorkspacePath}`);
       } else if (workspace['profile'] === 'nextjs-standalone') {
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${workspace['buildDirectory']}/standalone ${runtimeWorkspacePath}`);
+        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/standalone ${runtimeWorkspacePath}`);
         runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/public ${runtimeWorkspacePath}/public`);
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${workspace['buildDirectory']}/static ${runtimeWorkspacePath}/${workspace['buildDirectory']}/static`);
+        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/static ${runtimeWorkspacePath}/${dockerWorkspaceBuildDirectory}/static`);
       } else {
         runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/package.json ${runtimeWorkspacePath}/package.json`);
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${workspace['buildDirectory']} ${runtimeWorkspacePath}/${workspace['buildDirectory']}`);
+        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory} ${runtimeWorkspacePath}/${dockerWorkspaceBuildDirectory}`);
       }
 
       if (workspace['profile'] !== 'container-native') {

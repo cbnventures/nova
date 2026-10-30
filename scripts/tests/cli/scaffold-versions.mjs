@@ -7,6 +7,7 @@ import {
 import {
   applyScaffoldVersionAudit,
   auditScaffoldVersionCatalog,
+  renderScaffoldVersionTemplateContent,
   selectStableVersion,
 } from '../../lib/scaffold-versions.mjs';
 
@@ -317,6 +318,33 @@ describe('scaffold version maintenance', () => {
     expect(originalEntry['value']).toBe('1.0.0');
 
     expect(updatedEntry['value']).toBe('1.1.0');
+
+    return;
+  });
+
+  it('renders a valid temporary Android project', () => {
+    const catalog = /** @type {Parameters<typeof renderScaffoldVersionTemplateContent>[1]} */ ({
+      schemaVersion: 1,
+      entries: {
+        gradle: {
+          group: 'android',
+          placeholder: '[__SCAFFOLD_VERSION_GRADLE__]',
+          source: {
+            type: 'manual',
+          },
+          value: '9.8.2',
+        },
+      },
+    });
+    const content = [
+      'namespace = "[__ANDROID_APPLICATION_ID__]"',
+      'gradle = "[__SCAFFOLD_VERSION_GRADLE__]"',
+    ].join('\n');
+
+    expect(renderScaffoldVersionTemplateContent(content, catalog)).toBe([
+      'namespace = "io.cbnventures.nova.scaffoldversions"',
+      'gradle = "9.8.2"',
+    ].join('\n'));
 
     return;
   });

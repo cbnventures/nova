@@ -1861,36 +1861,36 @@ requires updating this document in the same change.
 
 ### Nova ESLint Rules
 
-| Area | Enabled rules |
-|------|---------------|
-| Control flow and patterns | `@cbnventures/nova/no-assign-then-return`, `@cbnventures/nova/no-await-in-loop`, `@cbnventures/nova/no-boolean-var-for-if`, `@cbnventures/nova/no-use-before-define`, `@cbnventures/nova/require-explicit-return`, `@cbnventures/nova/switch-case-blocks` |
-| Object and call access | `@cbnventures/nova/no-bracket-assignment`, `@cbnventures/nova/no-bracket-method-call`, `@cbnventures/nova/require-bracket-property-access` |
-| TypeScript contracts | `@cbnventures/nova/no-catch-unknown-annotation`, `@cbnventures/nova/no-explicit-any`, `@cbnventures/nova/no-inline-type-annotation`, `@cbnventures/nova/no-shared-type-import`, `@cbnventures/nova/require-type-naming`, `@cbnventures/nova/require-undefined-init` |
-| Syntax and safety | `@cbnventures/nova/no-default-export-declaration`, `@cbnventures/nova/no-destructuring`, `@cbnventures/nova/no-implicit-boolean`, `@cbnventures/nova/no-numeric-literals`, `@cbnventures/nova/no-optional-chaining`, `@cbnventures/nova/no-rest-params`, `@cbnventures/nova/no-script-url` |
+| Area                       | Enabled rules                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Control flow and patterns  | `@cbnventures/nova/no-assign-then-return`, `@cbnventures/nova/no-await-in-loop`, `@cbnventures/nova/no-boolean-var-for-if`, `@cbnventures/nova/no-use-before-define`, `@cbnventures/nova/require-explicit-return`, `@cbnventures/nova/switch-case-blocks`                                                                                                                                                                                                                       |
+| Object and call access     | `@cbnventures/nova/no-bracket-assignment`, `@cbnventures/nova/no-bracket-method-call`, `@cbnventures/nova/require-bracket-property-access`                                                                                                                                                                                                                                                                                                                                      |
+| TypeScript contracts       | `@cbnventures/nova/no-catch-unknown-annotation`, `@cbnventures/nova/no-explicit-any`, `@cbnventures/nova/no-inline-type-annotation`, `@cbnventures/nova/no-shared-type-import`, `@cbnventures/nova/require-type-naming`, `@cbnventures/nova/require-undefined-init`                                                                                                                                                                                                             |
+| Syntax and safety          | `@cbnventures/nova/no-default-export-declaration`, `@cbnventures/nova/no-destructuring`, `@cbnventures/nova/no-implicit-boolean`, `@cbnventures/nova/no-numeric-literals`, `@cbnventures/nova/no-optional-chaining`, `@cbnventures/nova/no-rest-params`, `@cbnventures/nova/no-script-url`                                                                                                                                                                                      |
 | Formatting and readability | `@cbnventures/nova/no-complex-arrow-concise`, `@cbnventures/nova/no-multiline-strings`, `@cbnventures/nova/no-raw-text-in-code`, `@cbnventures/nova/no-template-curly-in-string`, `@cbnventures/nova/no-ternary-in-template-literal`, `@cbnventures/nova/require-import-order`, `@cbnventures/nova/require-multiline-condition-groups`, `@cbnventures/nova/require-multiline-conditions`, `@cbnventures/nova/require-padding-lines`, `@cbnventures/nova/require-ternary-parens` |
-| JSDoc | `@cbnventures/nova/require-jsdoc-body`, `@cbnventures/nova/require-jsdoc-hierarchy`, `@cbnventures/nova/require-jsdoc-param-alignment`, `@cbnventures/nova/require-jsdoc-param-name`, `@cbnventures/nova/require-jsdoc-presence`, `@cbnventures/nova/require-jsdoc-private`, `@cbnventures/nova/require-jsdoc-returns`, `@cbnventures/nova/require-jsdoc-since`, `@cbnventures/nova/require-jsdoc-tag-order` |
-| Naming and modules | `@cbnventures/nova/require-hash-private`, `@cbnventures/nova/require-kebab-case-filename`, `@cbnventures/nova/require-naming-convention`, `@cbnventures/nova/require-node-protocol` |
-| Nova-specific diagnostics | `@cbnventures/nova/no-logger-dev` |
-| Regular expressions | `@cbnventures/nova/no-regex-literal-flags`, `@cbnventures/nova/no-regex-literals` |
+| JSDoc                      | `@cbnventures/nova/require-jsdoc-body`, `@cbnventures/nova/require-jsdoc-hierarchy`, `@cbnventures/nova/require-jsdoc-param-alignment`, `@cbnventures/nova/require-jsdoc-param-name`, `@cbnventures/nova/require-jsdoc-presence`, `@cbnventures/nova/require-jsdoc-private`, `@cbnventures/nova/require-jsdoc-returns`, `@cbnventures/nova/require-jsdoc-since`, `@cbnventures/nova/require-jsdoc-tag-order`                                                                    |
+| Naming and modules         | `@cbnventures/nova/require-hash-private`, `@cbnventures/nova/require-kebab-case-filename`, `@cbnventures/nova/require-naming-convention`, `@cbnventures/nova/require-node-protocol`                                                                                                                                                                                                                                                                                             |
+| Nova-specific diagnostics  | `@cbnventures/nova/no-logger-dev`                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Regular expressions        | `@cbnventures/nova/no-regex-literal-flags`, `@cbnventures/nova/no-regex-literals`                                                                                                                                                                                                                                                                                                                                                                                               |
 
 `@cbnventures/nova/no-raw-text-in-code` applies to MDX rather than TypeScript
 syntax, but remains listed because it is part of the same enabled preset.
 
 ### Vitest Type-Declaration Inspectors
 
-| Toggle | Contract |
-|--------|----------|
-| `inspector-cross-section-references` | Declaration sections only reference their own or imported types. |
-| `inspector-dts-import-verbatim` | Types imported from `.d.ts` files keep their canonical names. |
-| `inspector-no-inline-import-types` | Declaration files use top-of-file named type imports. |
-| `inspector-section-alphabetical` | Declaration sections remain alphabetical. |
-| `inspector-first-come-first-serve-order` | Types inside a section follow first use in source. |
-| `inspector-object-property-types` | Object properties use earlier parent-prefixed named types. |
-| `inspector-section-coverage` | Source and declaration sections cover one another in both directions. |
-| `inspector-variable-type-symmetry` | Parameters, returns, and body variables use their mirrored named aliases. |
-| `inspector-identifier-vs-filename` | Top-level identifiers do not duplicate the file name. |
-| `inspector-filename-validation` | Source and declaration paths follow the supported naming grammar. |
-| `inspector-standalone-type-files` | Shared declarations follow the standalone type-file rules. |
+| Toggle                                   | Contract                                                                  |
+|------------------------------------------|---------------------------------------------------------------------------|
+| `inspector-cross-section-references`     | Declaration sections only reference their own or imported types.          |
+| `inspector-dts-import-verbatim`          | Types imported from `.d.ts` files keep their canonical names.             |
+| `inspector-no-inline-import-types`       | Declaration files use top-of-file named type imports.                     |
+| `inspector-section-alphabetical`         | Declaration sections remain alphabetical.                                 |
+| `inspector-first-come-first-serve-order` | Types inside a section follow first use in source.                        |
+| `inspector-object-property-types`        | Object properties use earlier parent-prefixed named types.                |
+| `inspector-section-coverage`             | Source and declaration sections cover one another in both directions.     |
+| `inspector-variable-type-symmetry`       | Parameters, returns, and body variables use their mirrored named aliases. |
+| `inspector-identifier-vs-filename`       | Top-level identifiers do not duplicate the file name.                     |
+| `inspector-filename-validation`          | Source and declaration paths follow the supported naming grammar.         |
+| `inspector-standalone-type-files`        | Shared declarations follow the standalone type-file rules.                |
 
 Nova's other Vitest suites validate repository contracts such as environment
 variables, frontmatter, links, Markdown tables, package scripts, and

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>envoy-logo</title>
-    <g id="envoy-logo" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
-        <g id="Group">
-            <circle id="Oval" fill="#7C3AED" cx="256" cy="256" r="256"></circle>
-            <polygon id="Path" fill="#06B6D4" opacity="0.85" points="78.7692308 256 256 78.7692308 433.230769 256 256 433.230769"></polygon>
-            <circle id="Oval" fill="#FFFFFF" cx="256" cy="256" r="59.0769231"></circle>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>envoy/logo</title>
+    <g id="envoy/logo" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g id="envoy-logo-nobg">
+            <path d="M0,512 C0,794.769792 229.230208,1024 512,1024 C794.769792,1024 1024,794.769792 1024,512 C1024,229.230208 794.769792,0 512,0 C229.230208,0 0,229.230208 0,512 Z" id="Oval" fill="#7C3AED"></path>
+            <polygon id="Path" fill="#06B6D4" opacity="0.85" points="157.538462 512 512 157.538462 866.461538 512 512 866.461538"></polygon>
+            <path d="M393.846154,512 C393.846154,554.212304 416.366149,593.218082 452.923076,614.324234 C489.480004,635.430387 534.519996,635.430387 571.076924,614.324234 C607.633851,593.218082 630.153846,554.212304 630.153846,512 C630.153846,469.787696 607.633851,430.781918 571.076924,409.675766 C534.519996,388.569613 489.480004,388.569613 452.923076,409.675766 C416.366149,430.781918 393.846154,469.787696 393.846154,512 Z" id="Oval" fill="#FFFFFF"></path>
         </g>
     </g>
 </svg>

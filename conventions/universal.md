@@ -200,20 +200,20 @@ When the user corrects you, state what you're actually updating, why the prior a
 
 ### File Naming
 
-| Language                | Convention                       | Example                                     |
-|-------------------------|----------------------------------|---------------------------------------------|
-| TypeScript / JavaScript | kebab-case                       | `markdown-table.ts`, `cli-header.d.ts`      |
+| Language                | Convention                       | Example                                       |
+|-------------------------|----------------------------------|-----------------------------------------------|
+| TypeScript / JavaScript | kebab-case                       | `markdown-table.ts`, `cli-header.d.ts`        |
 | Go                      | lowercase snake_case             | `release_client.go`, `release_client_test.go` |
-| Rust                    | snake_case                       | `release_client.rs`                         |
-| Swift                   | PascalCase + role suffix         | `TunnelFormView.swift`, `TunnelModel.swift` |
-| Java                    | PascalCase matching class name   | `EntityRepository.java`                     |
-| Kotlin                  | PascalCase matching class name   | `EntityRepository.kt`                       |
-| C#                      | PascalCase matching class name   | `EntityRepository.cs`                       |
-| PHP                     | PascalCase (PSR-4) or snake_case | `EntityRepository.php`                      |
-| Python                  | snake_case (PEP 8)               | `entity_repository.py`                      |
-| CSS                     | kebab-case                       | `user-profile.css`                          |
-| Docker                  | kebab-case                       | `api-gateway.Dockerfile`                    |
-| Shell                   | kebab-case                       | `backup-config.sh`                          |
+| Rust                    | snake_case                       | `release_client.rs`                           |
+| Swift                   | PascalCase + role suffix         | `TunnelFormView.swift`, `TunnelModel.swift`   |
+| Java                    | PascalCase matching class name   | `EntityRepository.java`                       |
+| Kotlin                  | PascalCase matching class name   | `EntityRepository.kt`                         |
+| C#                      | PascalCase matching class name   | `EntityRepository.cs`                         |
+| PHP                     | PascalCase (PSR-4) or snake_case | `EntityRepository.php`                        |
+| Python                  | snake_case (PEP 8)               | `entity_repository.py`                        |
+| CSS                     | kebab-case                       | `user-profile.css`                            |
+| Docker                  | kebab-case                       | `api-gateway.Dockerfile`                      |
+| Shell                   | kebab-case                       | `backup-config.sh`                            |
 
 ## Documentation Style
 

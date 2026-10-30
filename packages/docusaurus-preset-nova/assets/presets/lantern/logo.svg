@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>lantern-logo-nobg</title>
+    <title>lantern/logo</title>
     <defs>
         <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="50%" id="radialGradient-1">
             <stop stop-color="#FFD42E" offset="0%"></stop>
@@ -11,10 +11,10 @@
             <stop stop-color="#FFE065" offset="100%"></stop>
         </radialGradient>
     </defs>
-    <g id="lantern-logo-nobg" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
-        <g id="Group" transform="translate(-1, 0)">
-            <circle id="Glow" fill="url(#radialGradient-1)" cx="512" cy="512" r="512"></circle>
-            <circle id="Wick" fill="url(#radialGradient-2)" cx="512" cy="512" r="300"></circle>
+    <g id="lantern/logo" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g id="lantern-logo-nobg">
+            <path d="M-0.5,512 C-0.5,794.769792 228.730208,1024 511.5,1024 C794.269792,1024 1023.5,794.769792 1023.5,512 C1023.5,229.230208 794.269792,0 511.5,0 C228.730208,0 -0.5,229.230208 -0.5,512 Z" id="Glow" fill="url(#radialGradient-1)"></path>
+            <path d="M211.5,512 C211.5,677.685425 345.814575,812 511.5,812 C677.185425,812 811.5,677.685425 811.5,512 C811.5,346.314575 677.185425,212 511.5,212 C345.814575,212 211.5,346.314575 211.5,512 Z" id="Wick" fill="url(#radialGradient-2)"></path>
         </g>
     </g>
 </svg>

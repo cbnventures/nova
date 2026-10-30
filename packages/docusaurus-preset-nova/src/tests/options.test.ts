@@ -1,4 +1,9 @@
-import { deepStrictEqual, strictEqual, throws } from 'node:assert/strict';
+import {
+  deepStrictEqual,
+  fail,
+  strictEqual,
+  throws,
+} from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -23,6 +28,7 @@ import type {
   Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema,
   Tests_Options_ValidateOptions_AcceptsValidPresetName_Result,
   Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated,
+  Tests_Options_ValidateOptions_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate,
   Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema,
   Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated,
   Tests_Options_ValidateOptions_RejectsInvalidPresetName_JoiSchema,
@@ -70,6 +76,7 @@ import type {
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site,
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata,
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated,
+  Tests_Options_ValidateThemeConfig_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate,
   Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_JoiSchema,
   Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated,
 } from '../types/tests/options.test.d.ts';
@@ -80,6 +87,19 @@ import type {
  * @since 0.15.0
  */
 describe('validateOptions', async () => {
+  it('does not call a foreign validation callback', () => {
+    const foreignValidate: Tests_Options_ValidateOptions_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate = () => fail('Foreign validation callback was called.');
+
+    validateOptions({
+      validate: foreignValidate,
+      options: {
+        preset: 'foundry',
+      },
+    });
+
+    return;
+  });
+
   it('rejects when preset is not provided', () => {
     throws(() => {
       validateOptions({
@@ -213,6 +233,17 @@ describe('validateOptions', async () => {
  * @since 0.15.0
  */
 describe('validateThemeConfig', async () => {
+  it('does not call a foreign validation callback', () => {
+    const foreignValidate: Tests_Options_ValidateThemeConfig_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate = () => fail('Foreign validation callback was called.');
+
+    validateThemeConfig({
+      validate: foreignValidate,
+      themeConfig: {},
+    });
+
+    return;
+  });
+
   it('accepts site namespace with title and metadata', () => {
     const result: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {

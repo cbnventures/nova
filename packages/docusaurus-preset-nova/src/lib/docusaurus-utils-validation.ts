@@ -3,7 +3,11 @@ import * as validationModule from '@docusaurus/utils-validation';
 import type {
   Lib_DocusaurusUtilsValidation_CompatibleValidationModule,
   Lib_DocusaurusUtilsValidation_Joi,
+  Lib_DocusaurusUtilsValidation_NormalizePluginOptions,
+  Lib_DocusaurusUtilsValidation_NormalizeThemeConfig,
   Lib_DocusaurusUtilsValidation_ResolvedJoi,
+  Lib_DocusaurusUtilsValidation_ResolvedNormalizePluginOptions,
+  Lib_DocusaurusUtilsValidation_ResolvedNormalizeThemeConfig,
 } from '../types/lib/docusaurus-utils-validation.d.ts';
 
 /**
@@ -27,10 +31,36 @@ const compatibleValidationModule: Lib_DocusaurusUtilsValidation_CompatibleValida
 /* eslint-disable @cbnventures/nova/no-optional-chaining -- The fallback intentionally models both loader-produced module shapes. */
 const resolvedJoi: Lib_DocusaurusUtilsValidation_ResolvedJoi = compatibleValidationModule['Joi']
   ?? compatibleValidationModule['default']?.['Joi'];
+
+/**
+ * Lib - Docusaurus Utils Validation - Resolved Normalize Plugin Options.
+ *
+ * Resolves the plugin normalizer beside Joi so schemas never cross module
+ * instances when Nova is linked into a consumer with another Joi version.
+ *
+ * @since 0.37.0
+ */
+const resolvedNormalizePluginOptions: Lib_DocusaurusUtilsValidation_ResolvedNormalizePluginOptions = compatibleValidationModule['normalizePluginOptions']
+  ?? compatibleValidationModule['default']?.['normalizePluginOptions'];
+
+/**
+ * Lib - Docusaurus Utils Validation - Resolved Normalize Theme Config.
+ *
+ * Resolves the theme normalizer beside Joi so every schema operation uses
+ * one validation module across native ESM and Jiti module shapes.
+ *
+ * @since 0.37.0
+ */
+const resolvedNormalizeThemeConfig: Lib_DocusaurusUtilsValidation_ResolvedNormalizeThemeConfig = compatibleValidationModule['normalizeThemeConfig']
+  ?? compatibleValidationModule['default']?.['normalizeThemeConfig'];
 /* eslint-enable @cbnventures/nova/no-optional-chaining */
 
-if (resolvedJoi === undefined) {
-  throw new TypeError('Unable to load Joi from "@docusaurus/utils-validation": expected the module to expose "Joi" or "default.Joi".');
+if (
+  resolvedJoi === undefined
+  || resolvedNormalizePluginOptions === undefined
+  || resolvedNormalizeThemeConfig === undefined
+) {
+  throw new TypeError('Unable to load validation exports from "@docusaurus/utils-validation": expected the module to expose Joi and both normalizers.');
 }
 
 /**
@@ -42,3 +72,23 @@ if (resolvedJoi === undefined) {
  * @since 0.34.0
  */
 export const joi: Lib_DocusaurusUtilsValidation_Joi = resolvedJoi;
+
+/**
+ * Lib - Docusaurus Utils Validation - Normalize Plugin Options.
+ *
+ * Exposes the plugin normalizer that owns the Joi instance used by Nova's
+ * schemas, preventing linked consumers from combining foreign schemas.
+ *
+ * @since 0.37.0
+ */
+export const normalizePluginOptions: Lib_DocusaurusUtilsValidation_NormalizePluginOptions = resolvedNormalizePluginOptions;
+
+/**
+ * Lib - Docusaurus Utils Validation - Normalize Theme Config.
+ *
+ * Exposes the theme normalizer from the same module instance as Nova's Joi
+ * schemas so loader boundaries cannot change validation ownership.
+ *
+ * @since 0.37.0
+ */
+export const normalizeThemeConfig: Lib_DocusaurusUtilsValidation_NormalizeThemeConfig = resolvedNormalizeThemeConfig;

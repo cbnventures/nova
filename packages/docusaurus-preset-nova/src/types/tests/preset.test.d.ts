@@ -192,6 +192,30 @@ export type Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvide
 export type Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvided_ThemeCount = number;
 
 /**
+ * Tests - Preset - Preset - Prefers Consumer Docusaurus Plugins To Keep Validation In One Dependency Tree.
+ *
+ * @since 0.37.0
+ */
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_SiteDirectory = string;
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPluginDirectory = string;
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultPlugin = [string, Record<string, unknown>] | string;
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultPlugins = Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultPlugin[];
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultTheme = [string, Record<string, unknown>] | string;
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultThemes = Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultTheme[];
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_Result = {
+  plugins: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultPlugins;
+  themes: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_ResultThemes;
+};
+
+export type Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPlugin = [string, Record<string, unknown>];
+
+/**
  * Tests - Preset - Preset - Returns Docs Blog Pages Sitemap Svgr Plugins And Nova Theme By Default.
  *
  * @since 0.15.0

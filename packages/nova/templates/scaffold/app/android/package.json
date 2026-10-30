@@ -22,7 +22,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.36.0"
+    "@cbnventures/nova": "0.37.0"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",

@@ -29,6 +29,7 @@ export type Lib_DockerPackaging_DockerConfigWorkspacePath = string;
 export type Lib_DockerPackaging_DockerManifestSchemaVersion = number;
 export type Lib_DockerPackaging_DockerProtectedWritablePaths = string[];
 export type Lib_DockerPackaging_DockerReservedServiceNames = ReadonlySet<string>;
+export type Lib_DockerPackaging_DockerWorkspaceBuildDirectory = string;
 export type Lib_DockerPackaging_DirectoryEntries = Dirent[];
 
 /**

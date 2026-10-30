@@ -178,6 +178,13 @@ export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated = {
 };
 
 /**
+ * Tests - Options - Validate Options - Does Not Call A Foreign Validation Callback.
+ *
+ * @since 0.37.0
+ */
+export type Tests_Options_ValidateOptions_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate = () => never;
+
+/**
  * Tests - Options - Validate Options - Rejects Invalid Hex Color.
  *
  * @since 0.15.0
@@ -452,6 +459,13 @@ export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMe
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site = Record<string, unknown>;
 
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata = unknown[];
+
+/**
+ * Tests - Options - Validate Theme Config - Does Not Call A Foreign Validation Callback.
+ *
+ * @since 0.37.0
+ */
+export type Tests_Options_ValidateThemeConfig_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate = () => never;
 
 /**
  * Tests - Options - Validate Theme Config - Rejects Error Pages Not Found Title When Not A String.

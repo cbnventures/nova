@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { resolveModulePath } from './lib/module-loader.js';
+import { resolveModulePathForSite } from './lib/module-loader.js';
 import { rehypeShiki } from './lib/rehype-shiki.js';
 import { getShikiThemes } from './lib/shiki-themes.js';
 
@@ -47,14 +47,14 @@ import type {
  * theme stack from a single options object, forwarding each section to its
  * corresponding Docusaurus plugin.
  *
- * @param {Preset_Preset_Context} _context - Context.
- * @param {Preset_Preset_Options} options  - Options.
+ * @param {Preset_Preset_Context} context - Context.
+ * @param {Preset_Preset_Options} options - Options.
  *
  * @returns {Preset_Preset_Returns}
  *
  * @since 0.15.0
  */
-function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options): Preset_Preset_Returns {
+function preset(context: Preset_Preset_Context, options: Preset_Preset_Options): Preset_Preset_Returns {
   const plugins: Preset_Preset_Plugins = [];
   const themes: Preset_Preset_Themes = [];
   const pluginOptions: Preset_Preset_PluginOptions = options['plugins'] ?? {};
@@ -84,7 +84,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
     beforeDefaultRehypePlugins: mergedDocsBeforeDefaultRehypePlugins,
   };
   const docsPlugin: Preset_Preset_DocsPlugin = [
-    resolveModulePath('@docusaurus/plugin-content-docs'),
+    resolveModulePathForSite('@docusaurus/plugin-content-docs', context['siteDir']),
     mergedDocsOptions,
   ];
 
@@ -102,7 +102,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
       beforeDefaultRehypePlugins: mergedBlogBeforeDefaultRehypePlugins,
     };
     const blogPlugin: Preset_Preset_BlogPlugin = [
-      resolveModulePath('@docusaurus/plugin-content-blog'),
+      resolveModulePathForSite('@docusaurus/plugin-content-blog', context['siteDir']),
       mergedBlogOptions,
     ];
 
@@ -121,7 +121,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
       beforeDefaultRehypePlugins: mergedPagesBeforeDefaultRehypePlugins,
     };
     const pagesPlugin: Preset_Preset_PagesPlugin = [
-      resolveModulePath('@docusaurus/plugin-content-pages'),
+      resolveModulePathForSite('@docusaurus/plugin-content-pages', context['siteDir']),
       mergedPagesOptions,
     ];
 
@@ -131,7 +131,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   // Sitemap plugin (unless sitemap: false).
   if (pluginOptions['sitemap'] !== false) {
     const sitemapPlugin: Preset_Preset_SitemapPlugin = [
-      resolveModulePath('@docusaurus/plugin-sitemap'),
+      resolveModulePathForSite('@docusaurus/plugin-sitemap', context['siteDir']),
       pluginOptions['sitemap'] ?? {},
     ];
 
@@ -139,7 +139,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   }
 
   // SVGR plugin (always included).
-  const svgrPlugin: Preset_Preset_SvgrPlugin = resolveModulePath('@docusaurus/plugin-svgr');
+  const svgrPlugin: Preset_Preset_SvgrPlugin = resolveModulePathForSite('@docusaurus/plugin-svgr', context['siteDir']);
 
   plugins.push(svgrPlugin);
 
@@ -178,7 +178,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   // Google Tag Manager plugin (if gtm option provided).
   if (analyticsOptions['gtm'] !== undefined) {
     const gtmPlugin: Preset_Preset_GtmPlugin = [
-      resolveModulePath('@docusaurus/plugin-google-tag-manager'),
+      resolveModulePathForSite('@docusaurus/plugin-google-tag-manager', context['siteDir']),
       analyticsOptions['gtm'],
     ];
 

@@ -1,4 +1,13 @@
 import { strictEqual } from 'node:assert/strict';
+import {
+  mkdirSync,
+  mkdtempSync,
+  realpathSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 import { describe, it } from 'vitest';
 
@@ -26,6 +35,10 @@ import type {
   Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ThemeOptions,
   Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvided_Result,
   Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvided_ThemeCount,
+  Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPlugin,
+  Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPluginDirectory,
+  Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_Result,
+  Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_SiteDirectory,
   Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_PluginCount,
   Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_Result,
   Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_ThemeCount,
@@ -306,6 +319,36 @@ describe('preset', async () => {
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);
+
+    return;
+  });
+
+  it('prefers consumer Docusaurus plugins to keep validation in one dependency tree', () => {
+    const siteDirectory: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_SiteDirectory = mkdtempSync(join(tmpdir(), 'nova-preset-consumer-'));
+    const docsPluginDirectory: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPluginDirectory = join(siteDirectory, 'node_modules', '@docusaurus', 'plugin-content-docs');
+
+    mkdirSync(docsPluginDirectory, { recursive: true });
+    writeFileSync(join(docsPluginDirectory, 'package.json'), JSON.stringify({
+      name: '@docusaurus/plugin-content-docs',
+      version: '0.0.0-consumer',
+      main: 'index.js',
+    }));
+    writeFileSync(join(docsPluginDirectory, 'index.js'), 'module.exports = () => ({ name: "consumer-docs" });\n');
+
+    try {
+      const result: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_Result = preset(
+        { siteDir: siteDirectory },
+        { preset: 'foundry' },
+      );
+      const docsPlugin: Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPlugin = result['plugins'][0] as Tests_Preset_Preset_PrefersConsumerDocusaurusPluginsToKeepValidationInOneDependencyTree_DocsPlugin;
+
+      strictEqual(docsPlugin[0], realpathSync(join(docsPluginDirectory, 'index.js')));
+    } finally {
+      rmSync(siteDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
 
     return;
   });

@@ -755,8 +755,6 @@ export type Lib_Regex_PlaceholderCustomDonation = RegExp;
  */
 export type Lib_Regex_PlaceholderDockerRuntimeDirectives = RegExp;
 
-export type Lib_Regex_PlaceholderDockerBuildDirectory = RegExp;
-
 export type Lib_Regex_PlaceholderAstroAdapter = RegExp;
 
 export type Lib_Regex_PlaceholderAstroRendering = RegExp;

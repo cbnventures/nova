@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.37.0 - 2026-10-30
+
+### FIXED
+- Prevented linked Docusaurus consumers from mixing Joi schema versions by keeping Nova's schemas and normalizers together and loading core plugins from the consuming site's dependency tree.
+
 ## 0.36.0 - 2026-10-29
 
 No changes.
