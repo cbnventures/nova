@@ -609,15 +609,20 @@ export type Lib_Item_RepositoryProtocols = readonly [
  * @since 0.11.0
  */
 export type Lib_Item_SkipDirectories = readonly [
+  '.astro',
   '.build',
+  '.cxx',
   '.docusaurus',
+  '.externalNativeBuild',
   '.gradle',
+  '.kotlin',
   '.next',
   '.nuxt',
   '.output',
   '.parcel-cache',
   '.serverless',
   '.svelte-kit',
+  '.swiftpm',
   '.turbo',
   '.vercel',
   '.vite',
@@ -625,10 +630,12 @@ export type Lib_Item_SkipDirectories = readonly [
   'DerivedData',
   'Pods',
   'build',
+  'captures',
   'coverage',
   'dist',
   'node_modules',
   'out',
   'target',
   'vendor',
+  'xcuserdata',
 ];

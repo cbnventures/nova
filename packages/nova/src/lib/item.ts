@@ -946,15 +946,20 @@ export const libItemRepositoryProtocols: Lib_Item_RepositoryProtocols = [
  * @since 0.11.0
  */
 export const libItemSkipDirectories: Lib_Item_SkipDirectories = [
+  '.astro',
   '.build',
+  '.cxx',
   '.docusaurus',
+  '.externalNativeBuild',
   '.gradle',
+  '.kotlin',
   '.next',
   '.nuxt',
   '.output',
   '.parcel-cache',
   '.serverless',
   '.svelte-kit',
+  '.swiftpm',
   '.turbo',
   '.vercel',
   '.vite',
@@ -962,10 +967,12 @@ export const libItemSkipDirectories: Lib_Item_SkipDirectories = [
   'DerivedData',
   'Pods',
   'build',
+  'captures',
   'coverage',
   'dist',
   'node_modules',
   'out',
   'target',
   'vendor',
+  'xcuserdata',
 ];

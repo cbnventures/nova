@@ -24,6 +24,16 @@ const config: Presets_Eslint_DxIgnore_Config = [
       '**/build/**',
       '**/out/**',
       '**/.output/**',
+      '**/coverage/**',
+      '**/target/**',
+    ],
+  },
+  {
+    name: 'nova/dx-ignore/framework-state',
+    ignores: [
+      '**/.astro/**',
+      '**/.docusaurus/**',
+      '**/.svelte-kit/**',
     ],
   },
   {
@@ -32,6 +42,7 @@ const config: Presets_Eslint_DxIgnore_Config = [
       '**/*.map',
       '**/generated/**',
       '**/__generated__/**',
+      '**/worker-configuration.d.ts',
     ],
   },
   {
@@ -39,6 +50,26 @@ const config: Presets_Eslint_DxIgnore_Config = [
     ignores: [
       '**/.next/**',
       '**/next-env.d.ts',
+    ],
+  },
+  {
+    name: 'nova/dx-ignore/platform-state',
+    ignores: [
+      '**/.cxx/**',
+      '**/.externalNativeBuild/**',
+      '**/.gradle/**',
+      '**/.kotlin/**',
+      '**/.swiftpm/**',
+      '**/DerivedData/**',
+      '**/Pods/**',
+      '**/xcuserdata/**',
+    ],
+  },
+  {
+    name: 'nova/dx-ignore/tooling-state',
+    ignores: [
+      '**/.vercel/**',
+      '**/.vite/**',
     ],
   },
   {

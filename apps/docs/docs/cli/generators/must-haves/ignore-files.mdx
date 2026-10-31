@@ -96,18 +96,22 @@ Each `ignoreFiles` key is an exact project-relative output path beginning with `
 
 ## Supported Files and Bundles
 
-| File basename   | Bundle             | What It Excludes                                                      |
-|-----------------|--------------------|-----------------------------------------------------------------------|
-| `.gitignore`    | `nova`             | Dependencies, generated output, local secrets, editors, and OS files. |
-| `.dockerignore` | `nova`             | Host-only dependencies, builds, secrets, and source-control metadata. |
-| `.assetsignore` | `cloudflare-astro` | Astro's `_worker.js` and `_routes.json` deployment control files.     |
+| File basename   | Bundle             | What It Excludes                                                                        |
+|-----------------|--------------------|-----------------------------------------------------------------------------------------|
+| `.gitignore`    | `nova`             | Dependencies, framework state, generated output, local secrets, editors, and OS files.  |
+| `.dockerignore` | `nova`             | Host-only dependencies, framework caches, builds, secrets, and source-control metadata. |
+| `.assetsignore` | `cloudflare-astro` | Astro's `_worker.js` and `_routes.json` deployment control files.                       |
 
 Nova validates that each path is project-relative and that every bundle belongs to the target file type before anything is written. `.gitignore` and `.assetsignore` may be nested, while `.dockerignore` must be exactly `./.dockerignore`.
+
+Nova scaffolds create one `.gitignore` at the repository root. Nested workspaces inherit that file; a nested `.gitignore` is only available for an existing project that deliberately configures one.
 
 ## How It Works
 
 The command loads every configured entry, joins the selected bundles in order, appends a **Project Excludes** section, and then appends the entry's custom patterns. The established `.gitignore` section layout and ordering remain unchanged. Generated files include the same Nova header as before, updated to point back to this command and documentation.
 
-For the root `.dockerignore`, the `nova` bundle excludes environment files, `.secrets`, dependency trees, build output, and log files at both the repository root and within nested workspaces. It re-includes `.env.sample` and `.env.example` at both levels. Running `nova generate must-haves ignore-files --replace-file` regenerates those rules from the canonical bundle.
+For the root `.dockerignore`, the `nova` bundle excludes environment files, `.secrets`, dependency trees, build output, framework caches, platform state, and log files at both the repository root and within nested workspaces. It re-includes `.env.sample` and `.env.example` at both levels. Running `nova generate must-haves ignore-files --replace-file` regenerates those rules from the canonical bundle.
 
-Nova scaffolds register the physical ignore files they create. A root scaffold registers `./.gitignore`; a Docker-enabled repository registers `./.dockerignore`; and a server-rendered Cloudflare Astro workspace registers `public/.assetsignore`.
+The Git bundle also excludes generated framework state, Cloudflare local secrets, native build caches, and signing credentials. TypeScript configs may still include generated declarations such as `next-env.d.ts` because type checking and source control have different responsibilities.
+
+Nova scaffolds register the physical ignore files they create. The scaffold root registers `./.gitignore`; a Docker-enabled repository registers `./.dockerignore`; and a server-rendered Cloudflare Astro workspace registers `public/.assetsignore`.

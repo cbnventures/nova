@@ -1,7 +1,7 @@
 ---
 id: "dx-ignore"
 title: "DX - Ignore"
-description: "Exclude project-owned supporting files, build output, source maps, and generated files from ESLint while retaining assets documentation."
+description: "Exclude project-owned supporting files, build output, framework state, platform state, and generated files from ESLint while retaining assets documentation."
 keywords:
   - "nova"
   - "dx ignore"
@@ -21,15 +21,16 @@ tags:
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-Exclude project-owned supporting files, build output, source maps, and generated files from ESLint while retaining the documentation that explains the root `assets` folder.
+Exclude project-owned supporting files, build output, framework state, platform state, and generated files from ESLint while retaining the documentation that explains the root `assets` folder.
 
 ## Why Use This Preset?
 
 1. Skips project-owned working files beneath the root `assets` folder while continuing to lint `assets/README.md`.
-2. Skips `dist`, `build`, `out`, and `.output` directories so compiled artifacts never trigger lint failures.
-3. Drops `**/*.map` source maps and `generated`/`__generated__` folders so machine-written code stays out of your reports.
-4. Ignores Next.js `.next` output, the generated `next-env.d.ts`, and Wrangler state so framework tooling does not add noise.
-5. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
+2. Skips compiled output and coverage directories so generated reports never trigger lint failures.
+3. Drops framework state from Astro, Docusaurus, Next.js, Svelte, and Vite so machine-written code stays out of your reports.
+4. Excludes Android, Apple, Gradle, and Rust build state from cross-language repositories.
+5. Ignores generated declarations, Vercel state, and Wrangler state so deployment tooling does not add noise.
+6. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
 
 ## Usage
 
@@ -53,7 +54,7 @@ export default [
 
 ## What This Preset Configures
 
-The preset registers no plugins, parsers, or rules — it defines five named ignore groups, each scoped with glob patterns. Because they only exclude files, the groups apply globally rather than targeting a specific set of script extensions.
+The preset registers no plugins, parsers, or rules — it defines eight named ignore groups, each scoped with glob patterns. Because they only exclude files, the groups apply globally rather than targeting a specific set of script extensions.
 
 ### Assets
 
@@ -66,20 +67,31 @@ The root-relative patterns do not ignore folders such as `src/assets`, so applic
 
 ### Build output
 
-| Pattern         | Excludes                                 |
-|-----------------|------------------------------------------|
-| `**/dist/**`    | The `dist` compiled output directory.    |
-| `**/build/**`   | The `build` compiled output directory.   |
-| `**/out/**`     | The `out` compiled output directory.     |
-| `**/.output/**` | The `.output` compiled output directory. |
+| Pattern          | Excludes                                 |
+|------------------|------------------------------------------|
+| `**/dist/**`     | The `dist` compiled output directory.    |
+| `**/build/**`    | The `build` compiled output directory.   |
+| `**/out/**`      | The `out` compiled output directory.     |
+| `**/.output/**`  | The `.output` compiled output directory. |
+| `**/coverage/**` | Generated test coverage reports.         |
+| `**/target/**`   | Rust and cross-platform compiled output. |
+
+### Framework state
+
+| Pattern             | Excludes                            |
+|---------------------|-------------------------------------|
+| `**/.astro/**`      | Astro's generated project state.    |
+| `**/.docusaurus/**` | Docusaurus generated project state. |
+| `**/.svelte-kit/**` | SvelteKit generated project state.  |
 
 ### Generated
 
-| Pattern               | Excludes                                      |
-|-----------------------|-----------------------------------------------|
-| `**/*.map`            | Source map files emitted alongside output.    |
-| `**/generated/**`     | The `generated` folder of machine output.     |
-| `**/__generated__/**` | The `__generated__` folder of machine output. |
+| Pattern                        | Excludes                                      |
+|--------------------------------|-----------------------------------------------|
+| `**/*.map`                     | Source map files emitted alongside output.    |
+| `**/generated/**`              | The `generated` folder of machine output.     |
+| `**/__generated__/**`          | The `__generated__` folder of machine output. |
+| `**/worker-configuration.d.ts` | Wrangler's generated Worker declarations.     |
 
 ### Next
 
@@ -87,6 +99,26 @@ The root-relative patterns do not ignore folders such as `src/assets`, so applic
 |--------------------|---------------------------------------------|
 | `**/.next/**`      | The Next.js `.next` build cache.            |
 | `**/next-env.d.ts` | The generated Next.js `next-env.d.ts` file. |
+
+### Platform state
+
+| Pattern                      | Excludes                                 |
+|------------------------------|------------------------------------------|
+| `**/.cxx/**`                 | Android native compilation state.        |
+| `**/.externalNativeBuild/**` | Android external native build state.     |
+| `**/.gradle/**`              | Gradle's generated project state.        |
+| `**/.kotlin/**`              | Kotlin's generated project state.        |
+| `**/.swiftpm/**`             | Swift Package Manager's workspace state. |
+| `**/DerivedData/**`          | Xcode's derived build data.              |
+| `**/Pods/**`                 | CocoaPods-installed dependencies.        |
+| `**/xcuserdata/**`           | Xcode's user-specific workspace state.   |
+
+### Tooling state
+
+| Pattern         | Excludes                           |
+|-----------------|------------------------------------|
+| `**/.vercel/**` | Vercel's local project-link state. |
+| `**/.vite/**`   | Vite's generated dependency cache. |
 
 ### Wrangler
 

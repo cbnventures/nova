@@ -190,8 +190,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     ],
     expectedFiles: [
       '.gitattributes',
-      '.gitignore',
-      'app/.gitignore',
       'app/build.gradle.kts',
       'app/proguard-rules.pro',
       'app/src/main/AndroidManifest.xml',

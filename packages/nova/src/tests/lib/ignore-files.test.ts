@@ -108,6 +108,20 @@ describe('ignore files', () => {
     const projectMarkerCount: Tests_Lib_IgnoreFiles_IgnoreFiles_CombinesBundlesWithProjectPatterns_ProjectMarkerCount = gitignoreContent.split('#### Project Excludes ####').length - 1;
 
     ok(gitignoreContent.includes('node_modules'));
+    ok(gitignoreContent.includes('.astro/'));
+    ok(gitignoreContent.includes('.cxx/'));
+    ok(gitignoreContent.includes('.dev.vars*'));
+    ok(gitignoreContent.includes('.externalNativeBuild/'));
+    ok(gitignoreContent.includes('.kotlin/'));
+    ok(gitignoreContent.includes('.svelte-kit/'));
+    ok(gitignoreContent.includes('.vercel/'));
+    ok(gitignoreContent.includes('.vite/'));
+    ok(gitignoreContent.includes('*.jks'));
+    ok(gitignoreContent.includes('*.keystore'));
+    ok(gitignoreContent.includes('captures/'));
+    ok(gitignoreContent.includes('keystore.properties'));
+    ok(gitignoreContent.includes('next-env.d.ts'));
+    ok(gitignoreContent.includes('target/'));
     ok(gitignoreContent.includes('graphify-out/'));
     ok(gitignoreContent.includes([
       '##########################',
@@ -139,6 +153,20 @@ describe('ignore files', () => {
       '########################',
     ].join('\n')));
     ok(dockerignoreContent.includes('local-output/'));
+    ok(dockerignoreContent.includes('**/.astro'));
+    ok(dockerignoreContent.includes('**/.cxx'));
+    ok(dockerignoreContent.includes('**/.docusaurus'));
+    ok(dockerignoreContent.includes('**/.externalNativeBuild'));
+    ok(dockerignoreContent.includes('**/.kotlin'));
+    ok(dockerignoreContent.includes('**/.svelte-kit'));
+    ok(dockerignoreContent.includes('**/.vercel'));
+    ok(dockerignoreContent.includes('**/.vite'));
+    ok(dockerignoreContent.includes('**/.wrangler'));
+    ok(dockerignoreContent.includes('**/*.jks'));
+    ok(dockerignoreContent.includes('**/*.keystore'));
+    ok(dockerignoreContent.includes('**/coverage'));
+    ok(dockerignoreContent.includes('**/keystore.properties'));
+    ok(dockerignoreContent.includes('**/target'));
     ok(assetsignoreContent.includes([
       '########################################',
       '#### Web Hosting - Cloudflare Astro ####',

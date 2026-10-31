@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.37.1 - 2026-10-31
+
+### FIXED
+- Expanded generated ignore coverage for framework caches, native platform state, deployment tooling, and container contexts while consolidating scaffold Git ignores at repository roots.
+
 ## 0.37.0 - 2026-10-30
 
 ### UPDATED
