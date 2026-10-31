@@ -15,7 +15,7 @@
     "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:build": "docusaurus build --out-dir build",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "clean:clear": "docusaurus clear",
     "i18n": "nova utility run-scripts --sequential \"i18n:*\"",
@@ -27,8 +27,8 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.37.1",
-    "@cbnventures/nova": "0.37.1",
+    "@cbnventures/docusaurus-preset-nova": "0.37.2",
+    "@cbnventures/nova": "0.37.2",
     "@docusaurus/core": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
     "react": "[__SCAFFOLD_VERSION_REACT__]",
     "react-dom": "[__SCAFFOLD_VERSION_REACT_DOM__]"

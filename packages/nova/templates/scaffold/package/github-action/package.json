@@ -18,7 +18,7 @@
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:reset": "shx rm -rf ./build",
     "build:ncc": "ncc build src/index.ts -o build --source-map --license licenses.txt",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@actions/core": "[__SCAFFOLD_VERSION_ACTIONS_CORE__]",
-    "@cbnventures/nova": "0.37.1"
+    "@cbnventures/nova": "0.37.2"
   },
   "devDependencies": {
     "@github/local-action": "[__SCAFFOLD_VERSION_GITHUB_LOCAL_ACTION__]",

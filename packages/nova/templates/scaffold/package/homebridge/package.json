@@ -33,7 +33,7 @@
     "build:reset": "shx rm -rf ./build",
     "build:transpile": "nova utility transpile --project tsconfig.source.json",
     "build:permissions": "shx chmod +x ./bin/repl.mjs ./bin/test-api.mjs ./build/cli/repl.js ./build/cli/test-api.js",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "repl": "node ./build/cli/repl.js",
     "test-api": "node ./build/cli/test-api.js"
@@ -43,7 +43,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.37.1"
+    "@cbnventures/nova": "0.37.2"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",

@@ -17,14 +17,14 @@
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:reset": "shx rm -rf ./build",
     "build:transpile": "nova utility transpile --project tsconfig.source.json",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.37.1",
+    "@cbnventures/nova": "0.37.2",
     "express": "[__SCAFFOLD_VERSION_EXPRESS__]"
   },
   "devDependencies": {

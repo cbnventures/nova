@@ -39,7 +39,9 @@ The `run-scripts` command reads the `scripts` field from the nearest `package.js
 - **Build pipelines** — Run `build:*` scripts sequentially with an explicit production environment so each step shares the same intent.
 - **Development mode** — Run `dev:*` scripts in parallel with an explicit development environment to start watchers, dev servers, and other tools concurrently.
 - **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
-- **Cleanup tasks** — Run `clean:*` scripts in parallel since cleanup operations are independent.
+- **Cleanup tasks** — Run independent `clean:*` scripts in parallel, or serialize
+  overlapping cleanup such as removing a Docusaurus build before clearing its
+  generated state.
 
 ## Requirements
 

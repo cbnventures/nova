@@ -22,14 +22,14 @@
     "build:stage": "node ./scripts/stage-package.mjs",
     "deploy": "nova utility run-scripts --sequential --node-env production \"deploy:*\"",
     "deploy:package": "sh ./scripts/build-package.sh",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE_PFSENSE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.37.1"
+    "@cbnventures/nova": "0.37.2"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",

@@ -1033,7 +1033,7 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     check: 'sequential',
     build: 'sequential',
     deploy: 'sequential',
-    clean: 'parallel',
+    clean: 'sequential',
     i18n: 'sequential',
   };
   const scriptGroupNodeEnvOptions: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions = {

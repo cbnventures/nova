@@ -39,7 +39,7 @@
     "build:permissions": "shx chmod +x ./bin/cli.mjs ./build/index.js",
     "deploy": "nova utility run-scripts --sequential --node-env production \"deploy:*\"",
     "deploy:functions": "vercel deploy --prod",
-    "clean": "nova utility run-scripts --parallel \"clean:*\"",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "clean:vercel": "shx rm -rf ./.vercel",
     "manage": "tsx src/index.ts status",
@@ -49,7 +49,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.37.1",
+    "@cbnventures/nova": "0.37.2",
     "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
     "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
     "vercel": "[__SCAFFOLD_VERSION_VERCEL__]"

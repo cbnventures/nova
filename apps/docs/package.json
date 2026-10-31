@@ -16,7 +16,7 @@
     "check:test": "vitest run",
     "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production \"build:*\"",
     "build:build": "docusaurus build --out-dir build",
-    "clean": "node ../../scripts/nova-run-scripts.mjs --parallel \"clean:*\"",
+    "clean": "node ../../scripts/nova-run-scripts.mjs --sequential \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "clean:clear": "docusaurus clear",
     "i18n": "node ../../scripts/nova-run-scripts.mjs --sequential \"i18n:*\"",

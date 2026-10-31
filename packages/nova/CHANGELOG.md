@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.37.2 - 2026-10-31
+
+### FIXED
+- Fixed generated cleanup commands racing overlapping output removal by serializing cleanup steps across every scaffold.
+
 ## 0.37.1 - 2026-10-31
 
 ### FIXED
