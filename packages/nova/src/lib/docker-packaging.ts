@@ -261,6 +261,29 @@ import type {
   Lib_DockerPackaging_Runner_ReadJsonObject_RawContent,
   Lib_DockerPackaging_Runner_ReadJsonObject_Returns,
   Lib_DockerPackaging_Runner_ReadJsonObject_TargetPath,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyDirectory,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackage,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackageNameValue,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackagePath,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ContainerBuildPackage,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ManifestPath,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ProjectDirectory,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Returns,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackage,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackagePath,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestContent,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestPath,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifests,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspacePackage,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspaceManifestsDirectory,
+  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_AssemblyPackageName,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_Environment,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentValue,
@@ -660,6 +683,73 @@ export class Runner {
     await Runner.writeRootfs(rootfsDirectory, updatedManifest);
 
     return result;
+  }
+
+  /**
+   * Lib - Docker Packaging - Refresh Generated Manifests.
+   *
+   * Rebuilds the Docker-only package-manager manifests from their canonical
+   * repository manifests after a release changes versions or dependency pins.
+   * Projects without Nova Docker packaging are left untouched.
+   *
+   * @param {Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ProjectDirectory} projectDirectory - Project directory.
+   *
+   * @returns {Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Returns}
+   *
+   * @since 0.38.0
+   */
+  public static async refreshGeneratedManifests(projectDirectory: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ProjectDirectory): Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Returns {
+    const assemblyDirectory: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyDirectory = join(projectDirectory, dockerAssemblyRelativePath);
+    const manifestPath: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ManifestPath = join(assemblyDirectory, 'manifest.json');
+
+    if (await pathExists(manifestPath) === false) {
+      return;
+    }
+
+    const rootPackagePath: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackagePath = join(projectDirectory, 'package.json');
+    const assemblyPackagePath: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackagePath = join(assemblyDirectory, 'package.json');
+    const rootPackage: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackage = await Runner.readJsonObject(rootPackagePath);
+    const assemblyPackage: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackage = await Runner.readJsonObject(assemblyPackagePath);
+    const assemblyPackageNameValue: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackageNameValue = assemblyPackage['name'];
+
+    if (typeof assemblyPackageNameValue !== 'string' || assemblyPackageNameValue.trim() === '') {
+      throw new Error(`The Docker assembly package manifest at "${assemblyPackagePath}" must define a package name.`);
+    }
+
+    const manifest: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest = Runner.normalizeManifest(await Runner.readJsonObject(manifestPath));
+    const workspacePackages: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages = await Runner.collectWorkspacePackages(projectDirectory, manifest);
+    const buildOrder: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder = Runner.resolveBuildOrder(manifest, workspacePackages);
+    const packageManagerDescriptor: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor = LibCorepack.parsePackageManager(rootPackage['packageManager']);
+    const packageManager: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager = (packageManagerDescriptor === undefined) ? 'npm' : packageManagerDescriptor['name'];
+    const packageManagerVersion: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion = (packageManagerDescriptor === undefined) ? '' : packageManagerDescriptor['version'];
+    const isYarnClassic: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic = packageManager === 'yarn' && packageManagerVersion.startsWith('1.');
+    const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests = packageManager === 'npm' || isYarnClassic === true;
+    const syntheticWorkspaceManifests: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifests = new Map();
+
+    if (needsSyntheticWorkspaceManifests === true) {
+      for (const workspacePackageValue of buildOrder.values()) {
+        const syntheticWorkspaceManifestPath: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestPath = join(assemblyDirectory, 'workspace-manifests', workspacePackageValue['path'], 'package.json');
+        const syntheticWorkspacePackage: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspacePackage = Runner.buildSyntheticWorkspacePackage(workspacePackageValue['packageJson'], buildOrder);
+        const syntheticWorkspaceManifestContent: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestContent = `${JSON.stringify(syntheticWorkspacePackage, null, 2)}\n`;
+
+        syntheticWorkspaceManifests.set(syntheticWorkspaceManifestPath, syntheticWorkspaceManifestContent);
+      }
+    }
+
+    const containerBuildPackage: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ContainerBuildPackage = Runner.buildContainerPackage(rootPackage, assemblyPackageNameValue, buildOrder);
+    const workspaceManifestsDirectory: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspaceManifestsDirectory = join(assemblyDirectory, 'workspace-manifests');
+
+    await fs.rm(workspaceManifestsDirectory, {
+      force: true,
+      recursive: true,
+    });
+
+    await Promise.all([
+      saveGeneratedFile(join(assemblyDirectory, 'build-package.json'), `${JSON.stringify(containerBuildPackage, null, 2)}\n`, true, undefined, false),
+      ...[...syntheticWorkspaceManifests].map((syntheticWorkspaceManifest) => saveGeneratedFile(syntheticWorkspaceManifest[0], syntheticWorkspaceManifest[1], true, undefined, false)),
+    ]);
+
+    return;
   }
 
   /**
@@ -1758,6 +1848,7 @@ export class Runner {
     };
 
     for (const inheritedField of [
+      'allowScripts',
       'engines',
       'overrides',
       'packageManager',

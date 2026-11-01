@@ -1,6 +1,7 @@
 import type {
   Shared_NovaConfig,
   Shared_NovaConfig_Agents,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Environment,
@@ -47,6 +48,8 @@ import type {
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Workflows,
   Shared_NovaConfig_Workspaces,
+  Shared_NovaConfigArtifact,
+  Shared_NovaConfigArtifactSource,
   Shared_NovaConfigConfig,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigEnvironment,
@@ -733,6 +736,8 @@ export type Lib_NovaConfig_Runner_Parse_Result_Readme = Shared_NovaConfig_ReadMe
 
 export type Lib_NovaConfig_Runner_Parse_Result_Workspaces = Shared_NovaConfig_Workspaces;
 
+export type Lib_NovaConfig_Runner_Parse_Result_Artifacts = Shared_NovaConfig_Artifacts;
+
 export type Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
 
 export type Lib_NovaConfig_Runner_Parse_Result_Agents = Shared_NovaConfig_Agents;
@@ -752,6 +757,7 @@ export type Lib_NovaConfig_Runner_Parse_Result = {
   urls?: Lib_NovaConfig_Runner_Parse_Result_Urls;
   readme?: Lib_NovaConfig_Runner_Parse_Result_Readme;
   workspaces?: Lib_NovaConfig_Runner_Parse_Result_Workspaces;
+  artifacts?: Lib_NovaConfig_Runner_Parse_Result_Artifacts;
   ignoreFiles?: Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles;
   agents?: Lib_NovaConfig_Runner_Parse_Result_Agents;
   recipes?: Lib_NovaConfig_Runner_Parse_Result_Recipes;
@@ -767,13 +773,15 @@ export type Lib_NovaConfig_Runner_Parse_Emails = Shared_NovaConfig_Emails | unde
 
 export type Lib_NovaConfig_Runner_Parse_Github = Shared_NovaConfig_Github | undefined;
 
-export type Lib_NovaConfig_Runner_Parse_Workflows = Shared_NovaConfig_Workflows | undefined;
-
 export type Lib_NovaConfig_Runner_Parse_Urls = Shared_NovaConfig_Urls | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_ReadMe = Shared_NovaConfig_ReadMe | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Workspaces = Shared_NovaConfig_Workspaces | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_Artifacts = Shared_NovaConfig_Artifacts | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_Workflows = Shared_NovaConfig_Workflows | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_IgnoreFiles = Shared_NovaConfig_IgnoreFiles | undefined;
 
@@ -795,6 +803,53 @@ export type Lib_NovaConfig_Runner_ParseAgents_Value = unknown;
 export type Lib_NovaConfig_Runner_ParseAgents_Returns = Shared_NovaConfig_Agents | undefined;
 
 export type Lib_NovaConfig_Runner_ParseAgents_Agents = ('claude-code' | 'codex')[];
+
+/**
+ * Lib - Nova Config - Parse Artifacts.
+ *
+ * @since 0.38.0
+ */
+export type Lib_NovaConfig_Runner_ParseArtifacts_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Workspaces = Shared_NovaConfig_Workspaces | undefined;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Returns = Shared_NovaConfig_Artifacts | undefined;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Result = Shared_NovaConfig_Artifacts;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Name = string;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_RawArtifact = unknown;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_RawBuild = unknown;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Build = string[];
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_HasError = boolean;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_TypedBuildEntry = string;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_RawSources = unknown;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Sources = Shared_NovaConfigArtifactSource[];
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_RawSource = unknown;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_From = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_To = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_FromSegments = string[];
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_ToSegments = string[];
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_FromIsSafe = boolean;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_ToIsSafe = boolean;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_Artifact = Shared_NovaConfigArtifact;
+
+export type Lib_NovaConfig_Runner_ParseArtifacts_SortedResult = Shared_NovaConfig_Artifacts;
 
 /**
  * Lib - Nova Config - Parse Emails.
@@ -1340,6 +1395,8 @@ export type Lib_NovaConfig_Runner_ParseUrls_ParsedUrl = string | undefined;
  */
 export type Lib_NovaConfig_Runner_ParseWorkflows_Value = unknown;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_Artifacts = Shared_NovaConfig_Artifacts | undefined;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_Returns = Shared_NovaConfig_Workflows | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Workflows_Element = Shared_NovaConfigWorkflow;
@@ -1400,6 +1457,8 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_To = string;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Path = string;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Artifact = string;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_After = string[];
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_With = Record<string, string>;
@@ -1407,6 +1466,7 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_With = Record<st
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element = {
   to: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_To;
   path: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Path;
+  artifact?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Artifact;
   after?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_After;
   with?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_With;
 };
@@ -1419,6 +1479,8 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTo = string | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployPath = string | undefined;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact = string | undefined;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter = string[];
@@ -1427,6 +1489,8 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_To = string;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Path = string;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Artifact = string;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_After = string[];
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_With = Record<string, string>;
@@ -1434,6 +1498,7 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_With = Record<stri
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget = {
   to: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_To;
   path: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Path;
+  artifact?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Artifact;
   after?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_After;
   with?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_With;
 };

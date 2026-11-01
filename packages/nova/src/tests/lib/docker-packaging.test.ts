@@ -79,6 +79,12 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_YarnProjectDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_YarnRunScriptContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_YarnWorkspaceDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_ProjectDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_RefreshedWorkspacePackage,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_Returns,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspaceDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackage,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackagePath,
   Tests_Lib_DockerPackaging_LibDockerPackaging_RejectsPersistedReservedAndDuplicateServiceNamesBeforeChangingArtifacts_ArtifactSentinel,
   Tests_Lib_DockerPackaging_LibDockerPackaging_RejectsPersistedReservedAndDuplicateServiceNamesBeforeChangingArtifacts_DuplicateManifestContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_RejectsPersistedReservedAndDuplicateServiceNamesBeforeChangingArtifacts_Manifest,
@@ -141,6 +147,10 @@ async function writeProject(projectDirectory: Tests_Lib_DockerPackaging_WritePro
   await writeFile(join(projectDirectory, 'package.json'), `${JSON.stringify({
     name: 'fixture-project',
     private: true,
+    allowScripts: {
+      esbuild: false,
+      ssh2: true,
+    },
     scripts: {
       'check': 'nova utility run-scripts --sequential "check:*"',
       'clean': 'nova utility run-scripts --parallel "clean:*"',
@@ -332,6 +342,10 @@ describe('LibDockerPackaging', async () => {
     });
     deepStrictEqual(containerBuildPackage['workspaces'], ['apps/api']);
     strictEqual(containerBuildPackage['packageManager'], 'npm@11.18.0');
+    deepStrictEqual(containerBuildPackage['allowScripts'], {
+      esbuild: false,
+      ssh2: true,
+    });
     strictEqual(JSON.stringify(rootPackage['scripts']).includes('"deploy:container":"docker compose up --build --detach"'), true);
     strictEqual(JSON.stringify(novaConfig['workspaces']).includes('"./packages/docker":{"name":"fixture-tool-docker","policy":"freezable","role":"tool"}'), true);
     strictEqual(JSON.stringify(novaConfig['ignoreFiles']).includes('"./.dockerignore":{"bundles":["nova"],"patterns":[]}'), true);
@@ -356,6 +370,37 @@ describe('LibDockerPackaging', async () => {
     strictEqual(serviceRunContent.includes(`/command/s6-applyuidgid -u "${shellVariableMarker}{PUID:-1000}" -g "${shellVariableMarker}{PGID:-1000}"`), true);
     strictEqual(healthcheckContent.includes('/command/s6-svstat -u /run/service/api'), true);
     strictEqual(serviceRunContent.includes('cd \'/app/apps/api\''), true);
+
+    return;
+  });
+
+  it('refreshes Docker-only manifests from canonical packages', async (): Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_Returns => {
+    const projectDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_ProjectDirectory = join(sandboxRoot, 'refresh-manifests');
+
+    await writeProject(projectDirectory);
+
+    const workspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/api', 'fixture-app-api');
+
+    await LibDockerPackaging.generateForTarget({
+      profile: 'http-service',
+      projectDirectory,
+      replaceFile: true,
+      workspaceDirectory,
+      workspaceName: 'api',
+    });
+
+    const workspacePackagePath: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackage: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackage = JSON.parse(await readFile(workspacePackagePath, 'utf-8'));
+
+    Reflect.set(workspacePackage, 'version', '1.2.3');
+
+    await writeFile(workspacePackagePath, `${JSON.stringify(workspacePackage, null, 2)}\n`, 'utf-8');
+
+    await LibDockerPackaging.refreshGeneratedManifests(projectDirectory);
+
+    const refreshedWorkspacePackage: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_RefreshedWorkspacePackage = JSON.parse(await readFile(join(projectDirectory, 'packages', 'docker', 'workspace-manifests', 'apps', 'api', 'package.json'), 'utf-8'));
+
+    strictEqual(refreshedWorkspacePackage['version'], '1.2.3');
 
     return;
   });

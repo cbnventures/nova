@@ -1,6 +1,7 @@
 import type {
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintValidationResult,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigWorkspace,
@@ -135,6 +136,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_RawWorkflows = unknown[];
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.38.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Result = Shared_BlueprintValidationResult;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryRawWorkflows = unknown[];
 
@@ -770,6 +782,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultDiagnostics;
 };
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.38.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.

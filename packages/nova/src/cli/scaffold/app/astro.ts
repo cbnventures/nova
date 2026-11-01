@@ -156,6 +156,14 @@ export class Runner {
         'web',
       ],
       resolveAllowScriptProfiles: (answers) => (answers.get('adapter') === 'cloudflare') ? ['cloudflare'] : [],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [{
+          from: `${workspaceRelPath}/build`,
+          to: './',
+        }],
+      }),
       resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppAstroTemplateQuestions,

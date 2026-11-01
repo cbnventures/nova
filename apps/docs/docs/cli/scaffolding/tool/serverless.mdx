@@ -86,3 +86,5 @@ Omitting `--target` in non-interactive mode preserves the Cloudflare Workers def
 ## Registration
 
 Nova registers the workspace with the `tool` role and `distributable` policy. The generated npm package uses `{project-name}-tool-{workspace-name}` while its executable keeps the shorter workspace name.
+
+Nova also registers a same-named file artifact with the selected provider's runtime files, CLI, package metadata, and compiled output. Cloudflare Workers and Vercel keep distinct layouts while sharing the same assembly contract.

@@ -136,3 +136,5 @@ nova scaffold package pfsense --non-interactive --workspace-name my-package --ou
 Nova prefixes the workspace package name with `pfsense-pkg-` when needed, so workspace `my-package` becomes `pfsense-pkg-my-package`. The FreeBSD port and installed package use pfSense's conventional `pfSense-pkg-MyPackage` form.
 
 The workspace is registered with the `package` role and `distributable` policy so Nova can track its changelog and semantic version. Publication remains explicit: the generated workflow uploads the FreeBSD package to GitHub Releases and does not publish it to npm or Netgate's repository.
+
+Nova also registers a same-named file artifact that stages the workspace's completed package output beneath the root `build/` folder without changing the workspace build itself.

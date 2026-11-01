@@ -124,3 +124,5 @@ nova scaffold app astro --non-interactive --workspace-name edge --output ./apps/
 ## Registration
 
 Nova registers the workspace with the `app` role and `trackable` policy. Its package name follows `{projectSlug}-app-{workspaceName}`.
+
+Nova also registers a same-named file artifact. A full root build stages the completed Astro output under `build/<package-name>/` without changing the workspace's own `build/` directory.

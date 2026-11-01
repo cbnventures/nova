@@ -208,6 +208,7 @@ import type {
   Lib_NovaConfig_Runner_Load_RawFile,
   Lib_NovaConfig_Runner_Load_Returns,
   Lib_NovaConfig_Runner_Parse_Agents,
+  Lib_NovaConfig_Runner_Parse_Artifacts,
   Lib_NovaConfig_Runner_Parse_Emails,
   Lib_NovaConfig_Runner_Parse_Entities,
   Lib_NovaConfig_Runner_Parse_Environment,
@@ -226,6 +227,27 @@ import type {
   Lib_NovaConfig_Runner_ParseAgents_Agents,
   Lib_NovaConfig_Runner_ParseAgents_Returns,
   Lib_NovaConfig_Runner_ParseAgents_Value,
+  Lib_NovaConfig_Runner_ParseArtifacts_Artifact,
+  Lib_NovaConfig_Runner_ParseArtifacts_Build,
+  Lib_NovaConfig_Runner_ParseArtifacts_From,
+  Lib_NovaConfig_Runner_ParseArtifacts_FromIsSafe,
+  Lib_NovaConfig_Runner_ParseArtifacts_FromSegments,
+  Lib_NovaConfig_Runner_ParseArtifacts_HasError,
+  Lib_NovaConfig_Runner_ParseArtifacts_Name,
+  Lib_NovaConfig_Runner_ParseArtifacts_RawArtifact,
+  Lib_NovaConfig_Runner_ParseArtifacts_RawBuild,
+  Lib_NovaConfig_Runner_ParseArtifacts_RawSource,
+  Lib_NovaConfig_Runner_ParseArtifacts_RawSources,
+  Lib_NovaConfig_Runner_ParseArtifacts_Result,
+  Lib_NovaConfig_Runner_ParseArtifacts_Returns,
+  Lib_NovaConfig_Runner_ParseArtifacts_SortedResult,
+  Lib_NovaConfig_Runner_ParseArtifacts_Sources,
+  Lib_NovaConfig_Runner_ParseArtifacts_To,
+  Lib_NovaConfig_Runner_ParseArtifacts_ToIsSafe,
+  Lib_NovaConfig_Runner_ParseArtifacts_ToSegments,
+  Lib_NovaConfig_Runner_ParseArtifacts_TypedBuildEntry,
+  Lib_NovaConfig_Runner_ParseArtifacts_Value,
+  Lib_NovaConfig_Runner_ParseArtifacts_Workspaces,
   Lib_NovaConfig_Runner_ParseEmails_EmailFields,
   Lib_NovaConfig_Runner_ParseEmails_Emails,
   Lib_NovaConfig_Runner_ParseEmails_ParsedEmail,
@@ -394,11 +416,13 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_UrlFieldsFundSourcesIndex,
   Lib_NovaConfig_Runner_ParseUrls_Urls,
   Lib_NovaConfig_Runner_ParseUrls_Value,
+  Lib_NovaConfig_Runner_ParseWorkflows_Artifacts,
   Lib_NovaConfig_Runner_ParseWorkflows_Build,
   Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
   Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms,
   Lib_NovaConfig_Runner_ParseWorkflows_Deploy,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployPath,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTo,
@@ -702,13 +726,14 @@ export class Runner {
     const entities: Lib_NovaConfig_Runner_Parse_Entities = this.parseEntities(value['entities']);
     const emails: Lib_NovaConfig_Runner_Parse_Emails = this.parseEmails(value['emails']);
     const github: Lib_NovaConfig_Runner_Parse_Github = this.parseGithub(value['github']);
-    const workflows: Lib_NovaConfig_Runner_Parse_Workflows = this.parseWorkflows(value['workflows']);
     const urls: Lib_NovaConfig_Runner_Parse_Urls = this.parseUrls(value['urls']);
     const readMe: Lib_NovaConfig_Runner_Parse_ReadMe = this.parseReadMe(value['readme'], github, urls);
     const workspaces: Lib_NovaConfig_Runner_Parse_Workspaces = this.parseWorkspaces(
       value['workspaces'],
       (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
     );
+    const artifacts: Lib_NovaConfig_Runner_Parse_Artifacts = this.parseArtifacts(value['artifacts'], workspaces);
+    const workflows: Lib_NovaConfig_Runner_Parse_Workflows = this.parseWorkflows(value['workflows'], artifacts);
     const ignoreFiles: Lib_NovaConfig_Runner_Parse_IgnoreFiles = this.parseIgnoreFiles(value['ignoreFiles']);
     const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
@@ -750,6 +775,10 @@ export class Runner {
 
     if (workspaces !== undefined) {
       result.workspaces = workspaces;
+    }
+
+    if (artifacts !== undefined) {
+      result.artifacts = artifacts;
     }
 
     if (ignoreFiles !== undefined) {
@@ -1965,7 +1994,8 @@ export class Runner {
    * Validates workflow objects while preserving their trigger-object filter arrays.
    * Drops non-string workflow settings.
    *
-   * @param {Lib_NovaConfig_Runner_ParseWorkflows_Value} value - Value.
+   * @param {Lib_NovaConfig_Runner_ParseWorkflows_Value}     value     - Value.
+   * @param {Lib_NovaConfig_Runner_ParseWorkflows_Artifacts} artifacts - Artifacts.
    *
    * @private
    *
@@ -1973,7 +2003,7 @@ export class Runner {
    *
    * @since 0.26.0
    */
-  private parseWorkflows(value: Lib_NovaConfig_Runner_ParseWorkflows_Value): Lib_NovaConfig_Runner_ParseWorkflows_Returns {
+  private parseWorkflows(value: Lib_NovaConfig_Runner_ParseWorkflows_Value, artifacts: Lib_NovaConfig_Runner_ParseWorkflows_Artifacts): Lib_NovaConfig_Runner_ParseWorkflows_Returns {
     if (Array.isArray(value) === false) {
       return undefined;
     }
@@ -2101,8 +2131,21 @@ export class Runner {
 
           const deployTo: Lib_NovaConfig_Runner_ParseWorkflows_DeployTo = this.getNonEmptyString(rawDeployValue['to']);
           const deployPath: Lib_NovaConfig_Runner_ParseWorkflows_DeployPath = this.getNonEmptyString(rawDeployValue['path']);
+          const deployArtifact: Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact = this.getNonEmptyString(rawDeployValue['artifact']);
 
           if (deployTo === undefined || deployPath === undefined) {
+            continue;
+          }
+
+          if (
+            deployArtifact !== undefined
+            && (
+              artifacts === undefined
+              || artifacts[deployArtifact] === undefined
+            )
+          ) {
+            this.pushError('Runner.parseWorkflows', 'workflows', `Deploy target "${deployTo}" references unknown artifact "${deployArtifact}". Skipping ...`);
+
             continue;
           }
 
@@ -2113,6 +2156,10 @@ export class Runner {
             to: deployTo,
             path: deployPath,
           };
+
+          if (deployArtifact !== undefined) {
+            Reflect.set(deployTarget, 'artifact', deployArtifact);
+          }
 
           if (deployAfter.length > 0) {
             Reflect.set(deployTarget, 'after', deployAfter);
@@ -2883,6 +2930,148 @@ export class Runner {
     }
 
     return (agents.length > 0) ? agents : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Artifacts.
+   *
+   * Parses named final-product assemblies with explicit project-relative paths and registered
+   * workspace build selectors so artifact-focused builds remain dependency-aware.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseArtifacts_Value}      value      - Value.
+   * @param {Lib_NovaConfig_Runner_ParseArtifacts_Workspaces} workspaces - Workspaces.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseArtifacts_Returns}
+   *
+   * @since 0.38.0
+   */
+  private parseArtifacts(value: Lib_NovaConfig_Runner_ParseArtifacts_Value, workspaces: Lib_NovaConfig_Runner_ParseArtifacts_Workspaces): Lib_NovaConfig_Runner_ParseArtifacts_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_ParseArtifacts_Result = {};
+
+    for (const artifactEntry of Object.entries(value)) {
+      const name: Lib_NovaConfig_Runner_ParseArtifacts_Name = artifactEntry[0].trim();
+      const rawArtifact: Lib_NovaConfig_Runner_ParseArtifacts_RawArtifact = artifactEntry[1];
+
+      if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(name) === false) {
+        this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact name "${name}" must be a simple slug. Skipping ...`);
+
+        continue;
+      }
+
+      if (isPlainObject(rawArtifact) === false) {
+        this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact "${name}" must contain an object. Skipping ...`);
+
+        continue;
+      }
+
+      const rawBuild: Lib_NovaConfig_Runner_ParseArtifacts_RawBuild = rawArtifact['build'];
+      const build: Lib_NovaConfig_Runner_ParseArtifacts_Build = this.getArrayOfNonEmptyStrings(rawBuild) ?? [];
+      let hasError: Lib_NovaConfig_Runner_ParseArtifacts_HasError = false;
+
+      if (Array.isArray(rawBuild) === false || build.length === 0) {
+        this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact "${name}" must declare at least one build workspace. Skipping ...`);
+
+        hasError = true;
+      }
+
+      for (const buildEntry of build) {
+        const typedBuildEntry: Lib_NovaConfig_Runner_ParseArtifacts_TypedBuildEntry = buildEntry;
+
+        if (workspaces === undefined || workspaces[typedBuildEntry] === undefined) {
+          this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact "${name}" references unregistered workspace "${typedBuildEntry}". Skipping ...`);
+
+          hasError = true;
+        }
+      }
+
+      const rawSources: Lib_NovaConfig_Runner_ParseArtifacts_RawSources = rawArtifact['sources'];
+      const sources: Lib_NovaConfig_Runner_ParseArtifacts_Sources = [];
+
+      if (Array.isArray(rawSources) === false || rawSources.length === 0) {
+        this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact "${name}" must declare at least one source. Skipping ...`);
+
+        continue;
+      }
+
+      for (const sourceValue of rawSources) {
+        const rawSource: Lib_NovaConfig_Runner_ParseArtifacts_RawSource = sourceValue;
+
+        if (isPlainObject(rawSource) === false) {
+          this.pushError('Runner.parseArtifacts', 'artifacts', `Every source for artifact "${name}" must contain an object. Skipping ...`);
+
+          hasError = true;
+
+          continue;
+        }
+
+        const from: Lib_NovaConfig_Runner_ParseArtifacts_From = this.getNonEmptyString(rawSource['from']);
+        const to: Lib_NovaConfig_Runner_ParseArtifacts_To = this.getNonEmptyString(rawSource['to']);
+
+        if (from === undefined || to === undefined) {
+          this.pushError('Runner.parseArtifacts', 'artifacts', `Every source for artifact "${name}" must declare from and to paths. Skipping ...`);
+
+          hasError = true;
+
+          continue;
+        }
+
+        const fromSegments: Lib_NovaConfig_Runner_ParseArtifacts_FromSegments = from.slice(2).split('/');
+        const toSegments: Lib_NovaConfig_Runner_ParseArtifacts_ToSegments = (to === './') ? [] : to.slice(2).split('/');
+        const fromIsSafe: Lib_NovaConfig_Runner_ParseArtifacts_FromIsSafe = from.startsWith('./') === true
+          && from !== './'
+          && from.includes('\\') === false
+          && fromSegments.every((segment) => (
+            segment.length > 0
+            && segment !== '.'
+            && segment !== '..'
+          ));
+        const toIsSafe: Lib_NovaConfig_Runner_ParseArtifacts_ToIsSafe = to.startsWith('./') === true
+          && to.includes('\\') === false
+          && toSegments.every((segment) => (
+            segment.length > 0
+            && segment !== '.'
+            && segment !== '..'
+          ));
+
+        if (fromIsSafe === false || toIsSafe === false) {
+          this.pushError('Runner.parseArtifacts', 'artifacts', `Artifact "${name}" paths must be safe project-relative paths beginning with "./". Skipping ...`);
+
+          hasError = true;
+
+          continue;
+        }
+
+        sources.push({
+          from,
+          to,
+        });
+      }
+
+      if (hasError === true || sources.length === 0) {
+        continue;
+      }
+
+      const artifact: Lib_NovaConfig_Runner_ParseArtifacts_Artifact = {
+        build,
+        sources,
+      };
+
+      Reflect.set(result, name, artifact);
+    }
+
+    const sortedResult: Lib_NovaConfig_Runner_ParseArtifacts_SortedResult = {};
+
+    for (const name of Object.keys(result).sort((left, right) => left.localeCompare(right))) {
+      Reflect.set(sortedResult, name, result[name]);
+    }
+
+    return (Object.keys(sortedResult).length > 0) ? sortedResult : undefined;
   }
 
   /**

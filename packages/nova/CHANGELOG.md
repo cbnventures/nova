@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.38.0 - 2026-11-01
+
+### FIXED
+- Fixed generated Docker-only package manifests omitting approved allowScripts policy and retaining stale release metadata.
+
+### ADDED
+- Added configurable named artifact assemblies that build dependency-aware workspace closures, preserve deliberate final layouts, and route generated publish workflows to explicit products.
+
 ## 0.37.2 - 2026-10-31
 
 ### FIXED

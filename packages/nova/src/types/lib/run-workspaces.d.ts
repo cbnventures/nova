@@ -7,12 +7,15 @@ import type { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import type {
   Shared_CorepackPackageManager,
   Shared_CorepackSpawnInvocation,
+  Shared_NovaConfig_Artifacts,
+  Shared_NovaConfigArtifact,
   Shared_NovaConfigConfig,
   Shared_NovaConfigSettings_RunWorkspaces_Root,
   Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigWorkspace,
   Shared_RunWorkspacesCacheRecord,
+  Shared_RunWorkspacesOptions_Artifact,
   Shared_RunWorkspacesOptions_Buffer,
   Shared_RunWorkspacesOptions_Concurrency,
   Shared_RunWorkspacesOptions_ContinueOnError,
@@ -390,6 +393,8 @@ export type Lib_RunWorkspaces_Runner_LoadProject_Diagnostics = ReturnType<LibNov
 
 export type Lib_RunWorkspaces_Runner_LoadProject_ConfiguredWorkspaces = Record<string, Shared_NovaConfigWorkspace>;
 
+export type Lib_RunWorkspaces_Runner_LoadProject_Artifacts = Shared_NovaConfig_Artifacts;
+
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = Shared_NovaConfigSettings_RunWorkspacesCache | undefined;
 
 export type Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = Shared_NovaConfigSettings_RunWorkspacesConcurrency | undefined;
@@ -527,6 +532,8 @@ export type Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootRequestedAlone =
  */
 export type Lib_RunWorkspaces_Runner_Run_Options_Task = Shared_RunWorkspacesOptions_Task | undefined;
 
+export type Lib_RunWorkspaces_Runner_Run_Options_Artifact = Shared_RunWorkspacesOptions_Artifact;
+
 export type Lib_RunWorkspaces_Runner_Run_Options_Buffer = Shared_RunWorkspacesOptions_Buffer;
 
 export type Lib_RunWorkspaces_Runner_Run_Options_Concurrency = Shared_RunWorkspacesOptions_Concurrency;
@@ -557,6 +564,7 @@ export type Lib_RunWorkspaces_Runner_Run_Options_WriteStdout = (message: string)
 
 export type Lib_RunWorkspaces_Runner_Run_Options = {
   task: Lib_RunWorkspaces_Runner_Run_Options_Task;
+  artifact?: Lib_RunWorkspaces_Runner_Run_Options_Artifact;
   buffer: Lib_RunWorkspaces_Runner_Run_Options_Buffer;
   concurrency: Lib_RunWorkspaces_Runner_Run_Options_Concurrency;
   continueOnError: Lib_RunWorkspaces_Runner_Run_Options_ContinueOnError;
@@ -587,9 +595,21 @@ export type Lib_RunWorkspaces_Runner_Run_NodeEnvOption = string | undefined;
 
 export type Lib_RunWorkspaces_Runner_Run_ScriptArgs = string[];
 
+export type Lib_RunWorkspaces_Runner_Run_ArtifactOption = Shared_RunWorkspacesOptions_Artifact;
+
+export type Lib_RunWorkspaces_Runner_Run_ArtifactNames = string[];
+
 export type Lib_RunWorkspaces_Runner_Run_NodeEnv = 'development' | 'production' | 'test' | undefined;
 
 export type Lib_RunWorkspaces_Runner_Run_Project = Shared_RunWorkspacesProject;
+
+export type Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntrySet = Set<string>;
+
+export type Lib_RunWorkspaces_Runner_Run_Artifact = Shared_NovaConfigArtifact | undefined;
+
+export type Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntries = string[];
+
+export type Lib_RunWorkspaces_Runner_Run_RequestedWorkspaces = string[] | undefined;
 
 export type Lib_RunWorkspaces_Runner_Run_RootSelection_IncludeRoot = boolean;
 
@@ -610,9 +630,19 @@ export type Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces = Shared_RunWorkspac
 
 export type Lib_RunWorkspaces_Runner_Run_Plan = Shared_RunWorkspacesPlan;
 
+export type Lib_RunWorkspaces_Runner_Run_ShouldAssemble = boolean;
+
+export type Lib_RunWorkspaces_Runner_Run_ShouldCleanArtifacts = boolean;
+
+export type Lib_RunWorkspaces_Runner_Run_SelectedArtifactNames = string[] | undefined;
+
 export type Lib_RunWorkspaces_Runner_Run_OrderedTasks = Shared_RunWorkspacesTask[];
 
 export type Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency = number;
+
+export type Lib_RunWorkspaces_Runner_Run_ExecutionExitCode = 0 | 1;
+
+export type Lib_RunWorkspaces_Runner_Run_AssembledPaths = string[];
 
 export type Lib_RunWorkspaces_Runner_Run_ErrorMessage = string;
 

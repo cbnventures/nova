@@ -102,3 +102,5 @@ nova scaffold package github-action --non-interactive --workspace-name my-action
 ## Registration
 
 Nova registers the workspace with the `package` role and `distributable` policy. The generated `action.yml` uses `./packages/{workspaceName}/build/index.js`, so a custom output path is also added to the root npm workspace list when needed.
+
+Nova also registers a same-named file artifact with `action.yml` at its root and the bundled JavaScript under `action/`. The generated publish workflow can hand that exact assembled tree to the action release job.

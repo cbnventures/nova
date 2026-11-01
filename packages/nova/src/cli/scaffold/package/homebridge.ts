@@ -96,6 +96,28 @@ export class Runner {
         'nodejs',
         'homebridge',
       ],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/bin`,
+            to: './bin',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+          {
+            from: `${workspaceRelPath}/config.schema.json`,
+            to: './config.schema.json',
+          },
+        ],
+      }),
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldPackageHomebridgeTemplateQuestions,
       templateSubpath: 'scaffold/package/homebridge',

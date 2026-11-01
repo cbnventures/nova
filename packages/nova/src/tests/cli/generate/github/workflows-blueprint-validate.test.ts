@@ -25,6 +25,9 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Artifacts,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_RawWorkflows,
@@ -108,6 +111,9 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_Workspaces,
@@ -303,6 +309,32 @@ describe('Validator.validate', () => {
     strictEqual(result['diagnostics'].length, 1);
 
     strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Unknown template "not-a-template"'), true);
+
+    return;
+  });
+
+  it('unknown artifact is flagged', () => {
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Workspaces = {
+      './apps/site': {
+        name: 'site-app',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_RawWorkflows = [{
+      template: 'publish',
+      name: 'site',
+      triggers: ['release'],
+      deploy: [{
+        to: 'cloudflare-pages',
+        path: './apps/site',
+        artifact: 'missing-site',
+      }],
+    }];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownArtifactIsFlagged_Result = Validator.validate(rawWorkflows, workspaces);
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('Target artifact "missing-site"')), true);
 
     return;
   });
@@ -622,6 +654,38 @@ describe('Validator.validate', () => {
 
     strictEqual(result['workflows'].length, 0);
     strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('missing required literal settings: IMAGE_NAMESPACE, IMAGE_REPOSITORY')), true);
+
+    return;
+  });
+
+  it('container file artifact is flagged', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_RawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+        artifact: 'container-files',
+        with: {
+          IMAGE_NAMESPACE: 'cbnventures',
+          IMAGE_REPOSITORY: 'nova',
+        },
+      }],
+    }];
+    const artifacts: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Artifacts = {
+      'container-files': {
+        build: ['./apps/api'],
+        sources: [{
+          from: './apps/api/build',
+          to: './',
+        }],
+      },
+    };
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, artifacts);
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('cannot select a file artifact because container registries use Nova\'s OCI handoff')), true);
 
     return;
   });

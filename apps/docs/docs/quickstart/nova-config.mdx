@@ -327,7 +327,7 @@ An array of GitHub Actions workflow entries consumed by [`nova generate github w
 | `timeoutMinutes`     | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.      |
 | `containerPlatforms` | `string[]` | Optional. Container platforms built into the one OCI artifact. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both. |
 | `build`              | `string[]` | Optional. Non-root workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to. `"./"` is invalid.    |
-| `deploy`             | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.                      |
+| `deploy`             | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `artifact`, `after`, and `with`.      |
 | `with`               | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                       |
 
 Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
@@ -357,12 +357,13 @@ See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#co
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field   | Type       | Description                                                                                                                                                           |
-|---------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `to`    | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"vercel-nextjs"`. |
-| `path`  | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                      |
-| `after` | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                   |
-| `with`  | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                       |
+| Field      | Type       | Description                                                                                                                                                           |
+|------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `to`       | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"vercel-nextjs"`. |
+| `path`     | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                      |
+| `artifact` | `string`   | Optional named entry from `artifacts`. File-based deploy targets download that assembled product instead of a workspace's default build paths.                        |
+| `after`    | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                   |
+| `with`     | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                       |
 
 Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
 
@@ -372,6 +373,7 @@ Container targets describe one repository-wide image. Configure at most one `doc
 | `ghcr`       | `IMAGE_REPOSITORY`                    | Derived from `github.repository_owner`.                |
 
 Both targets use `path: "./"`. Container inputs do not belong in `build`; the root multi-stage Docker build compiles them inside the image build.
+Container targets use the workflow's OCI handoff and cannot reference a named file artifact.
 
 ### Variable Formats
 
@@ -530,6 +532,42 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
   }
 }
 ```
+
+## `artifacts`
+
+A map of named final products assembled beneath the repository root's `build/` folder. Workspace builds stay independent; this map declares which workspaces must build and how their completed files are arranged for publishing or inspection.
+
+| Field     | Type       | Description                                                                                                                             |
+|-----------|------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `build`   | `string[]` | Non-empty list of registered workspace paths required to produce the artifact. Internal workspace dependencies are added automatically. |
+| `sources` | `object[]` | Non-empty ordered list of explicit `{ "from", "to" }` mappings copied into `build/<artifact-name>/`.                                    |
+
+Each source uses project-relative paths beginning with `./`. `from` must identify a file or directory outside the root `build/` folder. `to` is relative to the named artifact; use `"./"` to merge a source directory into its root or a path such as `"./web"` to keep it separate.
+
+```json
+{
+  "artifacts": {
+    "product": {
+      "build": [
+        "./apps/web",
+        "./apps/api"
+      ],
+      "sources": [
+        {
+          "from": "./apps/web/build",
+          "to": "./web"
+        },
+        {
+          "from": "./apps/api/build",
+          "to": "./api"
+        }
+      ]
+    }
+  }
+}
+```
+
+Nova validates every mapping before replacing existing output. Hidden files and executable modes are preserved. Missing sources, unsafe paths, symbolic links, and conflicting file destinations stop assembly instead of producing a partial product.
 
 ## `ignoreFiles`
 

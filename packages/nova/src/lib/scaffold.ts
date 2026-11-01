@@ -179,6 +179,8 @@ import type {
   Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_Returns,
   Lib_Scaffold_PromptScaffoldOptions_Returns,
   Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Artifact,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Artifacts,
   Lib_Scaffold_RegisterWorkspaceInConfig_AssetsignoreConfigPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_AssetsignorePath,
   Lib_Scaffold_RegisterWorkspaceInConfig_Category,
@@ -195,6 +197,7 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_IgnoreFiles,
   Lib_Scaffold_RegisterWorkspaceInConfig_NormalizedConfig,
   Lib_Scaffold_RegisterWorkspaceInConfig_PackageJsonRecipes,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedArtifacts,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces,
@@ -316,6 +319,7 @@ import type {
   Lib_Scaffold_RunScaffold_Environment,
   Lib_Scaffold_RunScaffold_EnvironmentVariables,
   Lib_Scaffold_RunScaffold_ErrorMessage,
+  Lib_Scaffold_RunScaffold_ExistingArtifacts,
   Lib_Scaffold_RunScaffold_ExistingRoot,
   Lib_Scaffold_RunScaffold_ExistingRootPackageJsonChanged,
   Lib_Scaffold_RunScaffold_ExistingWorkspace,
@@ -351,6 +355,7 @@ import type {
   Lib_Scaffold_RunScaffold_RegisteredConfig,
   Lib_Scaffold_RunScaffold_ReplacementResolution,
   Lib_Scaffold_RunScaffold_Replacements,
+  Lib_Scaffold_RunScaffold_ResolvedArtifact,
   Lib_Scaffold_RunScaffold_ResolvedReplacements,
   Lib_Scaffold_RunScaffold_Returns,
   Lib_Scaffold_RunScaffold_RootGitignorePath,
@@ -2031,12 +2036,13 @@ async function resolveScaffoldWorkspaceVersion(existingRoot: Lib_Scaffold_Resolv
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}             category             - Category.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables} environmentVariables - Environment variables.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Platforms}            platforms            - Platforms.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Artifact}             artifact             - Artifact.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.15.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms, artifact: Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = undefined): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -2114,6 +2120,30 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   });
 
   Reflect.set(parsedConfig, 'workspaces', workspaces);
+
+  if (artifact !== undefined) {
+    const parsedArtifacts: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedArtifacts = parsedConfig['artifacts'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedArtifacts;
+
+    if (parsedArtifacts !== undefined && isPlainObject(parsedArtifacts) === false) {
+      reportError('The root nova.config.json "artifacts" field must be an object.');
+
+      return;
+    }
+
+    const artifacts: Lib_Scaffold_RegisterWorkspaceInConfig_Artifacts = parsedArtifacts ?? {};
+
+    if (artifacts[artifact['name']] !== undefined) {
+      reportError(`The root nova.config.json already defines artifact "${artifact['name']}".`);
+
+      return;
+    }
+
+    Reflect.set(artifacts, artifact['name'], {
+      build: artifact['build'],
+      sources: artifact['sources'],
+    });
+    Reflect.set(parsedConfig, 'artifacts', artifacts);
+  }
 
   if (category === 'docs') {
     const parsedUrls: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls = parsedConfig['urls'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls;
@@ -2566,6 +2596,24 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     return;
   }
 
+  const resolvedArtifact: Lib_Scaffold_RunScaffold_ResolvedArtifact = (definition['resolveArtifact'] === undefined) ? undefined : definition.resolveArtifact(workspaceRelPath, workspacePackageName, templateAnswers);
+
+  if (resolvedArtifact !== undefined && LIB_REGEX_PATTERN_SLUG_SIMPLE.test(resolvedArtifact['name']) === false) {
+    reportError(`The scaffold artifact name "${resolvedArtifact['name']}" must be a lowercase slug. No scaffold files were written.`);
+
+    return;
+  }
+
+  if (resolvedArtifact !== undefined && existingRoot !== undefined) {
+    const existingArtifacts: Lib_Scaffold_RunScaffold_ExistingArtifacts = existingRoot['config']['artifacts'] as Lib_Scaffold_RunScaffold_ExistingArtifacts;
+
+    if (existingArtifacts !== undefined && existingArtifacts[resolvedArtifact['name']] !== undefined) {
+      reportError(`The artifact name "${resolvedArtifact['name']}" is already registered in nova.config.json. No scaffold files were written.`);
+
+      return;
+    }
+  }
+
   const shouldInstall: Lib_Scaffold_RunScaffold_ShouldInstall = resolveScaffoldInstall(options['install']);
   const environmentVariables: Lib_Scaffold_RunScaffold_EnvironmentVariables = definition['environmentVariables'] ?? [];
   const platforms: Lib_Scaffold_RunScaffold_Platforms = [...new Set([
@@ -2873,7 +2921,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   progress.start('Registering workspace', workspacePackageName);
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms, resolvedArtifact);
 
   await progress.complete();
 

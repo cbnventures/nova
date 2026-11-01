@@ -1,4 +1,7 @@
-import { strictEqual } from 'node:assert/strict';
+import {
+  deepStrictEqual,
+  strictEqual,
+} from 'node:assert/strict';
 import {
   access,
   mkdir,
@@ -31,7 +34,9 @@ import type {
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NextConfigPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfig,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfigPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfigRaw,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_PageTsxPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_RootPackageJsonPath,
@@ -216,6 +221,33 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     await access(rootPackageJsonPath);
 
     await access(novaConfigPath);
+
+    const novaConfigRaw: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfigRaw = await readFile(novaConfigPath, 'utf-8');
+    const novaConfig: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfig = JSON.parse(novaConfigRaw) as Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfig;
+
+    deepStrictEqual(novaConfig['artifacts'], {
+      'my-app-app-nextjs': {
+        build: ['./apps/nextjs'],
+        sources: [
+          {
+            from: './apps/nextjs/package.json',
+            to: './package.json',
+          },
+          {
+            from: './apps/nextjs/build',
+            to: './build',
+          },
+          {
+            from: './apps/nextjs/next.config.mjs',
+            to: './next.config.mjs',
+          },
+          {
+            from: './apps/nextjs/public',
+            to: './public',
+          },
+        ],
+      },
+    });
 
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'package.json');

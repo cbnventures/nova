@@ -1,3 +1,5 @@
+import type { Shared_NovaConfig } from '../../../../shared.d.ts';
+
 /**
  * Tests - CLI - Scaffold - App - Next.js - Run.
  *
@@ -46,6 +48,10 @@ export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorep
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_RootPackageJsonPath = string;
 
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfigPath = string;
+
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfigRaw = string;
+
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NovaConfig = Shared_NovaConfig;
 
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = string;
 

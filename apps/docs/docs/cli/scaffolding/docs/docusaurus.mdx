@@ -220,6 +220,8 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
 For project slug `my-docs`, Nova names the package `my-docs-docs` and writes that same identity to `nova.config.json`. The package name does not change when you choose a different workspace directory. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
 
+Nova also registers a same-named file artifact. A full root build stages the completed documentation site under `build/<package-name>/` without changing the workspace's own `build/` directory.
+
 A Nova project has one canonical workspace with the `docs` role, so the command refuses to create a second one. Before writing, Nova also requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps

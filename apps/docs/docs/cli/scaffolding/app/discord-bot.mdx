@@ -112,3 +112,5 @@ nova scaffold app discord-bot --docker-image --non-interactive --name my-bot --w
 ## Registration
 
 Nova registers the workspace with the `app` role and `trackable` policy. Its package name follows `{projectSlug}-app-{workspaceName}`.
+
+Nova also registers a same-named file artifact containing the runtime `package.json` and compiled `build/` tree. Docker publishing remains a separate repository-wide OCI artifact.

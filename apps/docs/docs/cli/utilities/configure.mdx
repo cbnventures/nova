@@ -149,6 +149,12 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 Environment variables and secrets live in the top-level [`environment`](/docs/quickstart/nova-config#environment) block and are editable in the [Environment](#environment) category below.
 :::
 
+### Artifacts
+
+- **Purpose**: Edit the complete top-level [`artifacts`](/docs/quickstart/nova-config#artifacts) map as validated JSON, including each final product's workspace build selectors and source-to-destination mappings.
+- **Nice to know**: A blank value removes the entire optional section. Existing values are pre-filled exactly, so reopening and saving the category preserves every named product.
+- **Things to watch**: Artifact names must be simple slugs. Every artifact needs a non-empty `build` array and `sources` array; path safety and registered workspace references are validated again when Nova loads the saved config.
+
 ### Workflows
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
@@ -303,6 +309,17 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
       "name": "@company/example",
       "role": "package",
       "policy": "distributable"
+    }
+  },
+  "artifacts": {
+    "example-docs": {
+      "build": ["./apps/docs"],
+      "sources": [
+        {
+          "from": "./apps/docs/build",
+          "to": "./"
+        }
+      ]
     }
   },
   "workflows": [

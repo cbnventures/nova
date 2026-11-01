@@ -1334,6 +1334,7 @@ class CLI {
       .description('Run dependency-aware scripts across Nova workspaces')
       .argument('<script>', 'Workspace script name')
       .argument('[scriptArgs...]', 'Arguments forwarded to the requested workspace script')
+      .option('-a, --artifact <name...>', 'Build the dependency closure and assemble only selected named artifacts')
       .option('-b, --buffer <ms>', 'Flush interval in ms for grouped workspace logs (default: 500)')
       .option('-c, --concurrency <count>', `Override the configured workspace concurrency (unconfigured default: ${LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY})`)
       .option('-k, --continue-on-error', 'Continue independent workspace tasks after a failure')

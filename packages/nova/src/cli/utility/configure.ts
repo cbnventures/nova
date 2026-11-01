@@ -62,6 +62,16 @@ import type {
   Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Result,
   Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Returns,
   Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Trimmed,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Artifact,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_ArtifactEntry,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Build,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Name,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Parsed,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Returns,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Source,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Sources,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsArtifactRecordInput_Value,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Parsed,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Returns,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Trimmed,
@@ -138,6 +148,9 @@ import type {
   Cli_Utility_Configure_Runner_NormalizeWorkspaceName_Role,
   Cli_Utility_Configure_Runner_NormalizeWorkspaceName_TrimmedValue,
   Cli_Utility_Configure_Runner_NormalizeWorkspaceName_Value,
+  Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Returns,
+  Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Trimmed,
+  Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Value,
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Returns,
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Value,
@@ -159,6 +172,14 @@ import type {
   Cli_Utility_Configure_Runner_PromptAgents_Config,
   Cli_Utility_Configure_Runner_PromptAgents_Existing,
   Cli_Utility_Configure_Runner_PromptAgents_Returns,
+  Cli_Utility_Configure_Runner_PromptArtifacts_Config,
+  Cli_Utility_Configure_Runner_PromptArtifacts_Existing,
+  Cli_Utility_Configure_Runner_PromptArtifacts_Output,
+  Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey,
+  Cli_Utility_Configure_Runner_PromptArtifacts_OutputResult,
+  Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue,
+  Cli_Utility_Configure_Runner_PromptArtifacts_Parsed,
+  Cli_Utility_Configure_Runner_PromptArtifacts_Returns,
   Cli_Utility_Configure_Runner_PromptEmails_Config,
   Cli_Utility_Configure_Runner_PromptEmails_Emails,
   Cli_Utility_Configure_Runner_PromptEmails_EmailsBugsInput,
@@ -1422,6 +1443,84 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Is Artifact Record Input.
+   *
+   * Validates the complete named-artifact map used by the compact configure
+   * editor while keeping every source and build selector visible to the user.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsArtifactRecordInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsArtifactRecordInput_Returns}
+   *
+   * @since 0.38.0
+   */
+  public static isArtifactRecordInput(value: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Value): Cli_Utility_Configure_Runner_IsArtifactRecordInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a JSON object of named artifacts.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return true;
+    }
+
+    try {
+      const parsed: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Parsed = JSON.parse(trimmed);
+
+      if (isPlainObject(parsed) === false) {
+        return 'Enter a JSON object of named artifacts.';
+      }
+
+      for (const rawArtifactEntry of Object.entries(parsed)) {
+        const artifactEntry: Cli_Utility_Configure_Runner_IsArtifactRecordInput_ArtifactEntry = rawArtifactEntry;
+        const name: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Name = artifactEntry[0];
+        const artifact: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Artifact = artifactEntry[1];
+
+        if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(name) === false || isPlainObject(artifact) === false) {
+          return 'Every artifact name must be a simple slug mapped to an object.';
+        }
+
+        const build: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Build = artifact['build'];
+        const sources: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Sources = artifact['sources'];
+
+        if (
+          Array.isArray(build) === false
+          || build.length === 0
+          || build.some((entry) => (
+            typeof entry !== 'string'
+            || entry.trim().length === 0
+          )) === true
+        ) {
+          return `Artifact "${name}" must declare a non-empty build array.`;
+        }
+
+        if (Array.isArray(sources) === false || sources.length === 0) {
+          return `Artifact "${name}" must declare a non-empty sources array.`;
+        }
+
+        for (const sourceValue of sources) {
+          const source: Cli_Utility_Configure_Runner_IsArtifactRecordInput_Source = sourceValue;
+
+          if (
+            isPlainObject(source) === false
+            || typeof source['from'] !== 'string'
+            || source['from'].startsWith('./') === false
+            || typeof source['to'] !== 'string'
+            || source['to'].startsWith('./') === false
+          ) {
+            return `Every source for artifact "${name}" must declare project-relative from and to paths.`;
+          }
+        }
+      }
+    } catch {
+      return 'Enter valid JSON for the named artifact map.';
+    }
+
+    return true;
+  }
+
+  /**
    * CLI - Utility - Configure - Is Boolean Record Input.
    *
    * Validates recipe settings as a compact JSON object while retaining the
@@ -1712,6 +1811,30 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Parse Artifact Record Input.
+   *
+   * Converts the validated compact artifact editor value into the top-level
+   * artifact map, or removes the section when the user leaves it blank.
+   *
+   * @param {Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Returns}
+   *
+   * @since 0.38.0
+   */
+  private static parseArtifactRecordInput(value: Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Value): Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Returns {
+    const trimmed: Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return undefined;
+    }
+
+    return JSON.parse(trimmed);
+  }
+
+  /**
    * CLI - Utility - Configure - Parse Boolean Record Input.
    *
    * Converts a prompt value that already passed isBooleanRecordInput into the
@@ -1808,6 +1931,46 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Prompt Artifacts.
+   *
+   * Presents the complete artifact contract in one compact JSON editor so every
+   * build selector and source mapping remains editable without hiding fields.
+   *
+   * @param {Cli_Utility_Configure_Runner_PromptArtifacts_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_PromptArtifacts_Returns}
+   *
+   * @since 0.38.0
+   */
+  private static async promptArtifacts(config: Cli_Utility_Configure_Runner_PromptArtifacts_Config): Cli_Utility_Configure_Runner_PromptArtifacts_Returns {
+    const existing: Cli_Utility_Configure_Runner_PromptArtifacts_Existing = config['artifacts'] ?? {};
+    const output: Cli_Utility_Configure_Runner_PromptArtifacts_Output = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey, Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue>({
+      type: 'text',
+      name: 'artifacts',
+      message: 'Named artifact map as JSON (blank removes all artifacts)',
+      initial: (Object.keys(existing).length > 0) ? JSON.stringify(existing) : '',
+      validate: Runner['isArtifactRecordInput'],
+    });
+
+    if (output['cancelled'] === true) {
+      return 'back';
+    }
+
+    const outputResult: Cli_Utility_Configure_Runner_PromptArtifacts_OutputResult = output['result'];
+    const parsed: Cli_Utility_Configure_Runner_PromptArtifacts_Parsed = Runner.parseArtifactRecordInput(outputResult.artifacts);
+
+    if (parsed === undefined) {
+      Reflect.deleteProperty(config, 'artifacts');
+    } else {
+      Reflect.set(config, 'artifacts', parsed);
+    }
+
+    return 'back';
+  }
+
+  /**
    * CLI - Utility - Configure - Prompt Flow.
    *
    * Top-level menu loop that lists configuration categories (project, entities, emails, URLs,
@@ -1862,6 +2025,11 @@ export class Runner {
         label: 'Workspaces',
         description: 'Review workspace packages, assigning roles and policies.',
         handler: Runner['promptWorkspaces'],
+      },
+      artifacts: {
+        label: 'Artifacts',
+        description: 'Configure named final products assembled beneath the root build folder.',
+        handler: Runner['promptArtifacts'],
       },
       ignoreFiles: {
         label: 'Ignore Files',

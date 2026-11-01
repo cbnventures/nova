@@ -23,6 +23,7 @@ import type {
   Shared_BlueprintTriggerWorkflowRun,
   Shared_BlueprintWithMapEntry,
   Shared_BlueprintWorkflow,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
 } from '../../../../shared.d.ts';
@@ -146,6 +147,21 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuild
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_GtmEntry = Shared_BlueprintEnvMapEntry | undefined;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_Result = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Publish - Builds And Uploads One Named Artifact For Multiple Deploy Targets.
+ *
+ * @since 0.38.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactWorkspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir = Shared_BlueprintWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result = string;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_GatesEveryJobOnTheFailureConclusionForTheFailureVariant_Ir = Shared_BlueprintWorkflow;
 

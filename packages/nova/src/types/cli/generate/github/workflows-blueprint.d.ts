@@ -44,7 +44,9 @@ import type {
   Shared_CorepackPackageManagerDescriptor,
   Shared_GeneratorRunResult,
   Shared_NovaConfig,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
+  Shared_NovaConfigArtifact,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
@@ -271,6 +273,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTa
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_AppPath = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesTarget_DeployDirectory = string;
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
@@ -295,6 +299,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkers
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_ProfileAware = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Shared_BlueprintDeliveryValues;
 
@@ -444,6 +450,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarge
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_WorkspaceDir = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_DeployDirectory = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ConfigureGitIdentityRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_VerifyReleaseContextRun = string;
@@ -473,6 +481,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTar
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_Variables = Shared_WorkflowTemplateVariables;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_DeployDirectory = string;
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
@@ -489,6 +499,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_Variables = Shared_WorkflowTemplateVariables;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_DeployDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPagesTarget_PagesStatusRun = string;
 
@@ -564,6 +576,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_Environ
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_AppPath = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_DeployDirectory = string;
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
@@ -572,6 +586,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_AppPath
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry = Shared_BlueprintConfigWorkflow;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = Shared_NovaConfig_Artifacts;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = Shared_NovaConfigEnvironment;
 
@@ -667,9 +683,19 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Env = Sha
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = Shared_BlueprintConfigWorkflow_Build;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactNames = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspaceNames = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifact = Shared_NovaConfigArtifact | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScope = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspace = Shared_NovaConfigWorkspace;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = string[];
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace = Shared_NovaConfigWorkspace;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ScopeWorkspace = Shared_NovaConfigWorkspace;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = string;
 
@@ -689,7 +715,11 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactP
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactUploadSteps = Shared_BlueprintSteps;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SeenArtifactNames = Set<string>;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget = Shared_BlueprintConfigDeployTarget;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadConfiguredArtifactName = string | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadMetadata = Shared_WorkflowTemplateTarget | undefined;
 
@@ -701,7 +731,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadRes
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadPath = string;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactName = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadArtifactName = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep = Shared_BlueprintStep;
 
@@ -716,6 +746,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTar
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployConfiguredArtifactName = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployArtifactName = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context = Shared_BlueprintPublishTargetContext;
 
@@ -769,6 +803,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Scri
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames = string[];
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ArtifactNames = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns = string;
@@ -776,6 +812,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Retu
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_SelectedNames = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ArtifactFlags = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -806,6 +844,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarge
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_Environment = Shared_NovaConfigEnvironment | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_AppPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_DeployDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_Dollar = string;
 
@@ -876,6 +916,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry = Shared_BlueprintConfigWorkflow;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = Shared_NovaConfig_Artifacts;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
@@ -1018,6 +1060,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ReplaceFileNo
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Config = Shared_NovaConfig;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts = Shared_NovaConfig_Artifacts;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = Shared_NovaConfigEnvironment;
 

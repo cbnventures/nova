@@ -1,6 +1,7 @@
 import type { Lib_WorkflowTemplates_Entry } from '../../../lib/workflow-templates.d.ts';
 import type {
   Shared_BlueprintConfigWorkflow,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigSettings_VersionStrategy,
@@ -218,6 +219,8 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Versi
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces = Shared_NovaConfig_Workspaces;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = Shared_NovaConfig_Artifacts;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ReturnsWorkflows = Shared_BlueprintConfigWorkflow[];
@@ -374,9 +377,13 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = unknown;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact = unknown;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = Record<string, unknown> | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredArtifact = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = boolean;
 

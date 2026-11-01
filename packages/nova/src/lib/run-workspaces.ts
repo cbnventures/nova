@@ -1,9 +1,13 @@
 import { spawn } from 'node:child_process';
-import { readFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import {
+  readFile,
+  rm,
+} from 'node:fs/promises';
+import { join, relative, resolve } from 'node:path';
 
 import chalk from 'chalk';
 
+import { Runner as LibArtifactAssembly } from './artifact-assembly.js';
 import { LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY } from './constants.js';
 import { Runner as LibCorepack } from './corepack.js';
 import { Runner as LibNovaConfig } from './nova-config.js';
@@ -143,6 +147,7 @@ import type {
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_Environment,
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_NodeEnv,
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_Returns,
+  Lib_RunWorkspaces_Runner_LoadProject_Artifacts,
   Lib_RunWorkspaces_Runner_LoadProject_Cache,
   Lib_RunWorkspaces_Runner_LoadProject_CacheDirectory,
   Lib_RunWorkspaces_Runner_LoadProject_CacheDirectoryValue,
@@ -204,20 +209,31 @@ import type {
   Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns,
   Lib_RunWorkspaces_Runner_ResolveRootSelection_Root,
   Lib_RunWorkspaces_Runner_ResolveRootSelection_RootIdentifiers,
+  Lib_RunWorkspaces_Runner_Run_Artifact,
+  Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntries,
+  Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntrySet,
+  Lib_RunWorkspaces_Runner_Run_ArtifactNames,
+  Lib_RunWorkspaces_Runner_Run_ArtifactOption,
+  Lib_RunWorkspaces_Runner_Run_AssembledPaths,
   Lib_RunWorkspaces_Runner_Run_BufferMs,
   Lib_RunWorkspaces_Runner_Run_Concurrency,
   Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency,
   Lib_RunWorkspaces_Runner_Run_ErrorMessage,
+  Lib_RunWorkspaces_Runner_Run_ExecutionExitCode,
   Lib_RunWorkspaces_Runner_Run_NodeEnv,
   Lib_RunWorkspaces_Runner_Run_NodeEnvOption,
   Lib_RunWorkspaces_Runner_Run_Options,
   Lib_RunWorkspaces_Runner_Run_OrderedTasks,
   Lib_RunWorkspaces_Runner_Run_Plan,
   Lib_RunWorkspaces_Runner_Run_Project,
+  Lib_RunWorkspaces_Runner_Run_RequestedWorkspaces,
   Lib_RunWorkspaces_Runner_Run_Returns,
   Lib_RunWorkspaces_Runner_Run_RootSelection,
   Lib_RunWorkspaces_Runner_Run_ScriptArgs,
+  Lib_RunWorkspaces_Runner_Run_SelectedArtifactNames,
   Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces,
+  Lib_RunWorkspaces_Runner_Run_ShouldAssemble,
+  Lib_RunWorkspaces_Runner_Run_ShouldCleanArtifacts,
   Lib_RunWorkspaces_Runner_Run_Task,
   Lib_RunWorkspaces_Runner_Run_TaskValue,
   Lib_RunWorkspaces_Runner_RunTask_Cache,
@@ -321,6 +337,8 @@ export class Runner {
       const concurrency: Lib_RunWorkspaces_Runner_Run_Concurrency = Runner.parsePositiveInteger(options['concurrency']);
       const nodeEnvOption: Lib_RunWorkspaces_Runner_Run_NodeEnvOption = options['nodeEnv'];
       const scriptArgs: Lib_RunWorkspaces_Runner_Run_ScriptArgs = options['scriptArgs'] ?? [];
+      const artifactOption: Lib_RunWorkspaces_Runner_Run_ArtifactOption = options['artifact'];
+      const artifactNames: Lib_RunWorkspaces_Runner_Run_ArtifactNames = artifactOption ?? [];
 
       if (task.length === 0) {
         throw new Error('A workspace script name is required.');
@@ -345,9 +363,36 @@ export class Runner {
 
       const nodeEnv: Lib_RunWorkspaces_Runner_Run_NodeEnv = nodeEnvOption;
       const project: Lib_RunWorkspaces_Runner_Run_Project = await Runner.loadProject();
+      const artifactBuildEntrySet: Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntrySet = new Set();
+
+      if (artifactNames.length > 0 && task !== 'build') {
+        throw new Error('Artifact selections are only supported for the build script.');
+      }
+
+      if (artifactNames.length > 0 && options['excludeWorkspace'] !== undefined) {
+        throw new Error('Artifact selections cannot be combined with workspace exclusions.');
+      }
+
+      for (const artifactName of artifactNames) {
+        const artifact: Lib_RunWorkspaces_Runner_Run_Artifact = project['artifacts'][artifactName];
+
+        if (artifact === undefined) {
+          throw new Error(`Unknown artifact "${artifactName}".`);
+        }
+
+        for (const buildEntry of artifact['build']) {
+          artifactBuildEntrySet.add(buildEntry);
+        }
+      }
+
+      const artifactBuildEntries: Lib_RunWorkspaces_Runner_Run_ArtifactBuildEntries = [...artifactBuildEntrySet];
+      const requestedWorkspaces: Lib_RunWorkspaces_Runner_Run_RequestedWorkspaces = (artifactNames.length > 0) ? [
+        ...artifactBuildEntries,
+        ...(options['workspace'] ?? []),
+      ] : options['workspace'];
       const rootSelection: Lib_RunWorkspaces_Runner_Run_RootSelection = Runner.resolveRootSelection(
         project['root'],
-        options['workspace'],
+        requestedWorkspaces,
         options['excludeWorkspace'],
       );
       const selectedWorkspaces: Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces = (rootSelection['rootOnly'] === true) ? [] : Runner.selectWorkspaces(
@@ -356,6 +401,22 @@ export class Runner {
         rootSelection['excluded'],
       );
       const plan: Lib_RunWorkspaces_Runner_Run_Plan = Runner.buildPlan(project['workspaces'], selectedWorkspaces, task);
+      const shouldAssemble: Lib_RunWorkspaces_Runner_Run_ShouldAssemble = (
+        task === 'build'
+        && Object.keys(project['artifacts']).length > 0
+        && (
+          artifactNames.length > 0
+          || (
+            options['workspace'] === undefined
+            && options['excludeWorkspace'] === undefined
+          )
+        )
+      );
+      const shouldCleanArtifacts: Lib_RunWorkspaces_Runner_Run_ShouldCleanArtifacts = task === 'clean'
+        && Object.keys(project['artifacts']).length > 0
+        && options['workspace'] === undefined
+        && options['excludeWorkspace'] === undefined;
+      const selectedArtifactNames: Lib_RunWorkspaces_Runner_Run_SelectedArtifactNames = (artifactNames.length > 0) ? artifactNames : undefined;
 
       if (project['root'] !== undefined && rootSelection['includeRoot'] === true) {
         Runner.addRootTasks(plan['tasks'], project['workspaces'], project['root'], task);
@@ -368,15 +429,35 @@ export class Runner {
 
       if (orderedTasks.length === 0) {
         options.printInfo(`No workspaces define the "${task}" script.`);
+      }
+
+      if (orderedTasks.length > 0) {
+        options.printInfo(`Planned ${orderedTasks.length} workspace task(s): ${orderedTasks.map((plannedTask) => plannedTask['label']).join(', ')}`);
+      }
+
+      if (shouldAssemble === true) {
+        options.printInfo(`Planned artifact assembly: ${(selectedArtifactNames ?? Object.keys(project['artifacts'])).join(', ')}`);
+      }
+
+      if (shouldCleanArtifacts === true) {
+        options.printInfo('Planned artifact cleanup: build');
+      }
+
+      if (options['dryRun'] === true) {
+        if (shouldAssemble === true || shouldCleanArtifacts === true) {
+          options.printInfo('Dry run complete. No workspace scripts or artifact operations were executed.');
+        } else {
+          options.printInfo('Dry run complete. No workspace scripts were executed.');
+        }
 
         return 0;
       }
 
-      options.printInfo(`Planned ${orderedTasks.length} workspace task(s): ${orderedTasks.map((plannedTask) => plannedTask['label']).join(', ')}`);
-
-      if (options['dryRun'] === true) {
-        options.printInfo('Dry run complete. No workspace scripts were executed.');
-
+      if (
+        orderedTasks.length === 0
+        && shouldAssemble === false
+        && shouldCleanArtifacts === false
+      ) {
         return 0;
       }
 
@@ -386,22 +467,51 @@ export class Runner {
         task,
       );
 
-      return await Runner.executeTasks(
-        plan['tasks'],
-        project['packageManager'],
-        project['packageManagerDescriptor'],
-        project['rootDirectory'],
-        project['cache'],
-        options['force'] === true,
-        effectiveConcurrency,
-        options['continueOnError'] === true,
-        bufferMs ?? 500,
-        nodeEnv,
-        task,
-        scriptArgs,
-        options['writeStderr'],
-        options['writeStdout'],
-      );
+      let executionExitCode: Lib_RunWorkspaces_Runner_Run_ExecutionExitCode = 0;
+
+      if (orderedTasks.length > 0) {
+        executionExitCode = await Runner.executeTasks(
+          plan['tasks'],
+          project['packageManager'],
+          project['packageManagerDescriptor'],
+          project['rootDirectory'],
+          project['cache'],
+          options['force'] === true,
+          effectiveConcurrency,
+          options['continueOnError'] === true,
+          bufferMs ?? 500,
+          nodeEnv,
+          task,
+          scriptArgs,
+          options['writeStderr'],
+          options['writeStdout'],
+        );
+      }
+
+      if (executionExitCode > 0) {
+        return executionExitCode;
+      }
+
+      if (shouldCleanArtifacts === true) {
+        await rm(resolve(project['rootDirectory'], 'build'), {
+          force: true,
+          recursive: true,
+        });
+
+        options.printInfo('Removed assembled artifacts: build');
+      }
+
+      if (shouldAssemble === true) {
+        const assembledPaths: Lib_RunWorkspaces_Runner_Run_AssembledPaths = await LibArtifactAssembly.assemble(
+          project['rootDirectory'],
+          project['artifacts'],
+          selectedArtifactNames,
+        );
+
+        options.printInfo(`Assembled ${assembledPaths.length} artifact(s): ${assembledPaths.map((assembledPath) => relative(project['rootDirectory'], assembledPath)).join(', ')}`);
+      }
+
+      return 0;
     } catch (error) {
       const errorMessage: Lib_RunWorkspaces_Runner_Run_ErrorMessage = (error instanceof Error) ? error.message : String(error);
 
@@ -439,10 +549,11 @@ export class Runner {
     const diagnostics: Lib_RunWorkspaces_Runner_LoadProject_Diagnostics = configLoader.diagnostics();
 
     if (diagnostics.length > 0) {
-      throw new Error(`nova.config.json is invalid: ${diagnostics.join('; ')}`);
+      throw new Error(`nova.config.json is invalid: ${diagnostics.map((diagnostic) => diagnostic['message']).join('; ')}`);
     }
 
     const configuredWorkspaces: Lib_RunWorkspaces_Runner_LoadProject_ConfiguredWorkspaces = config['workspaces'] ?? {};
+    const artifacts: Lib_RunWorkspaces_Runner_LoadProject_Artifacts = config['artifacts'] ?? {};
     let cacheSettings: Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = undefined;
     let concurrencySettings: Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = undefined;
 
@@ -582,6 +693,7 @@ export class Runner {
     };
 
     return {
+      artifacts,
       cache,
       concurrency,
       packageManager: packageManagerDescriptor['name'],

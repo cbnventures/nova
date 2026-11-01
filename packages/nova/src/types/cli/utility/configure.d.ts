@@ -28,6 +28,7 @@ import type {
   Shared_NormalizedResult,
   Shared_NormalizedResult_Sanitized,
   Shared_NovaConfig,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Github,
@@ -158,6 +159,31 @@ export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_MarkerIndex = n
 export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Result = string[];
 
 export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Trimmed = string;
+
+/**
+ * CLI - Utility - Configure - Is Artifact Record Input.
+ *
+ * @since 0.38.0
+ */
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Parsed = unknown;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_ArtifactEntry = [string, unknown];
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Name = string;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Artifact = unknown;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Build = unknown;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Sources = unknown;
+
+export type Cli_Utility_Configure_Runner_IsArtifactRecordInput_Source = unknown;
 
 /**
  * CLI - Utility - Configure - Is Boolean Record Input.
@@ -406,6 +432,17 @@ export type Cli_Utility_Configure_Runner_NormalizeWorkspaceName_ExpectedPrefix =
 export type Cli_Utility_Configure_Runner_NormalizeWorkspaceName_Descriptor = string;
 
 /**
+ * CLI - Utility - Configure - Parse Artifact Record Input.
+ *
+ * @since 0.38.0
+ */
+export type Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Returns = Shared_NovaConfig_Artifacts | undefined;
+
+export type Cli_Utility_Configure_Runner_ParseArtifactRecordInput_Trimmed = string;
+
+/**
  * CLI - Utility - Configure - Parse Boolean Record Input.
  *
  * @since 0.32.0
@@ -483,6 +520,27 @@ export type Cli_Utility_Configure_Runner_PromptAgents_AgentsOutput = Shared_Prom
 export type Cli_Utility_Configure_Runner_PromptAgents_AgentsInput = ('claude-code' | 'codex')[];
 
 export type Cli_Utility_Configure_Runner_PromptAgents_Agents = ('claude-code' | 'codex')[];
+
+/**
+ * CLI - Utility - Configure - Prompt Artifacts.
+ *
+ * @since 0.38.0
+ */
+export type Cli_Utility_Configure_Runner_PromptArtifacts_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_Existing = Shared_NovaConfig_Artifacts;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey = 'artifacts';
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey, Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_OutputResult = Record<Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey, Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptArtifacts_Parsed = Shared_NovaConfig_Artifacts | undefined;
 
 /**
  * CLI - Utility - Configure - Prompt Emails.

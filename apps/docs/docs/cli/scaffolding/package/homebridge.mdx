@@ -113,3 +113,5 @@ nova scaffold package homebridge --non-interactive --workspace-name thermostat -
 Nova prefixes the npm package name with `homebridge-` when needed, so workspace `lights` becomes package `homebridge-lights`. A name that already begins with `homebridge-` is preserved.
 
 The workspace is registered with the `package` role and `distributable` policy. Without `--custom-ui`, Homebridge Config UI X renders the schema normally. Enable the option only when the plugin needs its own setup flow or richer settings interface.
+
+Nova also registers a same-named file artifact containing the package metadata, launchers, compiled plugin, and configuration schema. The workspace build stays usable for local Homebridge development; the root artifact is the explicit publishable layout.

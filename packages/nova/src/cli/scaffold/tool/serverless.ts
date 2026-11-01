@@ -92,6 +92,57 @@ export class Runner {
         'web',
       ],
       resolveAllowScriptProfiles: (answers) => (answers.get('target') === 'cloudflare-workers') ? ['cloudflare'] : [],
+      resolveArtifact: (workspaceRelPath, workspacePackageName, answers) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: (answers.get('target') === 'cloudflare-workers') ? [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/bin`,
+            to: './bin',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+          {
+            from: `${workspaceRelPath}/wrangler.build.toml`,
+            to: './wrangler.build.toml',
+          },
+          {
+            from: `${workspaceRelPath}/wrangler.toml`,
+            to: './wrangler.toml',
+          },
+        ] : [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/api`,
+            to: './api',
+          },
+          {
+            from: `${workspaceRelPath}/bin`,
+            to: './bin',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+          {
+            from: `${workspaceRelPath}/src/types/api`,
+            to: './src/types/api',
+          },
+          {
+            from: `${workspaceRelPath}/vercel.json`,
+            to: './vercel.json',
+          },
+        ],
+      }),
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldToolServerlessTemplateQuestions,
       templateSubpath: 'scaffold/tool/serverless',

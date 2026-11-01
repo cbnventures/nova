@@ -13,6 +13,7 @@ import type {
   Shared_CorepackSpawnInvocation,
   Shared_MonorepoContext,
   Shared_NovaConfig,
+  Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_IgnoreFile,
   Shared_NovaConfig_IgnoreFile_Bundles,
   Shared_NovaConfig_IgnoreFile_Patterns,
@@ -29,6 +30,7 @@ import type {
   Shared_NovaConfigWorkspace_Policy,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
+  Shared_ScaffoldResolvedArtifact,
   Shared_ScaffoldTemplateQuestionChoice,
   Shared_ScaffoldTemplateQuestions,
   Shared_ScaffoldTemplateResolution,
@@ -447,6 +449,8 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables = Shared
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Platforms = Shared_NovaConfig_Project_Platforms;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = Shared_ScaffoldResolvedArtifact | undefined;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = Record<string, unknown> | undefined;
@@ -472,6 +476,10 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = string;
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces | undefined;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, unknown>;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedArtifacts = Shared_NovaConfig_Artifacts | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Artifacts = Shared_NovaConfig_Artifacts;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls = Shared_NovaConfig_Urls | undefined;
 
@@ -788,6 +796,12 @@ export type Lib_Scaffold_RunScaffold_Definition_ProjectFinalizer = (workspaceDir
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveAllowScriptProfiles = (answers: Shared_ScaffoldTemplateResolution_Answers) => Lib_Scaffold_RunScaffold_Definition_AllowScriptProfiles;
 
+export type Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspaceRelPath = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspacePackageName = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolveArtifact = (workspaceRelPath: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspacePackageName, answers: Shared_ScaffoldTemplateResolution_Answers) => Lib_Scaffold_RunScaffold_ResolvedArtifact | undefined;
+
 export type Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms = (answers: Shared_ScaffoldTemplateResolution_Answers) => Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions_WorkspaceName = string;
@@ -829,6 +843,7 @@ export type Lib_Scaffold_RunScaffold_Definition = {
   primaryScript?: Lib_Scaffold_RunScaffold_Definition_PrimaryScript;
   projectFinalizer?: Lib_Scaffold_RunScaffold_Definition_ProjectFinalizer;
   resolveAllowScriptProfiles?: Lib_Scaffold_RunScaffold_Definition_ResolveAllowScriptProfiles;
+  resolveArtifact?: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact;
   resolvePlatforms?: Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms;
   resolvePresentationOptions?: Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions;
   resolveReplacements?: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements;
@@ -926,6 +941,10 @@ export type Lib_Scaffold_RunScaffold_ResolvedReplacements = Map<RegExp, string>;
 export type Lib_Scaffold_RunScaffold_TemplateValidationError = string | undefined;
 
 export type Lib_Scaffold_RunScaffold_ReplacementResolution = Map<RegExp, string> | undefined;
+
+export type Lib_Scaffold_RunScaffold_ResolvedArtifact = Shared_ScaffoldResolvedArtifact | undefined;
+
+export type Lib_Scaffold_RunScaffold_ExistingArtifacts = Shared_NovaConfig_Artifacts | undefined;
 
 export type Lib_Scaffold_RunScaffold_ShouldInstall = boolean;
 

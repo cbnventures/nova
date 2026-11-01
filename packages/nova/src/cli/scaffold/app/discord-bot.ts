@@ -62,6 +62,20 @@ export class Runner {
           'discord',
           'docker',
         ],
+        resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+          name: workspacePackageName,
+          build: [workspaceRelPath],
+          sources: [
+            {
+              from: `${workspaceRelPath}/package.json`,
+              to: './package.json',
+            },
+            {
+              from: `${workspaceRelPath}/build`,
+              to: './build',
+            },
+          ],
+        }),
         resolvePresentationOptions: () => [
           {
             flag: '--docker-image',
@@ -108,6 +122,20 @@ export class Runner {
         'nodejs',
         'discord',
       ],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+        ],
+      }),
       resolvePresentationOptions: () => [
         {
           flag: '--docker-image',

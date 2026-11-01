@@ -38,6 +38,14 @@ export class Runner {
         'pfsense',
       ],
       primaryScript: 'build',
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [{
+          from: `${workspaceRelPath}/build`,
+          to: './',
+        }],
+      }),
       resolveReplacements: (workspaceName) => new Map([[
         LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
         workspaceName.replaceAll('-', '').replaceAll('_', ''),

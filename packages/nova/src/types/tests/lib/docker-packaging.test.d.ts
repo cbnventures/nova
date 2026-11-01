@@ -115,6 +115,18 @@ export type Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManager
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_PreservesPackageManagerRuntimeLayoutsForPnpmAndYarnPnP_ShellVariableMarker = string;
 
 /**
+ * Tests - Lib - Docker Packaging - LibDockerPackaging - RefreshesDockerOnlyManifestsFromCanonicalPackages.
+ *
+ * @since 0.38.0
+ */
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_Returns = Promise<void>;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_ProjectDirectory = string;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspaceDirectory = string;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackagePath = string;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_WorkspacePackage = Record<string, unknown>;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_RefreshedWorkspacePackage = Record<string, unknown>;
+
+/**
  * Tests - Lib - Docker Packaging - LibDockerPackaging - RejectsPersistedReservedAndDuplicateServiceNamesBeforeChangingArtifacts.
  *
  * @since 0.34.0

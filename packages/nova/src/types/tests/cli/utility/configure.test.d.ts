@@ -79,6 +79,7 @@ export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Value<Value, Key ext
 
 export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
   'promptAgents'
+  | 'promptArtifacts'
   | 'promptEmails'
   | 'promptEntities'
   | 'promptEnvironment'

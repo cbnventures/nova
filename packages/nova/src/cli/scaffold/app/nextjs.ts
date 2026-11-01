@@ -72,6 +72,28 @@ export class Runner {
         'nodejs',
         'web',
       ],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+          {
+            from: `${workspaceRelPath}/next.config.mjs`,
+            to: './next.config.mjs',
+          },
+          {
+            from: `${workspaceRelPath}/public`,
+            to: './public',
+          },
+        ],
+      }),
       resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths: () => ['scaffold-options/app/web-launchpad'],
       templateQuestions: cliScaffoldAppNextjsTemplateQuestions,

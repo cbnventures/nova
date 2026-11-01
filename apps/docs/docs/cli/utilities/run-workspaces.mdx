@@ -74,6 +74,7 @@ The root `package.json` is the top of the tree. Each lifecycle script there call
 | Flag                              | Description                                                                            |
 |-----------------------------------|----------------------------------------------------------------------------------------|
 | `-b, --buffer <ms>`               | Flush interval in milliseconds for grouped task output. Defaults to `500`.             |
+| `-a, --artifact <name…>`          | Build the workspace closure for named artifacts, then assemble only those artifacts.   |
 | `-c, --concurrency <count>`       | Override the configured limit for this run. Falls back to the script limit, then `10`. |
 | `-k, --continue-on-error`         | Continue independent tasks after a failure while blocking tasks that depend on it.     |
 | `-d, --dry-run`                   | Validate and print the expanded task plan without running package scripts.             |
@@ -92,6 +93,7 @@ An explicit `--concurrency` option overrides the configured limit for that run. 
 
 | Field                                         | Description                                                                                        |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `artifacts.<name>`                            | Named final-product assembly with workspace build selectors and explicit source mappings.          |
 | `settings.runWorkspaces.concurrency.<script>` | Positive integer limit for one workspace script, such as `check` or `build`.                       |
 | `settings.runWorkspaces.root`                 | `"first"` (default) runs the root's own steps before the workspaces. `"skip"` leaves the root out. |
 
@@ -109,6 +111,20 @@ An explicit `--concurrency` option overrides the configured limit for that run. 
 }
 ```
 
+## Named Artifacts
+
+Workspace builds remain independent: each workspace writes to its own `build/` folder. The top-level [`artifacts`](/docs/quickstart/nova-config#artifacts) map describes how selected outputs become final products under the repository root's `build/` folder.
+
+```text
+apps/web/build/ ──────┐
+                     ├── build/product/web/
+apps/api/build/ ──────┘   build/product/api/
+```
+
+A full, unfiltered `build` assembles every configured artifact after its workspace tasks succeed. `--artifact <name>` narrows the run to that artifact, automatically includes its declared workspace dependencies, and assembles only `build/<name>/`. A full, unfiltered `clean` removes the root assembly folder after workspace cleanup; filtered cleans leave it untouched.
+
+Assembly is validated before an existing artifact is replaced. Nova preserves hidden files, executable modes, and directory structure; rejects missing sources, unsafe paths, symbolic links, and file collisions; and never reads sources from the root assembly folder itself.
+
 ## Examples
 
 ```bash title="Check every workspace with two concurrent tasks"
@@ -119,6 +135,10 @@ nova utility run-workspaces check --concurrency 2
 nova utility run-workspaces build \
   --concurrency 2 \
   --workspace @example/api @example/web
+```
+
+```bash title="Build and assemble one final product"
+nova utility run-workspaces build --artifact product
 ```
 
 ```bash title="Preview cleanup while excluding a workspace"
@@ -164,5 +184,7 @@ Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> stops active workspace scripts and exits
 - **Unsupported package manager** — Set the root `packageManager` to an exact npm, pnpm, or Yarn descriptor.
 - **Workspace name drift** — Keep each `nova.config.json` workspace name identical to its package's `package.json` name.
 - **Unknown workspace selection** — Pass an exact package name or configured Nova workspace path.
+- **Unknown artifact selection** — Pass an exact key from the top-level `artifacts` map.
+- **Artifact assembly failure** — Confirm every declared source exists after its workspace build and no two sources map different files to the same destination.
 - **Dependency cycle** — Remove the circular internal package relationship before retrying; Nova validates this before spawning tasks.
 - **Unexpected cache miss** — Nova intentionally reruns when any verified input or workspace output differs. Use the task output to confirm what regenerated, then let the successful run establish the new record.

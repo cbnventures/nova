@@ -22,6 +22,26 @@ export type Shared_ActiveVitest = {
 };
 
 /**
+ * Shared - Artifact Assembly Operation.
+ *
+ * @since 0.38.0
+ */
+export type Shared_ArtifactAssemblyOperation_Kind = 'directory' | 'file';
+
+export type Shared_ArtifactAssemblyOperation_Source = string;
+
+export type Shared_ArtifactAssemblyOperation_Destination = string;
+
+export type Shared_ArtifactAssemblyOperation_Mode = number;
+
+export type Shared_ArtifactAssemblyOperation = {
+  kind: Shared_ArtifactAssemblyOperation_Kind;
+  source: Shared_ArtifactAssemblyOperation_Source;
+  destination: Shared_ArtifactAssemblyOperation_Destination;
+  mode: Shared_ArtifactAssemblyOperation_Mode;
+};
+
+/**
  * Shared - Border Characters.
  *
  * @since 0.15.0
@@ -1398,6 +1418,8 @@ export type Shared_NovaConfigWorkflowDeployTarget_To = string;
 
 export type Shared_NovaConfigWorkflowDeployTarget_Path = string;
 
+export type Shared_NovaConfigWorkflowDeployTarget_Artifact = Shared_NovaConfigArtifactName;
+
 export type Shared_NovaConfigWorkflowDeployTargetAfterEntry = string;
 
 export type Shared_NovaConfigWorkflowDeployTarget_After = Shared_NovaConfigWorkflowDeployTargetAfterEntry[];
@@ -1409,6 +1431,7 @@ export type Shared_NovaConfigWorkflowDeployTarget_With = {
 export type Shared_NovaConfigWorkflowDeployTarget = {
   to: Shared_NovaConfigWorkflowDeployTarget_To;
   path: Shared_NovaConfigWorkflowDeployTarget_Path;
+  artifact?: Shared_NovaConfigWorkflowDeployTarget_Artifact;
   after?: Shared_NovaConfigWorkflowDeployTarget_After;
   with?: Shared_NovaConfigWorkflowDeployTarget_With;
 };
@@ -1539,6 +1562,32 @@ export type Shared_NovaConfig_Workspaces = {
   [key: string]: Shared_NovaConfigWorkspace;
 };
 
+export type Shared_NovaConfigArtifactName = string;
+
+export type Shared_NovaConfigArtifactBuildEntry = string;
+
+export type Shared_NovaConfigArtifact_Build = Shared_NovaConfigArtifactBuildEntry[];
+
+export type Shared_NovaConfigArtifactSource_From = string;
+
+export type Shared_NovaConfigArtifactSource_To = string;
+
+export type Shared_NovaConfigArtifactSource = {
+  from: Shared_NovaConfigArtifactSource_From;
+  to: Shared_NovaConfigArtifactSource_To;
+};
+
+export type Shared_NovaConfigArtifact_Sources = Shared_NovaConfigArtifactSource[];
+
+export type Shared_NovaConfigArtifact = {
+  build: Shared_NovaConfigArtifact_Build;
+  sources: Shared_NovaConfigArtifact_Sources;
+};
+
+export type Shared_NovaConfig_Artifacts = {
+  [key: Shared_NovaConfigArtifactName]: Shared_NovaConfigArtifact;
+};
+
 export type Shared_BlueprintConfigWorkflow_Template = Shared_NovaConfigWorkflow_Template;
 
 export type Shared_BlueprintConfigWorkflow_Name = Shared_NovaConfigWorkflow_Name;
@@ -1575,6 +1624,8 @@ export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowDep
 
 export type Shared_BlueprintConfigDeployTarget_Path = Shared_NovaConfigWorkflowDeployTarget_Path;
 
+export type Shared_BlueprintConfigDeployTarget_Artifact = Shared_NovaConfigWorkflowDeployTarget_Artifact;
+
 export type Shared_BlueprintConfigDeployTarget_After = Shared_NovaConfigWorkflowDeployTarget_After;
 
 export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowDeployTarget_With;
@@ -1582,6 +1633,7 @@ export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowD
 export type Shared_BlueprintConfigDeployTarget = {
   to: Shared_BlueprintConfigDeployTarget_To;
   path: Shared_BlueprintConfigDeployTarget_Path;
+  artifact?: Shared_BlueprintConfigDeployTarget_Artifact;
   after?: Shared_BlueprintConfigDeployTarget_After;
   with?: Shared_BlueprintConfigDeployTarget_With;
 };
@@ -1632,6 +1684,8 @@ export type Shared_BlueprintPublishTargetContext_WorkingDir = string;
 
 export type Shared_BlueprintPublishTargetContext_ArtifactName = string;
 
+export type Shared_BlueprintPublishTargetContext_ArtifactDirectory = string | undefined;
+
 export type Shared_BlueprintPublishTargetContext_Needs = Shared_BlueprintJob_Needs;
 
 export type Shared_BlueprintPublishTargetContext_TargetSettings = Shared_NovaConfigWorkflowDeployTarget_With | undefined;
@@ -1649,6 +1703,7 @@ export type Shared_BlueprintPublishTargetContext_EnvironmentSelection = Shared_N
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
   artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
+  artifactDirectory?: Shared_BlueprintPublishTargetContext_ArtifactDirectory;
   needs: Shared_BlueprintPublishTargetContext_Needs;
   targetSettings?: Shared_BlueprintPublishTargetContext_TargetSettings;
   workflowSettings?: Shared_BlueprintPublishTargetContext_WorkflowSettings;
@@ -2067,6 +2122,7 @@ export type Shared_NovaConfig = {
   urls?: Shared_NovaConfig_Urls;
   readme?: Shared_NovaConfig_ReadMe;
   workspaces?: Shared_NovaConfig_Workspaces;
+  artifacts?: Shared_NovaConfig_Artifacts;
   ignoreFiles?: Shared_NovaConfig_IgnoreFiles;
   agents?: Shared_NovaConfig_Agents;
   recipes?: Shared_NovaConfig_Recipes;
@@ -2081,7 +2137,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'artifacts' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.
@@ -2150,6 +2206,8 @@ export type Shared_RunWorkspacesCacheRecord = {
  */
 export type Shared_RunWorkspacesOptions_Task = string;
 
+export type Shared_RunWorkspacesOptions_Artifact = string[] | undefined;
+
 export type Shared_RunWorkspacesOptions_Buffer = string | undefined;
 
 export type Shared_RunWorkspacesOptions_Concurrency = string | undefined;
@@ -2170,6 +2228,7 @@ export type Shared_RunWorkspacesOptions_Workspace = string[] | undefined;
 
 export type Shared_RunWorkspacesOptions = {
   task?: Shared_RunWorkspacesOptions_Task;
+  artifact?: Shared_RunWorkspacesOptions_Artifact;
   buffer?: Shared_RunWorkspacesOptions_Buffer;
   concurrency?: Shared_RunWorkspacesOptions_Concurrency;
   continueOnError?: Shared_RunWorkspacesOptions_ContinueOnError;
@@ -2222,6 +2281,8 @@ export type Shared_RunWorkspacesPlan = {
  *
  * @since 0.32.0
  */
+export type Shared_RunWorkspacesProject_Artifacts = Shared_NovaConfig_Artifacts;
+
 export type Shared_RunWorkspacesProject_Cache_Directory = string;
 
 export type Shared_RunWorkspacesProject_Cache_Enabled = boolean;
@@ -2247,6 +2308,7 @@ export type Shared_RunWorkspacesProject_Workspaces = Map<string, Shared_RunWorks
 export type Shared_RunWorkspacesProject_Root = Shared_RunWorkspacesWorkspace | undefined;
 
 export type Shared_RunWorkspacesProject = {
+  artifacts: Shared_RunWorkspacesProject_Artifacts;
   cache: Shared_RunWorkspacesProject_Cache;
   concurrency: Shared_RunWorkspacesProject_Concurrency;
   packageManager: Shared_RunWorkspacesProject_PackageManager;
@@ -2438,6 +2500,17 @@ export type Shared_ScaffoldOutputContract = {
   expectedFiles: Shared_ScaffoldOutputContract_ExpectedFiles;
   expectedScripts?: Shared_ScaffoldOutputContract_ExpectedScripts;
   replacements: Shared_ScaffoldOutputContract_Replacements;
+};
+
+/**
+ * Shared - Scaffold Resolved Artifact.
+ *
+ * @since 0.38.0
+ */
+export type Shared_ScaffoldResolvedArtifact_Name = string;
+
+export type Shared_ScaffoldResolvedArtifact = Shared_NovaConfigArtifact & {
+  name: Shared_ScaffoldResolvedArtifact_Name;
 };
 
 /**

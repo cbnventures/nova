@@ -48,6 +48,20 @@ export class Runner {
           'web',
           'docker',
         ],
+        resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+          name: workspacePackageName,
+          build: [workspaceRelPath],
+          sources: [
+            {
+              from: `${workspaceRelPath}/package.json`,
+              to: './package.json',
+            },
+            {
+              from: `${workspaceRelPath}/build`,
+              to: './build',
+            },
+          ],
+        }),
         resolvePresentationOptions: () => [{
           flag: '--docker-image',
           value: 'Yes',
@@ -88,6 +102,20 @@ export class Runner {
         'nodejs',
         'web',
       ],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [
+          {
+            from: `${workspaceRelPath}/package.json`,
+            to: './package.json',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './build',
+          },
+        ],
+      }),
       resolvePresentationOptions: () => [{
         flag: '--docker-image',
         value: 'No',

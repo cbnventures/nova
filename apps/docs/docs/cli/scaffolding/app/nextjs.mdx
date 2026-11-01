@@ -182,6 +182,8 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
 For project slug `my-app` and workspace slug `web`, Nova names the package `my-app-app-web`. The same name is written to the workspace `package.json` and its `nova.config.json` entry. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
 
+Nova also registers a same-named file artifact containing the runtime package metadata, standalone build, and Next.js config. Docker publishing remains a separate repository-wide OCI artifact.
+
 Before writing, Nova requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps

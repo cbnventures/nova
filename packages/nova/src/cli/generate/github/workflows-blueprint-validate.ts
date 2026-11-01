@@ -41,6 +41,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsNonEmptyStringArray_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Value,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Composite,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatform,
@@ -80,6 +81,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredArtifact,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredScope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredName,
@@ -112,6 +114,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Suffix,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SuffixValue,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Target,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targets,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName,
@@ -248,12 +251,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}      workspaces      - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy} versionStrategy - Version strategy.
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}     environment     - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts}       artifacts       - Artifacts.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
    * @since 0.26.0
    */
-  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
+  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}, artifacts: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = {}): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
     const workflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows = [];
     const seenKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = new Set();
@@ -800,6 +804,7 @@ export class Runner {
             const targetType: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType = target['to'];
             const targetTypeName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = targetType as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName;
             const workingDir: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = target['path'];
+            const targetArtifact: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact = target['artifact'];
             const isContainerTarget: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = targetTypeName === 'docker-hub' || targetTypeName === 'ghcr';
             const containerTargetSettings: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = (Runner.isPlainObject(target['with']) === true) ? target['with'] as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings : undefined;
 
@@ -837,6 +842,26 @@ export class Runner {
               diagnostics.push({
                 severity: 'error',
                 message: `Container target "${String(targetType)}" in workflow "${workflowKey}" must use path "./" because Nova supports one root-context OCI image per repository. Multiple Docker images per repository are unsupported.`,
+              });
+
+              hasError = true;
+            }
+
+            const isRegisteredArtifact: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredArtifact = typeof targetArtifact === 'string' && artifacts[targetArtifact] !== undefined;
+
+            if (targetArtifact !== undefined && isRegisteredArtifact === false) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Target artifact "${String(targetArtifact)}" in workflow "${workflowKey}" is not registered under the top-level "artifacts" config. Skipping.`,
+              });
+
+              hasError = true;
+            }
+
+            if (targetArtifact !== undefined && isContainerTarget === true) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Container target "${String(targetType)}" in workflow "${workflowKey}" cannot select a file artifact because container registries use Nova's OCI handoff. Skipping.`,
               });
 
               hasError = true;

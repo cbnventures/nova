@@ -380,6 +380,35 @@ export type Lib_DockerPackaging_Runner_ReadJsonObject_RawContent = string;
 export type Lib_DockerPackaging_Runner_ReadJsonObject_ParsedContent = unknown;
 
 /**
+ * Lib - Docker Packaging - Runner - Refresh Generated Manifests.
+ *
+ * @since 0.38.0
+ */
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ProjectDirectory = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Returns = Promise<void>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyDirectory = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ManifestPath = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackagePath = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackagePath = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackageNameValue = unknown;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages = Shared_DockerPackagingWorkspacePackages;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder = Shared_DockerPackagingWorkspacePackages;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager = Shared_CorepackPackageManagerDescriptor['name'];
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic = boolean;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests = boolean;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifests = Map<string, string>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestPath = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspacePackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestContent = string;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ContainerBuildPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspaceManifestsDirectory = string;
+
+/**
  * Lib - Docker Packaging - Runner - RegisterProjectConfig.
  *
  * @since 0.34.0

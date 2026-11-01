@@ -115,6 +115,8 @@ nova scaffold app apple --non-interactive --workspace-name client --bundle-id io
 
 Nova registers the workspace with the `app` role and `trackable` policy, then adds `swift`, `ios`, and `macos` to the root `project.platforms` list without removing existing entries. The generated package name follows `{projectSlug}-app-{workspaceName}`.
 
+Nova does not guess one file artifact for the native workspace because Xcode emits different app, archive, and test products per Apple platform and signing choice. Add a named artifact after choosing the exact product that belongs in the root assembly.
+
 The bundle identifier defaults to `com.example.{workspaceName}` when `--bundle-id` is omitted. Nova accepts ASCII letters, numbers, periods, and hyphens, preserves the supplied value exactly, and gives the unit-test target the matching `{bundleId}.tests` identifier.
 
 The scaffold creates `en-US` metadata placeholders for iOS and macOS plus documented screenshot and creative-asset directories. Fill only the fields and asset targets you intend to change, then use [`nova integration app-store-connect`](/docs/cli/integrations/app-store-connect/metadata). Nova does not add `/assets/` to the generated `.gitignore`; store assets remain project-owned and trackable by default.

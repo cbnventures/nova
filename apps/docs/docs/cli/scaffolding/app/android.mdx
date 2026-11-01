@@ -113,6 +113,8 @@ nova scaffold app android --non-interactive --workspace-name mobile --applicatio
 
 Nova registers the workspace with the `app` role and `trackable` policy only after every Nova-owned native and workspace file is written successfully, then adds `android` and `kotlin` to the root `project.platforms` list without removing existing entries. If generation fails, Nova does not record a partially prepared workspace.
 
+Nova does not guess one file artifact for the native workspace because Gradle emits different APK, app-bundle, test, and signed products by task and build variant. Add a named artifact after choosing the exact product that belongs in the root assembly.
+
 The package name follows `{projectSlug}-app-{workspaceName}`. The Android application ID defaults to `com.example.{normalizedWorkspaceName}` unless you provide `--application-id`.
 
 The scaffold creates an `en-US` Android listing placeholder plus documented screenshot and graphic-asset directories. Fill only the fields and asset targets you intend to change, then use [`nova integration google-play-console`](/docs/cli/integrations/google-play-console/metadata). Nova does not add `/assets/` to the generated `.gitignore`; store assets remain project-owned and trackable by default.

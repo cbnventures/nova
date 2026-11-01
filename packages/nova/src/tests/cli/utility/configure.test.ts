@@ -360,6 +360,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         $item: {
           to: 'promptWorkflowsForm',
           path: 'promptWorkflowsForm',
+          artifact: 'promptWorkflowsForm',
           after: { $item: 'promptWorkflowsForm' },
           with: { $entry: 'promptWorkflowsForm' },
         },
@@ -388,6 +389,17 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       name: 'promptWorkspacesForm',
       role: 'promptWorkspacesForm',
       policy: 'promptWorkspacesForm',
+    },
+  },
+  artifacts: {
+    $entry: {
+      build: { $item: 'promptArtifacts' },
+      sources: {
+        $item: {
+          from: 'promptArtifacts',
+          to: 'promptArtifacts',
+        },
+      },
     },
   },
   ignoreFiles: {
@@ -1152,6 +1164,7 @@ describe('prompt flow', () => {
       'urls',
       'readme',
       'workspaces',
+      'artifacts',
       'ignoreFiles',
       'agents',
       'recipes',

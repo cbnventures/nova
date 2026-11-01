@@ -48,6 +48,17 @@ import type {
   Tests_Cli_Utility_RunWorkspaces_IndependentOutputPath,
   Tests_Cli_Utility_RunWorkspaces_Infos,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsInternalDependenciesBeforeASelectedWorkspaceCheck_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiDirectory,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiPackageJsonContents,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_CleanExitCode,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredDirectory,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredPackageJsonContents,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_NovaConfigContents,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_PackageJsonContents,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ProjectRoot,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedDirectory,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedPackageJsonContents,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsRootDependenciesBeforeRootStepsAndWorkspaceTasks_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ContinuesIndependentTasksAndBlocksDependentsAfterFailure_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ContinuesIndependentTasksAndBlocksDependentsAfterFailure_WorkspacePackageJsonContents,
@@ -255,6 +266,188 @@ describe('LibRunWorkspaces.run', async () => {
       'app-check',
       '',
     ].join('\n'));
+
+    return;
+  });
+
+  it('builds only a selected artifact closure and assembles its final tree', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ProjectRoot = join(sandboxRoot, 'artifact-selection');
+    const sharedDirectory: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedDirectory = join(projectRoot, 'packages', 'shared');
+    const apiDirectory: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiDirectory = join(projectRoot, 'apps', 'api');
+    const ignoredDirectory: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredDirectory = join(projectRoot, 'apps', 'ignored');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+    const infos: Tests_Cli_Utility_RunWorkspaces_Infos = [];
+
+    await mkdir(sharedDirectory, { recursive: true });
+    await mkdir(apiDirectory, { recursive: true });
+    await mkdir(ignoredDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_PackageJsonContents = JSON.stringify({
+      name: 'artifact-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'artifact-project',
+          title: 'Artifact Project',
+        },
+      },
+      artifacts: {
+        server: {
+          build: ['./apps/api'],
+          sources: [
+            {
+              from: './packages/shared/build',
+              to: './shared',
+            },
+            {
+              from: './apps/api/build',
+              to: './api',
+            },
+          ],
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'artifact-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './packages/shared': {
+          name: '@example/shared',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './apps/api': {
+          name: 'artifact-project-app-api',
+          role: 'app',
+          policy: 'trackable',
+        },
+        './apps/ignored': {
+          name: 'artifact-project-app-ignored',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+    }, null, 2);
+    const sharedPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedPackageJsonContents = JSON.stringify({
+      name: '@example/shared',
+      scripts: {
+        build: [
+          'node -e "const fs = require(\'node:fs\'); fs.mkdirSync(\'build\', { recursive: true }); fs.writeFileSync(\'build/shared.txt\', \'shared',
+          [
+            '\\',
+            'n',
+          ].join(''),
+          '\')"',
+        ].join(''),
+      },
+    }, null, 2);
+    const apiPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiPackageJsonContents = JSON.stringify({
+      name: 'artifact-project-app-api',
+      dependencies: {
+        '@example/shared': 'workspace:*',
+      },
+      scripts: {
+        build: [
+          'node -e "const fs = require(\'node:fs\'); fs.mkdirSync(\'build\', { recursive: true }); fs.writeFileSync(\'build/api.txt\', \'api',
+          [
+            '\\',
+            'n',
+          ].join(''),
+          '\')"',
+        ].join(''),
+      },
+    }, null, 2);
+    const ignoredPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredPackageJsonContents = JSON.stringify({
+      name: 'artifact-project-app-ignored',
+      scripts: {
+        build: [
+          'node -e "require(\'node:fs\').writeFileSync(\'../../ignored.txt\', \'ignored',
+          [
+            '\\',
+            'n',
+          ].join(''),
+          '\')"',
+        ].join(''),
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(sharedDirectory, 'package.json'), `${sharedPackageJsonContents}\n`, 'utf-8');
+    await writeFile(join(apiDirectory, 'package.json'), `${apiPackageJsonContents}\n`, 'utf-8');
+    await writeFile(join(ignoredDirectory, 'package.json'), `${ignoredPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'build',
+      artifact: ['server'],
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        infos.push(message);
+
+        return;
+      },
+      printWarn: () => undefined,
+      writeStderr: () => undefined,
+      writeStdout: () => undefined,
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+    strictEqual(await readFile(join(projectRoot, 'build', 'server', 'shared', 'shared.txt'), 'utf-8'), 'shared\n');
+    strictEqual(await readFile(join(projectRoot, 'build', 'server', 'api', 'api.txt'), 'utf-8'), 'api\n');
+
+    await expect(access(join(projectRoot, 'ignored.txt'))).rejects.toThrow();
+
+    strictEqual(infos.includes('Assembled 1 artifact(s): build/server'), true);
+
+    const cleanExitCode: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_CleanExitCode = await LibRunWorkspaces.run({
+      task: 'clean',
+      artifact: undefined,
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        infos.push(message);
+
+        return;
+      },
+      printWarn: () => undefined,
+      writeStderr: () => undefined,
+      writeStdout: () => undefined,
+    });
+
+    strictEqual(cleanExitCode, 0, errors.join('\n'));
+
+    await expect(access(join(projectRoot, 'build'))).rejects.toThrow();
+
+    strictEqual(infos.includes('Removed assembled artifacts: build'), true);
 
     return;
   });

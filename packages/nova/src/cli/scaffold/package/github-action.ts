@@ -42,6 +42,20 @@ export class Runner {
       }],
       importMetaUrl: import.meta.url,
       platforms: ['nodejs'],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [
+          {
+            from: './action.yml',
+            to: './action.yml',
+          },
+          {
+            from: `${workspaceRelPath}/build`,
+            to: './action',
+          },
+        ],
+      }),
       rootTemplateSubpath: 'scaffold/package/github-action-root',
       templateSubpath: 'scaffold/package/github-action',
       typeName: 'github-action',

@@ -37,6 +37,8 @@ export type Tests_Cli_Utility_RunWorkspaces_OutputPath = string;
 
 export type Tests_Cli_Utility_RunWorkspaces_Output = string;
 
+export type Tests_Cli_Utility_RunWorkspaces_Infos = string[];
+
 export type Tests_Cli_Utility_RunWorkspaces_CaptureDirectory = string;
 
 export type Tests_Cli_Utility_RunWorkspaces_CapturePackageJsonContents = string;
@@ -54,8 +56,6 @@ export type Tests_Cli_Utility_RunWorkspaces_Captured = {
   marker?: Tests_Cli_Utility_RunWorkspaces_Captured_Marker;
   nodeEnv?: Tests_Cli_Utility_RunWorkspaces_Captured_NodeEnv;
 };
-
-export type Tests_Cli_Utility_RunWorkspaces_Infos = string[];
 
 export type Tests_Cli_Utility_RunWorkspaces_OutputBefore = string;
 
@@ -101,6 +101,33 @@ export type Tests_Cli_Utility_RunWorkspaces_IndependentOutput = string;
  * @since 0.32.0
  */
 export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsInternalDependenciesBeforeASelectedWorkspaceCheck_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Builds Only A Selected Artifact Closure And Assembles Its Final Tree.
+ *
+ * @since 0.38.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_Returns = Promise<void>;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedDirectory = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiDirectory = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredDirectory = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_NovaConfigContents = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_SharedPackageJsonContents = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_ApiPackageJsonContents = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_IgnoredPackageJsonContents = string;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsOnlyASelectedArtifactClosureAndAssemblesItsFinalTree_CleanExitCode = 0 | 1;
 
 /**
  * Tests - CLI - Utility - Run Workspaces - Run - Builds Root Dependencies Before Root Steps And Workspace Tasks.

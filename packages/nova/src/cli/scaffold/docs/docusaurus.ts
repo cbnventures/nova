@@ -158,6 +158,14 @@ export class Runner {
         'nodejs',
         'web',
       ],
+      resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
+        name: workspacePackageName,
+        build: [workspaceRelPath],
+        sources: [{
+          from: `${workspaceRelPath}/build`,
+          to: './',
+        }],
+      }),
       resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldDocsDocusaurusTemplateQuestions,

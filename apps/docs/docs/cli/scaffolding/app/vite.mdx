@@ -182,6 +182,8 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
 For project slug `my-vite-app` and workspace slug `web`, Nova names the package `my-vite-app-app-web`. The same name is written to the workspace `package.json` and its `nova.config.json` entry. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
 
+Nova also registers a same-named file artifact. A full root build stages the completed Vite output under `build/<package-name>/` without changing the workspace's own `build/` directory.
+
 Before writing, Nova requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps

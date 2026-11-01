@@ -129,12 +129,13 @@ Nova intentionally offers only `ubuntu-latest` as the runner selection. `timeout
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field   | Required | Description                                                                                                           |
-|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
-| `to`    | Yes      | One of the nine target types (see [Available Target Types](#available-target-types)).                                 |
-| `path`  | Yes      | Workspace path that owns the destination, or `"./"` for the repository-wide `docker-hub` and `ghcr` targets.          |
-| `after` | No       | Paths of other same-type destinations that must finish publishing before this one starts.                             |
-| `with`  | No       | Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`. |
+| Field      | Required | Description                                                                                                                            |
+|------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `to`       | Yes      | One of the nine target types (see [Available Target Types](#available-target-types)).                                                  |
+| `path`     | Yes      | Workspace path that owns the destination, or `"./"` for the repository-wide `docker-hub` and `ghcr` targets.                           |
+| `artifact` | No       | Named entry from the top-level `artifacts` map. File-based targets download that assembled product instead of default workspace paths. |
+| `after`    | No       | Paths of other same-type destinations that must finish publishing before this one starts.                                              |
+| `with`     | No       | Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                  |
 
 ### Config Examples
 
@@ -211,6 +212,42 @@ The `preset` destination waits for `core` to finish publishing before it starts,
 ```
 
 Each destination becomes its own publish job. Jobs run in parallel off a shared `build` job, except where `after` declares an explicit ordering.
+
+### Publishing Named Artifacts
+
+Use a named artifact when multiple independent workspace outputs need a deliberate final layout. The build job asks `run-workspaces` to build the artifact's complete workspace closure, assembles `build/<name>/`, validates it, and uploads it once. Every deploy target referencing that name downloads the same bytes into its own job.
+
+```json
+{
+  "artifacts": {
+    "site-release": {
+      "build": ["./apps/site"],
+      "sources": [
+        {
+          "from": "./apps/site/build",
+          "to": "./"
+        }
+      ]
+    }
+  },
+  "workflows": [
+    {
+      "template": "publish",
+      "name": "site",
+      "triggers": ["release"],
+      "deploy": [
+        {
+          "to": "cloudflare-pages",
+          "path": "./apps/site",
+          "artifact": "site-release"
+        }
+      ]
+    }
+  ]
+}
+```
+
+An unknown artifact name is rejected before YAML is written. Docker Hub and GHCR remain repository-wide OCI targets and reject `artifact` because their build-and-load handoff is intentionally separate from file artifacts.
 
 Before the build job hands files to GitHub, Nova validates every declared artifact root. Missing or empty roots, sensitive hidden paths such as `.env` and `.npmrc`, broken symlinks, and symlinks that escape their artifact root fail the job. Valid deployment files such as `.well-known/`, `.assetsignore`, `.nojekyll`, `.gitignore`, and `.gitattributes` remain included in the uploaded artifact.
 

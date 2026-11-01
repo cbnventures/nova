@@ -28,6 +28,7 @@ const libNovaConfigTopLevelKeys: Lib_NovaConfigOrder_LibNovaConfigTopLevelKeys =
   'urls',
   'readme',
   'workspaces',
+  'artifacts',
   'ignoreFiles',
   'agents',
   'recipes',

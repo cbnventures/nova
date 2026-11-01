@@ -11,6 +11,7 @@ import chalk from 'chalk';
 import prompts from 'prompts';
 
 import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../lib/constants.js';
+import { Runner as LibDockerPackaging } from '../../lib/docker-packaging.js';
 import {
   libItemChangelogAdjectives,
   libItemChangelogCategoryBumpMap,
@@ -1450,6 +1451,11 @@ export class Runner {
         return;
       }
     }
+
+    // Docker-only install manifests mirror canonical package metadata. Refresh
+    // them after every source manifest and exact internal pin has its final
+    // release value so container builds cannot embed stale release metadata.
+    await LibDockerPackaging.refreshGeneratedManifests(process.cwd());
 
     // Clean up consumed entry files.
     for (const entry of entries) {

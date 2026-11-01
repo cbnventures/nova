@@ -40,6 +40,7 @@ export class Runner {
    */
   public static async run(options: Cli_Utility_RunWorkspaces_Runner_Run_Options): Cli_Utility_RunWorkspaces_Runner_Run_Returns {
     const exitCode: Cli_Utility_RunWorkspaces_Runner_Run_ExitCode = await LibRunWorkspaces.run({
+      artifact: options['artifact'],
       buffer: options['buffer'],
       concurrency: options['concurrency'],
       continueOnError: options['continueOnError'],

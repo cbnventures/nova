@@ -41,6 +41,11 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_SiteKeyEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_StepEnv,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_WriteEnvStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Artifacts,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DefaultsEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Environment,
@@ -591,6 +596,58 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     strictEqual(result.includes('Validate Cloudflare deployment environment'), false);
 
     strictEqual(result.includes('Select Cloudflare deployment environment'), false);
+
+    return;
+  });
+
+  it('builds and uploads one named artifact for multiple deploy targets', () => {
+    const artifactEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactEntry = {
+      template: 'publish',
+      name: 'project',
+      triggers: ['release'],
+      build: [],
+      deploy: [
+        {
+          to: 'github-pages',
+          path: './apps/docs',
+          artifact: 'site-release',
+        },
+        {
+          to: 'cloudflare-pages',
+          path: './apps/docs',
+          artifact: 'site-release',
+        },
+      ],
+    };
+    const artifactWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactWorkspaces = {
+      './apps/docs': {
+        name: 'artifact-app-docs',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const artifacts: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Artifacts = {
+      'site-release': {
+        build: ['./apps/docs'],
+        sources: [{
+          from: './apps/docs/build',
+          to: './site',
+        }],
+      },
+    };
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir = WorkflowsBlueprint.buildPublish(artifactEntry, artifactWorkspaces, {}, [], 'npm', artifacts);
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result = WorkflowsBlueprint.serialize(ir);
+
+    strictEqual(result.includes('npm run build -- --workspace artifact-app-docs --artifact site-release'), true);
+    strictEqual(result.split('name: "Upload assembled artifact (site-release)"').length, 2);
+    strictEqual(result.split('name: "artifact-site-release"').length, 4);
+    strictEqual(result.includes('include-hidden-files: true'), true);
+    strictEqual(result.includes('if-no-files-found: "error"'), true);
+    strictEqual(result.includes([
+      'path: |',
+      '            build/site-release',
+    ].join('\n')), true);
+    strictEqual(result.split('path: "build/site-release"').length, 4);
 
     return;
   });
