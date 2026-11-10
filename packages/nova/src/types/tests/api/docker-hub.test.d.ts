@@ -53,6 +53,15 @@ export type Tests_Api_DockerHub_ApiDockerHubLogin_PostsCredentialsAndReturnsTheT
 export type Tests_Api_DockerHub_ApiDockerHubLogin_PostsCredentialsAndReturnsTheToken_Token = string | undefined;
 
 /**
+ * Tests - API - Docker Hub - Repository Requests - Reads A Missing Overview And Null Description As Empty.
+ *
+ * @since 0.40.1
+ */
+export type Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_NewRepositoryFixture = Record<string, unknown>;
+
+export type Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_Repository = Shared_DockerHubResponse<Shared_DockerHubRepository | undefined>;
+
+/**
  * Tests - API - Docker Hub - Repository Requests - Use The Documented Methods And Bodies.
  *
  * @since 0.40.0

@@ -23,6 +23,8 @@ import type {
   Tests_Api_DockerHub_ApiDockerHubFindCredentials_UsesCredentialHelpersInOrder_HelperResult,
   Tests_Api_DockerHub_ApiDockerHubLogin_PostsCredentialsAndReturnsTheToken_FetchSpy,
   Tests_Api_DockerHub_ApiDockerHubLogin_PostsCredentialsAndReturnsTheToken_Token,
+  Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_NewRepositoryFixture,
+  Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_Repository,
   Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_UsesTheDocumentedMethodsAndBodies_FetchSpy,
   Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_UsesTheDocumentedMethodsAndBodies_Repository,
   Tests_Api_DockerHub_RepositoryFixture,
@@ -225,6 +227,31 @@ describe('ApiDockerHub.login', () => {
  * @since 0.40.0
  */
 describe('ApiDockerHub.repositoryRequests', () => {
+  it('reads a missing overview and null description as empty', async () => {
+    const newRepositoryFixture: Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_NewRepositoryFixture = {
+      description: null,
+      is_private: false,
+      categories: [],
+      immutable_tags_settings: {
+        enabled: false,
+        rules: ['.*'],
+      },
+      permissions: {
+        write: true,
+      },
+    };
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce(new Response(JSON.stringify(newRepositoryFixture), { status: 200 }));
+
+    const repository: Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_ReadsAMissingOverviewAndNullDescriptionAsEmpty_Repository = await ApiDockerHub.getRepository('mrjackyliang', 'transmission-vpn', 'jwt-token');
+
+    strictEqual(repository['ok'], true);
+    strictEqual(repository['body']!['description'], '');
+    strictEqual(repository['body']!['full_description'], '');
+
+    return;
+  });
+
   it('uses the documented methods and bodies', async () => {
     const fetchSpy: Tests_Api_DockerHub_ApiDockerHubRepositoryRequests_UsesTheDocumentedMethodsAndBodies_FetchSpy = vi.spyOn(global, 'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify(repositoryFixture), { status: 200 }))

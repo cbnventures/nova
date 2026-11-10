@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.40.1 - 2026-11-10
+
+### FIXED
+- The Docker Hub recipes read a repository whose overview or short description has never been set, which Docker Hub returns without an overview and with a null description, instead of stopping with a response parse error.
+
 ## 0.40.0 - 2026-11-10
 
 ### UPDATED

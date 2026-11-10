@@ -63,8 +63,8 @@ export const libSchemaDockerHubLoginResponse = z.object({
  * @since 0.40.0
  */
 export const libSchemaDockerHubRepository = z.object({
-  description: z.string(),
-  full_description: z.string(),
+  description: z.string().nullish().transform((value) => value ?? ''),
+  full_description: z.string().nullish().transform((value) => value ?? ''),
   is_private: z.boolean(),
   categories: libSchemaDockerHubCategories,
   immutable_tags_settings: z.object({
