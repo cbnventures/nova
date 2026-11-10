@@ -1627,6 +1627,26 @@ export const LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE = /\[__DOCKER_IMAGE__\]/;
 export const LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH = /\[__DOCKER_PUBLISH__\]/;
 
 /**
+ * Lib - Regex - Pattern Docker Hub Category Slug.
+ *
+ * Accepts lowercase words separated by single dashes, matching Docker Hub's
+ * public category slugs.
+ *
+ * @since 0.40.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_HUB_CATEGORY_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Image Component.
+ *
+ * Accepts one lowercase Docker coordinate component with single separators.
+ * Registry hosts, paths, tags, and digests are excluded.
+ *
+ * @since 0.40.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT = /^[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
+
+/**
  * Lib - Regex - Pattern Docker Runtime Path.
  *
  * Accepts literal workspace-relative path characters for runtime assets while

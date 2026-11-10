@@ -1,0 +1,126 @@
+---
+id: "sync-policies"
+title: "Sync Policies"
+description: "Sync Docker Hub repository visibility and immutable-tag policies from nova.config.json."
+keywords:
+  - "nova"
+  - "sync-policies"
+  - "docker hub"
+  - "visibility"
+  - "immutable tags"
+tags:
+  - "cli"
+  - "sync-policies"
+  - "recipe"
+  - "docker-hub"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync Docker Hub repository **visibility** and **immutable-tag rules** from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-policies` recipe compares each configured policy with the current Docker Hub repository, reports it as changed or unchanged, and sends only the differences. An omitted policy remains unmanaged and keeps its current Docker Hub value.
+
+If both `dockerHub.visibility` and `dockerHub.immutableTags` are omitted, the recipe no-ops with `Skipping sync-policies. No Docker Hub policy values are configured.`
+
+## Why Use This Command?
+
+1. Keeps repository visibility and tag immutability in version-controlled configuration.
+2. Preserves Docker Hub values for policies that Nova does not own.
+3. Applies policy changes independently of publishing an image.
+
+## Requirements
+
+- **Docker login** — Run `docker login` for Docker Hub before the recipe.
+- **Existing repository** — Push the first image so the Docker Hub repository exists.
+- **Repository write access** — The stored Docker Hub login must have write permission.
+- **Docker Hub config** — Set `dockerHub.namespace` and `dockerHub.repository` in `nova.config.json`.
+- **Enabled recipe** — Set `recipes["docker-hub"]["sync-policies"].enabled` to `true`.
+
+## Login Lookup
+
+Nova reads Docker's existing login without printing the username's secret. It opens `config.json` in the directory named by `DOCKER_CONFIG`, or `~/.docker/config.json` when that environment variable is unset.
+
+Credential sources are checked in this order:
+
+1. `credHelpers["index.docker.io"]`.
+2. `credHelpers["https://index.docker.io/v1/"]`.
+3. `credsStore`.
+4. The base64 `auth` value under `auths["https://index.docker.io/v1/"]`.
+
+For a helper named `<helper>`, Nova runs `docker-credential-<helper> get` and sends `https://index.docker.io/v1/` on standard input. If no source yields credentials, the command stops with `No Docker Hub login found. Run "docker login".`
+
+## Behavior
+
+Each policy block is independently optional. When a field is omitted, Nova preserves Docker Hub's current value.
+
+| Field                   | What it controls                                                                                   |
+|-------------------------|----------------------------------------------------------------------------------------------------|
+| `visibility`            | Repository visibility: `public` or `private`.                                                      |
+| `immutableTags.enabled` | Enables or disables immutable tags.                                                                |
+| `immutableTags.rules`   | Ordered regular-expression strings supplied to Docker Hub when immutable-tag settings are updated. |
+
+An explicit empty `immutableTags.rules` array clears the current rules. Dry-run mode performs credential, repository, permission, and comparison checks while sending no changes.
+
+## Settings
+
+```json
+{
+  "dockerHub": {
+    "namespace": "example",
+    "repository": "example-project",
+    "visibility": "public",
+    "immutableTags": {
+      "enabled": true,
+      "rules": ["^v[0-9]+\\.[0-9]+\\.[0-9]+$"]
+    }
+  },
+  "recipes": {
+    "docker-hub": {
+      "sync-policies": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe docker-hub sync-policies [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe docker-hub sync-policies [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                    |
+|-----------------|----------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any Docker Hub settings. |
+
+## Errors
+
+The precheck stops before policy updates when it emits one of these messages. `<namespace>` and `<repository>` are replaced with the configured values.
+
+| Condition                | Message                                                                                                           |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------|
+| Login not found          | `No Docker Hub login found. Run "docker login".`                                                                  |
+| Authentication failed    | `Unable to authenticate with Docker Hub using the stored login.`                                                  |
+| Repository missing       | `Docker Hub repository <namespace>/<repository> does not exist. Push the first image, then run the recipe again.` |
+| Write permission missing | `The Docker Hub login does not have write access to <namespace>/<repository>.`                                    |

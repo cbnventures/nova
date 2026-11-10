@@ -1,0 +1,78 @@
+import type {
+  Shared_DockerHubCredentials,
+  Shared_DockerHubRepository,
+  Shared_DockerHubResponse,
+  Shared_NovaConfig_DockerHub,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_DockerHub,
+  Shared_NovaConfigConfig,
+  Shared_NovaConfigDockerHubRecipeName,
+} from '../../../shared.d.ts';
+
+/**
+ * CLI - Recipe - Docker Hub - Docker Hub Precheck.
+ *
+ * @since 0.40.0
+ */
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_RecipeName = Shared_NovaConfigDockerHubRecipeName;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Options_DryRun = true;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Options = {
+  dryRun?: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Options_DryRun;
+};
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_WorkingFile = Shared_NovaConfigConfig;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_DockerHub = Shared_NovaConfig_DockerHub;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Namespace = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_RepositoryName = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Token = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Repository = Shared_DockerHubRepository;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_IsDryRun = boolean;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result = {
+  workingFile: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_WorkingFile;
+  dockerHub: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_DockerHub;
+  namespace: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Namespace;
+  repositoryName: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_RepositoryName;
+  token: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Token;
+  repository: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_Repository;
+  isDryRun: Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result_IsDryRun;
+};
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Returns = Promise<Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Result | undefined>;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_CurrentDirectory = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_IsAtProjectRoot = boolean;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_WorkingFile = Shared_NovaConfigConfig;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_DockerHub = Shared_NovaConfig_DockerHub | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_DockerHubRecipes = Shared_NovaConfig_Recipes_DockerHub | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_RecipeEntry = Shared_NovaConfig_RecipeEntry | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_IsDryRun = boolean;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Credentials = Shared_DockerHubCredentials | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Token = string | undefined;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Namespace = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_RepositoryName = string;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_RepositoryResponse = Shared_DockerHubResponse<Shared_DockerHubRepository | undefined>;
+
+export type Cli_Recipe_DockerHub_DockerHubPrecheck_DockerHubPrecheck_Repository = Shared_DockerHubRepository | undefined;

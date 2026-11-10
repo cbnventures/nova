@@ -33,7 +33,7 @@ Describes the project identity, display info, and build metadata.
 |---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility configure` wizard; the parser only requires a non-empty trimmed string.                                                                                           |
 | `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                                                                                                     |
-| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                                                                                                                                                                                                                                       |
+| `description.short` | `string`   | One-line summary used in `package.json` and meta tags. When `dockerHub` exists, Docker Hub limits this value to 100 characters: configure rejects longer input, config parsing warns, and `sync-identity` stops before sending changes.                                                                      |
 | `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                                                                                                     |
 | `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                                                                                                                                                                                                                                    |
 | `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                                                                                                                                                                                                                                     |
@@ -314,6 +314,34 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 }
 ```
 
+## `dockerHub`
+
+Identifies the Docker Hub repository used by publish workflows and repository-management recipes. Namespace and repository names use lowercase Docker image components: alphanumeric segments separated by `.`, `_`, or `-`.
+
+| Field                   | Type       | Description                                                                                                                                                     |
+|-------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `namespace`             | `string`   | Required Docker Hub namespace.                                                                                                                                  |
+| `repository`            | `string`   | Required Docker Hub repository name. Publish workflows read the image coordinates from these two fields.                                                        |
+| `visibility`            | `string`   | Optional `public` or `private` value owned by [`sync-policies`](/docs/cli/recipes/docker-hub/sync-policies).                                                    |
+| `categories`            | `string[]` | Optional unique lowercase-dash slugs, up to three. [`sync-identity`](/docs/cli/recipes/docker-hub/sync-identity) validates them against Docker Hub's live list. |
+| `immutableTags.enabled` | `boolean`  | Enables or disables immutable tags through `sync-policies`.                                                                                                     |
+| `immutableTags.rules`   | `string[]` | Ordered regular-expression strings sent with the immutable-tags setting. An empty array clears the rules.                                                       |
+
+```json
+{
+  "dockerHub": {
+    "namespace": "example",
+    "repository": "example-project",
+    "visibility": "public",
+    "categories": ["developer-tools", "security"],
+    "immutableTags": {
+      "enabled": false,
+      "rules": []
+    }
+  }
+}
+```
+
 ## `workflows`
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
@@ -412,15 +440,19 @@ Each entry in the `deploy` array pins one publish destination to a workspace or 
 
 Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
 
-| Target       | Required `with` literals              | Registry namespace                                     |
-|--------------|---------------------------------------|--------------------------------------------------------|
-| `docker-hub` | `IMAGE_NAMESPACE`, `IMAGE_REPOSITORY` | Explicit `IMAGE_NAMESPACE`; credentials are auth-only. |
-| `ghcr`       | `IMAGE_REPOSITORY`                    | Derived from `github.repository_owner`.                |
+| Target       | Required `with` literals | Image coordinates                                                                                 |
+|--------------|--------------------------|---------------------------------------------------------------------------------------------------|
+| `docker-hub` | None                     | Reads `dockerHub.namespace` and `dockerHub.repository`; Docker Hub credentials authenticate only. |
+| `ghcr`       | `IMAGE_REPOSITORY`       | Uses `github.repository_owner` as the namespace.                                                  |
+
+A `docker-hub` target requires the top-level `dockerHub` section. `with.IMAGE_NAMESPACE` and `with.IMAGE_REPOSITORY` are invalid for that target and must be moved into `dockerHub`.
 
 Both targets use `path: "./"`. Container inputs do not belong in `build`; the root multi-stage Docker build compiles them inside the image build.
 Container targets use the workflow's OCI handoff and cannot reference a named file artifact.
 
 The `pfsense` target accepts a scaffolded pfSense package workspace path, such as `{"to":"pfsense","path":"./packages/firewall"}`. Its workspace must have the `package` role and a name beginning with `pfsense-pkg-`. Nova builds it on FreeBSD and attaches the resulting package files to the selected GitHub release.
+
+If the workspace provides `scripts/check-freebsd.sh`, the target runs it with FreeBSD's `/bin/sh` from the workspace directory before `make package`; a failure stops the package build. Checks placed in this hook should emit a clear skip message during `npm run check` on non-FreeBSD hosts instead of running with the wrong shell or userland.
 
 ### Variable Formats
 
@@ -682,6 +714,7 @@ Stores every recipe toggle in one top-level block. Repository, license, miscella
 
 | Category        | Supported recipes                                                                                                                                                                |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `docker-hub`    | `sync-identity`, `sync-policies`                                                                                                                                                 |
 | `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
 | `license`       | `update-copyright`                                                                                                                                                               |
 | `miscellaneous` | `fix-markdown-tables`, `remove-operating-system-files`                                                                                                                           |
@@ -702,6 +735,14 @@ Package JSON recipes accept these optional settings where applicable:
 ```json
 {
   "recipes": {
+    "docker-hub": {
+      "sync-identity": {
+        "enabled": true
+      },
+      "sync-policies": {
+        "enabled": true
+      }
+    },
     "github": {
       "sync-identity": {
         "enabled": true

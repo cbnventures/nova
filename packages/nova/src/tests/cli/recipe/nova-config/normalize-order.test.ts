@@ -24,6 +24,8 @@ import { Runner as CliRecipeNovaConfigNormalizeOrder } from '../../../../cli/rec
 import type {
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Config,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ConfigPath,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_DockerHub,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_DockerHubKeys,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Keys,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Output,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_PackageJsonPath,
@@ -99,6 +101,21 @@ describe.sequential('CliRecipeNovaConfigNormalizeOrder.run', async () => {
           slug: 'test-project',
         },
       },
+      dockerHub: {
+        immutableTags: {
+          rules: [],
+          enabled: false,
+        },
+        experimentalDockerHub: 'unchanged',
+        categories: ['networking'],
+        visibility: 'public',
+        repository: 'nova',
+        namespace: 'cbnventures',
+      },
+      github: {
+        repo: 'nova',
+        owner: 'cbnventures',
+      },
       workflows: [],
       experimentalSecond: 'unchanged',
     };
@@ -119,12 +136,25 @@ describe.sequential('CliRecipeNovaConfigNormalizeOrder.run', async () => {
 
     deepStrictEqual(keys, [
       'project',
+      'github',
+      'dockerHub',
       'workflows',
       'urls',
       'recipes',
       'settings',
       'experimentalFirst',
       'experimentalSecond',
+    ]);
+    const dockerHub: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_DockerHub = parsedOutput['dockerHub'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_DockerHub;
+    const dockerHubKeys: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_DockerHubKeys = Object.keys(dockerHub);
+
+    deepStrictEqual(dockerHubKeys, [
+      'namespace',
+      'repository',
+      'visibility',
+      'categories',
+      'immutableTags',
+      'experimentalDockerHub',
     ]);
     deepStrictEqual(parsedOutput['settings'], config['settings']);
     deepStrictEqual(parsedOutput['experimentalFirst'], config['experimentalFirst']);

@@ -34,8 +34,8 @@ import type {
 /**
  * CLI - Recipe - Nova Config - Normalize Order.
  *
- * Reorders only the top-level keys in nova.config.json while preserving every
- * nested value and any unrecognized top-level fields.
+ * Reorders top-level keys and Docker Hub fields while preserving all values and
+ * unrecognized fields.
  *
  * @since 0.33.0
  */
@@ -160,13 +160,13 @@ export class Runner {
     const normalizedContents: Cli_Recipe_NovaConfig_NormalizeOrder_Runner_Run_NormalizedContents = `${JSON.stringify(normalizedConfig, null, 2)}\n`;
 
     if (rawConfig === normalizedContents) {
-      Logger.info('The top-level "nova.config.json" key order is already normalized.');
+      Logger.info('The "nova.config.json" key order is already normalized.');
 
       return;
     }
 
     if (isDryRun === true) {
-      Logger.info('Would normalize the top-level "nova.config.json" key order.');
+      Logger.info('Would normalize the "nova.config.json" key order.');
 
       return;
     }
@@ -177,7 +177,7 @@ export class Runner {
 
     await fs.writeFile(configPath, normalizedContents, 'utf-8');
 
-    Logger.info('Normalized the top-level "nova.config.json" key order.');
+    Logger.info('Normalized the "nova.config.json" key order.');
 
     return;
   }

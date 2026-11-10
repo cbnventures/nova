@@ -51,6 +51,7 @@ import type {
   Shared_GithubRunnerImages,
   Shared_NovaConfig,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigArtifact,
   Shared_NovaConfigEnvironment,
@@ -411,7 +412,9 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context = Shared_BlueprintPublishTargetContext;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context = Shared_BlueprintPublishTargetContext & {
+  dockerHub: Shared_NovaConfig_DockerHub;
+};
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns = Shared_BlueprintJob;
 
@@ -427,23 +430,15 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_E
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHub = Shared_NovaConfig_DockerHub;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository = string;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ReadmePath = string;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_SyncDescription = string;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ShouldSyncDescription = boolean;
-
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubUsername = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubToken = string;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ProjectDescription = string;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_PostAttestationSteps = Shared_BlueprintSteps;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -673,7 +668,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = Shared_NovaConfig_Artifacts;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProjectDescription = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = Shared_NovaConfigEnvironment;
 
@@ -847,6 +842,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployArt
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context = Shared_BlueprintPublishTargetContext;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHubContext = Shared_BlueprintPublishTargetContext & {
+  dockerHub: Shared_NovaConfig_DockerHub;
+};
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
@@ -1011,7 +1010,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces = 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = Shared_NovaConfig_Artifacts;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ProjectDescription = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
@@ -1161,9 +1160,9 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Workspaces = 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts = Shared_NovaConfig_Artifacts;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = Shared_NovaConfigEnvironment;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ProjectDescription = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ConfigPath = string;
 

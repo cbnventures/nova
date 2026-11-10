@@ -30,7 +30,7 @@ Scaffold a **pfSense package starter** whose settings use the native WebGUI and 
 ## Requirements
 
 - **Node.js runtime** — Use Node.js 22 or 24 to validate and stage the package.
-- **FreeBSD package builder** — A FreeBSD environment is required only for the final `make package` step. See Netgate's [package build guidance](https://docs.netgate.com/pfsense/en/latest/development/develop-packages.html#testing-building-individual-packages).
+- **FreeBSD package builder** — A FreeBSD environment runs the optional native checks and is required for the final `make package` step. See Netgate's [package build guidance](https://docs.netgate.com/pfsense/en/latest/development/develop-packages.html#testing-building-individual-packages).
 - **Build VM version** — The generated workflow reads the optional `PFSENSE_FREEBSD_VERSION` repository variable to select the build VM's FreeBSD release and defaults to `15`. The generated script marks the finished package for any FreeBSD version because the scaffold contains no compiled code.
 - **Project author email** — `nova.config.json` must contain an entity with the `author` role and an `email`. Nova uses it as the FreeBSD port maintainer and stops before writing files when it is missing.
 - **Configured <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Scaffold a base project and configure its author metadata before adding a pfSense package. The package scaffold does not invent maintainer information for a new project.
@@ -140,6 +140,12 @@ PFSENSE_PORTS_DIR=/path/to/pfSense-FreeBSD-ports npm run deploy
 
 `npm run build` is safe on macOS, Linux, and Windows because it only stages source files. `npm run deploy` requires FreeBSD, refuses to overwrite an existing port directory in the supplied ports checkout, and verifies the rebuilt package's any-FreeBSD ABI and vital flag.
 
+A workspace can provide `scripts/check-freebsd.sh` for checks that depend on FreeBSD's own `/bin/sh` and userland. During publishing, `scripts/build-package.sh` runs the hook from the workspace directory inside the FreeBSD build VM, after its environment and staged-port guards and before it copies the port or runs `make package`.
+
+A missing hook is skipped silently. A non-zero exit prints `FreeBSD checks failed; the package was not built.` and stops package construction.
+
+Tests with the same FreeBSD dependency should print a clear skip message during `npm run check` on other hosts instead of running against a different shell or userland.
+
 The package is marked `vital` so pfSense upgrades keep it installed. Plain `pkg delete` refuses vital packages, so remove a generated package with `pkg delete -f pfSense-pkg-<Name>`.
 
 Before publishing, confirm the generated maintainer email and the `MIT` port license match the repository.
@@ -150,7 +156,7 @@ Run `nova generate github workflows` to update `.github/workflows/nova-publish-p
 
 1. Validates and stages the port on the GitHub runner.
 2. Derives the optional signing secret's public key and adds it to the staged port.
-3. Starts a FreeBSD VM, checks out the pfSense ports framework, and runs the package build.
+3. Starts a FreeBSD VM, checks out the pfSense ports framework, runs the optional `scripts/check-freebsd.sh` hook, and builds the package.
 4. Signs the finished package and verifies the signature against the staged key list.
 5. Uploads the `.pkg`, `.sha256`, and optional `.pkg.sig` files as both workflow artifacts and assets on the selected GitHub release.
 

@@ -26,10 +26,10 @@
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
-    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE_PFSENSE__]"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.39.0"
+    "@cbnventures/nova": "0.40.0"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",

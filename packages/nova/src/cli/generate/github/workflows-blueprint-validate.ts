@@ -1,7 +1,8 @@
-import { Buffer } from 'node:buffer';
-
 import { Runner as GithubRunnerImages } from '../../../api/github-runner-images.js';
-import { LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL } from '../../../lib/regex.js';
+import {
+  LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT,
+  LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL,
+} from '../../../lib/regex.js';
 import {
   libWorkflowContainerPlatformArchitectures,
   libWorkflowStepKinds,
@@ -41,9 +42,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHint_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Value,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsNonEmptyStringArray_Returns,
@@ -71,6 +69,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DerivedContainerLabel,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DetailEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHub,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageNamespace,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageRepository,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedReadmePath,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedSyncDescription,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveBuildTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatform,
@@ -92,6 +95,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentTriggerObject,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvMigration,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Existing,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrImageRepository,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasEnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasError,
@@ -99,7 +103,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionVersionTagKeys,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasUnsupportedEnvironmentTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasVersionTagTrigger,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWorkflowRunTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository,
@@ -123,8 +126,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MinimumJobTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MissingLiterals,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_NonCloudflareTargetCount,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription,
-  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawKeyEntry,
@@ -286,25 +287,23 @@ export class Runner {
    * Runs every parse-and-validate check over the raw entries and the workspaces.
    * The surviving typed workflows and the diagnostics are returned; failures drop.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}       rawWorkflows       - Raw workflows.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}         workspaces         - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy}    versionStrategy    - Version strategy.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}        environment        - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts}          artifacts          - Artifacts.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription} projectDescription - Project description.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages}       [runnerImages]     - Runner images.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}    rawWorkflows    - Raw workflows.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}      workspaces      - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy} versionStrategy - Version strategy.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}     environment     - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts}       artifacts       - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHub}       [dockerHub]     - Docker hub.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages}    [runnerImages]  - Runner images.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
    * @since 0.39.0
    */
-  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}, artifacts: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = {}, projectDescription: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription = '', runnerImages: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages = undefined): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
+  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}, artifacts: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHub = undefined, runnerImages: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages = undefined): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
     const workflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows = [];
     const seenKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = new Set();
     const uniquenessMap: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = new Map();
-    const projectDescriptionBytes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes = Buffer.byteLength(projectDescription, 'utf8');
-    let hasWarnedAboutDockerHubDescription: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription = false;
     let containerWorkflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = undefined;
 
     const rawEntries: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries = (Array.isArray(rawWorkflows) === true) ? rawWorkflows : [];
@@ -962,13 +961,74 @@ export class Runner {
             if (targetTypeName === 'docker-hub') {
               dockerHubTargetCount += 1;
 
-              if (projectDescriptionBytes > 100 && hasWarnedAboutDockerHubDescription === false) {
+              const dockerHubHasLegacyImageNamespace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageNamespace = containerTargetSettings !== undefined && Object.prototype.hasOwnProperty.call(containerTargetSettings, 'IMAGE_NAMESPACE') === true;
+              const dockerHubHasLegacyImageRepository: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageRepository = containerTargetSettings !== undefined && Object.prototype.hasOwnProperty.call(containerTargetSettings, 'IMAGE_REPOSITORY') === true;
+
+              if (dockerHubHasLegacyImageNamespace === true || dockerHubHasLegacyImageRepository === true) {
                 diagnostics.push({
-                  severity: 'warning',
-                  message: `Project short description is ${projectDescriptionBytes} bytes. Docker Hub truncates it to 100 bytes when syncing the repository short description.`,
+                  severity: 'error',
+                  message: `Container target "docker-hub" in workflow "${workflowKey}" cannot set with.IMAGE_NAMESPACE or with.IMAGE_REPOSITORY. Move Docker Hub image coordinates into the "dockerHub" section of nova.config.json. Skipping.`,
                 });
 
-                hasWarnedAboutDockerHubDescription = true;
+                hasError = true;
+              }
+
+              const dockerHubHasRemovedReadmePath: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedReadmePath = containerTargetSettings !== undefined && Object.prototype.hasOwnProperty.call(containerTargetSettings, 'README_PATH') === true;
+              const dockerHubHasRemovedSyncDescription: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedSyncDescription = containerTargetSettings !== undefined && Object.prototype.hasOwnProperty.call(containerTargetSettings, 'SYNC_DESCRIPTION') === true;
+
+              if (dockerHubHasRemovedReadmePath === true || dockerHubHasRemovedSyncDescription === true) {
+                diagnostics.push({
+                  severity: 'error',
+                  message: `Container target "docker-hub" in workflow "${workflowKey}" cannot set with.README_PATH or with.SYNC_DESCRIPTION. Publish jobs no longer sync the Docker Hub overview; remove them and run "nova recipe docker-hub sync-identity", which sends README.md. Skipping.`,
+                });
+
+                hasError = true;
+              }
+
+              if (dockerHub === undefined) {
+                diagnostics.push({
+                  severity: 'error',
+                  message: `Container target "docker-hub" in workflow "${workflowKey}" requires the "dockerHub" section in nova.config.json. Skipping.`,
+                });
+
+                hasError = true;
+              } else {
+                const imageNamespace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = dockerHub['namespace'];
+                const imageRepository: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = dockerHub['repository'];
+
+                if (Runner.isContainerCoordinateComponent(imageNamespace) === false) {
+                  diagnostics.push({
+                    severity: 'error',
+                    message: `The dockerHub.namespace value "${String(imageNamespace)}" is invalid. Use one lowercase namespace component without a registry host, repository, tag, digest, or slash. Skipping workflow "${workflowKey}".`,
+                  });
+
+                  hasError = true;
+                }
+
+                if (Runner.isContainerCoordinateComponent(imageRepository) === false) {
+                  diagnostics.push({
+                    severity: 'error',
+                    message: `The dockerHub.repository value "${String(imageRepository)}" is invalid. Use one lowercase repository component without a registry host, namespace, tag, digest, or slash. Skipping workflow "${workflowKey}".`,
+                  });
+
+                  hasError = true;
+                }
+
+                if (
+                  Runner.isContainerCoordinateComponent(imageNamespace) === true
+                  && Runner.isContainerCoordinateComponent(imageRepository) === true
+                ) {
+                  const containerCoordinate: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = `docker.io/${String(imageNamespace)}/${String(imageRepository)}`;
+
+                  if (Runner.isContainerCoordinate(containerCoordinate) === false) {
+                    diagnostics.push({
+                      severity: 'error',
+                      message: `The Docker Hub config resolves to invalid coordinate "${containerCoordinate}". Expected host/namespace/repository with no tag or digest. Skipping workflow "${workflowKey}".`,
+                    });
+
+                    hasError = true;
+                  }
+                }
               }
             }
 
@@ -1105,45 +1165,16 @@ export class Runner {
               }
             }
 
-            if (isContainerTarget === true && containerTargetSettings !== undefined) {
-              const imageRepository: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = containerTargetSettings['IMAGE_REPOSITORY'];
+            if (targetTypeName === 'ghcr' && containerTargetSettings !== undefined) {
+              const ghcrImageRepository: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrImageRepository = containerTargetSettings['IMAGE_REPOSITORY'];
 
-              if (imageRepository !== undefined && Runner.isContainerCoordinateComponent(imageRepository) === false) {
+              if (ghcrImageRepository !== undefined && Runner.isContainerCoordinateComponent(ghcrImageRepository) === false) {
                 diagnostics.push({
                   severity: 'error',
-                  message: `Container target "${String(targetType)}" in workflow "${workflowKey}" has invalid IMAGE_REPOSITORY "${String(imageRepository)}". Use one lowercase repository component without a registry host, namespace, tag, digest, or slash.`,
+                  message: `Container target "${String(targetType)}" in workflow "${workflowKey}" has invalid IMAGE_REPOSITORY "${String(ghcrImageRepository)}". Use one lowercase repository component without a registry host, namespace, tag, digest, or slash.`,
                 });
 
                 hasError = true;
-              }
-
-              if (targetTypeName === 'docker-hub') {
-                const imageNamespace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = containerTargetSettings['IMAGE_NAMESPACE'];
-
-                if (imageNamespace !== undefined && Runner.isContainerCoordinateComponent(imageNamespace) === false) {
-                  diagnostics.push({
-                    severity: 'error',
-                    message: `Container target "docker-hub" in workflow "${workflowKey}" has invalid IMAGE_NAMESPACE "${String(imageNamespace)}". Use one lowercase namespace component without a registry host, repository, tag, digest, or slash.`,
-                  });
-
-                  hasError = true;
-                }
-
-                if (
-                  Runner.isContainerCoordinateComponent(imageNamespace) === true
-                  && Runner.isContainerCoordinateComponent(imageRepository) === true
-                ) {
-                  const containerCoordinate: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = `docker.io/${String(imageNamespace)}/${String(imageRepository)}`;
-
-                  if (Runner.isContainerCoordinate(containerCoordinate) === false) {
-                    diagnostics.push({
-                      severity: 'error',
-                      message: `Container target "docker-hub" in workflow "${workflowKey}" resolves to invalid coordinate "${containerCoordinate}". Expected host/namespace/repository with no tag or digest.`,
-                    });
-
-                    hasError = true;
-                  }
-                }
               }
             }
           }
@@ -1588,43 +1619,9 @@ export class Runner {
    * @since 0.26.0
    */
   private static isContainerCoordinateComponent(value: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns {
-    if (
-      typeof value !== 'string'
-      || value.length === 0
-      || value.length > 255
-    ) {
-      return false;
-    }
-
-    let previousWasSeparator: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator = true;
-
-    for (const character of value) {
-      const isAlphanumeric: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric = (
-        character >= 'a'
-        && character <= 'z'
-      )
-      || (
-        character >= '0'
-        && character <= '9'
-      );
-      const isSeparator: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator = (
-        character === '.'
-        || character === '_'
-        || character === '-'
-      );
-
-      if (isAlphanumeric === false && isSeparator === false) {
-        return false;
-      }
-
-      if (isSeparator === true && previousWasSeparator === true) {
-        return false;
-      }
-
-      previousWasSeparator = isSeparator;
-    }
-
-    return previousWasSeparator === false;
+    return typeof value === 'string'
+      && value.length <= 255
+      && LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(value) === true;
   }
 
   /**

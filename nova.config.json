@@ -184,7 +184,7 @@
         "issue-comment",
         "issues"
       ],
-      "runsOn": "ubuntu-latest",
+      "runsOn": "ubuntu-24.04",
       "timeoutMinutes": 5
     },
     {
@@ -193,7 +193,7 @@
       "triggers": [
         "schedule-weekly"
       ],
-      "runsOn": "ubuntu-latest",
+      "runsOn": "ubuntu-24.04",
       "timeoutMinutes": 5
     },
     {
@@ -202,7 +202,7 @@
       "triggers": [
         "tag-push"
       ],
-      "runsOn": "ubuntu-latest",
+      "runsOn": "ubuntu-24.04",
       "timeoutMinutes": 30,
       "build": [
         "./packages/nova",
@@ -266,24 +266,24 @@
   },
   "workspaces": {
     "./": {
+      "name": "nova-project",
       "role": "project",
-      "policy": "freezable",
-      "name": "nova-project"
+      "policy": "freezable"
     },
     "./apps/docs": {
+      "name": "nova-docs",
       "role": "docs",
-      "policy": "freezable",
-      "name": "nova-docs"
+      "policy": "freezable"
     },
     "./packages/docusaurus-preset-nova": {
+      "name": "@cbnventures/docusaurus-preset-nova",
       "role": "package",
-      "policy": "distributable",
-      "name": "@cbnventures/docusaurus-preset-nova"
+      "policy": "distributable"
     },
     "./packages/nova": {
+      "name": "@cbnventures/nova",
       "role": "package",
-      "policy": "distributable",
-      "name": "@cbnventures/nova"
+      "policy": "distributable"
     }
   },
   "ignoreFiles": {

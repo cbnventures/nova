@@ -1,6 +1,82 @@
 import { z } from 'zod';
 
 /**
+ * Lib - Schema - Docker Hub Categories.
+ *
+ * Validates Docker Hub's public category list.
+ * Configure and sync recipes consume the parsed name and slug pairs.
+ *
+ * @since 0.40.0
+ */
+export const libSchemaDockerHubCategories = z.array(z.object({
+  name: z.string(),
+  slug: z.string(),
+}));
+
+/**
+ * Lib - Schema - Docker Hub Credential Helper Response.
+ *
+ * Validates credentials returned by a Docker credential helper.
+ * Requiring both fields prevents incomplete logins from reaching the API.
+ *
+ * @since 0.40.0
+ */
+export const libSchemaDockerHubCredentialHelperResponse = z.object({
+  Username: z.string().min(1),
+  Secret: z.string().min(1),
+});
+
+/**
+ * Lib - Schema - Docker Hub Docker Config.
+ *
+ * Validates the credential-related fields in Docker's local config file.
+ * Unrelated Docker settings are deliberately ignored by the parser.
+ *
+ * @since 0.40.0
+ */
+export const libSchemaDockerHubDockerConfig = z.object({
+  auths: z.record(z.string(), z.object({
+    auth: z.string().optional(),
+  })).optional(),
+  credHelpers: z.record(z.string(), z.string()).optional(),
+  credsStore: z.string().optional(),
+});
+
+/**
+ * Lib - Schema - Docker Hub Login Response.
+ *
+ * Validates the token returned by Docker Hub authentication.
+ * Sync requests proceed only when a non-empty token is present.
+ *
+ * @since 0.40.0
+ */
+export const libSchemaDockerHubLoginResponse = z.object({
+  access_token: z.string().min(1),
+});
+
+/**
+ * Lib - Schema - Docker Hub Repository.
+ *
+ * Validates the repository fields used by Docker Hub sync recipes.
+ * The recipes depend on these values for safe diffing and permission checks.
+ *
+ * @since 0.40.0
+ */
+export const libSchemaDockerHubRepository = z.object({
+  description: z.string(),
+  full_description: z.string(),
+  is_private: z.boolean(),
+  categories: libSchemaDockerHubCategories,
+  immutable_tags_settings: z.object({
+    enabled: z.boolean(),
+    rules: z.array(z.string()),
+  }),
+  permissions: z.object({
+    write: z.boolean(),
+  }),
+});
+
+/**
  * Lib - Schema - Node Releases Schedule.
  *
  * Validates the JSON response from the Node.js release schedule API.

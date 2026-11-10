@@ -24,6 +24,8 @@ import { Runner as CliIntegrationAppStoreConnect } from './integration/app-store
 import { Runner as CliIntegrationDiscordDeveloperPortal } from './integration/discord-developer-portal.js';
 import { Runner as CliIntegrationGooglePlayConsole } from './integration/google-play-console.js';
 import { Runner as CliIntegration } from './integration/index.js';
+import { Runner as CliRecipeDockerHubSyncIdentity } from './recipe/docker-hub/sync-identity.js';
+import { Runner as CliRecipeDockerHubSyncPolicies } from './recipe/docker-hub/sync-policies.js';
 import { Runner as CliRecipeGithubSyncActions } from './recipe/github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
@@ -113,6 +115,7 @@ import type {
   Cli_Index_CLI_RegisterCommands_IntegrationDiscordDeveloperPortal,
   Cli_Index_CLI_RegisterCommands_IntegrationGooglePlayConsole,
   Cli_Index_CLI_RegisterCommands_Recipe,
+  Cli_Index_CLI_RegisterCommands_RecipeDockerHub,
   Cli_Index_CLI_RegisterCommands_RecipeGithub,
   Cli_Index_CLI_RegisterCommands_RecipeLicense,
   Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous,
@@ -725,6 +728,38 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options, command) => {
         await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeNovaConfigNormalizeOrder['run']);
+
+        return;
+      });
+
+    const recipeDockerHub: Cli_Index_CLI_RegisterCommands_RecipeDockerHub = recipe
+      .command('docker-hub')
+      .alias('dh')
+      .usage('<subcommand> [options]')
+      .description('Recipes for Docker Hub repository synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipeDockerHub
+      .command('sync-identity')
+      .alias('sync-id')
+      .usage('[options]')
+      .description('Sync repository description, README overview, and categories to Docker Hub')
+      .option('-d, --dry-run', 'Run read-only checks without changing Docker Hub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeDockerHubSyncIdentity['run']);
+
+        return;
+      });
+
+    recipeDockerHub
+      .command('sync-policies')
+      .alias('sync-pol')
+      .usage('[options]')
+      .description('Sync repository visibility and immutable-tag settings to Docker Hub')
+      .option('-d, --dry-run', 'Run read-only checks without changing Docker Hub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeDockerHubSyncPolicies['run']);
 
         return;
       });

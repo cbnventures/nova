@@ -2,6 +2,8 @@ import type {
   Shared_NovaConfig,
   Shared_NovaConfig_Agents,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_DockerHub,
+  Shared_NovaConfig_DockerHub_ImmutableTags,
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Environment,
@@ -38,6 +40,7 @@ import type {
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_DockerHub,
   Shared_NovaConfig_Recipes_Github,
   Shared_NovaConfig_Recipes_License,
   Shared_NovaConfig_Recipes_Miscellaneous,
@@ -51,6 +54,7 @@ import type {
   Shared_NovaConfigArtifact,
   Shared_NovaConfigArtifactSource,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigDockerHubVisibility,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
@@ -730,6 +734,8 @@ export type Lib_NovaConfig_Runner_Parse_Result_Emails = Shared_NovaConfig_Emails
 
 export type Lib_NovaConfig_Runner_Parse_Result_Github = Shared_NovaConfig_Github;
 
+export type Lib_NovaConfig_Runner_Parse_Result_DockerHub = Shared_NovaConfig_DockerHub;
+
 export type Lib_NovaConfig_Runner_Parse_Result_Workflows = Shared_NovaConfig_Workflows;
 
 export type Lib_NovaConfig_Runner_Parse_Result_Urls = Shared_NovaConfig_Urls;
@@ -755,6 +761,7 @@ export type Lib_NovaConfig_Runner_Parse_Result = {
   entities?: Lib_NovaConfig_Runner_Parse_Result_Entities;
   emails?: Lib_NovaConfig_Runner_Parse_Result_Emails;
   github?: Lib_NovaConfig_Runner_Parse_Result_Github;
+  dockerHub?: Lib_NovaConfig_Runner_Parse_Result_DockerHub;
   workflows?: Lib_NovaConfig_Runner_Parse_Result_Workflows;
   urls?: Lib_NovaConfig_Runner_Parse_Result_Urls;
   readme?: Lib_NovaConfig_Runner_Parse_Result_Readme;
@@ -774,6 +781,8 @@ export type Lib_NovaConfig_Runner_Parse_Entities = Shared_NovaConfig_Entities | 
 export type Lib_NovaConfig_Runner_Parse_Emails = Shared_NovaConfig_Emails | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Github = Shared_NovaConfig_Github | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Urls = Shared_NovaConfig_Urls | undefined;
 
@@ -852,6 +861,71 @@ export type Lib_NovaConfig_Runner_ParseArtifacts_ToIsSafe = boolean;
 export type Lib_NovaConfig_Runner_ParseArtifacts_Artifact = Shared_NovaConfigArtifact;
 
 export type Lib_NovaConfig_Runner_ParseArtifacts_SortedResult = Shared_NovaConfig_Artifacts;
+
+/**
+ * Lib - Nova Config - Parse Docker Hub.
+ *
+ * @since 0.40.0
+ */
+export type Lib_NovaConfig_Runner_ParseDockerHub_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Returns = Shared_NovaConfig_DockerHub | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Namespace = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Repository = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_VisibilityCandidate = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Visibility = Shared_NovaConfigDockerHubVisibility | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_CategoriesValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Categories = string[] | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ParsedCategories = string[];
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_SeenCategories = Set<string>;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidCategory = boolean;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_TypedRawCategory = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Category = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTags = Shared_NovaConfig_DockerHub_ImmutableTags | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsEnabled = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRulesValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRules = string[];
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidImmutableTagRule = boolean;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_TypedRawImmutableTagRule = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagRule = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Namespace = string;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Repository = string;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Visibility = Shared_NovaConfigDockerHubVisibility;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Categories = string[];
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_ImmutableTags = Shared_NovaConfig_DockerHub_ImmutableTags;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result = {
+  namespace: Lib_NovaConfig_Runner_ParseDockerHub_Result_Namespace;
+  repository: Lib_NovaConfig_Runner_ParseDockerHub_Result_Repository;
+  visibility?: Lib_NovaConfig_Runner_ParseDockerHub_Result_Visibility;
+  categories?: Lib_NovaConfig_Runner_ParseDockerHub_Result_Categories;
+  immutableTags?: Lib_NovaConfig_Runner_ParseDockerHub_Result_ImmutableTags;
+};
 
 /**
  * Lib - Nova Config - Parse Emails.
@@ -1263,6 +1337,8 @@ export type Lib_NovaConfig_Runner_ParseRecipes_Value = unknown;
 export type Lib_NovaConfig_Runner_ParseRecipes_Returns = Shared_NovaConfig_Recipes | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_Result = Shared_NovaConfig_Recipes;
+
+export type Lib_NovaConfig_Runner_ParseRecipes_DockerHub = Shared_NovaConfig_Recipes_DockerHub | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_Github = Shared_NovaConfig_Recipes_Github | undefined;
 

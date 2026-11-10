@@ -10,15 +10,6 @@
         "strategy": "active-lts"
       }
     },
-    "nodeEnginePfsense": {
-      "value": ">=22.3 <23 || ^24 || ^26",
-      "placeholder": "[__SCAFFOLD_VERSION_NODE_ENGINE_PFSENSE__]",
-      "group": "pfsense",
-      "source": {
-        "type": "manual",
-        "reason": "The pfSense tooling baseline preserves its tested Node 22.3 minimum."
-      }
-    },
     "corepack": {
       "value": "0.36.0",
       "placeholder": "[__SCAFFOLD_VERSION_COREPACK__]",
@@ -526,16 +517,6 @@
       "source": {
         "type": "github-release",
         "repository": "docker/build-push-action",
-        "strategy": "latest-major"
-      }
-    },
-    "workflowActionDockerHubDescription": {
-      "value": "peter-evans/dockerhub-description@v5",
-      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOCKER_HUB_DESCRIPTION__]",
-      "group": "github-workflow",
-      "source": {
-        "type": "github-release",
-        "repository": "peter-evans/dockerhub-description",
         "strategy": "latest-major"
       }
     },

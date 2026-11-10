@@ -4,6 +4,7 @@ import { join, relative, sep } from 'node:path';
 import chalk from 'chalk';
 import prompts from 'prompts';
 
+import { Runner as DockerHub } from '../../api/docker-hub.js';
 import {
   GITHUB_RUNNER_IMAGES_README_URL,
   Runner as GithubRunnerImages,
@@ -31,6 +32,7 @@ import {
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
+  LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT,
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
   LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR,
@@ -199,6 +201,42 @@ import type {
   Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue,
   Cli_Utility_Configure_Runner_PromptArtifacts_Parsed,
   Cli_Utility_Configure_Runner_PromptArtifacts_Returns,
+  Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey,
+  Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputResult,
+  Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoices,
+  Cli_Utility_Configure_Runner_PromptDockerHub_CategorySlugs,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Config,
+  Cli_Utility_Configure_Runner_PromptDockerHub_DockerHub,
+  Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubRecipesInput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Existing,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ExistingRecipes,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableInitial,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableRules,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_LiveCategories,
+  Cli_Utility_Configure_Runner_PromptDockerHub_NamespaceInput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Recipes,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputKey,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputResult,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RepositoryInput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Returns,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutput,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputKey,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputResult,
+  Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_SyncIdentityInitial,
+  Cli_Utility_Configure_Runner_PromptDockerHub_SyncPoliciesInitial,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Trimmed,
+  Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityInitial,
+  Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityOrder,
+  Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue,
   Cli_Utility_Configure_Runner_PromptEmails_Config,
   Cli_Utility_Configure_Runner_PromptEmails_Emails,
   Cli_Utility_Configure_Runner_PromptEmails_EmailsBugsInput,
@@ -726,6 +764,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectPlatforms,
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectPronouns,
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectStartingYear,
+  Cli_Utility_Configure_Runner_PromptProject_HasDockerHub,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutput,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutputKey,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutputResult,
@@ -769,6 +808,9 @@ import type {
   Cli_Utility_Configure_Runner_PromptProject_QuestionsOutputResultValue,
   Cli_Utility_Configure_Runner_PromptProject_Returns,
   Cli_Utility_Configure_Runner_PromptProject_RolesToSync,
+  Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionCount,
+  Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit,
+  Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage,
   Cli_Utility_Configure_Runner_PromptProject_SlugChanged,
   Cli_Utility_Configure_Runner_PromptProject_SlugPrefix,
   Cli_Utility_Configure_Runner_PromptProject_StartingYearOutput,
@@ -2093,6 +2135,246 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Prompt Docker Hub.
+   *
+   * Collects repository identity and policies, validates categories against the
+   * live Docker Hub list, and configures both Docker Hub recipes.
+   *
+   * @param {Cli_Utility_Configure_Runner_PromptDockerHub_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_PromptDockerHub_Returns}
+   *
+   * @since 0.40.0
+   */
+  private static async promptDockerHub(config: Cli_Utility_Configure_Runner_PromptDockerHub_Config): Cli_Utility_Configure_Runner_PromptDockerHub_Returns {
+    const liveCategories: Cli_Utility_Configure_Runner_PromptDockerHub_LiveCategories = await DockerHub.fetchCategories();
+
+    if (liveCategories === undefined) {
+      Logger.error('Unable to load Docker Hub categories. The Docker Hub section was cancelled.');
+
+      return 'back';
+    }
+
+    const existing: Cli_Utility_Configure_Runner_PromptDockerHub_Existing = config['dockerHub'];
+    const existingRecipes: Cli_Utility_Configure_Runner_PromptDockerHub_ExistingRecipes = (config['recipes'] !== undefined) ? config['recipes']['docker-hub'] : undefined;
+    const categoryChoices: Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoices = liveCategories.map((category) => ({
+      title: category['name'],
+      value: category['slug'],
+      selected: (
+        existing !== undefined
+        && existing['categories'] !== undefined
+        && existing['categories'].includes(category['slug']) === true
+      ),
+    }));
+    const visibilityOrder: Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityOrder = [
+      'public',
+      'private',
+    ];
+    const visibilityInitial: Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityInitial = (existing !== undefined && existing['visibility'] !== undefined) ? visibilityOrder.indexOf(existing['visibility']) + 1 : 0;
+    let immutableInitial: Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableInitial = 0;
+
+    if (existing !== undefined && existing['immutableTags'] !== undefined) {
+      immutableInitial = (existing['immutableTags']['enabled'] === true) ? 1 : 2;
+    }
+
+    /**
+     * CLI - Utility - Configure - Prompt Docker Hub - Validate Docker Hub Component.
+     *
+     * Requires one lowercase Docker image-name component without registry or
+     * path separators.
+     *
+     * @param {Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue} dockerHubComponentValue - Docker hub component value.
+     *
+     * @returns {Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns}
+     *
+     * @since 0.40.0
+     */
+    const validateDockerHubComponent: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent = (dockerHubComponentValue: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue): Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns => {
+      const trimmed: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Trimmed = (typeof dockerHubComponentValue === 'string') ? dockerHubComponentValue.trim() : '';
+
+      if (trimmed.length === 0) {
+        return 'This value is required.';
+      }
+
+      if (LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(trimmed) === false) {
+        return 'Use one lowercase Docker image-name component without a registry, path, tag, or digest.';
+      }
+
+      return true;
+    };
+
+    const basicsOutput: Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue>([
+      {
+        type: 'text',
+        name: 'dockerHubNamespace',
+        message: 'Docker Hub namespace',
+        initial: (existing !== undefined) ? existing['namespace'] : '',
+        validate: validateDockerHubComponent,
+      },
+      {
+        type: 'text',
+        name: 'dockerHubRepository',
+        message: 'Docker Hub repository',
+        initial: (existing !== undefined) ? existing['repository'] : '',
+        validate: validateDockerHubComponent,
+      },
+      {
+        type: 'select',
+        name: 'dockerHubVisibility',
+        message: 'Repository visibility (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip',
+          },
+          {
+            title: 'Public',
+            value: 'public',
+          },
+          {
+            title: 'Private',
+            value: 'private',
+          },
+        ],
+        initial: visibilityInitial,
+      },
+      {
+        type: 'multiselect',
+        name: 'dockerHubCategories',
+        message: 'Repository categories (maximum 3)',
+        choices: categoryChoices,
+        max: 3,
+      },
+      {
+        type: 'select',
+        name: 'dockerHubImmutableTags',
+        message: 'Immutable tags (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip',
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: immutableInitial,
+      },
+    ]);
+
+    if (basicsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const basicsOutputResult: Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputResult = basicsOutput['result'];
+    const namespaceInput: Cli_Utility_Configure_Runner_PromptDockerHub_NamespaceInput = String(basicsOutputResult.dockerHubNamespace).trim();
+    const repositoryInput: Cli_Utility_Configure_Runner_PromptDockerHub_RepositoryInput = String(basicsOutputResult.dockerHubRepository).trim();
+    const dockerHub: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHub = {
+      namespace: namespaceInput,
+      repository: repositoryInput,
+    };
+    const visibilityValue: Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue = basicsOutputResult.dockerHubVisibility as Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue;
+    const categorySlugs: Cli_Utility_Configure_Runner_PromptDockerHub_CategorySlugs = (Array.isArray(basicsOutputResult.dockerHubCategories) === true) ? basicsOutputResult.dockerHubCategories : [];
+    const immutableValue: Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue = basicsOutputResult.dockerHubImmutableTags as Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue;
+
+    if (categorySlugs.length > 3) {
+      Logger.error('Docker Hub accepts at most 3 repository categories. The Docker Hub section was cancelled.');
+
+      return 'back';
+    }
+
+    if (visibilityValue !== 'skip') {
+      dockerHub.visibility = visibilityValue;
+    }
+
+    dockerHub.categories = categorySlugs;
+
+    let immutableRules: Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableRules = [];
+
+    if (immutableValue !== 'skip') {
+      const rulesOutput: Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputValue>({
+        type: 'text',
+        name: 'dockerHubImmutableTagsRules',
+        message: 'Immutable tag rules as a JSON string array',
+        initial: (existing !== undefined && existing['immutableTags'] !== undefined) ? JSON.stringify(existing['immutableTags']['rules']) : '[]',
+        validate: Runner['isStringArrayInput'],
+      });
+
+      if (rulesOutput['cancelled'] === true) {
+        return 'back';
+      }
+
+      const rulesOutputResult: Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputResult = rulesOutput['result'];
+
+      immutableRules = Runner.parseStringArrayInput(rulesOutputResult.dockerHubImmutableTagsRules);
+      dockerHub.immutableTags = {
+        enabled: immutableValue,
+        rules: immutableRules,
+      };
+    }
+
+    const syncIdentityInitial: Cli_Utility_Configure_Runner_PromptDockerHub_SyncIdentityInitial = (
+      existingRecipes !== undefined
+      && existingRecipes['sync-identity'] !== undefined
+    ) ? existingRecipes['sync-identity']['enabled'] : true;
+    const syncPoliciesInitial: Cli_Utility_Configure_Runner_PromptDockerHub_SyncPoliciesInitial = (
+      existingRecipes !== undefined
+      && existingRecipes['sync-policies'] !== undefined
+    ) ? existingRecipes['sync-policies']['enabled'] : false;
+    const recipesOutput: Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputValue>([
+      {
+        type: 'confirm',
+        name: 'dockerHubRecipeSyncIdentity',
+        message: 'Enable sync-identity recipe?',
+        initial: syncIdentityInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'dockerHubRecipeSyncPolicies',
+        message: 'Enable sync-policies recipe?',
+        initial: syncPoliciesInitial,
+      },
+    ]);
+
+    if (recipesOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const recipesOutputResult: Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputResult = recipesOutput['result'];
+    const dockerHubRecipesInput: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubRecipesInput = {
+      'sync-identity': {
+        ...((existingRecipes !== undefined && existingRecipes['sync-identity'] !== undefined) ? existingRecipes['sync-identity'] : {}),
+        enabled: recipesOutputResult.dockerHubRecipeSyncIdentity,
+      },
+      'sync-policies': {
+        ...((existingRecipes !== undefined && existingRecipes['sync-policies'] !== undefined) ? existingRecipes['sync-policies'] : {}),
+        enabled: recipesOutputResult.dockerHubRecipeSyncPolicies,
+      },
+    };
+    const recipes: Cli_Utility_Configure_Runner_PromptDockerHub_Recipes = (config['recipes'] !== undefined) ? { ...config['recipes'] } : {};
+
+    Reflect.set(recipes, 'docker-hub', dockerHubRecipesInput);
+    Reflect.set(config, 'dockerHub', dockerHub);
+    Reflect.set(config, 'recipes', recipes);
+
+    Logger.customize({
+      name: 'Runner.promptDockerHub',
+      purpose: 'updated',
+      padTop: 1,
+      padBottom: 1,
+    }).info('Docker Hub repository settings updated.');
+
+    return 'back';
+  }
+
+  /**
    * CLI - Utility - Configure - Prompt Flow.
    *
    * Top-level menu loop that lists configuration categories (project, entities, emails, URLs,
@@ -2127,6 +2409,11 @@ export class Runner {
         label: 'GitHub',
         description: 'Configure GitHub repository settings, recipes, and policies.',
         handler: Runner['promptGithubMenu'],
+      },
+      dockerHub: {
+        label: 'Docker Hub',
+        description: 'Configure Docker Hub repository settings, recipes, and policies.',
+        handler: Runner['promptDockerHub'],
       },
       workflows: {
         label: 'Workflows',
@@ -2260,6 +2547,10 @@ export class Runner {
     const projectName: Cli_Utility_Configure_Runner_PromptProject_ProjectName = (existingProjectName !== undefined) ? { ...existingProjectName } : {};
     const projectDescription: Cli_Utility_Configure_Runner_PromptProject_ProjectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
     const projectKeywords: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
+    const hasDockerHub: Cli_Utility_Configure_Runner_PromptProject_HasDockerHub = config['dockerHub'] !== undefined;
+    const shortDescriptionLimit: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit = (hasDockerHub === true) ? 100 : Infinity;
+    const shortDescriptionCount: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionCount = (projectDescription['short'] !== undefined) ? projectDescription['short'].length : 0;
+    const shortDescriptionMessage: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage = (hasDockerHub === true) ? `Short description (${shortDescriptionCount}/100)` : 'Short description';
 
     /**
      * CLI - Utility - Configure - Prompt Project - Validate Project Name Title.
@@ -2306,7 +2597,15 @@ export class Runner {
      * @since 0.11.0
      */
     const validateProjectDescriptionShort: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort = (projectDescriptionShortValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortValue): Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Returns => {
-      return Runner.normalizeText(projectDescriptionShortValue, Infinity)['result'];
+      if (
+        hasDockerHub === true
+        && typeof projectDescriptionShortValue === 'string'
+        && projectDescriptionShortValue.trim().length > 100
+      ) {
+        return 'Docker Hub\'s limit is 100 characters.';
+      }
+
+      return Runner.normalizeText(projectDescriptionShortValue, shortDescriptionLimit)['result'];
     };
 
     /**
@@ -2359,7 +2658,7 @@ export class Runner {
       {
         type: 'text',
         name: 'projectDescriptionShort',
-        message: 'Short description',
+        message: shortDescriptionMessage,
         initial: projectDescription['short'] ?? '',
         validate: validateProjectDescriptionShort,
       },
@@ -2387,7 +2686,7 @@ export class Runner {
 
     const projectNameTitleInput: Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleInput = Runner.normalizeText(questionsOutputResultValue.projectNameTitle, Infinity)['sanitized'];
     const projectNameSlugInput: Cli_Utility_Configure_Runner_PromptProject_ProjectNameSlugInput = Runner.normalizeProjectSlug(questionsOutputResultValue.projectNameSlug)['sanitized'];
-    const projectDescriptionShortInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionShort, Infinity)['sanitized'];
+    const projectDescriptionShortInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionShort, shortDescriptionLimit)['sanitized'];
     const projectDescriptionLongInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionLongInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionLong, Infinity)['sanitized'];
     const projectKeywordsInput: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsInput = Runner.normalizeTextArray(questionsOutputResultValue.projectKeywords, 50)['sanitized'];
 

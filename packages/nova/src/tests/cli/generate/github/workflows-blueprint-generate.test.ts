@@ -473,6 +473,10 @@ describe('WorkflowsBlueprint.generate', async () => {
           short: 'Valid Docker Hub description.',
         },
       },
+      dockerHub: {
+        namespace: 'example',
+        repository: 'valid',
+      },
       workflows: [
         {
           template: 'check-sponsor-gated-issues',
@@ -497,10 +501,6 @@ describe('WorkflowsBlueprint.generate', async () => {
             {
               to: 'docker-hub',
               path: './',
-              with: {
-                IMAGE_NAMESPACE: 'example',
-                IMAGE_REPOSITORY: 'valid',
-              },
             },
           ],
           with: {},
@@ -543,9 +543,9 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     const publishContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_PublishContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-sites.yml'), 'utf-8');
 
-    ok(publishContent.includes('uses: "peter-evans/dockerhub-description@v5"') === true, 'missing pinned Docker Hub description action');
-    ok(publishContent.includes('short-description: "Valid Docker Hub description."') === true, 'missing project short description');
-    ok(publishContent.includes('readme-filepath: "README.md"') === true, 'missing default Docker Hub README path');
+    ok(publishContent.includes('peter-evans/dockerhub-description') === false, 'unexpected Docker Hub description action');
+    ok(publishContent.includes('IMAGE_NAMESPACE: "example"') === true, 'missing Docker Hub namespace');
+    ok(publishContent.includes('IMAGE_REPOSITORY: "valid"') === true, 'missing Docker Hub repository');
 
     const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
 

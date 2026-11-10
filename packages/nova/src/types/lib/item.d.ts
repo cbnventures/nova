@@ -3,6 +3,7 @@ import type {
   Shared_ChangelogEntry_Category,
   Shared_ItemPrettyNames,
   Shared_NovaConfigAgent,
+  Shared_NovaConfigDockerHubRecipeName,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
@@ -59,6 +60,8 @@ export type Lib_Item_AllowedRecipes = readonly Shared_NovaConfigWorkspaceRecipeN
  */
 export type Lib_Item_RecipesByCategory_Github = readonly Shared_NovaConfigGithubRecipeName[];
 
+export type Lib_Item_RecipesByCategory_DockerHub = readonly Shared_NovaConfigDockerHubRecipeName[];
+
 export type Lib_Item_RecipesByCategory_License = readonly Shared_NovaConfigLicenseRecipeName[];
 
 export type Lib_Item_RecipesByCategory_Miscellaneous = readonly Shared_NovaConfigMiscellaneousRecipeName[];
@@ -70,6 +73,7 @@ export type Lib_Item_RecipesByCategory_ReadMe = readonly Shared_NovaConfigReadMe
 export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigWorkspaceRecipeName[];
 
 export type Lib_Item_RecipesByCategory = {
+  'docker-hub': Lib_Item_RecipesByCategory_DockerHub;
   'github': Lib_Item_RecipesByCategory_Github;
   'license': Lib_Item_RecipesByCategory_License;
   'miscellaneous': Lib_Item_RecipesByCategory_Miscellaneous;

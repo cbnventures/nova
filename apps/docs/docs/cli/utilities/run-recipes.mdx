@@ -1,7 +1,7 @@
 ---
 id: "run-recipes"
 title: "Run Recipes"
-description: "Run every enabled recipe in sequence across the GitHub, license, miscellaneous, Nova config, read-me, and package-json categories with a single command."
+description: "Run every enabled recipe in sequence across the Docker Hub, GitHub, license, miscellaneous, Nova config, read-me, and package-json categories."
 keywords:
   - "nova"
   - "nova run-recipes"
@@ -25,7 +25,7 @@ Run every enabled <Terminology title="transform script" to="/docs/quickstart/ter
 
 The `run-recipes` command traverses the complete recipe registry in sequence. Each recipe reads its own `nova.config.json` entry and performs work only when its individual `enabled` toggle is `true`. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
 
-There is no category flag, so every invocation visits the `github`, `license`, `miscellaneous`, `nova-config`, `read-me`, and `package-json` categories. Disabled recipes report that they were skipped.
+There is no category flag, so every invocation visits the `docker-hub`, `github`, `license`, `miscellaneous`, `nova-config`, `read-me`, and `package-json` categories. Disabled recipes perform no work.
 
 Recipes reconcile settings or existing content and are safe to run again. They do not invoke <Terminology title="template command" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology>; generated files remain an explicit `nova generate ...` action.
 
@@ -33,6 +33,7 @@ Recipes reconcile settings or existing content and are safe to run again. They d
 
 | Category        | Recipes                                                                                                                                                                          |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `docker-hub`    | `sync-identity`, `sync-policies`                                                                                                                                                 |
 | `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
 | `license`       | `update-copyright`                                                                                                                                                               |
 | `miscellaneous` | `fix-markdown-tables`, `remove-operating-system-files`                                                                                                                           |
@@ -79,7 +80,7 @@ Recipes reconcile settings or existing content and are safe to run again. They d
 
 ## Options
 
-| Flag                 | Description                                                            |
-|----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview file and GitHub changes without sending mutations.             |
-| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |
+| Flag                 | Description                                                             |
+|----------------------|-------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview file, Docker Hub, and GitHub changes without sending mutations. |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy.  |

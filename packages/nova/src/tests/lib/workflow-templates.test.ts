@@ -110,14 +110,9 @@ describe('publish targets', () => {
 
     strictEqual(dockerHub!['variables']['IMAGE_NAMESPACE'], undefined);
     strictEqual(dockerHub!['variables']['IMAGE_REPOSITORY'], undefined);
-    strictEqual(dockerHub!['requiredLiterals']!['IMAGE_NAMESPACE']!['description'].length > 0, true);
-    strictEqual(dockerHub!['requiredLiterals']!['IMAGE_REPOSITORY']!['description'].length > 0, true);
-    strictEqual(dockerHub!['variables']['README_PATH']!['format'], 'literal');
-    strictEqual(dockerHub!['variables']['README_PATH']!['default'], 'README.md');
-    strictEqual(dockerHub!['variables']['README_PATH']!['description']!.length > 0, true);
-    strictEqual(dockerHub!['variables']['SYNC_DESCRIPTION']!['format'], 'literal');
-    strictEqual(dockerHub!['variables']['SYNC_DESCRIPTION']!['default'], 'true');
-    strictEqual(dockerHub!['variables']['SYNC_DESCRIPTION']!['description']!.length > 0, true);
+    strictEqual(dockerHub!['requiredLiterals'], undefined);
+    strictEqual(dockerHub!['variables']['README_PATH'], undefined);
+    strictEqual(dockerHub!['variables']['SYNC_DESCRIPTION'], undefined);
     strictEqual(ghcr!['variables']['IMAGE_REPOSITORY'], undefined);
     strictEqual(ghcr!['requiredLiterals']!['IMAGE_REPOSITORY']!['description'].length > 0, true);
 

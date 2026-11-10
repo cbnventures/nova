@@ -5,6 +5,7 @@ import type {
   Shared_GithubRunnerImages,
   Shared_GithubRunnerLabelInfo,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigSettings_VersionStrategy,
@@ -187,12 +188,6 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoo
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns = boolean;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator = boolean;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric = boolean;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator = boolean;
-
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Is Non Empty String Array.
  *
@@ -226,7 +221,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Envir
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = Shared_NovaConfig_Artifacts;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription = string;
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages = Shared_GithubRunnerImages | undefined;
 
@@ -255,10 +250,6 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workf
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = Set<string>;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = Map<string, string>;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes = number;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = string | undefined;
 
@@ -412,6 +403,20 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsCon
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = Record<string, unknown> | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageNamespace = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasLegacyImageRepository = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedReadmePath = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubHasRemovedSyncDescription = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredArtifact = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = boolean;
@@ -422,11 +427,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsEligibleWorkspace = boolean;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = unknown;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = unknown;
-
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = string;
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrImageRepository = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformList = unknown[];
 

@@ -19,6 +19,8 @@ import {
   libItemUrlFields,
 } from './item.js';
 import {
+  LIB_REGEX_PATTERN_DOCKER_HUB_CATEGORY_SLUG,
+  LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT,
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
   LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR,
   LIB_REGEX_PATTERN_GITHUB_OWNER,
@@ -212,6 +214,7 @@ import type {
   Lib_NovaConfig_Runner_Load_Returns,
   Lib_NovaConfig_Runner_Parse_Agents,
   Lib_NovaConfig_Runner_Parse_Artifacts,
+  Lib_NovaConfig_Runner_Parse_DockerHub,
   Lib_NovaConfig_Runner_Parse_Emails,
   Lib_NovaConfig_Runner_Parse_Entities,
   Lib_NovaConfig_Runner_Parse_Environment,
@@ -251,6 +254,28 @@ import type {
   Lib_NovaConfig_Runner_ParseArtifacts_TypedBuildEntry,
   Lib_NovaConfig_Runner_ParseArtifacts_Value,
   Lib_NovaConfig_Runner_ParseArtifacts_Workspaces,
+  Lib_NovaConfig_Runner_ParseDockerHub_Categories,
+  Lib_NovaConfig_Runner_ParseDockerHub_CategoriesValue,
+  Lib_NovaConfig_Runner_ParseDockerHub_Category,
+  Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidCategory,
+  Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidImmutableTagRule,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagRule,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTags,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsEnabled,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRules,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRulesValue,
+  Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsValue,
+  Lib_NovaConfig_Runner_ParseDockerHub_Namespace,
+  Lib_NovaConfig_Runner_ParseDockerHub_ParsedCategories,
+  Lib_NovaConfig_Runner_ParseDockerHub_Repository,
+  Lib_NovaConfig_Runner_ParseDockerHub_Result,
+  Lib_NovaConfig_Runner_ParseDockerHub_Returns,
+  Lib_NovaConfig_Runner_ParseDockerHub_SeenCategories,
+  Lib_NovaConfig_Runner_ParseDockerHub_TypedRawCategory,
+  Lib_NovaConfig_Runner_ParseDockerHub_TypedRawImmutableTagRule,
+  Lib_NovaConfig_Runner_ParseDockerHub_Value,
+  Lib_NovaConfig_Runner_ParseDockerHub_Visibility,
+  Lib_NovaConfig_Runner_ParseDockerHub_VisibilityCandidate,
   Lib_NovaConfig_Runner_ParseEmails_EmailFields,
   Lib_NovaConfig_Runner_ParseEmails_Emails,
   Lib_NovaConfig_Runner_ParseEmails_ParsedEmail,
@@ -380,6 +405,7 @@ import type {
   Lib_NovaConfig_Runner_ParseReadMe_Urls,
   Lib_NovaConfig_Runner_ParseReadMe_Value,
   Lib_NovaConfig_Runner_ParseReadMe_ValueBadges,
+  Lib_NovaConfig_Runner_ParseRecipes_DockerHub,
   Lib_NovaConfig_Runner_ParseRecipes_Github,
   Lib_NovaConfig_Runner_ParseRecipes_License,
   Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous,
@@ -737,6 +763,7 @@ export class Runner {
     const entities: Lib_NovaConfig_Runner_Parse_Entities = this.parseEntities(value['entities']);
     const emails: Lib_NovaConfig_Runner_Parse_Emails = this.parseEmails(value['emails']);
     const github: Lib_NovaConfig_Runner_Parse_Github = this.parseGithub(value['github']);
+    const dockerHub: Lib_NovaConfig_Runner_Parse_DockerHub = this.parseDockerHub(value['dockerHub']);
     const urls: Lib_NovaConfig_Runner_Parse_Urls = this.parseUrls(value['urls']);
     const readMe: Lib_NovaConfig_Runner_Parse_ReadMe = this.parseReadMe(value['readme'], github, urls);
     const workspaces: Lib_NovaConfig_Runner_Parse_Workspaces = this.parseWorkspaces(
@@ -750,6 +777,16 @@ export class Runner {
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
     const environment: Lib_NovaConfig_Runner_Parse_Environment = this.parseEnvironment(value['environment'], workspaces, workflows);
     const settings: Lib_NovaConfig_Runner_Parse_Settings = this.parseSettings(value['settings']);
+
+    if (
+      dockerHub !== undefined
+      && project !== undefined
+      && project['description'] !== undefined
+      && project['description']['short'] !== undefined
+      && project['description']['short'].length > 100
+    ) {
+      this.pushWarning('Runner.parse', 'dockerHub', 'Project short description exceeds Docker Hub\'s 100-character limit. The sync-identity recipe will not update the repository.');
+    }
 
     // Cross-check deploy-credential scope against the environment namespaces so a
     // scoped target without its required prefix fails at load instead of silently
@@ -770,6 +807,10 @@ export class Runner {
 
     if (github !== undefined) {
       result.github = github;
+    }
+
+    if (dockerHub !== undefined) {
+      result.dockerHub = dockerHub;
     }
 
     if (workflows !== undefined) {
@@ -2352,6 +2393,173 @@ export class Runner {
   }
 
   /**
+   * Lib - Nova Config - Parse Docker Hub.
+   *
+   * Validates the Docker Hub repository identity, optional presentation fields,
+   * and immutable-tag policy without contacting Docker Hub.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseDockerHub_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseDockerHub_Returns}
+   *
+   * @since 0.40.0
+   */
+  private parseDockerHub(value: Lib_NovaConfig_Runner_ParseDockerHub_Value): Lib_NovaConfig_Runner_ParseDockerHub_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub" field must be an object. Skipping ...');
+
+      return undefined;
+    }
+
+    const namespace: Lib_NovaConfig_Runner_ParseDockerHub_Namespace = this.getNonEmptyString(value['namespace']);
+    const repository: Lib_NovaConfig_Runner_ParseDockerHub_Repository = this.getNonEmptyString(value['repository']);
+
+    if (namespace === undefined || LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(namespace) === false) {
+      this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.namespace" field must be one lowercase Docker image-name component. Skipping ...');
+    }
+
+    if (repository === undefined || LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(repository) === false) {
+      this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.repository" field must be one lowercase Docker image-name component. Skipping ...');
+    }
+
+    if (namespace === undefined || repository === undefined) {
+      return undefined;
+    }
+
+    if (
+      LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(namespace) === false
+      || LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT.test(repository) === false
+    ) {
+      return undefined;
+    }
+
+    const visibilityCandidate: Lib_NovaConfig_Runner_ParseDockerHub_VisibilityCandidate = value['visibility'];
+    const visibility: Lib_NovaConfig_Runner_ParseDockerHub_Visibility = (
+      visibilityCandidate === 'public'
+      || visibilityCandidate === 'private'
+    ) ? visibilityCandidate : undefined;
+
+    if (visibilityCandidate !== undefined && visibility === undefined) {
+      this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.visibility" field must be "public" or "private". Skipping ...');
+    }
+
+    const categoriesValue: Lib_NovaConfig_Runner_ParseDockerHub_CategoriesValue = value['categories'];
+    let categories: Lib_NovaConfig_Runner_ParseDockerHub_Categories = undefined;
+
+    if (categoriesValue !== undefined) {
+      if (Array.isArray(categoriesValue) === false) {
+        this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.categories" field must be an array. Skipping ...');
+      } else if (categoriesValue.length > 3) {
+        this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.categories" field cannot contain more than 3 slugs. Skipping ...');
+      } else {
+        const parsedCategories: Lib_NovaConfig_Runner_ParseDockerHub_ParsedCategories = [];
+        const seenCategories: Lib_NovaConfig_Runner_ParseDockerHub_SeenCategories = new Set();
+        let hasInvalidCategory: Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidCategory = false;
+
+        for (const rawCategory of categoriesValue) {
+          const typedRawCategory: Lib_NovaConfig_Runner_ParseDockerHub_TypedRawCategory = rawCategory;
+          const category: Lib_NovaConfig_Runner_ParseDockerHub_Category = this.getNonEmptyString(typedRawCategory);
+
+          if (category === undefined || LIB_REGEX_PATTERN_DOCKER_HUB_CATEGORY_SLUG.test(category) === false) {
+            this.pushError('Runner.parseDockerHub', 'dockerHub', `Docker Hub category slug "${String(typedRawCategory)}" is invalid. Skipping ...`);
+
+            hasInvalidCategory = true;
+
+            continue;
+          }
+
+          if (seenCategories.has(category) === true) {
+            this.pushError('Runner.parseDockerHub', 'dockerHub', `Docker Hub category slug "${category}" is duplicated. Skipping ...`);
+
+            hasInvalidCategory = true;
+
+            continue;
+          }
+
+          seenCategories.add(category);
+
+          parsedCategories.push(category);
+        }
+
+        if (hasInvalidCategory === false) {
+          categories = parsedCategories;
+        }
+      }
+    }
+
+    const immutableTagsValue: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsValue = value['immutableTags'];
+    let immutableTags: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTags = undefined;
+
+    if (immutableTagsValue !== undefined) {
+      if (isPlainObject(immutableTagsValue) === false) {
+        this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.immutableTags" field must be an object. Skipping ...');
+      } else {
+        const immutableTagsEnabled: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsEnabled = immutableTagsValue['enabled'];
+        const immutableTagsRulesValue: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRulesValue = immutableTagsValue['rules'];
+        const immutableTagsRules: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagsRules = [];
+        let hasInvalidImmutableTagRule: Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidImmutableTagRule = false;
+
+        if (typeof immutableTagsEnabled !== 'boolean') {
+          this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.immutableTags.enabled" field must be a boolean. Skipping ...');
+        }
+
+        if (Array.isArray(immutableTagsRulesValue) === false) {
+          this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.immutableTags.rules" field must be an array of strings. Skipping ...');
+
+          hasInvalidImmutableTagRule = true;
+        } else {
+          for (const rawImmutableTagRule of immutableTagsRulesValue) {
+            const typedRawImmutableTagRule: Lib_NovaConfig_Runner_ParseDockerHub_TypedRawImmutableTagRule = rawImmutableTagRule;
+            const immutableTagRule: Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagRule = (typeof typedRawImmutableTagRule === 'string') ? typedRawImmutableTagRule : undefined;
+
+            if (immutableTagRule === undefined) {
+              this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.immutableTags.rules" field must contain only strings. Skipping ...');
+
+              hasInvalidImmutableTagRule = true;
+
+              continue;
+            }
+
+            immutableTagsRules.push(immutableTagRule);
+          }
+        }
+
+        if (typeof immutableTagsEnabled === 'boolean' && hasInvalidImmutableTagRule === false) {
+          immutableTags = {
+            enabled: immutableTagsEnabled,
+            rules: immutableTagsRules,
+          };
+        }
+      }
+    }
+
+    const result: Lib_NovaConfig_Runner_ParseDockerHub_Result = {
+      namespace,
+      repository,
+    };
+
+    if (visibility !== undefined) {
+      result.visibility = visibility;
+    }
+
+    if (categories !== undefined) {
+      result.categories = categories;
+    }
+
+    if (immutableTags !== undefined) {
+      result.immutableTags = immutableTags;
+    }
+
+    return result;
+  }
+
+  /**
    * Lib - Nova Config - Parse GitHub.
    *
    * Parses owner, repo, topics, features, policies, security, rulesets, actions,
@@ -2441,7 +2649,7 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Recipes.
    *
-   * Parses the unified recipes block into its six categories, validating each entry
+   * Parses the unified recipes block into its registered categories, validating each entry
    * against the canonical recipe names. Returns undefined when the block is absent or empty.
    *
    * @param {Lib_NovaConfig_Runner_ParseRecipes_Value} value - Value.
@@ -2458,6 +2666,12 @@ export class Runner {
     }
 
     const result: Lib_NovaConfig_Runner_ParseRecipes_Result = {};
+
+    const dockerHub: Lib_NovaConfig_Runner_ParseRecipes_DockerHub = this.getRecipeEntries(value['docker-hub'], libItemRecipesByCategory['docker-hub']);
+
+    if (dockerHub !== undefined) {
+      Reflect.set(result, 'docker-hub', dockerHub);
+    }
 
     const github: Lib_NovaConfig_Runner_ParseRecipes_Github = this.getRecipeEntries(value['github'], libItemRecipesByCategory['github']);
 

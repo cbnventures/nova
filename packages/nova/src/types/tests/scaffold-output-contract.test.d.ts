@@ -1,4 +1,7 @@
 import type { SpawnSyncReturns } from 'node:child_process';
+import type { Stats } from 'node:fs';
+
+import type { Linter } from '@typescript-eslint/utils/ts-eslint';
 
 import type { Shared_ScaffoldOutputContract } from '../shared.d.ts';
 
@@ -57,6 +60,31 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTransl
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath = string;
 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = string;
+
+/**
+ * Tests - Scaffold Output Contract - Scaffold Output Contract - Lints The PfSense Staging Script Against The Shared Node Engine Range.
+ *
+ * @since 0.40.0
+ */
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_GeneratedWorkspaceDirectory = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonRaw = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJson = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageEngines = unknown;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_NodeEngine = unknown;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptContent = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter = Linter;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Messages = Linter.LintMessage[];
 
 /**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Marks pfSense Release Packages For Any FreeBSD Version And Keeps Them Vital.
@@ -149,6 +177,35 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSense
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsPath = string;
 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsContent = string;
+
+/**
+ * Tests - Scaffold Output Contract - Scaffold Output Contract - Stages PfSense Port Permissions And Empty Directories And Rejects Symlinks.
+ *
+ * @since 0.40.0
+ */
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_GeneratedWorkspaceDirectory = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutablePath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutablePath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceEmptyDirectoryPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_ExecutableMode = number;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagingResult = SpawnSyncReturns<string>;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutableStats = Stats;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutableStats = Stats;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryEntries = string[];
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkResult = SpawnSyncReturns<string>;
 
 /**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Validates pfSense Release Signing Key Files With Line Numbered Diagnostics.

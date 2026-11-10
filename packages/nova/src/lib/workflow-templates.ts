@@ -247,38 +247,14 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'DOCKERHUB_TOKEN': {
             format: 'secret',
             default: 'DOCKERHUB_TOKEN',
-            description: 'Docker Hub password or access token with Read, Write, Delete scope for image publishing and description syncing',
+            description: 'Docker Hub password or access token with Read, Write, Delete scope for image publishing',
             scope: 'account',
           },
           'DOCKERHUB_USERNAME': {
             format: 'var',
             default: 'DOCKERHUB_USERNAME',
-            description: 'Docker Hub username used to authenticate image publishing and description syncing',
+            description: 'Docker Hub username used to authenticate image publishing',
             scope: 'account',
-          },
-          'README_PATH': {
-            format: 'literal',
-            default: 'README.md',
-            description: 'Path to the Docker Hub overview Markdown file relative to the published workspace',
-            example: 'README.md',
-            optional: true,
-          },
-          'SYNC_DESCRIPTION': {
-            format: 'literal',
-            default: 'true',
-            description: 'Whether to sync the Docker Hub overview and short description after publishing',
-            example: 'true',
-            optional: true,
-          },
-        },
-        requiredLiterals: {
-          'IMAGE_NAMESPACE': {
-            description: 'Docker Hub namespace that owns the published image',
-            example: 'cbnventures',
-          },
-          'IMAGE_REPOSITORY': {
-            description: 'Docker Hub repository name for the published image',
-            example: 'nova',
           },
         },
         permissions: {
@@ -286,10 +262,6 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'attestations': 'write',
           'id-token': 'write',
         },
-        uniquenessKey: [
-          'IMAGE_NAMESPACE',
-          'IMAGE_REPOSITORY',
-        ],
       },
       'ghcr': {
         description: 'Publish Docker image to GitHub Container Registry',

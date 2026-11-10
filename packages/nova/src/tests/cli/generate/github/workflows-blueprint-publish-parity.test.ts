@@ -53,12 +53,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_OmitsDockerHubDescriptionSync_DisabledEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_OmitsDockerHubDescriptionSync_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_DisabledEntry,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_DerivesCredNamesThatMatchTheProvisionManagedSet_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_DerivesCredNamesThatMatchTheProvisionManagedSet_Ir,
@@ -740,11 +740,6 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
       {
         to: 'docker-hub',
         path: './',
-        with: {
-          IMAGE_NAMESPACE: 'cbnventures',
-          IMAGE_REPOSITORY: 'sandbox',
-          README_PATH: 'docs/container.md',
-        },
       },
       {
         to: 'ghcr',
@@ -765,7 +760,10 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
   };
 
   it('reproduces the synthetic containers workflow byte-for-byte', async () => {
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, {}, [], 'npm', {}, 'A short Docker Hub description.');
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, {}, [], 'npm', {}, {
+      namespace: 'cbnventures',
+      repository: 'sandbox',
+    });
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-docker-hub-ghcr.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -784,12 +782,9 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
       '$',
       '{{ github.sha }}',
     ].join('')), true);
-    strictEqual(generated.includes('uses: "peter-evans/dockerhub-description@v5"'), true);
-    strictEqual(generated.includes('continue-on-error: true'), true);
-    strictEqual(generated.includes('repository: "cbnventures/sandbox"'), true);
-    strictEqual(generated.includes('short-description: "A short Docker Hub description."'), true);
-    strictEqual(generated.includes('readme-filepath: "docs/container.md"'), true);
-    strictEqual(generated.includes('enable-url-completion: true'), true);
+    strictEqual(generated.includes('peter-evans/dockerhub-description'), false);
+    strictEqual(generated.includes('IMAGE_NAMESPACE: "cbnventures"'), true);
+    strictEqual(generated.includes('IMAGE_REPOSITORY: "sandbox"'), true);
     strictEqual(generated.split('include-hidden-files: true').length - 1, 4, 'every build and OCI artifact upload preserves hidden files');
     strictEqual(generated.split('if-no-files-found: "error"').length - 1, 4, 'every artifact upload rejects an empty handoff');
     strictEqual(generated.split('name: "Validate build artifacts"').length - 1, 1, 'the build handoffs share one preflight');
@@ -833,8 +828,8 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     return;
   });
 
-  it('skips Docker Hub description sync when disabled', () => {
-    const disabledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_DisabledEntry = {
+  it('omits Docker Hub description sync', () => {
+    const disabledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_OmitsDockerHubDescriptionSync_DisabledEntry = {
       template: 'publish',
       runsOn: 'ubuntu-24.04',
       name: 'containers-disabled',
@@ -842,14 +837,12 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
       deploy: [{
         to: 'docker-hub',
         path: './',
-        with: {
-          IMAGE_NAMESPACE: 'cbnventures',
-          IMAGE_REPOSITORY: 'sandbox',
-          SYNC_DESCRIPTION: 'false',
-        },
       }],
     };
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_Generated = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(disabledEntry, workspaces, {}, [], 'npm', {}, 'A short Docker Hub description.'));
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_OmitsDockerHubDescriptionSync_Generated = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(disabledEntry, workspaces, {}, [], 'npm', {}, {
+      namespace: 'cbnventures',
+      repository: 'sandbox',
+    }));
 
     strictEqual(generated.includes('peter-evans/dockerhub-description'), false);
     strictEqual(generated.includes('Checkout Docker Hub description source'), false);

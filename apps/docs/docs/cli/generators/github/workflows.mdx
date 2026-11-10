@@ -298,27 +298,30 @@ Configure the Docker Hub and GHCR destinations in the same publish workflow when
 
 ```json
 {
-  "template": "publish",
-  "name": "container",
-  "triggers": ["release"],
-  "runsOn": "ubuntu-24.04",
-  "containerPlatforms": ["linux/amd64", "linux/arm64"],
-  "deploy": [
+  "dockerHub": {
+    "namespace": "example",
+    "repository": "example-project"
+  },
+  "workflows": [
     {
-      "to": "docker-hub",
-      "path": "./",
-      "with": {
-        "IMAGE_NAMESPACE": "example",
-        "IMAGE_REPOSITORY": "example-project",
-        "README_PATH": "docs/docker-hub.md"
-      }
-    },
-    {
-      "to": "ghcr",
-      "path": "./",
-      "with": {
-        "IMAGE_REPOSITORY": "example-project"
-      }
+      "template": "publish",
+      "name": "container",
+      "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
+      "containerPlatforms": ["linux/amd64", "linux/arm64"],
+      "deploy": [
+        {
+          "to": "docker-hub",
+          "path": "./"
+        },
+        {
+          "to": "ghcr",
+          "path": "./",
+          "with": {
+            "IMAGE_REPOSITORY": "example-project"
+          }
+        }
+      ]
     }
   ]
 }
@@ -328,31 +331,11 @@ The workflow builds one multi-platform OCI artifact from the root `Dockerfile` c
 
 Each platform builds in its own job on the CPU type that matches the workflow's pinned `runsOn` label. For example, `ubuntu-24.04` produces an `ubuntu-24.04` x64 job for `linux/amd64` and an `ubuntu-24.04-arm` arm64 job for `linux/arm64`. Nova verifies both derived labels and architectures against GitHub's runner-images list before generation. Each job reuses a GitHub Actions Buildx cache scoped to its platform, so a release that leaves a Dockerfile stage unchanged skips rebuilding it. A merge job then combines the per-platform images into one multi-platform index. Registry jobs start only after the merge succeeds, so a failed platform build publishes no tags.
 
-Registry jobs do not compile workspaces or rebuild the image. When Docker Hub description syncing is enabled, its job checks out the source only after the image is pushed, verified, and attested so the overview file is available.
+Registry jobs do not compile workspaces, rebuild the image, or check out source after publishing. A release publishes and verifies the image without changing the Docker Hub repository description or overview.
 
-Docker Hub requires literal `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` values. `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` authenticate publishing and description syncing; they do not decide the image name.
+The Docker Hub target reads its image namespace and repository from the top-level `dockerHub` section. The section is required, and a target-level `with.IMAGE_NAMESPACE` or `with.IMAGE_REPOSITORY` is rejected with guidance to move those values into `dockerHub`. `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` authenticate publishing; they do not decide the image name.
 
-After a successful publish, Nova syncs the repository overview from `README_PATH` and its short description from `project.description.short`. `README_PATH` defaults to `README.md` at the published repository workspace, and relative links and images are completed as GitHub URLs.
-
-The Docker Hub description action accepts a Docker Hub password or a personal access token with **Read, Write, Delete** scope. Registry login and image pushing need only Read and Write, but the enabled-by-default description sync requires the additional Delete scope; for an organization namespace, the Docker Hub user must also have Admin permission on that repository.
-
-Docker Hub limits the short description to 100 UTF-8 bytes and the overview to 25,000 bytes. Nova warns during generation when `project.description.short` exceeds 100 bytes, while the action truncates an oversized overview with a warning.
-
-Set `"SYNC_DESCRIPTION": "false"` in the Docker Hub target's `with` object to disable both the source checkout and description sync:
-
-```json
-{
-  "to": "docker-hub",
-  "path": "./",
-  "with": {
-    "IMAGE_NAMESPACE": "example",
-    "IMAGE_REPOSITORY": "example-project",
-    "SYNC_DESCRIPTION": "false"
-  }
-}
-```
-
-Set repository categories and the repository icon by hand on Docker Hub. Categories require an organization access token with Repository Edit scope when managed through Docker Hub's API, while icons cannot be set through any API.
+Use [`nova recipe docker-hub sync-identity`](/docs/cli/recipes/docker-hub/sync-identity) to synchronize `project.description.short`, the repository-root `README.md`, and up to three repository categories. The recipe enforces Docker Hub's 100-character description and 25,000-character overview limits before sending changes. Use [`sync-policies`](/docs/cli/recipes/docker-hub/sync-policies) for visibility and immutable-tag settings. Repository icons remain manual because Docker Hub does not expose an API for them.
 
 GHCR derives its namespace from `github.repository_owner` and requires only the literal `IMAGE_REPOSITORY`. Both container targets use `path: "./"` because the image belongs to the repository rather than an individual workspace.
 
@@ -380,6 +363,10 @@ Use `pfsense` for a workspace created by `nova scaffold package pfsense`:
 ```
 
 Nova validates that the path belongs to a `package` workspace whose name starts with `pfsense-pkg-`. The generated job validates and stages the port, builds the no-architecture package with `vmactions/freebsd-vm`, uploads the `.pkg` and checksum as a workflow artifact, and attaches the files to the GitHub release. The manual workflow input accepts the tag of an existing release. Set the optional `PFSENSE_FREEBSD_VERSION` repository variable to the required FreeBSD major; it defaults to `15` for pfSense CE 2.8 and current pfSense Plus releases.
+
+When the workspace contains `scripts/check-freebsd.sh`, the package builder runs it with FreeBSD's `/bin/sh` from the workspace directory inside the VM before `make package`. The hook is silent when absent, while a failure stops package construction.
+
+The hook is intended for checks that require FreeBSD's own shell or userland. `npm run check` on other hosts should skip those checks with a clear message instead of running them with incompatible host tools.
 
 #### Signing pfSense Releases
 
@@ -429,18 +416,18 @@ The remaining values are `var`-format, not `literal` - they resolve to `${{ vars
 
 The `publish` template supports the following `to` values for each entry in `deploy`. Each type declares its own secrets and variables.
 
-| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                                                     |
-|----------------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                         |
-| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)).                       |
-| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                    |
-| `docker-hub`         | Publish the repository image to Docker Hub                | `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` name the image. `README_PATH` defaults to `README.md`; `SYNC_DESCRIPTION` defaults to `"true"`. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate publishing and description syncing. |
-| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                                               |
-| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                                 |
-| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                                                  |
-| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                    |
-| `pfsense`            | Build a pfSense package and attach it to a GitHub release | `PFSENSE_FREEBSD_VERSION` (optional repository variable) selects the FreeBSD major and defaults to `15`. `RELEASE_SIGNING_KEY` (`secret`, optional) signs release packages. The target requires a scaffolded `pfsense-pkg-` package workspace.          |
-| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                             |
+| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                                            |
+|----------------------|-----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                |
+| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)).              |
+| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
+| `docker-hub`         | Publish the repository image to Docker Hub                | Top-level `dockerHub.namespace` and `dockerHub.repository` name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate publishing.                                                                              |
+| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                                      |
+| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                        |
+| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                                         |
+| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
+| `pfsense`            | Build a pfSense package and attach it to a GitHub release | `PFSENSE_FREEBSD_VERSION` (optional repository variable) selects the FreeBSD major and defaults to `15`. `RELEASE_SIGNING_KEY` (`secret`, optional) signs release packages. The target requires a scaffolded `pfsense-pkg-` package workspace. |
+| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                    |
 
 ### Available Triggers
 

@@ -5,15 +5,21 @@ import {
 } from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import {
+  chmod,
+  mkdir,
   mkdtemp,
+  readdir,
   readFile,
   rm,
+  stat,
+  symlink,
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { Linter } from '@typescript-eslint/utils/ts-eslint';
 import { globSync } from 'glob';
 import {
   afterAll,
@@ -67,12 +73,23 @@ import {
   createMonorepoRoot,
   writeTemplateFiles,
 } from '../lib/scaffold.js';
+import { runtimeNode } from '../presets/eslint/index.js';
 
 import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_GeneratedWorkspaceDirectory,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Messages,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_NodeEngine,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageEngines,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJson,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonRaw,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackageContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackagePath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract,
@@ -110,6 +127,18 @@ import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_SandboxRoot,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_ExecutableMode,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_GeneratedWorkspaceDirectory,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceEmptyDirectoryPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutablePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutableStats,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryEntries,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutablePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutableStats,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagingResult,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkResult,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryPrefix,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_CommentOnlyContent,
@@ -1548,6 +1577,94 @@ describe('scaffold output contract', async () => {
     return;
   });
 
+  it('lints the pfSense staging script against the shared Node engine range', async () => {
+    const generatedWorkspaceDirectory: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_GeneratedWorkspaceDirectory = join(sandboxRoot, 'pfsense');
+    const packageJsonPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonPath = join(generatedWorkspaceDirectory, 'package.json');
+    const packageJsonRaw: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJsonRaw = await readFile(packageJsonPath, 'utf-8');
+    const packageJson: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageJson = JSON.parse(packageJsonRaw);
+    const packageEngines: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_PackageEngines = packageJson['engines'];
+
+    if (typeof packageEngines !== 'object' || packageEngines === null) {
+      throw new TypeError('Generated pfSense package.json must contain an engines object.');
+    }
+
+    const nodeEngine: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_NodeEngine = Reflect.get(packageEngines, 'node');
+
+    if (typeof nodeEngine !== 'string') {
+      throw new TypeError('Generated pfSense package.json must contain engines.node.');
+    }
+
+    strictEqual(nodeEngine, '^22 || ^24 || ^26');
+
+    const stageScriptPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptPath = join(generatedWorkspaceDirectory, 'scripts', 'stage-package.mjs');
+    const stageScriptContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptContent = await readFile(stageScriptPath, 'utf-8');
+    const linter: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter = new Linter({
+      configType: 'flat',
+      cwd: generatedWorkspaceDirectory,
+    });
+    const messages: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Messages = linter.verify(stageScriptContent, [
+      ...runtimeNode,
+      {
+        files: ['**/*.mjs'],
+        rules: {
+          'n/no-unsupported-features/node-builtins': [
+            'error',
+            {
+              version: nodeEngine,
+            },
+          ],
+        },
+      },
+    ], {
+      filename: stageScriptPath,
+    });
+
+    strictEqual(messages.length, 0, JSON.stringify(messages));
+
+    return;
+  });
+
+  it('stages pfSense port permissions and empty directories and rejects symlinks', async () => {
+    const generatedWorkspaceDirectory: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_GeneratedWorkspaceDirectory = join(sandboxRoot, 'pfsense');
+    const sourceExecutablePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutablePath = join(generatedWorkspaceDirectory, 'port', 'files', 'usr', 'local', 'sbin', 'my-package');
+    const stagedExecutablePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutablePath = join(generatedWorkspaceDirectory, 'build', 'port', 'files', 'usr', 'local', 'sbin', 'my-package');
+    const sourceEmptyDirectoryPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceEmptyDirectoryPath = join(generatedWorkspaceDirectory, 'port', 'files', 'empty-directory');
+    const stagedEmptyDirectoryPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryPath = join(generatedWorkspaceDirectory, 'build', 'port', 'files', 'empty-directory');
+    const symlinkPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkPath = join(generatedWorkspaceDirectory, 'port', 'linked-script');
+    const executableMode: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_ExecutableMode = Number.parseInt('755', 8);
+
+    await chmod(sourceExecutablePath, executableMode);
+    await mkdir(sourceEmptyDirectoryPath, { recursive: true });
+
+    const stagingResult: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagingResult = spawnSync(process.execPath, ['scripts/stage-package.mjs'], {
+      cwd: generatedWorkspaceDirectory,
+      encoding: 'utf-8',
+    });
+
+    strictEqual(stagingResult.status, 0, stagingResult.stderr);
+
+    const sourceExecutableStats: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SourceExecutableStats = await stat(sourceExecutablePath);
+    const stagedExecutableStats: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedExecutableStats = await stat(stagedExecutablePath);
+    const stagedEmptyDirectoryEntries: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_StagedEmptyDirectoryEntries = await readdir(stagedEmptyDirectoryPath);
+
+    strictEqual(stagedExecutableStats.mode, sourceExecutableStats.mode);
+    strictEqual(stagedEmptyDirectoryEntries.length, 0);
+
+    await symlink(sourceExecutablePath, symlinkPath);
+
+    const symlinkResult: Tests_ScaffoldOutputContract_ScaffoldOutputContract_StagesPfSensePortPermissionsAndEmptyDirectoriesAndRejectsSymlinks_SymlinkResult = spawnSync(process.execPath, ['scripts/stage-package.mjs'], {
+      cwd: generatedWorkspaceDirectory,
+      encoding: 'utf-8',
+    });
+
+    await rm(symlinkPath);
+
+    strictEqual(symlinkResult.status, 1);
+    strictEqual(symlinkResult.stderr.includes('only regular files and directories are supported'), true, symlinkResult.stderr);
+
+    return;
+  });
+
   it('keeps every translation-ready scaffold on its native localization contract', async () => {
     for (const translationReadyContract of translationReadyContracts) {
       const translationReadyPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath = join(packageDirectory, translationReadyContract['path']);
@@ -1595,6 +1712,29 @@ describe('scaffold output contract', async () => {
     strictEqual(buildPackageContent.includes(`pkg query -F "${'$'}{artifact}" '%V'`), true);
     strictEqual(buildPackageContent.includes(`if [ "${'$'}{artifact_abi}" != 'FreeBSD:*' ]; then`), true);
     strictEqual(buildPackageContent.includes(`if [ "${'$'}{artifact_vital}" != '1' ]; then`), true);
+    strictEqual(buildPackageContent.includes([
+      `  if [ -f "${'$'}{SCRIPT_DIR}/check-freebsd.sh" ]; then`,
+      `    if ! (cd "${'$'}{WORKSPACE_DIR}" && /bin/sh "${'$'}{SCRIPT_DIR}/check-freebsd.sh"); then`,
+      '      echo \'FreeBSD checks failed; the package was not built.\' >&2',
+      '      exit 1',
+      '    fi',
+      '  fi',
+    ].join('\n')), true);
+    strictEqual(buildPackageContent.includes(`  if [ ! -f "${'$'}{STAGED_PORT_DIR}/Makefile" ]; then`), true);
+    strictEqual(buildPackageContent.includes(`  cp -R -- "${'$'}{STAGED_PORT_DIR}" "${'$'}{PORT_DESTINATION}"`), true);
+    strictEqual(buildPackageContent.includes(`  make -C "${'$'}{PORT_DESTINATION}" package BATCH=yes DISABLE_VULNERABILITIES=yes`), true);
+    ok(
+      buildPackageContent.indexOf(`  if [ ! -f "${'$'}{STAGED_PORT_DIR}/Makefile" ]; then`) < buildPackageContent.indexOf(`  if [ -f "${'$'}{SCRIPT_DIR}/check-freebsd.sh" ]; then`),
+      'Expected the optional FreeBSD hook to run after staged-port validation.',
+    );
+    ok(
+      buildPackageContent.indexOf(`  if [ -f "${'$'}{SCRIPT_DIR}/check-freebsd.sh" ]; then`) < buildPackageContent.indexOf(`  cp -R -- "${'$'}{STAGED_PORT_DIR}" "${'$'}{PORT_DESTINATION}"`),
+      'Expected the optional FreeBSD hook to run before the port is copied.',
+    );
+    ok(
+      buildPackageContent.indexOf(`  if [ -f "${'$'}{SCRIPT_DIR}/check-freebsd.sh" ]; then`) < buildPackageContent.indexOf(`  make -C "${'$'}{PORT_DESTINATION}" package BATCH=yes DISABLE_VULNERABILITIES=yes`),
+      'Expected the optional FreeBSD hook to run before make package.',
+    );
 
     return;
   });

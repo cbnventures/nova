@@ -2,6 +2,7 @@ import type {
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintValidationResult,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigWorkspace,
@@ -288,15 +289,30 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 };
 
 /**
- * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Docker Hub Description Length Uses UTF-8 Bytes.
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Docker Hub Config Is Required.
  *
- * @since 0.39.0
+ * @since 0.40.0
  */
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_RawWorkflows = unknown[];
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_RawWorkflows = unknown[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_OverLimitResult = Shared_BlueprintValidationResult;
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_OverLimitResult = Shared_BlueprintValidationResult;
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_WithinLimitResult = Shared_BlueprintValidationResult;
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_WithinLimitResult = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Docker Hub Rejects Removed Target Settings.
+ *
+ * @since 0.40.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_DockerHub = Shared_NovaConfig_DockerHub;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateResult = Shared_BlueprintValidationResult;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewResult = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.

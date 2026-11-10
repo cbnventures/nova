@@ -101,6 +101,10 @@ export const libItemAllowedRecipes: Lib_Item_AllowedRecipes = [
  * @since 0.21.0
  */
 export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
+  'docker-hub': [
+    'sync-identity',
+    'sync-policies',
+  ],
   'github': [
     'sync-actions',
     'sync-features',
@@ -917,6 +921,7 @@ export const libItemPrettyNamesColumnTitle: Lib_Item_PrettyNamesColumnTitle = {
  * @since 0.15.0
  */
 export const libItemPrettyNamesKeyword: Lib_Item_PrettyNamesKeyword = {
+  'docker-hub': 'Docker Hub',
   'eslint': 'ESLint',
   'esnext': 'ESNext',
   'express': 'Express.js',

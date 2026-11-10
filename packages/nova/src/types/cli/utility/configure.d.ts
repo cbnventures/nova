@@ -26,6 +26,8 @@ import type {
   Shared_BlueprintConfigWorkflow_Triggers,
   Shared_BlueprintConfigWorkflow_With,
   Shared_DialogAction,
+  Shared_DockerHubCategories,
+  Shared_DockerHubCategory_Slug,
   Shared_EntityMenuAction,
   Shared_GithubRunnerImages,
   Shared_GithubRunnerSelectableLabels,
@@ -33,6 +35,7 @@ import type {
   Shared_NormalizedResult_Sanitized,
   Shared_NovaConfig,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Github,
@@ -69,6 +72,7 @@ import type {
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_DockerHub,
   Shared_NovaConfig_Recipes_Github,
   Shared_NovaConfig_Recipes_Miscellaneous,
   Shared_NovaConfig_Recipes_PackageJson,
@@ -78,6 +82,7 @@ import type {
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigAgent,
   Shared_NovaConfigCategory,
+  Shared_NovaConfigDockerHubVisibility,
   Shared_NovaConfigEntity,
   Shared_NovaConfigEntity_Roles,
   Shared_NovaConfigEntityRole,
@@ -579,6 +584,100 @@ export type Cli_Utility_Configure_Runner_PromptArtifacts_Output = Shared_PromptW
 export type Cli_Utility_Configure_Runner_PromptArtifacts_OutputResult = Record<Cli_Utility_Configure_Runner_PromptArtifacts_OutputKey, Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue>;
 
 export type Cli_Utility_Configure_Runner_PromptArtifacts_Parsed = Shared_NovaConfig_Artifacts | undefined;
+
+/**
+ * CLI - Utility - Configure - Prompt Docker Hub.
+ *
+ * @since 0.40.0
+ */
+export type Cli_Utility_Configure_Runner_PromptDockerHub_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_LiveCategories = Shared_DockerHubCategories | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_Existing = Shared_NovaConfig_DockerHub | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ExistingRecipes = Shared_NovaConfig_Recipes_DockerHub | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Value = Shared_DockerHubCategory_Slug;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Selected = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice = {
+  title: Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Title;
+  value: Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Value;
+  selected: Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice_Selected;
+};
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoices = Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoice[];
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityOrder = Shared_NovaConfigDockerHubVisibility[];
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityInitial = number;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableInitial = number;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue = unknown;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent = (dockerHubComponentValue: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue) => Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey =
+  'dockerHubNamespace'
+  | 'dockerHubRepository'
+  | 'dockerHubVisibility'
+  | 'dockerHubCategories'
+  | 'dockerHubImmutableTags';
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue = string | string[] | boolean;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputResult = Record<Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_NamespaceInput = string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RepositoryInput = string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_DockerHub = Shared_NovaConfig_DockerHub;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue = Shared_NovaConfigDockerHubVisibility | 'skip';
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_CategorySlugs = string[];
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue = boolean | 'skip';
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableRules = string[];
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputKey = 'dockerHubImmutableTagsRules';
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputResult = Record<Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RulesOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_SyncIdentityInitial = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_SyncPoliciesInitial = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputKey = 'dockerHubRecipeSyncIdentity' | 'dockerHubRecipeSyncPolicies';
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputValue = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputResult = Record<Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_RecipesOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubRecipesInput = Shared_NovaConfig_Recipes_DockerHub;
+
+export type Cli_Utility_Configure_Runner_PromptDockerHub_Recipes = Shared_NovaConfig_Recipes;
 
 /**
  * CLI - Utility - Configure - Prompt Emails.
@@ -2161,6 +2260,14 @@ export type Cli_Utility_Configure_Runner_PromptProject_ProjectName = Partial<Sha
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectDescription = Partial<Shared_NovaConfig_Project_Description>;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectKeywords = Shared_NovaConfig_Project_Keywords;
+
+export type Cli_Utility_Configure_Runner_PromptProject_HasDockerHub = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit = number;
+
+export type Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionCount = number;
+
+export type Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage = string;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleValue = unknown;
 

@@ -7,6 +7,8 @@ import type {
   Cli_Utility_Configure_Runner_CheckPath_Returns,
   Cli_Utility_Configure_Runner_PromptAgents_Config,
   Cli_Utility_Configure_Runner_PromptAgents_Returns,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Config,
+  Cli_Utility_Configure_Runner_PromptDockerHub_Returns,
   Cli_Utility_Configure_Runner_PromptEnvironment_Config,
   Cli_Utility_Configure_Runner_PromptEnvironment_Returns,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Config,
@@ -28,6 +30,8 @@ import type {
   Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns,
+  Cli_Utility_Configure_Runner_PromptProject_Config,
+  Cli_Utility_Configure_Runner_PromptProject_Returns,
   Cli_Utility_Configure_Runner_PromptRecipes_Config,
   Cli_Utility_Configure_Runner_PromptRecipes_Returns,
   Cli_Utility_Configure_Runner_PromptSettings_Config,
@@ -80,6 +84,7 @@ export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Value<Value, Key ext
 export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
   'promptAgents'
   | 'promptArtifacts'
+  | 'promptDockerHub'
   | 'promptEmails'
   | 'promptEntities'
   | 'promptEnvironment'
@@ -210,6 +215,17 @@ export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhen
 export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents = (config: Cli_Utility_Configure_Runner_PromptAgents_Config) => Cli_Utility_Configure_Runner_PromptAgents_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result = Awaited<Cli_Utility_Configure_Runner_PromptAgents_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Docker Hub - Configures Repository Settings And Recipes.
+ *
+ * @since 0.40.0
+ */
+export type Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_PromptDockerHub = (config: Cli_Utility_Configure_Runner_PromptDockerHub_Config) => Cli_Utility_Configure_Runner_PromptDockerHub_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Result = Awaited<Cli_Utility_Configure_Runner_PromptDockerHub_Returns>;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Environment Section - Adds A Global Secret Value.
@@ -433,6 +449,25 @@ export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatterns
 export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles = (config: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config) => Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result = Awaited<Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Project - Enforces The Docker Hub Short Description Limit.
+ *
+ * @since 0.40.0
+ */
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_PromptProject = (config: Cli_Utility_Configure_Runner_PromptProject_Config) => Cli_Utility_Configure_Runner_PromptProject_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Result = Awaited<Cli_Utility_Configure_Runner_PromptProject_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ShortQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate = (value: unknown) => unknown | Promise<unknown>;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult = unknown;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Closed Operating System Cleanup Settings.

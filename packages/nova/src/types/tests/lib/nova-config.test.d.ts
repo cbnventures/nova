@@ -1113,7 +1113,7 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesys
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'dockerHub' | 'workflows'>;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_LoadedProject = Shared_NovaConfig_Project | undefined;
 

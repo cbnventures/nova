@@ -845,6 +845,19 @@ describe('Shared_NovaConfig load', async () => {
           slug: 'loaded-project',
           title: 'Loaded Project',
         },
+        description: {
+          short: 'x'.repeat(101),
+        },
+      },
+      dockerHub: {
+        namespace: 'example',
+        repository: 'loaded-project',
+        visibility: 'public',
+        categories: ['developer-tools'],
+        immutableTags: {
+          enabled: false,
+          rules: [],
+        },
       },
     };
 
@@ -872,6 +885,17 @@ describe('Shared_NovaConfig load', async () => {
 
     strictEqual(loadedProjectName['slug'], 'loaded-project');
     strictEqual(loadedProjectName['title'], 'Loaded Project');
+    deepStrictEqual(loaded['dockerHub'], {
+      namespace: 'example',
+      repository: 'loaded-project',
+      visibility: 'public',
+      categories: ['developer-tools'],
+      immutableTags: {
+        enabled: false,
+        rules: [],
+      },
+    });
+    ok(config.diagnostics().some((diagnostic) => diagnostic['message'].includes('Project short description exceeds Docker Hub\'s 100-character limit.')));
 
     return;
   });
@@ -1174,6 +1198,14 @@ describe('Shared_NovaConfig load', async () => {
     const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigPath = join(projectDirectory, 'nova.config.json');
     const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigContents = JSON.stringify({
       recipes: {
+        'docker-hub': {
+          'sync-identity': {
+            enabled: true,
+          },
+          'sync-policies': {
+            enabled: false,
+          },
+        },
         'github': {
           'sync-actions': {
             enabled: true,
@@ -1261,6 +1293,14 @@ describe('Shared_NovaConfig load', async () => {
       fail('Expected recipes to be defined');
     }
 
+    deepStrictEqual(recipes['docker-hub'], {
+      'sync-identity': {
+        enabled: true,
+      },
+      'sync-policies': {
+        enabled: false,
+      },
+    });
     deepStrictEqual(recipes['github'], {
       'sync-actions': {
         enabled: true,

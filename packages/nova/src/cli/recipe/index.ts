@@ -1,3 +1,5 @@
+import { Runner as CliRecipeDockerHubSyncIdentity } from './docker-hub/sync-identity.js';
+import { Runner as CliRecipeDockerHubSyncPolicies } from './docker-hub/sync-policies.js';
 import { Runner as CliRecipeGithubSyncActions } from './github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './github/sync-identity.js';
@@ -35,6 +37,16 @@ import type { Cli_Recipe_Registry } from '../../types/cli/recipe/index.d.ts';
  * @since 0.14.0
  */
 export const registry: Cli_Recipe_Registry = {
+  'docker-hub': [
+    {
+      name: 'sync-identity',
+      run: CliRecipeDockerHubSyncIdentity['run'],
+    },
+    {
+      name: 'sync-policies',
+      run: CliRecipeDockerHubSyncPolicies['run'],
+    },
+  ],
   'github': [
     {
       name: 'sync-actions',

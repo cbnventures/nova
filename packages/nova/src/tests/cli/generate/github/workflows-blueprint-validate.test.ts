@@ -49,9 +49,14 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_Workspaces,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_OverLimitResult,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_RawWorkflows,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_WithinLimitResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_OverLimitResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_WithinLimitResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_DockerHub,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_Workspaces,
@@ -398,7 +403,7 @@ describe('Validator.validate', () => {
       name: 'project',
       triggers: ['schedule-weekly'],
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAnUnknownRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, '', [{
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAnUnknownRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, undefined, [{
       name: 'Ubuntu 24.04',
       architecture: 'x64',
       labels: ['ubuntu-24.04'],
@@ -418,7 +423,7 @@ describe('Validator.validate', () => {
       name: 'project',
       triggers: ['schedule-weekly'],
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsADeprecatedRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, '', [{
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsADeprecatedRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, undefined, [{
       name: 'macOS 14',
       architecture: 'x64',
       labels: ['macos-14'],
@@ -438,7 +443,7 @@ describe('Validator.validate', () => {
       name: 'project',
       triggers: ['schedule-weekly'],
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAPreviewRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, '', [{
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAPreviewRunnerLabel_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, undefined, [{
       name: 'Xcode 27',
       architecture: 'arm64',
       labels: ['xcode-27'],
@@ -850,16 +855,19 @@ describe('Validator.validate', () => {
       deploy: [{
         to: 'docker-hub',
         path: './',
+        with: {
+          IMAGE_NAMESPACE: 'cbnventures',
+          IMAGE_REPOSITORY: 'nova',
+        },
       }],
-      with: {
-        IMAGE_NAMESPACE: 'cbnventures',
-        IMAGE_REPOSITORY: 'nova',
-      },
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result = Validator.validate(rawWorkflows, {});
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, {
+      namespace: 'cbnventures',
+      repository: 'nova',
+    });
 
     strictEqual(result['workflows'].length, 0);
-    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('missing required literal settings: IMAGE_NAMESPACE, IMAGE_REPOSITORY')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('Move Docker Hub image coordinates into the "dockerHub" section')), true);
 
     return;
   });
@@ -874,10 +882,6 @@ describe('Validator.validate', () => {
         to: 'docker-hub',
         path: './',
         artifact: 'container-files',
-        with: {
-          IMAGE_NAMESPACE: 'cbnventures',
-          IMAGE_REPOSITORY: 'nova',
-        },
       }],
     }];
     const artifacts: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Artifacts = {
@@ -889,7 +893,10 @@ describe('Validator.validate', () => {
         }],
       },
     };
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, artifacts);
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerFileArtifactIsFlagged_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, artifacts, {
+      namespace: 'cbnventures',
+      repository: 'nova',
+    });
 
     strictEqual(result['workflows'].length, 0);
     strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('cannot select a file artifact because container registries use Nova\'s OCI handoff')), true);
@@ -906,17 +913,16 @@ describe('Validator.validate', () => {
       deploy: [{
         to: 'docker-hub',
         path: './',
-        with: {
-          IMAGE_NAMESPACE: 'docker.io/cbnventures',
-          IMAGE_REPOSITORY: 'nova:latest',
-        },
       }],
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result = Validator.validate(rawWorkflows, {});
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, {
+      namespace: 'docker.io/cbnventures',
+      repository: 'nova:latest',
+    });
 
     strictEqual(result['workflows'].length, 0);
-    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_NAMESPACE "docker.io/cbnventures"')), true);
-    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_REPOSITORY "nova:latest"')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('dockerHub.namespace value "docker.io/cbnventures" is invalid')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('dockerHub.repository value "nova:latest" is invalid')), true);
 
     const boundaryRawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryRawWorkflows = [{
       template: 'publish',
@@ -926,17 +932,16 @@ describe('Validator.validate', () => {
       deploy: [{
         to: 'docker-hub',
         path: './',
-        with: {
-          IMAGE_NAMESPACE: '.cbnventures',
-          IMAGE_REPOSITORY: 'nova-',
-        },
       }],
     }];
-    const boundaryResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult = Validator.validate(boundaryRawWorkflows, {});
+    const boundaryResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult = Validator.validate(boundaryRawWorkflows, {}, 'semver', {}, {}, {
+      namespace: '.cbnventures',
+      repository: 'nova-',
+    });
 
     strictEqual(boundaryResult['workflows'].length, 0);
-    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_NAMESPACE ".cbnventures"')), true);
-    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_REPOSITORY "nova-"')), true);
+    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('dockerHub.namespace value ".cbnventures" is invalid')), true);
+    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('dockerHub.repository value "nova-" is invalid')), true);
 
     return;
   });
@@ -984,7 +989,7 @@ describe('Validator.validate', () => {
         },
       }],
     }];
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RequiresAnAvailableRunnerLabelForEachContainerPlatform_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, '', [{
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RequiresAnAvailableRunnerLabelForEachContainerPlatform_Result = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, undefined, [{
       name: 'Ubuntu 24.04',
       architecture: 'x64',
       labels: ['ubuntu-24.04'],
@@ -997,8 +1002,37 @@ describe('Validator.validate', () => {
     return;
   });
 
-  it('Docker Hub description length uses UTF-8 bytes', () => {
-    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_RawWorkflows = [{
+  it('Docker Hub config is required', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_RawWorkflows = [{
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+      }],
+    }];
+    const overLimitResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_OverLimitResult = Validator.validate(rawWorkflows, {});
+    const withinLimitResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubConfigIsRequired_WithinLimitResult = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, {
+      namespace: 'cbnventures',
+      repository: 'nova',
+    });
+
+    strictEqual(overLimitResult['workflows'].length, 0);
+    strictEqual(overLimitResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('requires the "dockerHub" section')), true);
+    strictEqual(withinLimitResult['workflows'].length, 1);
+    strictEqual(withinLimitResult['diagnostics'].length, 0);
+
+    return;
+  });
+
+  it('Docker Hub rejects removed target settings', () => {
+    const dockerHub: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_DockerHub = {
+      namespace: 'cbnventures',
+      repository: 'nova',
+    };
+    const coordinateWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateWorkflows = [{
       template: 'publish',
       runsOn: 'ubuntu-24.04',
       name: 'containers',
@@ -1012,12 +1046,27 @@ describe('Validator.validate', () => {
         },
       }],
     }];
-    const overLimitResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_OverLimitResult = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, 'é'.repeat(51));
-    const withinLimitResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_WithinLimitResult = Validator.validate(rawWorkflows, {}, 'semver', {}, {}, 'é'.repeat(50));
+    const overviewWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewWorkflows = [{
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+        with: {
+          README_PATH: 'docs/container.md',
+          SYNC_DESCRIPTION: true,
+        },
+      }],
+    }];
+    const coordinateResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_CoordinateResult = Validator.validate(coordinateWorkflows, {}, 'semver', {}, {}, dockerHub);
+    const overviewResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubRejectsRemovedTargetSettings_OverviewResult = Validator.validate(overviewWorkflows, {}, 'semver', {}, {}, dockerHub);
 
-    strictEqual(overLimitResult['workflows'].length, 1);
-    strictEqual(overLimitResult['diagnostics'].some((diagnostic) => diagnostic['severity'] === 'warning' && diagnostic['message'].includes('Docker Hub truncates it to 100 bytes')), true);
-    strictEqual(withinLimitResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('Docker Hub truncates it')), false);
+    strictEqual(coordinateResult['workflows'].length, 0);
+    strictEqual(coordinateResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('cannot set with.IMAGE_NAMESPACE or with.IMAGE_REPOSITORY')), true);
+    strictEqual(overviewResult['workflows'].length, 0);
+    strictEqual(overviewResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('cannot set with.README_PATH or with.SYNC_DESCRIPTION')), true);
 
     return;
   });

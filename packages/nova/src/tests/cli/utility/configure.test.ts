@@ -18,6 +18,7 @@ import {
   vi,
 } from 'vitest';
 
+import { Runner as ApiDockerHub } from '../../../api/docker-hub.js';
 import { Runner as ApiGithubRunnerImages } from '../../../api/github-runner-images.js';
 import { Runner as CliUtilityConfigure } from '../../../cli/utility/configure.js';
 import { libEnvGithub } from '../../../lib/env-github.js';
@@ -47,6 +48,9 @@ import type {
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result,
+  Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Config,
+  Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_PromptDockerHub,
+  Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Result,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_Config,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_GlobalVariables,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_Next,
@@ -123,6 +127,13 @@ import type {
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Config,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_PromptProject,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Result,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ShortQuestion,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Config,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Next,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes,
@@ -353,6 +364,16 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       bugReportFields: { $item: 'promptGithub' },
     },
   },
+  dockerHub: {
+    namespace: 'promptDockerHub',
+    repository: 'promptDockerHub',
+    visibility: 'promptDockerHub',
+    categories: { $item: 'promptDockerHub' },
+    immutableTags: {
+      enabled: 'promptDockerHub',
+      rules: { $item: 'promptDockerHub' },
+    },
+  },
   workflows: {
     $item: {
       template: 'promptWorkflowsForm',
@@ -444,6 +465,16 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
   },
   agents: { $item: 'promptAgents' },
   recipes: {
+    'docker-hub': {
+      'sync-identity': {
+        enabled: 'promptDockerHub',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-policies': {
+        enabled: 'promptDockerHub',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
     'github': {
       'sync-actions': {
         enabled: 'promptRecipeEntries',
@@ -622,6 +653,17 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
 beforeEach(() => {
   vi.mocked(prompts).mockReset();
 
+  vi.spyOn(ApiDockerHub, 'fetchCategories').mockResolvedValue([
+    {
+      name: 'Networking',
+      slug: 'networking',
+    },
+    {
+      name: 'Security',
+      slug: 'security',
+    },
+  ]);
+
   vi.spyOn(ApiGithubRunnerImages, 'fetchRunnerImages').mockResolvedValue([
     {
       name: 'Ubuntu 24.04',
@@ -644,6 +686,8 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  ApiDockerHub.resetForTesting();
+
   ApiGithubRunnerImages.resetForTesting();
 
   vi.restoreAllMocks();
@@ -1306,6 +1350,7 @@ describe('prompt flow', () => {
       'entities',
       'emails',
       'github',
+      'dockerHub',
       'workflows',
       'urls',
       'readme',
@@ -1320,6 +1365,97 @@ describe('prompt flow', () => {
       'cancel',
     ]);
     deepStrictEqual(Object.keys(configFieldCoverage), values.slice(0, -2));
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Docker Hub.
+ *
+ * @since 0.40.0
+ */
+describe('prompt Docker Hub', () => {
+  it('configures repository settings and recipes', async () => {
+    vi.mocked(prompts)
+      .mockResolvedValueOnce({
+        dockerHubNamespace: 'mrjackyliang',
+        dockerHubRepository: 'transmission-vpn',
+        dockerHubVisibility: 'public',
+        dockerHubCategories: ['networking'],
+        dockerHubImmutableTags: true,
+      })
+      .mockResolvedValueOnce({
+        dockerHubImmutableTagsRules: '["^v\\\\d+$"]',
+      })
+      .mockResolvedValueOnce({
+        dockerHubRecipeSyncIdentity: true,
+        dockerHubRecipeSyncPolicies: true,
+      });
+
+    const config: Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Config = {};
+    const promptDockerHub: Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_PromptDockerHub = Reflect.get(CliUtilityConfigure, 'promptDockerHub') as Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_PromptDockerHub;
+    const result: Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Result = await promptDockerHub(config);
+
+    strictEqual(result, 'back');
+    deepStrictEqual(config['dockerHub'], {
+      namespace: 'mrjackyliang',
+      repository: 'transmission-vpn',
+      visibility: 'public',
+      categories: ['networking'],
+      immutableTags: {
+        enabled: true,
+        rules: ['^v\\d+$'],
+      },
+    });
+    deepStrictEqual(config['recipes']!['docker-hub'], {
+      'sync-identity': { enabled: true },
+      'sync-policies': { enabled: true },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Project.
+ *
+ * @since 0.40.0
+ */
+describe('prompt project', () => {
+  it('enforces the Docker Hub short description limit', async () => {
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      capturedQuestions.push(...((Array.isArray(questions) === true) ? questions : [questions]));
+
+      return Promise.resolve({});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Config = {
+      project: {
+        description: { short: 'x'.repeat(87) },
+      },
+      dockerHub: {
+        namespace: 'mrjackyliang',
+        repository: 'transmission-vpn',
+      },
+    };
+    const promptProject: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_PromptProject = Reflect.get(CliUtilityConfigure, 'promptProject') as Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_PromptProject;
+    const result: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Result = await promptProject(config);
+    const shortQuestion: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ShortQuestion = capturedQuestions.find((question) => question['name'] === 'projectDescriptionShort');
+
+    strictEqual(result, 'back');
+    strictEqual(shortQuestion!['message'], 'Short description (87/100)');
+
+    const validate: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate = shortQuestion!['validate'] as Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate;
+    const validationResult: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult = await validate('x'.repeat(101));
+
+    strictEqual(validationResult, 'Docker Hub\'s limit is 100 characters.');
 
     return;
   });
@@ -2105,8 +2241,6 @@ describe('prompt workflows', () => {
         targetTimeoutMinutes: '18',
         targetSettings: '',
       },
-      { targetRequiredLiteral: 'cbnventures' },
-      { targetRequiredLiteral: 'nova' },
       { targetAction: { kind: 'add' } },
       { targetType: 'ghcr' },
       {
@@ -2127,9 +2261,7 @@ describe('prompt workflows', () => {
       { settingValue: './' },
       { settingValue: 'DOCKERHUB_TOKEN' },
       { settingValue: 'DOCKERHUB_USERNAME' },
-      { settingValue: 'docs/container.md' },
-      { settingValue: 'false' },
-      { reviewedSettings: '{"DOCKERHUB_TOKEN":"DOCKERHUB_TOKEN","DOCKERHUB_USERNAME":"DOCKERHUB_USERNAME","README_PATH":"docs/container.md","SYNC_DESCRIPTION":"false"}' },
+      { reviewedSettings: '{"DOCKERHUB_TOKEN":"DOCKERHUB_TOKEN","DOCKERHUB_USERNAME":"DOCKERHUB_USERNAME"}' },
     ];
     const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_CapturedQuestions = [];
 
@@ -2201,10 +2333,6 @@ describe('prompt workflows', () => {
             to: 'docker-hub',
             path: './',
             timeoutMinutes: 18,
-            with: {
-              IMAGE_NAMESPACE: 'cbnventures',
-              IMAGE_REPOSITORY: 'nova',
-            },
           },
           {
             to: 'ghcr',
@@ -2222,8 +2350,6 @@ describe('prompt workflows', () => {
         with: {
           DOCKERHUB_TOKEN: 'DOCKERHUB_TOKEN',
           DOCKERHUB_USERNAME: 'DOCKERHUB_USERNAME',
-          README_PATH: 'docs/container.md',
-          SYNC_DESCRIPTION: 'false',
         },
       },
     });

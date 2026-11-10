@@ -138,6 +138,8 @@ export type Cli_Index_CLI_RegisterCommands_RecipePackageJson = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeNovaConfig = Command;
 
+export type Cli_Index_CLI_RegisterCommands_RecipeDockerHub = Command;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeGithub = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeLicense = Command;

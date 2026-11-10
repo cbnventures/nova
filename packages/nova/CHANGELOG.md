@@ -1,5 +1,21 @@
 # @cbnventures/nova
 
+## 0.40.0 - 2026-11-10
+
+### UPDATED
+- The generated Nova agent convention explains that environment keys are declared without their namespace and that the environment manager adds the project, workspace, or workflow prefix when it syncs them to GitHub.
+- The Docker Hub publish target reads the image namespace and repository from the `dockerHub` section and rejects `with.IMAGE_NAMESPACE` and `with.IMAGE_REPOSITORY`, and `nova utility configure` keeps the short description within Docker Hub's 100-character limit when that section exists.
+
+### FIXED
+- The pfSense package scaffold stages its port without `fs/promises` `cp` and uses the normal Node.js LTS engine range, so its scripts pass the `n/no-unsupported-features/node-builtins` lint check after `sync-environment` syncs `engines.node` to the active LTS versions.
+
+### ADDED
+- A `dockerHub` section in `nova.config.json` with `nova recipe docker-hub sync-identity` and `sync-policies`, which sync a Docker Hub repository's short description, README overview, categories, visibility, and immutable tags using the stored `docker login` credentials, and a Docker Hub section in `nova utility configure` with Docker Hub's live category list.
+- An optional `scripts/check-freebsd.sh` hook in pfSense package workspaces, which the generated `build-package.sh` runs inside the FreeBSD build VM before `make package`, so checks that need FreeBSD's own `sh` and userland run during publish and a failure stops the build.
+
+### REMOVED
+- Generated Docker Hub publish jobs no longer sync the repository description and overview during a release, and the target rejects `with.README_PATH` and `with.SYNC_DESCRIPTION`; `nova recipe docker-hub sync-identity` sends `README.md` instead.
+
 ## 0.39.0 - 2026-11-10
 
 ### UPDATED

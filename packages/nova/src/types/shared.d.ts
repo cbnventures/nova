@@ -547,6 +547,80 @@ export type Shared_FundPlatform = {
 export type Shared_GeneratorRunResult = 'completed' | 'cancelled';
 
 /**
+ * Shared - Docker Hub.
+ *
+ * @since 0.40.0
+ */
+export type Shared_DockerHubCategory_Name = string;
+
+export type Shared_DockerHubCategory_Slug = string;
+
+export type Shared_DockerHubCategory = {
+  name: Shared_DockerHubCategory_Name;
+  slug: Shared_DockerHubCategory_Slug;
+};
+
+export type Shared_DockerHubCategories = Shared_DockerHubCategory[];
+
+export type Shared_DockerHubCredentials_Username = string;
+
+export type Shared_DockerHubCredentials_Secret = string;
+
+export type Shared_DockerHubCredentials_Source = string;
+
+export type Shared_DockerHubCredentials = {
+  username: Shared_DockerHubCredentials_Username;
+  secret: Shared_DockerHubCredentials_Secret;
+  source: Shared_DockerHubCredentials_Source;
+};
+
+export type Shared_DockerHubImmutableTagsSettings_Enabled = boolean;
+
+export type Shared_DockerHubImmutableTagsSettings_Rules = string[];
+
+export type Shared_DockerHubImmutableTagsSettings = {
+  enabled: Shared_DockerHubImmutableTagsSettings_Enabled;
+  rules: Shared_DockerHubImmutableTagsSettings_Rules;
+};
+
+export type Shared_DockerHubRepository_Description = string;
+
+export type Shared_DockerHubRepository_FullDescription = string;
+
+export type Shared_DockerHubRepository_IsPrivate = boolean;
+
+export type Shared_DockerHubRepository_Categories = Shared_DockerHubCategories;
+
+export type Shared_DockerHubRepository_ImmutableTagsSettings = Shared_DockerHubImmutableTagsSettings;
+
+export type Shared_DockerHubRepository_Permissions_Write = boolean;
+
+export type Shared_DockerHubRepository_Permissions = {
+  write: Shared_DockerHubRepository_Permissions_Write;
+};
+
+export type Shared_DockerHubRepository = {
+  description: Shared_DockerHubRepository_Description;
+  full_description: Shared_DockerHubRepository_FullDescription;
+  is_private: Shared_DockerHubRepository_IsPrivate;
+  categories: Shared_DockerHubRepository_Categories;
+  immutable_tags_settings: Shared_DockerHubRepository_ImmutableTagsSettings;
+  permissions: Shared_DockerHubRepository_Permissions;
+};
+
+export type Shared_DockerHubResponse_Ok = boolean;
+
+export type Shared_DockerHubResponse_Status = number;
+
+export type Shared_DockerHubResponse_Body<Body> = Body;
+
+export type Shared_DockerHubResponse<Body = unknown> = {
+  ok: Shared_DockerHubResponse_Ok;
+  status: Shared_DockerHubResponse_Status;
+  body: Shared_DockerHubResponse_Body<Body>;
+};
+
+/**
  * Shared - GitHub Runner Image.
  *
  * @since 0.39.0
@@ -1480,6 +1554,35 @@ export type Shared_NovaConfig_Github = {
   issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
 };
 
+export type Shared_NovaConfig_DockerHub_Namespace = string;
+
+export type Shared_NovaConfig_DockerHub_Repository = string;
+
+export type Shared_NovaConfigDockerHubVisibility = 'public' | 'private';
+
+export type Shared_NovaConfig_DockerHub_Visibility = Shared_NovaConfigDockerHubVisibility;
+
+export type Shared_NovaConfig_DockerHub_Category = string;
+
+export type Shared_NovaConfig_DockerHub_Categories = Shared_NovaConfig_DockerHub_Category[];
+
+export type Shared_NovaConfig_DockerHub_ImmutableTags_Enabled = boolean;
+
+export type Shared_NovaConfig_DockerHub_ImmutableTags_Rules = string[];
+
+export type Shared_NovaConfig_DockerHub_ImmutableTags = {
+  enabled: Shared_NovaConfig_DockerHub_ImmutableTags_Enabled;
+  rules: Shared_NovaConfig_DockerHub_ImmutableTags_Rules;
+};
+
+export type Shared_NovaConfig_DockerHub = {
+  namespace: Shared_NovaConfig_DockerHub_Namespace;
+  repository: Shared_NovaConfig_DockerHub_Repository;
+  visibility?: Shared_NovaConfig_DockerHub_Visibility;
+  categories?: Shared_NovaConfig_DockerHub_Categories;
+  immutableTags?: Shared_NovaConfig_DockerHub_ImmutableTags;
+};
+
 export type Shared_NovaConfigWorkflow_Name = string;
 
 export type Shared_NovaConfigWorkflow_Template = string;
@@ -1860,7 +1963,7 @@ export type Shared_BlueprintPublishTargetContext_EnvironmentSelection = Shared_N
 
 export type Shared_BlueprintPublishTargetContext_TimeoutMinutes = number;
 
-export type Shared_BlueprintPublishTargetContext_ProjectDescription = Shared_NovaConfig_Project_Description_Short;
+export type Shared_BlueprintPublishTargetContext_DockerHub = Shared_NovaConfig_DockerHub;
 
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
@@ -1874,7 +1977,7 @@ export type Shared_BlueprintPublishTargetContext = {
   packageManager: Shared_BlueprintPublishTargetContext_PackageManager;
   environmentSelection?: Shared_BlueprintPublishTargetContext_EnvironmentSelection;
   timeoutMinutes: Shared_BlueprintPublishTargetContext_TimeoutMinutes;
-  projectDescription?: Shared_BlueprintPublishTargetContext_ProjectDescription;
+  dockerHub?: Shared_BlueprintPublishTargetContext_DockerHub;
 };
 
 /**
@@ -2181,6 +2284,12 @@ export type Shared_NovaConfig_Recipes_Github = {
   [K in Shared_NovaConfigGithubRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
+export type Shared_NovaConfigDockerHubRecipeName = 'sync-identity' | 'sync-policies';
+
+export type Shared_NovaConfig_Recipes_DockerHub = {
+  [K in Shared_NovaConfigDockerHubRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
 export type Shared_NovaConfigLicenseRecipeName = 'update-copyright';
 
 export type Shared_NovaConfig_Recipes_License = {
@@ -2220,6 +2329,7 @@ export type Shared_NovaConfig_Recipes_PackageJson = {
 };
 
 export type Shared_NovaConfig_Recipes = {
+  'docker-hub'?: Shared_NovaConfig_Recipes_DockerHub;
   'github'?: Shared_NovaConfig_Recipes_Github;
   'license'?: Shared_NovaConfig_Recipes_License;
   'miscellaneous'?: Shared_NovaConfig_Recipes_Miscellaneous;
@@ -2282,6 +2392,7 @@ export type Shared_NovaConfig = {
   entities?: Shared_NovaConfig_Entities;
   emails?: Shared_NovaConfig_Emails;
   github?: Shared_NovaConfig_Github;
+  dockerHub?: Shared_NovaConfig_DockerHub;
   workflows?: Shared_NovaConfig_Workflows;
   urls?: Shared_NovaConfig_Urls;
   readme?: Shared_NovaConfig_ReadMe;
@@ -2301,7 +2412,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'artifacts' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'dockerHub' | 'urls' | 'readme' | 'workspaces' | 'artifacts' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.
