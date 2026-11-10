@@ -1600,9 +1600,34 @@ function verifyCloudflareWorkerRuntime(projectDirectory) {
     'try {',
     '  await server.listen();',
     '  const response = await server.fetch(\'/\');',
-    '  const expectedBody = JSON.stringify({ message: \'Welcome to scaffold-smoke\' });',
-    '  if (response.status !== 200 || await response.text() !== expectedBody) {',
-    '    throw new Error(\'The generated Cloudflare Worker should return the starter response.\');',
+    '  const body = await response.text();',
+    '  if (',
+    '    response.status !== 200',
+    '    || response.headers.get(\'Content-Type\') !== \'text/html; charset=utf-8\'',
+    '    || response.headers.get(\'X-Content-Type-Options\') !== \'nosniff\'',
+    '    || body.includes(\'<h1>scaffold-smoke</h1>\') === false',
+    '    || body.includes(\'>Running</span>\') === false',
+    '    || body.includes(\'class="button ghost" href="https://github.com/example/scaffold-smoke" target="_blank" rel="noopener noreferrer"\') === false',
+    '  ) {',
+    '    throw new Error(\'The generated Cloudflare Worker should return the service homepage.\');',
+    '  }',
+    '  const headResponse = await server.fetch(\'/\', { method: \'HEAD\' });',
+    '  if (headResponse.status !== 200 || await headResponse.text() !== \'\') {',
+    '    throw new Error(\'The generated Cloudflare Worker should return homepage headers without a HEAD body.\');',
+    '  }',
+    '  const notFoundResponse = await server.fetch(\'/missing\');',
+    '  const expectedNotFoundBody = JSON.stringify({ status: \'error\', message: \'Not found\' });',
+    '  if (notFoundResponse.status !== 404 || await notFoundResponse.text() !== expectedNotFoundBody) {',
+    '    throw new Error(\'The generated Cloudflare Worker should return the JSON 404 contract.\');',
+    '  }',
+    '  const methodResponse = await server.fetch(\'/\', { method: \'POST\' });',
+    '  const expectedMethodBody = JSON.stringify({ status: \'error\', message: \'Method not allowed\' });',
+    '  if (',
+    '    methodResponse.status !== 405',
+    '    || methodResponse.headers.get(\'Allow\') !== \'GET, HEAD\'',
+    '    || await methodResponse.text() !== expectedMethodBody',
+    '  ) {',
+    '    throw new Error(\'The generated Cloudflare Worker should return the JSON 405 contract.\');',
     '  }',
     '} finally {',
     '  await server.close();',
@@ -1638,14 +1663,55 @@ function verifyCloudflareWorkerRuntime(projectDirectory) {
 async function verifyVercelFunctionRuntime(projectDirectory) {
   const functionPath = join(projectDirectory, 'packages', 'vercel-tool', 'build', 'api', 'index.js');
   const functionModule = await import(pathToFileURL(functionPath).href);
-  const response = await functionModule.GET(new Request('https://example.com/api'));
+  const functionHandler = functionModule.default;
+  const response = await functionHandler.fetch(new Request('https://example.com/'));
+  const body = await response.text();
 
   if (
     response instanceof Response === false
     || response.status !== 200
-    || await response.text() !== JSON.stringify({ message: 'Welcome to scaffold-smoke' })
+    || response.headers.get('Content-Type') !== 'text/html; charset=utf-8'
+    || response.headers.get('X-Content-Type-Options') !== 'nosniff'
+    || body.includes('<h1>scaffold-smoke</h1>') === false
+    || body.includes('>Running</span>') === false
+    || body.includes('class="button ghost" href="https://github.com/example/scaffold-smoke" target="_blank" rel="noopener noreferrer"') === false
   ) {
-    throw new Error('The generated Vercel Function should return the starter response.');
+    throw new Error('The generated Vercel Function should return the service homepage.');
+  }
+
+  const headResponse = await functionHandler.fetch(new Request('https://example.com/', {
+    method: 'HEAD',
+  }));
+
+  if (headResponse.status !== 200 || await headResponse.text() !== '') {
+    throw new Error('The generated Vercel Function should return homepage headers without a HEAD body.');
+  }
+
+  const notFoundResponse = await functionHandler.fetch(new Request('https://example.com/api?path=missing'));
+
+  if (
+    notFoundResponse.status !== 404
+    || await notFoundResponse.text() !== JSON.stringify({
+      status: 'error',
+      message: 'Not found',
+    })
+  ) {
+    throw new Error('The generated Vercel Function should return the JSON 404 contract.');
+  }
+
+  const methodResponse = await functionHandler.fetch(new Request('https://example.com/', {
+    method: 'POST',
+  }));
+
+  if (
+    methodResponse.status !== 405
+    || methodResponse.headers.get('Allow') !== 'GET, HEAD'
+    || await methodResponse.text() !== JSON.stringify({
+      status: 'error',
+      message: 'Method not allowed',
+    })
+  ) {
+    throw new Error('The generated Vercel Function should return the JSON 405 contract.');
   }
 
   process.stdout.write('Generated Vercel Function runtime loaded successfully.\n');
@@ -1922,6 +1988,15 @@ async function checkScaffolds() {
       'foundry',
     ], projectDirectory);
 
+    const serverlessConfigPath = join(projectDirectory, 'nova.config.json');
+    const serverlessConfig = JSON.parse(readFileSync(serverlessConfigPath, 'utf-8'));
+    const serverlessUrls = serverlessConfig['urls'] ?? {};
+
+    Reflect.set(serverlessUrls, 'repository', 'https://github.com/example/scaffold-smoke');
+    Reflect.set(serverlessConfig, 'urls', serverlessUrls);
+
+    writeFileSync(serverlessConfigPath, `${JSON.stringify(serverlessConfig, null, 2)}\n`, 'utf-8');
+
     runCommand(process.execPath, [
       novaCliPath,
       'scaffold',
@@ -1979,6 +2054,26 @@ async function checkScaffolds() {
       './packages/scaffold',
     ], projectDirectory);
 
+    const pfSenseConfigPath = join(projectDirectory, 'nova.config.json');
+    const pfSenseConfig = JSON.parse(readFileSync(pfSenseConfigPath, 'utf-8'));
+    const originalUrls = pfSenseConfig['urls'];
+
+    Reflect.set(pfSenseConfig, 'entities', [{
+      name: 'Scaffold Author',
+      email: 'author@example.com',
+      roles: ['author'],
+    }]);
+    Reflect.set(pfSenseConfig, 'urls', {
+      homepage: 'https://example.com',
+      documentation: 'https://example.com/docs',
+      repository: 'https://github.com/example/scaffold-smoke',
+      bugs: 'https://github.com/example/scaffold-smoke/issues',
+      license: 'https://github.com/example/scaffold-smoke/blob/main/LICENSE',
+      fundSources: ['https://github.com/sponsors/example'],
+    });
+
+    writeFileSync(pfSenseConfigPath, `${JSON.stringify(pfSenseConfig, null, 2)}\n`, 'utf-8');
+
     runCommand(process.execPath, [
       novaCliPath,
       'scaffold',
@@ -1991,6 +2086,12 @@ async function checkScaffolds() {
       '--output',
       './packages/my-package',
     ], projectDirectory);
+
+    const restoredConfig = JSON.parse(readFileSync(pfSenseConfigPath, 'utf-8'));
+
+    Reflect.set(restoredConfig, 'urls', originalUrls);
+
+    writeFileSync(pfSenseConfigPath, `${JSON.stringify(restoredConfig, null, 2)}\n`, 'utf-8');
 
     verifyWorkspaceRegistrations(projectDirectory, {
       './': {
@@ -2193,28 +2294,141 @@ async function checkScaffolds() {
       throw new Error('The generated action.yml should point at the selected package output path.');
     }
 
-    const pfSenseWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'pfsense-my-package.yml'), 'utf-8');
+    const registeredPfSenseConfig = /** @type {{ workflows?: Array<{ deploy?: Array<{ path?: string, to?: string }>, name?: string, template?: string, triggers?: string[] }> }} */ (JSON.parse(readFileSync(join(projectDirectory, 'nova.config.json'), 'utf-8')));
+    const registeredPfSenseWorkflows = registeredPfSenseConfig['workflows'];
+    const registeredPublishWorkflow = (registeredPfSenseWorkflows === undefined) ? undefined : registeredPfSenseWorkflows.find((workflow) => workflow['template'] === 'publish' && workflow['name'] === 'project');
+    const registeredPublishTriggers = (registeredPublishWorkflow === undefined) ? undefined : registeredPublishWorkflow['triggers'];
+    const registeredPublishTargets = (registeredPublishWorkflow === undefined) ? undefined : registeredPublishWorkflow['deploy'];
 
-    if (pfSenseWorkflow.includes('./packages/my-package/scripts/build-package.sh') === false) {
-      throw new Error('The generated pfSense workflow should point at the selected package workspace.');
+    if (
+      registeredPublishWorkflow === undefined
+      || registeredPublishTriggers === undefined
+      || registeredPublishTriggers.includes('release') === false
+      || registeredPublishTargets === undefined
+      || registeredPublishTargets.some((target) => target['to'] === 'pfsense' && target['path'] === './packages/my-package') === false
+    ) {
+      throw new Error('The pfSense scaffold should register its package in the publish-project workflow.');
+    }
+
+    if (existsSync(join(projectDirectory, '.github', 'workflows', 'pfsense-my-package.yml')) === true) {
+      throw new Error('The pfSense scaffold should not create a standalone release workflow.');
     }
 
     const pfSensePackageGui = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package.xml'), 'utf-8');
     const pfSensePackageHelper = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package.inc'), 'utf-8');
+    const pfSensePackagePaths = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package', 'PackagePaths.php'), 'utf-8');
+    const pfSensePackageUpdateManager = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package', 'UpdateManager.php'), 'utf-8');
     const pfSensePackageExecutable = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'sbin', 'my-package'), 'utf-8');
     const pfSensePackageInfo = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-MyPackage', 'info.xml'), 'utf-8');
+    const pfSensePackageLogo = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-MyPackage', 'logo.svg'), 'utf-8');
+    const pfSensePackageReleaseSigningKey = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-MyPackage', 'release-signing.pub'), 'utf-8');
+    const pfSensePackageAbout = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'www', 'my-package-about.php'), 'utf-8');
+    const pfSensePackageMakefile = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'Makefile.template'), 'utf-8');
+    const pfSensePackagePlist = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'pkg-plist'), 'utf-8');
+    const pfSensePackageBuild = readFileSync(join(projectDirectory, 'packages', 'my-package', 'scripts', 'build-package.sh'), 'utf-8');
+    const pfSensePackageCheck = readFileSync(join(projectDirectory, 'packages', 'my-package', 'scripts', 'check-package.mjs'), 'utf-8');
+    const pfSensePackageUpdateTests = readFileSync(join(projectDirectory, 'packages', 'my-package', 'tests', 'updates.php'), 'utf-8');
 
     if (
       pfSensePackageGui.includes('<name>mypackage</name>') === false
       || pfSensePackageGui.includes('<addedit_string>My Package: saved settings</addedit_string>') === false
       || pfSensePackageGui.includes('<fieldname>task_frequency</fieldname>') === false
+      || pfSensePackageGui.includes('<fieldname>update_check_frequency</fieldname>') === false
+      || pfSensePackageGui.includes('<default_value>weekly</default_value>') === false
+      || pfSensePackageGui.includes('<fieldname>update_remote_notifications</fieldname>') === false
       || pfSensePackageGui.includes('<option><name>Every minute</name><value>minute</value></option>') === false
       || pfSensePackageHelper.includes('installedpackages/mypackage/config/0') === false
       || pfSensePackageHelper.includes('\'minute\' => [\'*\', \'*\', \'*\', \'*\', \'*\']') === false
-      || pfSensePackageExecutable.includes('logger(LOG_NOTICE,') === false
+      || pfSensePackageHelper.includes('UpdateManager::stableCronSchedule($storedSchedule)') === false
+      || pfSensePackageHelper.includes('PackagePaths::UPDATE_CHECK_COMMAND') === false
+      || pfSensePackagePaths.includes('installedpackages/mypackage/update_schedule') === false
+      || pfSensePackageExecutable.includes('syslog(LOG_NOTICE,') === false
+      || pfSensePackageExecutable.includes('case \'--check-updates\'') === false
+      || pfSensePackageExecutable.includes('case \'--self-update\'') === false
+      || pfSensePackageExecutable.includes('\'NOVA_PFSENSE_UPDATE_RELEASES_API\'') === false
+      || pfSensePackageExecutable.includes('\'NOVA_PFSENSE_UPDATE_DOWNLOAD_PREFIX\'') === false
+      || pfSensePackageUpdateManager.includes('RELEASES_API = \'https://api.github.com/repos/example/scaffold-smoke/releases/latest\'') === false
+      || pfSensePackageUpdateManager.includes('DOWNLOAD_PREFIX = \'https://github.com/example/scaffold-smoke/releases/download/\'') === false
+      || pfSensePackageUpdateManager.includes('PACKAGE_NAME = \'pfSense-pkg-MyPackage\'') === false
+      || pfSensePackageUpdateManager.includes('SSH_KEYGEN_COMMAND = \'/usr/bin/ssh-keygen\'') === false
+      || pfSensePackageUpdateManager.includes('private const PKG_COMMAND = \'/usr/local/sbin/pkg\'') === false
       || pfSensePackageInfo.includes('<internal_name>MyPackage</internal_name>') === false
+      || pfSensePackageLogo.includes('<title>nova-logo-bg</title>') === false
+      || pfSensePackageReleaseSigningKey.startsWith('# Release signing keys for pfSense-pkg-MyPackage.\n') === false
+      || pfSensePackageAbout.includes('$projectRepository = \'https://github.com/example/scaffold-smoke\'') === false
+      || pfSensePackageAbout.includes('rtrim($projectRepository, \'/\') . \'/releases\'') === false
+      || pfSensePackageAbout.includes('\'https://github.com/sponsors/example\'') === false
+      || pfSensePackageAbout.includes('// List each pfSense release here after testing the package on it.') === false
+      || pfSensePackageAbout.includes('class="pkg-about-hero"') === false
+      || pfSensePackageAbout.includes('class="table table-striped table-hover pkg-about-table"') === false
+      || pfSensePackageAbout.includes('class="fab fa-github"') === false
+      || pfSensePackageAbout.includes('class="far fa-circle"') === false
+      || pfSensePackageAbout.includes('fab fa-paypal') === false
+      || pfSensePackageAbout.includes('.pkg-about .btn i {') === false
+      || pfSensePackageAbout.includes('.pkg-about-table i {') === false
+      || pfSensePackageAbout.includes('data:image/svg+xml;base64,') === false
+      || pfSensePackageAbout.includes('gettext(\'Support the Project\')') === false
+      || pfSensePackageAbout.includes('%1$s is free and open source under the %2$s. If it saves you time, you can support its development.') === false
+      || pfSensePackageAbout.includes('$supportMessageTemplateEscaped = $escape($supportMessageTemplate)') === false
+      || pfSensePackageAbout.includes('$supportMessage = sprintf(') === false
+      || pfSensePackageAbout.includes('fa fa-github') === true
+      || pfSensePackageAbout.includes('fa fa-paypal') === true
+      || pfSensePackageAbout.includes('fa fa-circle-o') === true
+      || pfSensePackageAbout.includes('i.fa') === true
+      || pfSensePackageAbout.includes('Project Links') === true
+      || pfSensePackageAbout.includes('simplexml_') === true
+      || pfSensePackageAbout.includes('$installedPackageVersion = UpdateManager::installedVersion()') === false
+      || pfSensePackageAbout.includes('UpdateManager::queueSelfUpdate($queuedVersion)') === false
+      || pfSensePackageAbout.includes('mwexec_bg(PackagePaths::SELF_UPDATE_COMMAND)') === false
+      || pfSensePackageAbout.includes('gettext(\'Check Now\')') === false
+      || pfSensePackageAbout.includes('gettext(\'Update to %1$s\')') === false
+      || pfSensePackageAbout.includes('Each tested release passed install, upgrade, a representative package operation, and removal.') === false
+      || pfSensePackageAbout.includes('prefix change, and removal') === true
+      || pfSensePackageAbout.includes('gettext(\'Unknown\')') === false
+      || pfSensePackageAbout.includes('$escape($packageVersion)') === false
+      || pfSensePackageAbout.includes('target="_blank" rel="noopener noreferrer"') === false
+      || pfSensePackageMakefile.includes('MAINTAINER?=\tauthor@example.com') === false
+      || pfSensePackageMakefile.includes('WWW=\thttps://example.com') === false
+      || pfSensePackageMakefile.includes('maintainer@example.invalid') === true
+      || pfSensePackageMakefile.includes(`${'$'}{FILESDIR}${'$'}{DATADIR}/logo.svg`) === false
+      || pfSensePackageMakefile.includes(`${'$'}{FILESDIR}${'$'}{DATADIR}/release-signing.pub`) === false
+      || pfSensePackageMakefile.includes(`${'$'}{PREFIX}/pkg/my-package/UpdateManager.php`) === false
+      || pfSensePackagePlist.includes('www/my-package-about.php') === false
+      || pfSensePackagePlist.includes('%%DATADIR%%/logo.svg') === false
+      || pfSensePackagePlist.includes('%%DATADIR%%/release-signing.pub') === false
+      || pfSensePackagePlist.includes('pkg/my-package/FileLock.php') === false
+      || pfSensePackagePlist.includes('pkg/my-package/PackagePaths.php') === false
+      || pfSensePackagePlist.includes('pkg/my-package/UpdateManager.php') === false
+      || pfSensePackageBuild.includes(`mktemp -d "${'$'}{PORT_DESTINATION}/work/any-freebsd.XXXXXX"`) === false
+      || pfSensePackageBuild.includes('root/+COMPACT_MANIFEST') === false
+      || pfSensePackageBuild.includes('"vital": true') === false
+      || pfSensePackageBuild.includes('\\1FreeBSD:*\\2') === false
+      || pfSensePackageBuild.includes('\\1freebsd:*\\2') === false
+      || pfSensePackageBuild.includes(`pkg query -F "${'$'}{artifact}" '%q'`) === false
+      || pfSensePackageBuild.includes(`pkg query -F "${'$'}{artifact}" '%V'`) === false
+      || pfSensePackageBuild.includes(`if [ "${'$'}{artifact_abi}" != 'FreeBSD:*' ]; then`) === false
+      || pfSensePackageBuild.includes(`if [ "${'$'}{artifact_vital}" != '1' ]; then`) === false
+      || pfSensePackageCheck.includes('\'port/files/usr/local/share/pfSense-pkg-MyPackage/logo.svg\'') === false
+      || pfSensePackageCheck.includes('\'port/files/usr/local/share/pfSense-pkg-MyPackage/release-signing.pub\'') === false
+      || pfSensePackageCheck.includes('\'tests/updates.php\'') === false
+      || pfSensePackageCheck.includes('releaseSigningKeyPattern.test(releaseSigningKeyLine)') === false
+      || pfSensePackageCheck.includes('WWW=\\thttps://example.com') === false
+      || pfSensePackageUpdateTests.includes('UpdateManager::stableCronSchedule([], $randomInteger)') === false
+      || pfSensePackageUpdateTests.includes('->verifyReleaseSignature(') === false
+      || [
+        pfSensePackageGui,
+        pfSensePackageHelper,
+        pfSensePackagePaths,
+        pfSensePackageExecutable,
+        pfSensePackageUpdateManager,
+        pfSensePackageAbout,
+        pfSensePackageMakefile,
+        pfSensePackagePlist,
+        pfSensePackageCheck,
+        pfSensePackageUpdateTests,
+      ].some((content) => content.includes('[__')) === true
     ) {
-      throw new Error('The generated pfSense package should keep its normalized config key and internal package identity aligned.');
+      throw new Error('The generated pfSense package should keep its identity, maintainer, About metadata, release signing trust list, and any-FreeBSD vital packaging aligned with nova.config.json.');
     }
 
     runNpm([

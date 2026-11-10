@@ -97,45 +97,78 @@ Configs written for the previous generator must migrate to the new field names (
 
 Each entry in the `"workflows"` array maps to one output file. An entry contains:
 
-| Field                | Required | Description                                                                                                                 |
-|----------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| `template`           | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                                  |
-| `name`               | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                         |
-| `triggers`           | Yes      | An array of triggers (see [Available Triggers](#available-triggers)). Each trigger must be valid for the template.          |
-| `runsOn`             | No       | Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps the template defaults. |
-| `timeoutMinutes`     | No       | Whole number from `1` through `360` applied to every generated job; omission keeps each job's template timeout.             |
-| `containerPlatforms` | No       | Container platforms for the repository image. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both.          |
-| `build`              | No       | An array of non-root workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.              |
-| `deploy`             | No       | An array of publish destinations for the `publish` template. See [Deploy Fields](#deploy-fields).                           |
-| `with`               | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.                         |
+| Field                 | Required | Description                                                                                                        |
+|-----------------------|----------|--------------------------------------------------------------------------------------------------------------------|
+| `template`            | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                         |
+| `name`                | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                |
+| `triggers`            | Yes      | An array of triggers (see [Available Triggers](#available-triggers)). Each trigger must be valid for the template. |
+| `runsOn`              | Yes      | Exact, pinned GitHub-hosted runner label, such as `"ubuntu-24.04"`.                                                |
+| `timeoutMinutes`      | No       | Whole number from `1` through `360` applied to every generated job; omission keeps each job's template timeout.    |
+| `buildTimeoutMinutes` | No       | Publish build-job timeout from `1` through `360`. Overrides `timeoutMinutes` for the build job.                    |
+| `stepTimeoutMinutes`  | No       | Step-kind timeout overrides from `1` through `360`. Every rendered value is clamped to its containing job timeout. |
+| `containerPlatforms`  | No       | Container platforms for the repository image. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both. |
+| `build`               | No       | An array of non-root workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.     |
+| `deploy`              | No       | An array of publish destinations for the `publish` template. See [Deploy Fields](#deploy-fields).                  |
+| `with`                | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.                |
 
 ### Job Execution
 
-Use `runsOn` and `timeoutMinutes` when every job in one generated workflow should share the same execution ceiling:
+Use `runsOn` and `timeoutMinutes` when every job in one generated workflow should share the same execution ceiling. Publish jobs default to 15 minutes; sponsor-check and inactive-lock jobs default to 5 minutes. A publish build or deploy target can override the workflow-wide value:
 
 ```json
 {
   "template": "publish",
   "name": "project",
   "triggers": ["release"],
-  "runsOn": "ubuntu-latest",
-  "timeoutMinutes": 45
+  "runsOn": "ubuntu-24.04",
+  "timeoutMinutes": 45,
+  "buildTimeoutMinutes": 30,
+  "stepTimeoutMinutes": {
+    "install": 12,
+    "deploy": 20
+  },
+  "deploy": [
+    {
+      "to": "npm",
+      "path": "./packages/core",
+      "timeoutMinutes": 15
+    }
+  ]
 }
 ```
 
-Nova intentionally offers only `ubuntu-latest` as the runner selection. `timeoutMinutes` accepts a whole number from `1` through `360`. A timeout is only the point where GitHub cancels a still-running job; it does not reserve that amount of runner time. Leave the timeout unset to retain the different defaults owned by each workflow template and job.
+Timeout precedence is target `timeoutMinutes` or workflow `buildTimeoutMinutes`, then workflow `timeoutMinutes`, then the template default. Every timeout accepts a whole number from `1` through `360`. A timeout is only the point where GitHub cancels a still-running job or step; it does not reserve that amount of runner time.
+
+`runsOn` must match an exact pinned label from GitHub's runner-images list. Nova reads that list during every configure and workflow-generation command, rejects moving `-latest`, preview, deprecated, unknown, or malformed labels, and marks paid larger runners in `nova utility configure`. Generation stops with an error before writing files when the list cannot be read.
+
+Every generated step has a timeout, grouped into these stable kinds:
+
+| Step kind  | Default     | Covers                                                     |
+|------------|-------------|------------------------------------------------------------|
+| `checkout` | 5           | Repository checkout.                                       |
+| `setup`    | 10          | Runtime, toolchain, environment, and workspace setup.      |
+| `install`  | 20          | Package-manager, Corepack, and deploy-CLI installation.    |
+| `build`    | job timeout | Project and OCI builds.                                    |
+| `check`    | job timeout | Tests, checks, validation, and preflight work.             |
+| `artifact` | job timeout | Artifact upload, download, validation, and digest records. |
+| `registry` | 5           | Package or container registry authentication.              |
+| `deploy`   | job timeout | Publishing, deployment, release, tagging, and sync work.   |
+| `attest`   | 10          | Build-provenance attestations.                             |
+
+`stepTimeoutMinutes` overrides one or more kinds for the workflow. Nova clamps both defaults and overrides to the containing job's timeout. Validation warns when an override exceeds the workflow's shortest job timeout.
 
 ### Deploy Fields
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field      | Required | Description                                                                                                                            |
-|------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `to`       | Yes      | One of the nine target types (see [Available Target Types](#available-target-types)).                                                  |
-| `path`     | Yes      | Workspace path that owns the destination, or `"./"` for the repository-wide `docker-hub` and `ghcr` targets.                           |
-| `artifact` | No       | Named entry from the top-level `artifacts` map. File-based targets download that assembled product instead of default workspace paths. |
-| `after`    | No       | Paths of other same-type destinations that must finish publishing before this one starts.                                              |
-| `with`     | No       | Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                  |
+| Field            | Required | Description                                                                                                                            |
+|------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `to`             | Yes      | One of the ten target types (see [Available Target Types](#available-target-types)).                                                   |
+| `path`           | Yes      | Workspace path that owns the destination, or `"./"` for the repository-wide `docker-hub` and `ghcr` targets.                           |
+| `artifact`       | No       | Named entry from the top-level `artifacts` map. File-based targets download that assembled product instead of default workspace paths. |
+| `timeoutMinutes` | No       | Target job timeout from `1` through `360`. Overrides the workflow-wide timeout for this destination.                                   |
+| `after`          | No       | Paths of other same-type destinations that must finish publishing before this one starts.                                              |
+| `with`           | No       | Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                  |
 
 ### Config Examples
 
@@ -146,6 +179,7 @@ Each entry in the `deploy` array pins one publish destination to a workspace or 
   "template": "publish",
   "name": "project",
   "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
   "build": ["./packages/core"],
   "deploy": [
     {
@@ -163,6 +197,7 @@ Each entry in the `deploy` array pins one publish destination to a workspace or 
   "template": "publish",
   "name": "project",
   "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
   "build": [
     "./packages/core",
     "./packages/preset"
@@ -190,6 +225,7 @@ The `preset` destination waits for `core` to finish publishing before it starts,
   "template": "publish",
   "name": "project",
   "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
   "build": [
     "./packages/sdk",
     "./apps/docs"
@@ -235,6 +271,7 @@ Use a named artifact when multiple independent workspace outputs need a delibera
       "template": "publish",
       "name": "site",
       "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
       "deploy": [
         {
           "to": "cloudflare-pages",
@@ -264,6 +301,7 @@ Configure the Docker Hub and GHCR destinations in the same publish workflow when
   "template": "publish",
   "name": "container",
   "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
   "containerPlatforms": ["linux/amd64", "linux/arm64"],
   "deploy": [
     {
@@ -271,7 +309,8 @@ Configure the Docker Hub and GHCR destinations in the same publish workflow when
       "path": "./",
       "with": {
         "IMAGE_NAMESPACE": "example",
-        "IMAGE_REPOSITORY": "example-project"
+        "IMAGE_REPOSITORY": "example-project",
+        "README_PATH": "docs/docker-hub.md"
       }
     },
     {
@@ -285,15 +324,76 @@ Configure the Docker Hub and GHCR destinations in the same publish workflow when
 }
 ```
 
-The workflow builds one multi-platform OCI artifact from the root `Dockerfile` covering every selected `containerPlatforms` entry, then distributes that exact artifact to each configured registry. Supported values are `"linux/amd64"` and `"linux/arm64"`; omitting the field selects both. Registry jobs do not compile workspaces or rebuild the image.
+The workflow builds one multi-platform OCI artifact from the root `Dockerfile` covering every selected `containerPlatforms` entry, then distributes that exact artifact to each configured registry. Supported values are `"linux/amd64"` and `"linux/arm64"`; omitting the field selects both.
 
-Docker Hub requires literal `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` values. `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` authenticate the push only; they do not decide the image name.
+Each platform builds in its own job on the CPU type that matches the workflow's pinned `runsOn` label. For example, `ubuntu-24.04` produces an `ubuntu-24.04` x64 job for `linux/amd64` and an `ubuntu-24.04-arm` arm64 job for `linux/arm64`. Nova verifies both derived labels and architectures against GitHub's runner-images list before generation. Each job reuses a GitHub Actions Buildx cache scoped to its platform, so a release that leaves a Dockerfile stage unchanged skips rebuilding it. A merge job then combines the per-platform images into one multi-platform index. Registry jobs start only after the merge succeeds, so a failed platform build publishes no tags.
+
+Registry jobs do not compile workspaces or rebuild the image. When Docker Hub description syncing is enabled, its job checks out the source only after the image is pushed, verified, and attested so the overview file is available.
+
+Docker Hub requires literal `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` values. `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` authenticate publishing and description syncing; they do not decide the image name.
+
+After a successful publish, Nova syncs the repository overview from `README_PATH` and its short description from `project.description.short`. `README_PATH` defaults to `README.md` at the published repository workspace, and relative links and images are completed as GitHub URLs.
+
+The Docker Hub description action accepts a Docker Hub password or a personal access token with **Read, Write, Delete** scope. Registry login and image pushing need only Read and Write, but the enabled-by-default description sync requires the additional Delete scope; for an organization namespace, the Docker Hub user must also have Admin permission on that repository.
+
+Docker Hub limits the short description to 100 UTF-8 bytes and the overview to 25,000 bytes. Nova warns during generation when `project.description.short` exceeds 100 bytes, while the action truncates an oversized overview with a warning.
+
+Set `"SYNC_DESCRIPTION": "false"` in the Docker Hub target's `with` object to disable both the source checkout and description sync:
+
+```json
+{
+  "to": "docker-hub",
+  "path": "./",
+  "with": {
+    "IMAGE_NAMESPACE": "example",
+    "IMAGE_REPOSITORY": "example-project",
+    "SYNC_DESCRIPTION": "false"
+  }
+}
+```
+
+Set repository categories and the repository icon by hand on Docker Hub. Categories require an organization access token with Repository Edit scope when managed through Docker Hub's API, while icons cannot be set through any API.
 
 GHCR derives its namespace from `github.repository_owner` and requires only the literal `IMAGE_REPOSITORY`. Both container targets use `path: "./"` because the image belongs to the repository rather than an individual workspace.
 
 The `build` array never accepts `"./"`. It contains only non-container workspace deliverables; the multi-stage container build compiles its own inputs from the repository root.
 
 See [Docker Images](/docs/cli/scaffolding/docker-images) for the generated image and runtime contract.
+
+### Publishing pfSense Packages
+
+Use `pfsense` for a workspace created by `nova scaffold package pfsense`:
+
+```json
+{
+  "template": "publish",
+  "name": "project",
+  "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
+  "deploy": [
+    {
+      "to": "pfsense",
+      "path": "./packages/firewall"
+    }
+  ]
+}
+```
+
+Nova validates that the path belongs to a `package` workspace whose name starts with `pfsense-pkg-`. The generated job validates and stages the port, builds the no-architecture package with `vmactions/freebsd-vm`, uploads the `.pkg` and checksum as a workflow artifact, and attaches the files to the GitHub release. The manual workflow input accepts the tag of an existing release. Set the optional `PFSENSE_FREEBSD_VERSION` repository variable to the required FreeBSD major; it defaults to `15` for pfSense CE 2.8 and current pfSense Plus releases.
+
+#### Signing pfSense Releases
+
+Release signing needs one GitHub Actions secret and no maintained public-key file. In 1Password, choose **New Item → SSH Key → Generate a New Key → Ed25519**, then choose **Export** on the private-key field and select OpenSSH format with no password.
+
+Upload the exported private key with `gh secret set PFSENSE_RELEASE_SIGNING_KEY < <exported file>`, or paste it into the repository's Actions secrets page, then delete the exported file. The secret name is the workspace prefix plus `RELEASE_SIGNING_KEY`, so a `PFSENSE_` prefix produces `PFSENSE_RELEASE_SIGNING_KEY`; without a prefix, use `RELEASE_SIGNING_KEY`.
+
+The **Add release signing key** step derives the public key from the secret and adds it to the staged port's `usr/local/share/<package>/release-signing.pub`. The **Sign release packages** step signs every `.pkg` as `<file>.pkg.sig` with `ssh-keygen -Y sign -n <package name>`, then checks the signature against the staged key list.
+
+Signing is optional. Without the secret, the workflow emits a notice, the package ships without a key, and the release remains unsigned. A provided secret must be an unencrypted OpenSSH Ed25519 private key; PKCS#8 exports, passphrase-protected keys, and other key types fail the job before anything is published.
+
+To change keys, add the new public key to `release-signing.pub`, publish one release while the old key remains the secret, then replace the secret with the new private key.
+
+If the private key is lost, installed copies cannot trust the replacement automatically. Download one package release containing the new public key and install it once with `pkg add -f /path/to/pfSense-pkg-<Name>-<version>.pkg`; later signed updates can use the normal path again.
 
 ### Available Templates
 
@@ -329,17 +429,18 @@ The remaining values are `var`-format, not `literal` - they resolve to `${{ vars
 
 The `publish` template supports the following `to` values for each entry in `deploy`. Each type declares its own secrets and variables.
 
-| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                               |
-|----------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                   |
-| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)). |
-| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
-| `docker-hub`         | Publish the repository image to Docker Hub                | `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` (`literal`) name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate the push only.                                                                    |
-| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                         |
-| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.           |
-| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                            |
-| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
-| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                       |
+| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                                                     |
+|----------------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                         |
+| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)).                       |
+| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                    |
+| `docker-hub`         | Publish the repository image to Docker Hub                | `IMAGE_NAMESPACE` and `IMAGE_REPOSITORY` name the image. `README_PATH` defaults to `README.md`; `SYNC_DESCRIPTION` defaults to `"true"`. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate publishing and description syncing. |
+| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                                               |
+| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                                 |
+| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                                                  |
+| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                    |
+| `pfsense`            | Build a pfSense package and attach it to a GitHub release | `PFSENSE_FREEBSD_VERSION` (optional repository variable) selects the FreeBSD major and defaults to `15`. `RELEASE_SIGNING_KEY` (`secret`, optional) signs release packages. The target requires a scaffolded `pfsense-pkg-` package workspace.          |
+| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                             |
 
 ### Available Triggers
 
@@ -401,6 +502,7 @@ Declare one of these triggers in object form. Its `workflows` array contains sib
       "workflows": ["publish-core"]
     }
   ],
+  "runsOn": "ubuntu-24.04",
   "build": ["./packages/preset"],
   "deploy": [
     {
@@ -473,6 +575,7 @@ Configure the selection on a dedicated Cloudflare Workers publish workflow:
         "release",
         "tag-push"
       ],
+      "runsOn": "ubuntu-24.04",
       "environmentSelection": {
         "versionTags": {
           "prerelease": "staging",
@@ -613,6 +716,8 @@ These features are related, but they solve different problems:
 
 For npm trusted publishing, configure the package on npm with the exact GitHub owner, repository, generated workflow filename, and optional GitHub environment. Do not create `NPM_TOKEN` for that target. If trusted publishing is not configured, Nova can still use a repository `NPM_TOKEN` secret as the explicit fallback.
 
+npm only accepts a trusted publisher for a package that already exists, so a brand-new package needs the token once. Create the `NPM_TOKEN` secret, publish the first release, configure trusted publishing on the package's npm settings page, then delete the secret. Later releases use OIDC automatically.
+
 Provenance is proof about the build; it is not permission to publish. OIDC supplies the short-lived identity used for trusted publishing, while the registry decides whether that identity is authorized.
 
 ## Publishing GitHub Actions
@@ -651,6 +756,7 @@ What lands on the `releases` branch for each release:
     "template": "publish",
     "name": "release",
     "triggers": ["release"],
+    "runsOn": "ubuntu-24.04",
     "deploy": [
       {
         "to": "github-action",
@@ -718,6 +824,7 @@ Example layout:
       "template": "publish",
       "name": "primary",
       "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
       "deploy": [
         {
           "to": "github-action",
@@ -735,6 +842,7 @@ Example layout:
       "template": "publish",
       "name": "secondary",
       "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
       "deploy": [
         {
           "to": "github-action",

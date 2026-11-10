@@ -6,6 +6,7 @@ import type {
   Lib_Item_BundlerKeys,
   Lib_Item_ChangelogAdjectives,
   Lib_Item_ChangelogCategoryBumpMap,
+  Lib_Item_ChangelogCategoryOpeningWords,
   Lib_Item_ChangelogNouns,
   Lib_Item_ChangelogOrderedCategories,
   Lib_Item_ChangelogValidBumps,
@@ -291,6 +292,33 @@ export const libItemChangelogCategoryBumpMap: Lib_Item_ChangelogCategoryBumpMap 
   updated: 'minor',
   fixed: 'patch',
   removed: 'major',
+};
+
+/**
+ * Lib - Item - Changelog Category Opening Words.
+ *
+ * Words an entry can't start with under each category, since the heading already
+ * says them. The changelog record and fold commands reject a match.
+ *
+ * @since 0.39.0
+ */
+export const libItemChangelogCategoryOpeningWords: Lib_Item_ChangelogCategoryOpeningWords = {
+  added: [
+    'added',
+    'add',
+  ],
+  updated: [
+    'updated',
+    'update',
+  ],
+  fixed: [
+    'fixed',
+    'fix',
+  ],
+  removed: [
+    'removed',
+    'remove',
+  ],
 };
 
 /**

@@ -1,5 +1,9 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.39.0 - 2026-11-10
+
+No changes.
+
 ## 0.38.0 - 2026-11-01
 
 No changes.
@@ -33,11 +37,11 @@ No changes.
 ## 0.34.0 - 2026-10-26
 
 ### FIXED
-- Fixed the blog list page and tag pages leaving out their meta description; the list page now uses the blog's `blogDescription` and a tag page uses its tag description, as Docusaurus does.
-- Fixed Docusaurus preset validation loading across native Node 22 and Node 24 plus Docusaurus Jiti by resolving both supported @docusaurus/utils-validation module shapes, with behavioral loader regression coverage.
-- Fixed translated sites leaving out the `hreflang` alternate links and `og:locale` that Docusaurus emits; every page now links each locale's version, plus an `x-default` pointing at the default locale.
-- Fixed navbar links such as `/blog/` never showing as active on sites served under a base path or in a non-default locale; plain links now resolve through the site's base URL before matching, with regression coverage.
-- Fixed the Stats block keying each stat by its value, which made stats with the same number clash; each stat is now keyed by its label.
+- The blog list page and tag pages no longer leave out their meta description; the list page now uses the blog's `blogDescription` and a tag page uses its tag description, as Docusaurus does.
+- Docusaurus preset validation loads across native Node 22 and Node 24 plus Docusaurus Jiti by resolving both supported @docusaurus/utils-validation module shapes, with behavioral loader regression coverage.
+- Translated sites no longer leave out the `hreflang` alternate links and `og:locale` that Docusaurus emits; every page now links each locale's version, plus an `x-default` pointing at the default locale.
+- Navbar links such as `/blog/` now show as active on sites served under a base path or in a non-default locale; plain links now resolve through the site's base URL before matching, with regression coverage.
+- The Stats block no longer keys each stat by its value, which made stats with the same number clash; each stat is now keyed by its label.
 
 ## 0.33.0 - 2026-10-18
 
@@ -45,7 +49,7 @@ No changes.
 - Measured desktop navbar links against the live space between the brand and action controls, recalculated overflow as the browser resizes, and reserved the More control only when the complete navigation row cannot fit.
 
 ### ADDED
-- Added a fullscreen Mermaid view that fits the diagram on entry, preserves zoom and pan controls, supports Escape, and falls back to an in-page fullscreen surface when the browser Fullscreen API is unavailable.
+- A fullscreen Mermaid view that fits the diagram on entry, preserves zoom and pan controls, supports Escape, and falls back to an in-page fullscreen surface when the browser Fullscreen API is unavailable.
 
 ## 0.32.0 - 2026-10-16
 
@@ -68,7 +72,7 @@ No changes.
 ## 0.30.0 - 2026-10-11
 
 ### ADDED
-- Added accessible Mermaid diagram controls with zoom buttons, view reset, pointer dragging, keyboard panning, and responsive viewport styling.
+- Accessible Mermaid diagram controls with zoom buttons, view reset, pointer dragging, keyboard panning, and responsive viewport styling.
 
 ## 0.29.0 - 2026-10-07
 
@@ -101,27 +105,27 @@ No changes.
 ## 0.27.0 - 2026-09-11
 
 ### FIXED
-- Fixed excess plural-form warnings in Hebrew and Indonesian localized builds by overriding Docusaurus's blog post messages with the correct number of forms.
-- Fixed the mobile docs sidebar to close after route navigation and the mobile table of contents to close after route or heading selection.
+- Hebrew and Indonesian localized builds no longer show excess plural-form warnings, since Docusaurus's blog post messages are overridden with the correct number of forms.
+- The mobile docs sidebar closes after route navigation and the mobile table of contents closes after route or heading selection.
 
 ## 0.26.0 - 2026-09-10
 
 ### UPDATED
-- Updated the Docusaurus preset reference with every Nova option, forwarded content-plugin setting, bundled integration, runtime dependency, and peer dependency, plus a manifest-to-documentation drift check.
-- Updated the Docusaurus preset's nine `@docusaurus/*` runtime packages from 3.10.0 to 3.10.2 and aligned its Docusaurus types, React types, ESLint, and Vitest development dependencies.
-- Updated Mermaid to 11.16.1 to consume its official security fixes.
+- The Docusaurus preset reference covers every Nova option, forwarded content-plugin setting, bundled integration, runtime dependency, and peer dependency, plus a manifest-to-documentation drift check.
+- The Docusaurus preset's nine `@docusaurus/*` runtime packages move from 3.10.0 to 3.10.2, and its Docusaurus types, React types, ESLint, and Vitest development dependencies are aligned.
+- Mermaid moves to 11.16.1 to consume its official security fixes.
 - Migrated the preset, theme plugin, browser exports, and CLI to one explicit ESM package boundary while preserving CommonJS dependency interoperability.
-- Updated the Docusaurus preset documentation for all i18n commands, navbar fields, and inline Iconify footer icons, with source-backed drift tests.
+- The Docusaurus preset documentation covers all i18n commands, navbar fields, and inline Iconify footer icons, with source-backed drift tests.
 
 ### FIXED
-- Fixed production CSS minimization to keep the mobile search mount transition warning-free while preserving its opening behavior.
+- Production CSS minimization keeps the mobile search mount transition warning-free while preserving its opening behavior.
 - Allowed the documented minimal preset configuration by safely handling omitted optional plugin and analytics groups.
-- Fixed the Docusaurus route progress bar to run through the client navigation lifecycle and apply the complete validated configuration surface with stable Nova defaults.
+- The Docusaurus route progress bar runs through the client navigation lifecycle and applies the complete validated configuration surface with stable Nova defaults.
 - Made live code blocks safe during static generation and prevented quoted title text from being mistaken for standalone code-fence flags.
-- Fixed classic search-worker validation to transpile current source in memory and reuse the production normalization path. Clean checks no longer require a prebuilt preset or package-level Turbo override, while incompatible worker syntax now fails during both tests and site builds.
+- Classic search-worker validation transpiles current source in memory and reuses the production normalization path. Clean checks no longer require a prebuilt preset or package-level Turbo override, while incompatible worker syntax now fails during both tests and site builds.
 
 ### ADDED
-- Added a configurable Docusaurus webpack cache policy that uses memory-only caching during development and disables production cache persistence by default, preventing multilingual sites from exhausting disk space.
+- A configurable Docusaurus webpack cache policy that uses memory-only caching during development and disables production cache persistence by default, preventing multilingual sites from exhausting disk space.
 
 ## 0.25.2 - 2026-08-20
 
@@ -138,16 +142,16 @@ No changes.
 ## 0.24.0 - 2026-08-16
 
 ### FIXED
-- Fixed navbar brand title ellipsis truncating against action buttons with no gap
-- Fixed mobile menu brand title missing ellipsis truncation
-- Fixed blog post dates rolling back one day for users in negative-UTC timezones
-- Fixed mobile menu items clipping during slide-up animation
+- The navbar brand title ellipsis no longer truncates against action buttons with no gap
+- The mobile menu brand title truncates with an ellipsis
+- Blog post dates no longer roll back one day for users in negative-UTC timezones
+- Mobile menu items no longer clip during slide-up animation
 - Navbar brand title no longer overflows or wraps at narrow viewport widths; long site titles now truncate with an ellipsis
 - InstallStrip copy button threw an uncaught TypeError when the Clipboard API was unavailable (e.g. non-HTTPS contexts); now shows an alert explaining that clipboard requires a secure context and to copy the command manually.
 
 ### ADDED
-- Added Canvas freeform container block for custom homepage sections
-- Added max-height scroll to locale dropdown menu
+- A Canvas freeform container block for custom homepage sections
+- Locale dropdown menu has a max-height scroll
 
 ## 0.23.0 - 2026-08-11
 
@@ -213,7 +217,7 @@ No changes.
 - Any docs or MDX page can now be embedded without the site chrome by appending `?docusaurus-data-bare=true` to its URL, with no frontmatter or configuration required. An inline pre-paint script maps `docusaurus-data-*` query parameters to `data-*` attributes on the document element before hydration, and a new shared embed stylesheet keyed off `html[data-bare="true"]` hides the navbar, footer, announcement bar, back-to-top button, skip-to-content link, docs sidebar, breadcrumbs, paginator, table of contents, tags, share buttons, and edit link, while keeping the page title, content, and last-updated date and stretching the content column to a centered full-width reading column. Pages always render with the full chrome by default, and removing the parameter restores it.
 - Adds the `theme-nova i18n coverage` command, which reports per-locale translation coverage over both `code.json` strings and Markdown content (docs, blog, and pages). Coverage scores each locale against the union of keys any locale translates, so brand and technical tokens left English in every locale surface as `English-only` rather than counting as gaps; the actionable `To translate` bucket is strings translated in another locale but English here, plus content files with no translated copy. `--min-coverage <percent>` exits 1 when any locale falls below the threshold for continuous integration, `--gaps` lists the exact missing strings and files per locale, and `--locale` narrows the report while still scoring against every configured locale.
 - The theme-nova translation registry now ships bundles for all 33 remaining Docusaurus-supported locales — Bulgarian, Bengali, Czech, Danish, German, Spanish, Estonian, Persian, Filipino, French, Hebrew, Hindi, Hungarian, Indonesian, Icelandic, Italian, Japanese, Korean, Norwegian Bokmål, Dutch, Polish, Brazilian Portuguese, European Portuguese, Russian, Slovenian, Serbian, Swedish, Turkmen, Turkish, Ukrainian, Urdu, and Vietnamese, plus Traditional Chinese — bringing full coverage to 35 locales alongside the existing Arabic and Simplified Chinese. Every bundle mirrors the English key registry one-to-one, preserves message placeholders, and carries the exact plural form count each locale's plural rules require, so sites configured for any Docusaurus locale get a fully translated Nova theme out of the box.
-- Added a `theme-nova` binary that reconciles the Docusaurus translation tree. `theme-nova i18n sync` regenerates and reconciles `code.json` and the `docusaurus-theme-nova/<area>.json` bundles: it seeds new source keys, drops the redundant `theme.*` and area copies whose message equals the extracted source default or the localized theme-translations default, and preserves every real translation or override verbatim. `theme-nova i18n check` computes the same plan without writing and exits non-zero on drift so CI can enforce a reconciled tree. Orphaned keys whose source string was removed are never dropped silently: an interactive run prompts per file, a non-interactive run blocks and writes nothing, and `--delete-defunct` opts into removing them. It replaces `docusaurus write-translations` for Nova sites by folding extraction, pruning, and orphan gating into one command, so no separate post-prune wrapper is needed.
+- A `theme-nova` binary that reconciles the Docusaurus translation tree. `theme-nova i18n sync` regenerates and reconciles `code.json` and the `docusaurus-theme-nova/<area>.json` bundles: it seeds new source keys, drops the redundant `theme.*` and area copies whose message equals the extracted source default or the localized theme-translations default, and preserves every real translation or override verbatim. `theme-nova i18n check` computes the same plan without writing and exits non-zero on drift so CI can enforce a reconciled tree. Orphaned keys whose source string was removed are never dropped silently: an interactive run prompts per file, a non-interactive run blocks and writes nothing, and `--delete-defunct` opts into removing them. It replaces `docusaurus write-translations` for Nova sites by folding extraction, pruning, and orphan gating into one command, so no separate post-prune wrapper is needed.
 
 ## 0.20.0 - 2026-07-01
 
@@ -239,7 +243,7 @@ No changes.
 ## 0.18.0 - 2026-06-19
 
 ### UPDATED
-- Renames the `./components` subpath export to `./blocks` to make the consumption-mode axis explicit: `theme/` holds Docusaurus swizzle targets (`@theme/X`) and `blocks/` holds Nova-owned direct-import surfaces (Hero, Frame, Stats, etc.). Update consumer imports from `@cbnventures/docusaurus-preset-nova/components` to `.../blocks`.
+- Renames the `./components` subpath export to `./blocks` to make the consumption-mode axis explicit: `theme/` holds Docusaurus swizzle targets (`@theme/X`) and `blocks/` holds Nova-owned direct-import surfaces (Hero, Frame, Stats, etc.). Consumer imports change from `@cbnventures/docusaurus-preset-nova/components` to `.../blocks`.
 - Renames the preset's four internal classes (the theme entry, `Color`, `CssGenerator`, and the lib utility) to the literal `Runner`, matching nova 0.18.0's convention, and migrates type aliases to the underscore form (e.g. `LibColorConstructorHsl` becomes `Lib_Color_Runner_Constructor_Hsl`). These classes are internal — Docusaurus consumes the preset through its default export by package name (plus the `./theme` and `./blocks` subpaths), so the rename is invisible to consumers; the renamed identifiers do surface in the published `./types/theme` and `./types/config` declarations.
 - Reworks the bundled Iconify collections: removes `@iconify-json/ic` and adds `@iconify-json/logos`, `@iconify-json/openmoji`, and `@iconify-json/simple-icons`. Consumers referencing `ic:*` icons should migrate to `ri:*` / `lucide:*` or one of the new collections (brand marks via `logos:*` / `simple-icons:*`, expressive glyphs via `openmoji:*`).
 - Gives Mermaid diagrams per-preset identity through five `preset.css` tokens (`node-radius`, `edge-stroke`, `cluster-fill`, `cluster-stroke`, `cluster-radius`, with dark-mode overrides on the color tokens): Marshal and Signal render sharp corners, the other presets rounded, and the tooltip radius tracks `--nova-mermaid-node-radius`. Diagram typography is pinned to a 14px system-sans stack (decoupled from `--nova-font-body`), and renders gate on `document.fonts.ready` so font loading can't push measurement out of sync.

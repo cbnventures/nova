@@ -1,21 +1,216 @@
-#!/usr/local/bin/php -f
+#!/usr/local/bin/php
 <?php
 
 declare(strict_types=1);
 
+use PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime\FileLock;
+use PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime\PackagePaths;
+use PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime\UpdateManager;
+
 require_once('/etc/inc/config.inc');
 require_once('/etc/inc/util.inc');
+require_once('/usr/local/pkg/[__WORKSPACE_NAME__]/FileLock.php');
+require_once('/usr/local/pkg/[__WORKSPACE_NAME__]/PackagePaths.php');
+require_once('/usr/local/pkg/[__WORKSPACE_NAME__]/UpdateManager.php');
 
-$settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
+/**
+ * Returns one test-only update endpoint override from the CLI environment.
+ *
+ * No configuration or WebGUI path reads these values. An empty variable falls back
+ * to the generated production constant.
+ *
+ * @param string $name     Environment variable name.
+ * @param string $fallback Production value.
+ *
+ * @return string Endpoint value.
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]EnvironmentOverride(string $name, string $fallback): string
+{
+    $value = getenv($name);
 
-if (!is_array($settings) || ($settings['enabled'] ?? '') !== 'on') {
-    exit(0);
+    return is_string($value) && $value !== '' ? $value : $fallback;
 }
 
-$message = trim((string) ($settings['message'] ?? ''));
+/**
+ * Runs a release check or verified self-update under the package lock.
+ *
+ * @param bool $selfUpdate Whether to install instead of only checking.
+ *
+ * @return int Process exit code.
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(bool $selfUpdate): int
+{
+    $fileLock = new FileLock(PackagePaths::LOCK_FILE);
 
-if ($message === '') {
-    $message = 'Example [__WORKSPACE_TITLE__] background task completed.';
+    try {
+        UpdateManager::assertEnvironment();
+
+        $installedVersion = UpdateManager::installedVersion();
+
+        if ($installedVersion === null) {
+            throw new RuntimeException(gettext('The installed package version could not be determined.'));
+        }
+
+        if ($fileLock->acquire() === false) {
+            $message = gettext('Another package operation is already running.');
+
+            if ($selfUpdate) {
+                UpdateManager::failQueuedSelfUpdate($message);
+            }
+
+            fwrite(STDOUT, $message . PHP_EOL);
+
+            return 0;
+        }
+
+        $settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
+        $settings = is_array($settings) ? $settings : [];
+        $remoteNotifications = ($settings['update_remote_notifications'] ?? '') === 'on';
+        $updateManager = new UpdateManager(
+            $installedVersion,
+            pfsensePackage[__WORKSPACE_IDENTIFIER__]EnvironmentOverride(
+                'NOVA_PFSENSE_UPDATE_RELEASES_API',
+                UpdateManager::RELEASES_API,
+            ),
+            pfsensePackage[__WORKSPACE_IDENTIFIER__]EnvironmentOverride(
+                'NOVA_PFSENSE_UPDATE_DOWNLOAD_PREFIX',
+                UpdateManager::DOWNLOAD_PREFIX,
+            ),
+        );
+        $state = $selfUpdate
+            ? $updateManager->selfUpdate($remoteNotifications)
+            : $updateManager->check($remoteNotifications);
+
+        if ($selfUpdate === false) {
+            fwrite(
+                STDOUT,
+                sprintf(
+                    gettext('The latest available version is %1$s.'),
+                    (string) ($state['latest_version'] ?? ''),
+                ) . PHP_EOL,
+            );
+        }
+
+        return 0;
+    } catch (Throwable $throwable) {
+        if ($selfUpdate) {
+            try {
+                UpdateManager::failQueuedSelfUpdate($throwable->getMessage());
+            } catch (Throwable) {
+                // Preserve the original update failure for CLI output.
+            }
+        }
+
+        fwrite(STDERR, sprintf(gettext('[__WORKSPACE_TITLE__] failed: %1$s'), $throwable->getMessage()) . PHP_EOL);
+
+        return 1;
+    } finally {
+        $fileLock->release();
+    }
 }
 
-logger(LOG_NOTICE, sprintf('[__WORKSPACE_TITLE__]: %s', $message));
+/**
+ * Runs the replaceable starter background task under the package lock.
+ *
+ * @return int Process exit code.
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunTask(): int
+{
+    $fileLock = new FileLock(PackagePaths::LOCK_FILE);
+
+    try {
+        if ($fileLock->acquire() === false) {
+            fwrite(STDOUT, gettext('Another package operation is already running.') . PHP_EOL);
+
+            return 0;
+        }
+
+        $settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
+
+        if (!is_array($settings) || ($settings['enabled'] ?? '') !== 'on') {
+            return 0;
+        }
+
+        $message = trim((string) ($settings['message'] ?? ''));
+
+        if ($message === '') {
+            $message = 'Example [__WORKSPACE_TITLE__] background task completed.';
+        }
+
+        // PHP's syslog() exists on every supported pfSense release; pfSense's own
+        // logger() helper is missing from CE 2.8.
+        syslog(LOG_NOTICE, sprintf('[__WORKSPACE_TITLE__]: %s', $message));
+
+        return 0;
+    } catch (Throwable $throwable) {
+        fwrite(STDERR, sprintf(gettext('[__WORKSPACE_TITLE__] failed: %1$s'), $throwable->getMessage()) . PHP_EOL);
+
+        return 1;
+    } finally {
+        $fileLock->release();
+    }
+}
+
+/**
+ * Runs the package command-line entry point.
+ *
+ * @param list<string> $arguments Command-line arguments.
+ *
+ * @return int Process exit code.
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]Main(array $arguments): int
+{
+    $checkUpdates = false;
+    $selfUpdate = false;
+
+    foreach (array_slice($arguments, 1) as $argument) {
+        switch ($argument) {
+            case '--check-updates': {
+                $checkUpdates = true;
+                break;
+            }
+
+            case '--self-update': {
+                $selfUpdate = true;
+                break;
+            }
+
+            case '--help': {
+                fwrite(STDOUT, implode(PHP_EOL, [
+                    gettext('Usage: [__WORKSPACE_NAME__] [--check-updates | --self-update | --help]'),
+                    gettext('Without an option, the configured background task runs.'),
+                ]) . PHP_EOL);
+
+                return 0;
+            }
+
+            default: {
+                fwrite(STDERR, sprintf(gettext('Unknown option: %1$s'), $argument) . PHP_EOL);
+
+                return 64;
+            }
+        }
+    }
+
+    if ($checkUpdates && $selfUpdate) {
+        fwrite(STDERR, gettext('Update commands cannot be combined.') . PHP_EOL);
+
+        return 64;
+    }
+
+    if ($checkUpdates || $selfUpdate) {
+        return pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand($selfUpdate);
+    }
+
+    return pfsensePackage[__WORKSPACE_IDENTIFIER__]RunTask();
+}
+
+exit(pfsensePackage[__WORKSPACE_IDENTIFIER__]Main($argv));

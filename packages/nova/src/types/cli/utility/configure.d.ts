@@ -16,15 +16,19 @@ import type {
   Shared_BlueprintConfigTriggerObject_Workflows,
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintConfigWorkflow_Build,
+  Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes,
   Shared_BlueprintConfigWorkflow_ContainerPlatforms,
   Shared_BlueprintConfigWorkflow_Deploy,
   Shared_BlueprintConfigWorkflow_EnvironmentSelection,
   Shared_BlueprintConfigWorkflow_RunsOn,
+  Shared_BlueprintConfigWorkflow_StepTimeoutMinutes,
   Shared_BlueprintConfigWorkflow_TimeoutMinutes,
   Shared_BlueprintConfigWorkflow_Triggers,
   Shared_BlueprintConfigWorkflow_With,
   Shared_DialogAction,
   Shared_EntityMenuAction,
+  Shared_GithubRunnerImages,
+  Shared_GithubRunnerSelectableLabels,
   Shared_NormalizedResult,
   Shared_NormalizedResult_Sanitized,
   Shared_NovaConfig,
@@ -199,6 +203,17 @@ export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Trimmed = string;
 export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Parsed = unknown;
 
 /**
+ * CLI - Utility - Configure - Is Environment Prefix Input.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Trimmed = string;
+
+/**
  * CLI - Utility - Configure - Is Ignore File Path Input.
  *
  * @since 0.32.0
@@ -290,6 +305,29 @@ export type Cli_Utility_Configure_Runner_IsStringRecordInput_Returns = true | st
 export type Cli_Utility_Configure_Runner_IsStringRecordInput_Trimmed = string;
 
 export type Cli_Utility_Configure_Runner_IsStringRecordInput_Parsed = unknown;
+
+/**
+ * CLI - Utility - Configure - Is Workflow Step Timeout Input.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Parsed = unknown;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Entries = [string, unknown][];
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_TypedEntry = [string, unknown];
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryKind = string;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryValue = unknown;
+
+export type Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_IsKnownKind = boolean;
 
 /**
  * CLI - Utility - Configure - Normalize Email.
@@ -2852,6 +2890,30 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReturnsBack = {
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns = Promise<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReturnsApply | Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReturnsBack>;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerImages = Shared_GithubRunnerImages | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableRunnerLabels = Shared_GithubRunnerSelectableLabels;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingRunsOn = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Value = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice = {
+  title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Title;
+  description: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Description;
+  value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice_Value;
+};
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoice[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_PaidSuffix = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerInitialIndex = number;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateChoice_Description = string;
@@ -2869,6 +2931,10 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingBuildTimeoutMinutes = Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingStepTimeoutMinutes = Shared_BlueprintConfigWorkflow_StepTimeoutMinutes | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection = Shared_BlueprintConfigWorkflow_EnvironmentSelection | undefined;
 
@@ -2920,7 +2986,7 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResultV
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix = string;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey = 'runsOn' | 'timeoutMinutes';
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey = 'runsOn' | 'timeoutMinutes' | 'buildTimeoutMinutes' | 'stepTimeoutMinutes';
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult = string;
 
@@ -2933,6 +2999,14 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn = Sh
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TimeoutMinutesRaw = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildTimeoutMinutesRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedBuildTimeoutMinutes = Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_StepTimeoutMinutesRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedStepTimeoutMinutes = Shared_BlueprintConfigWorkflow_StepTimeoutMinutes | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDir = string;
 
@@ -3081,6 +3155,10 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice = 
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = string[];
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetMetadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetWorkspace = Shared_NovaConfigWorkspace | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes = string[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetInAnotherWorkflow = boolean;
@@ -3144,6 +3222,14 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType 
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsContainerTarget = boolean;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathMetadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkspaceKeys = string[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathWorkspace = Shared_NovaConfigWorkspace | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value = string;
@@ -3152,8 +3238,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirCho
   title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title;
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value;
 };
-
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = number;
 
@@ -3201,11 +3285,15 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Needs =
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult>;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey = 'targetSettings';
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey = 'targetTimeoutMinutes' | 'targetSettings';
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTimeoutMinutesRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetTimeoutMinutes = number | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings = Shared_BlueprintConfigDeployTarget_With;
 

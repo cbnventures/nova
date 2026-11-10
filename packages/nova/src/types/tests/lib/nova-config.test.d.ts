@@ -241,6 +241,21 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowName
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Messages = string[];
 
 /**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenPrefixesUseInvalidShapes.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Serialized = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Messages = string[];
+
+/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly.
  *
  * @since 0.21.0
@@ -318,6 +333,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueW
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory = string;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_Serialized = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesValidPrefixShapes.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Serialized = string;
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - WarnsWhenABrowserExposedKeyIsMarkedSecret.

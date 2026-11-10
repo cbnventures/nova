@@ -80,8 +80,10 @@ import type {
   Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkflow_BuildTimeoutMinutes,
   Shared_NovaConfigWorkflow_ContainerPlatforms,
   Shared_NovaConfigWorkflow_RunsOn,
+  Shared_NovaConfigWorkflow_StepTimeoutMinutes,
   Shared_NovaConfigWorkflow_TimeoutMinutes,
   Shared_NovaConfigWorkflow_Triggers,
   Shared_NovaConfigWorkflowEnvironmentSelection,
@@ -1437,6 +1439,18 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes | undefined;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawBuildTimeoutMinutes = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_BuildTimeoutMinutes = Shared_NovaConfigWorkflow_BuildTimeoutMinutes | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeoutMinutes = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_StepTimeoutMinutes = Shared_NovaConfigWorkflow_StepTimeoutMinutes;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_StepKind = keyof Shared_NovaConfigWorkflow_StepTimeoutMinutes;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeout = unknown;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
@@ -1459,6 +1473,8 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Path = string;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Artifact = string;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_TimeoutMinutes = number;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_After = string[];
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_With = Record<string, string>;
@@ -1467,6 +1483,7 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element = {
   to: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_To;
   path: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Path;
   artifact?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_Artifact;
+  timeoutMinutes?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_TimeoutMinutes;
   after?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_After;
   with?: Lib_NovaConfig_Runner_ParseWorkflows_Deploy_Element_With;
 };
@@ -1481,6 +1498,10 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployPath = string | undefined
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact = string | undefined;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawDeployTimeoutMinutes = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTimeoutMinutes = number | undefined;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter = string[];
@@ -1491,6 +1512,8 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Path = string;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Artifact = string;
 
+export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_TimeoutMinutes = number;
+
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_After = string[];
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_With = Record<string, string>;
@@ -1499,6 +1522,7 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget = {
   to: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_To;
   path: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Path;
   artifact?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_Artifact;
+  timeoutMinutes?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_TimeoutMinutes;
   after?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_After;
   with?: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget_With;
 };

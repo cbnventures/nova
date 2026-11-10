@@ -110,11 +110,31 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenCategoryIsInvalid_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenCategoryIsInvalid_PackageJsonPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenCategoryIsInvalid_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Cases,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Category,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogEntries,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Message,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ProjectDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_ConfigPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_PackageJsonPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Cases,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Category,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogEntries,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Message,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ProjectDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenPackageIsInvalid_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenPackageIsInvalid_ConfigPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenPackageIsInvalid_PackageJsonContents,
@@ -485,7 +505,7 @@ describe('CliUtilityChangelog.run', async () => {
       package: '@test/core',
       category: 'added',
       bump: 'minor',
-      message: 'Added new feature',
+      message: 'New feature',
     });
 
     strictEqual(process.exitCode, undefined);
@@ -503,7 +523,7 @@ describe('CliUtilityChangelog.run', async () => {
     const hasPackage: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasPackage = content.includes('package: "@test/core"');
     const hasCategory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasCategory = content.includes('category: added');
     const hasBump: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasBump = content.includes('bump: minor');
-    const hasMessage: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasMessage = content.includes('Added new feature');
+    const hasMessage: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasMessage = content.includes('New feature');
 
     strictEqual(hasPackage, true);
     strictEqual(hasCategory, true);
@@ -669,6 +689,168 @@ describe('CliUtilityChangelog.run', async () => {
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('errors when message starts with its category', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ProjectDirectory = join(sandboxRoot, 'category-verb-message');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonContents = JSON.stringify({
+      name: 'test-category-verb-message',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const cases: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Cases = [
+      [
+        'updated',
+        'Updated the settings page.',
+      ],
+      [
+        'fixed',
+        'FIXED a crash on start.',
+      ],
+      [
+        'added',
+        '**Added** a backup page.',
+      ],
+      [
+        'removed',
+        'REMOVED: the legacy flag.',
+      ],
+      [
+        'updated',
+        'Update the settings page.',
+      ],
+      [
+        'fixed',
+        'Fix a crash on start.',
+      ],
+      [
+        'added',
+        'ADD a backup page.',
+      ],
+      [
+        'removed',
+        'Remove the legacy flag.',
+      ],
+    ];
+
+    for (const testCase of cases) {
+      const category: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Category = testCase[0];
+      const message: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Message = testCase[1];
+
+      process.exitCode = undefined;
+
+      await CliUtilityChangelog.run({
+        record: true,
+        package: '@test/core',
+        category,
+        bump: 'minor',
+        message,
+      });
+
+      strictEqual(process.exitCode, 1);
+    }
+
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogDirectory = join(projectDirectory, '.changelog');
+    const changelogEntries: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogEntries = await readdir(changelogDirectory).catch(() => []);
+
+    strictEqual(changelogEntries.filter((changelogEntry) => changelogEntry !== 'README.md').length, 0);
+
+    process.exitCode = undefined;
+
+    return;
+  });
+
+  it('errors when message does not start with a capital letter', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ProjectDirectory = join(sandboxRoot, 'lowercase-message');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonContents = JSON.stringify({
+      name: 'test-lowercase-message',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const cases: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Cases = [
+      [
+        'updated',
+        'the settings page loads faster.',
+      ],
+      [
+        'fixed',
+        'pfSense pages load again.',
+      ],
+      [
+        'added',
+        '`nova utility doctor` checks the project.',
+      ],
+      [
+        'removed',
+        '- The legacy flag is gone.',
+      ],
+    ];
+
+    for (const testCase of cases) {
+      const category: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Category = testCase[0];
+      const message: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Message = testCase[1];
+
+      process.exitCode = undefined;
+
+      await CliUtilityChangelog.run({
+        record: true,
+        package: '@test/core',
+        category,
+        bump: 'minor',
+        message,
+      });
+
+      strictEqual(process.exitCode, 1);
+    }
+
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogDirectory = join(projectDirectory, '.changelog');
+    const changelogEntries: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogEntries = await readdir(changelogDirectory).catch(() => []);
+
+    strictEqual(changelogEntries.filter((changelogEntry) => changelogEntry !== 'README.md').length, 0);
+
+    process.exitCode = undefined;
 
     return;
   });

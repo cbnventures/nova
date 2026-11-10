@@ -24,6 +24,16 @@ ios/<locale>/search-results/search.png
 
 Each target accepts exactly one PNG or JPEG. Nova uses Apple's placement names directly, leaves absent targets untouched, and rejects existing empty or multi-file targets before authentication.
 
+## Replacement safety
+
+Nova uploads each replacement to the App Asset Library and waits for Apple to finish processing it before changing the visible placement. The generated reference name includes the target platform and ends in the first eight hexadecimal characters of the local file's MD5 checksum, for example `[md5:1a2b3c4d]`. Platform-specific names prevent identical iOS and macOS files from sharing an asset unintentionally.
+
+A retry reuses a ready image with the exact generated reference name and an existing placement related to that image. Nova deletes only same-name image reservations in an explicitly recognized failed state; it leaves images with missing or unknown state data untouched. The first run after upgrading uploads each asset once because legacy reference names have no checksum. Superseded App Asset Library images are not deleted automatically because another placement may still use them.
+
+Apple's [placement limits](https://developer.apple.com/documentation/appstoreconnectapi/placing-assets-on-your-app-store-surfaces) allow one product-page header or search-result placement per group. The current and replacement placements therefore cannot coexist. Nova logs this non-atomic constraint, deletes the current placement only after the replacement image is ready, and then creates the replacement placement. If a create response is ambiguous, Nova relists placements with their related images included and reuses the accepted placement before retrying. If placement creation still fails, the group is temporarily empty, the error reports the exact old and new placement counts, and the processed image remains available for the next run to reuse.
+
+All App Store Connect requests and upload chunks run through a small bounded queue. Nova honors `Retry-After` and pauses the whole client when a `429` or Apple's `X-Rate-Limit` header shows that the hourly budget is nearly exhausted. Without `Retry-After`, rate-limit retries back off for up to about 10 minutes in total before failing. A rate-limit exhaustion error says that the run is safe to resume after Apple's budget resets. When one bounded batch fails, its already in-flight operations finish, every failure from that batch is reported together, and later batches do not start.
+
 ## Usage
 
 <Tabs groupId="install-state">

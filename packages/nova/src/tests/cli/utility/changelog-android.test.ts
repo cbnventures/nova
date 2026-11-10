@@ -129,5 +129,163 @@ describe('run Android releases', async () => {
     return;
   });
 
+  it('bumps the Android build while folding an existing section', async () => {
+    const projectDirectory: Tests_Cli_Utility_ChangelogAndroid_ProjectDirectory = join(sandboxRoot, 'android-fold');
+    const workspaceDirectory: Tests_Cli_Utility_ChangelogAndroid_WorkspaceDirectory = join(projectDirectory, 'apps', 'android');
+    const rootPackagePath: Tests_Cli_Utility_ChangelogAndroid_RootPackagePath = join(projectDirectory, 'package.json');
+    const configPath: Tests_Cli_Utility_ChangelogAndroid_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const appPackagePath: Tests_Cli_Utility_ChangelogAndroid_AppPackagePath = join(workspaceDirectory, 'package.json');
+    const gradlePath: Tests_Cli_Utility_ChangelogAndroid_GradlePath = join(workspaceDirectory, 'app', 'build.gradle.kts');
+    const changelogPath: Tests_Cli_Utility_ChangelogAndroid_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+
+    await mkdir(join(workspaceDirectory, 'app'), { recursive: true });
+
+    await Promise.all([
+      writeFile(rootPackagePath, `${JSON.stringify({ name: 'example' }, null, 2)}\n`, 'utf-8'),
+      writeFile(configPath, `${JSON.stringify({
+        project: {
+          name: {
+            slug: 'example',
+          },
+        },
+        workspaces: {
+          './apps/android': {
+            name: 'example-app-android',
+            role: 'app',
+            policy: 'trackable',
+          },
+        },
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(appPackagePath, `${JSON.stringify({
+        name: 'example-app-android',
+        version: '1.4.0',
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(gradlePath, [
+        'android {',
+        '  defaultConfig {',
+        '    versionCode = 449',
+        '    versionName = "1.4.0"',
+        '  }',
+        '}',
+        '',
+      ].join('\n'), 'utf-8'),
+      writeFile(changelogPath, [
+        '# example-app-android',
+        '',
+        '## 1.4.0 (449) - 2026-11-01',
+        '',
+        '### FIXED',
+        '',
+        '- Fixed the original Android issue.',
+        '',
+      ].join('\n'), 'utf-8'),
+    ]);
+
+    process.chdir(projectDirectory);
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      fold: true,
+      package: 'example-app-android',
+      add: true,
+      category: 'added',
+      message: 'The corrected Android behavior ships.',
+    });
+
+    const updatedGradle: Tests_Cli_Utility_ChangelogAndroid_UpdatedGradle = await readFile(gradlePath, 'utf-8');
+    const changelogContent: Tests_Cli_Utility_ChangelogAndroid_ChangelogContent = await readFile(changelogPath, 'utf-8');
+
+    strictEqual(updatedGradle.includes('versionName = "1.4.0"'), true);
+    strictEqual(updatedGradle.includes('versionCode = 450'), true);
+    strictEqual(changelogContent.includes('## 1.4.0 (450) - 2026-11-01'), true);
+    strictEqual(changelogContent.includes('- The corrected Android behavior ships.'), true);
+    strictEqual(process.exitCode, undefined);
+
+    return;
+  });
+
+  it('refuses to bump an older Android version', async () => {
+    const projectDirectory: Tests_Cli_Utility_ChangelogAndroid_ProjectDirectory = join(sandboxRoot, 'android-fold-older-version');
+    const workspaceDirectory: Tests_Cli_Utility_ChangelogAndroid_WorkspaceDirectory = join(projectDirectory, 'apps', 'android');
+    const rootPackagePath: Tests_Cli_Utility_ChangelogAndroid_RootPackagePath = join(projectDirectory, 'package.json');
+    const configPath: Tests_Cli_Utility_ChangelogAndroid_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const appPackagePath: Tests_Cli_Utility_ChangelogAndroid_AppPackagePath = join(workspaceDirectory, 'package.json');
+    const gradlePath: Tests_Cli_Utility_ChangelogAndroid_GradlePath = join(workspaceDirectory, 'app', 'build.gradle.kts');
+    const changelogPath: Tests_Cli_Utility_ChangelogAndroid_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+
+    await mkdir(join(workspaceDirectory, 'app'), { recursive: true });
+
+    await Promise.all([
+      writeFile(rootPackagePath, `${JSON.stringify({ name: 'example' }, null, 2)}\n`, 'utf-8'),
+      writeFile(configPath, `${JSON.stringify({
+        project: {
+          name: {
+            slug: 'example',
+          },
+        },
+        workspaces: {
+          './apps/android': {
+            name: 'example-app-android',
+            role: 'app',
+            policy: 'trackable',
+          },
+        },
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(appPackagePath, `${JSON.stringify({
+        name: 'example-app-android',
+        version: '1.4.0',
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(gradlePath, [
+        'android {',
+        '  defaultConfig {',
+        '    versionCode = 449',
+        '    versionName = "1.4.0"',
+        '  }',
+        '}',
+        '',
+      ].join('\n'), 'utf-8'),
+      writeFile(changelogPath, [
+        '# example-app-android',
+        '',
+        '## 1.4.0 (449) - 2026-11-01',
+        '',
+        '### FIXED',
+        '',
+        '- Fixed the current Android issue.',
+        '',
+        '## 1.3.0 (448) - 2026-10-01',
+        '',
+        '### FIXED',
+        '',
+        '- Fixed the older Android issue.',
+        '',
+      ].join('\n'), 'utf-8'),
+    ]);
+
+    process.chdir(projectDirectory);
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      fold: true,
+      package: 'example-app-android',
+      version: '1.3.0',
+      add: true,
+      category: 'fixed',
+      message: 'An older Android issue no longer happens.',
+    });
+
+    const updatedGradle: Tests_Cli_Utility_ChangelogAndroid_UpdatedGradle = await readFile(gradlePath, 'utf-8');
+    const changelogContent: Tests_Cli_Utility_ChangelogAndroid_ChangelogContent = await readFile(changelogPath, 'utf-8');
+
+    strictEqual(updatedGradle.includes('versionCode = 449'), true);
+    strictEqual(updatedGradle.includes('versionCode = 450'), false);
+    strictEqual(changelogContent.includes('An older Android issue no longer happens.'), false);
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = undefined;
+
+    return;
+  });
+
   return;
 });

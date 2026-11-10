@@ -190,9 +190,9 @@ export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaults
 /**
  * Tests - Lib - Scaffold - Workspace Contract - Derives Non Overlapping Environment Prefixes.
  *
- * @since 0.31.0
+ * @since 0.39.0
  */
-export type Tests_Lib_Scaffold_WorkspaceContract_DerivesNonOverlappingEnvironmentPrefixes_Returns = void;
+export type Tests_Lib_Scaffold_WorkspaceContract_DerivesNonOverlappingEnvironmentPrefixes_Returns = Promise<void>;
 
 /**
  * Tests - Lib - Scaffold - Workspace Contract - Derives Role Based Package Names.
@@ -200,6 +200,19 @@ export type Tests_Lib_Scaffold_WorkspaceContract_DerivesNonOverlappingEnvironmen
  * @since 0.26.0
  */
 export type Tests_Lib_Scaffold_WorkspaceContract_DerivesRoleBasedPackageNames_Returns = void;
+
+/**
+ * Tests - Lib - Scaffold - Workspace Contract - Disables PfSense Updates For Non GitHub Repositories.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ProjectDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ConfigPath = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ResolveReplacements = (workspaceName: string, configRoot: string) => Promise<Map<RegExp, string> | undefined>;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_Replacements = Map<RegExp, string> | undefined;
 
 /**
  * Tests - Lib - Scaffold - Workspace Contract - Merges Required Platforms When Registering Workspaces.
@@ -226,3 +239,47 @@ export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegi
  * @since 0.26.0
  */
 export type Tests_Lib_Scaffold_WorkspaceContract_NormalizesOnlyWorkspacePathsInsideTheRoot_Returns = void;
+
+/**
+ * Tests - Lib - Scaffold - Workspace Contract - Registers A Publish Deploy Target.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ProjectDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_WorkspaceDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigPath = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigContents = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigRaw = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_Config = Record<string, unknown>;
+
+/**
+ * Tests - Lib - Scaffold - Workspace Contract - Rejects PfSense Without Author Email.
+ *
+ * @since 0.39.0
+ */
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ProjectDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ConfigPath = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ResolveReplacements = (workspaceName: string, configRoot: string) => Promise<Map<RegExp, string> | undefined>;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_Result = Map<RegExp, string> | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Workspace Contract - Resolves PfSense Project Metadata.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ProjectDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ConfigPath = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ResolveReplacements = (workspaceName: string, configRoot: string) => Promise<Map<RegExp, string> | undefined>;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_Replacements = Map<RegExp, string> | undefined;

@@ -84,8 +84,14 @@ starts customizing the project.
   regenerates release state, and stamps supported unreleased annotations.
 - `nova utility run-recipes` runs every enabled recipe.
 - `nova utility run-workspaces <script>` executes the configured dependency
-  graph with the project's concurrency and cache settings.
+  graph with the project's concurrency and cache settings. For a configured
+  final product, add `--artifact <name>` so Nova builds its workspace closure
+  and assembles the declared root `build/<name>/` layout.
 - `nova utility run-scripts` coordinates related scripts inside one workspace.
+
+Keep workspace build outputs independent. The top-level `artifacts` map owns
+any deliberate combination into the root `build/` staging area; do not add
+ad-hoc copy steps between unrelated workspace build folders.
 
 Use command help and the generated docs for additional utilities. Do not invent
 new aliases, categories, or command semantics from memory.

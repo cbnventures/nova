@@ -65,6 +65,7 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_Manifest,
   Lib_DockerPackaging_Runner_BuildDockerfile_NeedsNodeRuntime,
   Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests,
+  Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig,
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageJson,
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageManager,
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies,
@@ -74,6 +75,19 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageName,
   Lib_DockerPackaging_Runner_BuildDockerfile_Ports,
   Lib_DockerPackaging_Runner_BuildDockerfile_PortSet,
+  Lib_DockerPackaging_Runner_BuildDockerfile_Project,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue,
+  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor,
   Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand,
   Lib_DockerPackaging_Runner_BuildDockerfile_QuotedPackageName,
   Lib_DockerPackaging_Runner_BuildDockerfile_Replacements,
@@ -90,6 +104,8 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePath,
   Lib_DockerPackaging_Runner_BuildDockerfile_ScriptsValue,
   Lib_DockerPackaging_Runner_BuildDockerfile_Template,
+  Lib_DockerPackaging_Runner_BuildDockerfile_Urls,
+  Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue,
   Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestCopyLines,
   Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestRestoreLines,
   Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestSourcePath,
@@ -173,6 +189,8 @@ import type {
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_Returns,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_WorkspacePackages,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_WorkspacePaths,
+  Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns,
+  Lib_DockerPackaging_Runner_EscapeDockerLabel_Value,
   Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyDirectory,
   Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackage,
   Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackageName,
@@ -600,7 +618,7 @@ export class Runner {
       fs.readFile(join(templateRoot, 'Dockerfile'), 'utf-8'),
       fs.readFile(join(templateRoot, 'compose.yml'), 'utf-8'),
     ]);
-    const dockerfileContent: Lib_DockerPackaging_Runner_GenerateForTarget_DockerfileContent = Runner.buildDockerfile(templateContents[0] ?? '', updatedManifest, buildOrder, rootPackage);
+    const dockerfileContent: Lib_DockerPackaging_Runner_GenerateForTarget_DockerfileContent = Runner.buildDockerfile(templateContents[0] ?? '', updatedManifest, buildOrder, rootPackage, novaConfig);
     const composeContent: Lib_DockerPackaging_Runner_GenerateForTarget_ComposeContent = Runner.buildCompose(templateContents[1] ?? '', updatedManifest);
     const ignoreFilesValue: Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFilesValue = novaConfig['ignoreFiles'];
     const configuredIgnoreFileEntry: Lib_DockerPackaging_Runner_GenerateForTarget_ConfiguredIgnoreFileEntry = (isPlainObject(ignoreFilesValue) === true) ? ignoreFilesValue['./.dockerignore'] : undefined;
@@ -1276,19 +1294,19 @@ export class Runner {
    * Renders a closure-scoped multi-stage build for the repository appliance while
    * using non-frozen installs because root lockfiles describe excluded workspaces.
    *
-   * @param {Lib_DockerPackaging_String}                            template    - Template.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_Manifest}   manifest    - Manifest.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder} buildOrder  - Build order.
-   * @param {Lib_DockerPackaging_JsonObject}                        rootPackage - Root package.
+   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_Template}    template    - Template.
+   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_Manifest}    manifest    - Manifest.
+   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder}  buildOrder  - Build order.
+   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage} rootPackage - Root package.
+   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig}  novaConfig  - Nova config.
    *
    * @private
    *
    * @returns {Lib_DockerPackaging_Runner_BuildDockerfile_Returns}
    *
-   * @since 0.34.0
+   * @since 0.39.0
    */
-
-  private static buildDockerfile(template: Lib_DockerPackaging_Runner_BuildDockerfile_Template, manifest: Lib_DockerPackaging_Runner_BuildDockerfile_Manifest, buildOrder: Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder, rootPackage: Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage): Lib_DockerPackaging_Runner_BuildDockerfile_Returns {
+  private static buildDockerfile(template: Lib_DockerPackaging_Runner_BuildDockerfile_Template, manifest: Lib_DockerPackaging_Runner_BuildDockerfile_Manifest, buildOrder: Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder, rootPackage: Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage, novaConfig: Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig): Lib_DockerPackaging_Runner_BuildDockerfile_Returns {
     const packageManagerValue: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue = rootPackage['packageManager'];
     const packageManagerDescriptor: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerDescriptor = LibCorepack.parsePackageManager(packageManagerValue);
     const packageManager: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManager = (packageManagerDescriptor === undefined) ? 'npm' : packageManagerDescriptor['name'];
@@ -1445,6 +1463,27 @@ export class Runner {
       ' \\',
       '  && ',
     ].join('\n'))}`;
+    const projectValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue = novaConfig['project'];
+    const project: Lib_DockerPackaging_Runner_BuildDockerfile_Project = (isPlainObject(projectValue) === true) ? projectValue : {};
+    const projectNameValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue = project['name'];
+    const projectName: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName = (isPlainObject(projectNameValue) === true) ? projectNameValue : {};
+    const projectDescriptionValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue = project['description'];
+    const projectDescription: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription = (isPlainObject(projectDescriptionValue) === true) ? projectDescriptionValue : {};
+    const urlsValue: Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue = novaConfig['urls'];
+    const urls: Lib_DockerPackaging_Runner_BuildDockerfile_Urls = (isPlainObject(urlsValue) === true) ? urlsValue : {};
+    let projectTitle: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle = '';
+
+    if (typeof projectName['title'] === 'string') {
+      projectTitle = projectName['title'];
+    } else if (typeof projectName['slug'] === 'string') {
+      projectTitle = projectName['slug'];
+    }
+    const projectShortDescription: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription = (typeof projectDescription['short'] === 'string') ? projectDescription['short'] : '';
+    const projectHomepage: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage = (typeof urls['homepage'] === 'string') ? urls['homepage'] : '';
+    const projectRepository: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository = (typeof urls['repository'] === 'string') ? urls['repository'] : '';
+    const projectDocumentation: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation = (typeof urls['documentation'] === 'string') ? urls['documentation'] : '';
+    const projectLicense: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense = (typeof project['license'] === 'string') ? project['license'] : '';
+    const projectVendor: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor = (typeof project['legalName'] === 'string') ? project['legalName'] : '';
     const replacements: Lib_DockerPackaging_Runner_BuildDockerfile_Replacements = {
       '[__DOCKER_BUILD_COMMANDS__]': (buildCommands.length === 0) ? '# No selected workspace declares a build script.' : buildCommands.join('\n'),
       '[__DOCKER_EXPOSE_DIRECTIVES__]': (exposeDirectives === '') ? '# This appliance does not expose a network port.' : exposeDirectives,
@@ -1458,6 +1497,13 @@ export class Runner {
       '[__DOCKER_WORKSPACE_MANIFEST_RESTORES__]': (workspaceManifestRestoreLines.length === 0) ? '# Workspace manifests already use this package manager\'s native protocol.' : workspaceManifestRestoreLines.join('\n'),
       '[__DOCKER_WORKSPACE_SOURCE_COPIES__]': workspaceSourceCopyLines.join('\n'),
       '[__DOCKER_WRITABLE_DIRECTORIES__]': writableDirectories,
+      '[__PROJECT_DESCRIPTION__]': Runner.escapeDockerLabel(projectShortDescription),
+      '[__PROJECT_DOCUMENTATION__]': Runner.escapeDockerLabel(projectDocumentation),
+      '[__PROJECT_HOMEPAGE__]': Runner.escapeDockerLabel(projectHomepage),
+      '[__PROJECT_LICENSE__]': Runner.escapeDockerLabel(projectLicense),
+      '[__PROJECT_NAME__]': Runner.escapeDockerLabel(projectTitle),
+      '[__PROJECT_REPOSITORY__]': Runner.escapeDockerLabel(projectRepository),
+      '[__PROJECT_VENDOR__]': Runner.escapeDockerLabel(projectVendor),
     };
     let content: Lib_DockerPackaging_Runner_BuildDockerfile_Content = applyScaffoldVersionReplacements(template);
 
@@ -1466,6 +1512,30 @@ export class Runner {
     }
 
     return applyScaffoldVersionReplacements(content);
+  }
+
+  /**
+   * Lib - Docker Packaging - Escape Docker Label.
+   *
+   * Escapes project-controlled metadata for a double-quoted Dockerfile LABEL
+   * value without permitting environment expansion or line injection.
+   *
+   * @param {Lib_DockerPackaging_Runner_EscapeDockerLabel_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static escapeDockerLabel(value: Lib_DockerPackaging_Runner_EscapeDockerLabel_Value): Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns {
+    return value
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('$', '\\$')
+      .replaceAll('\r', '\\r')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
   }
 
   /**

@@ -15,7 +15,9 @@
   },
   "include": [
     "./api/**/*.ts",
-    "./src/types/api/**/*.d.ts"
+    "./src/function/**/*.ts",
+    "./src/types/api/**/*.d.ts",
+    "./src/types/function/**/*.d.ts"
   ],
   "exclude": [
     "./api/**/*.test.ts",

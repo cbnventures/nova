@@ -33,37 +33,43 @@ env:
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
         with:
           fetch-depth: 0
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Install packages"
+        timeout-minutes: 15
         run: "npm install"
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Check project"
+        timeout-minutes: 15
         run: |
           npm run check -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
+        timeout-minutes: 15
         run: |
           npm run build -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Validate build artifacts"
+        timeout-minutes: 15
         run: |
           set -euo pipefail
 
@@ -158,6 +164,7 @@ jobs:
 
       - name: "Upload build artifacts (npm/packages-nova)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-nova"
           retention-days: 1
@@ -168,6 +175,7 @@ jobs:
 
       - name: "Upload build artifacts (npm/packages-docusaurus-preset-nova)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-docusaurus-preset-nova"
           retention-days: 1
@@ -178,6 +186,7 @@ jobs:
 
       - name: "Upload build artifacts (github-packages/packages-nova)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-github-packages-packages-nova"
           retention-days: 1
@@ -188,6 +197,7 @@ jobs:
 
       - name: "Upload build artifacts (github-packages/packages-docusaurus-preset-nova)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-github-packages-packages-docusaurus-preset-nova"
           retention-days: 1
@@ -198,6 +208,7 @@ jobs:
 
       - name: "Upload build artifacts (cloudflare-pages/apps-docs)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-pages-apps-docs"
           retention-days: 1
@@ -208,23 +219,26 @@ jobs:
 
   publish-npm-packages-nova:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
       id-token: "write"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 
       - name: "Remove deprecated .npmrc entries"
+        timeout-minutes: 10
         run: |
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
 
@@ -234,11 +248,13 @@ jobs:
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-nova"
           path: "./packages/nova/build"
 
       - name: "Configure authentication"
+        timeout-minutes: 5
         env:
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
         run: |
@@ -257,6 +273,7 @@ jobs:
           fi
 
       - name: "Publish package to npm"
+        timeout-minutes: 15
         run: |
           if [ "${PUBLISH}" = "true" ]; then
             echo "[Publish] Production."
@@ -269,23 +286,26 @@ jobs:
 
   publish-npm-packages-docusaurus-preset-nova:
     needs: ["build", "publish-npm-packages-nova"]
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
       id-token: "write"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 
       - name: "Remove deprecated .npmrc entries"
+        timeout-minutes: 10
         run: |
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
 
@@ -295,11 +315,13 @@ jobs:
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-docusaurus-preset-nova"
           path: "./packages/docusaurus-preset-nova/build"
 
       - name: "Configure authentication"
+        timeout-minutes: 5
         env:
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
         run: |
@@ -318,6 +340,7 @@ jobs:
           fi
 
       - name: "Publish package to npm"
+        timeout-minutes: 15
         run: |
           if [ "${PUBLISH}" = "true" ]; then
             echo "[Publish] Production."
@@ -330,8 +353,8 @@ jobs:
 
   publish-github-packages-packages-nova:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
       packages: "write"
@@ -339,15 +362,18 @@ jobs:
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Configure registry for GitHub Packages"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 5
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
@@ -355,6 +381,7 @@ jobs:
           scope: "@${{ github.repository_owner }}"
 
       - name: "Remove deprecated .npmrc entries"
+        timeout-minutes: 10
         run: |
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
 
@@ -364,11 +391,13 @@ jobs:
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-github-packages-packages-nova"
           path: "./packages/nova/build"
 
       - name: "Change to scoped package name"
+        timeout-minutes: 10
         run: |
           REPOSITORY_OWNER="@$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
           PACKAGE_NAME=$(npm pkg get name --workspaces=false | jq -r '.')
@@ -390,6 +419,7 @@ jobs:
         working-directory: "./packages/nova"
 
       - name: "Configure authentication"
+        timeout-minutes: 5
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
@@ -397,6 +427,7 @@ jobs:
           echo "NODE_AUTH_TOKEN=${GITHUB_TOKEN}" >> "$GITHUB_ENV"
 
       - name: "Publish package to GitHub Packages"
+        timeout-minutes: 15
         run: |
           if [ "${PUBLISH}" = "true" ]; then
             echo "[Publish] Production."
@@ -409,14 +440,15 @@ jobs:
 
       - name: "Restore package name"
         if: "${{ always() && env.PACKAGE_NAME }}"
+        timeout-minutes: 10
         run: |
           npm pkg set name="$PACKAGE_NAME"
         working-directory: "./packages/nova"
 
   publish-github-packages-packages-docusaurus-preset-nova:
     needs: ["build", "publish-github-packages-packages-nova"]
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
       packages: "write"
@@ -424,15 +456,18 @@ jobs:
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Configure registry for GitHub Packages"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 5
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
@@ -440,6 +475,7 @@ jobs:
           scope: "@${{ github.repository_owner }}"
 
       - name: "Remove deprecated .npmrc entries"
+        timeout-minutes: 10
         run: |
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
 
@@ -449,11 +485,13 @@ jobs:
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-github-packages-packages-docusaurus-preset-nova"
           path: "./packages/docusaurus-preset-nova/build"
 
       - name: "Change to scoped package name"
+        timeout-minutes: 10
         run: |
           REPOSITORY_OWNER="@$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
           PACKAGE_NAME=$(npm pkg get name --workspaces=false | jq -r '.')
@@ -475,6 +513,7 @@ jobs:
         working-directory: "./packages/docusaurus-preset-nova"
 
       - name: "Configure authentication"
+        timeout-minutes: 5
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
@@ -482,6 +521,7 @@ jobs:
           echo "NODE_AUTH_TOKEN=${GITHUB_TOKEN}" >> "$GITHUB_ENV"
 
       - name: "Publish package to GitHub Packages"
+        timeout-minutes: 15
         run: |
           if [ "${PUBLISH}" = "true" ]; then
             echo "[Publish] Production."
@@ -494,34 +534,39 @@ jobs:
 
       - name: "Restore package name"
         if: "${{ always() && env.PACKAGE_NAME }}"
+        timeout-minutes: 10
         run: |
           npm pkg set name="$PACKAGE_NAME"
         working-directory: "./packages/docusaurus-preset-nova"
 
   publish-cloudflare-pages-apps-docs:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-pages-apps-docs"
           path: "./apps/docs/build"
 
       - name: "Deploy to Cloudflare Pages"
         if: "${{ env.PUBLISH == 'true' }}"
+        timeout-minutes: 15
         env:
           CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"

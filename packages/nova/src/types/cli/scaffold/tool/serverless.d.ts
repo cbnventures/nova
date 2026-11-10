@@ -1,4 +1,6 @@
 import type {
+  Shared_NovaConfig,
+  Shared_NovaConfig_Urls,
   Shared_ScaffoldTemplateQuestions,
   Shared_ScaffoldTemplateResolution_Answers,
 } from '../../../shared.d.ts';
@@ -18,6 +20,34 @@ export type Cli_Scaffold_Tool_Serverless_TemplateQuestions = Shared_ScaffoldTemp
 export type Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Answers = Shared_ScaffoldTemplateResolution_Answers;
 
 export type Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Returns = string[];
+
+/**
+ * CLI - Scaffold - Tool - Serverless - Escape TypeScript Single Quoted.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Value = string;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Returns = string;
+
+/**
+ * CLI - Scaffold - Tool - Serverless - Resolve Replacements.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_WorkspaceName = string;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigRoot = string;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Returns = Promise<Map<RegExp, string>>;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigFilePath = string;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Config = Shared_NovaConfig;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Urls = Shared_NovaConfig_Urls;
+
+export type Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ProjectRepository = string;
 
 /**
  * CLI - Scaffold - Tool - Serverless - Run.

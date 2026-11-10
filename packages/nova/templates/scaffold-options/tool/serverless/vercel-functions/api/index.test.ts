@@ -4,17 +4,132 @@ import {
   it,
 } from 'vitest';
 
-import { GET } from './index.js';
+import { landingPage } from '../src/function/landing-page.js';
+import handler from './index.js';
 
-import type { Api_IndexTest_Get_ReturnsTheStarterResponse_Response } from '../src/types/api/index.test.d.ts';
+import type {
+  Api_IndexTest_FunctionHandler_EscapesProjectNamesBeforeRendering_Html,
+  Api_IndexTest_FunctionHandler_EscapesProjectNamesBeforeRendering_Response,
+  Api_IndexTest_FunctionHandler_OmitsTheRepositoryButtonWithoutARepository_Html,
+  Api_IndexTest_FunctionHandler_OmitsTheRepositoryButtonWithoutARepository_Response,
+  Api_IndexTest_FunctionHandler_ReturnsHeadersForHEADRequests_Response,
+  Api_IndexTest_FunctionHandler_ReturnsJsonForUnknownPaths_Response,
+  Api_IndexTest_FunctionHandler_ReturnsJsonForUnsupportedRootMethods_Response,
+  Api_IndexTest_FunctionHandler_ReturnsTheHomepage_Html,
+  Api_IndexTest_FunctionHandler_ReturnsTheHomepage_Response,
+} from '../src/types/api/index.test.d.ts';
 
-describe('GET', () => {
-  it('returns the starter response', async () => {
-    const response: Api_IndexTest_Get_ReturnsTheStarterResponse_Response = GET(new Request('https://example.com/api'));
+describe('Function handler', () => {
+  it('returns the homepage', async () => {
+    const response: Api_IndexTest_FunctionHandler_ReturnsTheHomepage_Response = handler.fetch(new Request('https://example.com/api?path='));
+    const html: Api_IndexTest_FunctionHandler_ReturnsTheHomepage_Html = await response.text();
 
     expect(response.status).toBe(200);
 
-    expect(await response.json()).toEqual({ message: 'Welcome to [__PROJECT_SLUG__]' });
+    expect(response.headers.get('Content-Type')).toBe('text/html; charset=utf-8');
+
+    expect(response.headers.get('Content-Security-Policy')).toContain('frame-ancestors \'none\'');
+
+    expect(response.headers.get('Permissions-Policy')).toBe('camera=(), geolocation=(), microphone=()');
+
+    expect(response.headers.get('Referrer-Policy')).toBe('no-referrer');
+
+    expect(response.headers.get('X-Content-Type-Options')).toBe('nosniff');
+
+    expect(response.headers.get('X-Frame-Options')).toBe('DENY');
+
+    expect(html).toContain('<title>[__PROJECT_SLUG__]</title>');
+
+    expect(html).toContain('Your Worker is running. Edit src/worker/index.ts to make it yours.');
+
+    expect(html).toContain('>Running</span>');
+
+    expect(html).toContain('https://nova.cbnventures.io/docs/quickstart/');
+
+    expect(html).toContain('class="button ghost" href="[__PROJECT_REPOSITORY__]" target="_blank" rel="noopener noreferrer"');
+
+    expect(html).toContain('aria-hidden="true"');
+
+    expect(html).toContain('>GitHub</a>');
+
+    expect(html).toContain('A CBN Ventures project');
+
+    return;
+  });
+
+  it('returns headers for HEAD requests', async () => {
+    const response: Api_IndexTest_FunctionHandler_ReturnsHeadersForHEADRequests_Response = handler.fetch(new Request('https://example.com/api', {
+      method: 'HEAD',
+    }));
+
+    expect(response.status).toBe(200);
+
+    expect(response.headers.get('Content-Type')).toBe('text/html; charset=utf-8');
+
+    expect(await response.text()).toBe('');
+
+    return;
+  });
+
+  it('returns JSON for unsupported root methods', async () => {
+    const response: Api_IndexTest_FunctionHandler_ReturnsJsonForUnsupportedRootMethods_Response = handler.fetch(new Request('https://example.com/', {
+      method: 'POST',
+    }));
+
+    expect(response.status).toBe(405);
+
+    expect(response.headers.get('Allow')).toBe('GET, HEAD');
+
+    expect(response.headers.get('Content-Type')).toContain('application/json');
+
+    expect(await response.json()).toEqual({
+      status: 'error',
+      message: 'Method not allowed',
+    });
+
+    return;
+  });
+
+  it('returns JSON for unknown paths', async () => {
+    const response: Api_IndexTest_FunctionHandler_ReturnsJsonForUnknownPaths_Response = handler.fetch(new Request('https://example.com/api?path=missing'));
+
+    expect(response.status).toBe(404);
+
+    expect(response.headers.get('Content-Type')).toContain('application/json');
+
+    expect(await response.json()).toEqual({
+      status: 'error',
+      message: 'Not found',
+    });
+
+    return;
+  });
+
+  it('escapes project names before rendering', async () => {
+    const response: Api_IndexTest_FunctionHandler_EscapesProjectNamesBeforeRendering_Response = landingPage(
+      '<script>alert("unsafe")</script>',
+      'https://example.com/?query="<unsafe>"',
+    );
+    const html: Api_IndexTest_FunctionHandler_EscapesProjectNamesBeforeRendering_Html = await response.text();
+
+    expect(html).toContain('&lt;script&gt;alert(&quot;unsafe&quot;)&lt;/script&gt;');
+
+    expect(html).not.toContain('<script>alert("unsafe")</script>');
+
+    expect(html).toContain('href="https://example.com/?query=&quot;&lt;unsafe&gt;&quot;"');
+
+    expect(html).not.toContain('href="https://example.com/?query="<unsafe>""');
+
+    return;
+  });
+
+  it('omits the repository button without a repository', async () => {
+    const response: Api_IndexTest_FunctionHandler_OmitsTheRepositoryButtonWithoutARepository_Response = landingPage('example');
+    const html: Api_IndexTest_FunctionHandler_OmitsTheRepositoryButtonWithoutARepository_Html = await response.text();
+
+    expect(html).toContain('>Documentation</a>');
+
+    expect(html).not.toContain('>GitHub</a>');
 
     return;
   });

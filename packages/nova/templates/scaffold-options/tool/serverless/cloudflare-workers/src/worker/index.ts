@@ -1,3 +1,5 @@
+import { landingPage } from './landing-page.js';
+
 import type {
   Worker_Index_Handler,
   Worker_Index_Handler_Fetch_Request,
@@ -17,11 +19,31 @@ const handler: Worker_Index_Handler = {
   async fetch(request: Worker_Index_Handler_Fetch_Request): Worker_Index_Handler_Fetch_Returns {
     const url: Worker_Index_Handler_Fetch_Url = new URL(request.url);
 
-    if (url.pathname === '/') {
-      return Response.json({ message: 'Welcome to [__PROJECT_SLUG__]' });
+    if (url.pathname !== '/') {
+      return Response.json({
+        status: 'error',
+        message: 'Not found',
+      }, {
+        status: 404,
+      });
     }
 
-    return new Response('Not Found', { status: 404 });
+    if (
+      request.method !== 'GET'
+      && request.method !== 'HEAD'
+    ) {
+      return Response.json({
+        status: 'error',
+        message: 'Method not allowed',
+      }, {
+        status: 405,
+        headers: {
+          Allow: 'GET, HEAD',
+        },
+      });
+    }
+
+    return landingPage('[__PROJECT_SLUG__]', '[__PROJECT_REPOSITORY__]', request.method === 'HEAD');
   },
 };
 

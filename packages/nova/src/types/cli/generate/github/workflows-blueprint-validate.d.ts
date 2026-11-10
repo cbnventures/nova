@@ -1,6 +1,9 @@
 import type { Lib_WorkflowTemplates_Entry } from '../../../lib/workflow-templates.d.ts';
 import type {
   Shared_BlueprintConfigWorkflow,
+  Shared_GithubRunnerImage_Architecture,
+  Shared_GithubRunnerImages,
+  Shared_GithubRunnerLabelInfo,
   Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
@@ -27,7 +30,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_TemplateName = 'check
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_TargetType = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_TargetType = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Trigger Name.
@@ -41,7 +44,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_TriggerName = 'issues
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_DiagnosticSeverity = 'error';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_DiagnosticSeverity = 'error' | 'warning';
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Diagnostic.
@@ -215,17 +218,21 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_
  */
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
-
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces = Shared_NovaConfig_Workspaces;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = Shared_NovaConfig_Artifacts;
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = Shared_NovaConfigEnvironment;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages = Shared_GithubRunnerImages | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ReturnsWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ReturnsDiagnosticSeverity = 'error';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ReturnsDiagnosticSeverity = 'error' | 'warning';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ReturnsDiagnosticMessage = string;
 
@@ -248,6 +255,10 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workf
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = Set<string>;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = Map<string, string>;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = string | undefined;
 
@@ -287,6 +298,14 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsO
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = unknown;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_BuildTimeoutMinutes = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutes = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutesEntry = Record<string, unknown> | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKinds = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms = unknown;
@@ -298,6 +317,14 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Valid
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasEnvironmentSelection = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerInfo = Shared_GithubRunnerLabelInfo | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKind = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsKnownStepTimeoutKind = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutValue = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelectionEntry = Record<string, unknown>;
 
@@ -373,11 +400,13 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTimeoutMinutes = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = boolean;
 
@@ -387,11 +416,29 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsReg
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = boolean;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetMetadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetWorkspace = Shared_NovaConfigWorkspace | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsEligibleWorkspace = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformList = unknown[];
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatform = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformName = Shared_NovaConfigWorkflowContainerPlatform;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerArchitecture = Shared_GithubRunnerImage_Architecture | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DerivedContainerLabel = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerRunnerInfo = Shared_GithubRunnerLabelInfo | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MissingLiterals = string[];
 
@@ -405,7 +452,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Liter
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 
@@ -425,7 +472,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Uniqu
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 
@@ -448,6 +495,20 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Resol
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Composite = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Existing = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MinimumJobTimeoutMinutes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveBuildTimeoutMinutes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTarget = Record<string, unknown>;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTargetTimeoutMinutes = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveTargetTimeoutMinutes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutKind = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutValue = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidatedEntry = Shared_BlueprintConfigWorkflow;
 

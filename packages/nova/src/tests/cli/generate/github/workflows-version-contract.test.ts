@@ -39,6 +39,7 @@ describe('GitHub Action publishing', () => {
       }],
       name: 'project',
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       triggers: ['release'],
       with: {},
     }];

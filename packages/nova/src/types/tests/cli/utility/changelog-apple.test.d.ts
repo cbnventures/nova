@@ -65,6 +65,27 @@ export type Tests_Cli_Utility_ChangelogApple_ChangelogPath = string;
 export type Tests_Cli_Utility_ChangelogApple_ChangelogContent = string;
 
 /**
+ * Tests - CLI - Utility - Changelog Apple - CliUtilityChangelog.run Apple Releases - Bumps The Pbxproj Build While Folding An Existing Section.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_ChangelogApple_CliUtilityChangelogRunAppleReleases_BumpsThePbxprojBuildWhileFoldingAnExistingSection_Returns = void;
+
+/**
+ * Tests - CLI - Utility - Changelog Apple - CliUtilityChangelog.run Apple Releases - Bumps The Project Yml Build While Folding An Existing Section.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_ChangelogApple_CliUtilityChangelogRunAppleReleases_BumpsTheProjectYmlBuildWhileFoldingAnExistingSection_Returns = void;
+
+/**
+ * Tests - CLI - Utility - Changelog Apple - CliUtilityChangelog.run Apple Releases - Skips The Apple Build Bump When Disabled.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_ChangelogApple_CliUtilityChangelogRunAppleReleases_SkipsTheAppleBuildBumpWhenDisabled_Returns = void;
+
+/**
  * Tests - CLI - Utility - Changelog Apple - CliUtilityChangelog.run Apple Releases - Synchronizes Apple Native Versions And Writes The Build In The Heading.
  *
  * @since 0.34.0

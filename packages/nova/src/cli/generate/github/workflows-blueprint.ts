@@ -1,8 +1,15 @@
 import { promises as fs } from 'node:fs';
-import { join } from 'node:path';
+import {
+  basename,
+  join,
+} from 'node:path';
 
 import chalk from 'chalk';
 
+import {
+  GITHUB_RUNNER_IMAGES_README_URL,
+  Runner as GithubRunnerImages,
+} from '../../../api/github-runner-images.js';
 import { Runner as LibCorepack } from '../../../lib/corepack.js';
 import { libEnvNamespace } from '../../../lib/env-namespace.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
@@ -14,6 +21,7 @@ import {
   LIB_REGEX_CHARACTER_FORWARD_SLASH,
   LIB_REGEX_PATTERN_DOUBLE_QUOTE,
   LIB_REGEX_PATTERN_LEADING_DOT_SLASH,
+  LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
 } from '../../../lib/regex.js';
 import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
@@ -23,6 +31,10 @@ import {
   saveGeneratedFile,
   shellQuote,
 } from '../../../lib/utility.js';
+import {
+  libWorkflowContainerPlatformArchitectures,
+  libWorkflowStepTimeoutDefaults,
+} from '../../../lib/workflow-templates.js';
 import { Logger } from '../../../toolkit/index.js';
 import { Runner as Validator } from './workflows-blueprint-validate.js';
 import { Runner as Variables } from './workflows-blueprint-variables.js';
@@ -123,9 +135,18 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_WorkflowSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CacheScope,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CheckoutRef,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Jobs,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Labels,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_NativeArchitecture,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobId,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobIds,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Platforms,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSlug,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSteps,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_TimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context,
@@ -133,6 +154,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PostAttestationSteps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PushRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistryHost,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug,
@@ -142,11 +164,18 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubToken,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubUsername,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_PostAttestationSteps,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ProjectDescription,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ReadmePath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ShouldSyncDescription,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_SyncDescription,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_WorkflowSettings,
@@ -218,6 +247,24 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AddSigningKeyRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AppPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Dollar,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_EscapedNewline,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_FreebsdRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseSigningKey,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_SignReleaseRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_StagedShareDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifact,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths,
@@ -230,8 +277,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredBuildTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerArtifactSteps,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerJobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn,
@@ -240,6 +288,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployArtifactName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployConfiguredArtifactName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DispatchInputs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Env,
@@ -247,6 +296,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs,
@@ -263,6 +313,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProjectDescription,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Reference,
@@ -350,12 +401,14 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_JobRunsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ProjectDescription,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunnerArchitecture,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dollar_Returns,
@@ -399,6 +452,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingEntries,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasValidationErrors,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsAtProjectRoot,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsBackup,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsDryRun,
@@ -412,11 +466,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonRaw,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ParsedPackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ProjectDescription,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawConfig,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawContent,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawWorkflows,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ReplaceFileNotice,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RunnerImages,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupMessage,
@@ -433,6 +489,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubPublishRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_MergeContainerArtifactsRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmAuthRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmAuthRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Dollar,
@@ -508,6 +565,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeEnv_Lines,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeEnv_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeHeader_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_ConfiguredStepTimeoutMinutes,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_DefaultStepTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_IsEnvAfterRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobIf,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobNeeds,
@@ -515,11 +574,15 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobSteps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_RenderedStepTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepContinueOnError,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepEnv,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepId,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepIf,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutDefault,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepUses,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepWith,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepWorkingDirectory,
@@ -581,7 +644,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
   public static async generate(options: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Options): Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Returns {
     const currentDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CurrentDirectory = process.cwd();
@@ -618,6 +681,10 @@ export class Runner {
     const workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Workspaces = config['workspaces'] ?? {};
     const artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts = config['artifacts'] ?? {};
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = config['environment'] ?? {};
+    const projectDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ProjectDescription = (
+      config['project'] !== undefined
+      && config['project']['description'] !== undefined
+    ) ? config['project']['description']['short'] ?? '' : '';
 
     // Read the raw nova.config.json so the validator inspects untyped
     // fields (missing or typo'd) that the parsed config would have dropped.
@@ -651,21 +718,42 @@ export class Runner {
       return 'completed';
     }
 
-    // Validate the raw workflows. Diagnostics report each rejected workflow;
-    // any diagnostic sets a non-zero exit while valid workflows still build.
-    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces, (config['settings'] === undefined) ? 'semver' : config['settings']['versionStrategy'], environment, artifacts);
+    const runnerImages: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RunnerImages = await GithubRunnerImages.fetchRunnerImages();
+
+    if (runnerImages === undefined) {
+      Logger.customize({
+        name: 'Runner.generate',
+        purpose: 'runners',
+      }).error(`Could not read GitHub's runner list from ${GITHUB_RUNNER_IMAGES_README_URL}.`);
+
+      process.exitCode = 1;
+
+      return 'cancelled';
+    }
+
+    // Validate the raw workflows. Diagnostics report rejected or clamped
+    // settings; errors set a non-zero exit while valid workflows still build.
+    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces, (config['settings'] === undefined) ? 'semver' : config['settings']['versionStrategy'], environment, artifacts, projectDescription, runnerImages);
     const validatedWorkflows: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows = validation['workflows'];
+    const hasValidationErrors: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasValidationErrors = validation['diagnostics'].some((diagnostic) => diagnostic['severity'] === 'error');
 
     for (const diagnosticEntry of validation['diagnostics']) {
       const diagnostic: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic = diagnosticEntry;
 
-      Logger.customize({
-        name: 'Runner.generate',
-        purpose: 'validate',
-      }).error(diagnostic['message']);
+      if (diagnostic['severity'] === 'warning') {
+        Logger.customize({
+          name: 'Runner.generate',
+          purpose: 'validate',
+        }).warn(diagnostic['message']);
+      } else {
+        Logger.customize({
+          name: 'Runner.generate',
+          purpose: 'validate',
+        }).error(diagnostic['message']);
+      }
     }
 
-    if (validation['diagnostics'].length > 0) {
+    if (hasValidationErrors === true) {
       process.exitCode = 1;
     }
 
@@ -723,7 +811,7 @@ export class Runner {
 
       // Build output filename: nova-<template>[-<name>].yml.
       const outputFileName: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName = (suffix !== undefined) ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
-      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts);
+      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts, projectDescription);
       const entrySetupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = Variables.collectSetupLines(entry, outputFileName, environment);
 
       generatedSet.add(outputFileName);
@@ -749,7 +837,7 @@ export class Runner {
     // would wrongly delete a still-configured workflow's existing file.
     if (
       isDryRun !== true
-      && validation['diagnostics'].length === 0
+      && hasValidationErrors === false
       && await pathExists(workflowsDirectory) === true
     ) {
       let existingEntries: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingEntries = [];
@@ -821,18 +909,19 @@ export class Runner {
    * returns the serialized YAML. The publish builder receives the workspaces
    * map and the sibling workflows for scope and chaining resolution.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}          entry            - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}     workspaces       - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}    [environment]    - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager} [packageManager] - Package manager.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts}      [artifacts]      - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}              entry                - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}         workspaces           - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}        [environment]        - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}           [siblings]           - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager}     [packageManager]     - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts}          [artifacts]          - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ProjectDescription} [projectDescription] - Project description.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
-  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
+  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}, projectDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ProjectDescription = ''): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
     const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = entry['template'];
 
     let workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = undefined;
@@ -842,21 +931,25 @@ export class Runner {
     } else if (template === 'lock-inactive-issues') {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
-      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts);
+      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, projectDescription);
     }
 
     const runsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = entry['runsOn'];
-    const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes = entry['timeoutMinutes'];
 
     for (const jobEntry of workflow['jobs']) {
       const job: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job = jobEntry;
 
       if (runsOn !== undefined) {
-        job.runsOn = runsOn;
-      }
+        const runnerArchitecture: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunnerArchitecture = job['runnerArchitecture'];
+        let jobRunsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_JobRunsOn = runsOn;
 
-      if (timeoutMinutes !== undefined) {
-        job.timeoutMinutes = timeoutMinutes;
+        if (runnerArchitecture === 'arm64' && runsOn.endsWith('-arm') === false) {
+          jobRunsOn = `${runsOn}-arm`;
+        } else if (runnerArchitecture === 'x64' && runsOn.endsWith('-arm') === true) {
+          jobRunsOn = runsOn.slice(0, -4);
+        }
+
+        Reflect.set(job, 'runsOn', jobRunsOn);
       }
     }
 
@@ -873,7 +966,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Serialize_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
   public static serialize(workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Serialize_Workflow): Cli_Generate_Github_WorkflowsBlueprint_Runner_Serialize_Returns {
     const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Serialize_Lines = [];
@@ -914,7 +1007,7 @@ export class Runner {
 
     lines.push('');
 
-    lines.push(...Runner.serializeJobs(workflow['jobs']));
+    lines.push(...Runner.serializeJobs(workflow['jobs'], workflow['stepTimeoutMinutes']));
 
     return `${lines.join('\n')}\n`;
   }
@@ -1004,6 +1097,7 @@ export class Runner {
 
     const step: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Step = {
       name: 'Check support issues',
+      kind: 'deploy',
       uses: getScaffoldVersion('workflowActionSponsorGatedSupport'),
       env: [
         {
@@ -1066,7 +1160,7 @@ export class Runner {
     const job: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Job = {
       id: 'check-issues',
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 5,
+      timeoutMinutes: entry['timeoutMinutes'] ?? 5,
       permissions: {
         contents: 'read',
         issues: 'write',
@@ -1074,6 +1168,7 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
         },
         step,
@@ -1092,6 +1187,7 @@ export class Runner {
         cancelInProgress: false,
       },
       env,
+      ...((entry['stepTimeoutMinutes'] === undefined) ? {} : { stepTimeoutMinutes: entry['stepTimeoutMinutes'] }),
       jobs: [job],
     };
   }
@@ -1164,6 +1260,7 @@ export class Runner {
 
     const step: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildLockInactiveIssues_Step = {
       name: 'Lock inactive threads',
+      kind: 'deploy',
       uses: getScaffoldVersion('workflowActionLockInactiveThreads'),
       env: [{
         key: 'GITHUB_TOKEN',
@@ -1212,7 +1309,7 @@ export class Runner {
     const job: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildLockInactiveIssues_Job = {
       id: 'lock-inactive-issues',
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 5,
+      timeoutMinutes: entry['timeoutMinutes'] ?? 5,
       steps: [step],
     };
 
@@ -1229,6 +1326,7 @@ export class Runner {
         cancelInProgress: false,
       },
       env,
+      ...((entry['stepTimeoutMinutes'] === undefined) ? {} : { stepTimeoutMinutes: entry['stepTimeoutMinutes'] }),
       jobs: [job],
     };
   }
@@ -1240,18 +1338,19 @@ export class Runner {
    * emitting one shared build job then one deploy job per target; sibling
    * workflows resolve chained depends-on references to names.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}          entry            - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}     workspaces       - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}    [environment]    - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager} [packageManager] - Package manager.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts}      [artifacts]      - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}              entry                - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}         workspaces           - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}        [environment]        - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}           [siblings]           - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager}     [packageManager]     - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts}          [artifacts]          - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProjectDescription} [projectDescription] - Project description.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
-  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
+  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}, projectDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProjectDescription = ''): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
     const suffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = entry['name'];
     const workflowId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId = Runner.resolveWorkflowId(suffix);
 
@@ -1266,6 +1365,7 @@ export class Runner {
     const profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = environmentSelection !== undefined;
     const selectedEnvironmentExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = 'github.event_name == \'workflow_dispatch\' && (inputs.environment || \'staging\') || github.event_name == \'release\' && github.event.release.prerelease && \'staging\' || github.event_name == \'release\' && \'production\' || \'from tag\'';
     const hasContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = targets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
+    const hasPfsenseTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget = targets.some((target) => target['to'] === 'pfsense');
     const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = entry['containerPlatforms'] ?? [
       'linux/amd64',
       'linux/arm64',
@@ -1430,7 +1530,15 @@ export class Runner {
       default: true,
     }];
 
-    if (hasContainerTarget === true) {
+    if (hasPfsenseTarget === true) {
+      dispatchInputs.push({
+        name: 'tag',
+        description: (hasContainerTarget === true) ? 'Existing GitHub release tag and image tag used when manually publishing' : 'Existing GitHub release tag that receives the package',
+        required: true,
+        type: 'string',
+        default: '',
+      });
+    } else if (hasContainerTarget === true) {
       dispatchInputs.push({
         name: 'tag',
         description: 'Required image tag when manually publishing',
@@ -1528,6 +1636,7 @@ export class Runner {
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
       {
         name: 'Checkout repository',
+        kind: 'checkout',
         uses: getScaffoldVersion('workflowActionCheckout'),
         with: [
           {
@@ -1542,6 +1651,7 @@ export class Runner {
       },
       {
         name: 'Setup Node.js',
+        kind: 'setup',
         uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
@@ -1556,6 +1666,7 @@ export class Runner {
       },
       {
         name: 'Install packages',
+        kind: 'install',
         run: Runner.installPackagesRun(packageManager),
         workingDirectory: Runner.expr('env.ROOT_DIR'),
       },
@@ -1585,6 +1696,7 @@ export class Runner {
 
       const writeEnvStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WriteEnvStep = {
         name: `Write environment file (${Runner.slugifyWorkingDir(scope)})`,
+        kind: 'setup',
         env: buildValues.map((buildValue) => ({
           key: buildValue['key'],
           value: Runner.resolveDeliveryValueExpr(buildValue),
@@ -1599,6 +1711,7 @@ export class Runner {
 
     steps.push({
       name: 'Check project',
+      kind: 'check',
       run: checkCommand,
       runBlock: true,
       workingDirectory: Runner.expr('env.ROOT_DIR'),
@@ -1607,6 +1720,7 @@ export class Runner {
     if (names.length > 0) {
       steps.push({
         name: 'Build project',
+        kind: 'build',
         run: buildCommand,
         runBlock: true,
         workingDirectory: Runner.expr('env.ROOT_DIR'),
@@ -1616,6 +1730,7 @@ export class Runner {
     if (hasContainerTarget === true) {
       steps.push({
         name: 'Validate manual container tag',
+        kind: 'check',
         if: Runner.expr('github.event_name == \'workflow_dispatch\' && !inputs.dry-run'),
         env: [{
           key: 'MANUAL_TAG',
@@ -1669,6 +1784,7 @@ export class Runner {
 
       const uploadStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep = {
         name: (uploadConfiguredArtifactName === undefined) ? `Upload build artifacts (${uploadTarget['to']}/${Runner.slugifyWorkingDir(uploadTarget['path'])})` : `Upload assembled artifact (${uploadConfiguredArtifactName})`,
+        kind: 'artifact',
         uses: getScaffoldVersion('workflowActionUploadArtifact'),
         with: [
           {
@@ -1719,16 +1835,14 @@ export class Runner {
       );
     }
 
-    if (hasContainerTarget === true) {
-      const containerArtifactSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerArtifactSteps = Runner.buildContainerArtifactSteps(containerPlatforms);
-
-      steps.push(...containerArtifactSteps);
-    }
-
+    const configuredTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes = entry['timeoutMinutes'];
+    const configuredBuildTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredBuildTimeoutMinutes = entry['buildTimeoutMinutes'];
     const buildJob: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob = {
       id: 'build',
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 15,
+      timeoutMinutes: configuredBuildTimeoutMinutes
+        ?? configuredTimeoutMinutes
+        ?? 15,
       permissions: {
         contents: 'read',
       },
@@ -1737,11 +1851,20 @@ export class Runner {
 
     const jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs = [buildJob];
 
+    if (hasContainerTarget === true) {
+      const containerJobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerJobs = Runner.buildContainerJobs(containerPlatforms, buildJob['timeoutMinutes'], (hasWorkflowRunNode === true) ? Runner.expr('github.event.workflow_run.head_sha') : undefined);
+
+      jobs.push(...containerJobs);
+    }
+
     for (const target of targets) {
       const deployTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTarget = target;
       const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_TargetSettings = deployTarget['with'];
       const isContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget = deployTarget['to'] === 'docker-hub' || deployTarget['to'] === 'ghcr';
       const deployConfiguredArtifactName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployConfiguredArtifactName = deployTarget['artifact'];
+      const deployTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTimeoutMinutes = deployTarget['timeoutMinutes']
+        ?? configuredTimeoutMinutes
+        ?? 15;
       let deployArtifactName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployArtifactName = `artifact-${deployConfiguredArtifactName}`;
 
       if (isContainerTarget === true) {
@@ -1754,12 +1877,14 @@ export class Runner {
         workingDir: deployTarget['path'],
         artifactName: deployArtifactName,
         ...((deployConfiguredArtifactName === undefined) ? {} : { artifactDirectory: `build/${deployConfiguredArtifactName}` }),
-        needs: (isContainerTarget === true) ? ['build'] : Runner.resolveDeployNeeds(deployTarget),
+        needs: (isContainerTarget === true) ? ['build-container'] : Runner.resolveDeployNeeds(deployTarget),
         targetSettings,
         workflowSettings,
         workspace: workspaces[deployTarget['path']],
         environment,
         packageManager,
+        timeoutMinutes: deployTimeoutMinutes,
+        projectDescription,
         ...((environmentSelection === undefined) ? {} : { environmentSelection }),
       };
 
@@ -1781,16 +1906,10 @@ export class Runner {
         jobs.push(Runner.buildGithubPagesTarget(context));
       } else if (deployTarget['to'] === 'github-action') {
         jobs.push(Runner.buildGithubActionTarget(context));
+      } else if (deployTarget['to'] === 'pfsense') {
+        jobs.push(Runner.buildPfsenseTarget(context));
       } else if (deployTarget['to'] === 'vercel-nextjs') {
         jobs.push(Runner.buildVercelNextjsTarget(context));
-      }
-    }
-
-    const configuredTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes = entry['timeoutMinutes'];
-
-    if (configuredTimeoutMinutes !== undefined) {
-      for (const configuredJob of jobs) {
-        configuredJob.timeoutMinutes = configuredTimeoutMinutes;
       }
     }
 
@@ -1814,6 +1933,7 @@ export class Runner {
         cancelInProgress: false,
       },
       env,
+      ...((entry['stepTimeoutMinutes'] === undefined) ? {} : { stepTimeoutMinutes: entry['stepTimeoutMinutes'] }),
       jobs,
     };
   }
@@ -1875,6 +1995,7 @@ export class Runner {
 
     return {
       name: 'Select Cloudflare deployment environment',
+      kind: 'setup',
       env: [
         {
           key: 'MANUAL_ENVIRONMENT',
@@ -2042,6 +2163,7 @@ export class Runner {
 
     return {
       name: 'Validate Cloudflare deployment environment',
+      kind: 'check',
       env,
       run: lines.join('\n'),
       runBlock: true,
@@ -2158,7 +2280,7 @@ export class Runner {
       id: `publish-npm-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         'contents': 'read',
         'id-token': 'write',
@@ -2166,10 +2288,12 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
+          kind: 'setup',
           uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
@@ -2188,10 +2312,12 @@ export class Runner {
         },
         {
           name: 'Remove deprecated .npmrc entries',
+          kind: 'setup',
           run: Runner.removeDeprecatedNpmrcRun(),
         },
         {
           name: 'Download build artifacts',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -2206,6 +2332,7 @@ export class Runner {
         },
         {
           name: 'Configure authentication',
+          kind: 'registry',
           env: [{
             key: 'NPM_TOKEN',
             value: Runner.resolveScopedCredExpr(variables, 'NPM_TOKEN', targetSettings, workflowSettings, environment, appPath),
@@ -2214,8 +2341,300 @@ export class Runner {
         },
         {
           name: 'Publish package to npm',
+          kind: 'deploy',
           run: Runner.npmPublishRun(),
           workingDirectory: deployDirectory,
+        },
+      ],
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Pfsense Target.
+   *
+   * Returns the pfSense package job that validates and stages the port inside
+   * FreeBSD, preserves its files, and attaches them to the GitHub release.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Context} context - Context.
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Returns}
+   *
+   * @since 0.39.0
+   */
+  public static buildPfsenseTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Returns {
+    const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TargetSettings = context['targetSettings'];
+    const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkflowSettings = context['workflowSettings'];
+    const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Metadata = Variables.getTargetMetadata('publish', 'pfsense');
+    const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
+    const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Environment = context['environment'];
+    const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AppPath = context['workingDir'];
+    const workspaceName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName = basename(context['workingDir']);
+    const validateAndStageRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun = [
+      `node "${context['workingDir']}/scripts/check-package.mjs"`,
+      `node "${context['workingDir']}/scripts/stage-package.mjs"`,
+    ].join('\n');
+    const dollar: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Dollar = Runner.dollar();
+    const escapedNewline: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_EscapedNewline = [
+      '\\',
+      'n',
+    ].join('');
+    const stagedShareDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_StagedShareDirectory = `${context['workingDir']}/build/port/files/usr/local/share`;
+    const releaseDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseDirectory = `${context['workingDir']}/build/release`;
+    const addSigningKeyRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AddSigningKeyRun = [
+      'set -eu',
+      '',
+      `staged_share_directory="${stagedShareDirectory}"`,
+      '',
+      `if [ -z "${dollar}RELEASE_SIGNING_KEY:-}" ]; then`,
+      '  echo "::notice::The release signing secret is not set, so the package ships without a release signing key."',
+      '  exit 0',
+      'fi',
+      '',
+      'umask 077',
+      `key_directory="$(mktemp -d "${dollar}RUNNER_TEMP:-/tmp}/release-signing.XXXXXX")"`,
+      'trap \'rm -rf "$key_directory"\' EXIT',
+      `printf '%s${escapedNewline}' "$RELEASE_SIGNING_KEY" | tr -d '\\r' > "${dollar}key_directory}/signing-key"`,
+      '',
+      `if ! ssh-keygen -y -P '' -f "${dollar}key_directory}/signing-key" > "${dollar}key_directory}/signing-key.pub" 2> /dev/null; then`,
+      '  echo "::error::The release signing secret must be an unencrypted OpenSSH private key that starts with \\"-----BEGIN OPENSSH PRIVATE KEY-----\\"."',
+      '  exit 1',
+      'fi',
+      '',
+      `public_key="$(awk '{ print $1 " " $2 }' "${dollar}key_directory}/signing-key.pub")"`,
+      '',
+      'case "$public_key" in',
+      '  "ssh-ed25519 "*)',
+      '    ;;',
+      '  *)',
+      '    echo "::error::The release signing secret must be an Ed25519 key."',
+      '    exit 1',
+      '    ;;',
+      'esac',
+      '',
+      'key_file_count=0',
+      '',
+      `for public_key_file in "${dollar}staged_share_directory}"/*/release-signing.pub; do`,
+      '  if [ ! -f "$public_key_file" ]; then',
+      '    continue',
+      '  fi',
+      '',
+      '  key_file_count=$((key_file_count + 1))',
+      '',
+      '  if [ -s "$public_key_file" ] && [ -n "$(tail -c 1 "$public_key_file")" ]; then',
+      `    printf '${escapedNewline}' >> "$public_key_file"`,
+      '  fi',
+      '',
+      '  if ! tr -d \'\\r\' < "$public_key_file" | awk \'{ print $1 " " $2 }\' | grep -Fxq "$public_key"; then',
+      `    printf '%s added by the publish workflow${escapedNewline}' "$public_key" >> "$public_key_file"`,
+      '  fi',
+      'done',
+      '',
+      'if [ "$key_file_count" -eq 0 ]; then',
+      '  echo "::warning::The staged port has no usr/local/share/<package>/release-signing.pub file, so installed copies won\'t check release signatures."',
+      'fi',
+      '',
+    ].join('\n');
+    const freebsdRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_FreebsdRun = [
+      'git clone --depth 1 --single-branch --branch devel --filter=blob:none --sparse https://github.com/pfsense/FreeBSD-ports.git /usr/ports',
+      'git -C /usr/ports sparse-checkout set Mk Templates Keywords',
+      `PFSENSE_PORTS_DIR=/usr/ports sh "${context['workingDir']}/scripts/build-package.sh"`,
+    ].join('\n');
+    const signReleaseRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_SignReleaseRun = [
+      'set -eu',
+      '',
+      `release_directory="${releaseDirectory}"`,
+      `share_directory="${stagedShareDirectory}"`,
+      '',
+      '# Prints the key lines of a release-signing.pub file. Blank lines and "#"',
+      '# comments are skipped, the same way the installed package reads the file.',
+      'read_key_lines() {',
+      '  tr -d \'\\r\' < "$1" | sed -e \'s/^[[:space:]]*//\' -e \'s/[[:space:]]*$//\' | grep -v -e \'^$\' -e \'^#\' || true',
+      '}',
+      '',
+      'package_count=0',
+      '',
+      `for package_file in "${dollar}release_directory}"/*.pkg; do`,
+      '  if [ -f "$package_file" ]; then',
+      '    package_count=$((package_count + 1))',
+      '  fi',
+      'done',
+      '',
+      'if [ "$package_count" -eq 0 ]; then',
+      `  echo "::error::No .pkg files were found in ${dollar}release_directory}."`,
+      '  exit 1',
+      'fi',
+      '',
+      `if [ -z "${dollar}RELEASE_SIGNING_KEY:-}" ]; then`,
+      '  echo "::notice::The release signing secret is not set, so the release packages are not signed."',
+      '  exit 0',
+      'fi',
+      '',
+      'umask 077',
+      `key_directory="$(mktemp -d "${dollar}RUNNER_TEMP:-/tmp}/release-signing.XXXXXX")"`,
+      'trap \'rm -rf "$key_directory"\' EXIT',
+      `printf '%s${escapedNewline}' "$RELEASE_SIGNING_KEY" | tr -d '\\r' > "${dollar}key_directory}/signing-key"`,
+      '',
+      `if ! ssh-keygen -y -P '' -f "${dollar}key_directory}/signing-key" > "${dollar}key_directory}/signing-key.pub" 2> /dev/null; then`,
+      '  echo "::error::The release signing secret must be an unencrypted OpenSSH private key that starts with \\"-----BEGIN OPENSSH PRIVATE KEY-----\\"."',
+      '  exit 1',
+      'fi',
+      '',
+      `for package_file in "${dollar}release_directory}"/*.pkg; do`,
+      '  package_name="$(basename "$package_file" .pkg)"',
+      '',
+      '  # Versioned files end in -<version>; a stable copy such as pfSense-pkg-Demo.pkg',
+      '  # already is the package name, so only a suffix that starts with a digit is removed.',
+      `  case "${dollar}package_name##*-}" in`,
+      `    [0-9]*) package_name="${dollar}package_name%-*}" ;;`,
+      '  esac',
+      '',
+      `  public_key_file="${dollar}share_directory}/${dollar}package_name}/release-signing.pub"`,
+      '',
+      `  rm -f "${dollar}package_file}.sig"`,
+      `  ssh-keygen -Y sign -f "${dollar}key_directory}/signing-key" -n "$package_name" "$package_file"`,
+      '',
+      '  key_lines=""',
+      '',
+      '  if [ -f "$public_key_file" ]; then',
+      '    key_lines="$(read_key_lines "$public_key_file")"',
+      '  fi',
+      '',
+      '  if [ -z "$key_lines" ]; then',
+      `    echo "::warning::${dollar}package_name} lists no key in release-signing.pub, so installed copies won't check this signature."`,
+      '    continue',
+      '  fi',
+      '',
+      `  : > "${dollar}key_directory}/allowed_signers"`,
+      '',
+      '  while IFS= read -r key_line; do',
+      `    if ! printf '%s${escapedNewline}' "$key_line" | grep -Eq '^ssh-ed25519[[:space:]]+AAAAC3NzaC1lZDI1NTE5AAAAI[A-Za-z0-9+/]{43}([[:space:]].*)?$'; then`,
+      `      echo "::error::${dollar}public_key_file} has a line that isn't an \\"ssh-ed25519\\" public key."`,
+      '      exit 1',
+      '    fi',
+      '',
+      `    key_data="$(printf '%s${escapedNewline}' "$key_line" | awk '{ print $2 }')"`,
+      `    printf '%s namespaces="%s" ssh-ed25519 %s${escapedNewline}' "$package_name" "$package_name" "$key_data" >> "${dollar}key_directory}/allowed_signers"`,
+      '  done <<KEY_LINES',
+      `${dollar}key_lines}`,
+      'KEY_LINES',
+      '',
+      `  if ! ssh-keygen -Y verify -f "${dollar}key_directory}/allowed_signers" -I "$package_name" -n "$package_name" -s "${dollar}package_file}.sig" < "$package_file"; then`,
+      `    echo "::error::The release signing secret doesn't match a key in ${dollar}public_key_file}."`,
+      '    exit 1',
+      '  fi',
+      'done',
+      '',
+    ].join('\n');
+    const releaseSigningKey: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseSigningKey = Runner.resolveScopedCredExpr(variables, 'RELEASE_SIGNING_KEY', targetSettings, workflowSettings, environment, appPath);
+
+    return {
+      id: `publish-pfsense-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      needs: context['needs'],
+      runsOn: 'ubuntu-latest',
+      timeoutMinutes: context['timeoutMinutes'],
+      permissions: {
+        contents: 'write',
+      },
+      steps: [
+        {
+          name: 'Checkout repository',
+          kind: 'checkout',
+          uses: getScaffoldVersion('workflowActionCheckout'),
+        },
+        {
+          name: 'Validate and stage port',
+          kind: 'check',
+          run: validateAndStageRun,
+          runBlock: true,
+        },
+        {
+          name: 'Add release signing key',
+          kind: 'attest',
+          env: [{
+            key: 'RELEASE_SIGNING_KEY',
+            value: releaseSigningKey,
+          }],
+          run: addSigningKeyRun,
+          runBlock: true,
+        },
+        {
+          name: 'Build on FreeBSD',
+          kind: 'build',
+          uses: getScaffoldVersion('workflowActionFreebsdVm'),
+          with: [
+            {
+              key: 'release',
+              value: Runner.expr('vars.PFSENSE_FREEBSD_VERSION || \'15\''),
+            },
+            {
+              key: 'copyback',
+              value: true,
+            },
+            {
+              key: 'prepare',
+              value: 'pkg install -y ca_root_nss git',
+              block: true,
+            },
+            {
+              key: 'run',
+              value: freebsdRun,
+              block: true,
+            },
+          ],
+        },
+        {
+          name: 'Sign release packages',
+          kind: 'attest',
+          env: [{
+            key: 'RELEASE_SIGNING_KEY',
+            value: releaseSigningKey,
+          }],
+          run: signReleaseRun,
+          runBlock: true,
+        },
+        {
+          name: 'Upload workflow artifact',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionUploadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: `pfsense-${workspaceName}`,
+            },
+            {
+              key: 'path',
+              value: `${releaseDirectory}/*`,
+            },
+            {
+              key: 'if-no-files-found',
+              value: 'error',
+            },
+            {
+              key: 'retention-days',
+              value: 7,
+            },
+            {
+              key: 'include-hidden-files',
+              value: true,
+            },
+          ],
+        },
+        {
+          name: 'Upload GitHub release assets',
+          kind: 'deploy',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          env: [
+            {
+              key: 'GH_TOKEN',
+              value: Runner.expr('github.token'),
+            },
+            {
+              key: 'RELEASE_TAG',
+              value: Runner.expr('github.event.release.tag_name || inputs.tag'),
+            },
+          ],
+          run: `gh release upload "$RELEASE_TAG" "${releaseDirectory}/"* --clobber`,
+          runBlock: true,
         },
       ],
     };
@@ -2244,7 +2663,7 @@ export class Runner {
       id: `publish-github-packages-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         'contents': 'read',
         'packages': 'write',
@@ -2253,10 +2672,12 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
+          kind: 'setup',
           uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
@@ -2271,6 +2692,7 @@ export class Runner {
         },
         {
           name: 'Configure registry for GitHub Packages',
+          kind: 'registry',
           uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
@@ -2293,10 +2715,12 @@ export class Runner {
         },
         {
           name: 'Remove deprecated .npmrc entries',
+          kind: 'setup',
           run: Runner.removeDeprecatedNpmrcRun(),
         },
         {
           name: 'Download build artifacts',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -2311,11 +2735,13 @@ export class Runner {
         },
         {
           name: 'Change to scoped package name',
+          kind: 'setup',
           run: Runner.scopePackageNameRun(),
           workingDirectory: deployDirectory,
         },
         {
           name: 'Configure authentication',
+          kind: 'registry',
           env: [{
             key: 'GITHUB_TOKEN',
             value: Runner.resolveVariableExpr(variables, 'GITHUB_TOKEN', targetSettings, workflowSettings),
@@ -2324,11 +2750,13 @@ export class Runner {
         },
         {
           name: 'Publish package to GitHub Packages',
+          kind: 'deploy',
           run: Runner.githubPublishRun(),
           workingDirectory: deployDirectory,
         },
         {
           name: 'Restore package name',
+          kind: 'setup',
           if: Runner.expr('always() && env.PACKAGE_NAME'),
           run: 'npm pkg set name="$PACKAGE_NAME"',
           runBlock: true,
@@ -2363,17 +2791,19 @@ export class Runner {
       id: `publish-cloudflare-pages-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         contents: 'read',
       },
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
+          kind: 'setup',
           uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
@@ -2388,10 +2818,12 @@ export class Runner {
         },
         ...((context['packageManager'] === 'npm') ? [] : [{
           name: 'Install Corepack',
+          kind: 'install' as const,
           run: Runner.corepackBootstrapRun(context['packageManager']),
         }]),
         {
           name: 'Download build artifacts',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -2406,6 +2838,7 @@ export class Runner {
         },
         {
           name: 'Deploy to Cloudflare Pages',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [
             {
@@ -2471,10 +2904,12 @@ export class Runner {
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = [
       {
         name: 'Checkout repository',
+        kind: 'checkout',
         uses: getScaffoldVersion('workflowActionCheckout'),
       },
       {
         name: 'Setup Node.js',
+        kind: 'setup',
         uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
@@ -2489,11 +2924,13 @@ export class Runner {
       },
       {
         name: 'Install packages',
+        kind: 'install',
         run: Runner.installPackagesRun(context['packageManager']),
         workingDirectory: Runner.expr('env.ROOT_DIR'),
       },
       {
         name: 'Download build artifacts',
+        kind: 'artifact',
         uses: getScaffoldVersion('workflowActionDownloadArtifact'),
         with: [
           {
@@ -2508,6 +2945,7 @@ export class Runner {
       },
       {
         name: 'Deploy to Cloudflare Workers',
+        kind: 'deploy',
         if: Runner.expr('env.PUBLISH == \'true\''),
         env: deployEnv,
         run: deployRun,
@@ -2549,7 +2987,7 @@ export class Runner {
       id: `publish-cloudflare-workers-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         contents: 'read',
       },
@@ -2561,13 +2999,13 @@ export class Runner {
    * CLI - Generate - GitHub - Workflows Blueprint - Build Docker Hub Target.
    *
    * Returns the Docker Hub consumer job that authenticates, tags, pushes,
-   * verifies, and attests the shared immutable OCI handoff.
+   * verifies, attests, and optionally syncs repository descriptions.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context} context - Context.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
   public static buildDockerHubTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns {
     const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_TargetSettings = context['targetSettings'];
@@ -2578,6 +3016,71 @@ export class Runner {
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath = context['workingDir'];
     const imageNamespace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace = (targetSettings === undefined) ? 'IMAGE_NAMESPACE' : targetSettings['IMAGE_NAMESPACE'] ?? 'IMAGE_NAMESPACE';
     const imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository = (targetSettings === undefined) ? 'IMAGE_REPOSITORY' : targetSettings['IMAGE_REPOSITORY'] ?? 'IMAGE_REPOSITORY';
+    const readmePath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ReadmePath = Variables.resolve('README_PATH', targetSettings, workflowSettings, variables['README_PATH'] ?? {
+      format: 'literal',
+      default: 'README.md',
+    });
+    const syncDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_SyncDescription = Variables.resolve('SYNC_DESCRIPTION', targetSettings, workflowSettings, variables['SYNC_DESCRIPTION'] ?? {
+      format: 'literal',
+      default: 'true',
+    });
+    const shouldSyncDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ShouldSyncDescription = syncDescription !== 'false';
+    const dockerHubUsername: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubUsername = Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_USERNAME', targetSettings, workflowSettings, environment, appPath);
+    const dockerHubToken: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubToken = Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_TOKEN', targetSettings, workflowSettings, environment, appPath);
+    const projectDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ProjectDescription = context['projectDescription'] ?? '';
+    const postAttestationSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_PostAttestationSteps = [];
+
+    if (shouldSyncDescription === true) {
+      postAttestationSteps.push(
+        {
+          name: 'Checkout Docker Hub description source',
+          kind: 'checkout',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          uses: getScaffoldVersion('workflowActionCheckout'),
+          with: [{
+            key: 'ref',
+            value: Runner.expr('github.event_name == \'workflow_run\' && github.event.workflow_run.head_sha || github.sha'),
+          }],
+        },
+        {
+          name: 'Sync Docker Hub description (warning only)',
+          kind: 'deploy',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          uses: getScaffoldVersion('workflowActionDockerHubDescription'),
+          continueOnError: true,
+          env: [{
+            key: 'DOCKERHUB_TOKEN',
+            value: dockerHubToken,
+          }],
+          with: [
+            {
+              key: 'username',
+              value: dockerHubUsername,
+            },
+            {
+              key: 'password',
+              value: Runner.expr('env.DOCKERHUB_TOKEN'),
+            },
+            {
+              key: 'repository',
+              value: `${imageNamespace}/${imageRepository}`,
+            },
+            {
+              key: 'short-description',
+              value: projectDescription,
+            },
+            {
+              key: 'readme-filepath',
+              value: readmePath,
+            },
+            {
+              key: 'enable-url-completion',
+              value: true,
+            },
+          ],
+        },
+      );
+    }
 
     return Runner.buildContainerRegistryTarget(context, {
       registrySlug: 'docker-hub',
@@ -2586,15 +3089,16 @@ export class Runner {
       imageRepository,
       loginStep: {
         name: 'Login to Docker Hub',
+        kind: 'registry',
         uses: getScaffoldVersion('workflowActionDockerLogin'),
         env: [{
           key: 'DOCKERHUB_TOKEN',
-          value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_TOKEN', targetSettings, workflowSettings, environment, appPath),
+          value: dockerHubToken,
         }],
         with: [
           {
             key: 'username',
-            value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_USERNAME', targetSettings, workflowSettings, environment, appPath),
+            value: dockerHubUsername,
           },
           {
             key: 'password',
@@ -2603,6 +3107,7 @@ export class Runner {
         ],
       },
       extraPermissions: {},
+      postAttestationSteps,
     });
   }
 
@@ -2632,6 +3137,7 @@ export class Runner {
       imageRepository,
       loginStep: {
         name: 'Login to GitHub Container Registry',
+        kind: 'registry',
         uses: getScaffoldVersion('workflowActionDockerLogin'),
         with: [
           {
@@ -2687,7 +3193,7 @@ export class Runner {
       id: `publish-github-pages-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         'contents': 'read',
         'pages': 'write',
@@ -2696,10 +3202,12 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Download build artifacts',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -2714,6 +3222,7 @@ export class Runner {
         },
         {
           name: 'Check GitHub Pages status',
+          kind: 'check',
           env: [{
             key: 'GITHUB_TOKEN',
             value: Runner.resolveVariableExpr(variables, 'GITHUB_TOKEN', targetSettings, workflowSettings),
@@ -2723,11 +3232,13 @@ export class Runner {
         },
         {
           name: 'Setup GitHub Pages',
+          kind: 'setup',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
           uses: getScaffoldVersion('workflowActionConfigurePages'),
         },
         {
           name: 'Upload artifact to GitHub Pages',
+          kind: 'artifact',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
           uses: getScaffoldVersion('workflowActionUploadPagesArtifact'),
           with: [{
@@ -2737,6 +3248,7 @@ export class Runner {
         },
         {
           name: 'Deploy to GitHub Pages',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
           uses: getScaffoldVersion('workflowActionDeployPages'),
         },
@@ -2889,7 +3401,7 @@ export class Runner {
       id: `publish-github-action-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 10,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         'contents': 'write',
         'id-token': 'write',
@@ -2898,6 +3410,7 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
+          kind: 'checkout',
           uses: getScaffoldVersion('workflowActionCheckout'),
           with: [{
             key: 'persist-credentials',
@@ -2906,6 +3419,7 @@ export class Runner {
         },
         {
           name: 'Download build artifacts',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -2920,11 +3434,13 @@ export class Runner {
         },
         {
           name: 'Configure git identity',
+          kind: 'setup',
           if: Runner.expr('env.PUBLISH == \'true\''),
           run: configureGitIdentityRun,
         },
         {
           name: 'Verify release context',
+          kind: 'check',
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [{
             key: 'TAG_NAME',
@@ -2934,6 +3450,7 @@ export class Runner {
         },
         {
           name: 'Initialize release workspace',
+          kind: 'setup',
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [
             {
@@ -2949,11 +3466,13 @@ export class Runner {
         },
         {
           name: 'Stage release tree',
+          kind: 'setup',
           if: Runner.expr('env.PUBLISH == \'true\''),
           run: stageReleaseTreeRun,
         },
         {
           name: 'Commit and push release',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [{
             key: 'TAG_NAME',
@@ -2963,6 +3482,7 @@ export class Runner {
         },
         {
           name: 'Force-retag semver and floating major',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [
             {
@@ -2978,6 +3498,7 @@ export class Runner {
         },
         {
           name: 'Attest build provenance',
+          kind: 'attest',
           if: Runner.expr('env.PUBLISH == \'true\''),
           uses: getScaffoldVersion('workflowActionAttest'),
           with: [{
@@ -3017,10 +3538,12 @@ export class Runner {
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_Steps = [
       {
         name: 'Checkout repository',
+        kind: 'checkout',
         uses: getScaffoldVersion('workflowActionCheckout'),
       },
       {
         name: 'Setup Node.js',
+        kind: 'setup',
         uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
@@ -3035,6 +3558,7 @@ export class Runner {
       },
       {
         name: 'Download build artifacts',
+        kind: 'artifact',
         uses: getScaffoldVersion('workflowActionDownloadArtifact'),
         with: [
           {
@@ -3049,12 +3573,14 @@ export class Runner {
       },
       {
         name: 'Install Vercel CLI',
+        kind: 'install',
         if: Runner.expr('env.PUBLISH == \'true\''),
         run: 'npm install -g vercel@latest',
         runPlain: true,
       },
       {
         name: 'Pull Vercel environment',
+        kind: 'setup',
         if: Runner.expr('env.PUBLISH == \'true\''),
         env: [
           {
@@ -3078,6 +3604,7 @@ export class Runner {
 
     const deployStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_DeployStep = {
       name: 'Deploy to Vercel',
+      kind: 'deploy',
       if: Runner.expr('env.PUBLISH == \'true\''),
       env: [
         {
@@ -3123,7 +3650,7 @@ export class Runner {
       id: `publish-vercel-nextjs-${Runner.slugifyWorkingDir(context['workingDir'])}`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 15,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         contents: 'read',
       },
@@ -3246,120 +3773,263 @@ export class Runner {
 
     return {
       name,
+      kind: 'check',
       run: lines.join('\n'),
       runBlock: true,
     };
   }
 
   /**
-   * CLI - Generate - GitHub - Workflows Blueprint - Build Container Artifact Steps.
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Container Jobs.
    *
-   * Builds the repository-root Dockerfile once for every selected platform,
-   * records its immutable index digest, and uploads one transient OCI handoff.
+   * Builds the repository-root Dockerfile once per platform on its own CPU type,
+   * then merges every per-platform image into one immutable multi-platform OCI index
+   * and uploads one transient OCI handoff for the registry jobs.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms} platforms - Platforms.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Platforms}      platforms      - Platforms.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_TimeoutMinutes} timeoutMinutes - Timeout minutes.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CheckoutRef}    checkoutRef    - Checkout ref.
    *
    * @private
    *
-   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns}
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Returns}
    *
-   * @since 0.26.0
+   * @since 0.39.0
    */
-  private static buildContainerArtifactSteps(platforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns {
-    const platformList: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList = platforms.join(',');
+  private static buildContainerJobs(platforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Platforms, timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_TimeoutMinutes, checkoutRef: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CheckoutRef): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Returns {
+    const labels: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Labels = [
+      `org.opencontainers.image.version=${Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name')}`,
+      `org.opencontainers.image.revision=${Runner.expr('github.sha')}`,
+    ].join('\n');
+    const jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Jobs = [];
+    const platformJobIds: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobIds = [];
 
-    return [
-      {
-        name: 'Set up QEMU',
-        uses: getScaffoldVersion('workflowActionDockerSetupQemu'),
-        with: [{
-          key: 'platforms',
-          value: platformList,
-        }],
-      },
-      {
-        name: 'Set up Docker Buildx',
-        uses: getScaffoldVersion('workflowActionDockerSetupBuildx'),
-      },
-      {
-        name: 'Prepare OCI handoff',
-        run: 'mkdir -p "$RUNNER_TEMP/container-oci"',
-      },
-      {
-        name: 'Build immutable OCI artifact',
-        id: 'build-oci',
-        uses: getScaffoldVersion('workflowActionDockerBuildPush'),
-        with: [
-          {
-            key: 'context',
-            value: './',
-          },
-          {
+    for (const platform of platforms) {
+      const platformSlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSlug = platform.replace(new RegExp(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN, 'g'), '-');
+      const platformJobId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobId = `build-container-${platformSlug}`;
+      const nativeArchitecture: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_NativeArchitecture = libWorkflowContainerPlatformArchitectures[platform];
+      const cacheScope: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CacheScope = `container-${platformSlug}`;
+      const platformSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSteps = [{
+        name: 'Checkout repository',
+        kind: 'checkout',
+        uses: getScaffoldVersion('workflowActionCheckout'),
+        ...((checkoutRef === undefined) ? {} : {
+          with: [{
+            key: 'ref',
+            value: checkoutRef,
+          }],
+        }),
+      }];
+
+      // Only platforms without a native GitHub-hosted runner fall back to emulation.
+      if (nativeArchitecture === undefined) {
+        platformSteps.push({
+          name: 'Set up QEMU',
+          kind: 'setup',
+          uses: getScaffoldVersion('workflowActionDockerSetupQemu'),
+          with: [{
             key: 'platforms',
-            value: platformList,
-          },
-          {
-            key: 'push',
-            value: false,
-          },
-          {
-            key: 'provenance',
-            value: false,
-          },
-          {
-            key: 'tags',
-            value: 'nova.local/container:nova-oci',
-          },
-          {
-            key: 'outputs',
-            value: `type=oci,dest=${Runner.expr('runner.temp')}/container-oci/layout,tar=false`,
-          },
-        ],
+            value: platform,
+          }],
+        });
+      }
+
+      platformSteps.push(
+        {
+          name: 'Set up Docker Buildx',
+          kind: 'setup',
+          uses: getScaffoldVersion('workflowActionDockerSetupBuildx'),
+        },
+        {
+          name: 'Prepare OCI handoff',
+          kind: 'setup',
+          run: 'mkdir -p "$RUNNER_TEMP/container-oci"',
+        },
+        {
+          name: 'Build immutable OCI artifact',
+          kind: 'build',
+          id: 'build-oci',
+          uses: getScaffoldVersion('workflowActionDockerBuildPush'),
+          with: [
+            {
+              key: 'context',
+              value: './',
+            },
+            {
+              key: 'platforms',
+              value: platform,
+            },
+            {
+              key: 'push',
+              value: false,
+            },
+            {
+              key: 'provenance',
+              value: false,
+            },
+            {
+              key: 'tags',
+              value: 'nova.local/container:nova-oci',
+            },
+            {
+              key: 'labels',
+              value: labels,
+              block: true,
+            },
+            {
+              key: 'cache-from',
+              value: `type=gha,scope=${cacheScope}`,
+            },
+            {
+              key: 'cache-to',
+              value: `type=gha,mode=max,scope=${cacheScope}`,
+            },
+            {
+              key: 'outputs',
+              value: `type=oci,dest=${Runner.expr('runner.temp')}/container-oci/layout,tar=false`,
+            },
+          ],
+        },
+        {
+          name: 'Record OCI digest',
+          kind: 'artifact',
+          run: `printf '%s' '${Runner.expr('steps.build-oci.outputs.digest')}' > "$RUNNER_TEMP/container-oci/container-image.digest"`,
+        },
+        Runner.buildArtifactPreflightStep(
+          'Validate immutable OCI artifact',
+          ['container-oci'],
+          Runner.expr('runner.temp'),
+        ),
+        {
+          name: 'Upload immutable OCI artifact',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionUploadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: `container-oci-${platformSlug}`,
+            },
+            {
+              key: 'retention-days',
+              value: 1,
+            },
+            {
+              key: 'include-hidden-files',
+              value: true,
+            },
+            {
+              key: 'if-no-files-found',
+              value: 'error',
+            },
+            {
+              key: 'path',
+              value: `${Runner.expr('runner.temp')}/container-oci`,
+            },
+          ],
+        },
+      );
+
+      jobs.push({
+        id: platformJobId,
+        runsOn: 'ubuntu-latest',
+        ...((nativeArchitecture === undefined) ? {} : {
+          runnerArchitecture: nativeArchitecture,
+        }),
+        timeoutMinutes,
+        permissions: {
+          contents: 'read',
+        },
+        steps: platformSteps,
+      });
+
+      platformJobIds.push(platformJobId);
+    }
+
+    jobs.push({
+      id: 'build-container',
+      needs: [
+        'build',
+        ...platformJobIds,
+      ],
+      runsOn: 'ubuntu-latest',
+      timeoutMinutes,
+      permissions: {
+        contents: 'read',
       },
-      {
-        name: 'Record OCI digest',
-        run: `printf '%s' '${Runner.expr('steps.build-oci.outputs.digest')}' > "$RUNNER_TEMP/container-oci/container-image.digest"`,
-      },
-      Runner.buildArtifactPreflightStep(
-        'Validate immutable OCI artifact',
-        ['container-oci'],
-        Runner.expr('runner.temp'),
-      ),
-      {
-        name: 'Upload immutable OCI artifact',
-        uses: getScaffoldVersion('workflowActionUploadArtifact'),
-        with: [
-          {
-            key: 'name',
-            value: 'container-oci',
-          },
-          {
-            key: 'retention-days',
-            value: 1,
-          },
-          {
-            key: 'include-hidden-files',
-            value: true,
-          },
-          {
-            key: 'if-no-files-found',
-            value: 'error',
-          },
-          {
-            key: 'path',
-            value: `${Runner.expr('runner.temp')}/container-oci`,
-          },
-        ],
-      },
-    ];
+      steps: [
+        {
+          name: 'Download per-platform OCI artifacts',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
+          with: [
+            {
+              key: 'pattern',
+              value: 'container-oci-*',
+            },
+            {
+              key: 'path',
+              value: `${Runner.expr('runner.temp')}/container-oci-platforms`,
+            },
+          ],
+        },
+        {
+          name: 'Set up ORAS',
+          kind: 'setup',
+          uses: getScaffoldVersion('workflowActionSetupOras'),
+          with: [{
+            key: 'version',
+            value: '1.3.3',
+          }],
+        },
+        {
+          name: 'Merge per-platform images',
+          kind: 'build',
+          run: Runner.mergeContainerArtifactsRun(),
+          runBlock: true,
+        },
+        Runner.buildArtifactPreflightStep(
+          'Validate immutable OCI artifact',
+          ['container-oci'],
+          Runner.expr('runner.temp'),
+        ),
+        {
+          name: 'Upload immutable OCI artifact',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionUploadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: 'container-oci',
+            },
+            {
+              key: 'retention-days',
+              value: 1,
+            },
+            {
+              key: 'include-hidden-files',
+              value: true,
+            },
+            {
+              key: 'if-no-files-found',
+              value: 'error',
+            },
+            {
+              key: 'path',
+              value: `${Runner.expr('runner.temp')}/container-oci`,
+            },
+          ],
+        },
+      ],
+    });
+
+    return jobs;
   }
 
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Container Registry Target.
    *
-   * Returns a registry-specific consumer of the immutable OCI handoff. The
-   * consumer authenticates, applies tags, pushes, verifies, and attests; it
-   * never checks out source or invokes a container build.
+   * Returns a registry consumer that publishes the immutable OCI handoff and can
+   * run post-attestation metadata steps without invoking another container build.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context} context - Context.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config}  config  - Config.
@@ -3368,7 +4038,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns}
    *
-   * @since 0.23.0
+   * @since 0.39.0
    */
   private static buildContainerRegistryTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context, config: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns {
     const registrySlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug = config['registrySlug'];
@@ -3377,6 +4047,7 @@ export class Runner {
     const imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageRepository = config['imageRepository'];
     const loginStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep = config['loginStep'];
     const extraPermissions: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions = config['extraPermissions'];
+    const postAttestationSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PostAttestationSteps = config['postAttestationSteps'] ?? [];
     const resolveTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = Runner.resolveContainerTagsRun();
     const checkImmutableTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun = Runner.checkImmutableContainerTagsRun();
     const pushRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PushRun = Runner.pushContainerArtifactRun();
@@ -3389,7 +4060,7 @@ export class Runner {
       id: `publish-${registrySlug}-root`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
-      timeoutMinutes: 15,
+      timeoutMinutes: context['timeoutMinutes'],
       permissions: {
         'contents': 'read',
         ...extraPermissions,
@@ -3400,6 +4071,7 @@ export class Runner {
       steps: [
         {
           name: 'Download immutable OCI artifact',
+          kind: 'artifact',
           uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
@@ -3414,6 +4086,7 @@ export class Runner {
         },
         {
           name: 'Set up ORAS',
+          kind: 'setup',
           uses: getScaffoldVersion('workflowActionSetupOras'),
           with: [{
             key: 'version',
@@ -3422,6 +4095,7 @@ export class Runner {
         },
         {
           name: 'Resolve image coordinate and tags',
+          kind: 'setup',
           env: [
             {
               key: 'EVENT_NAME',
@@ -3478,30 +4152,35 @@ export class Runner {
         loginStep,
         {
           name: 'Reject conflicting immutable tags',
+          kind: 'check',
           if: Runner.expr('env.PUBLISH == \'true\''),
           run: checkImmutableTagsRun,
           runBlock: true,
         },
         {
           name: 'Push immutable OCI artifact',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\''),
           run: pushRun,
           runBlock: true,
         },
         {
           name: 'Apply image tags',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\' && env.ADDITIONAL_TAGS != \'\''),
           run: tagRun,
           runBlock: true,
         },
         {
           name: 'Verify immutable image tags',
+          kind: 'check',
           if: Runner.expr('env.PUBLISH == \'true\''),
           run: verifyRun,
           runBlock: true,
         },
         {
           name: 'Generate build provenance',
+          kind: 'attest',
           if: Runner.expr('env.PUBLISH == \'true\''),
           uses: getScaffoldVersion('workflowActionAttest'),
           with: [
@@ -3519,8 +4198,10 @@ export class Runner {
             },
           ],
         },
+        ...postAttestationSteps,
         {
           name: 'Publish latest channel',
+          kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PUBLISH_LATEST == \'true\''),
           run: 'oras tag "$IMAGE@$IMAGE_DIGEST" latest',
         },
@@ -3720,6 +4401,45 @@ export class Runner {
       '    fi',
       '  fi',
       'done',
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Merge Container Artifacts Run.
+   *
+   * Copies every per-platform OCI layout into one layout and creates the immutable
+   * multi-platform index that the registry jobs publish by digest.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_MergeContainerArtifactsRun_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static mergeContainerArtifactsRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_MergeContainerArtifactsRun_Returns {
+    return [
+      'set -euo pipefail',
+      '',
+      'layout_directory="$RUNNER_TEMP/container-oci/layout"',
+      'platform_tags=()',
+      '',
+      'mkdir -p "$RUNNER_TEMP/container-oci"',
+      '',
+      'for platform_directory in "$RUNNER_TEMP"/container-oci-platforms/*/; do',
+      '  platform_tag="$(basename "$platform_directory")"',
+      '  platform_digest="$(cat "$platform_directory"container-image.digest)"',
+      '',
+      '  oras cp --from-oci-layout --to-oci-layout "$platform_directory"layout@"$platform_digest" "$layout_directory:$platform_tag"',
+      '  platform_tags+=("$platform_tag")',
+      'done',
+      '',
+      `if [ "${'$'}{#platform_tags[@]}" -eq 0 ]; then`,
+      '  echo "No per-platform OCI artifacts were downloaded." >&2',
+      '  exit 1',
+      'fi',
+      '',
+      `oras manifest index create --oci-layout "$layout_directory:nova-oci" "${'$'}{platform_tags[@]}"`,
+      'printf \'%s\' "$(oras resolve --oci-layout "$layout_directory:nova-oci")" > "$RUNNER_TEMP/container-oci/container-image.digest"',
     ].join('\n');
   }
 
@@ -3954,7 +4674,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
   private static removeDeprecatedNpmrcRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns {
     const dollar: Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar = Runner.dollar();
@@ -4174,6 +4894,9 @@ export class Runner {
     if (vendor === 'cloudflare') {
       // Encrypted channel: list the worker's secrets, drop any the config no
       // longer declares, then bulk upload the declared set from the step env.
+      // Wrangler has no --force flag for secret delete; in CI its confirmation
+      // answers yes on its own. Reading /dev/null keeps the delete from
+      // consuming the secret names the while loop is still reading.
       if (secretValues.length > 0) {
         const secretDeclared: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_SecretDeclared = secretValues.map((value) => value['key']).join(' ');
         const jqObject: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject = secretValues.map((value) => value['key']).join(', ');
@@ -4182,7 +4905,7 @@ export class Runner {
         lines.push(`${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret list | jq -r '.[].name' | while read -r name; do`);
         lines.push('  case " $DECLARED " in');
         lines.push('    *" $name "*) ;;');
-        lines.push(`    *) echo "Removing undeclared secret: $name"; ${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret delete "$name" --force ;;`);
+        lines.push(`    *) echo "Removing undeclared secret: $name"; ${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret delete "$name" < /dev/null ;;`);
         lines.push('  esac');
         lines.push('done');
         lines.push('echo "Syncing declared secrets: $DECLARED"');
@@ -4244,6 +4967,7 @@ export class Runner {
 
     return {
       name: (vendor === 'cloudflare') ? 'Sync worker runtime secrets' : 'Sync Vercel runtime environment',
+      kind: 'deploy',
       if: Runner.expr('env.PUBLISH == \'true\''),
       env,
       run,
@@ -4755,17 +5479,18 @@ export class Runner {
    * CLI - Generate - GitHub - Workflows Blueprint - Serialize Jobs.
    *
    * Emits the jobs map, each job's fields and steps, keeping with
-   * values scalar-aware so booleans and integers stay bare.
+   * values scalar-aware and clamping each step timeout to its job.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs} jobs - Jobs.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs}               jobs               - Jobs.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutMinutes} stepTimeoutMinutes - Step timeout minutes.
    *
    * @private
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Returns}
    *
-   * @since 0.21.0
+   * @since 0.39.0
    */
-  private static serializeJobs(jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs): Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Returns {
+  private static serializeJobs(jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs, stepTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutMinutes): Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Returns {
     const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Lines = [];
 
     lines.push('jobs:');
@@ -4804,9 +5529,10 @@ export class Runner {
       const jobSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobSteps = job['steps'];
 
       for (const step of jobSteps) {
-        // Fixed field order: name, id, if, uses, env, with, run,
-        // working-directory. A step flagged envAfterRun moves its env block
-        // after run, matching the Pages status step's declared order.
+        // Fixed field order: name, id, if, uses, timeout-minutes,
+        // continue-on-error, env, with, run, working-directory. A step flagged
+        // envAfterRun moves its env block after run, matching the Pages status
+        // step's declared order.
         lines.push(`      - name: ${Runner.quote(step['name'])}`);
 
         const stepId: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepId = step['id'];
@@ -4825,6 +5551,19 @@ export class Runner {
 
         if (stepUses !== undefined) {
           lines.push(`        uses: ${Runner.quote(stepUses)}`);
+        }
+
+        const configuredStepTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_ConfiguredStepTimeoutMinutes = (stepTimeoutMinutes === undefined) ? undefined : stepTimeoutMinutes[step['kind']];
+        const stepTimeoutDefault: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutDefault = libWorkflowStepTimeoutDefaults[step['kind']];
+        const defaultStepTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_DefaultStepTimeoutMinutes = (stepTimeoutDefault === 'job') ? job['timeoutMinutes'] : stepTimeoutDefault;
+        const renderedStepTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_RenderedStepTimeoutMinutes = Math.min(configuredStepTimeoutMinutes ?? defaultStepTimeoutMinutes, job['timeoutMinutes']);
+
+        lines.push(`        timeout-minutes: ${Runner.serializeScalar(renderedStepTimeoutMinutes)}`);
+
+        const stepContinueOnError: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepContinueOnError = step['continueOnError'];
+
+        if (stepContinueOnError !== undefined) {
+          lines.push(`        continue-on-error: ${Runner.serializeScalar(stepContinueOnError)}`);
         }
 
         const stepEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepEnv = step['env'];

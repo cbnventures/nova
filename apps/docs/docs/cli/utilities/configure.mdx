@@ -159,7 +159,7 @@ Environment variables and secrets live in the top-level [`environment`](/docs/qu
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
 - **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template, name, runner, optional timeout, trigger filters, build scopes, deployment targets, target ordering, target settings, and workflow settings. A workflow with a Docker Hub or GHCR target also chooses one or both supported container platforms. Existing custom template and target names remain selectable so opening the wizard never replaces or drops them.
-- **Things to watch**: `runsOn` currently offers only `ubuntu-latest`. Enter a whole number from `1` through `360` for `timeoutMinutes`, or leave it blank to preserve each generated job's template timeout. The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
+- **Things to watch**: `runsOn` is required. The runner menu reads GitHub's runner-images list, offers exact pinned available labels, and marks paid larger runners. Moving `-latest`, preview, and deprecated labels are excluded. The workflow form cancels with an error if the list cannot be read, and workflow generation stops before writing files under the same condition. Container platform jobs use the matching x64 or arm64 label derived from this selection. Enter a whole number from `1` through `360` for `timeoutMinutes`, or leave it blank to preserve each generated job's template timeout. The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
 
 :::note Multiline values
 The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline.
@@ -201,7 +201,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 - **Purpose**: Manage the [`environment`](/docs/quickstart/nova-config#environment) block — per-workspace environment values, project-wide keys, and their namespace prefixes — without editing `nova.config.json` by hand.
 - **Nice to know**: Each value has a required `reach`: `local` stays on the developer machine, `managed` is tracked locally and on GitHub but delivered nowhere, `build` is injected into CI builds, and `runtime` is reconciled to deployed servers. `managed`, `build`, and `runtime` values also require `secret` to choose GitHub Secret or Variable storage. The wizard can add the repo root `./` workspace alongside the others, bringing its `.env` under management.
-- **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. Every namespace — the `project` group, each workspace (including the root `./`), and each workflow — requires a non-empty `prefix` before it can be saved. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
+- **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. Every namespace — the `project` group, each workspace (including the root `./`), and each workflow — requires a prefix that matches `^[A-Z][A-Z0-9]*_$`: one uppercase word that starts with a letter, may contain digits, and ends with `_` (for example, `CBN_`). The prefix prompts reject inner underscores, lowercase, a missing trailing underscore, a leading digit, and the reserved `GITHUB_` namespace. Existing collision validation also rejects a prefix that overlaps another project, workspace, or workflow prefix. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
 
 ### Settings
 
@@ -326,12 +326,14 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     {
       "template": "lock-inactive-issues",
       "name": "project",
-      "triggers": ["schedule-weekly"]
+      "triggers": ["schedule-weekly"],
+      "runsOn": "ubuntu-24.04"
     },
     {
       "template": "publish",
       "name": "project",
       "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
       "build": ["./packages/nova"],
       "deploy": [
         {

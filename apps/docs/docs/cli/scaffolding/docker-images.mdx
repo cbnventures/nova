@@ -73,6 +73,24 @@ Initialization starts as root so the image can prepare its declared writable pat
 
 The appliance writes only to paths declared writable by its service contract. Adding a service therefore includes deciding which persistent or temporary paths it owns before that service enters the s6 graph.
 
+## OCI Image Labels
+
+The generated runtime image carries OCI annotations from `nova.config.json`:
+
+| Label                                    | Nova config source                   |
+|------------------------------------------|--------------------------------------|
+| `org.opencontainers.image.title`         | `project.name.title`, then its slug. |
+| `org.opencontainers.image.description`   | `project.description.short`.         |
+| `org.opencontainers.image.url`           | `urls.homepage`.                     |
+| `org.opencontainers.image.source`        | `urls.repository`.                   |
+| `org.opencontainers.image.documentation` | `urls.documentation`.                |
+| `org.opencontainers.image.licenses`      | `project.license`.                   |
+| `org.opencontainers.image.vendor`        | `project.legalName`.                 |
+
+Nova escapes project-controlled values for Dockerfile double-quoted label syntax when it scaffolds or refreshes the shared Dockerfile. Missing optional metadata produces an empty label value rather than leaving a scaffold token unresolved.
+
+The publish workflow adds `org.opencontainers.image.version` from the release, manual, or Git reference and `org.opencontainers.image.revision` from `github.sha` while building the immutable OCI artifact. Those build-time labels travel with the same digest that Docker Hub and GitHub Container Registry receive.
+
 ## Build and Distribution
 
 The root `Dockerfile` compiles container inputs inside named stages and copies only runtime output into the final s6 image. The build stage includes the root `nova.config.json` so workspace builds can resolve shared Nova identity and project settings. A host-side workspace build is not an input to the container build.

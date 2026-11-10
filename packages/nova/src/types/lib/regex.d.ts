@@ -188,6 +188,13 @@ export type Lib_Regex_PatternEmailSimple = RegExp;
 export type Lib_Regex_PatternEnvLine = RegExp;
 
 /**
+ * Lib - Regex - Pattern Environment Prefix.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PatternEnvironmentPrefix = RegExp;
+
+/**
  * Lib - Regex - Pattern Env Var Key.
  *
  * @since 0.11.0
@@ -277,6 +284,13 @@ export type Lib_Regex_PatternGithubOwner = RegExp;
  * @since 0.18.0
  */
 export type Lib_Regex_PatternGithubRepo = RegExp;
+
+/**
+ * Lib - Regex - Pattern Github Runner Label.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PatternGithubRunnerLabel = RegExp;
 
 /**
  * Lib - Regex - Pattern Hash Border Line.
@@ -870,11 +884,60 @@ export type Lib_Regex_PlaceholderPlatformBadges = RegExp;
 export type Lib_Regex_PlaceholderPlatformFields = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Pfsense Config Name.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Regex_PlaceholderPfsenseConfigName = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Api Url.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderPfsenseUpdateApiUrl = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Default Frequency.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderPfsenseUpdateDefaultFrequency = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Download Prefix.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderPfsenseUpdateDownloadPrefix = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Settings Description.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderPfsenseUpdateSettingsDescription = RegExp;
+
+/**
  * Lib - Regex - Placeholder Privacy Policy.
  *
  * @since 0.11.0
  */
 export type Lib_Regex_PlaceholderPrivacyPolicy = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Project Author Email.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectAuthorEmail = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Project Bugs.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectBugs = RegExp;
 
 /**
  * Lib - Regex - Placeholder Project Description.
@@ -884,11 +947,32 @@ export type Lib_Regex_PlaceholderPrivacyPolicy = RegExp;
 export type Lib_Regex_PlaceholderProjectDescription = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Project Documentation.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectDocumentation = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Project Fund Sources.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectFundSources = RegExp;
+
+/**
  * Lib - Regex - Placeholder Project Homepage.
  *
  * @since 0.11.0
  */
 export type Lib_Regex_PlaceholderProjectHomepage = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Project License.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectLicense = RegExp;
 
 /**
  * Lib - Regex - Placeholder Project Link.
@@ -910,6 +994,13 @@ export type Lib_Regex_PlaceholderProjectLogoUrl = RegExp;
  * @since 0.11.0
  */
 export type Lib_Regex_PlaceholderProjectName = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Project Repository.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Regex_PlaceholderProjectRepository = RegExp;
 
 /**
  * Lib - Regex - Placeholder Project Slug.

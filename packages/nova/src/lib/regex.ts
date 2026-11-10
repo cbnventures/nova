@@ -221,6 +221,27 @@ export const LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE = /^[A-Z][A-Z0-9]*(?:_[A-
 export const LIB_REGEX_PATTERN_CHANGELOG_CALVER_HEADING = /^## (?:[1-9]\d{3})\.(?:[1-9]|1[0-2])\.(?:0|[1-9]\d*)(?: \((?:0|[1-9]\d*)\))?$/;
 
 /**
+ * Lib - Regex - Pattern Changelog Capital Start.
+ *
+ * Matches a changelog entry whose first character is an uppercase letter. The
+ * changelog utility rejects entries that start any other way.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PATTERN_CHANGELOG_CAPITAL_START = /^[A-Z]/;
+
+/**
+ * Lib - Regex - Pattern Changelog First Word.
+ *
+ * Captures the first run of letters in a changelog entry, skipping leading
+ * punctuation such as markdown emphasis. The changelog utility compares it with
+ * the entry's category so entries don't repeat their heading's verb.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PATTERN_CHANGELOG_FIRST_WORD = /^[^A-Za-z]*([A-Za-z]+)/;
+
+/**
  * Lib - Regex - Pattern Changelog Numeric Heading.
  *
  * Identifies numeric H2 headings that look like release history but do not match
@@ -392,6 +413,16 @@ export const LIB_REGEX_PATTERN_EMPTY_ARRAY_BRACKETS = /\[\]/;
  * @since 0.14.0
  */
 export const LIB_REGEX_PATTERN_ENV_LINE = /^([A-Z_][A-Z0-9_]*)=["']?([^"'\n]*)["']?$/;
+
+/**
+ * Lib - Regex - Pattern Environment Prefix.
+ *
+ * Validates one uppercase environment namespace word followed by a trailing
+ * underscore. Prefix consumers use it before composing GitHub names.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PATTERN_ENVIRONMENT_PREFIX = /^[A-Z][A-Z0-9]*_$/;
 
 /**
  * Lib - Regex - Pattern Env Var Key.
@@ -1777,6 +1808,46 @@ export const LIB_REGEX_PLACEHOLDER_PLATFORM_FIELDS = /\[__PLATFORM_FIELDS__\]/;
 export const LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME = /\[__PFSENSE_CONFIG_NAME__\]/;
 
 /**
+ * Lib - Regex - Placeholder Pfsense Update API URL.
+ *
+ * Matches the "[__PFSENSE_UPDATE_API_URL__]" token in pfSense scaffold files.
+ * GitHub repositories receive their latest-release API endpoint.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL = /\[__PFSENSE_UPDATE_API_URL__\]/;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Default Frequency.
+ *
+ * Matches the "[__PFSENSE_UPDATE_DEFAULT_FREQUENCY__]" token in the pfSense
+ * settings schema. Unsupported repositories default update checks to Never.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY = /\[__PFSENSE_UPDATE_DEFAULT_FREQUENCY__\]/;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Download Prefix.
+ *
+ * Matches the "[__PFSENSE_UPDATE_DOWNLOAD_PREFIX__]" token in pfSense scaffold
+ * files. Release assets must remain beneath this generated GitHub URL.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX = /\[__PFSENSE_UPDATE_DOWNLOAD_PREFIX__\]/;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Update Settings Description.
+ *
+ * Matches the "[__PFSENSE_UPDATE_SETTINGS_DESCRIPTION__]" token in the pfSense
+ * settings schema. The generated text explains update availability.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION = /\[__PFSENSE_UPDATE_SETTINGS_DESCRIPTION__\]/;
+
+/**
  * Lib - Regex - Placeholder Privacy Policy.
  *
  * Matches the "[__PRIVACY_POLICY__]" token in issue templates. Used by the issue-template
@@ -1785,6 +1856,26 @@ export const LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME = /\[__PFSENSE_CONFIG_NAM
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_PRIVACY_POLICY = /\[__PRIVACY_POLICY__\]/;
+
+/**
+ * Lib - Regex - Placeholder Project Author Email.
+ *
+ * Matches the "[__PROJECT_AUTHOR_EMAIL__]" token in scaffold templates.
+ * Generated package metadata uses the value as its maintainer address.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_AUTHOR_EMAIL = /\[__PROJECT_AUTHOR_EMAIL__\]/;
+
+/**
+ * Lib - Regex - Placeholder Project Bugs.
+ *
+ * Matches the "[__PROJECT_BUGS__]" token in scaffold templates.
+ * Generated package metadata uses the value for its issue tracker.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_BUGS = /\[__PROJECT_BUGS__\]/;
 
 /**
  * Lib - Regex - Placeholder Project Description.
@@ -1797,6 +1888,26 @@ export const LIB_REGEX_PLACEHOLDER_PRIVACY_POLICY = /\[__PRIVACY_POLICY__\]/;
 export const LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION = /\[__PROJECT_DESCRIPTION__\]/;
 
 /**
+ * Lib - Regex - Placeholder Project Documentation.
+ *
+ * Matches the "[__PROJECT_DOCUMENTATION__]" token in scaffold templates.
+ * Generated package pages use the value for their documentation link.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION = /\[__PROJECT_DOCUMENTATION__\]/;
+
+/**
+ * Lib - Regex - Placeholder Project Fund Sources.
+ *
+ * Matches the "[__PROJECT_FUND_SOURCES__]" token in scaffold templates.
+ * Generated package pages use the value for their funding links.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES = /\[__PROJECT_FUND_SOURCES__\]/;
+
+/**
  * Lib - Regex - Placeholder Project Homepage.
  *
  * Matches the "[__PROJECT_HOMEPAGE__]" token in template files. Reserved for generators
@@ -1805,6 +1916,16 @@ export const LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION = /\[__PROJECT_DESCRIPTIO
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_PROJECT_HOMEPAGE = /\[__PROJECT_HOMEPAGE__\]/;
+
+/**
+ * Lib - Regex - Placeholder Project License.
+ *
+ * Matches the "[__PROJECT_LICENSE__]" token in scaffold templates.
+ * Generated package pages use the value for their license link.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_LICENSE = /\[__PROJECT_LICENSE__\]/;
 
 /**
  * Lib - Regex - Placeholder Project Link.
@@ -1835,6 +1956,16 @@ export const LIB_REGEX_PLACEHOLDER_PROJECT_LOGO_URL = /\[__PROJECT_LOGO_URL__\]/
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_PROJECT_NAME = /\[__PROJECT_NAME__\]/;
+
+/**
+ * Lib - Regex - Placeholder Project Repository.
+ *
+ * Matches the "[__PROJECT_REPOSITORY__]" token in scaffold templates.
+ * Generated package pages use the value for their repository link.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY = /\[__PROJECT_REPOSITORY__\]/;
 
 /**
  * Lib - Regex - Placeholder Project Slug.
@@ -2215,6 +2346,16 @@ export const LIB_REGEX_PATTERN_GITHUB_OWNER = /^[A-Za-z0-9-]+$/;
  * @since 0.18.0
  */
 export const LIB_REGEX_PATTERN_GITHUB_REPO = /^[A-Za-z0-9._-]+$/;
+
+/**
+ * Lib - Regex - Pattern GitHub Runner Label.
+ *
+ * Validates exact GitHub-hosted runner labels read from the runner-images list.
+ * Labels contain lowercase letters, digits, dots, and dashes.
+ *
+ * @since 0.39.0
+ */
+export const LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL = /^[a-z0-9.-]+$/;
 
 /**
  * Lib - Regex - Pattern Leading Or Trailing Hyphen.

@@ -21,6 +21,17 @@
 		<configfile>[__WORKSPACE_NAME__].xml</configfile>
 		<url>/pkg_edit.php?xml=[__WORKSPACE_NAME__].xml&amp;id=0</url>
 	</menu>
+	<tabs>
+		<tab>
+			<text>Settings</text>
+			<url>/pkg_edit.php?xml=[__WORKSPACE_NAME__].xml&amp;id=0</url>
+			<active/>
+		</tab>
+		<tab>
+			<text>About</text>
+			<url>/[__WORKSPACE_NAME__]-about.php</url>
+		</tab>
+	</tabs>
 	<fields>
 		<field>
 			<type>listtopic</type>
@@ -63,6 +74,29 @@
 			<description>Starter text written to the pfSense system log. Replace this behavior with the package's actual background work.</description>
 			<required/>
 		</field>
+		<field>
+			<type>listtopic</type>
+			<name>Package Updates</name>
+		</field>
+		<field>
+			<fielddescr>Update Checks</fielddescr>
+			<fieldname>update_check_frequency</fieldname>
+			<type>select</type>
+			<options>
+				<option><name>Daily</name><value>daily</value></option>
+				<option><name>Weekly</name><value>weekly</value></option>
+				<option><name>Monthly</name><value>monthly</value></option>
+				<option><name>Never</name><value>never</value></option>
+			</options>
+			<default_value>[__PFSENSE_UPDATE_DEFAULT_FREQUENCY__]</default_value>
+			<description>[__PFSENSE_UPDATE_SETTINGS_DESCRIPTION__]</description>
+		</field>
+		<field>
+			<fielddescr>Remote Notifications</fielddescr>
+			<fieldname>update_remote_notifications</fieldname>
+			<type>checkbox</type>
+			<description>Also send each new-version notice through configured pfSense email, Telegram, Pushover, or other remote notification channels.</description>
+		</field>
 	</fields>
 	<custom_php_install_command>
 		pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync();
@@ -73,6 +107,9 @@
 	<custom_delete_php_command>
 		pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove();
 	</custom_delete_php_command>
+	<custom_php_deinstall_command>
+		pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove();
+	</custom_php_deinstall_command>
 	<custom_php_validation_command>
 		pfsensePackage[__WORKSPACE_IDENTIFIER__]Validate($_POST, $input_errors);
 	</custom_php_validation_command>

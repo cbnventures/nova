@@ -3,7 +3,7 @@ import type { Shared_NovaConfigEnvironmentDeployProfile } from '../shared.d.ts';
 /**
  * Lib - Env Namespace - Lib Env Namespace.
  *
- * @since 0.21.0
+ * @since 0.39.0
  */
 export type Lib_EnvNamespace_LibEnvNamespace_GithubName = (prefix: string, key: string) => string;
 
@@ -12,6 +12,8 @@ export type Lib_EnvNamespace_LibEnvNamespace_GithubProfileName = (prefix: string
 export type Lib_EnvNamespace_LibEnvNamespace_IsGithubLegalName = (name: string) => boolean;
 
 export type Lib_EnvNamespace_LibEnvNamespace_IsReservedPrefix = (prefix: string) => boolean;
+
+export type Lib_EnvNamespace_LibEnvNamespace_IsValidPrefix = (prefix: string) => boolean;
 
 export type Lib_EnvNamespace_LibEnvNamespace_PrefixesOverlap = (a: string, b: string) => boolean;
 
@@ -22,6 +24,7 @@ export type Lib_EnvNamespace_LibEnvNamespace = {
   githubProfileName: Lib_EnvNamespace_LibEnvNamespace_GithubProfileName;
   isGithubLegalName: Lib_EnvNamespace_LibEnvNamespace_IsGithubLegalName;
   isReservedPrefix: Lib_EnvNamespace_LibEnvNamespace_IsReservedPrefix;
+  isValidPrefix: Lib_EnvNamespace_LibEnvNamespace_IsValidPrefix;
   prefixesOverlap: Lib_EnvNamespace_LibEnvNamespace_PrefixesOverlap;
   startsWithPrefix: Lib_EnvNamespace_LibEnvNamespace_StartsWithPrefix;
 };

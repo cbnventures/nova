@@ -124,6 +124,7 @@ export class Runner {
       'java.md',
       'kotlin.md',
       'nova.md',
+      'pfsense.md',
       'php.md',
       'python.md',
       'rust.md',

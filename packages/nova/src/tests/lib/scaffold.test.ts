@@ -22,11 +22,20 @@ import {
   vi,
 } from 'vitest';
 
+import { Runner as CliScaffoldPackagePfsense } from '../../cli/scaffold/package/pfsense.js';
 import {
   LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES,
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION,
+  LIB_REGEX_PLACEHOLDER_PROJECT_AUTHOR_EMAIL,
+  LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
+  LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES,
+  LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
 } from '../../lib/regex.js';
 import {
   detectMonorepoContext,
@@ -75,6 +84,10 @@ import type {
   Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result,
   Tests_Lib_Scaffold_TemplateQuestions,
+  Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ConfigPath,
+  Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ProjectDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_Replacements,
+  Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ResolveReplacements,
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Config,
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigContents,
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigPath,
@@ -82,6 +95,20 @@ import type {
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Project,
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ProjectDirectory,
   Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_WorkspaceDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_Config,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigContents,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigPath,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigRaw,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ProjectDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_WorkspaceDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ConfigPath,
+  Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ProjectDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ResolveReplacements,
+  Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_Result,
+  Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ConfigPath,
+  Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ProjectDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_Replacements,
+  Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ResolveReplacements,
 } from '../../types/tests/lib/scaffold.test.d.ts';
 
 vi.mock('prompts', () => {
@@ -276,8 +303,175 @@ describe('workspace contract', () => {
     return;
   });
 
-  it('derives non-overlapping environment prefixes', () => {
-    strictEqual(resolveScaffoldEnvironmentPrefix({
+  it('registers a publish deploy target', async () => {
+    const projectDirectory: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ProjectDirectory = await mkdtemp(join(tmpdir(), 'nova-publish-target-'));
+
+    try {
+      const workspaceDirectory: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_WorkspaceDirectory = join(projectDirectory, 'packages', 'firewall');
+
+      await mkdir(workspaceDirectory, { recursive: true });
+
+      const configPath: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigPath = join(projectDirectory, 'nova.config.json');
+      const configContents: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigContents = `${JSON.stringify({
+        project: {
+          name: {
+            slug: 'example',
+          },
+          platforms: ['nodejs'],
+        },
+        workspaces: {},
+        workflows: [{
+          template: 'publish',
+          name: 'project',
+          triggers: ['tag-push'],
+          deploy: [],
+        }],
+      }, null, 2)}\n`;
+
+      await writeFile(configPath, configContents, 'utf-8');
+      await registerWorkspaceInConfig(configPath, './packages/firewall', 'pfsense-pkg-firewall', 'firewall', 'package', [], [
+        'php',
+        'pfsense',
+      ], undefined, {
+        to: 'pfsense',
+        path: './packages/firewall',
+      });
+
+      const configRaw: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_ConfigRaw = await readFile(configPath, 'utf-8');
+      const config: Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_Config = JSON.parse(configRaw) as Tests_Lib_Scaffold_WorkspaceContract_RegistersAPublishDeployTarget_Config;
+
+      deepStrictEqual(config['workflows'], [{
+        template: 'publish',
+        name: 'project',
+        triggers: [
+          'tag-push',
+          'release',
+        ],
+        deploy: [{
+          to: 'pfsense',
+          path: './packages/firewall',
+        }],
+      }]);
+    } finally {
+      await rm(projectDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
+  it('resolves pfSense project metadata', async () => {
+    const projectDirectory: Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ProjectDirectory = await mkdtemp(join(tmpdir(), 'nova-pfsense-metadata-'));
+
+    try {
+      const configPath: Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+      await writeFile(configPath, JSON.stringify({
+        project: {
+          description: {
+            short: 'Owner\'s firewall package',
+          },
+        },
+        entities: [{
+          name: 'Project Author',
+          email: 'author@example.com',
+          roles: ['author'],
+        }],
+        urls: {
+          repository: 'https://github.com/example/firewall',
+          fundSources: ['https://github.com/sponsors/example'],
+        },
+      }, null, 2), 'utf-8');
+
+      const resolveReplacements: Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ResolveReplacements = Reflect.get(CliScaffoldPackagePfsense, 'resolveReplacements') as Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_ResolveReplacements;
+      const replacements: Tests_Lib_Scaffold_WorkspaceContract_ResolvesPfSenseProjectMetadata_Replacements = await resolveReplacements('firewall', projectDirectory);
+
+      ok(replacements !== undefined);
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PROJECT_AUTHOR_EMAIL), 'author@example.com');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION), 'Owner\\\'s firewall package');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY), 'https://github.com/example/firewall');
+      strictEqual((replacements.get(LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES) ?? '').includes('\'https://github.com/sponsors/example\''), true);
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL), 'https://api.github.com/repos/example/firewall/releases/latest');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX), 'https://github.com/example/firewall/releases/download/');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY), 'weekly');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION), 'Choose how often pfSense checks GitHub for a new package release. The check runs at a stable randomized time.');
+    } finally {
+      await rm(projectDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
+  it('disables pfSense updates for non-GitHub repositories', async () => {
+    const projectDirectory: Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ProjectDirectory = await mkdtemp(join(tmpdir(), 'nova-pfsense-non-github-'));
+
+    try {
+      const configPath: Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+      await writeFile(configPath, JSON.stringify({
+        entities: [{
+          name: 'Project Author',
+          email: 'author@example.com',
+          roles: ['author'],
+        }],
+        urls: {
+          repository: 'https://gitlab.example.com/example/firewall',
+        },
+      }, null, 2), 'utf-8');
+
+      const resolveReplacements: Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ResolveReplacements = Reflect.get(CliScaffoldPackagePfsense, 'resolveReplacements') as Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ResolveReplacements;
+      const replacements: Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_Replacements = await resolveReplacements('firewall', projectDirectory);
+
+      ok(replacements !== undefined);
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL), '');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX), '');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY), 'never');
+      strictEqual(replacements.get(LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION), 'Update checks are unavailable because the project repository URL is not a github.com repository. Configure a GitHub repository and regenerate this package to enable them.');
+    } finally {
+      await rm(projectDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
+  it('rejects pfSense without author email', async () => {
+    const projectDirectory: Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ProjectDirectory = await mkdtemp(join(tmpdir(), 'nova-pfsense-author-'));
+
+    try {
+      const configPath: Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+      await writeFile(configPath, JSON.stringify({
+        entities: [{
+          name: 'Project Author',
+          roles: ['author'],
+        }],
+      }, null, 2), 'utf-8');
+
+      const resolveReplacements: Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ResolveReplacements = Reflect.get(CliScaffoldPackagePfsense, 'resolveReplacements') as Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_ResolveReplacements;
+      const result: Tests_Lib_Scaffold_WorkspaceContract_RejectsPfSenseWithoutAuthorEmail_Result = await resolveReplacements('firewall', projectDirectory);
+
+      strictEqual(result, undefined);
+      strictEqual(process.exitCode, 1);
+    } finally {
+      await rm(projectDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
+  it('derives non-overlapping environment prefixes', async () => {
+    strictEqual(await resolveScaffoldEnvironmentPrefix({
       project: { prefix: 'PROJECT_' },
       workspaces: {
         './apps/api': { prefix: 'API_' },
@@ -285,13 +479,40 @@ describe('workspace contract', () => {
       workflows: {
         publish: { prefix: 'PUBLISH_' },
       },
-    }, 'web'), 'WEB_');
-    strictEqual(resolveScaffoldEnvironmentPrefix({
+    }, 'web', false), 'WEB_');
+    strictEqual(await resolveScaffoldEnvironmentPrefix({}, 'branded-short-links', true), 'LINKS_');
+    strictEqual(await resolveScaffoldEnvironmentPrefix({}, 'docker-engine', true), 'ENGINE_');
+    strictEqual(vi.mocked(prompts).mock.calls.length, 0);
+
+    vi.mocked(prompts).mockResolvedValueOnce({ prefix: 'WEB_' });
+
+    strictEqual(await resolveScaffoldEnvironmentPrefix({
       workspaces: {
-        './apps/api': { prefix: 'API_' },
+        './apps/web': { prefix: 'WEB_' },
       },
-    }, 'api-admin'), 'W1_API_ADMIN_');
-    strictEqual(resolveScaffoldEnvironmentPrefix({}, 'github'), 'W1_GITHUB_');
+    }, 'web-email', false), undefined);
+
+    vi.mocked(prompts).mockImplementationOnce((questions) => {
+      strictEqual(Reflect.get(questions, 'initial'), 'EMAIL_');
+      strictEqual(Reflect.apply(Reflect.get(questions, 'validate'), undefined, ['WEB_EMAIL_']), 'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").');
+      strictEqual(Reflect.apply(Reflect.get(questions, 'validate'), undefined, ['GITHUB_']), 'Choose a prefix that does not start with the reserved "GITHUB_" namespace.');
+      strictEqual(Reflect.apply(Reflect.get(questions, 'validate'), undefined, ['WEB_']), 'Choose a prefix that does not overlap an existing project, workspace, or workflow prefix.');
+      strictEqual(Reflect.apply(Reflect.get(questions, 'validate'), undefined, ['EMAIL_']), true);
+
+      return Promise.resolve({ prefix: 'EMAIL_' });
+    });
+
+    strictEqual(await resolveScaffoldEnvironmentPrefix({
+      workspaces: {
+        './apps/web': { prefix: 'WEB_' },
+      },
+    }, 'web-email', false), 'EMAIL_');
+    strictEqual(await resolveScaffoldEnvironmentPrefix({
+      workspaces: {
+        './apps/admin': { prefix: 'ADMIN_' },
+      },
+    }, 'api-admin', true), 'ADMIN1_');
+    strictEqual(await resolveScaffoldEnvironmentPrefix({}, 'github', true), 'GITHUB1_');
 
     return;
   });

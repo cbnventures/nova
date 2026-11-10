@@ -20,6 +20,8 @@ Update localized App Store version metadata from `assets/app-store-connect/{work
 
 Nova accepts `description`, `keywords`, `marketingUrl`, `promotionalText`, `supportUrl`, and `whatsNew`. A string updates that field. `null` is a local placeholder and is never sent to Apple. Files without any populated editable fields fail before authentication.
 
+App Store Connect requests run through a small bounded queue instead of updating every target at once. Nova creates the request token, headers, and timeout only after a queue slot is available, and refreshes a token when less than 60 seconds remain. It honors `Retry-After` and pauses the whole client when a `429` or Apple's `X-Rate-Limit` header shows that the hourly budget is nearly exhausted. Without `Retry-After`, rate-limit retries back off for up to about 10 minutes in total before failing. A rate-limit exhaustion error says that the run is safe to resume after Apple's budget resets. When one bounded batch fails, its already in-flight operations finish, every failure from that batch is reported together, and later batches do not start.
+
 ## Credentials
 
 Nova discovers App Store Connect API keys only from Apple's conventional `AuthKey_{KEY_ID}.p8` locations:

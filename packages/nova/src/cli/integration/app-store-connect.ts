@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
@@ -16,6 +17,7 @@ import {
   requireObject,
   requireString,
   resolveWorkspace,
+  wait,
 } from '../../lib/integration.js';
 import { pathExists } from '../../lib/utility.js';
 import { Logger } from '../../toolkit/index.js';
@@ -24,6 +26,25 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_CreateClient_Credentials,
   Cli_Integration_AppStoreConnect_Runner_CreateClient_Options,
   Cli_Integration_AppStoreConnect_Runner_CreateClient_Returns,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Attempt,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Client,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_DelayMilliseconds,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ImageId,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_MatchingPlacement,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Placements,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementType,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Query,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ReconciliationResponse,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Response,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Returns,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Client,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_ImageIds,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementType,
+  Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Returns,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_App,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AppId,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AssetLibrary,
@@ -57,6 +78,28 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedPlatforms,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Buffer,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Buffer,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_HasEndOfImage,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Height,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Marker,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Offset,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_SegmentLength,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Width,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Buffer,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkLength,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkType,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ColorType,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_DataOffset,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasEndChunk,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasTransparencyChunk,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Height,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_NextOffset,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Offset,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns,
+  Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Width,
   Cli_Integration_AppStoreConnect_Runner_Metadata_App,
   Cli_Integration_AppStoreConnect_Runner_Metadata_AppId,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Client,
@@ -69,6 +112,16 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_Metadata_Returns,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Targets,
   Cli_Integration_AppStoreConnect_Runner_Metadata_WorkspaceContext,
+  Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Client,
+  Cli_Integration_AppStoreConnect_Runner_OrderPlacements_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageData,
+  Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageRelationship,
+  Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Placement,
+  Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Relationships,
+  Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Returns,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BaseSettings,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BundleIdentifier,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Options,
@@ -92,18 +145,100 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_KeyId,
   Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_PrefixLength,
   Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_AvailablePlacements,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Client,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Context,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_DesiredPlacementIds,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ExistingPlacements,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureNewPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureOldPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailurePlacements,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureResponse,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FreeSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageId,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_InitialDesiredPlacementCount,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacement,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementId,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementIndex,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MaximumPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PendingImageIndexes,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementGroup,
-  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementIds,
-  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementResponses,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementImageId,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementType,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Query,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_RemainingOldPlacementIds,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Response,
   Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_AvailableSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_BatchImageIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Client,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CompleteReplacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementId,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DeletedOldPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredOrderedPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreeSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacements,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshQuery,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshResponse,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageId,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextCreatedPlacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextFreeSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextWindowSize,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementDeleteCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementIdsToDelete,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OrderedPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PendingImageIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PermittedOldPlacementDeleteCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementType,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIdsToDelete,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingPendingImageIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_SupersededPlacementIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_WindowSize,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Attributes,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_AvailableSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_BatchFileIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Client,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompletedUploadedScreenshotCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompleteReplacementCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DeletedOldScreenshotCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredOrderedScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_File,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FileBuffers,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FreeSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_IncompleteScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextFreeSlots,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextWindowSize,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotDeleteCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotIdsForCapacity,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OrderedScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PendingFileIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PermittedOldScreenshotDeleteCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingOldScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingPendingFileIndexes,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingResources,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_ResourcesBeforeSweep,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SetId,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_State,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SupersededScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Target,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshot,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotCount,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotId,
+  Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_WindowSize,
   Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_App,
   Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Cache,
   Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_CachedContext,
@@ -150,27 +285,57 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_ResourceId_Name,
   Cli_Integration_AppStoreConnect_Runner_ResourceId_Resource,
   Cli_Integration_AppStoreConnect_Runner_ResourceId_Returns,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_ActiveSet,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_App,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_AppId,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibrary,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibraryId,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Attributes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_AvailableScreenshots,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Buffers,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Client,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_CollectedTargets,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteDeliveryState,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteScreenshots,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_ContextCache,
-  Cli_Integration_AppStoreConnect_Runner_Screenshots_CreatedSet,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredIdSet,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotCount,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotIds,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_DisplayType,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoContext,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoTargets,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_ExistingScreenshots,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_FileBuffers,
-  Cli_Integration_AppStoreConnect_Runner_Screenshots_Files,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksum,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksums,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_FreeSlots,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_ImageIds,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Images,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteDeliveryState,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshots,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Lines,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_LocalizationId,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingChecksum,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshot,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotId,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotIndex,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_OldScreenshotCount,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Options,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_PendingFileIndexes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_PlaceholderCount,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingDescription,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingFileName,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingOldScreenshotIds,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingPlaceholders,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshotId,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshots,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingState,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Returns,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_ScreenshotsDirectory,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Set,
@@ -179,11 +344,27 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardContext,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardTargets,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Targets,
-  Cli_Integration_AppStoreConnect_Runner_Screenshots_UploadIds,
-  Cli_Integration_AppStoreConnect_Runner_Screenshots_Uploads,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_WorkspaceContext,
   Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Returns,
   Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedDescription,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedSizes,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ActualSize,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Buffer,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_CapacityFailureLines,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_DisplayPath,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Failures,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResult,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResults,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_PreflightFailureLines,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ReadFailure,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_SkipImageChecks,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_TargetName,
+  Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Targets,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_IsDuo,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_Returns,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_Targets,
@@ -264,6 +445,106 @@ const screenshotDisplayTypes = new Map([
 ]);
 
 /**
+ * CLI - Integration - App Store Connect - Screenshot Size Specifications.
+ *
+ * Mirrors Apple's screenshot specifications fetched on 2026-11-05:
+ * https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications
+ *
+ * @since 0.39.0
+ */
+const screenshotSizeSpecifications = new Map([
+  [
+    'apple-watch',
+    ['416x496'],
+  ],
+  [
+    'ipad',
+    [
+      '2064x2752',
+      '2752x2064',
+      '2048x2732',
+      '2732x2048',
+    ],
+  ],
+  [
+    'iphone',
+    [
+      '1260x2736',
+      '2736x1260',
+      '1290x2796',
+      '2796x1290',
+      '1320x2868',
+      '2868x1320',
+    ],
+  ],
+  [
+    'iphone-duo',
+    [
+      '1398x2034',
+      '2034x1398',
+      '2007x2853',
+      '2853x2007',
+    ],
+  ],
+  [
+    'mac',
+    [
+      '1280x800',
+      '1440x900',
+      '2560x1600',
+      '2880x1800',
+    ],
+  ],
+  [
+    'vision-pro',
+    ['3840x2160'],
+  ],
+]);
+
+/**
+ * CLI - Integration - App Store Connect - Png Signature.
+ *
+ * Identifies PNG bytes before the preflight parser reads the IHDR dimensions,
+ * color type, and any transparency chunk.
+ *
+ * @since 0.39.0
+ */
+const pngSignature = Buffer.from([
+  137,
+  80,
+  78,
+  71,
+  13,
+  10,
+  26,
+  10,
+]);
+
+/**
+ * CLI - Integration - App Store Connect - Jpeg Start Of Frame Markers.
+ *
+ * Covers baseline, progressive, lossless, differential, and arithmetic JPEG
+ * frames whose segment headers carry the real pixel dimensions.
+ *
+ * @since 0.39.0
+ */
+const jpegStartOfFrameMarkers = new Set([
+  parseInt('C0', 16),
+  parseInt('C1', 16),
+  parseInt('C2', 16),
+  parseInt('C3', 16),
+  parseInt('C5', 16),
+  parseInt('C6', 16),
+  parseInt('C7', 16),
+  parseInt('C9', 16),
+  parseInt('CA', 16),
+  parseInt('CB', 16),
+  parseInt('CD', 16),
+  parseInt('CE', 16),
+  parseInt('CF', 16),
+]);
+
+/**
  * CLI - Integration - App Store Connect - Creative Placement Types.
  *
  * Preserves Apple's public placement vocabulary in both folder names and API
@@ -281,6 +562,39 @@ const creativePlacementTypes = new Map([
     'APP_STORE_SEARCH_RESULTS_ASSET',
   ],
 ]);
+
+/**
+ * CLI - Integration - App Store Connect - Maximum Placement Counts.
+ *
+ * Records Apple's documented per-group limits so replacement stages new
+ * placements first only when both generations can coexist safely.
+ *
+ * @since 0.39.0
+ */
+const maximumPlacementCounts = new Map([
+  [
+    'APP_SCREENSHOT',
+    10,
+  ],
+  [
+    'APP_STORE_SEARCH_RESULTS_ASSET',
+    1,
+  ],
+  [
+    'PRODUCT_PAGE_HEADER_ASSET',
+    1,
+  ],
+]);
+
+/**
+ * CLI - Integration - App Store Connect - Maximum Screenshot Count.
+ *
+ * Apple documents this limit on its product-page guidance:
+ * https://developer.apple.com/app-store/product-page/
+ *
+ * @since 0.39.0
+ */
+const maximumScreenshotCount = 10;
 
 /**
  * CLI - Integration - App Store Connect.
@@ -301,7 +615,7 @@ export class Runner {
    *
    * @returns {Cli_Integration_AppStoreConnect_Runner_Metadata_Returns}
    *
-   * @since 0.34.0
+   * @since 0.39.0
    */
   public static async metadata(options: Cli_Integration_AppStoreConnect_Runner_Metadata_Options): Cli_Integration_AppStoreConnect_Runner_Metadata_Returns {
     const workspaceContext: Cli_Integration_AppStoreConnect_Runner_Metadata_WorkspaceContext = await Runner.prepareWorkspace(options);
@@ -322,14 +636,14 @@ export class Runner {
     const app: Cli_Integration_AppStoreConnect_Runner_Metadata_App = await client.findApp(workspaceContext['bundleIdentifier']);
     const appId: Cli_Integration_AppStoreConnect_Runner_Metadata_AppId = Runner.resourceId(app, 'App');
 
-    await Promise.all(targets.map(async (target) => {
+    await AppStoreConnect.runOperations(targets, async (target) => {
       const context: Cli_Integration_AppStoreConnect_Runner_Metadata_Context = await Runner.resolveContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
       const localizationId: Cli_Integration_AppStoreConnect_Runner_Metadata_LocalizationId = Runner.resourceId(context['localization'], `${target['locale']} localization`);
 
       await client.updateLocalization(localizationId, target['attributes']);
 
       return;
-    }));
+    });
 
     Logger.info(`Updated ${targets.length} App Store Connect metadata target(s) for app ${appId}.`);
 
@@ -346,7 +660,7 @@ export class Runner {
    *
    * @returns {Cli_Integration_AppStoreConnect_Runner_Screenshots_Returns}
    *
-   * @since 0.34.0
+   * @since 0.39.0
    */
   public static async screenshots(options: Cli_Integration_AppStoreConnect_Runner_Screenshots_Options): Cli_Integration_AppStoreConnect_Runner_Screenshots_Returns {
     const workspaceContext: Cli_Integration_AppStoreConnect_Runner_Screenshots_WorkspaceContext = await Runner.prepareWorkspace(options);
@@ -366,6 +680,8 @@ export class Runner {
 
     Runner.validateScreenshotTargets(targets);
 
+    await Runner.validateScreenshotImages(targets, options['skipImageChecks'] === true);
+
     reportPlan(`Replace App Store Connect screenshots for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']}:`, lines);
 
     if (await confirmPlan(options['dryRun'] === true, options['nonInteractive'] === true, options['yes'] === true) === false || options['dryRun'] === true) {
@@ -379,7 +695,7 @@ export class Runner {
     const duoTargets: Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoTargets = targets.filter((target) => target['target'] === 'iphone-duo');
     const standardTargets: Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardTargets = targets.filter((target) => target['target'] !== 'iphone-duo');
 
-    await Promise.all(standardTargets.map(async (target) => {
+    await AppStoreConnect.runOperations(standardTargets, async (target) => {
       const standardContext: Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardContext = await Runner.resolveCachedContext(contextCache, client, app, workspaceContext['version'], target['platform'], target['locale']);
       const localizationId: Cli_Integration_AppStoreConnect_Runner_Screenshots_LocalizationId = Runner.resourceId(standardContext['localization'], `${target['locale']} localization`);
       const displayType: Cli_Integration_AppStoreConnect_Runner_Screenshots_DisplayType = screenshotDisplayTypes.get(target['target']);
@@ -395,37 +711,143 @@ export class Runner {
         return attributes['screenshotDisplayType'] === displayType;
       });
 
-      if (set !== undefined) {
-        await client.deleteResource('appScreenshotSets', Runner.resourceId(set, `${displayType} screenshot set`));
+      const activeSet: Cli_Integration_AppStoreConnect_Runner_Screenshots_ActiveSet = (set === undefined) ? await client.createScreenshotSet(localizationId, displayType) : set;
+      const setId: Cli_Integration_AppStoreConnect_Runner_Screenshots_SetId = Runner.resourceId(activeSet, `${displayType} screenshot set`);
+      const existingScreenshots: Cli_Integration_AppStoreConnect_Runner_Screenshots_ExistingScreenshots = (set === undefined) ? [] : await client.listScreenshots(setId);
+      const incompleteScreenshots: Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshots = existingScreenshots.filter((screenshot) => {
+        const incompleteAttributes: Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteAttributes = requireObject(screenshot['attributes'], 'Existing screenshot attributes');
+        const incompleteDeliveryState: Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteDeliveryState = requireObject(incompleteAttributes['assetDeliveryState'], 'Existing screenshot delivery state');
+
+        return incompleteDeliveryState['state'] !== 'COMPLETE';
+      });
+      const incompleteScreenshotIds: Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshotIds = incompleteScreenshots.map((incompleteScreenshot) => Runner.resourceId(incompleteScreenshot, 'Incomplete screenshot'));
+
+      if (incompleteScreenshotIds.length > 0) {
+        try {
+          await AppStoreConnect.runOperations(incompleteScreenshotIds, (incompleteScreenshotId) => client.deleteResource('appScreenshots', incompleteScreenshotId));
+        } catch (error) {
+          throw new Error(`Unable to clean incomplete screenshots for ${target['relativePath']}. Existing complete screenshots were left in place.`, { cause: error });
+        }
+
+        Logger.info(`Cleaned ${incompleteScreenshotIds.length} incomplete screenshot reservation(s) before replacing ${target['relativePath']}.`);
       }
 
-      const createdSet: Cli_Integration_AppStoreConnect_Runner_Screenshots_CreatedSet = await client.createScreenshotSet(localizationId, displayType);
-      const setId: Cli_Integration_AppStoreConnect_Runner_Screenshots_SetId = Runner.resourceId(createdSet, `${displayType} screenshot set`);
-      const files: Cli_Integration_AppStoreConnect_Runner_Screenshots_Files = Runner.readFiles(target);
-      const fileBuffers: Cli_Integration_AppStoreConnect_Runner_Screenshots_FileBuffers = await files;
-      const uploads: Cli_Integration_AppStoreConnect_Runner_Screenshots_Uploads = await Promise.all(target['files'].map((file, index) => client.uploadScreenshot(setId, file['fileName'], Runner.fileBuffer(fileBuffers, index, file['fileName']))));
-      const uploadIds: Cli_Integration_AppStoreConnect_Runner_Screenshots_UploadIds = uploads.map((upload) => Runner.resourceId(upload, 'Uploaded screenshot'));
+      const completeScreenshots: Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteScreenshots = existingScreenshots.filter((screenshot) => {
+        const completeAttributes: Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteAttributes = requireObject(screenshot['attributes'], 'Existing screenshot attributes');
+        const completeDeliveryState: Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteDeliveryState = requireObject(completeAttributes['assetDeliveryState'], 'Existing screenshot delivery state');
 
-      await client.reorderScreenshots(setId, uploadIds);
+        return completeDeliveryState['state'] === 'COMPLETE';
+      });
+
+      if (completeScreenshots.length > maximumScreenshotCount) {
+        throw new Error(`${target['relativePath']} contains ${completeScreenshots.length} complete screenshots, exceeding Apple's ${maximumScreenshotCount}-screenshot limit.`);
+      }
+
+      const fileBuffers: Cli_Integration_AppStoreConnect_Runner_Screenshots_FileBuffers = await Runner.readFiles(target);
+      const fileChecksums: Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksums = fileBuffers.map((fileBuffer) => createHash('md5').update(fileBuffer).digest('hex'));
+      const availableScreenshots: Cli_Integration_AppStoreConnect_Runner_Screenshots_AvailableScreenshots = [...completeScreenshots];
+      const desiredScreenshotIds: Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotIds = target['files'].map(() => undefined);
+      const pendingFileIndexes: Cli_Integration_AppStoreConnect_Runner_Screenshots_PendingFileIndexes = [];
+
+      for (let fileIndex = 0; fileIndex < fileChecksums.length; fileIndex += 1) {
+        const fileChecksum: Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksum = fileChecksums[fileIndex];
+
+        if (fileChecksum === undefined) {
+          throw new Error(`Unable to calculate a checksum for local screenshot index ${fileIndex} in ${target['relativePath']}.`);
+        }
+
+        const matchingScreenshotIndex: Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotIndex = availableScreenshots.findIndex((availableScreenshot) => {
+          const matchingAttributes: Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingAttributes = requireObject(availableScreenshot['attributes'], 'Existing screenshot attributes');
+          const matchingChecksum: Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingChecksum = matchingAttributes['sourceFileChecksum'];
+
+          return typeof matchingChecksum === 'string' && matchingChecksum.toLowerCase() === fileChecksum;
+        });
+
+        if (matchingScreenshotIndex === -1) {
+          pendingFileIndexes.push(fileIndex);
+
+          continue;
+        }
+
+        const matchingScreenshot: Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshot = availableScreenshots[matchingScreenshotIndex];
+
+        if (matchingScreenshot === undefined) {
+          throw new Error(`Unable to reuse local screenshot index ${fileIndex} in ${target['relativePath']}.`);
+        }
+
+        const matchingScreenshotId: Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotId = Runner.resourceId(matchingScreenshot, 'Matching screenshot');
+
+        Reflect.set(desiredScreenshotIds, fileIndex, matchingScreenshotId);
+
+        availableScreenshots.splice(matchingScreenshotIndex, 1);
+      }
+
+      const remainingOldScreenshotIds: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingOldScreenshotIds = new Set(availableScreenshots.map((availableScreenshot) => Runner.resourceId(availableScreenshot, 'Existing screenshot')));
+      const freeSlots: Cli_Integration_AppStoreConnect_Runner_Screenshots_FreeSlots = maximumScreenshotCount - completeScreenshots.length;
+
+      try {
+        await Runner.replaceScreenshotBatch(client, setId, target, fileBuffers, pendingFileIndexes, desiredScreenshotIds, remainingOldScreenshotIds, freeSlots);
+      } catch (error) {
+        let oldScreenshotCount: Cli_Integration_AppStoreConnect_Runner_Screenshots_OldScreenshotCount = remainingOldScreenshotIds.size;
+        let desiredScreenshotCount: Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotCount = desiredScreenshotIds.filter((desiredScreenshotId) => desiredScreenshotId !== undefined).length;
+        let placeholderCount: Cli_Integration_AppStoreConnect_Runner_Screenshots_PlaceholderCount = 0;
+        let remainingDescription: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingDescription = '';
+
+        try {
+          const remainingScreenshots: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshots = await client.listScreenshots(setId);
+          const desiredIdSet: Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredIdSet = new Set(desiredScreenshotIds.filter((desiredScreenshotId) => desiredScreenshotId !== undefined));
+          const remainingPlaceholders: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingPlaceholders = [];
+
+          oldScreenshotCount = 0;
+          desiredScreenshotCount = 0;
+
+          for (const remainingScreenshot of remainingScreenshots) {
+            const remainingScreenshotId: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshotId = Runner.resourceId(remainingScreenshot, 'Remaining screenshot');
+            const remainingAttributes: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingAttributes = requireObject(remainingScreenshot['attributes'], 'Remaining screenshot attributes');
+            const remainingState: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingState = requireObject(remainingAttributes['assetDeliveryState'], 'Remaining screenshot delivery state');
+
+            if (remainingState['state'] !== 'COMPLETE') {
+              const remainingFileName: Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingFileName = (typeof remainingAttributes['fileName'] === 'string') ? remainingAttributes['fileName'] : remainingScreenshotId;
+
+              remainingPlaceholders.push(`${remainingFileName}:${String(remainingState['state'] ?? 'UNKNOWN')}`);
+
+              continue;
+            }
+
+            if (desiredIdSet.has(remainingScreenshotId) === true) {
+              desiredScreenshotCount += 1;
+            } else {
+              oldScreenshotCount += 1;
+            }
+          }
+
+          placeholderCount = remainingPlaceholders.length;
+          remainingDescription = (placeholderCount === 0) ? 'none' : remainingPlaceholders.join(', ');
+        } catch (stateError) {
+          remainingDescription = `unavailable (${String(stateError)})`;
+        }
+
+        throw new Error(`Replacing ${target['relativePath']} stopped after an App Store Connect failure. Remaining set: ${oldScreenshotCount} old COMPLETE screenshot(s), ${desiredScreenshotCount} replacement COMPLETE screenshot(s), and ${placeholderCount} non-COMPLETE placeholder(s) (${remainingDescription}).`, { cause: error });
+      }
 
       return;
-    }));
+    });
 
     if (duoTargets.length > 0) {
       const assetLibrary: Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibrary = await client.findAssetLibrary(appId);
       const assetLibraryId: Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibraryId = Runner.resourceId(assetLibrary, 'App asset library');
       const placementGroup: Cli_Integration_AppStoreConnect_Runner_Screenshots_PlacementGroup = await Runner.resolveDuoPlacementGroup(client);
 
-      await Promise.all(duoTargets.map(async (target) => {
+      await AppStoreConnect.runOperations(duoTargets, async (target) => {
         const duoContext: Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoContext = await Runner.resolveCachedContext(contextCache, client, app, workspaceContext['version'], target['platform'], target['locale']);
         const buffers: Cli_Integration_AppStoreConnect_Runner_Screenshots_Buffers = await Runner.readFiles(target);
-        const images: Cli_Integration_AppStoreConnect_Runner_Screenshots_Images = await Promise.all(target['files'].map((file, index) => client.uploadAssetLibraryImage(assetLibraryId, 'APP_SCREENSHOTS_AND_PREVIEWS', `${workspaceContext['workspace']['name']} ${target['locale']} iPhone Duo ${file['position']}`, file['fileName'], Runner.fileBuffer(buffers, index, file['fileName']))));
+        const images: Cli_Integration_AppStoreConnect_Runner_Screenshots_Images = await AppStoreConnect.runOperations(target['files'], (file, index) => client.uploadAssetLibraryImage(assetLibraryId, 'APP_SCREENSHOTS_AND_PREVIEWS', `${workspaceContext['workspace']['name']} ${target['platform']} ${target['locale']} iPhone Duo ${file['position']}`, file['fileName'], Runner.fileBuffer(buffers, index, file['fileName'])));
         const imageIds: Cli_Integration_AppStoreConnect_Runner_Screenshots_ImageIds = images.map((image) => Runner.resourceId(image, 'Uploaded iPhone Duo screenshot'));
 
         await Runner.replacePlacement(client, duoContext, 'APP_SCREENSHOT', placementGroup, imageIds);
 
         return;
-      }));
+      });
     }
 
     Logger.info(`Updated ${targets.length} App Store Connect screenshot target(s).`);
@@ -443,7 +865,7 @@ export class Runner {
    *
    * @returns {Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Returns}
    *
-   * @since 0.34.0
+   * @since 0.39.0
    */
   public static async creativeAssets(options: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Options): Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Returns {
     const workspaceContext: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_WorkspaceContext = await Runner.prepareWorkspace(options);
@@ -481,7 +903,7 @@ export class Runner {
     const assetLibraryId: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AssetLibraryId = Runner.resourceId(assetLibrary, 'App asset library');
     const contextCache: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_ContextCache = new Map();
 
-    await Promise.all(targets.map(async (target) => {
+    await AppStoreConnect.runOperations(targets, async (target) => {
       const context: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Context = await Runner.resolveCachedContext(contextCache, client, app, workspaceContext['version'], target['platform'], target['locale']);
       const placementType: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_PlacementType = creativePlacementTypes.get(target['target']);
 
@@ -496,14 +918,178 @@ export class Runner {
       }
 
       const buffers: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Buffers = await Runner.readFiles(target);
-      const image: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Image = await client.uploadAssetLibraryImage(assetLibraryId, 'CREATIVE_ASSETS', `${workspaceContext['workspace']['name']} ${target['locale']} ${target['target']}`, uploadedFile['fileName'], Runner.fileBuffer(buffers, 0, uploadedFile['fileName']));
+      const image: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Image = await client.uploadAssetLibraryImage(assetLibraryId, 'CREATIVE_ASSETS', `${workspaceContext['workspace']['name']} ${target['platform']} ${target['locale']} ${target['target']}`, uploadedFile['fileName'], Runner.fileBuffer(buffers, 0, uploadedFile['fileName']));
 
       await Runner.replacePlacement(client, context, placementType, 'DEFAULT_PROFILE', [Runner.resourceId(image, 'Uploaded creative asset')]);
 
       return;
-    }));
+    });
 
     Logger.info(`Updated ${targets.length} App Store Connect creative asset target(s).`);
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Create Placement.
+   *
+   * Reconciles an ambiguous placement create by listing included images and
+   * reusing the placement for the requested image before any retry.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Client}         client         - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_LocalizationId} localizationId - Localization id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementType}  placementType  - Placement type.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementGroup} placementGroup - Placement group.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ImageId}        imageId        - Image id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Attempt}        attempt        - Attempt.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async createPlacement(client: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Client, localizationId: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_LocalizationId, placementType: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementType, placementGroup: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementGroup, imageId: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ImageId, attempt: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Attempt = 1): Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Returns {
+    let response: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Response = undefined;
+
+    try {
+      response = await client.request('/v1/appAssetLibraryPlacements', {
+        body: {
+          data: {
+            attributes: {
+              placementGroup,
+              placementType,
+            },
+            relationships: {
+              appStoreVersionLocalization: {
+                data: {
+                  id: localizationId,
+                  type: 'appStoreVersionLocalizations',
+                },
+              },
+              image: {
+                data: {
+                  id: imageId,
+                  type: 'appAssetLibraryImages',
+                },
+              },
+            },
+            type: 'appAssetLibraryPlacements',
+          },
+        },
+        expectedStatuses: [201],
+        method: 'POST',
+      });
+    } catch (error) {
+      if (AppStoreConnect.isAmbiguousCreateError(error) === false) {
+        throw error;
+      }
+
+      const query: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Query = new URLSearchParams({
+        'fields[appAssetLibraryImages]': 'referenceName',
+        'fields[appAssetLibraryPlacements]': 'image,placementGroup,placementType',
+        'filter[placementGroup]': placementGroup,
+        'filter[placementType]': placementType,
+        'include': 'image',
+        'limit': '50',
+      });
+      const reconciliationResponse: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ReconciliationResponse = await client.request(`/v1/appStoreVersionLocalizations/${localizationId}/placements?${query.toString()}`);
+      const placements: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Placements = (reconciliationResponse === undefined) ? [] : requireArray(reconciliationResponse['data'], 'Reconciled asset placements').map((placement) => requireObject(placement, 'Reconciled asset placement'));
+      const matchingPlacement: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_MatchingPlacement = placements.find((placement) => Runner.placementImageId(placement) === imageId);
+
+      if (matchingPlacement !== undefined) {
+        return Runner.resourceId(matchingPlacement, 'Reconciled asset placement');
+      }
+
+      if (attempt >= 5) {
+        throw error;
+      }
+
+      const delayMilliseconds: Cli_Integration_AppStoreConnect_Runner_CreatePlacement_DelayMilliseconds = Math.min(1000 * Math.pow(2, attempt - 1), 15 * 1000);
+
+      await wait(delayMilliseconds);
+
+      return Runner.createPlacement(client, localizationId, placementType, placementGroup, imageId, attempt + 1);
+    }
+
+    if (response === undefined) {
+      throw new Error('Creating an App Asset Library placement returned no resource.');
+    }
+
+    return Runner.resourceId(requireObject(response['data'], 'Created asset placement'), 'Created asset placement');
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Create Placements.
+   *
+   * Creates one bounded placement batch in source order and returns only the
+   * resource identifiers needed for ordering and cleanup.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Client}         client         - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_LocalizationId} localizationId - Localization id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementType}  placementType  - Placement type.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementGroup} placementGroup - Placement group.
+   * @param {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_ImageIds}       imageIds       - Image ids.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async createPlacements(client: Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Client, localizationId: Cli_Integration_AppStoreConnect_Runner_CreatePlacements_LocalizationId, placementType: Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementType, placementGroup: Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementGroup, imageIds: Cli_Integration_AppStoreConnect_Runner_CreatePlacements_ImageIds): Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Returns {
+    return AppStoreConnect.runOperations(imageIds, (imageId) => Runner.createPlacement(client, localizationId, placementType, placementGroup, imageId));
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Order Placements.
+   *
+   * Applies one complete group order after replacement placements are ready and
+   * skips the vendor request when only one placement exists.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Client}         client         - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_OrderPlacements_LocalizationId} localizationId - Localization id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementGroup} placementGroup - Placement group.
+   * @param {Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementIds}   placementIds   - Placement ids.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async orderPlacements(client: Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Client, localizationId: Cli_Integration_AppStoreConnect_Runner_OrderPlacements_LocalizationId, placementGroup: Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementGroup, placementIds: Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementIds): Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Returns {
+    if (placementIds.length <= 1) {
+      return;
+    }
+
+    await client.request('/v1/appAssetLibraryPlacementOrderingRequests', {
+      body: {
+        data: {
+          attributes: {
+            placementGroup,
+          },
+          relationships: {
+            appStoreVersionLocalization: {
+              data: {
+                id: localizationId,
+                type: 'appStoreVersionLocalizations',
+              },
+            },
+            orderedPlacements: {
+              data: placementIds.map((placementId) => ({
+                id: placementId,
+                type: 'appAssetLibraryPlacements',
+              })),
+            },
+          },
+          type: 'appAssetLibraryPlacementOrderingRequests',
+        },
+      },
+      expectedStatuses: [201],
+      idempotent: true,
+      method: 'POST',
+    });
 
     return;
   }
@@ -623,6 +1209,327 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Validate Screenshot Images.
+   *
+   * Reads every selected image before authentication and reports all format,
+   * transparency, dimension, and per-set capacity failures in one error.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Targets}         targets         - Targets.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_SkipImageChecks} skipImageChecks - Skip image checks.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async validateScreenshotImages(targets: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Targets, skipImageChecks: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_SkipImageChecks): Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Returns {
+    const failures: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Failures = [];
+
+    for (const target of targets) {
+      if (target['files'].length < 1 || target['files'].length > maximumScreenshotCount) {
+        failures.push(`${target['relativePath']}: ${target['files'].length} file(s); accepted 1-${maximumScreenshotCount} files per set.`);
+      }
+    }
+
+    if (skipImageChecks === true) {
+      if (failures.length > 0) {
+        const capacityFailureLines: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_CapacityFailureLines = [
+          'Screenshot preflight failed:',
+          ...failures.map((failure) => `- ${failure}`),
+        ];
+
+        throw new Error(capacityFailureLines.join('\n'));
+      }
+
+      return;
+    }
+
+    const fileEntries: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries = targets.flatMap((target) => target['files'].map((file) => ({
+      file,
+      target,
+    })));
+    const fileResults: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResults = await Promise.allSettled(fileEntries.map((fileEntry) => fs.readFile(fileEntry['file']['filePath'])));
+
+    for (let fileIndex = 0; fileIndex < fileEntries.length; fileIndex += 1) {
+      const fileEntry: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry = fileEntries[fileIndex];
+      const fileResult: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResult = fileResults[fileIndex];
+
+      if (fileEntry === undefined) {
+        failures.push(`Selected screenshot index ${fileIndex}: actual missing local file entry; accepted a readable opaque PNG or JPEG.`);
+
+        continue;
+      }
+
+      const targetName: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_TargetName = fileEntry['target']['target'];
+      const acceptedSizes: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedSizes = screenshotSizeSpecifications.get(targetName) ?? [];
+      const acceptedDescription: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedDescription = acceptedSizes.join(', ');
+      const displayPath: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_DisplayPath = `${fileEntry['target']['relativePath']}/${fileEntry['file']['fileName']}`;
+
+      if (fileResult === undefined || fileResult.status === 'rejected') {
+        const readFailure: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ReadFailure = (fileResult === undefined) ? 'missing read result' : String(fileResult.reason);
+
+        failures.push(`${displayPath}: actual unreadable file (${readFailure}); accepted opaque PNG or JPEG at ${acceptedDescription}.`);
+
+        continue;
+      }
+
+      const buffer: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Buffer = fileResult.value;
+      let image: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image = undefined;
+
+      try {
+        image = Runner.inspectScreenshotImage(buffer);
+      } catch (error) {
+        failures.push(`${displayPath}: actual ${String(error)}; accepted opaque PNG or JPEG at ${acceptedDescription}.`);
+
+        continue;
+      }
+
+      const actualSize: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ActualSize = `${image['width']}x${image['height']}`;
+
+      if (acceptedSizes.includes(actualSize) === false) {
+        failures.push(`${displayPath}: actual ${actualSize} ${image['format']}; accepted ${acceptedDescription}.`);
+      }
+
+      if (image['hasAlpha'] === true) {
+        failures.push(`${displayPath}: actual ${actualSize} PNG with alpha; accepted opaque PNG or JPEG at ${acceptedDescription}.`);
+      }
+    }
+
+    if (failures.length > 0) {
+      const preflightFailureLines: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_PreflightFailureLines = [
+        'Screenshot preflight failed before any App Store Connect request:',
+        ...failures.map((failure) => `- ${failure}`),
+      ];
+
+      throw new Error(preflightFailureLines.join('\n'));
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Inspect Screenshot Image.
+   *
+   * Selects the PNG or JPEG header parser from the file signature instead of
+   * trusting a filename extension supplied by the local asset directory.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Buffer} buffer - Buffer.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static inspectScreenshotImage(buffer: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Buffer): Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns {
+    if (buffer.length >= pngSignature.length && buffer.subarray(0, pngSignature.length).equals(pngSignature) === true) {
+      return Runner.inspectScreenshotPng(buffer);
+    }
+
+    if (
+      buffer.length >= 2
+      && buffer[0] === parseInt('FF', 16)
+      && buffer[1] === parseInt('D8', 16)
+    ) {
+      return Runner.inspectScreenshotJpeg(buffer);
+    }
+
+    throw new Error('unrecognized image header');
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Inspect Screenshot Jpeg.
+   *
+   * Walks JPEG segments until a supported start-of-frame marker supplies the
+   * encoded width and height without decoding compressed image pixels.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Buffer} buffer - Buffer.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static inspectScreenshotJpeg(buffer: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Buffer): Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns {
+    let offset: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Offset = 2;
+    let width: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Width = undefined;
+    let height: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Height = undefined;
+    let hasEndOfImage: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_HasEndOfImage = false;
+
+    while (offset < buffer.length) {
+      while (offset < buffer.length && buffer[offset] !== parseInt('FF', 16)) {
+        offset += 1;
+      }
+
+      while (offset < buffer.length && buffer[offset] === parseInt('FF', 16)) {
+        offset += 1;
+      }
+
+      if (offset >= buffer.length) {
+        break;
+      }
+
+      const marker: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Marker = buffer[offset];
+
+      offset += 1;
+
+      if (marker === undefined) {
+        break;
+      }
+
+      if (marker === parseInt('00', 16)) {
+        continue;
+      }
+
+      if (marker === parseInt('D9', 16)) {
+        hasEndOfImage = true;
+
+        break;
+      }
+
+      if (
+        marker === parseInt('01', 16)
+        || marker === parseInt('D8', 16)
+        || (
+          marker >= parseInt('D0', 16)
+          && marker <= parseInt('D7', 16)
+        )
+      ) {
+        continue;
+      }
+
+      if (offset + 2 > buffer.length) {
+        throw new Error('truncated JPEG segment length');
+      }
+
+      const segmentLength: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_SegmentLength = buffer.readUInt16BE(offset);
+
+      if (segmentLength < 2 || offset + segmentLength > buffer.length) {
+        throw new Error('invalid JPEG segment length');
+      }
+
+      if (jpegStartOfFrameMarkers.has(marker) === true) {
+        if (segmentLength < 7) {
+          throw new Error('truncated JPEG start-of-frame segment');
+        }
+
+        height = buffer.readUInt16BE(offset + 3);
+        width = buffer.readUInt16BE(offset + 5);
+      }
+
+      offset += segmentLength;
+    }
+
+    if (width === undefined || height === undefined) {
+      throw new Error('JPEG has no supported start-of-frame segment');
+    }
+
+    if (hasEndOfImage === false) {
+      throw new Error('JPEG has no complete end-of-image marker');
+    }
+
+    return {
+      format: 'JPEG',
+      hasAlpha: false,
+      height,
+      width,
+    };
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Inspect Screenshot Png.
+   *
+   * Reads IHDR dimensions and rejects alpha-bearing color types or a tRNS chunk
+   * while checking every chunk boundary before advancing through the file.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Buffer} buffer - Buffer.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static inspectScreenshotPng(buffer: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Buffer): Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns {
+    let offset: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Offset = pngSignature.length;
+    let width: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Width = undefined;
+    let height: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Height = undefined;
+    let colorType: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ColorType = undefined;
+    let hasTransparencyChunk: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasTransparencyChunk = false;
+    let hasEndChunk: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasEndChunk = false;
+
+    while (offset + 12 <= buffer.length) {
+      const chunkLength: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkLength = buffer.readUInt32BE(offset);
+      const chunkType: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkType = buffer.subarray(offset + 4, offset + 8).toString('ascii');
+      const dataOffset: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_DataOffset = offset + 8;
+      const nextOffset: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_NextOffset = dataOffset + chunkLength + 4;
+
+      if (nextOffset > buffer.length) {
+        throw new Error(`truncated PNG ${chunkType || 'unknown'} chunk`);
+      }
+
+      if (offset === pngSignature.length && chunkType !== 'IHDR') {
+        throw new Error('PNG has no complete leading IHDR chunk');
+      }
+
+      if (chunkType === 'IHDR') {
+        if (offset !== pngSignature.length || chunkLength !== 13) {
+          throw new Error('invalid PNG IHDR length');
+        }
+
+        width = buffer.readUInt32BE(dataOffset);
+        height = buffer.readUInt32BE(dataOffset + 4);
+        colorType = buffer[dataOffset + 9];
+      }
+
+      if (chunkType === 'tRNS') {
+        hasTransparencyChunk = true;
+      }
+
+      offset = nextOffset;
+
+      if (chunkType === 'IEND') {
+        if (chunkLength !== 0) {
+          throw new Error('invalid PNG IEND length');
+        }
+
+        if (nextOffset !== buffer.length) {
+          throw new Error('PNG contains data after its IEND chunk');
+        }
+
+        hasEndChunk = true;
+
+        break;
+      }
+    }
+
+    if (
+      width === undefined
+      || height === undefined
+      || colorType === undefined
+    ) {
+      throw new Error('PNG has no complete IHDR chunk');
+    }
+
+    if (hasEndChunk === false) {
+      throw new Error('PNG has no complete IEND chunk');
+    }
+
+    return {
+      format: 'PNG',
+      hasAlpha: (
+        colorType === 4
+        || colorType === 6
+        || hasTransparencyChunk === true
+      ),
+      height,
+      width,
+    };
   }
 
   /**
@@ -958,10 +1865,181 @@ export class Runner {
   }
 
   /**
+   * CLI - Integration - App Store Connect - Replace Screenshot Batch.
+   *
+   * Fills current capacity, frees only the old slots needed by the next batch,
+   * and recurses until the exact local screenshot order can become authoritative.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Client}                    client                    - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SetId}                     setId                     - Set id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Target}                    target                    - Target.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FileBuffers}               fileBuffers               - File buffers.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PendingFileIndexes}        pendingFileIndexes        - Pending file indexes.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredScreenshotIds}      desiredScreenshotIds      - Desired screenshot ids.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingOldScreenshotIds} remainingOldScreenshotIds - Remaining old screenshot ids.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FreeSlots}                 freeSlots                 - Free slots.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_WindowSize}                windowSize                - Window size.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotDeleteCount}  oldScreenshotDeleteCount  - Old screenshot delete count.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotCount}   uploadedScreenshotCount   - Uploaded screenshot count.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async replaceScreenshotBatch(client: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Client, setId: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SetId, target: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Target, fileBuffers: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FileBuffers, pendingFileIndexes: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PendingFileIndexes, desiredScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredScreenshotIds, remainingOldScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingOldScreenshotIds, freeSlots: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FreeSlots, windowSize: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_WindowSize = 1, oldScreenshotDeleteCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotDeleteCount = 0, uploadedScreenshotCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotCount = 0): Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Returns {
+    let availableSlots: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_AvailableSlots = freeSlots;
+    let deletedOldScreenshotCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DeletedOldScreenshotCount = oldScreenshotDeleteCount;
+
+    if (availableSlots === 0 && pendingFileIndexes.length > 0) {
+      const completeReplacementCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompleteReplacementCount = uploadedScreenshotCount;
+      const permittedOldScreenshotDeleteCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PermittedOldScreenshotDeleteCount = Math.max(0, completeReplacementCount + 1 - deletedOldScreenshotCount);
+      const oldScreenshotIdsForCapacity: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotIdsForCapacity = [...remainingOldScreenshotIds].slice(0, Math.min(windowSize, pendingFileIndexes.length, permittedOldScreenshotDeleteCount));
+
+      if (oldScreenshotIdsForCapacity.length === 0) {
+        throw new Error(`Unable to free screenshot capacity for ${target['relativePath']} without exceeding the completed-replacement safety window.`);
+      }
+
+      await AppStoreConnect.runOperations(oldScreenshotIdsForCapacity, async (oldScreenshotId) => {
+        await client.deleteResource('appScreenshots', oldScreenshotId);
+
+        remainingOldScreenshotIds.delete(oldScreenshotId);
+
+        return;
+      });
+
+      availableSlots += oldScreenshotIdsForCapacity.length;
+      deletedOldScreenshotCount += oldScreenshotIdsForCapacity.length;
+    }
+
+    const batchFileIndexes: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_BatchFileIndexes = pendingFileIndexes.slice(0, Math.min(windowSize, availableSlots));
+
+    if (batchFileIndexes.length > 0) {
+      await AppStoreConnect.runOperations(batchFileIndexes, async (fileIndex) => {
+        const file: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_File = target['files'][fileIndex];
+
+        if (file === undefined) {
+          throw new Error(`Unable to find local screenshot index ${fileIndex} for ${target['relativePath']}.`);
+        }
+
+        const uploadedScreenshot: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshot = await client.uploadScreenshot(setId, file['fileName'], Runner.fileBuffer(fileBuffers, fileIndex, file['fileName']));
+        const uploadedScreenshotId: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotId = Runner.resourceId(uploadedScreenshot, 'Uploaded screenshot');
+
+        Reflect.set(desiredScreenshotIds, fileIndex, uploadedScreenshotId);
+
+        return;
+      });
+    }
+
+    const remainingPendingFileIndexes: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingPendingFileIndexes = pendingFileIndexes.slice(batchFileIndexes.length);
+    const completedUploadedScreenshotCount: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompletedUploadedScreenshotCount = uploadedScreenshotCount + batchFileIndexes.length;
+
+    if (remainingPendingFileIndexes.length === 0) {
+      const resourcesBeforeSweep: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_ResourcesBeforeSweep = await client.listScreenshots(setId);
+      const incompleteScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_IncompleteScreenshotIds = resourcesBeforeSweep.filter((resource) => {
+        const attributes: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Attributes = requireObject(resource['attributes'], 'Screenshot attributes before final ordering');
+        const state: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_State = requireObject(attributes['assetDeliveryState'], 'Screenshot delivery state before final ordering');
+
+        return state['state'] !== 'COMPLETE';
+      }).map((resource) => Runner.resourceId(resource, 'Incomplete screenshot before final ordering'));
+
+      await AppStoreConnect.runOperations(incompleteScreenshotIds, (incompleteScreenshotId) => client.deleteResource('appScreenshots', incompleteScreenshotId));
+
+      const remainingResources: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingResources = (incompleteScreenshotIds.length === 0) ? resourcesBeforeSweep : await client.listScreenshots(setId);
+      const desiredOrderedScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredOrderedScreenshotIds = desiredScreenshotIds.map((desiredScreenshotId) => {
+        if (desiredScreenshotId === undefined) {
+          throw new Error(`Screenshot replacement for ${target['relativePath']} ended without every local screenshot.`);
+        }
+
+        return desiredScreenshotId;
+      });
+      const remainingScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingScreenshotIds = remainingResources.map((remainingResource) => Runner.resourceId(remainingResource, 'Screenshot before final ordering'));
+
+      for (const desiredOrderedScreenshotId of desiredOrderedScreenshotIds) {
+        if (remainingScreenshotIds.includes(desiredOrderedScreenshotId) === false) {
+          throw new Error(`Screenshot replacement for ${target['relativePath']} is missing completed resource ${desiredOrderedScreenshotId}.`);
+        }
+      }
+
+      const supersededScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SupersededScreenshotIds = remainingScreenshotIds.filter((remainingScreenshotId) => desiredOrderedScreenshotIds.includes(remainingScreenshotId) === false);
+      const orderedScreenshotIds: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OrderedScreenshotIds = [
+        ...desiredOrderedScreenshotIds,
+        ...supersededScreenshotIds,
+      ];
+
+      await client.reorderScreenshots(setId, orderedScreenshotIds);
+
+      await AppStoreConnect.runOperations(supersededScreenshotIds, async (oldScreenshotId) => {
+        await client.deleteResource('appScreenshots', oldScreenshotId);
+
+        remainingOldScreenshotIds.delete(oldScreenshotId);
+
+        return;
+      });
+
+      return;
+    }
+
+    const nextFreeSlots: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextFreeSlots = availableSlots - batchFileIndexes.length;
+    const nextWindowSize: Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextWindowSize = (nextFreeSlots === 0) ? 1 : Math.min(windowSize * 2, maximumScreenshotCount);
+
+    await Runner.replaceScreenshotBatch(client, setId, target, fileBuffers, remainingPendingFileIndexes, desiredScreenshotIds, remainingOldScreenshotIds, nextFreeSlots, nextWindowSize, deletedOldScreenshotCount, completedUploadedScreenshotCount);
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Placement Image ID.
+   *
+   * Reads the placement's image relationship without guessing from JSON:API's
+   * de-duplicated, unordered included resources.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Placement} placement - Placement.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static placementImageId(placement: Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Placement): Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Returns {
+    const relationships: Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Relationships = placement['relationships'];
+
+    if (
+      typeof relationships === 'object'
+      && relationships !== null
+      && 'image' in relationships
+    ) {
+      const imageRelationship: Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageRelationship = relationships['image'];
+
+      if (
+        typeof imageRelationship === 'object'
+        && imageRelationship !== null
+        && 'data' in imageRelationship
+      ) {
+        const imageData: Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageData = imageRelationship['data'];
+
+        if (
+          typeof imageData === 'object'
+          && imageData !== null
+          && 'id' in imageData
+          && typeof imageData['id'] === 'string'
+          && imageData['id'] !== ''
+        ) {
+          return imageData['id'];
+        }
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * CLI - Integration - App Store Connect - Replace Placement.
    *
-   * Deletes placements only for the selected target, creates replacements in
-   * local filename order, and submits an explicit ordering request when needed.
+   * Stages and orders replacement placements before removing the prior set when
+   * Apple's per-group maximum permits both generations to coexist.
    *
    * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Client}         client         - Client.
    * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Context}        context        - Context.
@@ -973,83 +2051,213 @@ export class Runner {
    *
    * @returns {Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Returns}
    *
-   * @since 0.34.0
+   * @since 0.39.0
    */
   private static async replacePlacement(client: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Client, context: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Context, placementType: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementType, placementGroup: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementGroup, imageIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageIds): Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Returns {
     const localizationId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_LocalizationId = Runner.resourceId(context['localization'], 'App Store localization');
     const query: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Query = new URLSearchParams({
+      'fields[appAssetLibraryImages]': 'referenceName',
+      'fields[appAssetLibraryPlacements]': 'image,placementGroup,placementType',
       'filter[placementGroup]': placementGroup,
       'filter[placementType]': placementType,
+      'include': 'image',
       'limit': '50',
     });
     const response: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Response = await client.request(`/v1/appStoreVersionLocalizations/${localizationId}/placements?${query.toString()}`);
     const existingPlacements: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ExistingPlacements = (response === undefined) ? [] : requireArray(response['data'], 'Existing asset placements').map((placement) => requireObject(placement, 'Asset placement'));
+    const maximumPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MaximumPlacementCount = maximumPlacementCounts.get(placementType) ?? 1;
+    const availablePlacements: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_AvailablePlacements = [...existingPlacements];
+    const desiredPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_DesiredPlacementIds = imageIds.map(() => undefined);
+    const pendingImageIndexes: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PendingImageIndexes = [];
 
-    await Promise.all(existingPlacements.map((placement) => client.deleteResource('appAssetLibraryPlacements', Runner.resourceId(placement, 'Asset placement'))));
+    if (existingPlacements.length > maximumPlacementCount) {
+      throw new Error(`${placementType}/${placementGroup} contains ${existingPlacements.length} placements, exceeding Apple's ${maximumPlacementCount}-placement limit.`);
+    }
 
-    const placementResponses: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementResponses = await Promise.all(imageIds.map((imageId) => client.request('/v1/appAssetLibraryPlacements', {
-      body: {
-        data: {
-          attributes: {
-            placementGroup,
-            placementType,
-          },
-          relationships: {
-            appStoreVersionLocalization: {
-              data: {
-                id: localizationId,
-                type: 'appStoreVersionLocalizations',
-              },
-            },
-            image: {
-              data: {
-                id: imageId,
-                type: 'appAssetLibraryImages',
-              },
-            },
-          },
-          type: 'appAssetLibraryPlacements',
-        },
-      },
-      expectedStatuses: [201],
-      method: 'POST',
-    })));
-    const placementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementIds = placementResponses.map((placementResponse) => {
-      if (placementResponse === undefined) {
-        throw new Error('Creating an App Asset Library placement returned no resource.');
+    for (let imageIndex = 0; imageIndex < imageIds.length; imageIndex += 1) {
+      const imageId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageId = imageIds[imageIndex];
+
+      if (imageId === undefined) {
+        throw new Error(`Unable to resolve replacement image index ${imageIndex} for ${placementType}/${placementGroup}.`);
       }
 
-      return Runner.resourceId(requireObject(placementResponse['data'], 'Created asset placement'), 'Created asset placement');
-    });
+      const matchingPlacementIndex: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementIndex = availablePlacements.findIndex((availablePlacement) => Runner.placementImageId(availablePlacement) === imageId);
 
-    if (placementIds.length > 1) {
-      await client.request('/v1/appAssetLibraryPlacementOrderingRequests', {
-        body: {
-          data: {
-            attributes: {
-              placementGroup,
-            },
-            relationships: {
-              appStoreVersionLocalization: {
-                data: {
-                  id: localizationId,
-                  type: 'appStoreVersionLocalizations',
-                },
-              },
-              orderedPlacements: {
-                data: placementIds.map((placementId) => ({
-                  id: placementId,
-                  type: 'appAssetLibraryPlacements',
-                })),
-              },
-            },
-            type: 'appAssetLibraryPlacementOrderingRequests',
-          },
-        },
-        expectedStatuses: [201],
-        method: 'POST',
+      if (matchingPlacementIndex === -1) {
+        pendingImageIndexes.push(imageIndex);
+
+        continue;
+      }
+
+      const matchingPlacement: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacement = availablePlacements[matchingPlacementIndex];
+
+      if (matchingPlacement === undefined) {
+        throw new Error(`Unable to reuse replacement image index ${imageIndex} for ${placementType}/${placementGroup}.`);
+      }
+
+      const matchingPlacementId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementId = Runner.resourceId(matchingPlacement, 'Matching asset placement');
+
+      Reflect.set(desiredPlacementIds, imageIndex, matchingPlacementId);
+
+      availablePlacements.splice(matchingPlacementIndex, 1);
+    }
+
+    const remainingOldPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_RemainingOldPlacementIds = new Set(availablePlacements.map((availablePlacement) => Runner.resourceId(availablePlacement, 'Existing asset placement')));
+    const freeSlots: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FreeSlots = maximumPlacementCount - existingPlacements.length;
+
+    try {
+      const initialDesiredPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_InitialDesiredPlacementCount = desiredPlacementIds.filter((desiredPlacementId) => desiredPlacementId !== undefined).length;
+
+      if (
+        maximumPlacementCount === 1
+        && pendingImageIndexes.length > freeSlots
+        && initialDesiredPlacementCount === 0
+      ) {
+        Logger.warn(`Apple limits ${placementType}/${placementGroup} to one placement, so the old and replacement placements cannot coexist. The old placement will be removed only after the replacement asset finishes processing.`);
+      }
+
+      await Runner.replacePlacementBatch(client, localizationId, placementType, placementGroup, imageIds, pendingImageIndexes, desiredPlacementIds, remainingOldPlacementIds, freeSlots);
+    } catch (error) {
+      const failureResponse: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureResponse = await client.request(`/v1/appStoreVersionLocalizations/${localizationId}/placements?${query.toString()}`);
+      const failurePlacements: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailurePlacements = (failureResponse === undefined) ? [] : requireArray(failureResponse['data'], 'Asset placements after failure').map((placement) => requireObject(placement, 'Asset placement after failure'));
+      const failureNewPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureNewPlacementCount = failurePlacements.filter((placement) => {
+        const placementImageId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementImageId = Runner.placementImageId(placement);
+
+        return placementImageId !== undefined && imageIds.includes(placementImageId);
+      }).length;
+      const failureOldPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureOldPlacementCount = failurePlacements.length - failureNewPlacementCount;
+
+      throw new Error(`Replacing ${placementType}/${placementGroup} stopped after an App Store Connect failure. ${failureOldPlacementCount} old placement(s) and ${failureNewPlacementCount} new placement(s) remain; processed assets stay reusable in the App Asset Library.`, { cause: error });
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Replace Placement Batch.
+   *
+   * Reuses matching image placements and rolls new placements through the
+   * group's remaining capacity without accumulating retry leftovers.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Client}                   client                   - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_LocalizationId}           localizationId           - Localization id.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementType}            placementType            - Placement type.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementGroup}           placementGroup           - Placement group.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageIds}                 imageIds                 - Image ids.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PendingImageIndexes}      pendingImageIndexes      - Pending image indexes.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredPlacementIds}      desiredPlacementIds      - Desired placement ids.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIds} remainingOldPlacementIds - Remaining old placement ids.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreeSlots}                freeSlots                - Free slots.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_WindowSize}               windowSize               - Window size.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementDeleteCount}  oldPlacementDeleteCount  - Old placement delete count.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementCount}    createdPlacementCount    - Created placement count.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async replacePlacementBatch(client: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Client, localizationId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_LocalizationId, placementType: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementType, placementGroup: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementGroup, imageIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageIds, pendingImageIndexes: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PendingImageIndexes, desiredPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredPlacementIds, remainingOldPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIds, freeSlots: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreeSlots, windowSize: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_WindowSize = 1, oldPlacementDeleteCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementDeleteCount = 0, createdPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementCount = 0): Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Returns {
+    let availableSlots: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_AvailableSlots = freeSlots;
+    let deletedOldPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DeletedOldPlacementCount = oldPlacementDeleteCount;
+
+    if (availableSlots === 0 && pendingImageIndexes.length > 0) {
+      const completeReplacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CompleteReplacementCount = createdPlacementCount;
+      const permittedOldPlacementDeleteCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PermittedOldPlacementDeleteCount = Math.max(0, completeReplacementCount + 1 - deletedOldPlacementCount);
+      const oldPlacementIdsToDelete: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementIdsToDelete = [...remainingOldPlacementIds].slice(0, Math.min(windowSize, pendingImageIndexes.length, permittedOldPlacementDeleteCount));
+
+      if (oldPlacementIdsToDelete.length === 0) {
+        throw new Error(`Unable to free placement capacity for ${placementType}/${placementGroup} without exceeding the completed-replacement safety window.`);
+      }
+
+      await AppStoreConnect.runOperations(oldPlacementIdsToDelete, async (oldPlacementId) => {
+        await client.deleteResource('appAssetLibraryPlacements', oldPlacementId);
+
+        remainingOldPlacementIds.delete(oldPlacementId);
+
+        return;
+      });
+
+      availableSlots += oldPlacementIdsToDelete.length;
+      deletedOldPlacementCount += oldPlacementIdsToDelete.length;
+    }
+
+    const batchImageIndexes: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_BatchImageIndexes = pendingImageIndexes.slice(0, Math.min(windowSize, availableSlots));
+
+    if (batchImageIndexes.length > 0) {
+      await AppStoreConnect.runOperations(batchImageIndexes, async (imageIndex) => {
+        const imageId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageId = imageIds[imageIndex];
+
+        if (imageId === undefined) {
+          throw new Error(`Unable to find replacement image index ${imageIndex} for ${placementType}/${placementGroup}.`);
+        }
+
+        const createdPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementIds = await Runner.createPlacements(client, localizationId, placementType, placementGroup, [imageId]);
+        const createdPlacementId: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementId = createdPlacementIds[0];
+
+        if (createdPlacementId === undefined) {
+          throw new Error(`Creating replacement image index ${imageIndex} returned no placement.`);
+        }
+
+        Reflect.set(desiredPlacementIds, imageIndex, createdPlacementId);
+
+        return;
       });
     }
+
+    const remainingPendingImageIndexes: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingPendingImageIndexes = pendingImageIndexes.slice(batchImageIndexes.length);
+    const nextCreatedPlacementCount: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextCreatedPlacementCount = createdPlacementCount + batchImageIndexes.length;
+
+    if (remainingPendingImageIndexes.length === 0) {
+      const desiredOrderedPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredOrderedPlacementIds = desiredPlacementIds.map((desiredPlacementId) => {
+        if (desiredPlacementId === undefined) {
+          throw new Error(`Placement replacement for ${placementType}/${placementGroup} ended without every replacement image.`);
+        }
+
+        return desiredPlacementId;
+      });
+      const freshQuery: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshQuery = new URLSearchParams({
+        'fields[appAssetLibraryPlacements]': 'image,placementGroup,placementType',
+        'filter[placementGroup]': placementGroup,
+        'filter[placementType]': placementType,
+        'limit': '50',
+      });
+      const freshResponse: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshResponse = await client.request(`/v1/appStoreVersionLocalizations/${localizationId}/placements?${freshQuery.toString()}`);
+      const freshPlacements: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacements = (freshResponse === undefined) ? [] : requireArray(freshResponse['data'], 'Placements before final ordering').map((placement) => requireObject(placement, 'Placement before final ordering'));
+      const freshPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacementIds = freshPlacements.map((placement) => Runner.resourceId(placement, 'Placement before final ordering'));
+
+      for (const desiredOrderedPlacementId of desiredOrderedPlacementIds) {
+        if (freshPlacementIds.includes(desiredOrderedPlacementId) === false) {
+          throw new Error(`Placement replacement for ${placementType}/${placementGroup} is missing completed resource ${desiredOrderedPlacementId}.`);
+        }
+      }
+
+      const supersededPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_SupersededPlacementIds = freshPlacementIds.filter((freshPlacementId) => desiredOrderedPlacementIds.includes(freshPlacementId) === false);
+      const orderedPlacementIds: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OrderedPlacementIds = [
+        ...desiredOrderedPlacementIds,
+        ...supersededPlacementIds,
+      ];
+
+      await Runner.orderPlacements(client, localizationId, placementGroup, orderedPlacementIds);
+
+      const remainingOldPlacementIdsToDelete: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIdsToDelete = supersededPlacementIds;
+
+      await AppStoreConnect.runOperations(remainingOldPlacementIdsToDelete, async (oldPlacementId) => {
+        await client.deleteResource('appAssetLibraryPlacements', oldPlacementId);
+
+        remainingOldPlacementIds.delete(oldPlacementId);
+
+        return;
+      });
+
+      return;
+    }
+
+    const nextFreeSlots: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextFreeSlots = availableSlots - batchImageIndexes.length;
+    const nextWindowSize: Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextWindowSize = (nextFreeSlots === 0) ? 1 : Math.min(windowSize * 2, maximumPlacementCounts.get(placementType) ?? 1);
+
+    await Runner.replacePlacementBatch(client, localizationId, placementType, placementGroup, imageIds, remainingPendingImageIndexes, desiredPlacementIds, remainingOldPlacementIds, nextFreeSlots, nextWindowSize, deletedOldPlacementCount, nextCreatedPlacementCount);
 
     return;
   }

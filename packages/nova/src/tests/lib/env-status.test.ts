@@ -287,5 +287,34 @@ describe('libEnvStatus', () => {
     return;
   });
 
+  it('treats an absent optional pfSense signing key as healthy', () => {
+    deepStrictEqual(
+      libEnvStatus.classify(
+        [{
+          name: 'PFSENSE_RELEASE_SIGNING_KEY',
+          secret: true,
+          kind: 'deploy-cred',
+          optional: true,
+        }],
+        {
+          available: true,
+          variables: [],
+          secrets: [],
+        },
+        {
+          workspaces: {
+            './packages/firewall': { prefix: 'PFSENSE_' },
+          },
+        },
+      ),
+      [{
+        name: 'PFSENSE_RELEASE_SIGNING_KEY',
+        state: 'optional-absent',
+      }],
+    );
+
+    return;
+  });
+
   return;
 });

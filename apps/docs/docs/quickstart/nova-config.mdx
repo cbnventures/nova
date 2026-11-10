@@ -318,19 +318,63 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
 
-| Field                | Type       | Description                                                                                                                         |
-|----------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `template`           | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.                      |
-| `name`               | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.                          |
-| `triggers`           | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`.                   |
-| `runsOn`             | `string`   | Optional. Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps template defaults.   |
-| `timeoutMinutes`     | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.      |
-| `containerPlatforms` | `string[]` | Optional. Container platforms built into the one OCI artifact. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both. |
-| `build`              | `string[]` | Optional. Non-root workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to. `"./"` is invalid.    |
-| `deploy`             | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `artifact`, `after`, and `with`.      |
-| `with`               | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                       |
+| Field                 | Type       | Description                                                                                                                                                  |
+|-----------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `template`            | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.                                               |
+| `name`                | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.                                                   |
+| `triggers`            | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`.                                            |
+| `runsOn`              | `string`   | Required exact, pinned GitHub-hosted runner label, such as `"ubuntu-24.04"`. Moving `-latest`, preview, and deprecated labels are rejected.                  |
+| `timeoutMinutes`      | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.                               |
+| `buildTimeoutMinutes` | `number`   | Optional publish build-job timeout from `1` through `360`. Overrides `timeoutMinutes` for the build job.                                                     |
+| `stepTimeoutMinutes`  | `object`   | Optional step-kind timeout overrides from `1` through `360`. Values are clamped to each containing job timeout.                                              |
+| `containerPlatforms`  | `string[]` | Optional. Container platforms built into the one OCI artifact, each on a native runner. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both. |
+| `build`               | `string[]` | Optional. Non-root workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to. `"./"` is invalid.                             |
+| `deploy`              | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `artifact`, `timeoutMinutes`, `after`, and `with`.             |
+| `with`                | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                                                |
 
 Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
+
+Publish jobs default to 15 minutes. Sponsor-check and inactive-lock jobs default to 5 minutes. For publish workflows, `buildTimeoutMinutes` and each deploy target's `timeoutMinutes` take precedence over the workflow-wide `timeoutMinutes`.
+
+Nova reads GitHub's runner-images list during every `nova utility configure` and `nova generate github workflows` command. Configure marks paid larger-runner labels, and generation stops with an error when the list cannot be read. For container targets, Nova derives and verifies the matching x64 or arm64 label from the workflow's `runsOn` value for each native platform job.
+
+Every generated step receives a timeout. `stepTimeoutMinutes` can override these kinds:
+
+| Step kind  | Default     | Covers                                                     |
+|------------|-------------|------------------------------------------------------------|
+| `checkout` | 5           | Repository checkout.                                       |
+| `setup`    | 10          | Runtime, toolchain, environment, and workspace setup.      |
+| `install`  | 20          | Package-manager, Corepack, and deploy-CLI installation.    |
+| `build`    | job timeout | Project and OCI builds.                                    |
+| `check`    | job timeout | Tests, checks, validation, and preflight work.             |
+| `artifact` | job timeout | Artifact upload, download, validation, and digest records. |
+| `registry` | 5           | Package or container registry authentication.              |
+| `deploy`   | job timeout | Publishing, deployment, release, tagging, and sync work.   |
+| `attest`   | 10          | Build-provenance attestations.                             |
+
+Defaults and overrides are clamped to the containing job's timeout. Validation warns when an override exceeds the workflow's shortest job timeout.
+
+```json
+{
+  "template": "publish",
+  "name": "project",
+  "triggers": ["release"],
+  "runsOn": "ubuntu-24.04",
+  "timeoutMinutes": 45,
+  "buildTimeoutMinutes": 30,
+  "stepTimeoutMinutes": {
+    "install": 12,
+    "deploy": 20
+  },
+  "deploy": [
+    {
+      "to": "npm",
+      "path": "./packages/core",
+      "timeoutMinutes": 15
+    }
+  ]
+}
+```
 
 ### Trigger Object Fields
 
@@ -357,13 +401,14 @@ See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#co
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field      | Type       | Description                                                                                                                                                           |
-|------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `to`       | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"vercel-nextjs"`. |
-| `path`     | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                      |
-| `artifact` | `string`   | Optional named entry from `artifacts`. File-based deploy targets download that assembled product instead of a workspace's default build paths.                        |
-| `after`    | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                   |
-| `with`     | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                       |
+| Field            | Type       | Description                                                                                                                                                                        |
+|------------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `to`             | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"pfsense"`, `"vercel-nextjs"`. |
+| `path`           | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                                   |
+| `artifact`       | `string`   | Optional named entry from `artifacts`. File-based deploy targets download that assembled product instead of a workspace's default build paths.                                     |
+| `timeoutMinutes` | `number`   | Optional target job timeout from `1` through `360`. Overrides the workflow-wide timeout for this destination.                                                                      |
+| `after`          | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                |
+| `with`           | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                    |
 
 Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
 
@@ -374,6 +419,8 @@ Container targets describe one repository-wide image. Configure at most one `doc
 
 Both targets use `path: "./"`. Container inputs do not belong in `build`; the root multi-stage Docker build compiles them inside the image build.
 Container targets use the workflow's OCI handoff and cannot reference a named file artifact.
+
+The `pfsense` target accepts a scaffolded pfSense package workspace path, such as `{"to":"pfsense","path":"./packages/firewall"}`. Its workspace must have the `package` role and a name beginning with `pfsense-pkg-`. Nova builds it on FreeBSD and attaches the resulting package files to the selected GitHub release.
 
 ### Variable Formats
 
@@ -395,12 +442,14 @@ Generated files follow the pattern `nova-{template}-{name}.yml` under `.github/w
     {
       "template": "lock-inactive-issues",
       "name": "project",
-      "triggers": ["schedule-weekly"]
+      "triggers": ["schedule-weekly"],
+      "runsOn": "ubuntu-24.04"
     },
     {
       "template": "publish",
       "name": "project",
       "triggers": ["release"],
+      "runsOn": "ubuntu-24.04",
       "build": [
         "./packages/core",
         "./packages/preset",
@@ -731,7 +780,7 @@ Every environment value in the repository lives here, grouped by namespace and c
 
 Every declared `environment.project`, `environment.workspaces.<path>` (including the repo root `./`), and `environment.workflows.<name>` entry must declare a `prefix` — there is no exception for a group whose keys are all `local`. Nova joins that `prefix` to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
 
-Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
+Every prefix must match `^[A-Z][A-Z0-9]*_$`: one uppercase word that starts with a letter, may contain digits, and ends with one underscore. `CBN_`, `EMAIL_`, and `UI2_` are valid; inner underscores such as `WEB_EMAIL_`, lowercase, a missing trailing underscore, and a leading digit are invalid. Prefixes must also be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
 
 ### Environment Profiles
 
@@ -763,17 +812,17 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 
 | Field       | Type     | Description                                                                       |
 |-------------|----------|-----------------------------------------------------------------------------------|
-| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.                          |
+| `prefix`    | `string` | Required. A one-word uppercase namespace ending in `_`, joined to every `key`.    |
 | `variables` | `array`  | Optional. Managed-only values, each with `key`, `reach: "managed"`, and `secret`. |
 
 ### Workspaces Fields
 
 `environment.workspaces` is keyed by a workspace path that matches a top-level `workspaces` entry (including the repo root `./`). Each workspace declares a `prefix`; every value appears in its generated `.env` and `.env.sample`, while `reach` determines what happens beyond local development.
 
-| Field       | Type     | Description                                                                |
-|-------------|----------|----------------------------------------------------------------------------|
-| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.                   |
-| `variables` | `array`  | Optional. Workspace environment values. See [Value Fields](#value-fields). |
+| Field       | Type     | Description                                                                    |
+|-------------|----------|--------------------------------------------------------------------------------|
+| `prefix`    | `string` | Required. A one-word uppercase namespace ending in `_`, joined to every `key`. |
+| `variables` | `array`  | Optional. Workspace environment values. See [Value Fields](#value-fields).     |
 
 ### Value Fields
 
@@ -799,9 +848,9 @@ Project-scoped variables support only `managed`. Their Local `.env` column is no
 
 `workflows` is keyed by a workflow name and gives that workflow's config keys their own `prefix`.
 
-| Field    | Type     | Description                                              |
-|----------|----------|----------------------------------------------------------|
-| `prefix` | `string` | Required. The uppercase namespace joined to every `key`. |
+| Field    | Type     | Description                                                                    |
+|----------|----------|--------------------------------------------------------------------------------|
+| `prefix` | `string` | Required. A one-word uppercase namespace ending in `_`, joined to every `key`. |
 
 ```json
 {

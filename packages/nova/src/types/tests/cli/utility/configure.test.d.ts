@@ -117,6 +117,15 @@ export type Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Value> = [NonNu
 export type Tests_Cli_Utility_Configure_ConfigFieldCoverage = Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Shared_NovaConfig>;
 
 /**
+ * Tests - CLI - Utility - Configure - Is Environment Prefix Input.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_AcceptsValidShapes_Results = (true | string)[];
+
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_RejectsInvalidShapes_Results = (true | string)[];
+
+/**
  * Tests - CLI - Utility - Configure - Is Ignore File Path Input.
  *
  * @since 0.34.0
@@ -166,6 +175,10 @@ export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTim
  * @since 0.33.0
  */
 export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_RejectsValuesOutsideTheSupportedGitHubRange_Result = (true | string)[];
+
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_AcceptsSupportedKindsAndTimeouts_Result = (true | string)[];
+
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_RejectsUnknownKindsAndInvalidTimeouts_Result = (true | string)[];
 
 /**
  * Tests - CLI - Utility - Configure - Run.
@@ -507,6 +520,17 @@ export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromW
 export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = Awaited<Cli_Utility_Configure_Runner_PromptSettings_Returns>;
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Workflows - Cancels When The Runner List Cannot Be Read.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_PromptWorkflowsForm = (workflow: Shared_BlueprintConfigWorkflow | undefined, mode: 'create' | 'update', workflows: Shared_BlueprintConfigWorkflow[], config: Shared_NovaConfig) => Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Result = Awaited<Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns>;
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Workflows - Does Not Offer Container Targets When Another Workflow Owns The Image.
  *
  * @since 0.34.0
@@ -556,11 +580,42 @@ export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTa
 
 export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result = Awaited<Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns>;
 
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_RunsOnQuestion = PromptObject | undefined;
+
 export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions = PromptObject[];
 
 export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions = PromptObject[];
 
 export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion = PromptObject | undefined;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Workflows - PfSense.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Response = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Responses = Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Response[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_QuestionList = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Next = Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Response | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Workflow = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_PromptWorkflowsForm = (workflow: Shared_BlueprintConfigWorkflow | undefined, mode: 'create' | 'update', workflows: Shared_BlueprintConfigWorkflow[], config: Shared_NovaConfig) => Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Result = Awaited<Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_SecretQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetTypeQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetWorkingDirQuestion = PromptObject | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Workflows - Preserves Workflow Run Trigger Objects When Syncing Existing Workflows.

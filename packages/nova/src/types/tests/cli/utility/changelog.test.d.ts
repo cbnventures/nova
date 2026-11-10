@@ -242,6 +242,31 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenCategor
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenCategoryIsInvalid_ConfigContents = string;
 
 /**
+ * Tests - CLI - Utility - Changelog - Run - Errors When Message Does Not Start With A Capital Letter.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Cases = [string, string][];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Category = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_Message = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageDoesNotStartWithACapitalLetter_ChangelogEntries = string[];
+
+/**
  * Tests - CLI - Utility - Changelog - Run - Errors When Message Is Empty.
  *
  * @since 0.14.0
@@ -255,6 +280,31 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessage
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_ConfigPath = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageIsEmpty_ConfigContents = string;
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - Errors When Message Starts With Its Category.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Cases = [string, string][];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Category = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_Message = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenMessageStartsWithItsCategory_ChangelogEntries = string[];
 
 /**
  * Tests - CLI - Utility - Changelog - Run - Errors When Package Is Invalid.

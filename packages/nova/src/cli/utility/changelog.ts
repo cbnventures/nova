@@ -15,6 +15,7 @@ import { Runner as LibDockerPackaging } from '../../lib/docker-packaging.js';
 import {
   libItemChangelogAdjectives,
   libItemChangelogCategoryBumpMap,
+  libItemChangelogCategoryOpeningWords,
   libItemChangelogNouns,
   libItemChangelogOrderedCategories,
   libItemChangelogValidBumps,
@@ -30,6 +31,8 @@ import {
   LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION,
   LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION,
   LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION,
+  LIB_REGEX_PATTERN_CHANGELOG_CAPITAL_START,
+  LIB_REGEX_PATTERN_CHANGELOG_FIRST_WORD,
   LIB_REGEX_PATTERN_CSHARP_SINCE_UNRELEASED,
   LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED,
   LIB_REGEX_PATTERN_EXACT_SEMVER,
@@ -47,10 +50,146 @@ import { Runner as LibVersionContract } from '../../lib/version-contract.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
+  Cli_Utility_Changelog_Runner_FailFold_Message,
+  Cli_Utility_Changelog_Runner_FailFold_Returns,
+  Cli_Utility_Changelog_Runner_Fold_Action,
+  Cli_Utility_Changelog_Runner_Fold_ActionOutput,
+  Cli_Utility_Changelog_Runner_Fold_ActionOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_ActionOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_ActionOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_ActionVerb,
+  Cli_Utility_Changelog_Runner_Fold_AfterSectionContent,
+  Cli_Utility_Changelog_Runner_Fold_AndroidBuild,
+  Cli_Utility_Changelog_Runner_Fold_AppleBuild,
+  Cli_Utility_Changelog_Runner_Fold_BeforeSectionContent,
+  Cli_Utility_Changelog_Runner_Fold_BeforeSections,
+  Cli_Utility_Changelog_Runner_Fold_BuildSummary,
+  Cli_Utility_Changelog_Runner_Fold_Category,
+  Cli_Utility_Changelog_Runner_Fold_CategoryOutput,
+  Cli_Utility_Changelog_Runner_Fold_CategoryOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_CategoryOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_CategoryOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_ChangelogPath,
+  Cli_Utility_Changelog_Runner_Fold_Config,
+  Cli_Utility_Changelog_Runner_Fold_CurrentDirectory,
+  Cli_Utility_Changelog_Runner_Fold_CurrentVersion,
+  Cli_Utility_Changelog_Runner_Fold_DeduplicatedMessages,
+  Cli_Utility_Changelog_Runner_Fold_Diff,
+  Cli_Utility_Changelog_Runner_Fold_Document,
+  Cli_Utility_Changelog_Runner_Fold_DryRunLines,
+  Cli_Utility_Changelog_Runner_Fold_EligibleWorkspaces,
+  Cli_Utility_Changelog_Runner_Fold_EntryOutput,
+  Cli_Utility_Changelog_Runner_Fold_EntryOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_EntryOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_EntryOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_ExistingContent,
+  Cli_Utility_Changelog_Runner_Fold_FileContents,
+  Cli_Utility_Changelog_Runner_Fold_FilterWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Fold_FilterWorkspaceConfigPolicy,
+  Cli_Utility_Changelog_Runner_Fold_FindEligibleWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Fold_FindEligibleWorkspaceConfigName,
+  Cli_Utility_Changelog_Runner_Fold_FindWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Fold_FindWorkspaceConfigName,
+  Cli_Utility_Changelog_Runner_Fold_IsDryRun,
+  Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigName,
+  Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigPolicy,
+  Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigRole,
+  Cli_Utility_Changelog_Runner_Fold_MatchingIndexes,
+  Cli_Utility_Changelog_Runner_Fold_MatchingSections,
+  Cli_Utility_Changelog_Runner_Fold_MergeOutput,
+  Cli_Utility_Changelog_Runner_Fold_MergeOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_MergeOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_MergeOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_Message,
+  Cli_Utility_Changelog_Runner_Fold_MessageOutput,
+  Cli_Utility_Changelog_Runner_Fold_MessageOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_MessageOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_MessageOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_Messages,
+  Cli_Utility_Changelog_Runner_Fold_MessageValidation,
+  Cli_Utility_Changelog_Runner_Fold_NativeBuild,
+  Cli_Utility_Changelog_Runner_Fold_NativeBuilds,
+  Cli_Utility_Changelog_Runner_Fold_NextContent,
+  Cli_Utility_Changelog_Runner_Fold_Options,
+  Cli_Utility_Changelog_Runner_Fold_PackageDirectory,
+  Cli_Utility_Changelog_Runner_Fold_PackageJson,
+  Cli_Utility_Changelog_Runner_Fold_PackageJsonPath,
+  Cli_Utility_Changelog_Runner_Fold_PackageJsonRaw,
+  Cli_Utility_Changelog_Runner_Fold_PackageOutput,
+  Cli_Utility_Changelog_Runner_Fold_PackageOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_PackageOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_PackageOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_ParsedEntryNumber,
+  Cli_Utility_Changelog_Runner_Fold_RequestedActions,
+  Cli_Utility_Changelog_Runner_Fold_Returns,
+  Cli_Utility_Changelog_Runner_Fold_SeenMessages,
+  Cli_Utility_Changelog_Runner_Fold_SelectedIndex,
+  Cli_Utility_Changelog_Runner_Fold_SelectedPackage,
+  Cli_Utility_Changelog_Runner_Fold_SourceMessages,
+  Cli_Utility_Changelog_Runner_Fold_SourceSections,
+  Cli_Utility_Changelog_Runner_Fold_SourceVersions,
+  Cli_Utility_Changelog_Runner_Fold_TargetMessages,
+  Cli_Utility_Changelog_Runner_Fold_TargetSection,
+  Cli_Utility_Changelog_Runner_Fold_TargetSections,
+  Cli_Utility_Changelog_Runner_Fold_TargetVersion,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedCategory,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedMessages,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedOutput,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputKey,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputResult,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputValue,
+  Cli_Utility_Changelog_Runner_Fold_UncategorizedSections,
+  Cli_Utility_Changelog_Runner_Fold_UniqueSourceVersions,
+  Cli_Utility_Changelog_Runner_Fold_ValidCategory,
+  Cli_Utility_Changelog_Runner_Fold_ValidPackageEntry,
+  Cli_Utility_Changelog_Runner_Fold_ValidUncategorizedCategory,
+  Cli_Utility_Changelog_Runner_Fold_VersionStrategy,
+  Cli_Utility_Changelog_Runner_Fold_WorkspaceEntry,
+  Cli_Utility_Changelog_Runner_Fold_WorkspacePath,
+  Cli_Utility_Changelog_Runner_Fold_Workspaces,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_AfterContent,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_AfterLines,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_BeforeContent,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_BeforeLines,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_ChangelogPath,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_DiffLines,
+  Cli_Utility_Changelog_Runner_FormatChangelogDiff_Returns,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_BuildEndIndex,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_HeaderPrefix,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_HeaderSuffix,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_NativeBuild,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_Returns,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_Section,
+  Cli_Utility_Changelog_Runner_FormatChangelogHeader_SuffixAfterBuild,
+  Cli_Utility_Changelog_Runner_FormatChangelogSection_CategoryOrder,
+  Cli_Utility_Changelog_Runner_FormatChangelogSection_Messages,
+  Cli_Utility_Changelog_Runner_FormatChangelogSection_Returns,
+  Cli_Utility_Changelog_Runner_FormatChangelogSection_Section,
+  Cli_Utility_Changelog_Runner_FormatChangelogSection_SectionParts,
   Cli_Utility_Changelog_Runner_GenerateFileName_Adjective,
   Cli_Utility_Changelog_Runner_GenerateFileName_Noun,
   Cli_Utility_Changelog_Runner_GenerateFileName_Returns,
   Cli_Utility_Changelog_Runner_GenerateFileName_Verb,
+  Cli_Utility_Changelog_Runner_ParseChangelog_BuildEndIndex,
+  Cli_Utility_Changelog_Runner_ParseChangelog_BuildPrefix,
+  Cli_Utility_Changelog_Runner_ParseChangelog_BuildValue,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Category,
+  Cli_Utility_Changelog_Runner_ParseChangelog_CategoryValue,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Content,
+  Cli_Utility_Changelog_Runner_ParseChangelog_CurrentCategory,
+  Cli_Utility_Changelog_Runner_ParseChangelog_CurrentSection,
+  Cli_Utility_Changelog_Runner_ParseChangelog_HeaderBody,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Lines,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Message,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Messages,
+  Cli_Utility_Changelog_Runner_ParseChangelog_PackageHeading,
+  Cli_Utility_Changelog_Runner_ParseChangelog_ParsedBuild,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Returns,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Section,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Sections,
+  Cli_Utility_Changelog_Runner_ParseChangelog_Version,
+  Cli_Utility_Changelog_Runner_ParseChangelog_VersionSeparatorIndex,
   Cli_Utility_Changelog_Runner_ParseEntries_ChangelogDirectory,
   Cli_Utility_Changelog_Runner_ParseEntries_ColonIndex,
   Cli_Utility_Changelog_Runner_ParseEntries_Content,
@@ -101,6 +240,7 @@ import type {
   Cli_Utility_Changelog_Runner_Record_MessageOutputKey,
   Cli_Utility_Changelog_Runner_Record_MessageOutputResult,
   Cli_Utility_Changelog_Runner_Record_MessageOutputValue,
+  Cli_Utility_Changelog_Runner_Record_MessageValidation,
   Cli_Utility_Changelog_Runner_Record_Options,
   Cli_Utility_Changelog_Runner_Record_PackageOutput,
   Cli_Utility_Changelog_Runner_Record_PackageOutputKey,
@@ -208,6 +348,10 @@ import type {
   Cli_Utility_Changelog_Runner_Release_WorkspaceEntry,
   Cli_Utility_Changelog_Runner_Release_WorkspacePath,
   Cli_Utility_Changelog_Runner_Release_Workspaces,
+  Cli_Utility_Changelog_Runner_RenderChangelog_Document,
+  Cli_Utility_Changelog_Runner_RenderChangelog_Parts,
+  Cli_Utility_Changelog_Runner_RenderChangelog_Returns,
+  Cli_Utility_Changelog_Runner_RenderChangelog_SectionContents,
   Cli_Utility_Changelog_Runner_Run_IsDryRun,
   Cli_Utility_Changelog_Runner_Run_ModeOutput,
   Cli_Utility_Changelog_Runner_Run_ModeOutputKey,
@@ -333,6 +477,9 @@ import type {
   Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplatesDirectory,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_WorkspaceDirectory,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces,
+  Cli_Utility_Changelog_Runner_ValidateMessage_Category,
+  Cli_Utility_Changelog_Runner_ValidateMessage_FirstWord,
+  Cli_Utility_Changelog_Runner_ValidateMessage_FirstWordMatch,
   Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue,
   Cli_Utility_Changelog_Runner_ValidateMessage_Returns,
   Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion,
@@ -367,9 +514,9 @@ import type {
 /**
  * CLI - Utility - Changelog.
  *
- * Records individual change entries into .changelog/
- * and releases them by bumping package.json versions
- * and prepending CHANGELOG.md sections.
+ * Records individual change entries into .changelog/, folds corrections into
+ * existing CHANGELOG.md sections, and releases entries by bumping package.json
+ * versions and prepending new sections.
  *
  * @since 0.13.0
  */
@@ -377,8 +524,8 @@ export class Runner {
   /**
    * CLI - Utility - Changelog - Run.
    *
-   * Entry point invoked by the CLI. Routes to record or release mode based on flags, falling
-   * back to an interactive prompt when neither flag is provided.
+   * Entry point invoked by the CLI. Routes to record, fold, or release mode based on flags,
+   * falling back to an interactive prompt when no mode flag is provided.
    *
    * @param {Cli_Utility_Changelog_Runner_Run_Options} options - Options.
    *
@@ -396,12 +543,41 @@ export class Runner {
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
-    // Mutually exclusive check.
-    if (options['record'] === true && options['release'] === true) {
+    // Mutually exclusive mode check.
+    if (
+      Number(options['record'] === true)
+      + Number(options['release'] === true)
+      + Number(options['fold'] === true)
+      > 1
+    ) {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'validate',
-      }).error('Cannot use --record and --release together.');
+      }).error('Cannot use --record, --release, and --fold together.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    if (
+      options['fold'] !== true
+      && (
+        options['add'] === true
+        || options['edit'] === true
+        || options['remove'] === true
+        || options['entry'] !== undefined
+        || options['match'] !== undefined
+        || options['mergeFrom'] !== undefined
+        || options['uncategorizedAs'] !== undefined
+        || options['version'] !== undefined
+        || options['buildBump'] === false
+      )
+    ) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error('Fold action flags require --fold.');
 
       process.exitCode = 1;
 
@@ -445,6 +621,13 @@ export class Runner {
       return;
     }
 
+    // Fold mode (interactive or non-interactive).
+    if (options['fold'] === true) {
+      await Runner.fold(options);
+
+      return;
+    }
+
     // Interactive mode.
     const modeOutput: Cli_Utility_Changelog_Runner_Run_ModeOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue>({
       type: 'select',
@@ -454,6 +637,10 @@ export class Runner {
         {
           title: 'Record a change',
           value: 'record' as const,
+        },
+        {
+          title: 'Fold an existing changelog section',
+          value: 'fold' as const,
         },
         {
           title: 'Release',
@@ -474,9 +661,785 @@ export class Runner {
 
     if (modeOutputResult.action === 'record') {
       await Runner.record(options);
-    } else {
+    } else if (modeOutputResult.action === 'release') {
       await Runner.release(options);
+    } else {
+      await Runner.fold(options);
     }
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Fold.
+   *
+   * Corrects one existing release section without consuming pending entries.
+   * Maintainers can add, edit, remove, or merge historical release notes.
+   *
+   * @param {Cli_Utility_Changelog_Runner_Fold_Options} options - Options.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_Fold_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async fold(options: Cli_Utility_Changelog_Runner_Fold_Options): Cli_Utility_Changelog_Runner_Fold_Returns {
+    const isDryRun: Cli_Utility_Changelog_Runner_Fold_IsDryRun = options['dryRun'] === true;
+
+    if (options['bump'] !== undefined) {
+      Runner.failFold('--bump is only valid when recording a pending changelog entry.');
+
+      return;
+    }
+
+    const config: Cli_Utility_Changelog_Runner_Fold_Config = await new LibNovaConfig().load();
+    const workspaces: Cli_Utility_Changelog_Runner_Fold_Workspaces = config['workspaces'] ?? {};
+    const versionStrategy: Cli_Utility_Changelog_Runner_Fold_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
+
+    try {
+      await LibReleaseHistory.validateStrategy(config, process.cwd());
+    } catch (error) {
+      Runner.failFold((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
+
+      return;
+    }
+
+    const eligibleWorkspaces: Cli_Utility_Changelog_Runner_Fold_EligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
+      const filterWorkspaceConfig: Cli_Utility_Changelog_Runner_Fold_FilterWorkspaceConfig = workspace[1];
+      const filterWorkspaceConfigPolicy: Cli_Utility_Changelog_Runner_Fold_FilterWorkspaceConfigPolicy = filterWorkspaceConfig['policy'];
+
+      return filterWorkspaceConfigPolicy !== 'freezable';
+    });
+
+    if (eligibleWorkspaces.length === 0) {
+      Runner.failFold('No eligible (non-freezable) workspaces found in "nova.config.json".');
+
+      return;
+    }
+
+    let selectedPackage: Cli_Utility_Changelog_Runner_Fold_SelectedPackage = undefined;
+
+    if (options['package'] !== undefined) {
+      const validPackageEntry: Cli_Utility_Changelog_Runner_Fold_ValidPackageEntry = eligibleWorkspaces.find((eligibleWorkspace) => {
+        const findEligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Fold_FindEligibleWorkspaceConfig = eligibleWorkspace[1];
+        const findEligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Fold_FindEligibleWorkspaceConfigName = findEligibleWorkspaceConfig['name'];
+
+        return findEligibleWorkspaceConfigName === options['package'];
+      });
+
+      if (validPackageEntry === undefined) {
+        Runner.failFold(`Package "${options['package']}" is not a valid non-freezable workspace.`);
+
+        return;
+      }
+
+      selectedPackage = validPackageEntry[1]['name'];
+    } else if (eligibleWorkspaces.length === 1 && eligibleWorkspaces[0] !== undefined) {
+      selectedPackage = eligibleWorkspaces[0][1]['name'];
+
+      Logger.customize({
+        name: 'Runner.fold',
+        purpose: 'package',
+      }).info(`Auto-selected package: ${selectedPackage}`);
+    } else {
+      const packageOutput: Cli_Utility_Changelog_Runner_Fold_PackageOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_PackageOutputKey, Cli_Utility_Changelog_Runner_Fold_PackageOutputValue>({
+        type: 'select',
+        name: 'package',
+        message: 'Select a package.',
+        choices: eligibleWorkspaces.map((eligibleWorkspace) => {
+          const mapEligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfig = eligibleWorkspace[1];
+          const mapEligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigName = mapEligibleWorkspaceConfig['name'];
+          const mapEligibleWorkspaceConfigRole: Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigRole = mapEligibleWorkspaceConfig['role'];
+          const mapEligibleWorkspaceConfigPolicy: Cli_Utility_Changelog_Runner_Fold_MapEligibleWorkspaceConfigPolicy = mapEligibleWorkspaceConfig['policy'];
+
+          return {
+            title: mapEligibleWorkspaceConfigName,
+            description: `${mapEligibleWorkspaceConfigRole} · ${mapEligibleWorkspaceConfigPolicy}`,
+            value: mapEligibleWorkspaceConfigName,
+          };
+        }),
+      });
+
+      if (packageOutput['cancelled'] === true) {
+        return;
+      }
+
+      const packageOutputResult: Cli_Utility_Changelog_Runner_Fold_PackageOutputResult = packageOutput['result'];
+
+      if (packageOutputResult.package === undefined) {
+        return;
+      }
+
+      selectedPackage = packageOutputResult.package;
+    }
+
+    const workspaceEntry: Cli_Utility_Changelog_Runner_Fold_WorkspaceEntry = Object.entries(workspaces).find((workspace) => {
+      const findWorkspaceConfig: Cli_Utility_Changelog_Runner_Fold_FindWorkspaceConfig = workspace[1];
+      const findWorkspaceConfigName: Cli_Utility_Changelog_Runner_Fold_FindWorkspaceConfigName = findWorkspaceConfig['name'];
+
+      return findWorkspaceConfigName === selectedPackage;
+    });
+
+    if (workspaceEntry === undefined) {
+      Runner.failFold(`Package "${selectedPackage}" was not found in "nova.config.json".`);
+
+      return;
+    }
+
+    const workspacePath: Cli_Utility_Changelog_Runner_Fold_WorkspacePath = workspaceEntry[0];
+    const currentDirectory: Cli_Utility_Changelog_Runner_Fold_CurrentDirectory = process.cwd();
+    const packageDirectory: Cli_Utility_Changelog_Runner_Fold_PackageDirectory = resolve(currentDirectory, workspacePath);
+    const packageJsonPath: Cli_Utility_Changelog_Runner_Fold_PackageJsonPath = join(packageDirectory, 'package.json');
+    const changelogPath: Cli_Utility_Changelog_Runner_Fold_ChangelogPath = join(packageDirectory, 'CHANGELOG.md');
+
+    let fileContents: Cli_Utility_Changelog_Runner_Fold_FileContents = undefined;
+
+    try {
+      fileContents = await Promise.all([
+        fs.readFile(packageJsonPath, 'utf-8'),
+        fs.readFile(changelogPath, 'utf-8'),
+      ]);
+    } catch (error) {
+      Runner.failFold((error instanceof Error) ? error.message : `Unable to read "${packageJsonPath}" and "${changelogPath}".`);
+
+      return;
+    }
+
+    if (fileContents === undefined) {
+      return;
+    }
+
+    const packageJsonRaw: Cli_Utility_Changelog_Runner_Fold_PackageJsonRaw = fileContents[0];
+    const existingContent: Cli_Utility_Changelog_Runner_Fold_ExistingContent = fileContents[1];
+
+    let packageJson: Cli_Utility_Changelog_Runner_Fold_PackageJson = undefined;
+    let document: Cli_Utility_Changelog_Runner_Fold_Document = undefined;
+
+    try {
+      packageJson = JSON.parse(packageJsonRaw);
+      document = Runner.parseChangelog(existingContent);
+    } catch (error) {
+      Runner.failFold((error instanceof Error) ? error.message : `Unable to parse "${packageJsonPath}" or "${changelogPath}".`);
+
+      return;
+    }
+
+    if (packageJson === undefined || document === undefined) {
+      return;
+    }
+
+    const currentVersion: Cli_Utility_Changelog_Runner_Fold_CurrentVersion = (typeof packageJson['version'] === 'string') ? packageJson['version'] : undefined;
+
+    if (currentVersion === undefined) {
+      Runner.failFold(`No "version" field found in "${packageJsonPath}".`);
+
+      return;
+    }
+
+    try {
+      Runner.validateVersion(currentVersion, versionStrategy, packageJsonPath);
+    } catch (error) {
+      Runner.failFold((error instanceof Error) ? error.message : `Unable to validate the version in "${packageJsonPath}".`);
+
+      return;
+    }
+
+    if (document['sections'].length === 0 || document['sections'][0] === undefined) {
+      Runner.failFold(`No existing version sections were found in "${changelogPath}".`);
+
+      return;
+    }
+
+    const targetVersion: Cli_Utility_Changelog_Runner_Fold_TargetVersion = options['version'] ?? document['sections'][0]['version'];
+    const targetSections: Cli_Utility_Changelog_Runner_Fold_TargetSections = document['sections'].filter((section) => section['version'] === targetVersion);
+
+    if (targetSections.length === 0) {
+      Runner.failFold(`Version "${targetVersion}" was not found in "${changelogPath}".`);
+
+      return;
+    }
+
+    if (targetSections.length > 1 || targetSections[0] === undefined) {
+      Runner.failFold(`Version "${targetVersion}" is ambiguous because it appears more than once in "${changelogPath}".`);
+
+      return;
+    }
+
+    const targetSection: Cli_Utility_Changelog_Runner_Fold_TargetSection = targetSections[0];
+    const requestedActions: Cli_Utility_Changelog_Runner_Fold_RequestedActions = [];
+
+    if (options['add'] === true) {
+      requestedActions.push('add');
+    }
+
+    if (options['edit'] === true) {
+      requestedActions.push('edit');
+    }
+
+    if (options['remove'] === true) {
+      requestedActions.push('remove');
+    }
+
+    if (options['mergeFrom'] !== undefined) {
+      requestedActions.push('merge');
+    }
+
+    if (requestedActions.length > 1) {
+      Runner.failFold('Choose only one fold action: --add, --edit, --remove, or --merge-from.');
+
+      return;
+    }
+
+    let action: Cli_Utility_Changelog_Runner_Fold_Action = requestedActions[0];
+
+    if (action === undefined) {
+      const actionOutput: Cli_Utility_Changelog_Runner_Fold_ActionOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_ActionOutputKey, Cli_Utility_Changelog_Runner_Fold_ActionOutputValue>({
+        type: 'select',
+        name: 'action',
+        message: `How should version ${targetVersion} change?`,
+        choices: [
+          {
+            title: 'Add an entry',
+            value: 'add' as const,
+          },
+          {
+            title: 'Edit an entry',
+            value: 'edit' as const,
+          },
+          {
+            title: 'Remove an entry',
+            value: 'remove' as const,
+          },
+          {
+            title: 'Merge older sections',
+            value: 'merge' as const,
+          },
+        ],
+      });
+
+      if (actionOutput['cancelled'] === true) {
+        return;
+      }
+
+      const actionOutputResult: Cli_Utility_Changelog_Runner_Fold_ActionOutputResult = actionOutput['result'];
+
+      if (actionOutputResult.action === undefined) {
+        return;
+      }
+
+      action = actionOutputResult.action;
+    }
+
+    if (action !== 'merge' && options['uncategorizedAs'] !== undefined) {
+      Runner.failFold('--uncategorized-as is only valid when merging changelog sections.');
+
+      return;
+    }
+
+    let beforeSections: Cli_Utility_Changelog_Runner_Fold_BeforeSections = [targetSection];
+    let beforeSectionContent: Cli_Utility_Changelog_Runner_Fold_BeforeSectionContent = '';
+
+    if (action === 'merge') {
+      if (
+        options['category'] !== undefined
+        || options['entry'] !== undefined
+        || options['match'] !== undefined
+        || options['message'] !== undefined
+      ) {
+        Runner.failFold('--merge-from cannot be combined with --category, --entry, --match, or --message.');
+
+        return;
+      }
+
+      let sourceVersions: Cli_Utility_Changelog_Runner_Fold_SourceVersions = [];
+
+      if (options['mergeFrom'] !== undefined) {
+        sourceVersions = options['mergeFrom']
+          .split(',')
+          .map((sourceVersion) => sourceVersion.trim())
+          .filter((sourceVersion) => sourceVersion !== '');
+      } else {
+        if (document['sections'].every((section) => section['version'] === targetVersion) === true) {
+          Runner.failFold(`No other version sections are available to merge into version "${targetVersion}".`);
+
+          return;
+        }
+
+        const mergeOutput: Cli_Utility_Changelog_Runner_Fold_MergeOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_MergeOutputKey, Cli_Utility_Changelog_Runner_Fold_MergeOutputValue>({
+          type: 'multiselect',
+          name: 'versions',
+          message: `Select versions to merge into ${targetVersion}.`,
+          choices: document['sections']
+            .filter((section) => section['version'] !== targetVersion)
+            .map((section) => ({
+              title: section['version'],
+              value: section['version'],
+            })),
+          min: 1,
+        });
+
+        if (mergeOutput['cancelled'] === true) {
+          return;
+        }
+
+        const mergeOutputResult: Cli_Utility_Changelog_Runner_Fold_MergeOutputResult = mergeOutput['result'];
+
+        sourceVersions = mergeOutputResult.versions ?? [];
+      }
+
+      const uniqueSourceVersions: Cli_Utility_Changelog_Runner_Fold_UniqueSourceVersions = [...new Set(sourceVersions)];
+
+      if (uniqueSourceVersions.length === 0) {
+        Runner.failFold('Select at least one source version to merge.');
+
+        return;
+      }
+
+      const sourceSections: Cli_Utility_Changelog_Runner_Fold_SourceSections = [];
+
+      for (const sourceVersion of uniqueSourceVersions) {
+        if (sourceVersion === targetVersion) {
+          Runner.failFold(`Version "${sourceVersion}" cannot be merged into itself.`);
+
+          return;
+        }
+
+        const matchingSections: Cli_Utility_Changelog_Runner_Fold_MatchingSections = document['sections'].filter((section) => section['version'] === sourceVersion);
+
+        if (matchingSections.length === 0) {
+          Runner.failFold(`Merge source version "${sourceVersion}" was not found in "${changelogPath}".`);
+
+          return;
+        }
+
+        if (matchingSections.length > 1 || matchingSections[0] === undefined) {
+          Runner.failFold(`Merge source version "${sourceVersion}" is ambiguous in "${changelogPath}".`);
+
+          return;
+        }
+
+        sourceSections.push(matchingSections[0]);
+      }
+
+      beforeSections = document['sections'].filter((section) => section === targetSection || sourceSections.includes(section));
+      beforeSectionContent = beforeSections.map((section) => Runner.formatChangelogSection(section)).join('\n\n');
+
+      let uncategorizedCategory: Cli_Utility_Changelog_Runner_Fold_UncategorizedCategory = undefined;
+
+      if (options['uncategorizedAs'] !== undefined) {
+        const validUncategorizedCategory: Cli_Utility_Changelog_Runner_Fold_ValidUncategorizedCategory = libItemChangelogValidCategories.find((libItemChangelogValidCategory) => libItemChangelogValidCategory === options['uncategorizedAs']);
+
+        if (validUncategorizedCategory === undefined) {
+          Runner.failFold(`Uncategorized category "${options['uncategorizedAs']}" is invalid. Use: ${libItemChangelogValidCategories.join(', ')}.`);
+
+          return;
+        }
+
+        uncategorizedCategory = validUncategorizedCategory;
+      }
+
+      const uncategorizedSections: Cli_Utility_Changelog_Runner_Fold_UncategorizedSections = beforeSections.filter((section) => section['uncategorized'].length > 0);
+
+      if (uncategorizedSections.length > 0 && uncategorizedCategory === undefined) {
+        if (options['mergeFrom'] !== undefined) {
+          Runner.failFold('Selected changelog sections contain bullets outside category headings. Re-run with --uncategorized-as <updated|fixed|added|removed> to assign them before merging.');
+
+          return;
+        }
+
+        const uncategorizedOutput: Cli_Utility_Changelog_Runner_Fold_UncategorizedOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputKey, Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputValue>({
+          type: 'select',
+          name: 'uncategorizedAs',
+          message: 'Select a category for uncategorized bullets.',
+          choices: libItemChangelogOrderedCategories.map((candidateCategory) => ({
+            title: candidateCategory.toUpperCase(),
+            value: candidateCategory,
+          })),
+        });
+
+        if (uncategorizedOutput['cancelled'] === true) {
+          return;
+        }
+
+        const uncategorizedOutputResult: Cli_Utility_Changelog_Runner_Fold_UncategorizedOutputResult = uncategorizedOutput['result'];
+
+        if (uncategorizedOutputResult.uncategorizedAs === undefined) {
+          return;
+        }
+
+        uncategorizedCategory = uncategorizedOutputResult.uncategorizedAs;
+      }
+
+      if (uncategorizedCategory !== undefined) {
+        for (const uncategorizedSection of uncategorizedSections) {
+          const uncategorizedMessages: Cli_Utility_Changelog_Runner_Fold_UncategorizedMessages = uncategorizedSection['categories'].get(uncategorizedCategory) ?? [];
+
+          for (const uncategorizedMessage of uncategorizedSection['uncategorized']) {
+            uncategorizedMessages.push(uncategorizedMessage);
+          }
+
+          uncategorizedSection['categories'].set(uncategorizedCategory, uncategorizedMessages);
+
+          Reflect.set(uncategorizedSection, 'uncategorized', []);
+        }
+      }
+
+      for (const category of libItemChangelogOrderedCategories) {
+        const targetMessages: Cli_Utility_Changelog_Runner_Fold_TargetMessages = targetSection['categories'].get(category) ?? [];
+        const deduplicatedMessages: Cli_Utility_Changelog_Runner_Fold_DeduplicatedMessages = [];
+        const seenMessages: Cli_Utility_Changelog_Runner_Fold_SeenMessages = new Set();
+
+        for (const targetMessage of targetMessages) {
+          if (seenMessages.has(targetMessage) === false) {
+            deduplicatedMessages.push(targetMessage);
+
+            seenMessages.add(targetMessage);
+          }
+        }
+
+        for (const sourceSection of sourceSections) {
+          const sourceMessages: Cli_Utility_Changelog_Runner_Fold_SourceMessages = sourceSection['categories'].get(category) ?? [];
+
+          for (const sourceMessage of sourceMessages) {
+            if (seenMessages.has(sourceMessage) === false) {
+              deduplicatedMessages.push(sourceMessage);
+
+              seenMessages.add(sourceMessage);
+            }
+          }
+        }
+
+        if (deduplicatedMessages.length === 0) {
+          targetSection['categories'].delete(category);
+        } else {
+          targetSection['categories'].set(category, deduplicatedMessages);
+        }
+      }
+
+      Reflect.set(document, 'sections', document['sections'].filter((section) => sourceSections.includes(section) === false));
+    } else {
+      if (targetSection['uncategorized'].length > 0) {
+        Runner.failFold('The target section contains bullets outside category headings. Merge it with --uncategorized-as <updated|fixed|added|removed> to assign them before editing.');
+
+        return;
+      }
+
+      if (
+        (
+          action === 'edit'
+          || action === 'remove'
+        )
+        && [...targetSection['categories'].values()].every((messages) => messages.length === 0) === true
+      ) {
+        Runner.failFold(`Version "${targetVersion}" has no entries to ${action}.`);
+
+        return;
+      }
+
+      if (
+        action === 'add'
+        && (
+          options['entry'] !== undefined
+          || options['match'] !== undefined
+        )
+      ) {
+        Runner.failFold('--entry and --match are only valid with --edit or --remove.');
+
+        return;
+      }
+
+      if (action === 'remove' && options['message'] !== undefined) {
+        Runner.failFold('--message is only valid with --add or --edit.');
+
+        return;
+      }
+
+      let category: Cli_Utility_Changelog_Runner_Fold_Category = undefined;
+
+      if (options['category'] !== undefined) {
+        const validCategory: Cli_Utility_Changelog_Runner_Fold_ValidCategory = libItemChangelogValidCategories.find((libItemChangelogValidCategory) => libItemChangelogValidCategory === options['category']);
+
+        if (validCategory === undefined) {
+          Runner.failFold(`Category "${options['category']}" is invalid. Use: ${libItemChangelogValidCategories.join(', ')}.`);
+
+          return;
+        }
+
+        category = validCategory;
+      } else {
+        const categoryOutput: Cli_Utility_Changelog_Runner_Fold_CategoryOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_CategoryOutputKey, Cli_Utility_Changelog_Runner_Fold_CategoryOutputValue>({
+          type: 'select',
+          name: 'category',
+          message: 'Select a category.',
+          choices: libItemChangelogOrderedCategories
+            .filter((candidateCategory) => action === 'add' || (targetSection['categories'].get(candidateCategory) ?? []).length > 0)
+            .map((candidateCategory) => ({
+              title: candidateCategory.toUpperCase(),
+              value: candidateCategory,
+            })),
+        });
+
+        if (categoryOutput['cancelled'] === true) {
+          return;
+        }
+
+        const categoryOutputResult: Cli_Utility_Changelog_Runner_Fold_CategoryOutputResult = categoryOutput['result'];
+
+        if (categoryOutputResult.category === undefined) {
+          return;
+        }
+
+        category = categoryOutputResult.category;
+      }
+
+      beforeSectionContent = Runner.formatChangelogSection(targetSection);
+
+      const messages: Cli_Utility_Changelog_Runner_Fold_Messages = targetSection['categories'].get(category) ?? [];
+      let selectedIndex: Cli_Utility_Changelog_Runner_Fold_SelectedIndex = undefined;
+
+      if (action === 'edit' || action === 'remove') {
+        if (messages.length === 0) {
+          Runner.failFold(`Category "${category}" has no entries in version "${targetVersion}".`);
+
+          return;
+        }
+
+        if (options['entry'] !== undefined && options['match'] !== undefined) {
+          Runner.failFold('Use either --entry or --match, not both.');
+
+          return;
+        }
+
+        if (options['entry'] !== undefined) {
+          const parsedEntryNumber: Cli_Utility_Changelog_Runner_Fold_ParsedEntryNumber = Number(options['entry']);
+
+          if (
+            Number.isSafeInteger(parsedEntryNumber) === false
+            || parsedEntryNumber < 1
+            || parsedEntryNumber > messages.length
+          ) {
+            Runner.failFold(`Entry "${options['entry']}" does not exist in category "${category}" for version "${targetVersion}".`);
+
+            return;
+          }
+
+          selectedIndex = parsedEntryNumber - 1;
+        } else if (options['match'] !== undefined) {
+          const matchingIndexes: Cli_Utility_Changelog_Runner_Fold_MatchingIndexes = [];
+
+          for (let i = 0; i < messages.length; i += 1) {
+            if (messages[i] === options['match']) {
+              matchingIndexes.push(i);
+            }
+          }
+
+          if (matchingIndexes.length === 0) {
+            Runner.failFold(`No entry exactly matching "${options['match']}" was found in category "${category}" for version "${targetVersion}".`);
+
+            return;
+          }
+
+          if (matchingIndexes.length > 1 || matchingIndexes[0] === undefined) {
+            Runner.failFold(`Entry text "${options['match']}" is ambiguous in category "${category}" for version "${targetVersion}"; use --entry instead.`);
+
+            return;
+          }
+
+          selectedIndex = matchingIndexes[0];
+        } else {
+          const entryOutput: Cli_Utility_Changelog_Runner_Fold_EntryOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_EntryOutputKey, Cli_Utility_Changelog_Runner_Fold_EntryOutputValue>({
+            type: 'select',
+            name: 'entry',
+            message: 'Select an entry.',
+            choices: messages.map((message, index) => ({
+              title: message,
+              description: `Entry ${index + 1}`,
+              value: index,
+            })),
+          });
+
+          if (entryOutput['cancelled'] === true) {
+            return;
+          }
+
+          const entryOutputResult: Cli_Utility_Changelog_Runner_Fold_EntryOutputResult = entryOutput['result'];
+
+          if (entryOutputResult.entry === undefined) {
+            return;
+          }
+
+          selectedIndex = entryOutputResult.entry;
+        }
+      }
+
+      let message: Cli_Utility_Changelog_Runner_Fold_Message = undefined;
+
+      if (action === 'add' || action === 'edit') {
+        if (options['message'] !== undefined) {
+          message = options['message'].trim();
+
+          if (message === '') {
+            Runner.failFold('Message cannot be empty.');
+
+            return;
+          }
+
+          const messageValidation: Cli_Utility_Changelog_Runner_Fold_MessageValidation = Runner.validateMessage(message, category);
+
+          if (messageValidation !== true) {
+            Runner.failFold(messageValidation);
+
+            return;
+          }
+        } else {
+          const messageOutput: Cli_Utility_Changelog_Runner_Fold_MessageOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Fold_MessageOutputKey, Cli_Utility_Changelog_Runner_Fold_MessageOutputValue>({
+            type: 'text',
+            name: 'message',
+            message: (action === 'add') ? 'Describe the entry.' : 'Edit the entry.',
+            initial: (action === 'edit' && selectedIndex !== undefined) ? messages[selectedIndex] : undefined,
+            validate: (messageValue) => Runner.validateMessage(messageValue, category),
+          });
+
+          if (messageOutput['cancelled'] === true) {
+            return;
+          }
+
+          const messageOutputResult: Cli_Utility_Changelog_Runner_Fold_MessageOutputResult = messageOutput['result'];
+
+          if (messageOutputResult.message === undefined) {
+            return;
+          }
+
+          message = messageOutputResult.message.trim();
+        }
+      }
+
+      if (action === 'add' && message !== undefined) {
+        messages.push(message);
+      } else if (
+        action === 'edit'
+        && message !== undefined
+        && selectedIndex !== undefined
+      ) {
+        messages.splice(selectedIndex, 1, message);
+      } else if (action === 'remove' && selectedIndex !== undefined) {
+        messages.splice(selectedIndex, 1);
+      }
+
+      if (messages.length === 0) {
+        targetSection['categories'].delete(category);
+      } else {
+        targetSection['categories'].set(category, messages);
+      }
+    }
+
+    let androidBuild: Cli_Utility_Changelog_Runner_Fold_AndroidBuild = undefined;
+    let appleBuild: Cli_Utility_Changelog_Runner_Fold_AppleBuild = undefined;
+    let nativeBuild: Cli_Utility_Changelog_Runner_Fold_NativeBuild = undefined;
+
+    if (action !== 'merge' && options['buildBump'] !== false) {
+      try {
+        const nativeBuilds: Cli_Utility_Changelog_Runner_Fold_NativeBuilds = await Promise.all([
+          Runner.syncAndroidVersion(packageDirectory, currentVersion, currentVersion, 1, false),
+          Runner.syncAppleVersion(packageDirectory, currentVersion, currentVersion, 1, false),
+        ]);
+
+        androidBuild = nativeBuilds[0];
+        appleBuild = nativeBuilds[1];
+      } catch (error) {
+        Runner.failFold((error instanceof Error) ? error.message : 'Unable to validate native version manifests.');
+
+        return;
+      }
+
+      if (androidBuild !== undefined && appleBuild !== undefined) {
+        Runner.failFold(`Native workspace "${packageDirectory}" cannot define both Android and Apple version manifests.`);
+
+        return;
+      }
+
+      nativeBuild = androidBuild ?? appleBuild;
+
+      if (nativeBuild !== undefined && targetSection['version'] !== currentVersion) {
+        Runner.failFold(`Native workspace "${selectedPackage}" can only bump build numbers in its current version "${currentVersion}"; target version "${targetSection['version']}" is not current. Use --no-build-bump to fold an older section.`);
+
+        return;
+      }
+
+      if (nativeBuild !== undefined) {
+        Reflect.set(targetSection, 'header', Runner.formatChangelogHeader(targetSection, nativeBuild));
+        Reflect.set(targetSection, 'build', nativeBuild);
+      }
+    }
+
+    const nextContent: Cli_Utility_Changelog_Runner_Fold_NextContent = Runner.renderChangelog(document);
+    const afterSectionContent: Cli_Utility_Changelog_Runner_Fold_AfterSectionContent = Runner.formatChangelogSection(targetSection);
+    const diff: Cli_Utility_Changelog_Runner_Fold_Diff = Runner.formatChangelogDiff(changelogPath, beforeSectionContent, afterSectionContent);
+
+    let buildSummary: Cli_Utility_Changelog_Runner_Fold_BuildSummary = 'Native build: not applicable.';
+
+    if (action === 'merge') {
+      buildSummary = 'Native build: unchanged (merge operations never bump builds).';
+    } else if (options['buildBump'] === false) {
+      buildSummary = 'Native build: unchanged (--no-build-bump).';
+    } else if (androidBuild !== undefined) {
+      buildSummary = `Android versionCode: ${androidBuild - 1} -> ${androidBuild}.`;
+    } else if (appleBuild !== undefined) {
+      buildSummary = `Apple CURRENT_PROJECT_VERSION: ${appleBuild - 1} -> ${appleBuild}.`;
+    }
+
+    if (isDryRun === true) {
+      Logger.customize({
+        name: 'Runner.fold',
+        purpose: 'dryRun',
+        padTop: 1,
+      }).info(`Would update "${changelogPath}":`);
+
+      const dryRunLines: Cli_Utility_Changelog_Runner_Fold_DryRunLines = [
+        diff,
+        buildSummary,
+        '',
+      ];
+
+      process.stdout.write(dryRunLines.join('\n'));
+
+      return;
+    }
+
+    try {
+      if (androidBuild !== undefined) {
+        await Runner.syncAndroidVersion(packageDirectory, currentVersion, currentVersion, 1, true);
+      }
+
+      if (appleBuild !== undefined) {
+        await Runner.syncAppleVersion(packageDirectory, currentVersion, currentVersion, 1, true);
+      }
+
+      await fs.writeFile(changelogPath, nextContent, 'utf-8');
+    } catch (error) {
+      Runner.failFold((error instanceof Error) ? error.message : `Unable to update "${changelogPath}".`);
+
+      return;
+    }
+
+    let actionVerb: Cli_Utility_Changelog_Runner_Fold_ActionVerb = 'Folded';
+
+    if (action === 'add') {
+      actionVerb = 'Added an entry to';
+    } else if (action === 'edit') {
+      actionVerb = 'Edited an entry in';
+    } else if (action === 'remove') {
+      actionVerb = 'Removed an entry from';
+    } else if (action === 'merge') {
+      actionVerb = 'Merged sections into';
+    }
+
+    Logger.customize({
+      name: 'Runner.fold',
+      purpose: 'complete',
+      padTop: 1,
+    }).info(`${actionVerb} version ${targetVersion} in "${changelogPath}".`);
 
     return;
   }
@@ -644,6 +1607,19 @@ export class Runner {
         return;
       }
 
+      const messageValidation: Cli_Utility_Changelog_Runner_Record_MessageValidation = Runner.validateMessage(validMessage, validCategory);
+
+      if (messageValidation !== true) {
+        Logger.customize({
+          name: 'Runner.record',
+          purpose: 'validate',
+        }).error(messageValidation);
+
+        process.exitCode = 1;
+
+        return;
+      }
+
       selectedPackage = validPackage;
       selectedCategory = validCategory;
       selectedMessage = validMessage;
@@ -734,7 +1710,7 @@ export class Runner {
         type: 'text',
         name: 'message',
         message: 'Describe the change.',
-        validate: Runner['validateMessage'],
+        validate: (messageValue) => Runner.validateMessage(messageValue, selectedCategory),
       });
 
       if (messageOutput['cancelled'] === true) {
@@ -2433,6 +3409,307 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Changelog - Fail Fold.
+   *
+   * Reports one fold validation error through the command's shared logger.
+   * The helper also applies the non-zero exit contract used by CLI failures.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FailFold_Message} message - Message.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FailFold_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static failFold(message: Cli_Utility_Changelog_Runner_FailFold_Message): Cli_Utility_Changelog_Runner_FailFold_Returns {
+    Logger.customize({
+      name: 'Runner.fold',
+      purpose: 'validate',
+    }).error(message);
+
+    process.exitCode = 1;
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Format Changelog Diff.
+   *
+   * Renders complete before and after section blocks as an auditable diff.
+   * Dry runs use this output so every resulting line remains visible.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogDiff_ChangelogPath} changelogPath - Changelog path.
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogDiff_BeforeContent} beforeContent - Before content.
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogDiff_AfterContent}  afterContent  - After content.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FormatChangelogDiff_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static formatChangelogDiff(changelogPath: Cli_Utility_Changelog_Runner_FormatChangelogDiff_ChangelogPath, beforeContent: Cli_Utility_Changelog_Runner_FormatChangelogDiff_BeforeContent, afterContent: Cli_Utility_Changelog_Runner_FormatChangelogDiff_AfterContent): Cli_Utility_Changelog_Runner_FormatChangelogDiff_Returns {
+    const beforeLines: Cli_Utility_Changelog_Runner_FormatChangelogDiff_BeforeLines = beforeContent.split('\n');
+    const afterLines: Cli_Utility_Changelog_Runner_FormatChangelogDiff_AfterLines = afterContent.split('\n');
+    const diffLines: Cli_Utility_Changelog_Runner_FormatChangelogDiff_DiffLines = [
+      `--- ${changelogPath} (before)`,
+      `+++ ${changelogPath} (after)`,
+      '@@',
+    ];
+
+    for (const beforeLine of beforeLines) {
+      diffLines.push(`-${beforeLine}`);
+    }
+
+    for (const afterLine of afterLines) {
+      diffLines.push(`+${afterLine}`);
+    }
+
+    return diffLines.join('\n');
+  }
+
+  /**
+   * CLI - Utility - Changelog - Format Changelog Header.
+   *
+   * Replaces or inserts a native build while preserving the target suffix.
+   * SemVer dates and CalVer's intentionally absent date remain unchanged.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogHeader_Section}     section     - Section.
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogHeader_NativeBuild} nativeBuild - Native build.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FormatChangelogHeader_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static formatChangelogHeader(section: Cli_Utility_Changelog_Runner_FormatChangelogHeader_Section, nativeBuild: Cli_Utility_Changelog_Runner_FormatChangelogHeader_NativeBuild): Cli_Utility_Changelog_Runner_FormatChangelogHeader_Returns {
+    const headerPrefix: Cli_Utility_Changelog_Runner_FormatChangelogHeader_HeaderPrefix = `## ${section['version']}`;
+    const headerSuffix: Cli_Utility_Changelog_Runner_FormatChangelogHeader_HeaderSuffix = section['header'].slice(headerPrefix.length);
+
+    if (headerSuffix.startsWith(' (') === true) {
+      const buildEndIndex: Cli_Utility_Changelog_Runner_FormatChangelogHeader_BuildEndIndex = headerSuffix.indexOf(')');
+      const suffixAfterBuild: Cli_Utility_Changelog_Runner_FormatChangelogHeader_SuffixAfterBuild = headerSuffix.slice(buildEndIndex + 1);
+
+      return `${headerPrefix} (${nativeBuild})${suffixAfterBuild}`;
+    }
+
+    return `${headerPrefix} (${nativeBuild})${headerSuffix}`;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Format Changelog Section.
+   *
+   * Produces the same ordered headings, spacing, and bullets as release mode.
+   * Empty sections use Nova's established "No changes." representation.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FormatChangelogSection_Section} section - Section.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FormatChangelogSection_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static formatChangelogSection(section: Cli_Utility_Changelog_Runner_FormatChangelogSection_Section): Cli_Utility_Changelog_Runner_FormatChangelogSection_Returns {
+    const sectionParts: Cli_Utility_Changelog_Runner_FormatChangelogSection_SectionParts = [section['header']];
+    const categoryOrder: Cli_Utility_Changelog_Runner_FormatChangelogSection_CategoryOrder = [...libItemChangelogOrderedCategories];
+
+    if (section['categories'].size === 0 && section['uncategorized'].length === 0) {
+      sectionParts.push('');
+      sectionParts.push('No changes.');
+
+      return sectionParts.join('\n');
+    }
+
+    if (section['uncategorized'].length > 0) {
+      sectionParts.push('');
+
+      for (const uncategorizedMessage of section['uncategorized']) {
+        sectionParts.push(`- ${uncategorizedMessage}`);
+      }
+    }
+
+    for (const category of categoryOrder) {
+      const messages: Cli_Utility_Changelog_Runner_FormatChangelogSection_Messages = section['categories'].get(category);
+
+      if (messages === undefined || messages.length === 0) {
+        continue;
+      }
+
+      sectionParts.push('');
+      sectionParts.push(`### ${category.toUpperCase()}`);
+
+      for (const message of messages) {
+        sectionParts.push(`- ${message}`);
+      }
+    }
+
+    return sectionParts.join('\n');
+  }
+
+  /**
+   * CLI - Utility - Changelog - Parse Changelog.
+   *
+   * Reads Nova's generated package heading and ordered release sections.
+   * Fold mode rejects unsupported prose instead of silently discarding it.
+   *
+   * @param {Cli_Utility_Changelog_Runner_ParseChangelog_Content} content - Content.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_ParseChangelog_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static parseChangelog(content: Cli_Utility_Changelog_Runner_ParseChangelog_Content): Cli_Utility_Changelog_Runner_ParseChangelog_Returns {
+    const lines: Cli_Utility_Changelog_Runner_ParseChangelog_Lines = content.trimEnd().split('\n');
+    const packageHeading: Cli_Utility_Changelog_Runner_ParseChangelog_PackageHeading = lines[0];
+
+    if (
+      packageHeading === undefined
+      || packageHeading.startsWith('# ') === false
+      || packageHeading.startsWith('## ') === true
+    ) {
+      throw new Error('CHANGELOG.md must begin with one package heading.');
+    }
+
+    const sections: Cli_Utility_Changelog_Runner_ParseChangelog_Sections = [];
+    let currentSection: Cli_Utility_Changelog_Runner_ParseChangelog_CurrentSection = undefined;
+    let currentCategory: Cli_Utility_Changelog_Runner_ParseChangelog_CurrentCategory = undefined;
+
+    for (const line of lines.slice(1)) {
+      if (line.startsWith('## ') === true) {
+        const headerBody: Cli_Utility_Changelog_Runner_ParseChangelog_HeaderBody = line.slice(3);
+        const versionSeparatorIndex: Cli_Utility_Changelog_Runner_ParseChangelog_VersionSeparatorIndex = headerBody.indexOf(' ');
+        const version: Cli_Utility_Changelog_Runner_ParseChangelog_Version = (versionSeparatorIndex === -1) ? headerBody : headerBody.slice(0, versionSeparatorIndex);
+
+        if (version === '') {
+          throw new Error(`Invalid changelog section heading "${line}".`);
+        }
+
+        const section: Cli_Utility_Changelog_Runner_ParseChangelog_Section = {
+          header: line,
+          version,
+          categories: new Map(),
+          uncategorized: [],
+        };
+        const buildPrefix: Cli_Utility_Changelog_Runner_ParseChangelog_BuildPrefix = `${version} (`;
+
+        if (headerBody.startsWith(buildPrefix) === true) {
+          const buildEndIndex: Cli_Utility_Changelog_Runner_ParseChangelog_BuildEndIndex = headerBody.indexOf(')', buildPrefix.length);
+
+          if (buildEndIndex === -1) {
+            throw new Error(`Invalid native build in changelog heading "${line}".`);
+          }
+
+          const buildValue: Cli_Utility_Changelog_Runner_ParseChangelog_BuildValue = headerBody.slice(buildPrefix.length, buildEndIndex);
+          const parsedBuild: Cli_Utility_Changelog_Runner_ParseChangelog_ParsedBuild = Number(buildValue);
+
+          if (Number.isSafeInteger(parsedBuild) === false) {
+            throw new Error(`Invalid native build "${buildValue}" in changelog heading "${line}".`);
+          }
+
+          Reflect.set(section, 'build', parsedBuild);
+        }
+
+        sections.push(section);
+
+        currentSection = section;
+        currentCategory = undefined;
+
+        continue;
+      }
+
+      if (line.startsWith('### ') === true) {
+        if (currentSection === undefined) {
+          throw new Error(`Category heading "${line}" appears before a version section.`);
+        }
+
+        const categoryValue: Cli_Utility_Changelog_Runner_ParseChangelog_CategoryValue = line.slice(4).toLowerCase();
+        const category: Cli_Utility_Changelog_Runner_ParseChangelog_Category = libItemChangelogValidCategories.find((libItemChangelogValidCategory) => libItemChangelogValidCategory === categoryValue);
+
+        if (category === undefined) {
+          throw new Error(`Unsupported changelog category heading "${line}".`);
+        }
+
+        if (currentSection['categories'].has(category) === true) {
+          throw new Error(`Category "${category}" appears more than once in version "${currentSection['version']}".`);
+        }
+
+        currentSection['categories'].set(category, []);
+        currentCategory = category;
+
+        continue;
+      }
+
+      if (line.startsWith('- ') === true) {
+        if (currentSection === undefined) {
+          throw new Error(`Changelog bullet "${line}" appears before a version section.`);
+        }
+
+        const message: Cli_Utility_Changelog_Runner_ParseChangelog_Message = line.slice(2);
+
+        if (message === '') {
+          throw new Error(`Version "${currentSection['version']}" contains an empty changelog bullet.`);
+        }
+
+        if (currentCategory === undefined) {
+          currentSection['uncategorized'].push(message);
+
+          continue;
+        }
+
+        const messages: Cli_Utility_Changelog_Runner_ParseChangelog_Messages = currentSection['categories'].get(currentCategory) ?? [];
+
+        messages.push(message);
+
+        currentSection['categories'].set(currentCategory, messages);
+
+        continue;
+      }
+
+      if (line === '' || line === 'No changes.') {
+        continue;
+      }
+
+      throw new Error(`Unsupported changelog content "${line}". Fold only edits Nova-formatted sections.`);
+    }
+
+    return {
+      packageHeading,
+      sections,
+    };
+  }
+
+  /**
+   * CLI - Utility - Changelog - Render Changelog.
+   *
+   * Reassembles a package changelog from canonical formatted sections.
+   * The renderer keeps one blank line between every generated block.
+   *
+   * @param {Cli_Utility_Changelog_Runner_RenderChangelog_Document} document - Document.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_RenderChangelog_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static renderChangelog(document: Cli_Utility_Changelog_Runner_RenderChangelog_Document): Cli_Utility_Changelog_Runner_RenderChangelog_Returns {
+    const sectionContents: Cli_Utility_Changelog_Runner_RenderChangelog_SectionContents = document['sections'].map((section) => Runner.formatChangelogSection(section));
+    const parts: Cli_Utility_Changelog_Runner_RenderChangelog_Parts = [
+      document['packageHeading'],
+      '',
+      sectionContents.join('\n\n'),
+      '',
+    ];
+
+    return parts.join('\n');
+  }
+
+  /**
    * CLI - Utility - Changelog - Generate File Name.
    *
    * Produces a random three-word slug from the adjectives, nouns, and verbs word lists.
@@ -2455,10 +3732,12 @@ export class Runner {
   /**
    * CLI - Utility - Changelog - Validate Message.
    *
-   * Rejects empty or non-string descriptions for the interactive message prompt.
+   * Rejects empty descriptions and ones that don't start with a capital letter.
+   * Also rejects a first word that repeats the category, like "Update" under updated.
    * Returns true when the value is acceptable, otherwise an error string.
    *
    * @param {Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue} messageValue - Message value.
+   * @param {Cli_Utility_Changelog_Runner_ValidateMessage_Category}     category     - Category.
    *
    * @private
    *
@@ -2466,9 +3745,24 @@ export class Runner {
    *
    * @since 0.13.0
    */
-  private static validateMessage(messageValue: Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue): Cli_Utility_Changelog_Runner_ValidateMessage_Returns {
+  private static validateMessage(messageValue: Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue, category: Cli_Utility_Changelog_Runner_ValidateMessage_Category): Cli_Utility_Changelog_Runner_ValidateMessage_Returns {
     if (typeof messageValue !== 'string' || messageValue.trim() === '') {
       return 'Enter a description.';
+    }
+
+    if (LIB_REGEX_PATTERN_CHANGELOG_CAPITAL_START.test(messageValue.trim()) === false) {
+      return 'Start the entry with a capital letter.';
+    }
+
+    if (category === undefined) {
+      return true;
+    }
+
+    const firstWordMatch: Cli_Utility_Changelog_Runner_ValidateMessage_FirstWordMatch = messageValue.trim().match(LIB_REGEX_PATTERN_CHANGELOG_FIRST_WORD);
+    const firstWord: Cli_Utility_Changelog_Runner_ValidateMessage_FirstWord = (firstWordMatch !== null) ? (firstWordMatch[1] ?? '') : '';
+
+    if (libItemChangelogCategoryOpeningWords[category].includes(firstWord.toLowerCase()) === true) {
+      return `Entries under "${category}" can't start with "${firstWord}", because the heading already says it. Start with what changed instead.`;
     }
 
     return true;

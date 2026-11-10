@@ -26,7 +26,42 @@ macos/<locale>/mac/01-name.png
 visionos/<locale>/vision-pro/01-name.png
 ```
 
-Each PNG or JPEG filename begins with a unique position from `01` through `10`. Nova leaves absent targets untouched and rejects an existing empty target directory before authentication. iPhone Duo assets use Apple's asset-library placement flow; the other targets use App Store screenshot sets.
+Each filename begins with a unique position from `01` through `10`. Nova leaves absent targets untouched and rejects an existing empty target directory before authentication. iPhone Duo assets use Apple's asset-library placement flow; the other targets use App Store screenshot sets.
+
+## Image preflight
+
+Before authentication or any App Store Connect request, Nova reads every selected file and reports all failures together. Each target must contain 1–10 files. Files must have a real PNG or JPEG signature, not only a matching extension. PNG color types 4 and 6 and PNGs containing a `tRNS` chunk are rejected because App Store screenshots cannot contain alpha.
+
+Nova accepts these dimensions from Apple's [screenshot specifications](https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications), checked on November 5, 2026:
+
+| Target        | App Store Connect display type | Accepted pixel dimensions                                                    |
+|---------------|--------------------------------|------------------------------------------------------------------------------|
+| `iphone`      | `APP_IPHONE_67`                | `1260x2736`, `2736x1260`, `1290x2796`, `2796x1290`, `1320x2868`, `2868x1320` |
+| `ipad`        | `APP_IPAD_PRO_3GEN_129`        | `2064x2752`, `2752x2064`, `2048x2732`, `2732x2048`                           |
+| `mac`         | `APP_DESKTOP`                  | `1280x800`, `1440x900`, `2560x1600`, `2880x1800`                             |
+| `vision-pro`  | `APP_APPLE_VISION_PRO`         | `3840x2160`                                                                  |
+| `apple-watch` | `APP_WATCH_SERIES_10`          | `416x496`                                                                    |
+| `iphone-duo`  | Asset Library placement        | outer: `1398x2034`, `2034x1398`; inner: `2007x2853`, `2853x2007`             |
+
+Nova uploads Apple Watch screenshots only as `APP_WATCH_SERIES_10`, so it accepts only `416x496` for the `apple-watch` target. Apple's other Watch dimensions belong to display types that Nova does not upload. Creative assets have separate Apple specifications and do not use this table.
+
+Use `--skip-image-checks` if Apple adds a supported size before Nova's table is updated. The override skips format, alpha, and dimension inspection; the 1–10 files-per-target limit and other target validation still apply.
+
+## Replacement safety
+
+Apple [allows up to 10 screenshots](https://developer.apple.com/app-store/product-page/) in each standard screenshot set. Before replacing a supplied target, Nova removes every incomplete or failed screenshot reservation in that set, regardless of its filename, and reports the cleanup count.
+
+Nova calculates each local file's MD5 checksum and reuses any complete screenshot with the same App Store Connect `sourceFileChecksum`. Reused screenshots are part of the new generation, not the old generation. This makes a retry continue a partial replacement instead of uploading duplicates.
+
+If unmatched local files fit in the set's free slots, Nova fills those slots in parallel batches without deleting an old screenshot first. A full set is replaced one screenshot at a time: Nova opens one slot, uploads one image, and waits for Apple to mark it `COMPLETE` before opening the next slot. Reused screenshots do not increase the deletion allowance. At every step, the number of deleted old screenshots is no greater than the number uploaded by the current run that reached `COMPLETE`, plus one. An Apple processing failure can therefore remove at most one old screenshot beyond this run's completed uploads.
+
+Nova polls processing once per set at each interval, using 2, 4, and 8 seconds before capping the interval at 15 seconds. A failed upload or processing result triggers a best-effort deletion of its own reservation. Before final ordering, Nova sweeps every remaining non-`COMPLETE` entry. The reorder request contains every screenshot still in the set—new screenshots first and old screenshots after them—because App Store Connect rejects an order that omits an existing ID. Nova deletes the remaining old screenshots only after that complete order succeeds.
+
+If a reservation create has any transport failure, a server failure, or a failure while reading a successful response after Apple may have accepted it, Nova relists the set, removes same-name `AWAITING_UPLOAD` reservations created by the run, and then retries. If replacement still fails, Nova reports the exact counts of old `COMPLETE` screenshots, replacement `COMPLETE` screenshots, and non-complete placeholders that actually remain.
+
+iPhone Duo uses App Asset Library placements, with the same limit of 10 screenshots per placement group. Nova uploads and processes the images first, gives each one a platform-specific content-derived reference ending in `[md5:xxxxxxxx]`, and reuses a ready image and any matching placement on retry. Existing placements are listed with their related images included. Placements whose image cannot be resolved are treated as old and are never reused. Groups with free slots fill them in parallel batches; a full group is replaced one placement at a time. Nova refreshes the filtered placement listing before final ordering, orders every new and remaining old placement, and deletes old placements only after ordering succeeds. A failed placement run refreshes the listing before reporting its old and new counts; processed images remain reusable in the App Asset Library.
+
+All App Store Connect requests and upload chunks run through a small bounded queue. Nova honors `Retry-After` and pauses the whole client when a `429` or Apple's `X-Rate-Limit` header shows that the hourly budget is nearly exhausted. Without `Retry-After`, rate-limit retries back off for up to about 10 minutes in total before failing. A rate-limit exhaustion error says that the run is safe to resume after Apple's budget resets. When one bounded batch fails, its already in-flight operations finish, every failure from that batch is reported together, and later batches do not start.
 
 ## Usage
 
@@ -48,4 +83,4 @@ Each PNG or JPEG filename begins with a unique position from `01` through `10`. 
   </TabItem>
 </Tabs>
 
-The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/). The complete replacement plan is shown before authentication or remote changes.
+The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/), plus `--skip-image-checks`. The complete replacement plan is shown before authentication or remote changes.

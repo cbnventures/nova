@@ -24,9 +24,12 @@ import type {
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfig_Urls,
+  Shared_NovaConfig_Workflows,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigSettings_VersionStrategy,
+  Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkflowDeployTarget,
   Shared_NovaConfigWorkspace_Policy,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
@@ -433,7 +436,7 @@ export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInit
 /**
  * Lib - Scaffold - Register Workspace In Config.
  *
- * @since 0.15.0
+ * @since 0.39.0
  */
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath = string;
 
@@ -450,6 +453,10 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables = Shared
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Platforms = Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = Shared_ScaffoldResolvedArtifact | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget = Shared_NovaConfigWorkflowDeployTarget | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix = string | undefined;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
@@ -480,6 +487,14 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, u
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedArtifacts = Shared_NovaConfig_Artifacts | undefined;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkflows = Shared_NovaConfig_Workflows | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Workflows = Shared_NovaConfig_Workflows;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_PublishWorkflow = Shared_NovaConfigWorkflow | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_PublishDeploy = Shared_NovaConfigWorkflowDeployTarget[];
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls = Shared_NovaConfig_Urls | undefined;
 
@@ -519,6 +534,8 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces =
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces = Record<string, unknown>;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ResolvedEnvironmentPrefix = string | undefined;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace = Record<string, unknown>;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Json = string;
@@ -548,13 +565,15 @@ export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory =
 /**
  * Lib - Scaffold - Resolve Scaffold Environment Prefix.
  *
- * @since 0.31.0
+ * @since 0.39.0
  */
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment = Record<string, unknown>;
 
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName = string;
 
-export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns = string;
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_IsNonInteractive = boolean;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns = Promise<string | undefined>;
 
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes = string[];
 
@@ -570,7 +589,19 @@ export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Entry = Record<string,
 
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_PrefixValue = unknown;
 
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceNameSegments = string[];
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_LastWorkspaceNameSegment = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_SuggestedPrefix = string;
+
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answers = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answer = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefixWord = string;
 
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate = string;
 
@@ -802,6 +833,8 @@ export type Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspacePackage
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveArtifact = (workspaceRelPath: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact_WorkspacePackageName, answers: Shared_ScaffoldTemplateResolution_Answers) => Lib_Scaffold_RunScaffold_ResolvedArtifact | undefined;
 
+export type Lib_Scaffold_RunScaffold_Definition_ResolveDeployTarget = (workspaceRelPath: string, workspacePackageName: string, answers: Shared_ScaffoldTemplateResolution_Answers) => Shared_NovaConfigWorkflowDeployTarget | undefined;
+
 export type Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms = (answers: Shared_ScaffoldTemplateResolution_Answers) => Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions_WorkspaceName = string;
@@ -810,9 +843,11 @@ export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions = (wo
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName = string;
 
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_ConfigRoot = string;
+
 export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_Returns = Map<RegExp, string> | Promise<Map<RegExp, string> | undefined> | undefined;
 
-export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName) => Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_Returns;
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName, configRoot: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_ConfigRoot) => Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_Returns;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths = (answers: Shared_ScaffoldTemplateResolution_Answers) => string[];
 
@@ -844,6 +879,7 @@ export type Lib_Scaffold_RunScaffold_Definition = {
   projectFinalizer?: Lib_Scaffold_RunScaffold_Definition_ProjectFinalizer;
   resolveAllowScriptProfiles?: Lib_Scaffold_RunScaffold_Definition_ResolveAllowScriptProfiles;
   resolveArtifact?: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact;
+  resolveDeployTarget?: Lib_Scaffold_RunScaffold_Definition_ResolveDeployTarget;
   resolvePlatforms?: Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms;
   resolvePresentationOptions?: Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions;
   resolveReplacements?: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements;
@@ -930,6 +966,12 @@ export type Lib_Scaffold_RunScaffold_ExistingWorkspaceName = unknown;
 
 export type Lib_Scaffold_RunScaffold_ExistingWorkspaceRole = unknown;
 
+export type Lib_Scaffold_RunScaffold_PrefixEnvironment = Record<string, unknown>;
+
+export type Lib_Scaffold_RunScaffold_ExistingEnvironment = unknown;
+
+export type Lib_Scaffold_RunScaffold_EnvironmentPrefix = string | undefined;
+
 export type Lib_Scaffold_RunScaffold_TemplateResolution = Shared_ScaffoldTemplateResolution | undefined;
 
 export type Lib_Scaffold_RunScaffold_TemplateAnswers = Shared_ScaffoldTemplateResolution_Answers;
@@ -943,6 +985,8 @@ export type Lib_Scaffold_RunScaffold_TemplateValidationError = string | undefine
 export type Lib_Scaffold_RunScaffold_ReplacementResolution = Map<RegExp, string> | undefined;
 
 export type Lib_Scaffold_RunScaffold_ResolvedArtifact = Shared_ScaffoldResolvedArtifact | undefined;
+
+export type Lib_Scaffold_RunScaffold_ResolvedDeployTarget = Shared_NovaConfigWorkflowDeployTarget | undefined;
 
 export type Lib_Scaffold_RunScaffold_ExistingArtifacts = Shared_NovaConfig_Artifacts | undefined;
 

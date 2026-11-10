@@ -41,6 +41,20 @@ export type Tests_Cli_Utility_ChangelogAndroid_ChangelogContent = string;
 export type Tests_Cli_Utility_ChangelogAndroid_RunAndroidReleases_Returns = void;
 
 /**
+ * Tests - CLI - Utility - Changelog Android - Run Android Releases - Bumps The Android Build While Folding An Existing Section.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_ChangelogAndroid_RunAndroidReleases_BumpsTheAndroidBuildWhileFoldingAnExistingSection_Returns = void;
+
+/**
+ * Tests - CLI - Utility - Changelog Android - Run Android Releases - Refuses To Bump An Older Android Version.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Utility_ChangelogAndroid_RunAndroidReleases_RefusesToBumpAnOlderAndroidVersion_Returns = void;
+
+/**
  * Tests - CLI - Utility - Changelog Android - Run Android Releases - Synchronizes Android Versions And Writes The Build In The Heading.
  *
  * @since 0.34.0

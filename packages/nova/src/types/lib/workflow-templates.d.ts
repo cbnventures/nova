@@ -1,8 +1,34 @@
 import type {
+  Shared_GithubRunnerImage_Architecture,
+  Shared_NovaConfigWorkflowContainerPlatform,
+  Shared_WorkflowStepKind,
   Shared_WorkflowTemplatePermissions,
   Shared_WorkflowTemplateTargets,
   Shared_WorkflowTemplateVariables,
 } from '../shared.d.ts';
+
+/**
+ * Lib - Workflow Templates - Workflow Step Kinds.
+ *
+ * @since 0.39.0
+ */
+export type Lib_WorkflowTemplates_StepKinds = Shared_WorkflowStepKind[];
+
+/**
+ * Lib - Workflow Templates - Workflow Step Timeout Defaults.
+ *
+ * @since 0.39.0
+ */
+export type Lib_WorkflowTemplates_StepTimeoutDefault = number | 'job';
+
+export type Lib_WorkflowTemplates_StepTimeoutDefaults = Record<Shared_WorkflowStepKind, Lib_WorkflowTemplates_StepTimeoutDefault>;
+
+/**
+ * Lib - Workflow Templates - Lib Workflow Container Platform Architectures.
+ *
+ * @since 0.39.0
+ */
+export type Lib_WorkflowTemplates_ContainerPlatformArchitectures = Partial<Record<Shared_NovaConfigWorkflowContainerPlatform, Shared_GithubRunnerImage_Architecture>>;
 
 /**
  * Lib - Workflow Templates - Lib Workflow Templates Metadata.

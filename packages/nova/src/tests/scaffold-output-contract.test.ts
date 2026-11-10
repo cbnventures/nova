@@ -3,10 +3,12 @@ import {
   ok,
   strictEqual,
 } from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import {
   mkdtemp,
   readFile,
   rm,
+  writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -39,6 +41,18 @@ import {
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
   LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
   LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION,
+  LIB_REGEX_PLACEHOLDER_PROJECT_AUTHOR_EMAIL,
+  LIB_REGEX_PLACEHOLDER_PROJECT_BUGS,
+  LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
+  LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION,
+  LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES,
+  LIB_REGEX_PLACEHOLDER_PROJECT_HOMEPAGE,
+  LIB_REGEX_PLACEHOLDER_PROJECT_LICENSE,
+  LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
   LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
   LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
@@ -57,23 +71,54 @@ import {
 import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackageContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackagePath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResultTypeGuard,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesTheBaseStarterInventory_StarterContractPromise,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_PackageDirectory,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_AboutPageContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_AboutPagePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_CheckPackageContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_CheckPackagePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_FileLockContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_FileLockPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_MakefileContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_MakefilePath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageLogoContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageLogoPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePathsContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePathsPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePlistContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePlistPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_ReleaseSigningKeyContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_ReleaseSigningKeyPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPageContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPagePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateManagerContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateManagerPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_SandboxRoot,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryPrefix,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_CommentOnlyContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_CommentOnlyResult,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_GeneratedWorkspaceDirectory,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_MalformedKeyResult,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ReleaseSigningFilePath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ValidKey,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ValidKeyResult,
   Tests_ScaffoldOutputContract_TemplateContracts,
   Tests_ScaffoldOutputContract_TranslationReadyContracts,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintBaseline,
@@ -521,8 +566,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/types/status.d.ts',
       'src/types/worker/index.d.ts',
       'src/types/worker/index.test.d.ts',
+      'src/types/worker/landing-page.d.ts',
       'src/worker/index.test.ts',
       'src/worker/index.ts',
+      'src/worker/landing-page.ts',
       'tsconfig.cli.json',
       'tsconfig.config.json',
       'tsconfig.tests.json',
@@ -539,6 +586,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
         'contract-serverless-cloudflare-workers',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+        'https://github.com/example/contract-serverless-cloudflare-workers',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
@@ -567,12 +618,14 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'bin/cli.mjs',
       'eslint.config.mts',
       'package.json',
+      'src/function/landing-page.ts',
       'src/index.ts',
       'src/program.ts',
       'src/status.test.ts',
       'src/status.ts',
       'src/types/api/index.d.ts',
       'src/types/api/index.test.d.ts',
+      'src/types/function/landing-page.d.ts',
       'src/types/program.d.ts',
       'src/types/status.d.ts',
       'tsconfig.cli.json',
@@ -590,6 +643,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
         'contract-serverless-vercel-functions',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+        'https://github.com/example/contract-serverless-vercel-functions',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
@@ -728,14 +785,21 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'port/files/pkg-install.in',
       'port/files/usr/local/pkg/my-package.inc',
       'port/files/usr/local/pkg/my-package.xml',
+      'port/files/usr/local/pkg/my-package/FileLock.php',
+      'port/files/usr/local/pkg/my-package/PackagePaths.php',
+      'port/files/usr/local/pkg/my-package/UpdateManager.php',
       'port/files/usr/local/sbin/my-package',
       'port/files/usr/local/share/pfSense-pkg-MyPackage/info.xml',
+      'port/files/usr/local/share/pfSense-pkg-MyPackage/logo.svg',
+      'port/files/usr/local/share/pfSense-pkg-MyPackage/release-signing.pub',
+      'port/files/usr/local/www/my-package-about.php',
       'port/pkg-descr',
       'port/pkg-plist',
       'scripts/build-package.sh',
       'scripts/check-package.mjs',
       'scripts/regex.mjs',
       'scripts/stage-package.mjs',
+      'tests/updates.php',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -765,24 +829,53 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
         'mypackage',
       ],
-    ]),
-  },
-  {
-    name: 'pfsense-root',
-    templateSubpath: 'package/pfsense-root',
-    expectedFiles: ['.github/workflows/pfsense-my-package.yml'],
-    replacements: new Map([
       [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
-        'my-package',
+        LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
+        'https://api.github.com/repos/example/contract-pfsense/releases/latest',
       ],
       [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
-        'packages/my-package',
+        LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY,
+        'weekly',
       ],
       [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
-        'My Package',
+        LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX,
+        'https://github.com/example/contract-pfsense/releases/download/',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_SETTINGS_DESCRIPTION,
+        'Choose how often pfSense checks GitHub for a new package release. The check runs at a stable randomized time.',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_AUTHOR_EMAIL,
+        'author@example.com',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_BUGS,
+        'https://github.com/example/contract-pfsense/issues',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
+        'A generated pfSense package.',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION,
+        'https://example.com/docs',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES,
+        '[\'https://github.com/sponsors/example\']',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_HOMEPAGE,
+        'https://example.com',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_LICENSE,
+        'https://github.com/example/contract-pfsense/blob/main/LICENSE',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+        'https://github.com/example/contract-pfsense',
       ],
     ]),
   },
@@ -1471,15 +1564,117 @@ describe('scaffold output contract', async () => {
     return;
   });
 
+  it('keeps the Docker image OCI label contract', async () => {
+    const dockerfilePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath = join(packageDirectory, 'templates', 'scaffold-options', 'docker-image', 'common', 'Dockerfile');
+    const dockerfileContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = await readFile(dockerfilePath, 'utf-8');
+
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="[__PROJECT_NAME__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.description="[__PROJECT_DESCRIPTION__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="[__PROJECT_HOMEPAGE__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="[__PROJECT_REPOSITORY__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="[__PROJECT_DOCUMENTATION__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="[__PROJECT_LICENSE__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="[__PROJECT_VENDOR__]"'), true);
+
+    return;
+  });
+
+  it('marks pfSense release packages for any FreeBSD version and keeps them vital', async () => {
+    const buildPackagePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackagePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'scripts', 'build-package.sh');
+    const buildPackageContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MarksPfSenseReleasePackagesForAnyFreeBSDVersionAndKeepsThemVital_BuildPackageContent = await readFile(buildPackagePath, 'utf-8');
+
+    strictEqual(buildPackageContent.includes('PACKAGE_REBUILD_DIR=\'\''), true);
+    strictEqual(buildPackageContent.includes(`rm -rf -- "${'$'}{PACKAGE_REBUILD_DIR}"`), true);
+    strictEqual(buildPackageContent.includes(`mktemp -d "${'$'}{PORT_DESTINATION}/work/any-freebsd.XXXXXX"`), true);
+    strictEqual(buildPackageContent.includes('root/+COMPACT_MANIFEST'), true);
+    strictEqual(buildPackageContent.includes('"vital": true'), true);
+    strictEqual(buildPackageContent.includes('\\1FreeBSD:*\\2'), true);
+    strictEqual(buildPackageContent.includes('\\1freebsd:*\\2'), true);
+    strictEqual(buildPackageContent.includes('pkg create \\'), true);
+    strictEqual(buildPackageContent.includes(`pkg query -F "${'$'}{artifact}" '%q'`), true);
+    strictEqual(buildPackageContent.includes(`pkg query -F "${'$'}{artifact}" '%V'`), true);
+    strictEqual(buildPackageContent.includes(`if [ "${'$'}{artifact_abi}" != 'FreeBSD:*' ]; then`), true);
+    strictEqual(buildPackageContent.includes(`if [ "${'$'}{artifact_vital}" != '1' ]; then`), true);
+
+    return;
+  });
+
+  it('validates pfSense release signing key files with line-numbered diagnostics', async () => {
+    const releaseSigningFilePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ReleaseSigningFilePath = join(sandboxRoot, 'pfsense', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-MyPackage', 'release-signing.pub');
+    const commentOnlyContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_CommentOnlyContent = await readFile(releaseSigningFilePath, 'utf-8');
+    const generatedWorkspaceDirectory: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_GeneratedWorkspaceDirectory = join(sandboxRoot, 'pfsense');
+
+    try {
+      const commentOnlyResult: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_CommentOnlyResult = spawnSync(process.execPath, ['scripts/check-package.mjs'], {
+        cwd: generatedWorkspaceDirectory,
+        encoding: 'utf-8',
+      });
+
+      strictEqual(commentOnlyResult.status, 0, commentOnlyResult.stderr);
+
+      const validKey: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ValidKey = `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI${'A'.repeat(43)} contract-test`;
+
+      await writeFile(releaseSigningFilePath, `${validKey}\n`, 'utf-8');
+
+      const validKeyResult: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_ValidKeyResult = spawnSync(process.execPath, ['scripts/check-package.mjs'], {
+        cwd: generatedWorkspaceDirectory,
+        encoding: 'utf-8',
+      });
+
+      strictEqual(validKeyResult.status, 0, validKeyResult.stderr);
+
+      await writeFile(releaseSigningFilePath, [
+        '# Comment',
+        '',
+        '# Another comment',
+        'not-a-key',
+        '',
+      ].join('\n'), 'utf-8');
+
+      const malformedKeyResult: Tests_ScaffoldOutputContract_ScaffoldOutputContract_ValidatesPfSenseReleaseSigningKeyFilesWithLineNumberedDiagnostics_MalformedKeyResult = spawnSync(process.execPath, ['scripts/check-package.mjs'], {
+        cwd: generatedWorkspaceDirectory,
+        encoding: 'utf-8',
+      });
+
+      strictEqual(malformedKeyResult.status, 1);
+      strictEqual(malformedKeyResult.stderr.includes('release-signing.pub'), true);
+      strictEqual(malformedKeyResult.stderr.includes('line 4'), true);
+    } finally {
+      await writeFile(releaseSigningFilePath, commentOnlyContent, 'utf-8');
+    }
+
+    return;
+  });
+
   it('routes the pfSense single-instance settings page directly to its native editor', async () => {
     const settingsPagePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPagePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__].xml');
     const settingsPageContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPageContent = await readFile(settingsPagePath, 'utf-8');
     const settingsHandlerPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__].inc');
     const settingsHandlerContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerContent = await readFile(settingsHandlerPath, 'utf-8');
+    const fileLockPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_FileLockPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__]', 'FileLock.php');
+    const fileLockContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_FileLockContent = await readFile(fileLockPath, 'utf-8');
+    const packagePathsPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePathsPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__]', 'PackagePaths.php');
+    const packagePathsContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePathsContent = await readFile(packagePathsPath, 'utf-8');
+    const updateManagerPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateManagerPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__]', 'UpdateManager.php');
+    const updateManagerContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateManagerContent = await readFile(updateManagerPath, 'utf-8');
     const packageScriptPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'sbin', '[__WORKSPACE_NAME__]');
     const packageScriptContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptContent = await readFile(packageScriptPath, 'utf-8');
     const packageInfoPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]', 'info.xml');
     const packageInfoContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent = await readFile(packageInfoPath, 'utf-8');
+    const packageLogoPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageLogoPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]', 'logo.svg');
+    const packageLogoContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageLogoContent = await readFile(packageLogoPath, 'utf-8');
+    const releaseSigningKeyPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_ReleaseSigningKeyPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]', 'release-signing.pub');
+    const releaseSigningKeyContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_ReleaseSigningKeyContent = await readFile(releaseSigningKeyPath, 'utf-8');
+    const aboutPagePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_AboutPagePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'www', '[__WORKSPACE_NAME__]-about.php');
+    const aboutPageContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_AboutPageContent = await readFile(aboutPagePath, 'utf-8');
+    const makefilePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_MakefilePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'Makefile.template');
+    const makefileContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_MakefileContent = await readFile(makefilePath, 'utf-8');
+    const packagePlistPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePlistPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'pkg-plist');
+    const packagePlistContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackagePlistContent = await readFile(packagePlistPath, 'utf-8');
+    const checkPackagePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_CheckPackagePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'scripts', 'check-package.mjs');
+    const checkPackageContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_CheckPackageContent = await readFile(checkPackagePath, 'utf-8');
+    const updateTestsPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'tests', 'updates.php');
+    const updateTestsContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_UpdateTestsContent = await readFile(updateTestsPath, 'utf-8');
 
     strictEqual(
       settingsPageContent.includes('<url>/pkg_edit.php?xml=[__WORKSPACE_NAME__].xml&amp;id=0</url>'),
@@ -1537,7 +1732,7 @@ describe('scaffold output contract', async () => {
     );
 
     strictEqual(
-      packageScriptContent.includes('logger(LOG_NOTICE,'),
+      packageScriptContent.includes('syslog(LOG_NOTICE,'),
       true,
     );
 
@@ -1545,6 +1740,110 @@ describe('scaffold output contract', async () => {
       packageInfoContent.includes('<internal_name>[__WORKSPACE_IDENTIFIER__]</internal_name>'),
       true,
     );
+
+    strictEqual(settingsPageContent.includes('<text>About</text>'), true);
+    strictEqual(settingsHandlerContent.includes('function pfsensePackage[__WORKSPACE_IDENTIFIER__]Tabs(string $active): array'), true);
+    strictEqual(settingsPageContent.includes('<name>Package Updates</name>'), true);
+    strictEqual(settingsPageContent.includes('<fieldname>update_check_frequency</fieldname>'), true);
+    strictEqual(settingsPageContent.includes('<default_value>[__PFSENSE_UPDATE_DEFAULT_FREQUENCY__]</default_value>'), true);
+    strictEqual(settingsPageContent.includes('<description>[__PFSENSE_UPDATE_SETTINGS_DESCRIPTION__]</description>'), true);
+    strictEqual(settingsPageContent.includes('<fieldname>update_remote_notifications</fieldname>'), true);
+    strictEqual(settingsPageContent.includes('<custom_php_deinstall_command>'), true);
+    strictEqual(settingsHandlerContent.includes('PackagePaths::UPDATE_CHECK_COMMAND'), true);
+    strictEqual(settingsHandlerContent.includes('UpdateManager::stableCronSchedule($storedSchedule)'), true);
+    strictEqual(settingsHandlerContent.includes('$frequency === \'never\''), true);
+    strictEqual(settingsHandlerContent.includes('close_notice(UpdateManager::NOTICE_ID)'), true);
+    strictEqual(aboutPageContent.includes('simplexml_'), false);
+    strictEqual(aboutPageContent.includes('$installedPackageVersion = UpdateManager::installedVersion()'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'Unknown\')'), true);
+    strictEqual(aboutPageContent.includes('$packageDataPath = \'/usr/local/share/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]\''), true);
+    strictEqual(aboutPageContent.includes('display_top_tabs(pfsensePackage[__WORKSPACE_IDENTIFIER__]Tabs(\'about\'))'), true);
+    strictEqual(aboutPageContent.includes('$projectRepository = \'[__PROJECT_REPOSITORY__]\''), true);
+    strictEqual(aboutPageContent.includes('rtrim($projectRepository, \'/\') . \'/releases\''), true);
+    strictEqual(aboutPageContent.includes('$fundSources = [__PROJECT_FUND_SOURCES__]'), true);
+    strictEqual(aboutPageContent.includes('// List each pfSense release here after testing the package on it.'), true);
+    strictEqual(aboutPageContent.includes('class="pkg-about-hero"'), true);
+    strictEqual(aboutPageContent.includes('class="table table-striped table-hover pkg-about-table"'), true);
+    strictEqual(aboutPageContent.includes('class="fab fa-github"'), true);
+    strictEqual(aboutPageContent.includes('class="far fa-circle"'), true);
+    strictEqual(aboutPageContent.includes('fab fa-paypal'), true);
+    strictEqual(aboutPageContent.includes('.pkg-about .btn i {'), true);
+    strictEqual(aboutPageContent.includes('.pkg-about-table i {'), true);
+    strictEqual(aboutPageContent.includes('data:image/svg+xml;base64,'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'Support the Project\')'), true);
+    strictEqual(aboutPageContent.includes('%1$s is free and open source under the %2$s. If it saves you time, you can support its development.'), true);
+    strictEqual(aboutPageContent.includes('$supportMessageTemplateEscaped = $escape($supportMessageTemplate)'), true);
+    strictEqual(aboutPageContent.includes('$supportMessage = sprintf('), true);
+    strictEqual(aboutPageContent.includes('target="_blank" rel="noopener noreferrer"'), true);
+    strictEqual(aboutPageContent.includes('$escape($packageVersion)'), true);
+    strictEqual(aboutPageContent.includes('if ($updatesAvailable):'), true);
+    strictEqual(aboutPageContent.includes('UpdateManager::queueSelfUpdate($queuedVersion)'), true);
+    strictEqual(aboutPageContent.includes('mwexec_bg(PackagePaths::SELF_UPDATE_COMMAND)'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'Check Now\')'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'Update to %1$s\')'), true);
+    strictEqual(aboutPageContent.includes('\'[__WORKSPACE_NAME__]-about.php?update_status=1\''), true);
+    strictEqual(aboutPageContent.includes('Each tested release passed install, upgrade, a representative package operation, and removal.'), true);
+    strictEqual(aboutPageContent.includes('prefix change, and removal'), false);
+    strictEqual(aboutPageContent.includes('fa fa-github'), false);
+    strictEqual(aboutPageContent.includes('fa fa-paypal'), false);
+    strictEqual(aboutPageContent.includes('fa fa-circle-o'), false);
+    strictEqual(aboutPageContent.includes('i.fa'), false);
+    strictEqual(aboutPageContent.includes('Project Links'), false);
+    strictEqual(aboutPageContent.includes('\'Homepage\''), false);
+    strictEqual(fileLockContent.includes('flock($handle, LOCK_EX | LOCK_NB)'), true);
+    strictEqual(fileLockContent.includes('fchmod('), false);
+    strictEqual(packagePathsContent.includes('UPDATE_SCHEDULE_PATH = \'installedpackages/[__PFSENSE_CONFIG_NAME__]/update_schedule\''), true);
+    strictEqual(updateManagerContent.includes('RELEASES_API = \'[__PFSENSE_UPDATE_API_URL__]\''), true);
+    strictEqual(updateManagerContent.includes('DOWNLOAD_PREFIX = \'[__PFSENSE_UPDATE_DOWNLOAD_PREFIX__]\''), true);
+    strictEqual(updateManagerContent.includes('64 * 1024 * 1024'), true);
+    strictEqual(updateManagerContent.includes('64 * 1024'), true);
+    strictEqual(updateManagerContent.includes('SSH_KEYGEN_COMMAND = \'/usr/bin/ssh-keygen\''), true);
+    strictEqual(updateManagerContent.includes('private const PKG_COMMAND = \'/usr/local/sbin/pkg\''), true);
+    strictEqual(updateManagerContent.indexOf('$this->verifyReleaseSignature(') < updateManagerContent.indexOf('$this->verifyPackageMetadata('), true);
+    strictEqual(updateManagerContent.includes([
+      '                \'add\',',
+      '                \'-f\',',
+    ].join('\n')), true);
+    strictEqual(updateManagerContent.includes('Translator'), false);
+    strictEqual(packageScriptContent.includes('case \'--check-updates\''), true);
+    strictEqual(packageScriptContent.includes('case \'--self-update\''), true);
+    strictEqual(packageScriptContent.includes('\'NOVA_PFSENSE_UPDATE_RELEASES_API\''), true);
+    strictEqual(packageScriptContent.includes('\'NOVA_PFSENSE_UPDATE_DOWNLOAD_PREFIX\''), true);
+    strictEqual(packageScriptContent.includes('SIGNING_KEYS'), false);
+    strictEqual(packageScriptContent.includes('SSH_KEYGEN'), false);
+    strictEqual(packageLogoContent.includes('<title>nova-logo-bg</title>'), true);
+    strictEqual(releaseSigningKeyContent, [
+      '# Release signing keys for pfSense-pkg-[__WORKSPACE_IDENTIFIER__].',
+      '#',
+      '# The publish workflow adds the public key of its release signing secret to the',
+      '# package it builds, so this file normally lists no key. Installed copies only',
+      '# install updates signed by a key listed in their copy of this file.',
+      '#',
+      '# To change keys, add the new "ssh-ed25519 ..." public key on its own line,',
+      '# publish one release while the old key is still the secret, then replace the',
+      '# secret with the new key.',
+      '',
+    ].join('\n'));
+    strictEqual(makefileContent.includes('MAINTAINER?=\t[__PROJECT_AUTHOR_EMAIL__]'), true);
+    strictEqual(makefileContent.includes('WWW=\t[__PROJECT_HOMEPAGE__]'), true);
+    strictEqual(makefileContent.includes(`${'$'}{PREFIX}/www/[__WORKSPACE_NAME__]-about.php`), true);
+    strictEqual(makefileContent.includes(`${'$'}{FILESDIR}${'$'}{DATADIR}/logo.svg`), true);
+    strictEqual(makefileContent.includes(`${'$'}{FILESDIR}${'$'}{DATADIR}/release-signing.pub`), true);
+    strictEqual(makefileContent.includes(`${'$'}{PREFIX}/pkg/[__WORKSPACE_NAME__]/UpdateManager.php`), true);
+    strictEqual(packagePlistContent.includes('www/[__WORKSPACE_NAME__]-about.php'), true);
+    strictEqual(packagePlistContent.includes('%%DATADIR%%/logo.svg'), true);
+    strictEqual(packagePlistContent.includes('%%DATADIR%%/release-signing.pub'), true);
+    strictEqual(packagePlistContent.includes('pkg/[__WORKSPACE_NAME__]/FileLock.php'), true);
+    strictEqual(packagePlistContent.includes('pkg/[__WORKSPACE_NAME__]/PackagePaths.php'), true);
+    strictEqual(packagePlistContent.includes('pkg/[__WORKSPACE_NAME__]/UpdateManager.php'), true);
+    strictEqual(checkPackageContent.includes('\'port/files/usr/local/www/[__WORKSPACE_NAME__]-about.php\''), true);
+    strictEqual(checkPackageContent.includes('\'port/files/usr/local/share/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]/logo.svg\''), true);
+    strictEqual(checkPackageContent.includes('\'port/files/usr/local/share/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]/release-signing.pub\''), true);
+    strictEqual(checkPackageContent.includes('\'tests/updates.php\''), true);
+    strictEqual(checkPackageContent.includes('releaseSigningKeyPattern.test(releaseSigningKeyLine)'), true);
+    strictEqual(checkPackageContent.includes('WWW=\\t[__PROJECT_HOMEPAGE__]'), true);
+    strictEqual(updateTestsContent.includes('UpdateManager::stableCronSchedule([], $randomInteger)'), true);
+    strictEqual(updateTestsContent.includes('->verifyReleaseSignature('), true);
 
     return;
   });

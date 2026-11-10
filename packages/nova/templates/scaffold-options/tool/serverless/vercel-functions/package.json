@@ -13,7 +13,9 @@
     "api/index.ts",
     "bin",
     "build",
+    "src/function",
     "src/types/api",
+    "src/types/function",
     "vercel.json"
   ],
   "bin": {
@@ -49,7 +51,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.38.0",
+    "@cbnventures/nova": "0.39.0",
     "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
     "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
     "vercel": "[__SCAFFOLD_VERSION_VERCEL__]"

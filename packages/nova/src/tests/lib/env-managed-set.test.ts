@@ -73,6 +73,7 @@ describe('libEnvManagedSet', () => {
         },
         workflows: [{
           template: 'check-sponsor-gated-issues',
+          runsOn: 'ubuntu-24.04',
           name: 'sponsor',
           triggers: ['schedule'],
         }],
@@ -145,6 +146,7 @@ describe('libEnvManagedSet', () => {
         },
         workflows: [{
           template: 'publish',
+          runsOn: 'ubuntu-24.04',
           name: 'release',
           triggers: ['push'],
           deploy: [{
@@ -186,6 +188,7 @@ describe('libEnvManagedSet', () => {
         },
         workflows: [{
           template: 'publish',
+          runsOn: 'ubuntu-24.04',
           name: 'release',
           triggers: ['push'],
           deploy: [{
@@ -196,6 +199,36 @@ describe('libEnvManagedSet', () => {
       }),
       [{
         name: 'G_NPM_TOKEN',
+        secret: true,
+        kind: 'deploy-cred',
+        optional: true,
+      }],
+    );
+
+    return;
+  });
+
+  it('marks the pfSense release signing key as an optional app deploy cred', () => {
+    deepStrictEqual(
+      libEnvManagedSet.compute({
+        environment: {
+          workspaces: {
+            './packages/firewall': { prefix: 'PFSENSE_' },
+          },
+        },
+        workflows: [{
+          template: 'publish',
+          runsOn: 'ubuntu-24.04',
+          name: 'release',
+          triggers: ['release'],
+          deploy: [{
+            to: 'pfsense',
+            path: './packages/firewall',
+          }],
+        }],
+      }),
+      [{
+        name: 'PFSENSE_RELEASE_SIGNING_KEY',
         secret: true,
         kind: 'deploy-cred',
         optional: true,

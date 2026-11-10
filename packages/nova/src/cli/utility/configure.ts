@@ -4,6 +4,10 @@ import { join, relative, sep } from 'node:path';
 import chalk from 'chalk';
 import prompts from 'prompts';
 
+import {
+  GITHUB_RUNNER_IMAGES_README_URL,
+  Runner as GithubRunnerImages,
+} from '../../api/github-runner-images.js';
 import { libEnvGithub } from '../../lib/env-github.js';
 import { libEnvManagedSet } from '../../lib/env-managed-set.js';
 import { libEnvNamespace } from '../../lib/env-namespace.js';
@@ -42,7 +46,10 @@ import {
   resolveTemplatePath,
 } from '../../lib/utility.js';
 import { Runner as LibVersionStrategyMigration } from '../../lib/version-strategy-migration.js';
-import { libWorkflowTemplatesMetadata } from '../../lib/workflow-templates.js';
+import {
+  libWorkflowStepKinds,
+  libWorkflowTemplatesMetadata,
+} from '../../lib/workflow-templates.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -76,6 +83,9 @@ import type {
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Returns,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Value,
+  Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Returns,
+  Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Value,
   Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Returns,
   Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Trimmed,
   Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Value,
@@ -105,6 +115,15 @@ import type {
   Cli_Utility_Configure_Runner_IsStringRecordInput_Returns,
   Cli_Utility_Configure_Runner_IsStringRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_IsStringRecordInput_Value,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Entries,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryKind,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryValue,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_IsKnownKind,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Parsed,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Returns,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_TypedEntry,
+  Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Value,
   Cli_Utility_Configure_Runner_NormalizeEmail_Returns,
   Cli_Utility_Configure_Runner_NormalizeEmail_TrimmedValue,
   Cli_Utility_Configure_Runner_NormalizeEmail_Value,
@@ -990,8 +1009,11 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetIsContainer,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetMetadata,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetWorkspace,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Branches,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildTimeoutMinutesRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildWorkspaceKeys,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CompositeKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Config,
@@ -1018,10 +1040,13 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingBuildTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingRunsOn,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingScopes,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingStepTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargets,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes,
@@ -1046,6 +1071,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_MergedVariables,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Mode,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_PaidSuffix,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Parts,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Paths,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ProfilesEnabled,
@@ -1058,6 +1084,9 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutput,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoices,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerImages,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerInitialIndex,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScheduleVariants,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeCandidates,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoices,
@@ -1065,15 +1094,19 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableRunnerLabels,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableTargetTypes,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedBuildTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedEnvironmentSelection,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedStepTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetMetadata,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetNeeds,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargets,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTemplate,
@@ -1085,6 +1118,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SettingsOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SettingsOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SettingValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_StepTimeoutMinutesRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutput,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResult,
@@ -1105,6 +1139,8 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathMetadata,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathWorkspace,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntries,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralInitial,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralKey,
@@ -1120,6 +1156,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTimeoutMinutesRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEdit,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEditExistingNeeds,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToRemoveIndex,
@@ -1143,6 +1180,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkspaceKeys,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateChoices,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateInitialIndex,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateOutput,
@@ -1560,6 +1598,32 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Is Environment Prefix Input.
+   *
+   * Validates the one-word namespace format shared by config loading and
+   * scaffolding. Prefix prompts use it before mutating the working config.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Returns}
+   *
+   * @since 0.39.0
+   */
+  public static isEnvironmentPrefixInput(value: Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Value): Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsEnvironmentPrefixInput_Trimmed = value.trim();
+
+    if (libEnvNamespace.isValidPrefix(trimmed) === false) {
+      return 'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").';
+    }
+
+    return true;
+  }
+
+  /**
    * CLI - Utility - Configure - Is Ignore File Path Input.
    *
    * Validates project-relative physical ignore-file paths against the same
@@ -1674,6 +1738,64 @@ export class Runner {
       || `${parsed}` !== trimmed
     ) {
       return 'Enter a whole number from 1 through 360, or leave the field blank.';
+    }
+
+    return true;
+  }
+
+  /**
+   * CLI - Utility - Configure - Is Workflow Step Timeout Input.
+   *
+   * Accepts a blank value or a compact JSON object whose keys are supported
+   * workflow step kinds and whose values are whole minutes from 1 through 360.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Returns}
+   *
+   * @since 0.39.0
+   */
+  public static isWorkflowStepTimeoutInput(value: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Value): Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a JSON object keyed by a supported step kind, or leave the field blank.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return true;
+    }
+
+    try {
+      const parsed: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Parsed = JSON.parse(trimmed);
+
+      if (isPlainObject(parsed) === false) {
+        return 'Enter a JSON object keyed by a supported step kind.';
+      }
+
+      const entries: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_Entries = Object.entries(parsed);
+
+      for (const entry of entries) {
+        const typedEntry: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_TypedEntry = entry;
+        const entryKind: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryKind = typedEntry[0];
+        const entryValue: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_EntryValue = typedEntry[1];
+        const isKnownKind: Cli_Utility_Configure_Runner_IsWorkflowStepTimeoutInput_IsKnownKind = libWorkflowStepKinds.some((stepKind) => stepKind === entryKind);
+
+        if (isKnownKind === false) {
+          return `Unknown step kind "${entryKind}". Allowed kinds: ${libWorkflowStepKinds.join(', ')}.`;
+        }
+
+        if (
+          typeof entryValue !== 'number'
+          || Number.isInteger(entryValue) === false
+          || entryValue < 1
+          || entryValue > 360
+        ) {
+          return `Enter a whole number from 1 through 360 for "${entryKind}".`;
+        }
+      }
+    } catch {
+      return 'Enter valid JSON, for example {"install":10,"deploy":15}.';
     }
 
     return true;
@@ -6526,9 +6648,52 @@ export class Runner {
    * @since 0.26.0
    */
   private static async promptWorkflowsForm(workflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Workflow, mode: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Mode, workflows: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Workflows, config: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Config): Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns {
+    const runnerImages: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerImages = await GithubRunnerImages.fetchRunnerImages();
+
+    if (runnerImages === undefined) {
+      Logger.customize({
+        name: 'Runner.promptWorkflowsForm',
+        purpose: 'runners',
+      }).error(`Could not read GitHub's runner list from ${GITHUB_RUNNER_IMAGES_README_URL}.`);
+
+      return {
+        action: 'back',
+      };
+    }
+
+    const selectableRunnerLabels: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableRunnerLabels = GithubRunnerImages.selectableLabels(runnerImages);
+    const existingRunsOn: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingRunsOn = (workflow !== undefined && typeof workflow['runsOn'] === 'string') ? workflow['runsOn'] : '';
+    const runnerChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerChoices = selectableRunnerLabels.map((entry) => {
+      const paidSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_PaidSuffix = (entry['paid'] === true) ? ' (paid)' : '';
+
+      return {
+        title: `${entry['label']}${paidSuffix}`,
+        description: `${entry['imageName']}, ${entry['architecture']}`,
+        value: entry['label'],
+      };
+    });
+    let runnerInitialIndex: Cli_Utility_Configure_Runner_PromptWorkflowsForm_RunnerInitialIndex = selectableRunnerLabels.findIndex((entry) => entry['label'] === existingRunsOn);
+
+    if (runnerInitialIndex === -1) {
+      runnerInitialIndex = selectableRunnerLabels.findIndex((entry) => entry['label'].startsWith('ubuntu-') === true && entry['architecture'] === 'x64');
+    }
+
+    if (runnerInitialIndex === -1) {
+      Logger.customize({
+        name: 'Runner.promptWorkflowsForm',
+        purpose: 'runners',
+      }).error('GitHub\'s runner list does not contain an available pinned Ubuntu x64 label.');
+
+      return {
+        action: 'back',
+      };
+    }
+
     const existingTemplate: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
     const existingSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = (workflow !== undefined && typeof workflow['name'] === 'string') ? workflow['name'] : '';
     const existingTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = (workflow !== undefined && typeof workflow['timeoutMinutes'] === 'number') ? workflow['timeoutMinutes'] : undefined;
+    const existingBuildTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingBuildTimeoutMinutes = (workflow !== undefined && typeof workflow['buildTimeoutMinutes'] === 'number') ? workflow['buildTimeoutMinutes'] : undefined;
+    const existingStepTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingStepTimeoutMinutes = (workflow !== undefined) ? workflow['stepTimeoutMinutes'] : undefined;
     const existingEnvironmentSelection: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingEnvironmentSelection = (workflow !== undefined) ? workflow['environmentSelection'] : undefined;
     const existingContainerPlatforms: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms = (
       workflow !== undefined
@@ -6638,11 +6803,8 @@ export class Runner {
         type: 'select',
         name: 'runsOn',
         message: 'GitHub-hosted runner',
-        choices: [{
-          title: 'ubuntu-latest',
-          value: 'ubuntu-latest',
-        }],
-        initial: 0,
+        choices: runnerChoices,
+        initial: runnerInitialIndex,
       },
       {
         type: 'text',
@@ -6650,6 +6812,20 @@ export class Runner {
         message: 'Job timeout in minutes (1-360; blank keeps template defaults)',
         initial: (existingTimeoutMinutes === undefined) ? '' : `${existingTimeoutMinutes}`,
         validate: Runner['isOptionalWorkflowTimeoutInput'],
+      },
+      ...((selectedTemplate === 'publish') ? [{
+        type: 'text' as const,
+        name: 'buildTimeoutMinutes' as const,
+        message: 'Publish build job timeout in minutes (1-360; blank inherits the workflow timeout)',
+        initial: (existingBuildTimeoutMinutes === undefined) ? '' : `${existingBuildTimeoutMinutes}`,
+        validate: Runner['isOptionalWorkflowTimeoutInput'],
+      }] : []),
+      {
+        type: 'text',
+        name: 'stepTimeoutMinutes' as const,
+        message: `Step timeouts as JSON (${libWorkflowStepKinds.join(', ')}; blank keeps defaults)`,
+        initial: (existingStepTimeoutMinutes === undefined) ? '' : JSON.stringify(existingStepTimeoutMinutes),
+        validate: Runner['isWorkflowStepTimeoutInput'],
       },
     ]);
 
@@ -6660,9 +6836,13 @@ export class Runner {
     }
 
     const executionOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue = executionOutput['result'];
-    const selectedRunsOn: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn = (executionOutputResultValue.runsOn === 'ubuntu-latest') ? executionOutputResultValue.runsOn : 'ubuntu-latest';
+    const selectedRunsOn: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn = executionOutputResultValue['runsOn'];
     const timeoutMinutesRaw: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TimeoutMinutesRaw = (typeof executionOutputResultValue.timeoutMinutes === 'string') ? executionOutputResultValue.timeoutMinutes.trim() : '';
     const selectedTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTimeoutMinutes = (timeoutMinutesRaw === '') ? undefined : Number.parseInt(timeoutMinutesRaw, 10);
+    const buildTimeoutMinutesRaw: Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildTimeoutMinutesRaw = (typeof executionOutputResultValue.buildTimeoutMinutes === 'string') ? executionOutputResultValue.buildTimeoutMinutes.trim() : '';
+    const selectedBuildTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedBuildTimeoutMinutes = (buildTimeoutMinutesRaw === '') ? undefined : Number.parseInt(buildTimeoutMinutesRaw, 10);
+    const stepTimeoutMinutesRaw: Cli_Utility_Configure_Runner_PromptWorkflowsForm_StepTimeoutMinutesRaw = (typeof executionOutputResultValue.stepTimeoutMinutes === 'string') ? executionOutputResultValue.stepTimeoutMinutes.trim() : '';
+    const selectedStepTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedStepTimeoutMinutes = (stepTimeoutMinutesRaw === '') ? undefined : JSON.parse(stepTimeoutMinutesRaw) as Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedStepTimeoutMinutes;
 
     // Discover available triggers from the template's triggers/ folder.
     const triggersDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDir = join(resolveTemplatePath(import.meta.url, 'generators/github/workflows'), selectedTemplate, 'triggers');
@@ -6839,7 +7019,35 @@ export class Runner {
       )
       || selectedTargets.length > 0
     ) {
-      const availableTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = (matchedMetadata !== undefined) ? Object.keys(matchedMetadata['targets'] ?? {}) : [];
+      const availableTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = (matchedMetadata !== undefined) ? Object.keys(matchedMetadata['targets'] ?? {}).filter((availableTargetType) => {
+        const availableTargetMetadata: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetMetadata = (matchedMetadata['targets'] !== undefined) ? matchedMetadata['targets'][availableTargetType] : undefined;
+
+        if (
+          availableTargetMetadata === undefined
+          || (
+            availableTargetMetadata['workspaceRole'] === undefined
+            && availableTargetMetadata['workspaceNamePrefix'] === undefined
+          )
+        ) {
+          return true;
+        }
+
+        return workspaceKeys.some((workspaceKey) => {
+          const availableTargetWorkspace: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetWorkspace = (config['workspaces'] !== undefined) ? config['workspaces'][workspaceKey] : undefined;
+
+          return (
+            availableTargetWorkspace !== undefined
+            && (
+              availableTargetMetadata['workspaceRole'] === undefined
+              || availableTargetWorkspace['role'] === availableTargetMetadata['workspaceRole']
+            )
+            && (
+              availableTargetMetadata['workspaceNamePrefix'] === undefined
+              || availableTargetWorkspace['name'].startsWith(availableTargetMetadata['workspaceNamePrefix']) === true
+            )
+          );
+        });
+      }) : [];
       const existingTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes = selectedTargets.map((target) => target['to']);
       const hasContainerTargetInAnotherWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetInAnotherWorkflow = workflows.some((candidate) => {
         if (candidate === workflow || Array.isArray(candidate['deploy']) === false) {
@@ -7000,8 +7208,29 @@ export class Runner {
           let selectedTargetWorkingDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = './';
 
           if (isContainerTarget === false) {
-            const targetWorkingDirInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = (targetToEdit !== undefined) ? workspaceKeys.indexOf(targetToEdit['path']) : 0;
-            const targetWorkingDirChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = workspaceKeys.map((workspaceKey) => ({
+            const targetPathMetadata: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathMetadata = (
+              matchedMetadata !== undefined
+              && matchedMetadata['targets'] !== undefined
+            ) ? matchedMetadata['targets'][selectedTargetType] : undefined;
+            const targetWorkspaceKeys: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkspaceKeys = workspaceKeys.filter((workspaceKey) => {
+              const targetPathWorkspace: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetPathWorkspace = (config['workspaces'] !== undefined) ? config['workspaces'][workspaceKey] : undefined;
+
+              return (
+                targetPathWorkspace !== undefined
+                && (
+                  targetPathMetadata === undefined
+                  || targetPathMetadata['workspaceRole'] === undefined
+                  || targetPathWorkspace['role'] === targetPathMetadata['workspaceRole']
+                )
+                && (
+                  targetPathMetadata === undefined
+                  || targetPathMetadata['workspaceNamePrefix'] === undefined
+                  || targetPathWorkspace['name'].startsWith(targetPathMetadata['workspaceNamePrefix']) === true
+                )
+              );
+            });
+            const targetWorkingDirInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = (targetToEdit !== undefined) ? targetWorkspaceKeys.indexOf(targetToEdit['path']) : 0;
+            const targetWorkingDirChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = targetWorkspaceKeys.map((workspaceKey) => ({
               title: workspaceKey,
               value: workspaceKey,
             }));
@@ -7083,18 +7312,29 @@ export class Runner {
             selectedTargetNeeds = (Array.isArray(targetNeedsOutputResultValue.targetNeeds) === true && targetNeedsOutputResultValue.targetNeeds.length > 0) ? targetNeedsOutputResultValue.targetNeeds : undefined;
           }
 
-          const targetSettingsOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult>({
-            type: 'text',
-            name: 'targetSettings',
-            message: 'Target settings as a JSON object (blank unsets)',
-            initial: (targetToEdit !== undefined && targetToEdit['with'] !== undefined) ? JSON.stringify(targetToEdit['with']) : '',
-            validate: Runner['isStringRecordInput'],
-          });
+          const targetSettingsOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult>([
+            {
+              type: 'text',
+              name: 'targetTimeoutMinutes',
+              message: 'Target job timeout in minutes (1-360; blank inherits the workflow timeout)',
+              initial: (targetToEdit !== undefined && targetToEdit['timeoutMinutes'] !== undefined) ? `${targetToEdit['timeoutMinutes']}` : '',
+              validate: Runner['isOptionalWorkflowTimeoutInput'],
+            },
+            {
+              type: 'text',
+              name: 'targetSettings',
+              message: 'Target settings as a JSON object (blank unsets)',
+              initial: (targetToEdit !== undefined && targetToEdit['with'] !== undefined) ? JSON.stringify(targetToEdit['with']) : '',
+              validate: Runner['isStringRecordInput'],
+            },
+          ]);
 
           if (targetSettingsOutput['cancelled'] === true) {
             continue;
           }
 
+          const targetTimeoutMinutesRaw: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTimeoutMinutesRaw = (typeof targetSettingsOutput['result'].targetTimeoutMinutes === 'string') ? targetSettingsOutput['result'].targetTimeoutMinutes.trim() : '';
+          const selectedTargetTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetTimeoutMinutes = (targetTimeoutMinutesRaw === '') ? undefined : Number.parseInt(targetTimeoutMinutesRaw, 10);
           const targetSettings: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings = Runner.parseStringRecordInput(targetSettingsOutput['result'].targetSettings);
           const selectedTargetMetadata: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetMetadata = (matchedMetadata === undefined || matchedMetadata['targets'] === undefined) ? undefined : matchedMetadata['targets'][selectedTargetType];
           const targetRequiredLiterals: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiterals = (selectedTargetMetadata === undefined || selectedTargetMetadata['requiredLiterals'] === undefined) ? {} : selectedTargetMetadata['requiredLiterals'];
@@ -7137,6 +7377,10 @@ export class Runner {
             to: selectedTargetType,
             path: selectedTargetWorkingDir,
           };
+
+          if (selectedTargetTimeoutMinutes !== undefined) {
+            Reflect.set(newTarget, 'timeoutMinutes', selectedTargetTimeoutMinutes);
+          }
 
           if (selectedTargetNeeds !== undefined) {
             Reflect.set(newTarget, 'after', selectedTargetNeeds);
@@ -7480,7 +7724,8 @@ export class Runner {
     Object.assign(settings, reviewedSettings);
 
     // Build the resolved workflow (locked field order: template, name,
-    // triggers, runsOn, timeoutMinutes, environmentSelection, containerPlatforms, build, deploy, with).
+    // triggers, runsOn, timeoutMinutes, buildTimeoutMinutes, stepTimeoutMinutes,
+    // environmentSelection, containerPlatforms, build, deploy, with).
     const resolvedWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow = {
       template: selectedTemplate,
       name: selectedSuffix,
@@ -7491,6 +7736,16 @@ export class Runner {
     // Workflow - Timeout Minutes.
     if (selectedTimeoutMinutes !== undefined) {
       Reflect.set(resolvedWorkflow, 'timeoutMinutes', selectedTimeoutMinutes);
+    }
+
+    // Workflow - Build Timeout Minutes.
+    if (selectedBuildTimeoutMinutes !== undefined) {
+      Reflect.set(resolvedWorkflow, 'buildTimeoutMinutes', selectedBuildTimeoutMinutes);
+    }
+
+    // Workflow - Step Timeout Minutes.
+    if (selectedStepTimeoutMinutes !== undefined) {
+      Reflect.set(resolvedWorkflow, 'stepTimeoutMinutes', selectedStepTimeoutMinutes);
     }
 
     // Workflow - Environment Selection.
@@ -8336,8 +8591,15 @@ export class Runner {
     const prefixOutput: Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputValue>({
       type: 'text',
       name: 'prefix',
-      message: `Prefix for workflow "${workflowName}" (blank removes it)`,
+      message: `Prefix for workflow "${workflowName}" (e.g. "CBN_", blank removes it):`,
       initial: (existing !== undefined) ? existing['prefix'] : '',
+      validate: (value) => {
+        if (typeof value === 'string' && value.trim() === '') {
+          return true;
+        }
+
+        return Runner.isEnvironmentPrefixInput(value);
+      },
     });
 
     if (prefixOutput['cancelled'] === true) {
@@ -8348,6 +8610,24 @@ export class Runner {
 
     if (prefix === '') {
       Reflect.deleteProperty(workflows, workflowName);
+    } else if (libEnvNamespace.isValidPrefix(prefix) === false) {
+      Logger.customize({
+        name: 'Runner.promptEnvironmentWorkflow',
+        purpose: 'prefixFormat',
+        padTop: 1,
+        padBottom: 1,
+      }).error('Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").');
+
+      return 'back';
+    } else if (libEnvNamespace.isReservedPrefix(prefix) === true) {
+      Logger.customize({
+        name: 'Runner.promptEnvironmentWorkflow',
+        purpose: 'reservedPrefix',
+        padTop: 1,
+        padBottom: 1,
+      }).error(`The prefix "${prefix}" is reserved by GitHub. Choose a prefix that does not start with "GITHUB_".`);
+
+      return 'back';
     } else {
       Reflect.set(workflows, workflowName, { prefix });
     }
@@ -8746,16 +9026,27 @@ export class Runner {
           name: 'prefix',
           message: 'GitHub name prefix (e.g. "CBN_"):',
           initial: prefix,
-          validate: Runner['isNonEmptyLiteralInput'],
+          validate: Runner['isEnvironmentPrefixInput'],
         });
 
         if (prefixOutput['cancelled'] === true) {
           continue;
         }
 
-        const prefixInput: Cli_Utility_Configure_Runner_PromptEnvironmentScope_PrefixInput = prefixOutput['result'].prefix.trim().toUpperCase();
+        const prefixInput: Cli_Utility_Configure_Runner_PromptEnvironmentScope_PrefixInput = prefixOutput['result'].prefix.trim();
 
         if (prefixInput === '') {
+          continue;
+        }
+
+        if (libEnvNamespace.isValidPrefix(prefixInput) === false) {
+          Logger.customize({
+            name: 'Runner.promptEnvironmentScope',
+            purpose: 'prefixFormat',
+            padTop: 1,
+            padBottom: 1,
+          }).error('Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").');
+
           continue;
         }
 

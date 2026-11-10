@@ -98,6 +98,50 @@ export type Shared_ChangelogEntry = {
 };
 
 /**
+ * Shared - Changelog Fold Action.
+ *
+ * @since 0.39.0
+ */
+export type Shared_ChangelogFoldAction = 'add' | 'edit' | 'remove' | 'merge';
+
+/**
+ * Shared - Changelog Section.
+ *
+ * @since 0.39.0
+ */
+export type Shared_ChangelogSection_Header = string;
+
+export type Shared_ChangelogSection_Version = string;
+
+export type Shared_ChangelogSection_Build = number;
+
+export type Shared_ChangelogSection_Categories = Map<Shared_ChangelogEntry_Category, Shared_ChangelogEntry_Message[]>;
+
+export type Shared_ChangelogSection_Uncategorized = Shared_ChangelogEntry_Message[];
+
+export type Shared_ChangelogSection = {
+  header: Shared_ChangelogSection_Header;
+  version: Shared_ChangelogSection_Version;
+  build?: Shared_ChangelogSection_Build;
+  categories: Shared_ChangelogSection_Categories;
+  uncategorized: Shared_ChangelogSection_Uncategorized;
+};
+
+/**
+ * Shared - Changelog Document.
+ *
+ * @since 0.39.0
+ */
+export type Shared_ChangelogDocument_PackageHeading = string;
+
+export type Shared_ChangelogDocument_Sections = Shared_ChangelogSection[];
+
+export type Shared_ChangelogDocument = {
+  packageHeading: Shared_ChangelogDocument_PackageHeading;
+  sections: Shared_ChangelogDocument_Sections;
+};
+
+/**
  * Shared - Changelog Options.
  *
  * @since 0.13.0
@@ -105,6 +149,14 @@ export type Shared_ChangelogEntry = {
 export type Shared_ChangelogOptions_Record = true;
 
 export type Shared_ChangelogOptions_Release = true;
+
+export type Shared_ChangelogOptions_Fold = true;
+
+export type Shared_ChangelogOptions_Add = true;
+
+export type Shared_ChangelogOptions_Edit = true;
+
+export type Shared_ChangelogOptions_Remove = true;
 
 export type Shared_ChangelogOptions_Package = string;
 
@@ -116,14 +168,36 @@ export type Shared_ChangelogOptions_Message = string;
 
 export type Shared_ChangelogOptions_DryRun = true;
 
+export type Shared_ChangelogOptions_Version = string;
+
+export type Shared_ChangelogOptions_Entry = string;
+
+export type Shared_ChangelogOptions_Match = string;
+
+export type Shared_ChangelogOptions_MergeFrom = string;
+
+export type Shared_ChangelogOptions_UncategorizedAs = string;
+
+export type Shared_ChangelogOptions_BuildBump = boolean;
+
 export type Shared_ChangelogOptions = {
   record?: Shared_ChangelogOptions_Record;
   release?: Shared_ChangelogOptions_Release;
+  fold?: Shared_ChangelogOptions_Fold;
+  add?: Shared_ChangelogOptions_Add;
+  edit?: Shared_ChangelogOptions_Edit;
+  remove?: Shared_ChangelogOptions_Remove;
   package?: Shared_ChangelogOptions_Package;
   category?: Shared_ChangelogOptions_Category;
   bump?: Shared_ChangelogOptions_Bump;
   message?: Shared_ChangelogOptions_Message;
   dryRun?: Shared_ChangelogOptions_DryRun;
+  version?: Shared_ChangelogOptions_Version;
+  entry?: Shared_ChangelogOptions_Entry;
+  match?: Shared_ChangelogOptions_Match;
+  mergeFrom?: Shared_ChangelogOptions_MergeFrom;
+  uncategorizedAs?: Shared_ChangelogOptions_UncategorizedAs;
+  buildBump?: Shared_ChangelogOptions_BuildBump;
 };
 
 /**
@@ -473,6 +547,56 @@ export type Shared_FundPlatform = {
 export type Shared_GeneratorRunResult = 'completed' | 'cancelled';
 
 /**
+ * Shared - GitHub Runner Image.
+ *
+ * @since 0.39.0
+ */
+export type Shared_GithubRunnerImage_Name = string;
+
+export type Shared_GithubRunnerImage_Architecture = 'x64' | 'arm64';
+
+export type Shared_GithubRunnerImage_Label = string;
+
+export type Shared_GithubRunnerImage_Labels = Shared_GithubRunnerImage_Label[];
+
+export type Shared_GithubRunnerImage_Status = 'available' | 'deprecated' | 'preview';
+
+export type Shared_GithubRunnerImage = {
+  name: Shared_GithubRunnerImage_Name;
+  architecture: Shared_GithubRunnerImage_Architecture;
+  labels: Shared_GithubRunnerImage_Labels;
+  status: Shared_GithubRunnerImage_Status;
+};
+
+export type Shared_GithubRunnerImages = Shared_GithubRunnerImage[];
+
+export type Shared_GithubRunnerSelectableLabel_Label = Shared_GithubRunnerImage_Label;
+
+export type Shared_GithubRunnerSelectableLabel_Architecture = Shared_GithubRunnerImage_Architecture;
+
+export type Shared_GithubRunnerSelectableLabel_ImageName = Shared_GithubRunnerImage_Name;
+
+export type Shared_GithubRunnerSelectableLabel_Paid = boolean;
+
+export type Shared_GithubRunnerSelectableLabel = {
+  label: Shared_GithubRunnerSelectableLabel_Label;
+  architecture: Shared_GithubRunnerSelectableLabel_Architecture;
+  imageName: Shared_GithubRunnerSelectableLabel_ImageName;
+  paid: Shared_GithubRunnerSelectableLabel_Paid;
+};
+
+export type Shared_GithubRunnerSelectableLabels = Shared_GithubRunnerSelectableLabel[];
+
+export type Shared_GithubRunnerLabelInfo_Image = Shared_GithubRunnerImage;
+
+export type Shared_GithubRunnerLabelInfo_Status = Shared_GithubRunnerImage_Status;
+
+export type Shared_GithubRunnerLabelInfo = {
+  image: Shared_GithubRunnerLabelInfo_Image;
+  status: Shared_GithubRunnerLabelInfo_Status;
+};
+
+/**
  * Shared - Blueprint Permission.
  *
  * @since 0.21.0
@@ -698,11 +822,17 @@ export type Shared_BlueprintTriggers = Shared_BlueprintTrigger[];
  */
 export type Shared_BlueprintStep_Name = string;
 
+export type Shared_WorkflowStepKind = 'checkout' | 'setup' | 'install' | 'build' | 'check' | 'artifact' | 'registry' | 'deploy' | 'attest';
+
+export type Shared_BlueprintStep_Kind = Shared_WorkflowStepKind;
+
 export type Shared_BlueprintStep_Id = string;
 
 export type Shared_BlueprintStep_If = string;
 
 export type Shared_BlueprintStep_Uses = string;
+
+export type Shared_BlueprintStep_ContinueOnError = boolean;
 
 export type Shared_BlueprintStep_Env = Shared_BlueprintEnvMap;
 
@@ -720,9 +850,11 @@ export type Shared_BlueprintStep_WorkingDirectory = string;
 
 export type Shared_BlueprintStep = {
   name: Shared_BlueprintStep_Name;
+  kind: Shared_BlueprintStep_Kind;
   id?: Shared_BlueprintStep_Id;
   if?: Shared_BlueprintStep_If;
   uses?: Shared_BlueprintStep_Uses;
+  continueOnError?: Shared_BlueprintStep_ContinueOnError;
   env?: Shared_BlueprintStep_Env;
   envAfterRun?: Shared_BlueprintStep_EnvAfterRun;
   with?: Shared_BlueprintStep_With;
@@ -747,6 +879,8 @@ export type Shared_BlueprintJob_Needs = Shared_BlueprintJobNeedsEntry[];
 
 export type Shared_BlueprintJob_RunsOn = string;
 
+export type Shared_BlueprintJob_RunnerArchitecture = Shared_GithubRunnerImage_Architecture;
+
 export type Shared_BlueprintJob_TimeoutMinutes = number;
 
 export type Shared_BlueprintJob_Permissions = Shared_BlueprintPermissions;
@@ -759,6 +893,7 @@ export type Shared_BlueprintJob = {
   id: Shared_BlueprintJob_Id;
   needs?: Shared_BlueprintJob_Needs;
   runsOn: Shared_BlueprintJob_RunsOn;
+  runnerArchitecture?: Shared_BlueprintJob_RunnerArchitecture;
   timeoutMinutes: Shared_BlueprintJob_TimeoutMinutes;
   permissions?: Shared_BlueprintJob_Permissions;
   if?: Shared_BlueprintJob_If;
@@ -784,6 +919,8 @@ export type Shared_BlueprintWorkflow_Concurrency = Shared_BlueprintConcurrency;
 
 export type Shared_BlueprintWorkflow_Env = Shared_BlueprintEnvMap;
 
+export type Shared_BlueprintWorkflow_StepTimeoutMinutes = Shared_NovaConfigWorkflow_StepTimeoutMinutes;
+
 export type Shared_BlueprintWorkflow_Jobs = Shared_BlueprintJobs;
 
 export type Shared_BlueprintWorkflow = {
@@ -793,6 +930,7 @@ export type Shared_BlueprintWorkflow = {
   permissions: Shared_BlueprintWorkflow_Permissions;
   concurrency: Shared_BlueprintWorkflow_Concurrency;
   env: Shared_BlueprintWorkflow_Env;
+  stepTimeoutMinutes?: Shared_BlueprintWorkflow_StepTimeoutMinutes;
   jobs: Shared_BlueprintWorkflow_Jobs;
 };
 
@@ -1380,9 +1518,15 @@ export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTrigge
 
 export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflow_Triggers;
 
-export type Shared_NovaConfigWorkflow_RunsOn = 'ubuntu-latest';
+export type Shared_NovaConfigWorkflow_RunsOn = string;
 
 export type Shared_NovaConfigWorkflow_TimeoutMinutes = number;
+
+export type Shared_NovaConfigWorkflow_BuildTimeoutMinutes = number;
+
+export type Shared_NovaConfigWorkflowStepTimeoutMinutes = Partial<Record<Shared_WorkflowStepKind, number>>;
+
+export type Shared_NovaConfigWorkflow_StepTimeoutMinutes = Shared_NovaConfigWorkflowStepTimeoutMinutes;
 
 export type Shared_NovaConfigWorkflowEnvironmentSelectionVersionTags_Prerelease = 'staging';
 
@@ -1420,6 +1564,8 @@ export type Shared_NovaConfigWorkflowDeployTarget_Path = string;
 
 export type Shared_NovaConfigWorkflowDeployTarget_Artifact = Shared_NovaConfigArtifactName;
 
+export type Shared_NovaConfigWorkflowDeployTarget_TimeoutMinutes = number;
+
 export type Shared_NovaConfigWorkflowDeployTargetAfterEntry = string;
 
 export type Shared_NovaConfigWorkflowDeployTarget_After = Shared_NovaConfigWorkflowDeployTargetAfterEntry[];
@@ -1432,6 +1578,7 @@ export type Shared_NovaConfigWorkflowDeployTarget = {
   to: Shared_NovaConfigWorkflowDeployTarget_To;
   path: Shared_NovaConfigWorkflowDeployTarget_Path;
   artifact?: Shared_NovaConfigWorkflowDeployTarget_Artifact;
+  timeoutMinutes?: Shared_NovaConfigWorkflowDeployTarget_TimeoutMinutes;
   after?: Shared_NovaConfigWorkflowDeployTarget_After;
   with?: Shared_NovaConfigWorkflowDeployTarget_With;
 };
@@ -1448,6 +1595,8 @@ export type Shared_NovaConfigWorkflow = {
   'triggers': Shared_NovaConfigWorkflow_Triggers;
   'runsOn'?: Shared_NovaConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_NovaConfigWorkflow_TimeoutMinutes;
+  'buildTimeoutMinutes'?: Shared_NovaConfigWorkflow_BuildTimeoutMinutes;
+  'stepTimeoutMinutes'?: Shared_NovaConfigWorkflow_StepTimeoutMinutes;
   'environmentSelection'?: Shared_NovaConfigWorkflowEnvironmentSelection;
   'containerPlatforms'?: Shared_NovaConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_NovaConfigWorkflow_Build;
@@ -1614,6 +1763,10 @@ export type Shared_BlueprintConfigWorkflow_RunsOn = Shared_NovaConfigWorkflow_Ru
 
 export type Shared_BlueprintConfigWorkflow_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes;
 
+export type Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes = Shared_NovaConfigWorkflow_BuildTimeoutMinutes;
+
+export type Shared_BlueprintConfigWorkflow_StepTimeoutMinutes = Shared_NovaConfigWorkflow_StepTimeoutMinutes;
+
 export type Shared_BlueprintConfigWorkflow_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection;
 
 export type Shared_BlueprintConfigWorkflow_ContainerPlatforms = Shared_NovaConfigWorkflow_ContainerPlatforms;
@@ -1626,6 +1779,8 @@ export type Shared_BlueprintConfigDeployTarget_Path = Shared_NovaConfigWorkflowD
 
 export type Shared_BlueprintConfigDeployTarget_Artifact = Shared_NovaConfigWorkflowDeployTarget_Artifact;
 
+export type Shared_BlueprintConfigDeployTarget_TimeoutMinutes = Shared_NovaConfigWorkflowDeployTarget_TimeoutMinutes;
+
 export type Shared_BlueprintConfigDeployTarget_After = Shared_NovaConfigWorkflowDeployTarget_After;
 
 export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowDeployTarget_With;
@@ -1634,6 +1789,7 @@ export type Shared_BlueprintConfigDeployTarget = {
   to: Shared_BlueprintConfigDeployTarget_To;
   path: Shared_BlueprintConfigDeployTarget_Path;
   artifact?: Shared_BlueprintConfigDeployTarget_Artifact;
+  timeoutMinutes?: Shared_BlueprintConfigDeployTarget_TimeoutMinutes;
   after?: Shared_BlueprintConfigDeployTarget_After;
   with?: Shared_BlueprintConfigDeployTarget_With;
 };
@@ -1648,6 +1804,8 @@ export type Shared_BlueprintConfigWorkflow = {
   'triggers': Shared_BlueprintConfigWorkflow_Triggers;
   'runsOn'?: Shared_BlueprintConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_BlueprintConfigWorkflow_TimeoutMinutes;
+  'buildTimeoutMinutes'?: Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes;
+  'stepTimeoutMinutes'?: Shared_BlueprintConfigWorkflow_StepTimeoutMinutes;
   'environmentSelection'?: Shared_BlueprintConfigWorkflow_EnvironmentSelection;
   'containerPlatforms'?: Shared_BlueprintConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_BlueprintConfigWorkflow_Build;
@@ -1657,7 +1815,7 @@ export type Shared_BlueprintConfigWorkflow = {
 
 export type Shared_BlueprintConfig_Workflows = Shared_BlueprintConfigWorkflow[];
 
-export type Shared_BlueprintValidationResultDiagnostic_Severity = 'error';
+export type Shared_BlueprintValidationResultDiagnostic_Severity = 'error' | 'warning';
 
 export type Shared_BlueprintValidationResultDiagnostic_Message = string;
 
@@ -1700,6 +1858,10 @@ export type Shared_BlueprintPublishTargetContext_PackageManager = Shared_Corepac
 
 export type Shared_BlueprintPublishTargetContext_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
 
+export type Shared_BlueprintPublishTargetContext_TimeoutMinutes = number;
+
+export type Shared_BlueprintPublishTargetContext_ProjectDescription = Shared_NovaConfig_Project_Description_Short;
+
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
   artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
@@ -1711,6 +1873,8 @@ export type Shared_BlueprintPublishTargetContext = {
   environment?: Shared_BlueprintPublishTargetContext_Environment;
   packageManager: Shared_BlueprintPublishTargetContext_PackageManager;
   environmentSelection?: Shared_BlueprintPublishTargetContext_EnvironmentSelection;
+  timeoutMinutes: Shared_BlueprintPublishTargetContext_TimeoutMinutes;
+  projectDescription?: Shared_BlueprintPublishTargetContext_ProjectDescription;
 };
 
 /**
@@ -2789,6 +2953,10 @@ export type Shared_WorkflowTemplateTarget_UniquenessKey = Shared_WorkflowTemplat
 
 export type Shared_WorkflowTemplateTarget_SupportsRuntimeSecretSync = boolean;
 
+export type Shared_WorkflowTemplateTarget_WorkspaceRole = Shared_NovaConfigWorkspace_Role;
+
+export type Shared_WorkflowTemplateTarget_WorkspaceNamePrefix = string;
+
 export type Shared_WorkflowTemplateTarget = {
   description: Shared_WorkflowTemplateTarget_Description;
   artifactPaths: Shared_WorkflowTemplateTarget_ArtifactPaths;
@@ -2797,6 +2965,8 @@ export type Shared_WorkflowTemplateTarget = {
   permissions: Shared_WorkflowTemplateTarget_Permissions;
   uniquenessKey?: Shared_WorkflowTemplateTarget_UniquenessKey;
   supportsRuntimeSecretSync?: Shared_WorkflowTemplateTarget_SupportsRuntimeSecretSync;
+  workspaceRole?: Shared_WorkflowTemplateTarget_WorkspaceRole;
+  workspaceNamePrefix?: Shared_WorkflowTemplateTarget_WorkspaceNamePrefix;
 };
 
 export type Shared_WorkflowTemplateTargetType = string;
@@ -2951,6 +3121,69 @@ export type Shared_IntegrationAssetTarget = {
 
 export type Shared_AppStoreConnectResource = Record<string, unknown>;
 
+export type Shared_AppStoreConnectScreenshotProcessingWaiter_FileName = string;
+
+export type Shared_AppStoreConnectScreenshotProcessingWaiter_Reject = (reason?: unknown) => void;
+
+export type Shared_AppStoreConnectScreenshotProcessingWaiter_Resolve = () => void;
+
+export type Shared_AppStoreConnectScreenshotProcessingWaiter = {
+  fileName: Shared_AppStoreConnectScreenshotProcessingWaiter_FileName;
+  reject: Shared_AppStoreConnectScreenshotProcessingWaiter_Reject;
+  resolve: Shared_AppStoreConnectScreenshotProcessingWaiter_Resolve;
+};
+
+export type Shared_AppStoreConnectTestFakeState_AssetImageCreateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_Events = string[];
+
+export type Shared_AppStoreConnectTestFakeState_Images = Shared_AppStoreConnectResource[];
+
+export type Shared_AppStoreConnectTestFakeState_LocalizationCreateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_Localizations = Shared_AppStoreConnectResource[];
+
+export type Shared_AppStoreConnectTestFakeState_MaximumPlacementCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_MaximumScreenshotCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_MinimumPlacementCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_MinimumScreenshotCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_PlacementCreateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_Placements = Shared_AppStoreConnectResource[];
+
+export type Shared_AppStoreConnectTestFakeState_RequestCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_ScreenshotCreateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_ScreenshotSetCreateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_ScreenshotSets = Shared_AppStoreConnectResource[];
+
+export type Shared_AppStoreConnectTestFakeState_Screenshots = Shared_AppStoreConnectResource[];
+
+export type Shared_AppStoreConnectTestFakeState = {
+  assetImageCreateCount: Shared_AppStoreConnectTestFakeState_AssetImageCreateCount;
+  events: Shared_AppStoreConnectTestFakeState_Events;
+  images: Shared_AppStoreConnectTestFakeState_Images;
+  localizationCreateCount: Shared_AppStoreConnectTestFakeState_LocalizationCreateCount;
+  localizations: Shared_AppStoreConnectTestFakeState_Localizations;
+  maximumPlacementCount: Shared_AppStoreConnectTestFakeState_MaximumPlacementCount;
+  maximumScreenshotCount: Shared_AppStoreConnectTestFakeState_MaximumScreenshotCount;
+  minimumPlacementCount: Shared_AppStoreConnectTestFakeState_MinimumPlacementCount;
+  minimumScreenshotCount: Shared_AppStoreConnectTestFakeState_MinimumScreenshotCount;
+  placementCreateCount: Shared_AppStoreConnectTestFakeState_PlacementCreateCount;
+  placements: Shared_AppStoreConnectTestFakeState_Placements;
+  requestCount: Shared_AppStoreConnectTestFakeState_RequestCount;
+  screenshotCreateCount: Shared_AppStoreConnectTestFakeState_ScreenshotCreateCount;
+  screenshotSetCreateCount: Shared_AppStoreConnectTestFakeState_ScreenshotSetCreateCount;
+  screenshotSets: Shared_AppStoreConnectTestFakeState_ScreenshotSets;
+  screenshots: Shared_AppStoreConnectTestFakeState_Screenshots;
+};
+
 export type Shared_AppStoreConnectCredentials_IssuerId = string;
 
 export type Shared_AppStoreConnectCredentials_KeyId = string;
@@ -2967,11 +3200,14 @@ export type Shared_AppStoreConnectRequestOptions_Body = Record<string, unknown>;
 
 export type Shared_AppStoreConnectRequestOptions_ExpectedStatuses = number[];
 
+export type Shared_AppStoreConnectRequestOptions_Idempotent = boolean;
+
 export type Shared_AppStoreConnectRequestOptions_Method = string;
 
 export type Shared_AppStoreConnectRequestOptions = {
   body?: Shared_AppStoreConnectRequestOptions_Body;
   expectedStatuses?: Shared_AppStoreConnectRequestOptions_ExpectedStatuses;
+  idempotent?: Shared_AppStoreConnectRequestOptions_Idempotent;
   method?: Shared_AppStoreConnectRequestOptions_Method;
 };
 
@@ -2989,6 +3225,8 @@ export type Shared_AppStoreConnectIntegrationOptions_NonInteractive = true;
 
 export type Shared_AppStoreConnectIntegrationOptions_Platforms = string;
 
+export type Shared_AppStoreConnectIntegrationOptions_SkipImageChecks = true;
+
 export type Shared_AppStoreConnectIntegrationOptions_Version = string;
 
 export type Shared_AppStoreConnectIntegrationOptions_Workspace = string;
@@ -3003,6 +3241,7 @@ export type Shared_AppStoreConnectIntegrationOptions = {
   locales?: Shared_AppStoreConnectIntegrationOptions_Locales;
   nonInteractive?: Shared_AppStoreConnectIntegrationOptions_NonInteractive;
   platforms?: Shared_AppStoreConnectIntegrationOptions_Platforms;
+  skipImageChecks?: Shared_AppStoreConnectIntegrationOptions_SkipImageChecks;
   version?: Shared_AppStoreConnectIntegrationOptions_Version;
   workspace?: Shared_AppStoreConnectIntegrationOptions_Workspace;
   yes?: Shared_AppStoreConnectIntegrationOptions_Yes;

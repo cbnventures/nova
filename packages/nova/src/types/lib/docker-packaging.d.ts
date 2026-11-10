@@ -66,12 +66,13 @@ export type Lib_DockerPackaging_Runner_BuildContainerPackage_InheritedValue = un
 /**
  * Lib - Docker Packaging - Runner - BuildDockerfile.
  *
- * @since 0.34.0
+ * @since 0.39.0
  */
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Template = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder = Shared_DockerPackagingWorkspacePackages;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Returns = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue = unknown;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
@@ -111,6 +112,21 @@ export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths = string[];
 export type Lib_DockerPackaging_Runner_BuildDockerfile_WritableDirectories = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssembly = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue = unknown;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_Project = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue = unknown;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue = unknown;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue = unknown;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_Urls = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense = string;
+export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Replacements = Shared_DockerPackagingStringMap;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Content = string;
 
@@ -248,6 +264,14 @@ export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_WorkspacePackage
 export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackagePath = string;
 export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackageJson = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackageName = unknown;
+
+/**
+ * Lib - Docker Packaging - Runner - Escape Docker Label.
+ *
+ * @since 0.39.0
+ */
+export type Lib_DockerPackaging_Runner_EscapeDockerLabel_Value = string;
+export type Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns = string;
 
 /**
  * Lib - Docker Packaging - Runner - GenerateForTarget.

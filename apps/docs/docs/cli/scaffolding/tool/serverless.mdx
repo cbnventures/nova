@@ -74,6 +74,28 @@ Scaffold a distributable **serverless tool** with one npm-installed command line
 
 Both targets include the same `bin/cli.mjs`, `src/program.ts`, starter `status` command, Nova-style CLI header, and CLI tests. Provider-specific source, TypeScript projects, dependencies, and scripts come only from the selected target layer.
 
+## Default Homepage
+
+Both targets serve the same self-contained service card for `GET /`, with a violet project-initial logo, the generated project name, a `Running` badge, and a primary link to the Nova documentation. When `urls.repository` is set in `nova.config.json`, the page also shows a ghost-style GitHub button that opens the escaped repository URL in a new tab. The GitHub button is omitted when no repository URL is configured. `HEAD /` returns the same status and headers without a response body.
+
+The page markup stays isolated so it can be restyled without changing request routing:
+
+| Target               | Homepage module                |
+|----------------------|--------------------------------|
+| `cloudflare-workers` | `src/worker/landing-page.ts`   |
+| `vercel-functions`   | `src/function/landing-page.ts` |
+
+Requests to paths without a page return the matching HTTP `404` status with this JSON response:
+
+```json title="404 response"
+{
+  "status": "error",
+  "message": "Not found"
+}
+```
+
+Methods other than `GET` and `HEAD` at the root return HTTP `405`, an `Allow: GET, HEAD` header, and the same JSON shape with the message `Method not allowed`.
+
 ## Non-Interactive Mode
 
 ```bash

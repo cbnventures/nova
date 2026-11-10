@@ -32,7 +32,10 @@ import {
   pathExists,
   renameFileWithDate,
 } from './utility.js';
-import { libWorkflowTemplatesMetadata } from './workflow-templates.js';
+import {
+  libWorkflowStepKinds,
+  libWorkflowTemplatesMetadata,
+} from './workflow-templates.js';
 
 import type {
   Lib_NovaConfig_Runner_Config,
@@ -418,6 +421,7 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_Artifacts,
   Lib_NovaConfig_Runner_ParseWorkflows_Build,
+  Lib_NovaConfig_Runner_ParseWorkflows_BuildTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
   Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms,
   Lib_NovaConfig_Runner_ParseWorkflows_Deploy,
@@ -425,6 +429,7 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployPath,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployTo,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployWith,
   Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection,
@@ -435,16 +440,22 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith,
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith,
   Lib_NovaConfig_Runner_ParseWorkflows_RawBuild,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawBuildTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawDeployTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
   Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection,
   Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeout,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers,
   Lib_NovaConfig_Runner_ParseWorkflows_Returns,
   Lib_NovaConfig_Runner_ParseWorkflows_RunsOn,
+  Lib_NovaConfig_Runner_ParseWorkflows_StepKind,
+  Lib_NovaConfig_Runner_ParseWorkflows_StepTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_Template,
   Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare,
   Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes,
@@ -1495,6 +1506,8 @@ export class Runner {
 
       if (projectPrefix === undefined) {
         this.pushError('Runner.parseEnvironment', 'environment', 'Environment "project" has no prefix. Skipping ...');
+      } else if (libEnvNamespace.isValidPrefix(projectPrefix) === false) {
+        this.pushError('Runner.parseEnvironment', 'environment', `Environment "project" prefix "${projectPrefix}" is invalid. Prefixes must be one uppercase word containing letters or digits, starting with a letter, followed by "_" (for example, "CBN_"). Skipping ...`);
       } else if (libEnvNamespace.isReservedPrefix(projectPrefix) === true) {
         this.pushError('Runner.parseEnvironment', 'environment', `Environment "project" prefix "${projectPrefix}" is reserved and cannot be used. Skipping ...`);
       } else {
@@ -1537,6 +1550,12 @@ export class Runner {
 
         if (workspacePrefix === undefined) {
           this.pushError('Runner.parseEnvironment', 'environment', `Environment workspace "${workspacePath}" has no prefix. Skipping ...`);
+
+          continue;
+        }
+
+        if (libEnvNamespace.isValidPrefix(workspacePrefix) === false) {
+          this.pushError('Runner.parseEnvironment', 'environment', `Environment workspace "${workspacePath}" prefix "${workspacePrefix}" is invalid. Prefixes must be one uppercase word containing letters or digits, starting with a letter, followed by "_" (for example, "CBN_"). Skipping ...`);
 
           continue;
         }
@@ -1596,6 +1615,12 @@ export class Runner {
 
         if (workflowPrefix === undefined) {
           this.pushError('Runner.parseEnvironment', 'environment', `Environment workflow "${workflowName}" has no prefix. Skipping ...`);
+
+          continue;
+        }
+
+        if (libEnvNamespace.isValidPrefix(workflowPrefix) === false) {
+          this.pushError('Runner.parseEnvironment', 'environment', `Environment workflow "${workflowName}" prefix "${workflowPrefix}" is invalid. Prefixes must be one uppercase word containing letters or digits, starting with a letter, followed by "_" (for example, "CBN_"). Skipping ...`);
 
           continue;
         }
@@ -2085,7 +2110,7 @@ export class Runner {
       }
 
       const rawRunsOn: Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn = castItem['runsOn'];
-      const runsOn: Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = (rawRunsOn === 'ubuntu-latest') ? rawRunsOn : undefined;
+      const runsOn: Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = this.getNonEmptyString(rawRunsOn);
       const rawTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = castItem['timeoutMinutes'];
       const timeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = (
         typeof rawTimeoutMinutes === 'number'
@@ -2093,6 +2118,31 @@ export class Runner {
         && rawTimeoutMinutes >= 1
         && rawTimeoutMinutes <= 360
       ) ? rawTimeoutMinutes : undefined;
+      const rawBuildTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_RawBuildTimeoutMinutes = castItem['buildTimeoutMinutes'];
+      const buildTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_BuildTimeoutMinutes = (
+        typeof rawBuildTimeoutMinutes === 'number'
+        && Number.isInteger(rawBuildTimeoutMinutes) === true
+        && rawBuildTimeoutMinutes >= 1
+        && rawBuildTimeoutMinutes <= 360
+      ) ? rawBuildTimeoutMinutes : undefined;
+      const rawStepTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeoutMinutes = castItem['stepTimeoutMinutes'];
+      const stepTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_StepTimeoutMinutes = {};
+
+      if (isPlainObject(rawStepTimeoutMinutes) === true) {
+        for (const stepKindEntry of libWorkflowStepKinds) {
+          const stepKind: Lib_NovaConfig_Runner_ParseWorkflows_StepKind = stepKindEntry;
+          const rawStepTimeout: Lib_NovaConfig_Runner_ParseWorkflows_RawStepTimeout = rawStepTimeoutMinutes[stepKind];
+
+          if (
+            typeof rawStepTimeout === 'number'
+            && Number.isInteger(rawStepTimeout) === true
+            && rawStepTimeout >= 1
+            && rawStepTimeout <= 360
+          ) {
+            Reflect.set(stepTimeoutMinutes, stepKind, rawStepTimeout);
+          }
+        }
+      }
       const rawEnvironmentSelection: Lib_NovaConfig_Runner_ParseWorkflows_RawEnvironmentSelection = castItem['environmentSelection'];
       let environmentSelection: Lib_NovaConfig_Runner_ParseWorkflows_EnvironmentSelection = undefined;
 
@@ -2132,6 +2182,13 @@ export class Runner {
           const deployTo: Lib_NovaConfig_Runner_ParseWorkflows_DeployTo = this.getNonEmptyString(rawDeployValue['to']);
           const deployPath: Lib_NovaConfig_Runner_ParseWorkflows_DeployPath = this.getNonEmptyString(rawDeployValue['path']);
           const deployArtifact: Lib_NovaConfig_Runner_ParseWorkflows_DeployArtifact = this.getNonEmptyString(rawDeployValue['artifact']);
+          const rawDeployTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_RawDeployTimeoutMinutes = rawDeployValue['timeoutMinutes'];
+          const deployTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_DeployTimeoutMinutes = (
+            typeof rawDeployTimeoutMinutes === 'number'
+            && Number.isInteger(rawDeployTimeoutMinutes) === true
+            && rawDeployTimeoutMinutes >= 1
+            && rawDeployTimeoutMinutes <= 360
+          ) ? rawDeployTimeoutMinutes : undefined;
 
           if (deployTo === undefined || deployPath === undefined) {
             continue;
@@ -2161,6 +2218,10 @@ export class Runner {
             Reflect.set(deployTarget, 'artifact', deployArtifact);
           }
 
+          if (deployTimeoutMinutes !== undefined) {
+            Reflect.set(deployTarget, 'timeoutMinutes', deployTimeoutMinutes);
+          }
+
           if (deployAfter.length > 0) {
             Reflect.set(deployTarget, 'after', deployAfter);
           }
@@ -2179,7 +2240,8 @@ export class Runner {
       const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
       // Build workflow object with properties in type-definition order: template, name, triggers,
-      // runsOn, timeoutMinutes, environmentSelection, containerPlatforms, build, deploy, with.
+      // runsOn, timeoutMinutes, buildTimeoutMinutes, stepTimeoutMinutes, environmentSelection,
+      // containerPlatforms, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
         name,
@@ -2192,6 +2254,14 @@ export class Runner {
 
       if (timeoutMinutes !== undefined) {
         Reflect.set(workflow, 'timeoutMinutes', timeoutMinutes);
+      }
+
+      if (buildTimeoutMinutes !== undefined) {
+        Reflect.set(workflow, 'buildTimeoutMinutes', buildTimeoutMinutes);
+      }
+
+      if (Object.keys(stepTimeoutMinutes).length > 0) {
+        Reflect.set(workflow, 'stepTimeoutMinutes', stepTimeoutMinutes);
       }
 
       if (environmentSelection !== undefined) {

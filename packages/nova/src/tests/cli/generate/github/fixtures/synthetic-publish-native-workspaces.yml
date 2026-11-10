@@ -33,37 +33,43 @@ env:
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
         with:
           fetch-depth: 0
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Install packages"
+        timeout-minutes: 15
         run: "npm install"
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Check project"
+        timeout-minutes: 15
         run: |
           npm run check -- --workspace sandbox-plain
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
+        timeout-minutes: 15
         run: |
           npm run build -- --workspace sandbox-plain
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Validate build artifacts"
+        timeout-minutes: 15
         run: |
           set -euo pipefail
 
@@ -156,6 +162,7 @@ jobs:
 
       - name: "Upload build artifacts (npm/packages-plain)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-plain"
           retention-days: 1
@@ -166,23 +173,26 @@ jobs:
 
   publish-npm-packages-plain:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
       id-token: "write"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 
       - name: "Remove deprecated .npmrc entries"
+        timeout-minutes: 10
         run: |
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
 
@@ -192,11 +202,13 @@ jobs:
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-npm-packages-plain"
           path: "./packages/plain/build"
 
       - name: "Configure authentication"
+        timeout-minutes: 5
         env:
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
         run: |
@@ -215,6 +227,7 @@ jobs:
           fi
 
       - name: "Publish package to npm"
+        timeout-minutes: 15
         run: |
           if [ "${PUBLISH}" = "true" ]; then
             echo "[Publish] Production."

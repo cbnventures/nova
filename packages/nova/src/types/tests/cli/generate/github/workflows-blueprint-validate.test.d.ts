@@ -31,7 +31,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_AcyclicDiamondDependsOnGraphPasses_ResultDiagnosticMessage = string;
 
@@ -58,7 +58,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_BareStringPushTriggerIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_BareStringPushTriggerIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_BareStringPushTriggerIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_BareStringPushTriggerIsFlagged_ResultDiagnosticMessage = string;
 
@@ -85,7 +85,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CircularDependsOnReferencesAreFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CircularDependsOnReferencesAreFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CircularDependsOnReferencesAreFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CircularDependsOnReferencesAreFlagged_ResultDiagnosticMessage = string;
 
@@ -112,7 +112,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_ResultDiagnosticMessage = string;
 
@@ -181,7 +181,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_ResultDiagnosticMessage = string;
 
@@ -208,7 +208,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DependsOnReferenceThatDoesNotExistIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DependsOnReferenceThatDoesNotExistIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DependsOnReferenceThatDoesNotExistIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DependsOnReferenceThatDoesNotExistIsFlagged_ResultDiagnosticMessage = string;
 
@@ -271,7 +271,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DestinationCollisionIsFlagged_ResultDiagnosticMessage = string;
 
@@ -288,6 +288,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 };
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Docker Hub Description Length Uses UTF-8 Bytes.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_OverLimitResult = Shared_BlueprintValidationResult;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DockerHubDescriptionLengthUsesUTF8Bytes_WithinLimitResult = Shared_BlueprintValidationResult;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
  *
  * @since 0.21.0
@@ -298,7 +309,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultDiagnosticMessage = string;
 
@@ -313,6 +324,51 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_DuplicateWorkflowKeyIsFlagged_ResultDiagnostics;
 };
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsADeprecatedRunnerLabel_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsADeprecatedRunnerLabel_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsALatestRunnerLabel_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsALatestRunnerLabel_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAMissingRunsOnValue_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAMissingRunsOnValue_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAnUnknownRunnerLabel_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAnUnknownRunnerLabel_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAPreviewRunnerLabel_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsAPreviewRunnerLabel_Result = Shared_BlueprintValidationResult;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_FlagsDeploymentEnvironmentSelectionWithoutProfiles_Workspaces = Shared_NovaConfig_Workspaces;
 
@@ -333,7 +389,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionDestinationCollisionIsFlagged_ResultDiagnosticMessage = string;
 
@@ -360,7 +416,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_ResultDiagnosticMessage = string;
 
@@ -398,7 +454,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_ResultDiagnosticMessage = string;
 
@@ -425,7 +481,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingSuffixIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingSuffixIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingSuffixIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingSuffixIsFlagged_ResultDiagnosticMessage = string;
 
@@ -452,7 +508,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_ResultDiagnosticMessage = string;
 
@@ -488,7 +544,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_ResultDiagnosticMessage = string;
 
@@ -505,6 +561,23 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 };
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - PfSense Workspace.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_Result = Shared_BlueprintValidationResult;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_ValidWorkspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_ValidRawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_ValidResult = Shared_BlueprintValidationResult;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
  *
  * @since 0.21.0
@@ -515,7 +588,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerObjectWithoutBranchesIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerObjectWithoutBranchesIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerObjectWithoutBranchesIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerObjectWithoutBranchesIsFlagged_ResultDiagnosticMessage = string;
 
@@ -542,7 +615,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithAnEmptyBranchesArrayIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithAnEmptyBranchesArrayIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithAnEmptyBranchesArrayIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithAnEmptyBranchesArrayIsFlagged_ResultDiagnosticMessage = string;
 
@@ -569,7 +642,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultDiagnosticMessage = string;
 
@@ -584,6 +657,15 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultDiagnostics;
 };
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RequiresAnAvailableRunnerLabelForEachContainerPlatform_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RequiresAnAvailableRunnerLabelForEachContainerPlatform_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
@@ -605,7 +687,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_ResultDiagnosticMessage = string;
 
@@ -632,7 +714,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetCollisionIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetCollisionIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetCollisionIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetCollisionIsFlagged_ResultDiagnosticMessage = string;
 
@@ -659,7 +741,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetViolationIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetViolationIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetViolationIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_SingletonTargetViolationIsFlagged_ResultDiagnosticMessage = string;
 
@@ -686,7 +768,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerOnAnIssueTemplateIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerOnAnIssueTemplateIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerOnAnIssueTemplateIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerOnAnIssueTemplateIsFlagged_ResultDiagnosticMessage = string;
 
@@ -713,7 +795,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerWithInvalidTagsIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerWithInvalidTagsIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerWithInvalidTagsIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TagPushTriggerWithInvalidTagsIsFlagged_ResultDiagnosticMessage = string;
 
@@ -740,7 +822,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TargetTypeNotBuildableIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TargetTypeNotBuildableIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TargetTypeNotBuildableIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TargetTypeNotBuildableIsFlagged_ResultDiagnosticMessage = string;
 
@@ -767,7 +849,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_TriggerNotValidForTemplateIsFlagged_ResultDiagnosticMessage = string;
 
@@ -805,7 +887,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnknownTemplateIsFlagged_ResultDiagnosticMessage = string;
 
@@ -832,7 +914,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredScopeIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredScopeIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredScopeIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredScopeIsFlagged_ResultDiagnosticMessage = string;
 
@@ -859,7 +941,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultDiagnosticMessage = string;
 
@@ -874,6 +956,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_UnregisteredWorkingDirIsFlagged_ResultDiagnostics;
 };
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Warns When Step Timeouts Are Clamped.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WarnsWhenStepTimeoutsAreClamped_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WarnsWhenStepTimeoutsAreClamped_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WarnsWhenStepTimeoutsAreClamped_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
@@ -931,7 +1024,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithAValidDependsOnPasses_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithAValidDependsOnPasses_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithAValidDependsOnPasses_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithAValidDependsOnPasses_ResultDiagnosticMessage = string;
 
@@ -958,7 +1051,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithoutDependsOnIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithoutDependsOnIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithoutDependsOnIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkflowRunTriggerWithoutDependsOnIsFlagged_ResultDiagnosticMessage = string;
 
@@ -989,7 +1082,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkspaceDotenvMigrationHintIsFlagged_ResultWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkspaceDotenvMigrationHintIsFlagged_ResultDiagnosticSeverity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkspaceDotenvMigrationHintIsFlagged_ResultDiagnosticSeverity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_WorkspaceDotenvMigrationHintIsFlagged_ResultDiagnosticMessage = string;
 

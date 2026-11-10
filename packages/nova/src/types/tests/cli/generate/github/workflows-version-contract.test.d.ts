@@ -14,7 +14,7 @@ export type Tests_Cli_Generate_Github_WorkflowsVersionContract_RawWorkflows = un
 
 export type Tests_Cli_Generate_Github_WorkflowsVersionContract_SemverResult_Workflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsVersionContract_SemverResult_Diagnostic_Severity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsVersionContract_SemverResult_Diagnostic_Severity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsVersionContract_SemverResult_Diagnostic_Message = string;
 
@@ -32,7 +32,7 @@ export type Tests_Cli_Generate_Github_WorkflowsVersionContract_SemverResult = {
 
 export type Tests_Cli_Generate_Github_WorkflowsVersionContract_CalverResult_Workflows = Shared_BlueprintConfigWorkflow[];
 
-export type Tests_Cli_Generate_Github_WorkflowsVersionContract_CalverResult_Diagnostic_Severity = 'error';
+export type Tests_Cli_Generate_Github_WorkflowsVersionContract_CalverResult_Diagnostic_Severity = 'error' | 'warning';
 
 export type Tests_Cli_Generate_Github_WorkflowsVersionContract_CalverResult_Diagnostic_Message = string;
 

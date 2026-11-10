@@ -57,6 +57,8 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Crea
 
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_PackageJson = string;
 
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_VercelConfig = string;
+
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_WranglerExists = boolean;
 
 /**
@@ -76,6 +78,25 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Reje
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ResolvesTheTargetInteractivelyBeforeConfirmingTheScaffold_OutputPath = string;
 
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ResolvesTheTargetInteractivelyBeforeConfirmingTheScaffold_ApiSource = string;
+
+/**
+ * Tests - CLI - Scaffold - Tool - Serverless - Run - Uses The Configured Repository On The Homepage.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_ProjectDirectory = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJson = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJsonPath = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfig = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfigPath = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_IndexSource = string;
+
+export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_LandingPageSource = string;
 
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Validates Dry Run Without Writing.

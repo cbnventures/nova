@@ -167,7 +167,20 @@ async function writeProject(projectDirectory: Tests_Lib_DockerPackaging_WritePro
         slug: 'fixture',
         title: 'Fixture',
       },
+      description: {
+        short: [
+          'Fixture\'s "$HOME"',
+          'image',
+        ].join('\n'),
+      },
+      legalName: 'Fixture Vendor',
+      license: 'MIT',
       platforms: ['nodejs'],
+    },
+    urls: {
+      documentation: 'https://docs.example.com/fixture',
+      homepage: 'https://example.com/fixture',
+      repository: 'https://github.com/example/fixture',
     },
     workspaces: {
       './': {
@@ -280,6 +293,16 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('"amd64") s6_architecture="x86_64"'), true);
     strictEqual(dockerfileContent.includes('"arm64") s6_architecture="aarch64"'), true);
     strictEqual(dockerfileContent.includes('COPY --from=s6-overlay /s6-rootfs/ /'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="Fixture"'), true);
+    strictEqual(dockerfileContent.includes([
+      'org.opencontainers.image.description="Fixture\'s \\"\\$HOME\\"',
+      'image"',
+    ].join(String.raw`\n`)), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="https://example.com/fixture"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="https://github.com/example/fixture"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="https://docs.example.com/fixture"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="MIT"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="Fixture Vendor"'), true);
     strictEqual(dockerfileContent.includes('apk add'), false);
     strictEqual(dockerfileContent.includes('ENTRYPOINT ["/init"]'), true);
     strictEqual(dockerfileContent.includes('[__'), false);

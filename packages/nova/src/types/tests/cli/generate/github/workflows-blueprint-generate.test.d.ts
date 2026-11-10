@@ -33,6 +33,23 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_PublishContent = string;
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Cancels Without Writing When Github Runner Images Cannot Be Read.
+ *
+ * @since 0.39.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Result = 'cancelled' | 'completed';
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Entries = string[];
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Generates A Tag Push Publish Workflow With A Tags Filtered On Block.
  *
  * @since 0.21.0
@@ -195,5 +212,7 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutSpy = ReturnType<typeof vi['spyOn']>;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_Entries = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_PublishContent = string;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = string;

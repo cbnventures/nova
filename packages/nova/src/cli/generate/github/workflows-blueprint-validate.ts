@@ -1,3 +1,12 @@
+import { Buffer } from 'node:buffer';
+
+import { Runner as GithubRunnerImages } from '../../../api/github-runner-images.js';
+import { LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL } from '../../../lib/regex.js';
+import {
+  libWorkflowContainerPlatformArchitectures,
+  libWorkflowStepKinds,
+} from '../../../lib/workflow-templates.js';
+
 import { Runner as Variables } from './workflows-blueprint-variables.js';
 
 import type {
@@ -42,19 +51,32 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_BuildTimeoutMinutes,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutKind,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutValue,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTarget,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTargetTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Composite,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerArchitecture,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatform,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformList,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformName,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerRunnerInfo,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DependsOnEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DeployMigration,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DerivedContainerLabel,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DetailEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveBuildTimeoutMinutes,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatform,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformList,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveTargetTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Entry,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EntryKeys,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment,
@@ -77,10 +99,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasExactEnvironmentSelectionVersionTagKeys,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasUnsupportedEnvironmentTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasVersionTagTrigger,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWorkflowRunTrigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsEligibleWorkspace,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsKnownStepTimeoutKind,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredArtifact,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredScope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir,
@@ -95,8 +120,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralVariableMeta,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralVariableName,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MinimumJobTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MissingLiterals,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_NonCloudflareTargetCount,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawKeyEntry,
@@ -106,18 +134,28 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValue,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValues,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerInfo,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKind,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKinds,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutes,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutesEntry,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutValue,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Suffix,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SuffixValue,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Target,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetMetadata,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targets,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetWorkspace,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Template,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TemplateName,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes,
@@ -174,7 +212,7 @@ const allowedTemplates: Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedTe
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Buildable Target Types.
  *
- * The nine publish target types with concrete deploy builders. Targets of any
+ * The ten publish target types with concrete deploy builders. Targets of any
  * other type are rejected because the generator has no job to emit for them.
  *
  * @since 0.21.0
@@ -188,6 +226,7 @@ const buildableTargetTypes: Cli_Generate_Github_WorkflowsBlueprintValidate_Build
   'docker-hub',
   'ghcr',
   'github-pages',
+  'pfsense',
   'vercel-nextjs',
 ];
 
@@ -247,21 +286,25 @@ export class Runner {
    * Runs every parse-and-validate check over the raw entries and the workspaces.
    * The surviving typed workflows and the diagnostics are returned; failures drop.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}    rawWorkflows    - Raw workflows.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}      workspaces      - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy} versionStrategy - Version strategy.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}     environment     - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts}       artifacts       - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}       rawWorkflows       - Raw workflows.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}         workspaces         - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy}    versionStrategy    - Version strategy.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment}        environment        - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts}          artifacts          - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription} projectDescription - Project description.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages}       [runnerImages]     - Runner images.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
-   * @since 0.26.0
+   * @since 0.39.0
    */
-  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}, artifacts: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = {}): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
+  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver', environment: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Environment = {}, artifacts: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Artifacts = {}, projectDescription: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescription = '', runnerImages: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerImages = undefined): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
     const workflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows = [];
     const seenKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = new Set();
     const uniquenessMap: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = new Map();
+    const projectDescriptionBytes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ProjectDescriptionBytes = Buffer.byteLength(projectDescription, 'utf8');
+    let hasWarnedAboutDockerHubDescription: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWarnedAboutDockerHubDescription = false;
     let containerWorkflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = undefined;
 
     const rawEntries: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries = (Array.isArray(rawWorkflows) === true) ? rawWorkflows : [];
@@ -384,19 +427,62 @@ export class Runner {
       const workflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey = `${templateName}-${suffixValue}`;
       const runsOn: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn = entry['runsOn'];
       const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = entry['timeoutMinutes'];
+      const buildTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_BuildTimeoutMinutes = entry['buildTimeoutMinutes'];
+      const stepTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutes = entry['stepTimeoutMinutes'];
+      const stepTimeoutMinutesEntry: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutesEntry = (Runner.isPlainObject(stepTimeoutMinutes) === true) ? stepTimeoutMinutes as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutMinutesEntry : undefined;
+      const stepTimeoutKinds: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKinds = (stepTimeoutMinutesEntry === undefined) ? [] : Object.keys(stepTimeoutMinutesEntry);
       const rawEnvironmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEnvironmentSelection = entry['environmentSelection'];
       const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms = entry['containerPlatforms'];
       const validTriggers: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = validTriggersByTemplate[templateName];
       let environmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvironmentSelection = undefined;
       let hasEnvironmentSelection: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasEnvironmentSelection = false;
 
-      if (runsOn !== undefined && runsOn !== 'ubuntu-latest') {
+      if (typeof runsOn !== 'string' || runsOn.trim().length === 0) {
         diagnostics.push({
           severity: 'error',
-          message: `Workflow "${workflowKey}" has an invalid "runsOn" value. Allowed value: ubuntu-latest. Skipping.`,
+          message: `Workflow "${workflowKey}" is missing "runsOn". Run "nova utility configure" to choose a GitHub-hosted runner. Skipping.`,
         });
 
         hasError = true;
+      } else if (GithubRunnerImages.isLatestLabel(runsOn) === true) {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" uses "${runsOn}" for "runsOn". Pinned labels are required; labels containing "-latest" are not allowed. Skipping.`,
+        });
+
+        hasError = true;
+      } else if (LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL.test(runsOn) === false) {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" has invalid runner label "${runsOn}". Use lowercase letters, digits, dots, and dashes. Skipping.`,
+        });
+
+        hasError = true;
+      } else if (runnerImages !== undefined) {
+        const runnerInfo: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunnerInfo = GithubRunnerImages.findLabel(runnerImages, runsOn);
+
+        if (runnerInfo === undefined) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" runner label "${runsOn}" is not on GitHub's runner-images list. Skipping.`,
+          });
+
+          hasError = true;
+        } else if (runnerInfo['status'] === 'deprecated') {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" runner label "${runsOn}" is deprecated on GitHub's runner-images list. Skipping.`,
+          });
+
+          hasError = true;
+        } else if (runnerInfo['status'] === 'preview') {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" runner label "${runsOn}" is a preview label on GitHub's runner-images list. Skipping.`,
+          });
+
+          hasError = true;
+        }
       }
 
       if (
@@ -414,6 +500,70 @@ export class Runner {
         });
 
         hasError = true;
+      }
+
+      if (
+        buildTimeoutMinutes !== undefined
+        && (
+          typeof buildTimeoutMinutes !== 'number'
+          || Number.isInteger(buildTimeoutMinutes) === false
+          || buildTimeoutMinutes < 1
+          || buildTimeoutMinutes > 360
+        )
+      ) {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" has an invalid "buildTimeoutMinutes" value. Enter a whole number from 1 through 360. Skipping.`,
+        });
+
+        hasError = true;
+      } else if (buildTimeoutMinutes !== undefined && templateName !== 'publish') {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" can only use "buildTimeoutMinutes" with the publish template. Skipping.`,
+        });
+
+        hasError = true;
+      }
+
+      if (stepTimeoutMinutes !== undefined && stepTimeoutMinutesEntry === undefined) {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" has an invalid "stepTimeoutMinutes" value. Configure an object keyed by a supported step kind. Skipping.`,
+        });
+
+        hasError = true;
+      }
+
+      for (const stepTimeoutKindEntry of stepTimeoutKinds) {
+        const stepTimeoutKind: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutKind = stepTimeoutKindEntry;
+        const isKnownStepTimeoutKind: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsKnownStepTimeoutKind = libWorkflowStepKinds.some((allowedStepKind) => allowedStepKind === stepTimeoutKind);
+        const stepTimeoutValue: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_StepTimeoutValue = (stepTimeoutMinutesEntry === undefined) ? undefined : stepTimeoutMinutesEntry[stepTimeoutKind];
+
+        if (isKnownStepTimeoutKind === false) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" has an unknown step timeout kind "${stepTimeoutKind}". Allowed kinds: ${libWorkflowStepKinds.join(', ')}. Skipping.`,
+          });
+
+          hasError = true;
+
+          continue;
+        }
+
+        if (
+          typeof stepTimeoutValue !== 'number'
+          || Number.isInteger(stepTimeoutValue) === false
+          || stepTimeoutValue < 1
+          || stepTimeoutValue > 360
+        ) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" has an invalid "stepTimeoutMinutes.${stepTimeoutKind}" value. Enter a whole number from 1 through 360. Skipping.`,
+          });
+
+          hasError = true;
+        }
       }
 
       if (rawEnvironmentSelection !== undefined) {
@@ -805,11 +955,21 @@ export class Runner {
             const targetTypeName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = targetType as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName;
             const workingDir: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = target['path'];
             const targetArtifact: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetArtifact = target['artifact'];
+            const targetTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTimeoutMinutes = target['timeoutMinutes'];
             const isContainerTarget: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = targetTypeName === 'docker-hub' || targetTypeName === 'ghcr';
             const containerTargetSettings: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = (Runner.isPlainObject(target['with']) === true) ? target['with'] as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings : undefined;
 
             if (targetTypeName === 'docker-hub') {
               dockerHubTargetCount += 1;
+
+              if (projectDescriptionBytes > 100 && hasWarnedAboutDockerHubDescription === false) {
+                diagnostics.push({
+                  severity: 'warning',
+                  message: `Project short description is ${projectDescriptionBytes} bytes. Docker Hub truncates it to 100 bytes when syncing the repository short description.`,
+                });
+
+                hasWarnedAboutDockerHubDescription = true;
+              }
             }
 
             if (targetTypeName === 'ghcr') {
@@ -833,6 +993,23 @@ export class Runner {
               diagnostics.push({
                 severity: 'error',
                 message: `Target type "github-action" in workflow "${workflowKey}" requires SemVer because its release branch publishes floating major aliases. CalVer projects must use another publish target or change settings.versionStrategy before release history exists.`,
+              });
+
+              hasError = true;
+            }
+
+            if (
+              targetTimeoutMinutes !== undefined
+              && (
+                typeof targetTimeoutMinutes !== 'number'
+                || Number.isInteger(targetTimeoutMinutes) === false
+                || targetTimeoutMinutes < 1
+                || targetTimeoutMinutes > 360
+              )
+            ) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Target "${String(targetType)}" in workflow "${workflowKey}" has an invalid "timeoutMinutes" value. Enter a whole number from 1 through 360. Skipping.`,
               });
 
               hasError = true;
@@ -889,6 +1066,43 @@ export class Runner {
               });
 
               hasError = true;
+            }
+
+            if (
+              isRegisteredWorkingDir === true
+              && isContainerTarget === false
+              && typeof workingDir === 'string'
+            ) {
+              const targetMetadata: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetMetadata = Variables.getTargetMetadata(templateName, targetTypeName);
+              const targetWorkspace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetWorkspace = workspaces[workingDir];
+              const isEligibleWorkspace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsEligibleWorkspace = (
+                targetMetadata !== undefined
+                && targetWorkspace !== undefined
+                && (
+                  targetMetadata['workspaceRole'] === undefined
+                  || targetWorkspace['role'] === targetMetadata['workspaceRole']
+                )
+                && (
+                  targetMetadata['workspaceNamePrefix'] === undefined
+                  || targetWorkspace['name'].startsWith(targetMetadata['workspaceNamePrefix']) === true
+                )
+              );
+
+              if (
+                targetMetadata !== undefined
+                && (
+                  targetMetadata['workspaceRole'] !== undefined
+                  || targetMetadata['workspaceNamePrefix'] !== undefined
+                )
+                && isEligibleWorkspace === false
+              ) {
+                diagnostics.push({
+                  severity: 'error',
+                  message: `Target "${String(targetType)}" in workflow "${workflowKey}" must reference a pfSense package workspace whose role is "package" and whose name starts with "pfsense-pkg-". Skipping.`,
+                });
+
+                hasError = true;
+              }
             }
 
             if (isContainerTarget === true && containerTargetSettings !== undefined) {
@@ -972,6 +1186,58 @@ export class Runner {
         }
 
         if (dockerHubTargetCount + ghcrTargetCount > 0) {
+          if (
+            runnerImages !== undefined
+            && typeof runsOn === 'string'
+            && (
+              containerPlatforms === undefined
+              || Array.isArray(containerPlatforms) === true
+            )
+          ) {
+            const effectiveContainerPlatformList: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformList = (containerPlatforms === undefined) ? allowedContainerPlatforms : containerPlatforms;
+
+            for (const containerPlatformValue of effectiveContainerPlatformList) {
+              const effectiveContainerPlatform: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatform = containerPlatformValue;
+              const effectiveContainerPlatformName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformName = effectiveContainerPlatform as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveContainerPlatformName;
+
+              if (
+                typeof effectiveContainerPlatform !== 'string'
+                || allowedContainerPlatforms.includes(effectiveContainerPlatformName) === false
+              ) {
+                continue;
+              }
+
+              const containerArchitecture: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerArchitecture = libWorkflowContainerPlatformArchitectures[effectiveContainerPlatformName];
+
+              if (containerArchitecture === undefined) {
+                continue;
+              }
+
+              let derivedContainerLabel: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DerivedContainerLabel = runsOn;
+
+              if (containerArchitecture === 'arm64' && runsOn.endsWith('-arm') === false) {
+                derivedContainerLabel = `${runsOn}-arm`;
+              } else if (containerArchitecture === 'x64' && runsOn.endsWith('-arm') === true) {
+                derivedContainerLabel = runsOn.slice(0, -4);
+              }
+
+              const containerRunnerInfo: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerRunnerInfo = GithubRunnerImages.findLabel(runnerImages, derivedContainerLabel);
+
+              if (
+                containerRunnerInfo === undefined
+                || containerRunnerInfo['status'] !== 'available'
+                || containerRunnerInfo['image']['architecture'] !== containerArchitecture
+              ) {
+                diagnostics.push({
+                  severity: 'error',
+                  message: `Workflow "${workflowKey}" container platform "${effectiveContainerPlatformName}" requires runner label "${derivedContainerLabel}", but GitHub's runner-images list does not provide it as an available ${containerArchitecture} label. Skipping.`,
+                });
+
+                hasError = true;
+              }
+            }
+          }
+
           if (containerWorkflowKey !== undefined && containerWorkflowKey !== workflowKey) {
             diagnostics.push({
               severity: 'error',
@@ -1155,6 +1421,50 @@ export class Runner {
           }
 
           uniquenessMap.set(composite, workflowKey);
+        }
+      }
+
+      if (hasError === false && stepTimeoutMinutesEntry !== undefined) {
+        let minimumJobTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MinimumJobTimeoutMinutes = (templateName === 'publish') ? 15 : 5;
+
+        if (typeof timeoutMinutes === 'number') {
+          minimumJobTimeoutMinutes = timeoutMinutes;
+        }
+
+        if (templateName === 'publish') {
+          const effectiveBuildTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveBuildTimeoutMinutes = (typeof buildTimeoutMinutes === 'number') ? buildTimeoutMinutes : minimumJobTimeoutMinutes;
+
+          minimumJobTimeoutMinutes = Math.min(minimumJobTimeoutMinutes, effectiveBuildTimeoutMinutes);
+
+          if (Array.isArray(targets) === true) {
+            for (const clampTargetValue of targets) {
+              const clampedTarget: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTarget = (typeof clampTargetValue === 'object' && clampTargetValue !== null) ? clampTargetValue as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTarget : {};
+              const clampedTargetTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedTargetTimeoutMinutes = clampedTarget['timeoutMinutes'];
+              let effectiveTargetTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EffectiveTargetTimeoutMinutes = 15;
+
+              if (typeof timeoutMinutes === 'number') {
+                effectiveTargetTimeoutMinutes = timeoutMinutes;
+              }
+
+              if (typeof clampedTargetTimeoutMinutes === 'number') {
+                effectiveTargetTimeoutMinutes = clampedTargetTimeoutMinutes;
+              }
+
+              minimumJobTimeoutMinutes = Math.min(minimumJobTimeoutMinutes, effectiveTargetTimeoutMinutes);
+            }
+          }
+        }
+
+        for (const clampStepTimeoutKindEntry of stepTimeoutKinds) {
+          const clampedStepTimeoutKind: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutKind = clampStepTimeoutKindEntry;
+          const clampedStepTimeoutValue: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ClampedStepTimeoutValue = stepTimeoutMinutesEntry[clampedStepTimeoutKind];
+
+          if (typeof clampedStepTimeoutValue === 'number' && clampedStepTimeoutValue > minimumJobTimeoutMinutes) {
+            diagnostics.push({
+              severity: 'warning',
+              message: `Workflow "${workflowKey}" sets "stepTimeoutMinutes.${clampedStepTimeoutKind}" to ${clampedStepTimeoutValue}, above its shortest job timeout of ${minimumJobTimeoutMinutes}. Generated steps are clamped to their containing job timeout.`,
+            });
+          }
         }
       }
 

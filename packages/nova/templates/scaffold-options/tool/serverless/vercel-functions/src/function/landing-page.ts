@@ -1,0 +1,278 @@
+import type {
+  Function_LandingPage_EscapeHtml_Returns,
+  Function_LandingPage_EscapeHtml_Value,
+  Function_LandingPage_LandingPage_Body,
+  Function_LandingPage_LandingPage_EscapedProjectInitial,
+  Function_LandingPage_LandingPage_EscapedProjectName,
+  Function_LandingPage_LandingPage_EscapedProjectRepository,
+  Function_LandingPage_LandingPage_Html,
+  Function_LandingPage_LandingPage_IsHead,
+  Function_LandingPage_LandingPage_ProjectName,
+  Function_LandingPage_LandingPage_ProjectRepository,
+  Function_LandingPage_LandingPage_RepositoryButton,
+  Function_LandingPage_LandingPage_Returns,
+} from '../types/function/landing-page.d.ts';
+
+/**
+ * Landing Page - Escape HTML.
+ *
+ * Encodes project-owned text before it enters the starter homepage markup.
+ * Generated projects can safely reuse the renderer with customized names.
+ *
+ * @param {Function_LandingPage_EscapeHtml_Value} value - Value.
+ *
+ * @returns {Function_LandingPage_EscapeHtml_Returns}
+ *
+ * @since 0.0.0
+ */
+function escapeHtml(value: Function_LandingPage_EscapeHtml_Value): Function_LandingPage_EscapeHtml_Returns {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('\'', '&#39;');
+}
+
+/**
+ * Landing Page - Landing Page.
+ *
+ * Renders the self-contained service card shown at the deployment root route.
+ * The isolated module gives generated projects one place to restyle it.
+ *
+ * @param {Function_LandingPage_LandingPage_ProjectName}       projectName         - Project name.
+ * @param {Function_LandingPage_LandingPage_ProjectRepository} [projectRepository] - Project repository.
+ * @param {Function_LandingPage_LandingPage_IsHead}            [isHead]            - Is head.
+ *
+ * @returns {Function_LandingPage_LandingPage_Returns}
+ *
+ * @since 0.0.0
+ */
+function landingPage(projectName: Function_LandingPage_LandingPage_ProjectName, projectRepository: Function_LandingPage_LandingPage_ProjectRepository = '', isHead: Function_LandingPage_LandingPage_IsHead = false): Function_LandingPage_LandingPage_Returns {
+  const escapedProjectName: Function_LandingPage_LandingPage_EscapedProjectName = escapeHtml(projectName);
+  const escapedProjectInitial: Function_LandingPage_LandingPage_EscapedProjectInitial = escapeHtml(projectName.charAt(0).toUpperCase());
+  const escapedProjectRepository: Function_LandingPage_LandingPage_EscapedProjectRepository = escapeHtml(projectRepository);
+  const repositoryButton: Function_LandingPage_LandingPage_RepositoryButton = (projectRepository === '') ? '' : `      <a class="button ghost" href="${escapedProjectRepository}" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>GitHub</a>`;
+  const html: Function_LandingPage_LandingPage_Html = [
+    '<!DOCTYPE html>',
+    '<html lang="en">',
+    '<head>',
+    '  <meta charset="utf-8">',
+    '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+    `  <title>${escapedProjectName}</title>`,
+    '  <style>',
+    '    :root {',
+    '      --background: #111318;',
+    '      --accent: #a78bfa;',
+    '      --accent-text: #1e1037;',
+    '      --focus: #60a5fa;',
+    '      --text: #f6f3ff;',
+    '      --text-muted: #cfc9e6;',
+    '      --text-subtle: #9a93b8;',
+    '    }',
+    '',
+    '    *, *::before, *::after {',
+    '      box-sizing: border-box;',
+    '    }',
+    '',
+    '    body {',
+    '      display: grid;',
+    '      grid-template-columns: minmax(0, 1fr);',
+    '      place-items: center;',
+    '      min-height: 100vh;',
+    '      min-height: 100dvh;',
+    '      margin: 0;',
+    '      padding: 1rem;',
+    '',
+    '      color: var(--text);',
+    '      font-family: system-ui, -apple-system, \'Segoe UI\', sans-serif;',
+    '      -webkit-font-smoothing: antialiased;',
+    '',
+    '      background:',
+    '        radial-gradient(circle at 15% 10%, rgba(124, 58, 237, 0.3), transparent 45%),',
+    '        radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.22), transparent 40%),',
+    '        var(--background);',
+    '    }',
+    '',
+    '    .card {',
+    '      display: flex;',
+    '      flex-direction: column;',
+    '      align-items: center;',
+    '      width: 100%;',
+    '      min-width: 0;',
+    '      max-width: 28rem;',
+    '      padding: 2.25rem 1rem 1.25rem;',
+    '',
+    '      text-align: center;',
+    '',
+    '      background: rgba(255, 255, 255, 0.05);',
+    '      border: 1px solid rgba(255, 255, 255, 0.12);',
+    '      border-radius: 24px;',
+    '      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);',
+    '    }',
+    '',
+    '    .logo {',
+    '      display: grid;',
+    '      flex: none;',
+    '      place-items: center;',
+    '      width: 80px;',
+    '      height: 80px;',
+    '      margin-bottom: 1.25rem;',
+    '',
+    '      color: var(--accent-text);',
+    '      font-size: 34px;',
+    '      font-weight: 800;',
+    '',
+    '      background: var(--accent);',
+    '      border-radius: 20px;',
+    '      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);',
+    '    }',
+    '',
+    '    h1 {',
+    '      max-width: 100%;',
+    '      margin: 0;',
+    '',
+    '      font-size: 1.75rem;',
+    '      line-height: 1.2;',
+    '      letter-spacing: -0.4px;',
+    '      overflow-wrap: anywhere;',
+    '    }',
+    '',
+    '    .description {',
+    '      max-width: 100%;',
+    '      margin: 0.6rem 0 0;',
+    '',
+    '      color: var(--text-muted);',
+    '      font-size: 1rem;',
+    '      line-height: 1.5;',
+    '      overflow-wrap: anywhere;',
+    '    }',
+    '',
+    '    .status {',
+    '      display: inline-flex;',
+    '      align-items: center;',
+    '      gap: 8px;',
+    '      margin-top: 1.1rem;',
+    '      padding: 5px 12px;',
+    '',
+    '      font-size: 13px;',
+    '      font-weight: 600;',
+    '',
+    '      background: rgba(255, 255, 255, 0.08);',
+    '      border: 1px solid rgba(255, 255, 255, 0.14);',
+    '      border-radius: 999px;',
+    '    }',
+    '',
+    '    .status-dot {',
+    '      width: 8px;',
+    '      height: 8px;',
+    '',
+    '      background: #34d399;',
+    '      border-radius: 50%;',
+    '      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25);',
+    '    }',
+    '',
+    '    .actions {',
+    '      display: flex;',
+    '      flex-wrap: wrap;',
+    '      justify-content: center;',
+    '      gap: 10px;',
+    '      width: 100%;',
+    '      margin-top: 1.4rem;',
+    '    }',
+    '',
+    '    .button {',
+    '      display: inline-flex;',
+    '      align-items: center;',
+    '      justify-content: center;',
+    '      gap: 8px;',
+    '      width: 100%;',
+    '      max-width: 100%;',
+    '      padding: 0.65rem 1.25rem;',
+    '',
+    '      font: 600 15px system-ui, -apple-system, sans-serif;',
+    '      text-align: center;',
+    '      text-decoration: none;',
+    '      overflow-wrap: anywhere;',
+    '',
+    '      border: 1px solid transparent;',
+    '      border-radius: 999px;',
+    '    }',
+    '',
+    '    .button.primary {',
+    '      color: var(--accent-text);',
+    '      background: var(--accent);',
+    '    }',
+    '',
+    '    .button.ghost {',
+    '      color: var(--text);',
+    '      background: transparent;',
+    '      border-color: rgba(255, 255, 255, 0.22);',
+    '    }',
+    '',
+    '    .button svg {',
+    '      width: 16px;',
+    '      height: 16px;',
+    '    }',
+    '',
+    '    .button:hover {',
+    '      filter: brightness(1.08);',
+    '    }',
+    '',
+    '    .button:focus-visible {',
+    '      outline: 3px solid var(--focus);',
+    '      outline-offset: 3px;',
+    '    }',
+    '',
+    '    .footer {',
+    '      margin-top: 1.6rem;',
+    '',
+    '      color: var(--text-subtle);',
+    '      font-size: 12px;',
+    '      letter-spacing: 0.2px;',
+    '    }',
+    '',
+    '    @media (min-width: 361px) {',
+    '      .card {',
+    '        padding-inline: 1.5rem;',
+    '      }',
+    '',
+    '      .actions, .button {',
+    '        width: auto;',
+    '      }',
+    '    }',
+    '  </style>',
+    '</head>',
+    '<body>',
+    '  <main class="card">',
+    `    <div class="logo" role="img" aria-label="${escapedProjectName} logo">${escapedProjectInitial}</div>`,
+    `    <h1>${escapedProjectName}</h1>`,
+    '    <p class="description">Your Worker is running. Edit src/worker/index.ts to make it yours.</p>',
+    '    <span class="status"><span class="status-dot" aria-hidden="true"></span>Running</span>',
+    '    <div class="actions">',
+    '      <a class="button primary" href="https://nova.cbnventures.io/docs/quickstart/" target="_blank" rel="noopener noreferrer">Documentation</a>',
+    repositoryButton,
+    '    </div>',
+    '    <footer class="footer">A CBN Ventures project</footer>',
+    '  </main>',
+    '</body>',
+    '</html>',
+  ].join('\n');
+  const body: Function_LandingPage_LandingPage_Body = (isHead === true) ? null : html;
+
+  return new Response(body, {
+    status: 200,
+    headers: {
+      'Content-Security-Policy': 'default-src \'none\'; base-uri \'none\'; form-action \'none\'; frame-ancestors \'none\'; style-src \'unsafe-inline\'',
+      'Content-Type': 'text/html; charset=utf-8',
+      'Permissions-Policy': 'camera=(), geolocation=(), microphone=()',
+      'Referrer-Policy': 'no-referrer',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+    },
+  });
+}
+
+export {
+  landingPage,
+};

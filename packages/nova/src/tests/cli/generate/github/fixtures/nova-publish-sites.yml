@@ -33,27 +33,31 @@ env:
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
         with:
           fetch-depth: 0
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Install packages"
+        timeout-minutes: 15
         run: "npm install"
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Write environment file (apps-cbnventures)"
+        timeout-minutes: 10
         env:
           PUBLIC_GOOGLE_TAG_MANAGER_ID: "${{ vars.CBN_PUBLIC_GOOGLE_TAG_MANAGER_ID }}"
           PUBLIC_TURNSTILE_SITE_KEY: "${{ vars.CBN_PUBLIC_TURNSTILE_SITE_KEY }}"
@@ -67,6 +71,7 @@ jobs:
         working-directory: "./apps/cbnventures"
 
       - name: "Write environment file (apps-mrjackyliang)"
+        timeout-minutes: 10
         env:
           PUBLIC_GOOGLE_TAG_MANAGER_ID: "${{ vars.MJL_PUBLIC_GOOGLE_TAG_MANAGER_ID }}"
           PUBLIC_TURNSTILE_SITE_KEY: "${{ vars.MJL_PUBLIC_TURNSTILE_SITE_KEY }}"
@@ -78,16 +83,19 @@ jobs:
         working-directory: "./apps/mrjackyliang"
 
       - name: "Check project"
+        timeout-minutes: 15
         run: |
           npm run check -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
+        timeout-minutes: 15
         run: |
           npm run build -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Validate build artifacts"
+        timeout-minutes: 15
         run: |
           set -euo pipefail
 
@@ -181,6 +189,7 @@ jobs:
 
       - name: "Upload build artifacts (cloudflare-workers/apps-cbnventures)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-workers-apps-cbnventures"
           retention-days: 1
@@ -191,6 +200,7 @@ jobs:
 
       - name: "Upload build artifacts (cloudflare-workers/apps-mrjackyliang)"
         uses: "actions/upload-artifact@v7"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-workers-apps-mrjackyliang"
           retention-days: 1
@@ -201,32 +211,37 @@ jobs:
 
   publish-cloudflare-workers-apps-cbnventures:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Install packages"
+        timeout-minutes: 15
         run: "npm install"
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-workers-apps-cbnventures"
           path: "./apps/cbnventures/build"
 
       - name: "Deploy to Cloudflare Workers"
         if: "${{ env.PUBLISH == 'true' }}"
+        timeout-minutes: 15
         env:
           CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
@@ -235,6 +250,7 @@ jobs:
 
       - name: "Sync worker runtime secrets"
         if: "${{ env.PUBLISH == 'true' }}"
+        timeout-minutes: 15
         env:
           CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
@@ -249,7 +265,7 @@ jobs:
           npx wrangler secret list | jq -r '.[].name' | while read -r name; do
             case " $DECLARED " in
               *" $name "*) ;;
-              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;
+              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" < /dev/null ;;
             esac
           done
           echo "Syncing declared secrets: $DECLARED"
@@ -258,32 +274,37 @@ jobs:
 
   publish-cloudflare-workers-apps-mrjackyliang:
     needs: "build"
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    runs-on: "ubuntu-24.04"
+    timeout-minutes: 15
     permissions:
       contents: "read"
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
+        timeout-minutes: 5
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v7"
+        timeout-minutes: 10
         with:
           node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Install packages"
+        timeout-minutes: 15
         run: "npm install"
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Download build artifacts"
         uses: "actions/download-artifact@v8"
+        timeout-minutes: 15
         with:
           name: "build-cloudflare-workers-apps-mrjackyliang"
           path: "./apps/mrjackyliang/build"
 
       - name: "Deploy to Cloudflare Workers"
         if: "${{ env.PUBLISH == 'true' }}"
+        timeout-minutes: 15
         env:
           CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
@@ -292,6 +313,7 @@ jobs:
 
       - name: "Sync worker runtime secrets"
         if: "${{ env.PUBLISH == 'true' }}"
+        timeout-minutes: 15
         env:
           CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
@@ -304,7 +326,7 @@ jobs:
           npx wrangler secret list | jq -r '.[].name' | while read -r name; do
             case " $DECLARED " in
               *" $name "*) ;;
-              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;
+              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" < /dev/null ;;
             esac
           done
           echo "Syncing declared secrets: $DECLARED"

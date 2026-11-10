@@ -1,9 +1,25 @@
-import { LIB_REGEX_PLACEHOLDER_SERVERLESS_TARGET } from '../../../lib/regex.js';
+import { access } from 'node:fs/promises';
+import { join } from 'node:path';
+
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
+import {
+  LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+  LIB_REGEX_PLACEHOLDER_SERVERLESS_TARGET,
+} from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
 
 import type {
   Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Answers,
   Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Returns,
+  Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Returns,
+  Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Value,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Config,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigFilePath,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigRoot,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ProjectRepository,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Returns,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Urls,
+  Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_WorkspaceName,
   Cli_Scaffold_Tool_Serverless_Runner_Run_Options,
   Cli_Scaffold_Tool_Serverless_Runner_Run_Returns,
   Cli_Scaffold_Tool_Serverless_TemplateQuestions,
@@ -134,8 +150,16 @@ export class Runner {
             to: './build',
           },
           {
+            from: `${workspaceRelPath}/src/function`,
+            to: './src/function',
+          },
+          {
             from: `${workspaceRelPath}/src/types/api`,
             to: './src/types/api',
+          },
+          {
+            from: `${workspaceRelPath}/src/types/function`,
+            to: './src/types/function',
           },
           {
             from: `${workspaceRelPath}/vercel.json`,
@@ -143,6 +167,7 @@ export class Runner {
           },
         ],
       }),
+      resolveReplacements: Runner['resolveReplacements'],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldToolServerlessTemplateQuestions,
       templateSubpath: 'scaffold/tool/serverless',
@@ -150,5 +175,60 @@ export class Runner {
     });
 
     return;
+  }
+
+  /**
+   * CLI - Scaffold - Tool - Serverless - Resolve Replacements.
+   *
+   * Reads the project repository URL before templates are written so both
+   * provider homepages can link back to the generated project's source.
+   *
+   * @param {Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_WorkspaceName} _workspaceName - Workspace name.
+   * @param {Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigRoot}    configRoot     - Config root.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static async resolveReplacements(_workspaceName: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_WorkspaceName, configRoot: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigRoot): Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Returns {
+    const configFilePath: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ConfigFilePath = join(configRoot, 'nova.config.json');
+
+    try {
+      await access(configFilePath);
+    } catch {
+      return new Map([[
+        LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+        '',
+      ]]);
+    }
+
+    const config: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Config = await new LibNovaConfig().load(configRoot);
+    const urls: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_Urls = config['urls'] ?? {};
+    const projectRepository: Cli_Scaffold_Tool_Serverless_Runner_ResolveReplacements_ProjectRepository = urls['repository'] ?? '';
+
+    return new Map([[
+      LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
+      Runner.escapeTypeScriptSingleQuoted(projectRepository),
+    ]]);
+  }
+
+  /**
+   * CLI - Scaffold - Tool - Serverless - Escape Type Script Single Quoted.
+   *
+   * Escapes project-controlled values for TypeScript single-quoted literals.
+   * The generated renderer separately escapes the value for HTML attributes.
+   *
+   * @param {Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Returns}
+   *
+   * @since 0.39.0
+   */
+  private static escapeTypeScriptSingleQuoted(value: Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Value): Cli_Scaffold_Tool_Serverless_Runner_EscapeTypeScriptSingleQuoted_Returns {
+    return value.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
   }
 }

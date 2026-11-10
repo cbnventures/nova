@@ -195,6 +195,13 @@ export type Lib_Item_ChangelogAdjectives = readonly [
 export type Lib_Item_ChangelogCategoryBumpMap = Record<Shared_ChangelogEntry_Category, Shared_ChangelogEntry_Bump>;
 
 /**
+ * Lib - Item - Changelog Category Opening Words.
+ *
+ * @since 0.39.0
+ */
+export type Lib_Item_ChangelogCategoryOpeningWords = Record<Shared_ChangelogEntry_Category, readonly string[]>;
+
+/**
  * Lib - Item - Changelog Nouns.
  *
  * @since 0.11.0

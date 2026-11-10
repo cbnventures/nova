@@ -573,7 +573,7 @@
         "prefix": "DOCS_"
       },
       "./packages/docusaurus-preset-nova": {
-        "prefix": "DOCUSAURUS_PRESET_NOVA_"
+        "prefix": "PRESET_"
       },
       "./packages/nova": {
         "prefix": "NOVA_"

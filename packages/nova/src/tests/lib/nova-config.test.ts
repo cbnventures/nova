@@ -90,6 +90,11 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Messages,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Config,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Messages,
@@ -113,6 +118,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_Serialized,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxPrefix,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxRoot,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_TemporaryDirectory,
@@ -2242,8 +2251,13 @@ describe('parseWorkflows (via load)', async () => {
               tags: ['v*'],
             },
           ],
-          runsOn: 'ubuntu-latest',
+          runsOn: ' macos-26 ',
           timeoutMinutes: 45,
+          buildTimeoutMinutes: 30,
+          stepTimeoutMinutes: {
+            install: 12,
+            deploy: 20,
+          },
           containerPlatforms: [
             'linux/arm64',
             'unsupported/platform',
@@ -2254,6 +2268,17 @@ describe('parseWorkflows (via load)', async () => {
             region: 'us-east-1',
             stage: 'prod',
           },
+          deploy: [
+            {
+              to: 'npm',
+              path: './packages/core',
+              timeoutMinutes: 20,
+            },
+            {
+              to: 'pfsense',
+              path: './packages/firewall',
+            },
+          ],
         },
         {
           template: 'publish',
@@ -2262,6 +2287,7 @@ describe('parseWorkflows (via load)', async () => {
             name: 'workflow-run-success',
             workflows: ['publish-core'],
           }],
+          runsOn: 'ubuntu-24.04',
         },
       ],
     }, null, 2);
@@ -2301,8 +2327,13 @@ describe('parseWorkflows (via load)', async () => {
         tags: ['v*'],
       },
     ]);
-    strictEqual(firstWorkflow['runsOn'], 'ubuntu-latest');
+    strictEqual(firstWorkflow['runsOn'], 'macos-26');
     strictEqual(firstWorkflow['timeoutMinutes'], 45);
+    strictEqual(firstWorkflow['buildTimeoutMinutes'], 30);
+    deepStrictEqual(firstWorkflow['stepTimeoutMinutes'], {
+      install: 12,
+      deploy: 20,
+    });
     deepStrictEqual(firstWorkflow['containerPlatforms'], [
       'linux/arm64',
       'unsupported/platform',
@@ -2313,6 +2344,17 @@ describe('parseWorkflows (via load)', async () => {
       region: 'us-east-1',
       stage: 'prod',
     });
+    deepStrictEqual(firstWorkflow['deploy'], [
+      {
+        to: 'npm',
+        path: './packages/core',
+        timeoutMinutes: 20,
+      },
+      {
+        to: 'pfsense',
+        path: './packages/firewall',
+      },
+    ]);
 
     const secondWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_SecondWorkflow = loadedWorkflows[1];
 
@@ -2343,6 +2385,7 @@ describe('parseWorkflows (via load)', async () => {
           template: 'publish',
           name: 'core',
           triggers: ['release'],
+          runsOn: 'ubuntu-24.04',
         },
         {
           template: 'publish',
@@ -2351,7 +2394,7 @@ describe('parseWorkflows (via load)', async () => {
             name: 'workflow-run-success',
             workflows: ['publish-core'],
           }],
-          runsOn: 'ubuntu-latest',
+          runsOn: 'ubuntu-24.04',
           timeoutMinutes: 60,
           build: [
             './packages/thing',
@@ -2403,7 +2446,7 @@ describe('parseWorkflows (via load)', async () => {
       name: 'workflow-run-success',
       workflows: ['publish-core'],
     }]);
-    strictEqual(reloadedWorkflow['runsOn'], 'ubuntu-latest');
+    strictEqual(reloadedWorkflow['runsOn'], 'ubuntu-24.04');
     strictEqual(reloadedWorkflow['timeoutMinutes'], 60);
     deepStrictEqual(reloadedWorkflow['build'], [
       './packages/thing',
@@ -2431,11 +2474,13 @@ describe('parseWorkflows (via load)', async () => {
         {
           template: 'deploy',
           triggers: ['release'],
+          runsOn: 'ubuntu-24.04',
         },
         {
           template: 'test',
           name: 'valid',
           triggers: ['push'],
+          runsOn: 'ubuntu-24.04',
         },
       ],
     }, null, 2);
@@ -2478,11 +2523,13 @@ describe('parseWorkflows (via load)', async () => {
         {
           template: 'deploy',
           name: 'no-triggers',
+          runsOn: 'ubuntu-24.04',
         },
         {
           template: 'test',
           name: 'valid',
           triggers: ['push'],
+          runsOn: 'ubuntu-24.04',
         },
       ],
     }, null, 2);
@@ -2525,11 +2572,13 @@ describe('parseWorkflows (via load)', async () => {
           template: 'publish-to-npm',
           name: 'primary',
           triggers: ['release'],
+          runsOn: 'ubuntu-24.04',
         },
         {
           'template': 'publish-to-npm',
           'name': 'secondary',
           'triggers': ['workflow-run-success'],
+          'runsOn': 'ubuntu-24.04',
           'depends-on': ['publish-to-npm-primary'],
         },
       ],
@@ -2572,6 +2621,7 @@ describe('parseWorkflows (via load)', async () => {
         template: 'check-sponsor-gated-issues',
         name: 'empty-triggers',
         triggers: [],
+        runsOn: 'ubuntu-24.04',
       }],
     }, null, 2);
 
@@ -2650,7 +2700,7 @@ describe('parseWorkflows (via load)', async () => {
     }
 
     strictEqual(firstWorkflow['template'], 'valid-entry');
-    strictEqual(firstWorkflow['runsOn'], undefined);
+    strictEqual(firstWorkflow['runsOn'], 'ubuntu-24.04');
     strictEqual(firstWorkflow['timeoutMinutes'], undefined);
 
     return;
@@ -2690,6 +2740,7 @@ describe('parseWorkflows (via load)', async () => {
         template: 'deploy',
         name: 'settings-test',
         triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
         with: {
           region: 'us-east-1',
           count: 5,
@@ -3667,6 +3718,70 @@ describe('parseEnvironment (via load)', async () => {
     return;
   });
 
+  it('errors when prefixes use invalid shapes', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ProjectDirectory = join(sandboxRoot, 'env-invalid-prefix-shapes');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'release',
+        triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
+      }],
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+        './apps/b': {
+          name: 'app-b',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        project: {
+          prefix: 'PROJECT_CONFIG_',
+        },
+        workspaces: {
+          './apps/a': {
+            prefix: 'CBN',
+          },
+          './apps/b': {
+            prefix: 'cbn_',
+          },
+        },
+        workflows: {
+          release: {
+            prefix: '1ACTION_',
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Serialized = JSON.stringify(await config.load());
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('PROJECT_CONFIG_') === true && message.includes('CBN_') === true), `expected an inner-underscore prefix error with an example; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('"CBN"') === true && message.includes('followed by "_"') === true), `expected a missing-trailing-underscore prefix error; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('cbn_') === true && message.includes('uppercase') === true), `expected a lowercase prefix error; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('1ACTION_') === true && message.includes('starting with a letter') === true), `expected a leading-digit prefix error; got: ${messages.join(' | ')}`);
+    strictEqual(serialized.includes('PROJECT_CONFIG_'), false);
+    strictEqual(serialized.includes('"prefix":"CBN"'), false);
+    strictEqual(serialized.includes('cbn_'), false);
+    strictEqual(serialized.includes('1ACTION_'), false);
+
+    return;
+  });
+
   it('errors when two prefixes overlap', async () => {
     const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ProjectDirectory = join(sandboxRoot, 'env-overlap');
 
@@ -3694,7 +3809,7 @@ describe('parseEnvironment (via load)', async () => {
             variables: [],
           },
           './apps/b': {
-            prefix: 'CBN_SUB_',
+            prefix: 'CBN_',
             variables: [],
           },
         },
@@ -3709,7 +3824,7 @@ describe('parseEnvironment (via load)', async () => {
 
     const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
 
-    ok(messages.some((message) => message.includes('CBN_SUB_') === true && message.includes('overlap') === true), `expected an overlap error naming both prefixes; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('CBN_') === true && message.includes('overlap') === true), `expected an overlap error naming both prefixes; got: ${messages.join(' | ')}`);
 
     return;
   });
@@ -3739,6 +3854,57 @@ describe('parseEnvironment (via load)', async () => {
     const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
 
     ok(messages.some((message) => message.includes('GITHUB_') === true && message.includes('reserved') === true), `expected a reserved-prefix error; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('parses valid prefix shapes', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ProjectDirectory = join(sandboxRoot, 'env-valid-prefix-shapes');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'release',
+        triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
+      }],
+      workspaces: {
+        './apps/web': {
+          name: 'app-web',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        project: {
+          prefix: 'CBN_',
+        },
+        workspaces: {
+          './apps/web': {
+            prefix: 'WEB2_',
+          },
+        },
+        workflows: {
+          release: {
+            prefix: 'ACTION_',
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Serialized = JSON.stringify(await config.load());
+
+    ok(serialized.includes('"prefix":"CBN_"') === true, `expected the project prefix to be preserved; got: ${serialized}`);
+    ok(serialized.includes('"prefix":"WEB2_"') === true, `expected the workspace prefix to be preserved; got: ${serialized}`);
+    ok(serialized.includes('"prefix":"ACTION_"') === true, `expected the workflow prefix to be preserved; got: ${serialized}`);
+    strictEqual(config.diagnostics().some((diagnostic) => diagnostic['message'].includes('prefix') === true), false);
 
     return;
   });
@@ -3878,6 +4044,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'lock-inactive-issues',
         name: 'ci',
         triggers: ['schedule-weekly'],
+        runsOn: 'ubuntu-24.04',
       }],
       environment: {
         workflows: {
@@ -3914,11 +4081,13 @@ describe('parseEnvironment (via load)', async () => {
           template: 'lock-inactive-issues',
           name: 'dup',
           triggers: ['schedule-weekly'],
+          runsOn: 'ubuntu-24.04',
         },
         {
           template: 'check-sponsor-gated-issues',
           name: 'dup',
           triggers: ['issues'],
+          runsOn: 'ubuntu-24.04',
         },
       ],
       environment: {
@@ -3955,6 +4124,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'publish',
         name: 'sites',
         triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
         deploy: [{
           to: 'cloudflare-workers',
           path: './apps/a',
@@ -4001,6 +4171,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'publish',
         name: 'sites',
         triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
         deploy: [{
           to: 'vercel-nextjs',
           path: './apps/a',
@@ -4045,6 +4216,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'publish',
         name: 'sites',
         triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
         deploy: [{
           to: 'npm',
           path: './apps/a',
@@ -4140,6 +4312,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'check-sponsor-gated-issues',
         name: 'sponsor-check',
         triggers: ['issues'],
+        runsOn: 'ubuntu-24.04',
       }],
       environment: {
         project: {
@@ -4175,6 +4348,7 @@ describe('parseEnvironment (via load)', async () => {
         template: 'check-sponsor-gated-issues',
         name: 'sponsor-check',
         triggers: ['issues'],
+        runsOn: 'ubuntu-24.04',
       }],
     }, null, 2), 'utf-8');
 

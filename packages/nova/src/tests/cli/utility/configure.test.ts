@@ -11,12 +11,14 @@ import { join } from 'node:path';
 import prompts from 'prompts';
 import {
   afterAll,
+  afterEach,
   beforeEach,
   describe,
   it,
   vi,
 } from 'vitest';
 
+import { Runner as ApiGithubRunnerImages } from '../../../api/github-runner-images.js';
 import { Runner as CliUtilityConfigure } from '../../../cli/utility/configure.js';
 import { libEnvGithub } from '../../../lib/env-github.js';
 import { libEnvReconcile } from '../../../lib/env-reconcile.js';
@@ -24,6 +26,8 @@ import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import * as toolkit from '../../../toolkit/index.js';
 
 import type {
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_AcceptsValidShapes_Results,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_RejectsInvalidShapes_Results,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_AcceptsRootDockerAndNestedGitOrAssetPaths_Results,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_RejectsAWorkspaceLocalDockerignore_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForAnEmptyString_Result,
@@ -32,6 +36,8 @@ import type {
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTrueForANonEmptyString_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_AcceptsBlankInputAndWholeNumbersFrom1Through360_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_RejectsValuesOutsideTheSupportedGitHubRange_Result,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_AcceptsSupportedKindsAndTimeouts_Result,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_RejectsUnknownKindsAndInvalidTimeouts_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_OriginalCwd,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SandboxRoot,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
@@ -144,6 +150,9 @@ import type {
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory,
+  Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Config,
+  Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_PromptWorkflowsForm,
+  Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Result,
   Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_CapturedQuestions,
   Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Config,
   Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_ContainerWorkflow,
@@ -161,10 +170,22 @@ import type {
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_QuestionList,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Responses,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_RunsOnQuestion,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions,
   Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Workflow,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Config,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Next,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_PromptWorkflowsForm,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_QuestionList,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Responses,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Result,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_SecretQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetTypeQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetWorkingDirQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Workflow,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows,
@@ -347,6 +368,18 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       },
       runsOn: 'promptWorkflowsForm',
       timeoutMinutes: 'promptWorkflowsForm',
+      buildTimeoutMinutes: 'promptWorkflowsForm',
+      stepTimeoutMinutes: {
+        checkout: 'promptWorkflowsForm',
+        setup: 'promptWorkflowsForm',
+        install: 'promptWorkflowsForm',
+        build: 'promptWorkflowsForm',
+        check: 'promptWorkflowsForm',
+        artifact: 'promptWorkflowsForm',
+        registry: 'promptWorkflowsForm',
+        deploy: 'promptWorkflowsForm',
+        attest: 'promptWorkflowsForm',
+      },
       environmentSelection: {
         versionTags: {
           prerelease: 'promptWorkflowsForm',
@@ -361,6 +394,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
           to: 'promptWorkflowsForm',
           path: 'promptWorkflowsForm',
           artifact: 'promptWorkflowsForm',
+          timeoutMinutes: 'promptWorkflowsForm',
           after: { $item: 'promptWorkflowsForm' },
           with: { $entry: 'promptWorkflowsForm' },
         },
@@ -588,6 +622,32 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
 beforeEach(() => {
   vi.mocked(prompts).mockReset();
 
+  vi.spyOn(ApiGithubRunnerImages, 'fetchRunnerImages').mockResolvedValue([
+    {
+      name: 'Ubuntu 24.04',
+      architecture: 'x64',
+      labels: [
+        'ubuntu-latest',
+        'ubuntu-24.04',
+      ],
+      status: 'available',
+    },
+    {
+      name: 'macOS 26',
+      architecture: 'x64',
+      labels: ['macos-26-large'],
+      status: 'available',
+    },
+  ]);
+
+  return;
+});
+
+afterEach(() => {
+  ApiGithubRunnerImages.resetForTesting();
+
+  vi.restoreAllMocks();
+
   return;
 });
 
@@ -623,6 +683,51 @@ describe('CliUtilityConfigure.run', async () => {
     await CliUtilityConfigure.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Is Environment Prefix Input.
+ *
+ * @since 0.39.0
+ */
+describe('CliUtilityConfigure.isEnvironmentPrefixInput', () => {
+  it('accepts valid shapes', () => {
+    const results: Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_AcceptsValidShapes_Results = [
+      CliUtilityConfigure.isEnvironmentPrefixInput('CBN_'),
+      CliUtilityConfigure.isEnvironmentPrefixInput('EMAIL2_'),
+      CliUtilityConfigure.isEnvironmentPrefixInput(' ACTION_ '),
+    ];
+
+    deepStrictEqual(results, [
+      true,
+      true,
+      true,
+    ]);
+
+    return;
+  });
+
+  it('rejects invalid shapes', () => {
+    const results: Tests_Cli_Utility_Configure_CliUtilityConfigureIsEnvironmentPrefixInput_RejectsInvalidShapes_Results = [
+      CliUtilityConfigure.isEnvironmentPrefixInput('WEB_EMAIL_'),
+      CliUtilityConfigure.isEnvironmentPrefixInput('CBN'),
+      CliUtilityConfigure.isEnvironmentPrefixInput('cbn_'),
+      CliUtilityConfigure.isEnvironmentPrefixInput('1CBN_'),
+      CliUtilityConfigure.isEnvironmentPrefixInput(undefined),
+    ];
+
+    deepStrictEqual(results, [
+      'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").',
+      'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").',
+      'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").',
+      'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").',
+      'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").',
+    ]);
 
     return;
   });
@@ -739,6 +844,47 @@ describe('CliUtilityConfigure.isOptionalWorkflowTimeoutInput', () => {
       'Enter a whole number from 1 through 360, or leave the field blank.',
       'Enter a whole number from 1 through 360, or leave the field blank.',
       'Enter a whole number from 1 through 360, or leave the field blank.',
+    ]);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Is Workflow Step Timeout Input.
+ *
+ * @since 0.39.0
+ */
+describe('CliUtilityConfigure.isWorkflowStepTimeoutInput', () => {
+  it('accepts supported kinds and timeouts', () => {
+    const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_AcceptsSupportedKindsAndTimeouts_Result = [
+      CliUtilityConfigure.isWorkflowStepTimeoutInput(''),
+      CliUtilityConfigure.isWorkflowStepTimeoutInput('{"install":10,"deploy":30}'),
+      CliUtilityConfigure.isWorkflowStepTimeoutInput('{"checkout":1,"attest":360}'),
+    ];
+
+    deepStrictEqual(result, [
+      true,
+      true,
+      true,
+    ]);
+
+    return;
+  });
+
+  it('rejects unknown kinds and invalid timeouts', () => {
+    const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsWorkflowStepTimeoutInput_RejectsUnknownKindsAndInvalidTimeouts_Result = [
+      CliUtilityConfigure.isWorkflowStepTimeoutInput('{"mystery":5}'),
+      CliUtilityConfigure.isWorkflowStepTimeoutInput('{"install":0}'),
+      CliUtilityConfigure.isWorkflowStepTimeoutInput('{"deploy":361}'),
+    ];
+
+    deepStrictEqual(result, [
+      'Unknown step kind "mystery". Allowed kinds: checkout, setup, install, build, check, artifact, registry, deploy, attest.',
+      'Enter a whole number from 1 through 360 for "install".',
+      'Enter a whole number from 1 through 360 for "deploy".',
     ]);
 
     return;
@@ -1926,36 +2072,64 @@ describe('prompt settings', () => {
  * @since 0.26.0
  */
 describe('prompt workflows', () => {
+  it('cancels when the runner list cannot be read', async () => {
+    vi.mocked(ApiGithubRunnerImages['fetchRunnerImages']).mockResolvedValueOnce(undefined);
+
+    const config: Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Config = {};
+    const promptWorkflowsForm: Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_PromptWorkflowsForm = Reflect.get(CliUtilityConfigure, 'promptWorkflowsForm') as Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_PromptWorkflowsForm;
+    const result: Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Result = await promptWorkflowsForm(undefined, 'create', [], config);
+
+    deepStrictEqual(result, {
+      action: 'back',
+    });
+    strictEqual(vi.mocked(prompts).mock.calls.length, 0);
+
+    return;
+  });
+
   it('keeps container identity target local while Pages stay additive', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Responses = [
       { template: 'publish' },
       { suffix: 'containers' },
       {
-        runsOn: 'ubuntu-latest',
+        runsOn: 'ubuntu-24.04',
         timeoutMinutes: '',
+        buildTimeoutMinutes: '22',
+        stepTimeoutMinutes: '{"build":18,"deploy":16}',
       },
       { triggers: ['release'] },
       { advancedTriggers: [] },
       { targetAction: { kind: 'add' } },
       { targetType: 'docker-hub' },
-      { targetSettings: '' },
+      {
+        targetTimeoutMinutes: '18',
+        targetSettings: '',
+      },
       { targetRequiredLiteral: 'cbnventures' },
       { targetRequiredLiteral: 'nova' },
       { targetAction: { kind: 'add' } },
       { targetType: 'ghcr' },
-      { targetSettings: '' },
+      {
+        targetTimeoutMinutes: '',
+        targetSettings: '',
+      },
       { targetRequiredLiteral: 'nova' },
       { targetAction: { kind: 'add' } },
       { targetType: 'github-pages' },
       { targetWorkingDir: './apps/docs' },
-      { targetSettings: '' },
+      {
+        targetTimeoutMinutes: '12',
+        targetSettings: '',
+      },
       { targetAction: { kind: 'done' } },
       { containerPlatforms: ['linux/arm64'] },
       { scopes: [] },
       { settingValue: './' },
       { settingValue: 'DOCKERHUB_TOKEN' },
       { settingValue: 'DOCKERHUB_USERNAME' },
-      { reviewedSettings: '{"DOCKERHUB_TOKEN":"DOCKERHUB_TOKEN","DOCKERHUB_USERNAME":"DOCKERHUB_USERNAME"}' },
+      { settingValue: 'docs/container.md' },
+      { settingValue: 'false' },
+      { reviewedSettings: '{"DOCKERHUB_TOKEN":"DOCKERHUB_TOKEN","DOCKERHUB_USERNAME":"DOCKERHUB_USERNAME","README_PATH":"docs/container.md","SYNC_DESCRIPTION":"false"}' },
     ];
     const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_CapturedQuestions = [];
 
@@ -1997,11 +2171,13 @@ describe('prompt workflows', () => {
     };
     const workflow: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Workflow = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'containers',
       triggers: ['release'],
     };
     const promptWorkflowsForm: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm = Reflect.get(CliUtilityConfigure, 'promptWorkflowsForm') as Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm;
     const result: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result = await promptWorkflowsForm(workflow, 'update', [workflow], config);
+    const runsOnQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_RunsOnQuestion = capturedQuestions.find((question) => question['name'] === 'runsOn');
     const targetWorkingDirQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions = capturedQuestions.filter((question) => question['name'] === 'targetWorkingDir');
     const targetTypeQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions = capturedQuestions.filter((question) => question['name'] === 'targetType');
     const scopesQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion = capturedQuestions.find((question) => question['name'] === 'scopes');
@@ -2012,13 +2188,19 @@ describe('prompt workflows', () => {
         template: 'publish',
         name: 'containers',
         triggers: ['release'],
-        runsOn: 'ubuntu-latest',
+        runsOn: 'ubuntu-24.04',
+        buildTimeoutMinutes: 22,
+        stepTimeoutMinutes: {
+          build: 18,
+          deploy: 16,
+        },
         containerPlatforms: ['linux/arm64'],
         build: ['./apps/docs'],
         deploy: [
           {
             to: 'docker-hub',
             path: './',
+            timeoutMinutes: 18,
             with: {
               IMAGE_NAMESPACE: 'cbnventures',
               IMAGE_REPOSITORY: 'nova',
@@ -2034,14 +2216,31 @@ describe('prompt workflows', () => {
           {
             to: 'github-pages',
             path: './apps/docs',
+            timeoutMinutes: 12,
           },
         ],
         with: {
           DOCKERHUB_TOKEN: 'DOCKERHUB_TOKEN',
           DOCKERHUB_USERNAME: 'DOCKERHUB_USERNAME',
+          README_PATH: 'docs/container.md',
+          SYNC_DESCRIPTION: 'false',
         },
       },
     });
+    strictEqual(runsOnQuestion !== undefined, true);
+    deepStrictEqual(runsOnQuestion!['choices'], [
+      {
+        title: 'ubuntu-24.04',
+        description: 'Ubuntu 24.04, x64',
+        value: 'ubuntu-24.04',
+      },
+      {
+        title: 'macos-26-large (paid)',
+        description: 'macOS 26, x64',
+        value: 'macos-26-large',
+      },
+    ]);
+    strictEqual(runsOnQuestion!['initial'], 0);
     strictEqual(targetWorkingDirQuestions.length, 1);
     strictEqual(targetTypeQuestions.length, 3);
     strictEqual(JSON.stringify(targetTypeQuestions[0]!['choices']).includes('"value":"docker-hub"'), true);
@@ -2056,12 +2255,110 @@ describe('prompt workflows', () => {
     return;
   });
 
+  it('offers pfSense only for pfSense package workspaces', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Responses = [
+      { template: 'publish' },
+      { suffix: 'project' },
+      {
+        runsOn: 'ubuntu-24.04',
+        timeoutMinutes: '',
+        buildTimeoutMinutes: '',
+        stepTimeoutMinutes: '',
+      },
+      { triggers: ['release'] },
+      { advancedTriggers: [] },
+      { targetAction: { kind: 'add' } },
+      { targetType: 'pfsense' },
+      { targetWorkingDir: './packages/firewall' },
+      {
+        targetTimeoutMinutes: '',
+        targetSettings: '',
+      },
+      { targetAction: { kind: 'done' } },
+      { scopes: [] },
+      { settingValue: './' },
+      { settingValue: 'RELEASE_SIGNING_KEY' },
+      { reviewedSettings: '{"RELEASE_SIGNING_KEY":"RELEASE_SIGNING_KEY"}' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const questionList: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_QuestionList = (Array.isArray(questions) === true) ? questions : [questions];
+
+      capturedQuestions.push(...questionList);
+
+      const next: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Next = responses.shift();
+
+      if (next !== undefined && Object.keys(next).some((key) => questionList.some((question) => question['name'] === key) === false) === true) {
+        throw new Error(JSON.stringify({
+          names: questionList.map((question) => question['name']),
+          next,
+        }));
+      }
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Config = {
+      workspaces: {
+        './packages/firewall': {
+          name: 'pfsense-pkg-firewall',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './packages/ordinary': {
+          name: 'ordinary-package',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    };
+    const workflow: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Workflow = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: ['release'],
+    };
+    const promptWorkflowsForm: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_PromptWorkflowsForm = Reflect.get(CliUtilityConfigure, 'promptWorkflowsForm') as Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_PromptWorkflowsForm;
+    const result: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_Result = await promptWorkflowsForm(workflow, 'update', [workflow], config);
+    const secretQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_SecretQuestion = capturedQuestions.find((question) => typeof question['message'] === 'string' && question['message'].startsWith('Secret: RELEASE_SIGNING_KEY'));
+    const targetTypeQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetTypeQuestion = capturedQuestions.find((question) => question['name'] === 'targetType');
+    const targetWorkingDirQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_OffersPfSenseOnlyForPfSensePackageWorkspaces_TargetWorkingDirQuestion = capturedQuestions.find((question) => question['name'] === 'targetWorkingDir');
+
+    deepStrictEqual(result, {
+      action: 'apply',
+      workflow: {
+        template: 'publish',
+        name: 'project',
+        triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
+        build: ['./packages/firewall'],
+        deploy: [{
+          to: 'pfsense',
+          path: './packages/firewall',
+        }],
+        with: {
+          RELEASE_SIGNING_KEY: 'RELEASE_SIGNING_KEY',
+        },
+      },
+    });
+    strictEqual(secretQuestion !== undefined, true);
+    strictEqual(secretQuestion!['initial'], 'RELEASE_SIGNING_KEY');
+    strictEqual(targetTypeQuestion !== undefined, true);
+    strictEqual(JSON.stringify(targetTypeQuestion!['choices']).includes('"value":"pfsense"'), true);
+    strictEqual(targetWorkingDirQuestion !== undefined, true);
+    strictEqual(JSON.stringify(targetWorkingDirQuestion!['choices']).includes('"value":"./packages/firewall"'), true);
+    strictEqual(JSON.stringify(targetWorkingDirQuestion!['choices']).includes('"value":"./packages/ordinary"'), false);
+
+    return;
+  });
+
   it('does not offer container targets when another workflow owns the image', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Responses = [
       { template: 'publish' },
       { suffix: 'pages' },
       {
-        runsOn: 'ubuntu-latest',
+        runsOn: 'ubuntu-24.04',
         timeoutMinutes: '',
       },
       { triggers: ['release'] },
@@ -2104,6 +2401,7 @@ describe('prompt workflows', () => {
     };
     const containerWorkflow: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_ContainerWorkflow = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'containers',
       triggers: ['release'],
       deploy: [{
@@ -2116,6 +2414,7 @@ describe('prompt workflows', () => {
     };
     const workflow: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Workflow = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'pages',
       triggers: ['release'],
     };
@@ -2132,7 +2431,7 @@ describe('prompt workflows', () => {
         template: 'publish',
         name: 'pages',
         triggers: ['release'],
-        runsOn: 'ubuntu-latest',
+        runsOn: 'ubuntu-24.04',
         build: ['./apps/docs'],
         deploy: [{
           to: 'github-pages',
@@ -2162,11 +2461,13 @@ describe('prompt workflows', () => {
       workflows: [
         {
           template: 'publish',
+          runsOn: 'ubuntu-24.04',
           name: 'core',
           triggers: ['release'],
         },
         {
           template: 'zz-custom-publish',
+          runsOn: 'ubuntu-24.04',
           name: 'preset',
           triggers: [{
             name: 'workflow-run-success',
@@ -2196,11 +2497,13 @@ describe('prompt workflows', () => {
     deepStrictEqual(config['workflows'], [
       {
         template: 'publish',
+        runsOn: 'ubuntu-24.04',
         name: 'core',
         triggers: ['release'],
       },
       {
         template: 'zz-custom-publish',
+        runsOn: 'ubuntu-24.04',
         name: 'preset',
         triggers: [{
           name: 'workflow-run-success',

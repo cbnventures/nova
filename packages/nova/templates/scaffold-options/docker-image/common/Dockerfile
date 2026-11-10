@@ -56,6 +56,13 @@ RUN set -eux; \
 ###############################
 FROM [__DOCKER_RUNTIME_BASE__] AS runtime
 ARG DEBIAN_FRONTEND="noninteractive"
+LABEL org.opencontainers.image.title="[__PROJECT_NAME__]" \
+  org.opencontainers.image.description="[__PROJECT_DESCRIPTION__]" \
+  org.opencontainers.image.url="[__PROJECT_HOMEPAGE__]" \
+  org.opencontainers.image.source="[__PROJECT_REPOSITORY__]" \
+  org.opencontainers.image.documentation="[__PROJECT_DOCUMENTATION__]" \
+  org.opencontainers.image.licenses="[__PROJECT_LICENSE__]" \
+  org.opencontainers.image.vendor="[__PROJECT_VENDOR__]"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \

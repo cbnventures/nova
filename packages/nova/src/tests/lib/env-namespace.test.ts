@@ -25,6 +25,21 @@ describe('libEnvNamespace', () => {
     return;
   });
 
+  it('accepts one-word prefixes and rejects every invalid shape', () => {
+    strictEqual(libEnvNamespace.isValidPrefix('CBN_'), true);
+    strictEqual(libEnvNamespace.isValidPrefix('EMAIL2_'), true);
+    strictEqual(libEnvNamespace.isValidPrefix('ROOT_'), true);
+    strictEqual(libEnvNamespace.isValidPrefix('DOCS_'), true);
+    strictEqual(libEnvNamespace.isValidPrefix('SGS_'), true);
+    strictEqual(libEnvNamespace.isValidPrefix('WEB_EMAIL_'), false);
+    strictEqual(libEnvNamespace.isValidPrefix('CONFIG_UI_'), false);
+    strictEqual(libEnvNamespace.isValidPrefix('CBN'), false);
+    strictEqual(libEnvNamespace.isValidPrefix('cbn_'), false);
+    strictEqual(libEnvNamespace.isValidPrefix('1CBN_'), false);
+
+    return;
+  });
+
   it('derives a GitHub name by concatenating prefix and key', () => {
     strictEqual(libEnvNamespace.githubName('CBN_', 'PUBLIC_X'), 'CBN_PUBLIC_X');
 

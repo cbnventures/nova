@@ -187,10 +187,12 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath,
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigRoot,
+  Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget,
   Lib_Scaffold_RegisterWorkspaceInConfig_DockerignoreConfigPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_DockerignorePath,
   Lib_Scaffold_RegisterWorkspaceInConfig_DocumentationUrl,
   Lib_Scaffold_RegisterWorkspaceInConfig_Environment,
+  Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces,
@@ -206,6 +208,7 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPlatforms,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedRecipes,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkflows,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_Platforms,
   Lib_Scaffold_RegisterWorkspaceInConfig_PlatformsMerged,
@@ -213,11 +216,15 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_Project,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug,
+  Lib_Scaffold_RegisterWorkspaceInConfig_PublishDeploy,
+  Lib_Scaffold_RegisterWorkspaceInConfig_PublishWorkflow,
   Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
   Lib_Scaffold_RegisterWorkspaceInConfig_Recipes,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ResolvedEnvironmentPrefix,
   Lib_Scaffold_RegisterWorkspaceInConfig_Returns,
   Lib_Scaffold_RegisterWorkspaceInConfig_Role,
   Lib_Scaffold_RegisterWorkspaceInConfig_Urls,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Workflows,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceDirectory,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName,
@@ -227,7 +234,10 @@ import type {
   Lib_Scaffold_ReportError_Returns,
   Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory,
   Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answer,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answers,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefixWord,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Entry,
@@ -235,11 +245,15 @@ import type {
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_IsNonInteractive,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_LastWorkspaceNameSegment,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_PrefixValue,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Scope,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ScopeValue,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_SuggestedPrefix,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceNameSegments,
   Lib_Scaffold_ResolveScaffoldGitignoreEntry_Bundles,
   Lib_Scaffold_ResolveScaffoldGitignoreEntry_BundlesValue,
   Lib_Scaffold_ResolveScaffoldGitignoreEntry_Config,
@@ -317,9 +331,11 @@ import type {
   Lib_Scaffold_RunScaffold_Definition,
   Lib_Scaffold_RunScaffold_Destination,
   Lib_Scaffold_RunScaffold_Environment,
+  Lib_Scaffold_RunScaffold_EnvironmentPrefix,
   Lib_Scaffold_RunScaffold_EnvironmentVariables,
   Lib_Scaffold_RunScaffold_ErrorMessage,
   Lib_Scaffold_RunScaffold_ExistingArtifacts,
+  Lib_Scaffold_RunScaffold_ExistingEnvironment,
   Lib_Scaffold_RunScaffold_ExistingRoot,
   Lib_Scaffold_RunScaffold_ExistingRootPackageJsonChanged,
   Lib_Scaffold_RunScaffold_ExistingWorkspace,
@@ -344,6 +360,7 @@ import type {
   Lib_Scaffold_RunScaffold_PackageManagerValue,
   Lib_Scaffold_RunScaffold_PlannedPaths,
   Lib_Scaffold_RunScaffold_Platforms,
+  Lib_Scaffold_RunScaffold_PrefixEnvironment,
   Lib_Scaffold_RunScaffold_PresentationOptions,
   Lib_Scaffold_RunScaffold_PrimaryScript,
   Lib_Scaffold_RunScaffold_ProfilesEnabled,
@@ -356,6 +373,7 @@ import type {
   Lib_Scaffold_RunScaffold_ReplacementResolution,
   Lib_Scaffold_RunScaffold_Replacements,
   Lib_Scaffold_RunScaffold_ResolvedArtifact,
+  Lib_Scaffold_RunScaffold_ResolvedDeployTarget,
   Lib_Scaffold_RunScaffold_ResolvedReplacements,
   Lib_Scaffold_RunScaffold_Returns,
   Lib_Scaffold_RunScaffold_RootGitignorePath,
@@ -1831,17 +1849,18 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
 /**
  * Lib - Scaffold - Resolve Scaffold Environment Prefix.
  *
- * Derives a readable workspace prefix and falls back to a numbered namespace
- * when it would overlap any project, workspace, or workflow prefix already in use.
+ * Derives a one-word workspace prefix and falls back to a numbered namespace
+ * when it would overlap a project, workspace, or workflow prefix already in use.
  *
- * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment}   environment   - Environment.
- * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName} workspaceName - Workspace name.
+ * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment}      environment      - Environment.
+ * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName}    workspaceName    - Workspace name.
+ * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_IsNonInteractive} isNonInteractive - Is non interactive.
  *
  * @returns {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns}
  *
- * @since 0.31.0
+ * @since 0.39.0
  */
-export function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment, workspaceName: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName): Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns {
+export async function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment, workspaceName: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName, isNonInteractive: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_IsNonInteractive): Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns {
   const existingPrefixes: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes = [];
 
   for (const scopeName of [
@@ -1872,13 +1891,64 @@ export function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_Resol
     }
   }
 
-  const basePrefix: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix = `${workspaceName.toUpperCase().replace(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN, '_')}_`;
+  const workspaceNameSegments: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceNameSegments = workspaceName.split(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN);
+  const lastWorkspaceNameSegment: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_LastWorkspaceNameSegment = workspaceNameSegments[workspaceNameSegments.length - 1] as Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_LastWorkspaceNameSegment;
+  let suggestedPrefix: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_SuggestedPrefix = `${lastWorkspaceNameSegment.toUpperCase()}_`;
+
+  if (libEnvNamespace.isValidPrefix(suggestedPrefix) === false) {
+    suggestedPrefix = `W${suggestedPrefix}`;
+  }
+
+  let basePrefix: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix = suggestedPrefix;
+
+  if (workspaceNameSegments.length > 1 && isNonInteractive === false) {
+    const answers: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answers = await prompts({
+      type: 'text',
+      name: 'prefix',
+      message: `Environment prefix for "${workspaceName}" (one uppercase word followed by "_"):`,
+      initial: suggestedPrefix,
+      validate: (value) => {
+        if (typeof value !== 'string' || libEnvNamespace.isValidPrefix(value.trim()) === false) {
+          return 'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").';
+        }
+
+        if (libEnvNamespace.isReservedPrefix(value.trim()) === true) {
+          return 'Choose a prefix that does not start with the reserved "GITHUB_" namespace.';
+        }
+
+        if (existingPrefixes.some((existingPrefix) => libEnvNamespace.prefixesOverlap(value.trim(), existingPrefix) === true) === true) {
+          return 'Choose a prefix that does not overlap an existing project, workspace, or workflow prefix.';
+        }
+
+        return true;
+      },
+    }, {
+      onCancel: () => false,
+    });
+    const answer: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answer = answers['prefix'];
+
+    if (
+      typeof answer !== 'string'
+      || libEnvNamespace.isValidPrefix(answer.trim()) === false
+      || libEnvNamespace.isReservedPrefix(answer.trim()) === true
+      || existingPrefixes.some((existingPrefix) => libEnvNamespace.prefixesOverlap(answer.trim(), existingPrefix) === true) === true
+    ) {
+      return undefined;
+    }
+
+    basePrefix = answer.trim();
+  }
+
+  const basePrefixWord: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefixWord = basePrefix.slice(0, -1);
   let candidate: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate = basePrefix;
   let candidateIndex: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex = 1;
   let hasConflict: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict = true;
 
   while (hasConflict === true) {
-    hasConflict = libEnvNamespace.isReservedPrefix(candidate);
+    hasConflict = (
+      libEnvNamespace.isValidPrefix(candidate) === false
+      || libEnvNamespace.isReservedPrefix(candidate) === true
+    );
 
     if (hasConflict === false) {
       for (const existingPrefix of existingPrefixes) {
@@ -1891,7 +1961,7 @@ export function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_Resol
     }
 
     if (hasConflict === true) {
-      candidate = `W${candidateIndex}_${basePrefix}`;
+      candidate = `${basePrefixWord}${candidateIndex}_`;
       candidateIndex += 1;
     }
   }
@@ -2037,12 +2107,14 @@ async function resolveScaffoldWorkspaceVersion(existingRoot: Lib_Scaffold_Resolv
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables} environmentVariables - Environment variables.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Platforms}            platforms            - Platforms.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Artifact}             artifact             - Artifact.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget}         deployTarget         - Deploy target.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix}    environmentPrefix    - Environment prefix.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
- * @since 0.15.0
+ * @since 0.39.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms, artifact: Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = undefined): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms, artifact: Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = undefined, deployTarget: Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget = undefined, environmentPrefix: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix = undefined): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -2143,6 +2215,52 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
       sources: artifact['sources'],
     });
     Reflect.set(parsedConfig, 'artifacts', artifacts);
+  }
+
+  if (deployTarget !== undefined) {
+    const parsedWorkflows: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkflows = parsedConfig['workflows'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkflows;
+
+    if (parsedWorkflows !== undefined && Array.isArray(parsedWorkflows) === false) {
+      reportError('The root nova.config.json "workflows" field must be an array.');
+
+      return;
+    }
+
+    const workflows: Lib_Scaffold_RegisterWorkspaceInConfig_Workflows = parsedWorkflows ?? [];
+    let publishWorkflow: Lib_Scaffold_RegisterWorkspaceInConfig_PublishWorkflow = workflows.find((workflow) => workflow['template'] === 'publish' && workflow['name'] === 'project');
+
+    if (publishWorkflow === undefined) {
+      publishWorkflow = {
+        template: 'publish',
+        name: 'project',
+        triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
+        deploy: [],
+      };
+
+      workflows.push(publishWorkflow);
+    } else if (Array.isArray(publishWorkflow['triggers']) === false) {
+      reportError('The root nova.config.json "publish-project" workflow must define a triggers array.');
+
+      return;
+    } else if (publishWorkflow['triggers'].some((trigger) => (typeof trigger === 'string') ? trigger === 'release' : trigger['name'] === 'release') === false) {
+      publishWorkflow['triggers'].push('release');
+    }
+
+    if (publishWorkflow['deploy'] !== undefined && Array.isArray(publishWorkflow['deploy']) === false) {
+      reportError('The root nova.config.json "publish-project" workflow must define deploy as an array.');
+
+      return;
+    }
+
+    const publishDeploy: Lib_Scaffold_RegisterWorkspaceInConfig_PublishDeploy = publishWorkflow['deploy'] ?? [];
+
+    if (publishDeploy.some((target) => target['to'] === deployTarget['to'] && target['path'] === deployTarget['path']) === false) {
+      publishDeploy.push(deployTarget);
+    }
+
+    Reflect.set(publishWorkflow, 'deploy', publishDeploy);
+    Reflect.set(parsedConfig, 'workflows', workflows);
   }
 
   if (category === 'docs') {
@@ -2247,8 +2365,16 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   }
 
   const environmentWorkspaces: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces = parsedEnvironmentWorkspaces ?? {};
+  const resolvedEnvironmentPrefix: Lib_Scaffold_RegisterWorkspaceInConfig_ResolvedEnvironmentPrefix = environmentPrefix ?? await resolveScaffoldEnvironmentPrefix(environment, workspaceName, true);
+
+  if (resolvedEnvironmentPrefix === undefined) {
+    reportError(`Unable to resolve a valid environment prefix for workspace "${workspaceName}".`);
+
+    return;
+  }
+
   const environmentWorkspace: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace = {
-    prefix: resolveScaffoldEnvironmentPrefix(environment, workspaceName),
+    prefix: resolvedEnvironmentPrefix,
   };
 
   if (environmentVariables.length > 0) {
@@ -2555,6 +2681,37 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     }
   }
 
+  let prefixEnvironment: Lib_Scaffold_RunScaffold_PrefixEnvironment = {
+    workspaces: {
+      './': {
+        prefix: 'ROOT_',
+      },
+    },
+  };
+
+  if (existingRoot !== undefined) {
+    const existingEnvironment: Lib_Scaffold_RunScaffold_ExistingEnvironment = existingRoot['config']['environment'];
+
+    if (existingEnvironment !== undefined && isPlainObject(existingEnvironment) === false) {
+      reportError('The root nova.config.json "environment" field must be an object. No scaffold files were written.');
+
+      return;
+    }
+
+    prefixEnvironment = (existingEnvironment === undefined) ? {} : existingEnvironment;
+  }
+
+  const environmentPrefix: Lib_Scaffold_RunScaffold_EnvironmentPrefix = await resolveScaffoldEnvironmentPrefix(prefixEnvironment, config['workspaceName'], isNonInteractive);
+
+  if (environmentPrefix === undefined) {
+    Logger.customize({
+      name: 'CliScaffold.run',
+      purpose: 'cancelled',
+    }).warn('Scaffold cancelled.');
+
+    return;
+  }
+
   const templateResolution: Lib_Scaffold_RunScaffold_TemplateResolution = await resolveTemplateAnswers(options, definition['templateQuestions'] ?? [], isNonInteractive);
 
   if (templateResolution === undefined) {
@@ -2574,7 +2731,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
   const templateValidationError: Lib_Scaffold_RunScaffold_TemplateValidationError = (definition['validateTemplateAnswers'] === undefined) ? undefined : definition.validateTemplateAnswers(templateAnswers);
 
   if (definition['resolveReplacements'] !== undefined) {
-    const replacementResolution: Lib_Scaffold_RunScaffold_ReplacementResolution = await definition.resolveReplacements(config['workspaceName']);
+    const replacementResolution: Lib_Scaffold_RunScaffold_ReplacementResolution = await definition.resolveReplacements(config['workspaceName'], configRoot);
 
     if (replacementResolution === undefined) {
       if (process.exitCode !== 1) {
@@ -2597,6 +2754,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
   }
 
   const resolvedArtifact: Lib_Scaffold_RunScaffold_ResolvedArtifact = (definition['resolveArtifact'] === undefined) ? undefined : definition.resolveArtifact(workspaceRelPath, workspacePackageName, templateAnswers);
+  const resolvedDeployTarget: Lib_Scaffold_RunScaffold_ResolvedDeployTarget = (definition['resolveDeployTarget'] === undefined) ? undefined : definition.resolveDeployTarget(workspaceRelPath, workspacePackageName, templateAnswers);
 
   if (resolvedArtifact !== undefined && LIB_REGEX_PATTERN_SLUG_SIMPLE.test(resolvedArtifact['name']) === false) {
     reportError(`The scaffold artifact name "${resolvedArtifact['name']}" must be a lowercase slug. No scaffold files were written.`);
@@ -2921,7 +3079,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   progress.start('Registering workspace', workspacePackageName);
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms, resolvedArtifact);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms, resolvedArtifact, resolvedDeployTarget, environmentPrefix);
 
   await progress.complete();
 

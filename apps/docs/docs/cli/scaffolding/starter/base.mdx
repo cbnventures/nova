@@ -144,6 +144,8 @@ Before creating any file, Nova validates the project slug and checks every root 
 
 After scaffolding, enter the new monorepo and add as many workspaces as the project needs. Each scaffold command detects the existing workspace root, creates only the requested workspace, adds it to the same `nova.config.json`, and merges its required runtimes and deployment targets into `project.platforms`. Running another scaffold command later preserves the workspaces and platforms that are already registered.
 
+Scaffolds also register a workspace environment prefix that matches `^[A-Z][A-Z0-9]*_$`: one uppercase word followed by `_`. A single-word workspace such as `web` becomes `WEB_`. For a multi-word workspace such as `web-email`, interactive mode asks for a one-word prefix and suggests the last word, `EMAIL_`; the answer must not overlap an existing project, workspace, or workflow prefix. Non-interactive mode uses the last word automatically. When an automatically derived prefix clashes, Nova appends a number before the underscore, such as `EMAIL1_`. The reserved `GITHUB_` namespace remains unavailable.
+
 For example, these commands add a Docusaurus documentation site and a Cloudflare Workers serverless tool to one project:
 
 <Tabs groupId="install-state">

@@ -8,6 +8,7 @@ import type {
   Shared_BlueprintConfigTriggerWideEntry,
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintConfigWorkflow_Build,
+  Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes,
   Shared_BlueprintConfigWorkflow_ContainerPlatforms,
   Shared_BlueprintConfigWorkflow_Deploy,
   Shared_BlueprintConfigWorkflow_TimeoutMinutes,
@@ -19,6 +20,9 @@ import type {
   Shared_BlueprintJob,
   Shared_BlueprintJob_If,
   Shared_BlueprintJob_Needs,
+  Shared_BlueprintJob_RunnerArchitecture,
+  Shared_BlueprintJob_RunsOn,
+  Shared_BlueprintJob_TimeoutMinutes,
   Shared_BlueprintJobs,
   Shared_BlueprintPermission,
   Shared_BlueprintPermissions,
@@ -40,9 +44,11 @@ import type {
   Shared_BlueprintWithMap,
   Shared_BlueprintWithMapEntry_Value,
   Shared_BlueprintWorkflow,
+  Shared_BlueprintWorkflow_StepTimeoutMinutes,
   Shared_CorepackPackageManager,
   Shared_CorepackPackageManagerDescriptor,
   Shared_GeneratorRunResult,
+  Shared_GithubRunnerImages,
   Shared_NovaConfig,
   Shared_NovaConfig_Artifacts,
   Shared_NovaConfig_Workspaces,
@@ -315,15 +321,33 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkers
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep = Shared_BlueprintStep | undefined;
 
 /**
- * CLI - Generate - GitHub - Workflows Blueprint - Build Container Artifact Steps.
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Container Jobs.
  *
- * @since 0.26.0
+ * @since 0.39.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Platforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns = Shared_BlueprintSteps;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_TimeoutMinutes = Shared_BlueprintJob_TimeoutMinutes;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList = string;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CheckoutRef = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Returns = Shared_BlueprintJobs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Labels = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_Jobs = Shared_BlueprintJobs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobIds = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSlug = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformJobId = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_NativeArchitecture = Shared_BlueprintJob_RunnerArchitecture | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_CacheScope = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerJobs_PlatformSteps = Shared_BlueprintSteps;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Build GitHub Pages Target.
@@ -344,6 +368,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_ExtraPermissions = Shared_BlueprintPermissions;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_PostAttestationSteps = Shared_BlueprintSteps;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config = {
   registrySlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_RegistrySlug;
   registryHost: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_RegistryHost;
@@ -351,6 +377,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
   imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_ImageRepository;
   loginStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_LoginStep;
   extraPermissions: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_ExtraPermissions;
+  postAttestationSteps?: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_PostAttestationSteps;
 };
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns = Shared_BlueprintJob;
@@ -366,6 +393,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_LoginStep;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_ExtraPermissions;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PostAttestationSteps = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_PostAttestationSteps;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = string;
 
@@ -401,6 +430,20 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_A
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ReadmePath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_SyncDescription = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ShouldSyncDescription = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubUsername = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHubToken = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ProjectDescription = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_PostAttestationSteps = Shared_BlueprintSteps;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -579,6 +622,47 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_AppPath
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildNpmTarget_DeployDirectory = string;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build PfSense Target.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Context = Shared_BlueprintPublishTargetContext;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Returns = Shared_BlueprintJob;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Metadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables = Shared_WorkflowTemplateVariables;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Environment = Shared_NovaConfigEnvironment | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AppPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Dollar = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_EscapedNewline = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_StagedShareDirectory = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseDirectory = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AddSigningKeyRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_FreebsdRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_SignReleaseRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseSigningKey = string;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -588,6 +672,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry = S
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces = Shared_NovaConfig_Workspaces;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProjectDescription = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = Shared_NovaConfigEnvironment;
 
@@ -622,6 +708,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAw
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
 
@@ -735,11 +823,15 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadArt
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep = Shared_BlueprintStep;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerArtifactSteps = Shared_BlueprintSteps;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredBuildTimeoutMinutes = Shared_BlueprintConfigWorkflow_BuildTimeoutMinutes | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob = Shared_BlueprintJob;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs = Shared_BlueprintJobs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerJobs = Shared_BlueprintJobs;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTarget = Shared_BlueprintConfigDeployTarget;
 
@@ -749,11 +841,11 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContain
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployConfiguredArtifactName = string | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTimeoutMinutes = number;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployArtifactName = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context = Shared_BlueprintPublishTargetContext;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -919,6 +1011,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces = 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = Shared_NovaConfig_Artifacts;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ProjectDescription = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = Shared_BlueprintConfigWorkflow[];
@@ -936,6 +1030,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = Shar
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes = Shared_BlueprintConfigWorkflow['timeoutMinutes'];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job = Shared_BlueprintJob;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunnerArchitecture = Shared_BlueprintJob_RunnerArchitecture | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_JobRunsOn = Shared_BlueprintJob_RunsOn;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -1065,6 +1163,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts = S
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = Shared_NovaConfigEnvironment;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ProjectDescription = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ConfigPath = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawConfig = Record<string, unknown>;
@@ -1072,6 +1172,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawConfig = R
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawContent = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawWorkflows = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RunnerImages = Shared_GithubRunnerImages | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation_Workflows = Cli_Generate_Github_WorkflowsBlueprintValidate_Result_Workflows;
 
@@ -1084,7 +1186,9 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows = Shared_BlueprintConfigWorkflow[];
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic_Severity = 'error';
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasValidationErrors = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic_Severity = 'error' | 'warning';
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic_Message = string;
 
@@ -1163,6 +1267,13 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubPublishRun_Dolla
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Merge Container Artifacts Run.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_MergeContainerArtifactsRun_Returns = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -1422,6 +1533,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeHeader_Return
  */
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs = Shared_BlueprintJobs;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutMinutes = Shared_BlueprintWorkflow_StepTimeoutMinutes | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Line = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Returns = Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Line[];
@@ -1441,6 +1554,16 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepId =
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepIf = string | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepUses = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_ConfiguredStepTimeoutMinutes = number | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepTimeoutDefault = number | 'job';
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_DefaultStepTimeoutMinutes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_RenderedStepTimeoutMinutes = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepContinueOnError = boolean | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_StepEnv = Shared_BlueprintEnvMap | undefined;
 

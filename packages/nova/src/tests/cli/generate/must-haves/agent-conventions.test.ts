@@ -34,6 +34,7 @@ import type {
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_NovaMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJson,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PfsenseMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectDirectory,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectRulesMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RuleName,
@@ -174,6 +175,7 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
     const documentationMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath = join(projectDirectory, 'conventions', 'documentation.md');
     const goMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_GoMdPath = join(projectDirectory, 'conventions', 'go.md');
     const novaMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_NovaMdPath = join(projectDirectory, 'conventions', 'nova.md');
+    const pfsenseMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PfsenseMdPath = join(projectDirectory, 'conventions', 'pfsense.md');
     const rustMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_RustMdPath = join(projectDirectory, 'conventions', 'rust.md');
     const typescriptMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_TypescriptMdPath = join(projectDirectory, 'conventions', 'typescript.md');
 
@@ -188,6 +190,8 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
     await access(goMdPath);
 
     await access(novaMdPath);
+
+    await access(pfsenseMdPath);
 
     await access(rustMdPath);
 

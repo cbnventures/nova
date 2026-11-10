@@ -1,5 +1,12 @@
-import { ok, strictEqual } from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import {
+  deepStrictEqual,
+  ok,
+  strictEqual,
+} from 'node:assert/strict';
+import {
+  execFileSync,
+  spawnSync,
+} from 'node:child_process';
 import {
   mkdir,
   mkdtemp,
@@ -33,7 +40,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Ir,
@@ -45,14 +51,14 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_DisabledEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_DerivesCredNamesThatMatchTheProvisionManagedSet_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_DerivesCredNamesThatMatchTheProvisionManagedSet_Ir,
@@ -65,21 +71,62 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddFixture,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_BuildIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ExpectedAddRun,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ExpectedSignRun,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_FixtureDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_Job,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedAddStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedIr,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedSecretExpression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedSignStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ReleaseDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignFixture,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_StagedShareDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_UnprefixedSecretExpression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_UploadIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ValidateIndex,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_AddRunWithPlaceholder,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_AddStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_FixtureDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_HarnessOutput,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_HarnessPath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_Job,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_ReleaseDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SandboxRoot,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SigningDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SignRunWithPlaceholders,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SignStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_StagedShareDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_Committed,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_FixturePath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_FixturesDir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_Generated,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Ir,
@@ -89,7 +136,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_Environment,
@@ -97,14 +143,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Environment,
@@ -112,7 +156,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Ir,
@@ -124,7 +167,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_AddonEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_CoreEntry,
@@ -132,12 +174,10 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_Siblings,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_Workspaces,
 } from '../../../../types/tests/cli/generate/github/workflows-blueprint-publish-parity.test.d.ts';
@@ -178,6 +218,184 @@ async function assertWorkflowFixture(generated: Tests_Cli_Generate_Github_Workfl
 }
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Pfsense.
+ *
+ * @since 0.39.0
+ */
+describe('WorkflowsBlueprintPublishParity.pfsense', () => {
+  const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_Workspaces = {
+    './packages/firewall': {
+      name: 'pfsense-pkg-firewall',
+      role: 'package',
+      policy: 'distributable',
+    },
+  };
+
+  const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_Entry = {
+    template: 'publish',
+    runsOn: 'ubuntu-24.04',
+    name: 'project',
+    triggers: ['release'],
+    timeoutMinutes: 45,
+    stepTimeoutMinutes: {
+      checkout: 4,
+      check: 8,
+      build: 40,
+      artifact: 10,
+      deploy: 6,
+    },
+    build: ['./packages/firewall'],
+    deploy: [{
+      to: 'pfsense',
+      path: './packages/firewall',
+    }],
+  };
+
+  it('adds signing steps with scoped secrets and exact reviewed scripts', async () => {
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
+    const prefixedWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedWorkspaces = {
+      './packages/x': {
+        name: 'pfsense-pkg-x',
+        role: 'package',
+        policy: 'distributable',
+      },
+    };
+    const prefixedEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedEntry = {
+      ...entry,
+      build: ['./packages/x'],
+      deploy: [{
+        to: 'pfsense',
+        path: './packages/x',
+      }],
+    };
+    const prefixedEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedEnvironment = {
+      workspaces: {
+        './packages/x': { prefix: 'PFSENSE_' },
+      },
+    };
+    const prefixedIr: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedIr = WorkflowsBlueprint.buildPublish(prefixedEntry, prefixedWorkspaces, prefixedEnvironment);
+    const job: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_Job = ir['jobs'].find((candidateJob) => candidateJob['id'] === 'publish-pfsense-packages-firewall');
+    const prefixedJob: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedJob = prefixedIr['jobs'].find((candidateJob) => candidateJob['id'] === 'publish-pfsense-packages-x');
+
+    ok(job !== undefined);
+    ok(prefixedJob !== undefined);
+
+    const validateIndex: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ValidateIndex = job['steps'].findIndex((candidateStep) => candidateStep['name'] === 'Validate and stage port');
+    const addIndex: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddIndex = job['steps'].findIndex((candidateStep) => candidateStep['name'] === 'Add release signing key');
+    const buildIndex: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_BuildIndex = job['steps'].findIndex((candidateStep) => candidateStep['name'] === 'Build on FreeBSD');
+    const signIndex: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignIndex = job['steps'].findIndex((candidateStep) => candidateStep['name'] === 'Sign release packages');
+    const uploadIndex: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_UploadIndex = job['steps'].findIndex((candidateStep) => candidateStep['name'] === 'Upload workflow artifact');
+    const addStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddStep = job['steps'][addIndex]!;
+    const signStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignStep = job['steps'][signIndex]!;
+    const prefixedAddStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedAddStep = prefixedJob['steps'].find((candidateStep) => candidateStep['name'] === 'Add release signing key')!;
+    const prefixedSignStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedSignStep = prefixedJob['steps'].find((candidateStep) => candidateStep['name'] === 'Sign release packages')!;
+
+    strictEqual(addIndex, validateIndex + 1);
+    strictEqual(buildIndex, addIndex + 1);
+    strictEqual(signIndex, buildIndex + 1);
+    strictEqual(uploadIndex, signIndex + 1);
+    strictEqual(addStep['kind'], 'attest');
+    strictEqual(signStep['kind'], 'attest');
+    strictEqual(addStep['if'], undefined);
+    strictEqual(signStep['if'], undefined);
+    strictEqual(addStep['runBlock'], true);
+    strictEqual(signStep['runBlock'], true);
+
+    const fixtureDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_FixtureDirectory = join(dirname(fileURLToPath(import.meta.url)), 'fixtures', 'pfsense-signing');
+    const addFixture: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_AddFixture = await readFile(join(fixtureDirectory, 'add-signing-key.sh'), 'utf-8');
+    const signFixture: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_SignFixture = await readFile(join(fixtureDirectory, 'sign-release.sh'), 'utf-8');
+    const stagedShareDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_StagedShareDirectory = './packages/firewall/build/port/files/usr/local/share';
+    const releaseDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ReleaseDirectory = './packages/firewall/build/release';
+    const expectedAddRun: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ExpectedAddRun = addFixture.replace('__STAGED_SHARE_DIRECTORY__', stagedShareDirectory);
+    const expectedSignRun: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_ExpectedSignRun = signFixture
+      .replace('__RELEASE_DIRECTORY__', releaseDirectory)
+      .replace('__STAGED_SHARE_DIRECTORY__', stagedShareDirectory);
+    const unprefixedSecretExpression: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_UnprefixedSecretExpression = [
+      '$',
+      '{{ secrets.RELEASE_SIGNING_KEY }}',
+    ].join('');
+    const prefixedSecretExpression: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_AddsSigningStepsWithScopedSecretsAndExactReviewedScripts_PrefixedSecretExpression = [
+      '$',
+      '{{ secrets.PFSENSE_RELEASE_SIGNING_KEY }}',
+    ].join('');
+
+    strictEqual(addStep['run'], expectedAddRun);
+    strictEqual(signStep['run'], expectedSignRun);
+    deepStrictEqual(addStep['env'], [{
+      key: 'RELEASE_SIGNING_KEY',
+      value: unprefixedSecretExpression,
+    }]);
+    deepStrictEqual(signStep['env'], addStep['env']);
+    deepStrictEqual(prefixedAddStep['env'], [{
+      key: 'RELEASE_SIGNING_KEY',
+      value: prefixedSecretExpression,
+    }]);
+    deepStrictEqual(prefixedSignStep['env'], prefixedAddStep['env']);
+
+    return;
+  });
+
+  it.skipIf(spawnSync('ssh-keygen', ['-?']).error !== undefined)('executes the generated signing pipeline with throwaway keys', async () => {
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
+    const job: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_Job = ir['jobs'].find((candidateJob) => candidateJob['id'] === 'publish-pfsense-packages-firewall');
+
+    ok(job !== undefined);
+
+    const addStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_AddStep = job['steps'].find((candidateStep) => candidateStep['name'] === 'Add release signing key')!;
+    const signStep: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SignStep = job['steps'].find((candidateStep) => candidateStep['name'] === 'Sign release packages')!;
+    const fixtureDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_FixtureDirectory = join(dirname(fileURLToPath(import.meta.url)), 'fixtures', 'pfsense-signing');
+    const harnessPath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_HarnessPath = join(fixtureDirectory, 'test-pipeline.sh');
+    const sandboxRoot: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SandboxRoot = await mkdtemp(join(tmpdir(), 'nova-pfsense-signing-'));
+
+    try {
+      const signingDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SigningDirectory = join(sandboxRoot, 'signing');
+
+      await mkdir(signingDirectory, { recursive: true });
+
+      const stagedShareDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_StagedShareDirectory = './packages/firewall/build/port/files/usr/local/share';
+      const releaseDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_ReleaseDirectory = './packages/firewall/build/release';
+      const addRunWithPlaceholder: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_AddRunWithPlaceholder = addStep['run']!.replace(stagedShareDirectory, '__STAGED_SHARE_DIRECTORY__');
+      const signRunWithPlaceholders: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_SignRunWithPlaceholders = signStep['run']!
+        .replace(releaseDirectory, '__RELEASE_DIRECTORY__')
+        .replace(stagedShareDirectory, '__STAGED_SHARE_DIRECTORY__');
+
+      await writeFile(join(signingDirectory, 'add-signing-key.sh'), addRunWithPlaceholder, 'utf-8');
+      await writeFile(join(signingDirectory, 'sign-release.sh'), signRunWithPlaceholders, 'utf-8');
+
+      const harnessOutput: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ExecutesTheGeneratedSigningPipelineWithThrowawayKeys_HarnessOutput = execFileSync('bash', [
+        harnessPath,
+        sandboxRoot,
+        'bash',
+      ], {
+        encoding: 'utf-8',
+      });
+
+      strictEqual(harnessOutput.includes('RESULT (bash): 10 passed, 0 failed'), true);
+    } finally {
+      await rm(sandboxRoot, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
+  it('reproduces the synthetic pfSense workflow byte-for-byte', async () => {
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
+    const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
+    const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-pfsense.yml');
+    const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPfsense_ReproducesTheSyntheticPfSenseWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
+
+    await assertWorkflowFixture(generated, committed, fixturePath);
+
+    return;
+  });
+
+  return;
+});
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Project.
  *
  * @since 0.21.0
@@ -203,6 +421,7 @@ describe('WorkflowsBlueprintPublishParity.project', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['release'],
     build: [
@@ -242,8 +461,7 @@ describe('WorkflowsBlueprintPublishParity.project', () => {
   };
 
   it('reproduces the committed project workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath = join(fixturesDir, 'nova-publish-project.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -367,6 +585,7 @@ describe('WorkflowsBlueprintPublishParity.sites', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'sites',
     triggers: ['release'],
     build: [
@@ -389,8 +608,7 @@ describe('WorkflowsBlueprintPublishParity.sites', () => {
   };
 
   it('reproduces the committed sites workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, environment);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_FixturePath = join(fixturesDir, 'nova-publish-sites.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_ReproducesTheCommittedSitesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -439,6 +657,7 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'portal',
     triggers: ['release'],
     build: ['./apps/portal'],
@@ -452,8 +671,7 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
   };
 
   it('reproduces the synthetic cloudflare workers secret sync workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, environment);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-cloudflare-workers-secret-sync.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_ReproducesTheSyntheticCloudflareWorkersSecretSyncWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -473,6 +691,7 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
     };
     const noSecretsEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsEntry = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'plain',
       triggers: ['release'],
       build: ['./apps/plain'],
@@ -511,6 +730,7 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'containers',
     triggers: ['release'],
     timeoutMinutes: 45,
@@ -523,6 +743,7 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
         with: {
           IMAGE_NAMESPACE: 'cbnventures',
           IMAGE_REPOSITORY: 'sandbox',
+          README_PATH: 'docs/container.md',
         },
       },
       {
@@ -544,8 +765,7 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
   };
 
   it('reproduces the synthetic containers workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, {}, [], 'npm', {}, 'A short Docker Hub description.');
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-docker-hub-ghcr.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -554,13 +774,37 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('artifact-metadata: "write"'), true);
     strictEqual(generated.split('uses: "docker/build-push-action@v7"').length - 1, 1);
-    strictEqual(generated.split('include-hidden-files: true').length - 1, 3, 'every build and OCI artifact upload preserves hidden files');
-    strictEqual(generated.split('if-no-files-found: "error"').length - 1, 3, 'every artifact upload rejects an empty handoff');
+    strictEqual(generated.includes([
+      'org.opencontainers.image.version=',
+      '$',
+      '{{ github.event.release.tag_name || inputs.tag || github.ref_name }}',
+    ].join('')), true);
+    strictEqual(generated.includes([
+      'org.opencontainers.image.revision=',
+      '$',
+      '{{ github.sha }}',
+    ].join('')), true);
+    strictEqual(generated.includes('uses: "peter-evans/dockerhub-description@v5"'), true);
+    strictEqual(generated.includes('continue-on-error: true'), true);
+    strictEqual(generated.includes('repository: "cbnventures/sandbox"'), true);
+    strictEqual(generated.includes('short-description: "A short Docker Hub description."'), true);
+    strictEqual(generated.includes('readme-filepath: "docs/container.md"'), true);
+    strictEqual(generated.includes('enable-url-completion: true'), true);
+    strictEqual(generated.split('include-hidden-files: true').length - 1, 4, 'every build and OCI artifact upload preserves hidden files');
+    strictEqual(generated.split('if-no-files-found: "error"').length - 1, 4, 'every artifact upload rejects an empty handoff');
     strictEqual(generated.split('name: "Validate build artifacts"').length - 1, 1, 'the build handoffs share one preflight');
-    strictEqual(generated.split('name: "Validate immutable OCI artifact"').length - 1, 1, 'the OCI handoff receives its own preflight');
+    strictEqual(generated.split('name: "Validate immutable OCI artifact"').length - 1, 2, 'each per-platform and merged OCI handoff receives its own preflight');
     strictEqual(generated.includes('Artifact contains a sensitive hidden path'), true);
     strictEqual(generated.includes('Artifact symlink escapes its root'), true);
-    strictEqual(generated.split('platforms: "linux/arm64"').length - 1, 2);
+    strictEqual(generated.split('platforms: "linux/arm64"').length - 1, 1);
+    strictEqual(generated.includes('docker/setup-qemu-action'), false, 'a platform with a native runner builds without emulation');
+    strictEqual(generated.includes('build-container-linux-arm64:'), true);
+    strictEqual(generated.includes('runs-on: "ubuntu-24.04-arm"'), true);
+    strictEqual(generated.includes('cache-from: "type=gha,scope=container-linux-arm64"'), true);
+    strictEqual(generated.includes('cache-to: "type=gha,mode=max,scope=container-linux-arm64"'), true);
+    strictEqual(generated.includes('needs: ["build", "build-container-linux-arm64"]'), true);
+    strictEqual(generated.split('needs: "build-container"').length - 1, 2, 'registry jobs wait for the merged index');
+    strictEqual(generated.includes('oras manifest index create --oci-layout'), true);
     strictEqual(generated.includes('linux/amd64'), false);
     strictEqual(generated.split('name: "Download immutable OCI artifact"').length - 1, 2);
     strictEqual(generated.split('name: "container-oci"').length - 1, 3);
@@ -584,7 +828,31 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     strictEqual(generated.includes('oras resolve "$IMAGE:$tag" 2>/dev/null'), false);
     strictEqual(generated.split('name: "Verify immutable image tags"').length - 1, 2);
     strictEqual(generated.includes('oras tag \\"$IMAGE@$IMAGE_DIGEST\\" latest'), true);
-    strictEqual(generated.split('timeout-minutes: 45').length - 1, 5);
+    strictEqual(generated.split('\n    timeout-minutes: 45\n').length - 1, 7, 'the per-platform build and merge jobs share the build timeout');
+
+    return;
+  });
+
+  it('skips Docker Hub description sync when disabled', () => {
+    const disabledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_DisabledEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'containers-disabled',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+        with: {
+          IMAGE_NAMESPACE: 'cbnventures',
+          IMAGE_REPOSITORY: 'sandbox',
+          SYNC_DESCRIPTION: 'false',
+        },
+      }],
+    };
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_SkipsDockerHubDescriptionSyncWhenDisabled_Generated = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(disabledEntry, workspaces, {}, [], 'npm', {}, 'A short Docker Hub description.'));
+
+    strictEqual(generated.includes('peter-evans/dockerhub-description'), false);
+    strictEqual(generated.includes('Checkout Docker Hub description source'), false);
 
     return;
   });
@@ -608,6 +876,7 @@ describe('WorkflowsBlueprintPublishParity.nativeWorkspaces', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'plain',
     triggers: ['release'],
     build: ['./packages/plain'],
@@ -621,8 +890,7 @@ describe('WorkflowsBlueprintPublishParity.nativeWorkspaces', () => {
   };
 
   it('reproduces the synthetic native-workspaces workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-native-workspaces.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -651,6 +919,7 @@ describe('WorkflowsBlueprintPublishParity.pages', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'pages',
     triggers: ['release'],
     build: ['./apps/docs'],
@@ -661,8 +930,7 @@ describe('WorkflowsBlueprintPublishParity.pages', () => {
   };
 
   it('reproduces the synthetic pages workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-github-pages.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -691,6 +959,7 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'action',
     triggers: ['release'],
     build: ['./packages/action'],
@@ -707,8 +976,7 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
   };
 
   it('reproduces the synthetic action workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-github-action.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -965,6 +1233,7 @@ describe('WorkflowsBlueprintPublishParity.vercel', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'vercel',
     triggers: ['release'],
     build: ['./apps/web'],
@@ -975,8 +1244,7 @@ describe('WorkflowsBlueprintPublishParity.vercel', () => {
   };
 
   it('reproduces the synthetic vercel workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercel_ReproducesTheSyntheticVercelWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1016,6 +1284,7 @@ describe('WorkflowsBlueprintPublishParity.vercelScope', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'vercel-scope',
     triggers: ['release'],
     build: ['./apps/web'],
@@ -1026,8 +1295,7 @@ describe('WorkflowsBlueprintPublishParity.vercelScope', () => {
   };
 
   it('reproduces the synthetic vercel scope workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, environment);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel-scope.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1076,6 +1344,7 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'vercel-secret-sync',
     triggers: ['release'],
     build: ['./apps/web'],
@@ -1086,8 +1355,7 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
   };
 
   it('reproduces the synthetic vercel secret sync workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, environment);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-vercel-secret-sync.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1107,6 +1375,7 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
     };
     const noSecretsEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsEntry = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'plain',
       triggers: ['release'],
       build: ['./apps/plain'],
@@ -1165,6 +1434,7 @@ describe('WorkflowsBlueprintPublishParity.runtimeSyncFanOut', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'api',
     triggers: ['release'],
     build: ['./apps/api'],
@@ -1181,8 +1451,7 @@ describe('WorkflowsBlueprintPublishParity.runtimeSyncFanOut', () => {
   };
 
   it('syncs the same runtime secrets to every server-bearing target byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, workspaces, environment);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-runtime-sync-fan-out.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1226,6 +1495,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
 
   const coreEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_CoreEntry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'core',
     triggers: ['release'],
     build: ['./packages/core'],
@@ -1245,6 +1515,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
       name: 'workflow-run-success',
       workflows: ['publish-core'],
     }],
+    'runsOn': 'ubuntu-24.04',
     'build': ['./packages/addon'],
     'deploy': [{
       to: 'npm',
@@ -1261,8 +1532,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
   ];
 
   it('reproduces the synthetic upstream core workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(coreEntry, workspaces, {}, siblings);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(coreEntry, workspaces, {}, siblings);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-workflow-run-core.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticUpstreamCoreWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1273,8 +1543,7 @@ describe('WorkflowsBlueprintPublishParity.workflowRun', () => {
   });
 
   it('reproduces the synthetic chained success workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(addonEntry, workspaces, {}, siblings);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(addonEntry, workspaces, {}, siblings);
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-workflow-run-success.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityWorkflowRun_ReproducesTheSyntheticChainedSuccessWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
@@ -1319,6 +1588,7 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
 
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'invariant',
     triggers: ['release'],
     build: ['./apps/docs'],
@@ -1335,6 +1605,7 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
       environment,
       workflows: [{
         template: 'publish',
+        runsOn: 'ubuntu-24.04',
         name: 'invariant',
         triggers: ['release'],
         deploy: [{

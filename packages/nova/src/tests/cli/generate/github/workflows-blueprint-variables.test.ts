@@ -213,6 +213,7 @@ describe('Variables.collectSetupLines', () => {
   it('excludes auto secrets and lists non-auto secrets and vars', () => {
     const workflow: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ExcludesAutoSecretsAndListsNonAutoSecretsAndVars_Workflow = {
       template: 'check-sponsor-gated-issues',
+      runsOn: 'ubuntu-24.04',
       name: 'project',
       triggers: ['issues'],
     };
@@ -244,6 +245,7 @@ describe('Variables.collectSetupLines', () => {
   it('resolves target variable names from target settings', () => {
     const workflow: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ResolvesTargetVariableNamesFromTargetSettings_Workflow = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'project',
       triggers: ['release'],
       deploy: [{
@@ -266,6 +268,7 @@ describe('Variables.collectSetupLines', () => {
   it('lists public dotenv variables for publish scopes', () => {
     const workflow: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Workflow = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'project',
       triggers: ['release'],
       build: ['./packages/pkg-a'],
@@ -277,7 +280,7 @@ describe('Variables.collectSetupLines', () => {
     const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Environment = {
       workspaces: {
         './packages/pkg-a': {
-          prefix: 'PKG_A_',
+          prefix: 'PKGA_',
           variables: [
             {
               key: 'PUBLIC_SITE_KEY',
@@ -302,10 +305,10 @@ describe('Variables.collectSetupLines', () => {
     const joined: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Joined = result.join('\n').replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
 
     // A reach-build var lists under its prefixed GitHub name.
-    strictEqual(joined.includes('Variable PKG_A_PUBLIC_SITE_KEY'), true);
+    strictEqual(joined.includes('Variable PKGA_PUBLIC_SITE_KEY'), true);
 
     // A second reach-build var lists under its prefixed GitHub name.
-    strictEqual(joined.includes('Variable PKG_A_PUBLIC_GTM_ID'), true);
+    strictEqual(joined.includes('Variable PKGA_PUBLIC_GTM_ID'), true);
 
     // The unprefixed key must not appear, so the report matches the baked YAML.
     strictEqual(joined.includes('Variable PUBLIC_GTM_ID'), false);

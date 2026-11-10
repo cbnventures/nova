@@ -14,11 +14,14 @@ import { stripVTControlCharacters } from 'node:util';
 
 import {
   afterAll,
+  afterEach,
+  beforeEach,
   describe,
   it,
   vi,
 } from 'vitest';
 
+import { Runner as ApiGithubRunnerImages } from '../../../../api/github-runner-images.js';
 import { Runner as WorkflowsBlueprint } from '../../../../cli/generate/github/workflows-blueprint.js';
 
 import type {
@@ -29,6 +32,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutChunks,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutSpy,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutText,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Entries,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_PreviousExitCode,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_StderrSpy,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_DollarBrace,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_ProjectDirectory,
@@ -93,6 +102,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_Entries,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_PublishContent,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutChunks,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutSpy,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText,
@@ -109,6 +119,33 @@ describe('WorkflowsBlueprint.generate', async () => {
   const temporaryPrefix: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
   const sandboxRoot: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_SandboxRoot = await mkdtemp(temporaryPrefix);
 
+  beforeEach(() => {
+    vi.spyOn(ApiGithubRunnerImages, 'fetchRunnerImages').mockResolvedValue([
+      {
+        name: 'Ubuntu 24.04',
+        architecture: 'x64',
+        labels: ['ubuntu-24.04'],
+        status: 'available',
+      },
+      {
+        name: 'Ubuntu 24.04 Arm64',
+        architecture: 'arm64',
+        labels: ['ubuntu-24.04-arm'],
+        status: 'available',
+      },
+    ]);
+
+    return;
+  });
+
+  afterEach(() => {
+    ApiGithubRunnerImages.resetForTesting();
+
+    vi.restoreAllMocks();
+
+    return;
+  });
+
   afterAll(async () => {
     process.chdir(originalCwd);
 
@@ -116,6 +153,69 @@ describe('WorkflowsBlueprint.generate', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  it('cancels without writing when GitHub runner images cannot be read', async () => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_ProjectDirectory = join(sandboxRoot, 'runner-images-failure-mock');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'runner-images-failure-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_NovaConfig = {
+      project: {
+        name: {
+          title: 'Runner Images Failure',
+          slug: 'runner-images-failure',
+        },
+      },
+      workflows: [{
+        template: 'lock-inactive-issues',
+        runsOn: 'ubuntu-24.04',
+        name: 'project',
+        triggers: ['schedule-weekly'],
+      }],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'runner-images-failure-project',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    const previousExitCode: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_PreviousExitCode = process.exitCode;
+
+    process.exitCode = undefined;
+
+    vi.mocked(ApiGithubRunnerImages['fetchRunnerImages']).mockResolvedValueOnce(undefined);
+
+    const stderrSpy: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_StderrSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Result = await WorkflowsBlueprint.generate({});
+
+    stderrSpy.mockRestore();
+
+    strictEqual(result, 'cancelled');
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = previousExitCode;
+
+    const entries: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Entries = await readdir(join(projectDirectory, '.github')).catch(() => []);
+
+    strictEqual(entries.length, 0, 'workflow files were written after the runner list failed');
 
     return;
   });
@@ -145,6 +245,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       workflows: [
         {
           template: 'check-sponsor-gated-issues',
+          runsOn: 'ubuntu-24.04',
           name: 'project',
           triggers: [
             'issue-comment',
@@ -165,11 +266,13 @@ describe('WorkflowsBlueprint.generate', async () => {
         },
         {
           template: 'lock-inactive-issues',
+          runsOn: 'ubuntu-24.04',
           name: 'project',
           triggers: ['schedule-weekly'],
         },
         {
           template: 'publish',
+          runsOn: 'ubuntu-24.04',
           name: 'sites',
           triggers: ['release'],
           build: [
@@ -366,10 +469,14 @@ describe('WorkflowsBlueprint.generate', async () => {
           title: 'Valid',
           slug: 'valid',
         },
+        description: {
+          short: 'Valid Docker Hub description.',
+        },
       },
       workflows: [
         {
           template: 'check-sponsor-gated-issues',
+          runsOn: 'ubuntu-24.04',
           name: 'project',
           triggers: [
             'issue-comment',
@@ -378,13 +485,24 @@ describe('WorkflowsBlueprint.generate', async () => {
         },
         {
           template: 'publish',
+          runsOn: 'ubuntu-24.04',
           name: 'sites',
           triggers: ['release'],
           build: ['./apps/cbnventures'],
-          deploy: [{
-            to: 'cloudflare-workers',
-            path: './apps/cbnventures',
-          }],
+          deploy: [
+            {
+              to: 'cloudflare-workers',
+              path: './apps/cbnventures',
+            },
+            {
+              to: 'docker-hub',
+              path: './',
+              with: {
+                IMAGE_NAMESPACE: 'example',
+                IMAGE_REPOSITORY: 'valid',
+              },
+            },
+          ],
           with: {},
         },
       ],
@@ -423,6 +541,12 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     ok(entries.includes('nova-publish-sites.yml') === true, 'missing publish workflow');
 
+    const publishContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_PublishContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-sites.yml'), 'utf-8');
+
+    ok(publishContent.includes('uses: "peter-evans/dockerhub-description@v5"') === true, 'missing pinned Docker Hub description action');
+    ok(publishContent.includes('short-description: "Valid Docker Hub description."') === true, 'missing project short description');
+    ok(publishContent.includes('readme-filepath: "README.md"') === true, 'missing default Docker Hub README path');
+
     const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
 
     ok(stdoutText.includes('Setup:') === true, 'missing Setup report');
@@ -459,6 +583,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'not-a-real-template',
+        runsOn: 'ubuntu-24.04',
         name: 'project',
         triggers: ['issues'],
       }],
@@ -536,6 +661,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'not-a-real-template',
+        runsOn: 'ubuntu-24.04',
         name: 'project',
         triggers: ['issues'],
       }],
@@ -596,6 +722,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'lock-inactive-issues',
+        runsOn: 'ubuntu-24.04',
         triggers: ['schedule-weekly'],
       }],
       workspaces: {
@@ -662,6 +789,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'publish',
+        runsOn: 'ubuntu-24.04',
         name: 'sites',
         triggers: ['release'],
         build: ['./apps/not-registered'],
@@ -740,6 +868,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'publish',
+        runsOn: 'ubuntu-24.04',
         name: 'sites',
         triggers: ['release'],
         build: ['./apps/cbnventures'],
@@ -847,6 +976,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'publish',
+        runsOn: 'ubuntu-24.04',
         name: 'sites',
         triggers: ['tag-push'],
         build: ['./apps/cbnventures'],
@@ -926,6 +1056,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       },
       workflows: [{
         template: 'check-sponsor-gated-issues',
+        runsOn: 'ubuntu-24.04',
         name: 'sponsor-check',
         triggers: [
           'issue-comment',

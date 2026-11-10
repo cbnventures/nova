@@ -321,6 +321,16 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
           slug: 'docker-workspace-test',
           title: 'Docker Workspace Test',
         },
+        description: {
+          short: 'Docker workspace fixture',
+        },
+        legalName: 'Docker Workspace Vendor',
+        license: 'MIT',
+      },
+      urls: {
+        documentation: 'https://docs.example.com/docker-workspace-test',
+        homepage: 'https://example.com/docker-workspace-test',
+        repository: 'https://github.com/example/docker-workspace-test',
       },
       workspaces: {
         './': {
@@ -357,6 +367,13 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
     strictEqual(dockerfileContent.includes('EXPOSE 3000'), true);
     strictEqual(dockerfileContent.includes('HEALTHCHECK'), true);
     strictEqual(dockerfileContent.includes('ENTRYPOINT ["/init"]'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="Docker Workspace Test"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.description="Docker workspace fixture"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="https://example.com/docker-workspace-test"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="https://github.com/example/docker-workspace-test"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="https://docs.example.com/docker-workspace-test"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="MIT"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="Docker Workspace Vendor"'), true);
     strictEqual(dockerfileContent.includes('[__'), false);
     strictEqual(dockerignoreContent.includes('**/build'), true);
     strictEqual(dockerignoreContent.includes('**/dist'), true);

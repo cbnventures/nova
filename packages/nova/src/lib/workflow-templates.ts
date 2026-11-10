@@ -1,4 +1,62 @@
-import type { Lib_WorkflowTemplates_Metadata } from '../types/lib/workflow-templates.d.ts';
+import type {
+  Lib_WorkflowTemplates_ContainerPlatformArchitectures,
+  Lib_WorkflowTemplates_Metadata,
+  Lib_WorkflowTemplates_StepKinds,
+  Lib_WorkflowTemplates_StepTimeoutDefaults,
+} from '../types/lib/workflow-templates.d.ts';
+
+/**
+ * Lib - Workflow Templates - Lib Workflow Step Kinds.
+ *
+ * Lists the supported timeout categories for generated workflow steps.
+ * The order also drives validation and interactive configuration output.
+ *
+ * @since 0.39.0
+ */
+export const libWorkflowStepKinds: Lib_WorkflowTemplates_StepKinds = [
+  'checkout',
+  'setup',
+  'install',
+  'build',
+  'check',
+  'artifact',
+  'registry',
+  'deploy',
+  'attest',
+];
+
+/**
+ * Lib - Workflow Templates - Lib Workflow Step Timeout Defaults.
+ *
+ * Assigns short ceilings to quick steps and the job ceiling to long steps.
+ * The serializer clamps every resolved value to its containing job timeout.
+ *
+ * @since 0.39.0
+ */
+export const libWorkflowStepTimeoutDefaults: Lib_WorkflowTemplates_StepTimeoutDefaults = {
+  checkout: 5,
+  setup: 10,
+  install: 20,
+  build: 'job',
+  check: 'job',
+  artifact: 'job',
+  registry: 5,
+  deploy: 'job',
+  attest: 10,
+};
+
+/**
+ * Lib - Workflow Templates - Lib Workflow Container Platform Architectures.
+ *
+ * Maps native container platforms to their required CPU architecture.
+ * Platforms not listed are built under QEMU on the workflow runner.
+ *
+ * @since 0.39.0
+ */
+export const libWorkflowContainerPlatformArchitectures: Lib_WorkflowTemplates_ContainerPlatformArchitectures = {
+  'linux/amd64': 'x64',
+  'linux/arm64': 'arm64',
+};
 
 /**
  * Lib - Workflow Templates - Lib Workflow Templates Metadata.
@@ -189,14 +247,28 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'DOCKERHUB_TOKEN': {
             format: 'secret',
             default: 'DOCKERHUB_TOKEN',
-            description: 'Docker Hub access token for publishing images',
+            description: 'Docker Hub password or access token with Read, Write, Delete scope for image publishing and description syncing',
             scope: 'account',
           },
           'DOCKERHUB_USERNAME': {
             format: 'var',
             default: 'DOCKERHUB_USERNAME',
-            description: 'Docker Hub username used only to authenticate the registry push',
+            description: 'Docker Hub username used to authenticate image publishing and description syncing',
             scope: 'account',
+          },
+          'README_PATH': {
+            format: 'literal',
+            default: 'README.md',
+            description: 'Path to the Docker Hub overview Markdown file relative to the published workspace',
+            example: 'README.md',
+            optional: true,
+          },
+          'SYNC_DESCRIPTION': {
+            format: 'literal',
+            default: 'true',
+            description: 'Whether to sync the Docker Hub overview and short description after publishing',
+            example: 'true',
+            optional: true,
           },
         },
         requiredLiterals: {
@@ -309,6 +381,24 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'id-token': 'write',
         },
         uniquenessKey: [],
+      },
+      'pfsense': {
+        description: 'Build a pfSense package on FreeBSD and attach it to a GitHub release',
+        artifactPaths: [],
+        variables: {
+          'RELEASE_SIGNING_KEY': {
+            format: 'secret',
+            default: 'RELEASE_SIGNING_KEY',
+            description: 'Unencrypted OpenSSH Ed25519 private key that signs the release packages. Skip creating this secret to publish unsigned packages',
+            scope: 'app',
+            optional: true,
+          },
+        },
+        permissions: {
+          contents: 'write',
+        },
+        workspaceRole: 'package',
+        workspaceNamePrefix: 'pfsense-pkg-',
       },
       'vercel-nextjs': {
         description: 'Deploy Next.js to Vercel',

@@ -1,4 +1,10 @@
 pkg/[__WORKSPACE_NAME__].inc
 pkg/[__WORKSPACE_NAME__].xml
+pkg/[__WORKSPACE_NAME__]/FileLock.php
+pkg/[__WORKSPACE_NAME__]/PackagePaths.php
+pkg/[__WORKSPACE_NAME__]/UpdateManager.php
 sbin/[__WORKSPACE_NAME__]
+www/[__WORKSPACE_NAME__]-about.php
 %%DATADIR%%/info.xml
+%%DATADIR%%/logo.svg
+%%DATADIR%%/release-signing.pub

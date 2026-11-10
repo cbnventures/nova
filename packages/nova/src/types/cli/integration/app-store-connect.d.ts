@@ -20,6 +20,49 @@ export type Cli_Integration_AppStoreConnect_Runner_CreateClient_Returns = Promis
 
 export type Cli_Integration_AppStoreConnect_Runner_CreateClient_Credentials = Shared_AppStoreConnectCredentials;
 
+/**
+ * CLI - Integration - App Store Connect - Create Placement.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementType = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ImageId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Attempt = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Returns = Promise<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Response = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Query = URLSearchParams;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_ReconciliationResponse = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_Placements = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_MatchingPlacement = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacement_DelayMilliseconds = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementType = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_ImageIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreatePlacements_Returns = Promise<string[]>;
+
 export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Options = Shared_AppStoreConnectIntegrationOptions;
 
 export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Returns = Promise<void>;
@@ -86,6 +129,104 @@ export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesPlatform
 
 export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesLocale = boolean;
 
+/**
+ * CLI - Integration - App Store Connect - Inspect Screenshot Image.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Buffer = Buffer;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Format = 'JPEG' | 'PNG';
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_HasAlpha = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Height = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Width = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns = {
+  format: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Format;
+  hasAlpha: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_HasAlpha;
+  height: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Height;
+  width: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns_Width;
+};
+
+/**
+ * CLI - Integration - App Store Connect - Inspect Screenshot JPEG.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Buffer = Buffer;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Format = 'JPEG' | 'PNG';
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_HasAlpha = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Height = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Width = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns = {
+  format: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Format;
+  hasAlpha: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_HasAlpha;
+  height: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Height;
+  width: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Returns_Width;
+};
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Offset = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Width = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Height = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_HasEndOfImage = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Marker = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_SegmentLength = number;
+
+/**
+ * CLI - Integration - App Store Connect - Inspect Screenshot PNG.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Buffer = Buffer;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Format = 'JPEG' | 'PNG';
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_HasAlpha = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Height = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Width = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns = {
+  format: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Format;
+  hasAlpha: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_HasAlpha;
+  height: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Height;
+  width: Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Returns_Width;
+};
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Offset = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Width = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Height = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ColorType = number | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasTransparencyChunk = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_HasEndChunk = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkLength = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_ChunkType = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_DataOffset = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_NextOffset = number;
+
 export type Cli_Integration_AppStoreConnect_Runner_Metadata_Options = Shared_AppStoreConnectIntegrationOptions;
 
 export type Cli_Integration_AppStoreConnect_Runner_Metadata_Returns = Promise<void>;
@@ -109,6 +250,31 @@ export type Cli_Integration_AppStoreConnect_Runner_Metadata_AppId = string;
 export type Cli_Integration_AppStoreConnect_Runner_Metadata_Context = Shared_AppStoreConnectRemoteContext;
 
 export type Cli_Integration_AppStoreConnect_Runner_Metadata_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_OrderPlacements_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_OrderPlacements_PlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Returns = Promise<void>;
+
+/**
+ * CLI - Integration - App Store Connect - Placement Image ID.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Placement = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Returns = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Relationships = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageRelationship = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_PlacementImageId_ImageData = unknown;
 
 export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Options = Shared_AppStoreConnectIntegrationOptions;
 
@@ -176,9 +342,183 @@ export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Response = S
 
 export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ExistingPlacements = Shared_AppStoreConnectResource[];
 
-export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementResponses = (Shared_AppStoreConnectResource | undefined)[];
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MaximumPlacementCount = number;
 
-export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementIds = string[];
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_AvailablePlacements = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_DesiredPlacementIds = (string | undefined)[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PendingImageIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageId = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementIndex = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacement = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_MatchingPlacementId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_RemainingOldPlacementIds = Set<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_InitialDesiredPlacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureResponse = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailurePlacements = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureNewPlacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementImageId = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_FailureOldPlacementCount = number;
+
+/**
+ * CLI - Integration - App Store Connect - Replace Placement Batch.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementType = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PendingImageIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredPlacementIds = (string | undefined)[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIds = Set<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_WindowSize = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementDeleteCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_AvailableSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DeletedOldPlacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CompleteReplacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_PermittedOldPlacementDeleteCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OldPlacementIdsToDelete = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_BatchImageIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_ImageId = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_CreatedPlacementId = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingPendingImageIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextCreatedPlacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_DesiredOrderedPlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshQuery = URLSearchParams;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshResponse = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacements = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_FreshPlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_SupersededPlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_OrderedPlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_RemainingOldPlacementIdsToDelete = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextFreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacementBatch_NextWindowSize = number;
+
+/**
+ * CLI - Integration - App Store Connect - Replace Screenshot Batch.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SetId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FileBuffers = Buffer[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PendingFileIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredScreenshotIds = (string | undefined)[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingOldScreenshotIds = Set<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_FreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_WindowSize = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotDeleteCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_AvailableSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DeletedOldScreenshotCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompleteReplacementCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_PermittedOldScreenshotDeleteCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OldScreenshotIdsForCapacity = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_BatchFileIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_File = Shared_IntegrationAssetTarget['files'][number] | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshot = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_UploadedScreenshotId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingPendingFileIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_CompletedUploadedScreenshotCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_ResourcesBeforeSweep = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_IncompleteScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_Attributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_State = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingResources = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_DesiredOrderedScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_RemainingScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_SupersededScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_OrderedScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextFreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplaceScreenshotBatch_NextWindowSize = number;
 
 export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Cache = Shared_AppStoreConnectContextCache;
 
@@ -310,17 +650,73 @@ export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Set = Shared_AppS
 
 export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Attributes = Record<string, unknown>;
 
-export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CreatedSet = Shared_AppStoreConnectResource;
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ActiveSet = Shared_AppStoreConnectResource;
 
 export type Cli_Integration_AppStoreConnect_Runner_Screenshots_SetId = string;
 
-export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Files = Promise<Buffer[]>;
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ExistingScreenshots = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshots = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteAttributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteDeliveryState = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_IncompleteScreenshotIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteScreenshots = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteAttributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CompleteDeliveryState = Record<string, unknown>;
 
 export type Cli_Integration_AppStoreConnect_Runner_Screenshots_FileBuffers = Buffer[];
 
-export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Uploads = Shared_AppStoreConnectResource[];
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksums = string[];
 
-export type Cli_Integration_AppStoreConnect_Runner_Screenshots_UploadIds = string[];
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_AvailableScreenshots = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotIds = (string | undefined)[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_PendingFileIndexes = number[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_FileChecksum = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotIndex = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingAttributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingChecksum = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshot = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_MatchingScreenshotId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingOldScreenshotIds = Set<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_FreeSlots = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_OldScreenshotCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredScreenshotCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_PlaceholderCount = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingDescription = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshots = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DesiredIdSet = Set<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingPlaceholders = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingScreenshotId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingAttributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingState = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_RemainingFileName = string;
 
 export type Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibrary = Shared_AppStoreConnectResource;
 
@@ -339,6 +735,74 @@ export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ImageIds = string
 export type Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Targets = Shared_IntegrationAssetTarget[];
 
 export type Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Returns = void;
+
+/**
+ * CLI - Integration - App Store Connect - Validate Screenshot Images.
+ *
+ * @since 0.39.0
+ */
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_SkipImageChecks = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Failures = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_CapacityFailureLines = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries_File = Shared_IntegrationAssetTarget['files'][number];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries = {
+  file: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries_File;
+  target: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntries_Target;
+}[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResults = PromiseSettledResult<Buffer>[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry_File = Shared_IntegrationAssetTarget['files'][number];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry = {
+  file: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry_File;
+  target: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileEntry_Target;
+} | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_FileResult = PromiseSettledResult<Buffer> | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_TargetName = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedSizes = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedDescription = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_DisplayPath = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ReadFailure = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Buffer = Buffer;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Format = 'JPEG' | 'PNG';
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_HasAlpha = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Height = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Width = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image = {
+  format: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Format;
+  hasAlpha: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_HasAlpha;
+  height: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Height;
+  width: Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_Image_Width;
+} | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ActualSize = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_PreflightFailureLines = string[];
 
 export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_Targets = Shared_IntegrationAssetTarget[];
 

@@ -20,6 +20,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_AppendsTheWorkflowDispatchInput_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Serialized,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_BuildJob,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_PlainStep,
@@ -62,6 +63,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_DollarBrace,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_NodeVersionEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_SerializedDefaults,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_SetupStep,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_LeavesOriginalModeEnvironmentAgnostic_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndPushTriggersInConfigOrder_DollarBrace,
@@ -115,6 +117,14 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_BuildSection,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_DeploySection,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_Emit,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_ReturnsUndefinedWhenTheTargetDeclaresNoRuntimeValues_Step,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_RoutesACloudflareSecretThroughTheEncryptedChannelAndAVariableThroughTheDeployChannel_Step,
@@ -136,6 +146,16 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_LeavesBooleansAndIntegersBareWhileQuotingStrings_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_LeavesBooleansAndIntegersBareWhileQuotingStrings_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedSnippet,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedSnippetLines,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedStepTimeoutMinutes,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedTimeoutMinutesByJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedTimeoutMinutesForJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Jobs,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_JobTimeoutMinutes,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_StepKinds,
 } from '../../../../types/tests/cli/generate/github/workflows-blueprint.test.d.ts';
 
 /**
@@ -325,6 +345,7 @@ describe('WorkflowsBlueprint.buildPushTrigger', () => {
 describe('WorkflowsBlueprint.buildCheckSponsorGatedIssues', () => {
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildCheckSponsorGatedIssues_Entry = {
     template: 'check-sponsor-gated-issues',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: [
       'issue-comment',
@@ -365,6 +386,7 @@ describe('WorkflowsBlueprint.buildCheckSponsorGatedIssues', () => {
 describe('WorkflowsBlueprint.buildLockInactiveIssues', () => {
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_Entry = {
     template: 'lock-inactive-issues',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['schedule-weekly'],
   };
@@ -387,6 +409,16 @@ describe('WorkflowsBlueprint.buildLockInactiveIssues', () => {
       'pull-requests': 'write',
     });
 
+    strictEqual(ir['jobs'].map((job) => job['timeoutMinutes']).join(','), '5', 'the lock job keeps its five-minute default');
+
+    const serialized: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Serialized = WorkflowsBlueprint.serialize(ir);
+
+    ok(serialized.includes('    timeout-minutes: 5'), 'the lock job timeout is serialized');
+    ok(serialized.includes([
+      '- name: "Lock inactive threads"',
+      '        uses:',
+    ].join('\n')) && serialized.includes('        timeout-minutes: 5'), 'the lock step clamps to the five-minute job');
+
     return;
   });
 
@@ -401,6 +433,7 @@ describe('WorkflowsBlueprint.buildLockInactiveIssues', () => {
 describe('WorkflowsBlueprint.serialize', () => {
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_Entry = {
     template: 'lock-inactive-issues',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['schedule-weekly'],
   };
@@ -426,6 +459,9 @@ describe('WorkflowsBlueprint.serialize', () => {
 
   it('leaves booleans and integers bare while quoting strings', () => {
     const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_LeavesBooleansAndIntegersBareWhileQuotingStrings_Ir = WorkflowsBlueprint.buildLockInactiveIssues(entry);
+
+    Reflect.set(ir['jobs'][0]!, 'runsOn', 'ubuntu-24.04');
+
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_LeavesBooleansAndIntegersBareWhileQuotingStrings_Result = WorkflowsBlueprint.serialize(ir);
 
     ok(result.includes('  cancel-in-progress: false\n'), 'boolean stays bare');
@@ -434,7 +470,107 @@ describe('WorkflowsBlueprint.serialize', () => {
 
     ok(result.includes('        default: true\n'), 'dispatch default stays bare');
 
-    ok(result.includes('runs-on: "ubuntu-latest"\n'), 'string scalar is quoted');
+    ok(result.includes('runs-on: "ubuntu-24.04"\n'), 'string scalar is quoted');
+
+    return;
+  });
+
+  it('uses job timeouts for long kinds and clamps quick defaults to shorter jobs', () => {
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Ir = WorkflowsBlueprint.buildLockInactiveIssues(entry);
+    const stepKinds: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_StepKinds = [
+      'checkout',
+      'setup',
+      'install',
+      'build',
+      'check',
+      'artifact',
+      'registry',
+      'deploy',
+      'attest',
+    ];
+    const jobTimeoutMinutes: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_JobTimeoutMinutes = [
+      4,
+      15,
+      45,
+      90,
+    ];
+    const jobs: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Jobs = jobTimeoutMinutes.map((jobTimeoutMinute) => ({
+      id: `job-${jobTimeoutMinute}`,
+      runsOn: 'ubuntu-24.04',
+      timeoutMinutes: jobTimeoutMinute,
+      steps: stepKinds.map((stepKind) => ({
+        name: `${stepKind}-${jobTimeoutMinute}`,
+        kind: stepKind,
+        run: 'true',
+      })),
+    }));
+
+    Reflect.set(ir, 'jobs', jobs);
+
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_Result = WorkflowsBlueprint.serialize(ir);
+    const expectedTimeoutMinutesByJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedTimeoutMinutesByJob = {
+      4: {
+        checkout: 4,
+        setup: 4,
+        install: 4,
+        build: 4,
+        check: 4,
+        artifact: 4,
+        registry: 4,
+        deploy: 4,
+        attest: 4,
+      },
+      15: {
+        checkout: 5,
+        setup: 10,
+        install: 15,
+        build: 15,
+        check: 15,
+        artifact: 15,
+        registry: 5,
+        deploy: 15,
+        attest: 10,
+      },
+      45: {
+        checkout: 5,
+        setup: 10,
+        install: 20,
+        build: 45,
+        check: 45,
+        artifact: 45,
+        registry: 5,
+        deploy: 45,
+        attest: 10,
+      },
+      90: {
+        checkout: 5,
+        setup: 10,
+        install: 20,
+        build: 90,
+        check: 90,
+        artifact: 90,
+        registry: 5,
+        deploy: 90,
+        attest: 10,
+      },
+    };
+
+    for (const jobTimeoutMinute of jobTimeoutMinutes) {
+      const expectedTimeoutMinutesForJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedTimeoutMinutesForJob = expectedTimeoutMinutesByJob[jobTimeoutMinute];
+
+      ok(expectedTimeoutMinutesForJob !== undefined, `${jobTimeoutMinute} has expected step timeout defaults`);
+
+      for (const stepKind of stepKinds) {
+        const expectedStepTimeoutMinutes: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedStepTimeoutMinutes = expectedTimeoutMinutesForJob[stepKind];
+        const expectedSnippetLines: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedSnippetLines = [
+          `      - name: "${stepKind}-${jobTimeoutMinute}"`,
+          `        timeout-minutes: ${expectedStepTimeoutMinutes}`,
+        ];
+        const expectedSnippet: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_ExpectedSnippet = expectedSnippetLines.join('\n');
+
+        ok(result.includes(expectedSnippet), `${stepKind} uses ${expectedStepTimeoutMinutes} minutes in the ${jobTimeoutMinute}-minute job`);
+      }
+    }
 
     return;
   });
@@ -506,7 +642,7 @@ describe('WorkflowsBlueprint.dispatch', () => {
       template: 'publish',
       name: 'project',
       triggers: ['release'],
-      runsOn: 'ubuntu-latest',
+      runsOn: 'ubuntu-24.04',
       timeoutMinutes: 42,
       build: ['./packages/tool'],
       deploy: [{
@@ -523,9 +659,92 @@ describe('WorkflowsBlueprint.dispatch', () => {
     };
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result = WorkflowsBlueprint.dispatch(entry, workspaces);
 
-    strictEqual(result.split('runs-on: "ubuntu-latest"').length, 3, 'both generated jobs use the configured runner');
+    strictEqual(result.split('runs-on: "ubuntu-24.04"').length, 3, 'both generated jobs use the configured runner');
 
-    strictEqual(result.split('timeout-minutes: 42').length, 3, 'both generated jobs use the configured timeout');
+    strictEqual(result.split('\n    timeout-minutes: 42\n').length, 3, 'both generated jobs use the configured timeout');
+
+    return;
+  });
+
+  it('applies per-job and step overrides with clamping', () => {
+    const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Entry = {
+      template: 'publish',
+      name: 'project',
+      triggers: ['release'],
+      runsOn: 'ubuntu-24.04',
+      timeoutMinutes: 40,
+      buildTimeoutMinutes: 12,
+      stepTimeoutMinutes: {
+        check: 7,
+        install: 20,
+        deploy: 30,
+      },
+      build: ['./packages/tool'],
+      deploy: [{
+        to: 'npm',
+        path: './packages/tool',
+        timeoutMinutes: 8,
+      }],
+    };
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Workspaces = {
+      './packages/tool': {
+        name: 'tool-package',
+        role: 'package',
+        policy: 'distributable',
+      },
+    };
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_Result = WorkflowsBlueprint.dispatch(entry, workspaces);
+    const buildSection: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_BuildSection = result.split('  publish-npm-packages-tool:')[0] ?? '';
+    const deploySection: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesPerJobAndStepOverridesWithClamping_DeploySection = result.split('  publish-npm-packages-tool:')[1] ?? '';
+
+    ok(buildSection.includes('    timeout-minutes: 12'), 'the build override wins over the workflow timeout');
+    ok(buildSection.includes([
+      '- name: "Check project"',
+      '        timeout-minutes: 7',
+    ].join('\n')), 'the check kind uses its configured timeout');
+    ok(buildSection.includes([
+      '- name: "Install packages"',
+      '        timeout-minutes: 12',
+    ].join('\n')), 'the install override clamps to the build job');
+    ok(deploySection.includes('    timeout-minutes: 8'), 'the target override wins over the workflow timeout');
+    ok(deploySection.includes([
+      '- name: "Publish package to npm"',
+      '        timeout-minutes: 8',
+    ].join('\n')), 'the deploy override clamps to the target job');
+
+    return;
+  });
+
+  it('uses matching container runner architectures', () => {
+    const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Entry = {
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      runsOn: 'ubuntu-24.04',
+      containerPlatforms: [
+        'linux/amd64',
+        'linux/arm64',
+      ],
+      deploy: [{
+        to: 'ghcr',
+        path: './',
+        with: {
+          IMAGE_REPOSITORY: 'nova',
+        },
+      }],
+    };
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Workspaces = {};
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_UsesMatchingContainerRunnerArchitectures_Result = WorkflowsBlueprint.dispatch(entry, workspaces);
+
+    ok(result.includes([
+      '  build-container-linux-amd64:',
+      '    runs-on: "ubuntu-24.04"',
+    ].join('\n')), 'the x64 job uses the pinned x64 label');
+    ok(result.includes([
+      '  build-container-linux-arm64:',
+      '    runs-on: "ubuntu-24.04-arm"',
+    ].join('\n')), 'the arm64 job uses the derived arm label');
+    strictEqual(result.includes('-latest'), false, 'generated output contains no moving runner aliases');
 
     return;
   });
@@ -541,6 +760,7 @@ describe('WorkflowsBlueprint.dispatch', () => {
 describe('WorkflowsBlueprint.buildPublish', () => {
   const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Entry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['release'],
     build: [
@@ -603,6 +823,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
   it('builds and uploads one named artifact for multiple deploy targets', () => {
     const artifactEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactEntry = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'project',
       triggers: ['release'],
       build: [],
@@ -655,6 +876,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
   it('profiles Cloudflare publishing by release channel', () => {
     const profiledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEntry = {
       template: 'publish',
+      runsOn: 'ubuntu-24.04',
       name: 'project',
       triggers: [
         'release',
@@ -854,6 +1076,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
   const defaultsEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DefaultsEntry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['release'],
     build: ['./apps/plain-app'],
@@ -920,7 +1143,29 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
     strictEqual(deployJob['runsOn'], 'ubuntu-latest', 'the deploy job keeps the default runner');
 
-    strictEqual(deployJob['timeoutMinutes'], 10, 'the deploy job keeps the 10 minute default');
+    strictEqual(deployJob['timeoutMinutes'], 15, 'the deploy job keeps the 15 minute default');
+
+    const serializedDefaults: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_SerializedDefaults = WorkflowsBlueprint.serialize(ir);
+
+    strictEqual(serializedDefaults.split('        timeout-minutes:').length - 1, ir['jobs'].flatMap((job) => job['steps']).length, 'every generated step has a timeout');
+
+    ok(serializedDefaults.includes([
+      '- name: "Checkout repository"',
+      '        uses:',
+    ].join('\n')), 'checkout steps are serialized');
+    ok(serializedDefaults.includes('        timeout-minutes: 5'), 'five-minute step defaults are serialized');
+    ok(serializedDefaults.includes([
+      '- name: "Install packages"',
+      '        timeout-minutes: 15',
+    ].join('\n')), 'install steps clamp to the fifteen-minute job');
+    ok(serializedDefaults.includes([
+      '- name: "Build project"',
+      '        timeout-minutes: 15',
+    ].join('\n')), 'build steps default to fifteen minutes');
+    ok(serializedDefaults.includes([
+      '- name: "Publish package to npm"',
+      '        timeout-minutes: 15',
+    ].join('\n')), 'deploy steps default to fifteen minutes');
 
     const setupStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_SetupStep = buildJob['steps'].find((step) => step['name'] === 'Setup Node.js');
 
@@ -968,6 +1213,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
   const tagPushEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_TagPushEntry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: ['tag-push'],
     build: ['./apps/plain-app'],
@@ -1005,6 +1251,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
   // entry, mirroring how the blueprint reads { name, branches } forms.
   const releasePushEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleasePushEntry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: [
       'release',
@@ -1049,6 +1296,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
   // string-and-object trigger forms.
   const tagBranchPushEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_TagBranchPushEntry = {
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'project',
     triggers: [
       'tag-push',
@@ -1090,6 +1338,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
   // template-name key, carried on the workflow-run trigger as "workflows".
   const workflowRunSiblings: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_WorkflowRunSiblings = [{
     template: 'publish',
+    runsOn: 'ubuntu-24.04',
     name: 'core',
     triggers: ['release'],
     build: ['./apps/plain-app'],
@@ -1105,6 +1354,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       name: 'workflow-run-success',
       workflows: ['publish-core'],
     }],
+    'runsOn': 'ubuntu-24.04',
     'build': ['./apps/plain-app'],
     'deploy': [{
       to: 'npm',
@@ -1169,6 +1419,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       name: 'workflow-run-failure',
       workflows: ['publish-core'],
     }],
+    'runsOn': 'ubuntu-24.04',
     'build': ['./apps/plain-app'],
     'deploy': [{
       to: 'npm',
@@ -1194,6 +1445,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       name: 'workflow-run-any',
       workflows: ['publish-core'],
     }],
+    'runsOn': 'ubuntu-24.04',
     'build': ['./apps/plain-app'],
     'deploy': [{
       to: 'npm',
@@ -1219,6 +1471,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
         workflows: ['publish-core'],
       },
     ],
+    'runsOn': 'ubuntu-24.04',
     'build': ['./apps/plain-app'],
     'deploy': [{
       to: 'npm',

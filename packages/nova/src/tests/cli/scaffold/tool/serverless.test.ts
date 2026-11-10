@@ -1,9 +1,11 @@
 import { strictEqual } from 'node:assert/strict';
 import {
   access,
+  mkdir,
   mkdtemp,
   readFile,
   rm,
+  writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -29,6 +31,7 @@ import type {
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_ApiSource,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_OutputPath,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_PackageJson,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_VercelConfig,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_WorkspacePath,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_WranglerExists,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_OriginalCwd,
@@ -39,6 +42,13 @@ import type {
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_SandboxRoot,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_TemporaryBase,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_TemporaryDirectory,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_IndexSource,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_LandingPageSource,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfig,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfigPath,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJson,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJsonPath,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_ProjectDirectory,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ValidatesDryRunWithoutWriting_Exists,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ValidatesDryRunWithoutWriting_OutputPath,
   Tests_Cli_Scaffold_Tool_Serverless_Prompts_MockModule,
@@ -128,6 +138,7 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
     const workspacePath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_WorkspacePath = join(outputPath, 'packages', 'gateway');
     const apiSource: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_ApiSource = await readFile(join(workspacePath, 'api', 'index.ts'), 'utf-8');
     const packageJson: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_PackageJson = await readFile(join(workspacePath, 'package.json'), 'utf-8');
+    const vercelConfig: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_VercelConfig = await readFile(join(workspacePath, 'vercel.json'), 'utf-8');
 
     let wranglerExists: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_WranglerExists = true;
 
@@ -137,9 +148,65 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
       wranglerExists = false;
     }
 
-    strictEqual(apiSource.includes('export function GET'), true);
+    strictEqual(apiSource.includes('return landingPage'), true);
+    strictEqual(apiSource.includes('message: \'Not found\''), true);
     strictEqual(packageJson.includes(`"vercel": "${getScaffoldVersion('vercel')}"`), true);
+    strictEqual(vercelConfig.includes('"destination": "/api?path=:path*"'), true);
     strictEqual(wranglerExists, false);
+
+    return;
+  });
+
+  it('uses the configured repository on the homepage', async () => {
+    const projectDirectory: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_ProjectDirectory = join(sandboxRoot, 'repository-homepage');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJson: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJson = JSON.stringify({
+      name: 'repository-homepage-project',
+      workspaces: ['packages/*'],
+    }, null, 2);
+    const packageJsonPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_PackageJsonPath = join(projectDirectory, 'package.json');
+    const novaConfig: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfig = JSON.stringify({
+      project: {
+        name: {
+          slug: 'repository-homepage',
+          title: 'Repository Homepage',
+        },
+      },
+      urls: {
+        repository: 'https://github.com/example/serverless',
+      },
+      workspaces: {
+        './': {
+          name: 'repository-homepage-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+    }, null, 2);
+    const novaConfigPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliScaffoldToolServerless.run({
+      install: false,
+      nonInteractive: true,
+      output: './packages/gateway',
+      target: 'cloudflare-workers',
+      workspaceName: 'gateway',
+    });
+
+    const indexSource: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_IndexSource = await readFile(join(projectDirectory, 'packages', 'gateway', 'src', 'worker', 'index.ts'), 'utf-8');
+    const landingPageSource: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_UsesTheConfiguredRepositoryOnTheHomepage_LandingPageSource = await readFile(join(projectDirectory, 'packages', 'gateway', 'src', 'worker', 'landing-page.ts'), 'utf-8');
+
+    strictEqual(indexSource.includes('landingPage(\'repository-homepage\', \'https://github.com/example/serverless\', request.method === \'HEAD\')'), true);
+    strictEqual(indexSource.includes('[__PROJECT_REPOSITORY__]'), false);
+    strictEqual(landingPageSource.includes('class="button ghost"'), true);
+    strictEqual(landingPageSource.includes('target="_blank" rel="noopener noreferrer"'), true);
 
     return;
   });
