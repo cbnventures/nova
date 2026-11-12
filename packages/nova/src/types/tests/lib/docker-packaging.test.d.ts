@@ -89,6 +89,16 @@ export type Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusauru
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_ComposeContent = string;
 
 /**
+ * Tests - Lib - Docker Packaging - LibDockerPackaging - ListsTheWorkspacesTheImageShipsInBuildOrder.
+ *
+ * @since 0.41.1
+ */
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_Returns = Promise<void>;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ProjectDirectory = string;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_EmptyProjectDirectory = string;
+export type Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ApiDirectory = string;
+
+/**
  * Tests - Lib - Docker Packaging - LibDockerPackaging - NormalizesOnlyClosureInternalNpmWorkspaceProtocolsInBuildOnlyManifests.
  *
  * @since 0.34.0

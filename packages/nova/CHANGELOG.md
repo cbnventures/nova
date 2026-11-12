@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.41.1 - 2026-11-12
+
+### FIXED
+- The generated publish workflow's check step covered exactly what the workflow ships: its built and deployed workspaces, a `docker-hub` or `ghcr` image's workspaces and `packages/docker`, and every workspace they depend on, keeping the root's own checks only for an image built from the repository root.
+
 ## 0.41.0 - 2026-11-12
 
 ### FIXED

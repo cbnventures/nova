@@ -23,7 +23,7 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 
 ## Why Use This Command?
 
-- Generates `.env` and `.env.sample` for every workspace that declares `environment.workspaces` values, so each workspace in a <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> gets its own files (including the repo root `./` when it is declared).
+- Generates `.env` and `.env.sample` for every workspace that declares `environment.workspaces` values, so each workspace in a <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> gets its own files (including the repo root `./` when it is declared).
 - Pre-populates Nova CLI logger settings and Node.js defaults so contributors know which variables are available.
 - Keeps sensitive values out of version control while documenting the expected shape.
 - Reads each workspace's environment values from `nova.config.json` so the same keys and defaults apply on every run.
@@ -33,7 +33,7 @@ Every Nova scaffold registers its root and generated workspace namespaces and wr
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
 - **Project root** — Run the command from the directory containing the top-level `package.json`.
 
 ## Usage

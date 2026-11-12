@@ -22,13 +22,13 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **homepage**, **bugs**, **author**, **contributors**, **funding**, and **repository** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
+Sync **homepage**, **bugs**, **author**, **contributors**, **funding**, and **repository** fields in <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `sync-ownership` recipe ensures that ownership-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the values defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+The `sync-ownership` recipe ensures that ownership-related fields in each <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the values defined in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
-For <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces, each field can be individually enabled via recipe settings.
+For <Terminology title="Versioned and ready to publish to a package registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces, each field can be individually enabled via recipe settings.
 
 ## Why Use This Command?
 
@@ -44,11 +44,11 @@ For <Terminology title="publishable workspace" to="/docs/quickstart/terminology#
 
 ## Behavior
 
-For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`.
+For each eligible <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`.
 
 See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
-For distributable workspaces with the respective setting enabled, the value is synced from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If the source value is not defined, the field is removed.
+For distributable workspaces with the respective setting enabled, the value is synced from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If the source value is not defined, the field is removed.
 
 - **`homepage` (Conditional)** — Synced from `urls.homepage`.
 - **`bugs` (Conditional)** — Synced as `{ "email": emails.bugs, "url": urls.bugs }`.

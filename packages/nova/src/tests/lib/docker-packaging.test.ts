@@ -65,6 +65,10 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_DockerfileContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_ProjectDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_WorkspaceDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ApiDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_EmptyProjectDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ProjectDirectory,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_Returns,
   Tests_Lib_DockerPackaging_LibDockerPackaging_NormalizesOnlyClosureInternalNpmWorkspaceProtocolsInBuildOnlyManifests_DockerfileContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_NormalizesOnlyClosureInternalNpmWorkspaceProtocolsInBuildOnlyManifests_OriginalPackage,
   Tests_Lib_DockerPackaging_LibDockerPackaging_NormalizesOnlyClosureInternalNpmWorkspaceProtocolsInBuildOnlyManifests_ProjectDirectory,
@@ -424,6 +428,40 @@ describe('LibDockerPackaging', async () => {
     const refreshedWorkspacePackage: Tests_Lib_DockerPackaging_LibDockerPackaging_RefreshesDockerOnlyManifestsFromCanonicalPackages_RefreshedWorkspacePackage = JSON.parse(await readFile(join(projectDirectory, 'packages', 'docker', 'workspace-manifests', 'apps', 'api', 'package.json'), 'utf-8'));
 
     strictEqual(refreshedWorkspacePackage['version'], '1.2.3');
+
+    return;
+  });
+
+  it('lists the workspaces the image ships in build order', async (): Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_Returns => {
+    const projectDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ProjectDirectory = join(sandboxRoot, 'image-workspaces');
+    const emptyProjectDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_EmptyProjectDirectory = join(sandboxRoot, 'image-workspaces-empty');
+
+    await writeProject(projectDirectory);
+
+    await writeProject(emptyProjectDirectory);
+
+    await writeWorkspace(projectDirectory, 'packages/shared', 'fixture-package-shared');
+
+    await writeWorkspace(projectDirectory, 'apps/unrelated', 'fixture-app-unrelated');
+
+    const apiDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_ListsTheWorkspacesTheImageShipsInBuildOrder_ApiDirectory = await writeWorkspace(projectDirectory, 'apps/api', 'fixture-app-api', {
+      'fixture-package-shared': 'workspace:*',
+    });
+
+    await LibDockerPackaging.generateForTarget({
+      profile: 'http-service',
+      projectDirectory,
+      replaceFile: true,
+      workspaceDirectory: apiDirectory,
+      workspaceName: 'api',
+    });
+
+    deepStrictEqual(await LibDockerPackaging.readImageWorkspaces(projectDirectory), [
+      './packages/shared',
+      './apps/api',
+      './packages/docker',
+    ]);
+    deepStrictEqual(await LibDockerPackaging.readImageWorkspaces(emptyProjectDirectory), []);
 
     return;
   });

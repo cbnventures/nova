@@ -31,20 +31,20 @@ It can write changes, preview them with `--dry-run`, or report formatting drift 
 
 ## Why Use This Command?
 
-1. Scans the complete project root so documentation outside the current <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> is not overlooked.
+1. Scans the complete project root so documentation outside the current <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> is not overlooked.
 2. Uses Nova's MarkdownTable renderer so copied formatting scripts cannot drift between repositories.
-3. Provides preview and check modes so you can inspect changes locally or enforce the format in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>.
+3. Provides preview and check modes so you can inspect changes locally or enforce the format in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
 - **Project manifest** — A `package.json` file must exist in the current directory or one of its parent directories.
 - **Recipe toggle** — Set `recipes.miscellaneous.fix-markdown-tables.enabled` to `true` in `nova.config.json`.
 - **Supported sources** — Tables must use leading pipes in `.md` or `.mdx` files and include a header, delimiter, and at least one data row.
 
 ## Behavior
 
-1. **Resolve the project** — Find the nearest `package.json`, preferring the containing <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root when it declares workspaces.
+1. **Resolve the project** — Find the nearest `package.json`, preferring the containing <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root when it declares workspaces.
 2. **Discover sources** — Find `.md` and `.mdx` files while skipping dependencies, generated output, caches, and agent-state directories.
 3. **Protect semantics** — Ignore tables inside backtick or tilde code fences and tables with alignment markers such as `:---` or `---:`.
 4. **Render tables** — Preserve escaped pipes and optional trailing pipes, then rewrite changed tables with Nova's Markdown table formatter.

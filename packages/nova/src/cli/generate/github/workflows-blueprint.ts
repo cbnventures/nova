@@ -11,6 +11,7 @@ import {
   Runner as GithubRunnerImages,
 } from '../../../api/github-runner-images.js';
 import { Runner as LibCorepack } from '../../../lib/corepack.js';
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import { libEnvNamespace } from '../../../lib/env-namespace.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
@@ -35,6 +36,7 @@ import {
   libWorkflowContainerPlatformArchitectures,
   libWorkflowStepTimeoutDefaults,
 } from '../../../lib/workflow-templates.js';
+import { Runner as LibWorkspaceGraph } from '../../../lib/workspace-graph.js';
 import { Logger } from '../../../toolkit/index.js';
 import { Runner as Validator } from './workflows-blueprint-validate.js';
 import { Runner as Variables } from './workflows-blueprint-variables.js';
@@ -266,13 +268,16 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScope,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScopePaths,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactUploadSteps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspaceNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckAddedPaths,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredBuildTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerJobs,
@@ -295,7 +300,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasRootContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_JobsCondition,
@@ -348,6 +355,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WriteEnvStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPushTrigger_Branches,
@@ -398,6 +406,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_JobRunsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager,
@@ -407,6 +416,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dollar_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Declared,
@@ -453,6 +463,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasValidationErrors,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ImageWorkspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsAtProjectRoot,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsBackup,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsDryRun,
@@ -481,6 +492,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkspaceGraph,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubAuthRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubAuthRun_Returns,
@@ -498,6 +510,14 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Value,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_AddedPaths,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_BasePaths,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Node,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_SelectedPaths,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_WorkspaceGraph,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Namespace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns,
@@ -796,6 +816,28 @@ export class Runner {
       packageManager = parsedPackageManager['name'];
     }
 
+    // Publish checks follow what each workflow ships, so read the internal
+    // workspace dependencies and the Docker image's workspaces once up front.
+    let workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkspaceGraph = {};
+    let imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ImageWorkspaces = [];
+
+    if (hasPublishWorkflow === true) {
+      workspaceGraph = await LibWorkspaceGraph.read(currentDirectory, workspaces);
+
+      try {
+        imageWorkspaces = await LibDockerPackaging.readImageWorkspaces(currentDirectory);
+      } catch {
+        Logger.customize({
+          name: 'Runner.generate',
+          purpose: 'imageWorkspaces',
+        }).error('Failed to read or parse "packages/docker/build-package.json".');
+
+        process.exitCode = 1;
+
+        return 'cancelled';
+      }
+    }
+
     const workflowsDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory = join(currentDirectory, '.github', 'workflows');
     const generatedSet: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = new Set();
     const setupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines = [];
@@ -807,7 +849,7 @@ export class Runner {
 
       // Build output filename: nova-<template>[-<name>].yml.
       const outputFileName: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName = (suffix !== undefined) ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
-      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts, dockerHub);
+      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces);
       const entrySetupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = Variables.collectSetupLines(entry, outputFileName, environment);
 
       generatedSet.add(outputFileName);
@@ -905,19 +947,21 @@ export class Runner {
    * returns the serialized YAML. The publish builder receives the workspaces
    * map and the sibling workflows for scope and chaining resolution.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}          entry            - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}     workspaces       - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}    [environment]    - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager} [packageManager] - Package manager.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts}      [artifacts]      - Artifacts.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub}      [dockerHub]      - Docker hub.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}           entry             - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}      workspaces        - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}     [environment]     - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}        [siblings]        - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager}  [packageManager]  - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts}       [artifacts]       - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub}       [dockerHub]       - Docker hub.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph}  [workspaceGraph]  - Workspace graph.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces} [imageWorkspaces] - Image workspaces.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
    *
    * @since 0.39.0
    */
-  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = undefined): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
+  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces = []): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
     const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = entry['template'];
 
     let workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = undefined;
@@ -927,7 +971,7 @@ export class Runner {
     } else if (template === 'lock-inactive-issues') {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
-      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub);
+      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces);
     }
 
     const runsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = entry['runsOn'];
@@ -1334,19 +1378,21 @@ export class Runner {
    * emitting one shared build job then one deploy job per target; sibling
    * workflows resolve chained depends-on references to names.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}          entry            - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}     workspaces       - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}    [environment]    - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager} [packageManager] - Package manager.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts}      [artifacts]      - Artifacts.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub}      [dockerHub]      - Docker hub.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}           entry             - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}      workspaces        - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}     [environment]     - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}        [siblings]        - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager}  [packageManager]  - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts}       [artifacts]       - Artifacts.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub}       [dockerHub]       - Docker hub.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph}  [workspaceGraph]  - Workspace graph.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces} [imageWorkspaces] - Image workspaces.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
    *
    * @since 0.39.0
    */
-  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = undefined): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
+  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces = []): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
     const suffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = entry['name'];
     const workflowId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId = Runner.resolveWorkflowId(suffix);
 
@@ -1602,6 +1648,7 @@ export class Runner {
     const scopes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = entry['build'] ?? [];
     const artifactNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactNames = [...new Set(targets.flatMap((target) => (target['artifact'] === undefined) ? [] : [target['artifact']]))];
     const artifactWorkspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspaceNames = [];
+    const artifactScopePaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScopePaths = [];
 
     for (const artifactName of artifactNames) {
       const artifact: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifact = artifacts[artifactName];
@@ -1615,6 +1662,8 @@ export class Runner {
         const artifactWorkspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspace = workspaces[artifactScope] as Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspace;
 
         artifactWorkspaceNames.push(artifactWorkspace['name']);
+
+        artifactScopePaths.push(artifactScope);
       }
     }
 
@@ -1626,7 +1675,27 @@ export class Runner {
         return scopeWorkspace['name'];
       }),
     ])];
-    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', names, [], packageManager);
+
+    // The check covers what this workflow ships: its built and deployed
+    // workspaces, the workspaces a root container image ships, and their
+    // internal dependencies. Only a root container image keeps the root's own
+    // checks, because the image builds from root-level files like the Dockerfile.
+    const hasRootContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasRootContainerTarget = targets.some((target) => (
+      (
+        target['to'] === 'docker-hub'
+        || target['to'] === 'ghcr'
+      )
+      && target['path'] === './'
+    ));
+    const checkAddedPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckAddedPaths = [
+      ...targets.map((target) => target['path']),
+      ...((hasRootContainerTarget === true) ? imageWorkspaces : []),
+    ];
+    const checkNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = Runner.resolveCheckNames([
+      ...artifactScopePaths,
+      ...scopes,
+    ], checkAddedPaths, workspaces, workspaceGraph);
+    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = (checkNames.length > 0 && hasRootContainerTarget === false) ? `${Runner.buildScopeCommand('check', checkNames, [], packageManager)} --exclude-workspace ./` : Runner.buildScopeCommand('check', checkNames, [], packageManager);
     const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, artifactNames, packageManager);
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
@@ -4477,6 +4546,58 @@ export class Runner {
     }
 
     return `${packageManager} run ${scriptName} -- ${workspaceFlags} ${artifactFlags}`;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Check Names.
+   *
+   * Keeps the built scopes first, then appends shipped workspaces and every internal
+   * dependency they reach, each registered workspace once.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_BasePaths}      basePaths      - Base paths.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_AddedPaths}     addedPaths     - Added paths.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspaces}     workspaces     - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_WorkspaceGraph} workspaceGraph - Workspace graph.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Returns}
+   *
+   * @since 0.41.1
+   */
+  private static resolveCheckNames(basePaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_BasePaths, addedPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_AddedPaths, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspaces, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_WorkspaceGraph): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Returns {
+    const selectedPaths: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_SelectedPaths = [];
+
+    for (const seedPath of [
+      ...basePaths,
+      ...addedPaths,
+    ]) {
+      if (selectedPaths.includes(seedPath) === false && workspaces[seedPath] !== undefined) {
+        selectedPaths.push(seedPath);
+      }
+    }
+
+    // Walk breadth-first so each dependency lands after the workspace that first
+    // needs it, in configuration order.
+    for (let index = 0; index < selectedPaths.length; index += 1) {
+      const node: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Node = workspaceGraph[selectedPaths[index] ?? ''];
+
+      if (node === undefined) {
+        continue;
+      }
+
+      for (const dependencyPath of node['dependencies']) {
+        if (selectedPaths.includes(dependencyPath) === false && workspaces[dependencyPath] !== undefined) {
+          selectedPaths.push(dependencyPath);
+        }
+      }
+    }
+
+    return selectedPaths.flatMap((selectedPath) => {
+      const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspace = workspaces[selectedPath];
+
+      return (selectedPath === './' || workspace === undefined) ? [] : [workspace['name']];
+    });
   }
 
   /**

@@ -85,7 +85,7 @@ jobs:
       - name: "Check project"
         timeout-minutes: 15
         run: |
-          npm run check -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
+          npm run check -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang --exclude-workspace ./
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"

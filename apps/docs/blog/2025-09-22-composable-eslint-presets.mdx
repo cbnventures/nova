@@ -20,25 +20,25 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-Most ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat configs</Terminology> start the same way. You spread a popular shared config into your array, add your overrides, and move on.
+Most ESLint <Terminology title="One file with a flat list of configs, no cascading files" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat configs</Terminology> start the same way. You spread a popular shared config into your array, add your overrides, and move on.
 
-But as the project grows — more <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>, more file types, more framework-specific needs — the config grows with it. You end up with a single array where language rules, environment globals, and framework conventions are tangled together, and figuring out which object added which rule means reading the whole thing top to bottom.
+But as the project grows — more <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>, more file types, more framework-specific needs — the config grows with it. You end up with a single array where language rules, environment globals, and framework conventions are tangled together, and figuring out which object added which rule means reading the whole thing top to bottom.
 
-Nova's <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are designed to keep that clean. Each <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> handles one concern, and you compose them into exactly the combination your <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> needs.
+Nova's <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are designed to keep that clean. Each <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> handles one concern, and you compose them into exactly the combination your <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> needs.
 
 {/* truncate */}
 
 ## The Problem with Monolithic Configs
 
-Even with <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, shared <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> tend to ship as one large array that covers everything. You spread it in and get hundreds of rules — some relevant, some not.
+Even with <Terminology title="One file with a flat list of configs, no cascading files" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, shared <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> tend to ship as one large array that covers everything. You spread it in and get hundreds of rules — some relevant, some not.
 
-When a rule behaves unexpectedly, you trace through the shared config to figure out where it came from. When two <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> need different rules, you fork the config or add per-<Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> overrides.
+When a rule behaves unexpectedly, you trace through the shared config to figure out where it came from. When two <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> need different rules, you fork the config or add per-<Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> overrides.
 
 The config stays flat, but the complexity doesn't.
 
 ## Layers, Not Inheritance
 
-Nova's <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are independent arrays. Each one handles a specific concern, and you spread them into your config in any order:
+Nova's <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are independent arrays. Each one handles a specific concern, and you spread them into your config in any order:
 
 ```javascript
 import {
@@ -62,7 +62,7 @@ Three layers, each self-contained:
 
 A browser project uses `runtimeBrowser` instead of `runtimeNode`. A Docusaurus site adds `fwDocusaurus` on top.
 
-Each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> composes exactly the layers it needs.
+Each <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> composes exactly the layers it needs.
 
 ## What Each Layer Does
 
@@ -78,7 +78,7 @@ Language layers configure the parser and add language-specific rules. `langTypes
 
 ### Environment
 
-Environment layers add globals and module settings for a specific runtime. `runtimeNode` adds Node.js globals and <Terminology title="CJS" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>CommonJS</Terminology>/<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> resolution.
+Environment layers add globals and module settings for a specific runtime. `runtimeNode` adds Node.js globals and <Terminology title="Node's older require() style of modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>CommonJS</Terminology>/<Terminology title="Modern modules that use import and export" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> resolution.
 
 `runtimeBrowser` adds DOM globals. `runtimeEdge` covers edge runtimes like Cloudflare Workers.
 
@@ -92,7 +92,7 @@ You only add the one you need.
 
 ## The TSConfig Side
 
-The same layering applies to TypeScript configuration. Nova ships TSConfig <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> that compose the same way — a strict baseline, an environment target, and an optional framework layer:
+The same layering applies to TypeScript configuration. Nova ships TSConfig <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> that compose the same way — a strict baseline, an environment target, and an optional framework layer:
 
 ```json
 {
@@ -104,11 +104,11 @@ The same layering applies to TypeScript configuration. Nova ships TSConfig <Term
 }
 ```
 
-No guessing which `compilerOptions` came from where. Each <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> handles one concern.
+No guessing which `compilerOptions` came from where. Each <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> handles one concern.
 
 ## Why This Matters
 
-The point isn't that composition is better than inheritance in the abstract. The point is that <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> have diverse <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> — an API server, a docs site, a <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> tool, a shared library — and each one needs a different combination of rules.
+The point isn't that composition is better than inheritance in the abstract. The point is that <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> have diverse <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> — an API server, a docs site, a <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> tool, a shared library — and each one needs a different combination of rules.
 
 Composable layers make that easy without maintaining a dozen forked configs.
 

@@ -19,7 +19,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Block `javascript:` URLs except explicitly allowed patterns because script URLs execute arbitrary code and are a common <Terminology title="cross site scripting" to="/docs/quickstart/terminology#security" color={true}>XSS</Terminology> vector.
+Block `javascript:` URLs except explicitly allowed patterns because script URLs execute arbitrary code and are a common <Terminology title="Someone else's script running inside your users' browser" to="/docs/quickstart/terminology#security" color={true}>XSS</Terminology> vector.
 
 ## Summary
 
@@ -58,7 +58,7 @@ The `no-script-url` rule reports any string literal whose value, lowercased, sta
 <Tabs groupId="no-script-url-config">
   <TabItem value="default" label="Default" default>
 
-    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+    Enable the rule in your ESLint <Terminology title="One file with a flat list of configs, no cascading files" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
     ```ts
     import { NoScriptUrl } from '@cbnventures/nova/rules/eslint';

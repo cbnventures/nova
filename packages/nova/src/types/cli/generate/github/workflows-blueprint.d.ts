@@ -78,6 +78,8 @@ import type {
   Shared_WorkflowTemplateVariable_Scope,
   Shared_WorkflowTemplateVariableName,
   Shared_WorkflowTemplateVariables,
+  Shared_WorkspaceGraph,
+  Shared_WorkspaceGraphNode,
 } from '../../../shared.d.ts';
 import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Result_Diagnostics,
@@ -670,6 +672,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph = Shared_WorkspaceGraph;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = Shared_BlueprintConfigWorkflow[];
@@ -770,6 +776,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactN
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactWorkspaceNames = string[];
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScopePaths = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifact = Shared_NovaConfigArtifact | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactScope = string;
@@ -779,6 +787,12 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactW
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ScopeWorkspace = Shared_NovaConfigWorkspace;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasRootContainerTarget = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckAddedPaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = string;
 
@@ -1012,6 +1026,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = S
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = Shared_NovaConfig_DockerHub | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph = Shared_WorkspaceGraph;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = Shared_BlueprintConfigWorkflow[];
@@ -1212,6 +1230,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonRa
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ParsedPackageManager = Shared_CorepackPackageManagerDescriptor | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkspaceGraph = Shared_WorkspaceGraph;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ImageWorkspaces = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = Set<string>;
@@ -1320,6 +1342,27 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Returns = string
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Resolve Check Names.
+ *
+ * @since 0.41.1
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_BasePaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_AddedPaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_WorkspaceGraph = Shared_WorkspaceGraph;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Returns = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_SelectedPaths = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Node = Shared_WorkspaceGraphNode | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspace = Shared_NovaConfigWorkspace | undefined;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Resolve Container Tags Run.

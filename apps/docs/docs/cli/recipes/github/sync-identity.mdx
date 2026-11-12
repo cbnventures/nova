@@ -20,11 +20,11 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **description**, **homepage URL**, and **topics** to a GitHub repository from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+Sync **description**, **homepage URL**, and **topics** to a GitHub repository from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
 ## Summary
 
-The `sync-identity` recipe pushes repository identity fields from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit` and `gh api -X PUT /repos/.../topics`. It acts as the authoritative source for the repository's public description, homepage, and topic tags.
+The `sync-identity` recipe pushes repository identity fields from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit` and `gh api -X PUT /repos/.../topics`. It acts as the authoritative source for the repository's public description, homepage, and topic tags.
 
 If all three fields (`description`, `homepage`, and `topics`) are undefined in the config, the recipe no-ops and emits a warning.
 
@@ -42,7 +42,7 @@ If all three fields (`description`, `homepage`, and `topics`) are undefined in t
 
 ## Behavior
 
-- **`description`** — Sourced from `project.description.short` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If undefined, the field is skipped.
+- **`description`** — Sourced from `project.description.short` in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If undefined, the field is skipped.
 - **`homepage`** — Sourced from `urls.homepage`. If undefined, the field is skipped.
 - **`topics`** — Sourced from `github.topics` if set. If `github.topics` is not defined, topics are derived from `project.keywords` using the normalization rules below. If `github.topics` is set to an empty array (`[]`), all topics are cleared on GitHub.
 

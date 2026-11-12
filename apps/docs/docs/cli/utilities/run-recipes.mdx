@@ -19,15 +19,15 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Run every enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> in sequence.
+Run every enabled <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> in sequence.
 
 ## Summary
 
-The `run-recipes` command traverses the complete recipe registry in sequence. Each recipe reads its own `nova.config.json` entry and performs work only when its individual `enabled` toggle is `true`. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
+The `run-recipes` command traverses the complete recipe registry in sequence. Each recipe reads its own `nova.config.json` entry and performs work only when its individual `enabled` toggle is `true`. This is the single command that replaces chaining individual <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
 
 There is no category flag, so every invocation visits the `docker-hub`, `github`, `license`, `miscellaneous`, `nova-config`, `read-me`, and `package-json` categories. Disabled recipes perform no work.
 
-Recipes reconcile settings or existing content and are safe to run again. They do not invoke <Terminology title="template command" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology>; generated files remain an explicit `nova generate ...` action.
+Recipes reconcile settings or existing content and are safe to run again. They do not invoke <Terminology title="Writes a config file for you from a built-in template" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology>; generated files remain an explicit `nova generate ...` action.
 
 ## Recipe Categories
 
@@ -48,8 +48,8 @@ Recipes reconcile settings or existing content and are safe to run again. They d
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
-- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file must exist at the project root with configured <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file must exist at the project root with configured <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
 
 ## Usage
 

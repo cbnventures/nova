@@ -20,7 +20,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 `nova utility initialize` made sense when Nova's guided setup had one obvious job: create the first `nova.config.json` file.
 
-The command grew. It became the place to return whenever a project changed, whether you needed to add a <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, revise repository settings, manage environment variables, or inspect GitHub environment status. Calling that ongoing work “initialization” stopped describing what the command actually did.
+The command grew. It became the place to return whenever a project changed, whether you needed to add a <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, revise repository settings, manage environment variables, or inspect GitHub environment status. Calling that ongoing work “initialization” stopped describing what the command actually did.
 
 Nova 0.30.0 gives it a more accurate name: `configure`.
 
@@ -44,7 +44,7 @@ nova util config
 
 Nova's documentation uses the full command because it is the clearest form. The shorter `config` alias remains available for interactive terminal use.
 
-This is a command rename, not a configuration format migration. Nova continues to read the existing `nova.config.json` in the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. You do not need to recreate the file or answer the wizard's questions again.
+This is a command rename, not a configuration format migration. Nova continues to read the existing `nova.config.json` in the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. You do not need to recreate the file or answer the wizard's questions again.
 
 The command also keeps its existing options:
 

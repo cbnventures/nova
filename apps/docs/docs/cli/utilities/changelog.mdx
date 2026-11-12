@@ -34,18 +34,18 @@ The `changelog` command combines three workflows into one guided flow:
 - **Folding** a correction into an existing version section without cutting a new version.
 - **Releasing** accumulated changes (bump versions and write a `CHANGELOG.md`).
 
-In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record`, `--fold`, and `--release` flags drive the same workflows from scripts and <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines.
+In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record`, `--fold`, and `--release` flags drive the same workflows from scripts and <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines.
 
-Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory.
+Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory.
 
 ## Why Use This Command?
 
 - Combines the record-and-release lifecycle into one command instead of separate tools.
 - Corrects or consolidates an existing changelog section without manually editing `CHANGELOG.md` or creating a replacement release.
-- Interactive prompts guide you through package selection, category, description, and <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
-- The `--record`, `--fold`, and `--release` flags enable the same workflow in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
+- Interactive prompts guide you through package selection, category, description, and <Terminology title="Version numbers that tell you if an update will break you" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
+- The `--record`, `--fold`, and `--release` flags enable the same workflow in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
 - The **dry run** option lets you preview every change before any file is touched.
-- Supports both **<Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology>** and **CalVer** strategies, configured per-project in `nova.config.json`.
+- Supports both **<Terminology title="Version numbers that tell you if an update will break you" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology>** and **CalVer** strategies, configured per-project in `nova.config.json`.
 
 ## Use Cases
 
@@ -53,14 +53,14 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 - **Team workflows** — Each contributor records changes in their PR. A maintainer runs the release step when ready.
 - **Release corrections** — Add, edit, or remove an entry from an existing version section after a publishing mistake, without cutting another version.
 - **Pre-release consolidation** — Merge older unreleased sections into the intended version, such as folding several work-in-progress app sections into `1.0.0`.
-- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
+- **<Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
 - **Migration from Changesets** — Replace `changeset add` with `nova utility changelog --record` and `changeset version` with `nova utility changelog --release`.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
-- **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> included).
-- **Nova config** — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> must exist. Recording a change requires a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> workspace; releasing can also stamp freezable workspaces when there are no entries.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> included).
+- **Nova config** — A valid <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> must exist. Recording a change requires a non-<Terminology title="Version stays 0.0.0 and it never gets published" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> workspace; releasing can also stamp freezable workspaces when there are no entries.
 
 ## Usage
 
@@ -121,7 +121,7 @@ You can run this command in two ways:
 
 ### Record Flow
 
-1. **Select package** — Auto-selects if only one non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> exists. Otherwise prompts.
+1. **Select package** — Auto-selects if only one non-<Terminology title="Version stays 0.0.0 and it never gets published" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> exists. Otherwise prompts.
 2. **Select category** — Choose from Updated, Fixed, Added, or Removed.
 3. **Enter description** — Free-text description of the change. It must start with a capital letter and can't start with the category's own word (for example "Fixed …" or "Fix …" under Fixed), because the category heading already says it; start with what changed instead.
 4. **Select bump type** — Pre-selected based on category (Added/Updated = minor, Fixed = patch, Removed = major). Override if needed. (Skipped in CalVer mode.)
@@ -158,7 +158,7 @@ The validation and preview steps finish before Nova writes any release files. Ve
 When `.changelog/` has no entries, `--release` still stamps freezable workspaces at `0.0.0`. This includes every supported file owned by the workspace without crossing into declared child workspaces. A dry run writes nothing.
 
 :::danger Non-Zero Exit Code
-The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
+The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
 :::
 
 ### UNRELEASED Sentinel Convention
@@ -210,7 +210,7 @@ New ESLint rule for switch case blocks.
 
 ### CalVer Mode
 
-When `settings.versionStrategy` is `"calver"` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, the changelog command switches to calendar-based versioning:
+When `settings.versionStrategy` is `"calver"` in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, the changelog command switches to calendar-based versioning:
 
 - **Version format:** `YYYY.M.MICRO` — full year, unpadded month, micro counter that resets each new month.
 - **No bump field:** Changelog entries omit the `bump` field entirely. The `--bump` flag is not available in CalVer mode.
@@ -449,7 +449,7 @@ For users migrating from the [Changesets](https://github.com/changesets/changese
 | `nova utility changelog --release` | `changeset version` | Release accumulated changes, bump versions, and stamp `@since`/`@deprecated UNRELEASED` tags in source. |
 
 :::tip Shorten long commands with scripts
-Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>):
+Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>):
 
 ```json title="package.json"
 {
@@ -466,14 +466,14 @@ Then run `npm run changelog:record`, `npm run changelog:fold`, or `npm run chang
 
 ## Troubleshooting
 
-- **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="workspace label" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
+- **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="Gets real version bumps but stays off the registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="Versioned and ready to publish to a package registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="Decides if Nova freezes, tracks, or publishes a workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
 - **"Choose only one changelog mode"** — `--record`, `--fold`, and `--release` are mutually exclusive. Run them as separate commands.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — In semver mode, all four flags are required when using `--record`. In CalVer mode, only `--package`, `--category`, and `--message` are required (no `--bump`). Omit `--record` for interactive mode.
 - **"Entry text ... is ambiguous"** — The same bullet appears more than once in the selected category. Repeat the fold with `--entry` and its 1-based position instead of `--match`.
 - **"Selected changelog sections contain bullets outside category headings"** — Add `--uncategorized-as updated`, `fixed`, `added`, or `removed` to classify legacy bullets during a non-interactive merge. Interactive merges ask for the category when needed.
 - **"Target version ... is not current"** — Native build bumps only apply to the package's current version. Select the current section or add `--no-build-bump` when intentionally correcting an older section.
 - **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. No versions or changelogs change, but a non-dry-run release still stamps freezable workspace sentinels at `0.0.0`.
-- **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+- **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="Version stays 0.0.0 and it never gets published" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 - **"Configured version strategy ... conflicts with existing ... release history"** — Keep `settings.versionStrategy` aligned with the format already recorded in the root or a non-freezable workspace changelog. Do not rewrite published history merely to switch strategies.
 - **"Lock-step versioning requires every non-freezable workspace to start at the same version"** — Align the listed workspace versions, then run the release again. Nova has not written any release files when this check fails.
 - **"UNRELEASED sentinel survived stamping"** — The release step found a supported `@since UNRELEASED` or `@deprecated UNRELEASED` tag directly inside a workspace root or one of Nova's supported source trees that was not replaced. Check the file paths in the error, correct the source problem, and re-run the release; pending entry files remain available.

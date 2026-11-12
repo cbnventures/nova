@@ -275,6 +275,13 @@ import type {
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_RuntimePaths,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_Value,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_WorkspacePath,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackage,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackagePath,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_ProjectDirectory,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_Returns,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePaths,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePathTypeGuard,
+  Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacesValue,
   Lib_DockerPackaging_Runner_ReadJsonObject_ParsedContent,
   Lib_DockerPackaging_Runner_ReadJsonObject_RawContent,
   Lib_DockerPackaging_Runner_ReadJsonObject_Returns,
@@ -768,6 +775,35 @@ export class Runner {
     ]);
 
     return;
+  }
+
+  /**
+   * Lib - Docker Packaging - Read Image Workspaces.
+   *
+   * Lists the workspaces the root image ships in build order, then the assembly.
+   * Projects without Nova Docker packaging return an empty list.
+   *
+   * @param {Lib_DockerPackaging_Runner_ReadImageWorkspaces_ProjectDirectory} projectDirectory - Project directory.
+   *
+   * @returns {Lib_DockerPackaging_Runner_ReadImageWorkspaces_Returns}
+   *
+   * @since 0.41.1
+   */
+  public static async readImageWorkspaces(projectDirectory: Lib_DockerPackaging_Runner_ReadImageWorkspaces_ProjectDirectory): Lib_DockerPackaging_Runner_ReadImageWorkspaces_Returns {
+    const buildPackagePath: Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackagePath = join(projectDirectory, dockerAssemblyRelativePath, 'build-package.json');
+
+    if (await pathExists(buildPackagePath) === false) {
+      return [];
+    }
+
+    const buildPackage: Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackage = await Runner.readJsonObject(buildPackagePath);
+    const workspacesValue: Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacesValue = buildPackage['workspaces'];
+    const workspacePaths: Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePaths = (Array.isArray(workspacesValue) === true) ? workspacesValue.filter((workspacePath): workspacePath is Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePathTypeGuard => typeof workspacePath === 'string' && workspacePath !== '') : [];
+
+    return [...new Set([
+      ...workspacePaths.map((workspacePath) => ((workspacePath.startsWith('./') === true) ? workspacePath : `./${workspacePath}`)),
+      dockerConfigWorkspacePath,
+    ])];
   }
 
   /**

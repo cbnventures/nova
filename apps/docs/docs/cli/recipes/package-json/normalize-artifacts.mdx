@@ -22,11 +22,11 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **files**, **bin**, **man**, **directories**, **private**, and **publishConfig** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
+Normalize **files**, **bin**, **man**, **directories**, **private**, and **publishConfig** fields in <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-artifacts` recipe ensures that publish and artifact-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the conventions defined by the workspace role and policy.
+The `normalize-artifacts` recipe ensures that publish and artifact-related fields in each <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the conventions defined by the workspace role and policy.
 
 It handles file inclusion lists, binary entry points, man pages, directory mappings, private flags, and publish configuration.
 
@@ -44,7 +44,7 @@ It handles file inclusion lists, binary entry points, man pages, directory mappi
 
 ## Behavior
 
-For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects artifact and publish fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+For each eligible <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects artifact and publish fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 - **`files` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it but the array is empty, the field is also removed.
 - **`bin` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it and the value is a string, it is normalized into an object using the unscoped package name as the key (e.g., `"./cli.js"` becomes `{ "my-tool": "./cli.js" }`). If empty, the field is removed.

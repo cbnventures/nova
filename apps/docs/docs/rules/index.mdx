@@ -65,7 +65,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
   <TabItem value="where" label="Where">
     <ul>
       <li>In new or existing codebases.</li>
-      <li>In local development, <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, and code review workflows.</li>
+      <li>In local development, <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, and code review workflows.</li>
       <li>In any repository structure.</li>
       <li>Alongside existing ESLint configs, plugins, formatters, and test runners.</li>
     </ul>
@@ -206,7 +206,7 @@ Importable test suites that each scan across multiple files to hold your project
 Unlike ESLint rules, which check one file at a time, each Vitest suite walks an entire directory tree and reports every violation in a single test run.
 
 :::info
-Each suite imports `describe` and `it` from <Terminology title="next-generation test runner" to="/docs/quickstart/terminology#testing" color={true}>Vitest</Terminology>. Your project must already use Vitest as its test runner.
+Each suite imports `describe` and `it` from <Terminology title="A fast test runner built for Vite projects" to="/docs/quickstart/terminology#testing" color={true}>Vitest</Terminology>. Your project must already use Vitest as its test runner.
 :::
 
 Each test file collapses to a short import-and-invoke. The suite logic lives in the package; your wrapper supplies the configuration.

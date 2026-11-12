@@ -24,9 +24,9 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> is classified by a **role** and a **policy**.
+Every <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> is classified by a **role** and a **policy**.
 
-These two properties, defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, control how <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> read, create, modify, and remove fields in each workspace's `package.json`.
+These two properties, defined in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, control how <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> read, create, modify, and remove fields in each workspace's `package.json`.
 
 ## Roles
 
@@ -179,7 +179,7 @@ The patterns are:
 
 ## Required vs. Conditional
 
-Each field that a <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> handles is classified as either **required** or **conditional**. This classification describes _when_ the recipe will act on the field.
+Each field that a <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> handles is classified as either **required** or **conditional**. This classification describes _when_ the recipe will act on the field.
 
 | Classification  | Meaning                                                                                                                                                                                                                    |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

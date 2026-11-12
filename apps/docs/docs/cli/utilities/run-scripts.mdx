@@ -21,7 +21,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Run `package.json` scripts by pattern in sequential or parallel mode with no extra <Terminology title="runtime dep" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
+Run `package.json` scripts by pattern in sequential or parallel mode with no extra <Terminology title="A package your code needs in order to run" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
 
 ## Summary
 
@@ -29,7 +29,7 @@ The `run-scripts` command reads the `scripts` field from the nearest `package.js
 
 ## Why Use This Command?
 
-- Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Terminology title="runtime dep" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
+- Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Terminology title="A package your code needs in order to run" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
 - Choose between sequential execution (for ordered pipelines) and parallel execution (for independent tasks).
 - Set `NODE_ENV` for child scripts without relying on platform-specific shell syntax or Nova guessing from script names.
 - Keep concurrent output readable with script labels, section frames, preserved child colors, and one final failure summary.
@@ -38,14 +38,14 @@ The `run-scripts` command reads the `scripts` field from the nearest `package.js
 
 - **Build pipelines** — Run `build:*` scripts sequentially with an explicit production environment so each step shares the same intent.
 - **Development mode** — Run `dev:*` scripts in parallel with an explicit development environment to start watchers, dev servers, and other tools concurrently.
-- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
+- **<Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
 - **Cleanup tasks** — Run independent `clean:*` scripts in parallel, or serialize
   overlapping cleanup such as removing a Docusaurus build before clearing its
   generated state.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
 - **package.json** — A valid `package.json` with a `scripts` field must exist in the current working directory.
 
 ## Usage

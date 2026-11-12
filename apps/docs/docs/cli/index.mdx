@@ -28,7 +28,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The **Nova <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>** lets you generate files, apply local assets through vendor integrations, run <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology>, <Terminology title="project starter" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> projects, and use development utilities.
+The **Nova <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>** lets you generate files, apply local assets through vendor integrations, run <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology>, <Terminology title="Builds a whole new project for you, wired and ready" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> projects, and use development utilities.
 
 :::tip Step by step
 Not sure what to type? Build the command **one section at a time**.
@@ -111,7 +111,7 @@ You can freely combine full names and shorthands in the same command. For exampl
 
 ### Generators
 
-Create **semi-tailored** vendor and project files at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. Generators read <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when their output needs project-level values.
+Create **semi-tailored** vendor and project files at the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. Generators read <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when their output needs project-level values.
 
 :::info
 Generators use `nova generate <category> <subcommand>`.
@@ -120,11 +120,11 @@ Generators use `nova generate <category> <subcommand>`.
 #### GitHub
 _Category: `github` · Alias: `gh`_
 
-| Subcommand                                                     | Shorthand | What It Does                                                                                                                                                                                                                    |
-|----------------------------------------------------------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`funding`](/docs/cli/generators/github/funding)               | —         | Create a `.github/FUNDING.yml` file for [GitHub](https://github.com/) sponsor links.                                                                                                                                            |
-| [`issue-template`](/docs/cli/generators/github/issue-template) | `issue`   | Create `.github/ISSUE_TEMPLATE` files for [GitHub](https://github.com/) issue forms.                                                                                                                                            |
-| [`workflows`](/docs/cli/generators/github/workflows)           | —         | Create `.github/workflows` files for [GitHub](https://github.com/) <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation. |
+| Subcommand                                                     | Shorthand | What It Does                                                                                                                                                                                                                                       |
+|----------------------------------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`funding`](/docs/cli/generators/github/funding)               | —         | Create a `.github/FUNDING.yml` file for [GitHub](https://github.com/) sponsor links.                                                                                                                                                               |
+| [`issue-template`](/docs/cli/generators/github/issue-template) | `issue`   | Create `.github/ISSUE_TEMPLATE` files for [GitHub](https://github.com/) issue forms.                                                                                                                                                               |
+| [`workflows`](/docs/cli/generators/github/workflows)           | —         | Create `.github/workflows` files for [GitHub](https://github.com/) <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation. |
 
 #### Must-Haves
 _Category: `must-haves` · Alias: `must`_
@@ -175,7 +175,7 @@ _Category: `google-play-console` · Alias: `gpc`_
 
 ### Recipes
 
-Apply **scripted edits** that automate routine maintenance, using values from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when the recipe needs configured project data.
+Apply **scripted edits** that automate routine maintenance, using values from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when the recipe needs configured project data.
 
 :::info
 All commands in "Recipes" are shaped as `nova recipe <category> <subcommand>` or `nova rcp <alias> <shorthand>`.
@@ -246,7 +246,7 @@ _Category: `read-me` · Alias: `read`_
 
 ### Scaffolding
 
-Bootstrap **full project starters** as <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> workspaces. Each <Terminology title="project starter" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> creates a ready-to-use workspace with all necessary config files, dependencies, and build setup.
+Bootstrap **full project starters** as <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> workspaces. Each <Terminology title="Builds a whole new project for you, wired and ready" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> creates a ready-to-use workspace with all necessary config files, dependencies, and build setup.
 
 :::info
 All commands in "Scaffolding" are shaped as `nova scaffold <category> <subcommand>` or `nova scaf <alias> <shorthand>`.

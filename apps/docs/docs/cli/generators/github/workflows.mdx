@@ -21,23 +21,23 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Generate GitHub Actions workflow files under `.github/workflows/` from the `"workflows"` array in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+Generate GitHub Actions workflow files under `.github/workflows/` from the `"workflows"` array in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
 The generator validates each entry against its template, builds the workflow from your config, resolves variable names, and writes the YAML to disk.
 
 ## Why Use This Command?
 
-- Bootstraps a full set of <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> workflows without writing YAML by hand.
+- Bootstraps a full set of <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> workflows without writing YAML by hand.
 - Coordinates package, container, and hosting destinations from one workflow while preserving each deliverable's build boundary.
 - Serializes dependent publishes (e.g., a preset waits for its core dependency to reach the registry) via `after` on deploy destinations.
 - Keeps workflow definitions consistent across Nova-managed repositories.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
 - **Project root** — Run the command from the directory containing the top-level `package.json`.
 - **Corepack package manager** — A project with a `publish` workflow must declare an exact root `packageManager` value for npm, pnpm, or Yarn. Ranges, partial versions, missing values, and unsupported clients are rejected before any workflow file changes.
-- **Configured workflows** — The `"workflows"` array must exist in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility configure` to configure it interactively.
+- **Configured workflows** — The `"workflows"` array must exist in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility configure` to configure it interactively.
 - **GitHub Action release strategy** — A `github-action` publish destination requires SemVer because the generated release job maintains floating major aliases such as `v1`. Nova rejects that target under CalVer before writing a workflow.
 
 ## Usage
@@ -341,6 +341,32 @@ GHCR derives its namespace from `github.repository_owner` and requires only the 
 
 The `build` array never accepts `"./"`. It contains only non-container workspace deliverables; the multi-stage container build compiles its own inputs from the repository root.
 
+The image's workspaces are still checked before anything publishes. The **Check project** step adds every workspace listed in the generated `packages/docker/build-package.json`, in image build order, plus the `packages/docker` assembly workspace, whose `check` validates the root `Dockerfile`. It also keeps the root's own `check:*` scripts, because the image builds from root-level files such as the `Dockerfile`, `compose.yml`, and `.dockerignore`. See [What the Check Step Covers](#what-the-check-step-covers).
+
+### What the Check Step Covers
+
+Nova works out each publish workflow's **Check project** scope when it generates the file, from what that workflow ships. There is no setting to fill in.
+
+1. The workspaces in `build`, the workspaces behind any `artifact`, and every workspace a `deploy` entry points at.
+2. For a `docker-hub` or `ghcr` target, every workspace the image ships and `packages/docker`.
+3. Every workspace those depend on inside the repository, at any depth, followed through each `package.json`'s `dependencies`, `devDependencies`, `peerDependencies`, and `optionalDependencies`, by package name or by a local `file:`, `link:`, or `workspace:` path.
+
+The root's own `check:*` scripts run only for a workflow with a container image; other workflows pass `--exclude-workspace ./`, because the root check covers root-level files that those workspaces do not ship. The **Build project** step is unchanged and still builds only the `build` scopes.
+
+For example, a repository whose image ships `apps/bot` and whose documentation in `apps/docs` publishes to GitHub Pages from the same workflow runs:
+
+```bash
+npm run check -- --workspace example-docs --workspace example-app-bot --workspace example-tool-docker
+```
+
+A workflow that only publishes `apps/docs`, which depends on `packages/ui`, runs:
+
+```bash
+npm run check -- --workspace example-docs --workspace example-package-ui --exclude-workspace ./
+```
+
+Regenerate the workflows after changing a workspace's dependencies or the image's workspaces.
+
 See [Docker Images](/docs/cli/scaffolding/docker-images) for the generated image and runtime contract.
 
 ### Publishing pfSense Packages
@@ -541,7 +567,7 @@ The list form `["build", "runtime"]` delivers one value both ways from the same 
 
 For `managed`, `build`, `runtime`, and `["build", "runtime"]`, the independent `secret` flag controls storage: `secret: false` uses a GitHub Variable, while `secret: true` uses a GitHub Secret. A `local` value never leaves the developer's machine, so it does not accept `secret` and does not need a namespace prefix.
 
-A build value exists only while the build runs on the <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner. A Variable that application code inlines (for example, `import.meta.env.PUBLIC_SITE_KEY`) can become part of the output; a Secret used for authentication can be consumed without being emitted. **"Build" means "available to the build process," not automatically "shipped to users."** Whether a value is exposed in client output depends on how the application uses it.
+A build value exists only while the build runs on the <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner. A Variable that application code inlines (for example, `import.meta.env.PUBLIC_SITE_KEY`) can become part of the output; a Secret used for authentication can be consumed without being emitted. **"Build" means "available to the build process," not automatically "shipped to users."** Whether a value is exposed in client output depends on how the application uses it.
 
 A runtime value is reconciled into a running server's environment and read by reference (`env.X` or `process.env.X`). A managed value is tracked locally and on GitHub but is intentionally delivered to neither destination.
 
@@ -614,7 +640,7 @@ On each deploy, Nova reconciles every workspace value with `reach: "runtime"` or
 
 :::warning Sync makes Nova authoritative
 
-Nova has full authority over each server's runtime env — removing a `reach: "runtime"` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, so there is no interactive confirm — the deploy log records every change.
+Nova has full authority over each server's runtime env — removing a `reach: "runtime"` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, so there is no interactive confirm — the deploy log records every change.
 :::
 
 #### Per-Target Mechanism
@@ -655,7 +681,7 @@ nova-{template}-{name}.yml
 
 ### Reading Config
 
-The generator loads <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> and reads the `"workflows"` array. If the array is missing or empty, the generator exits with no changes.
+The generator loads <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> and reads the `"workflows"` array. If the array is missing or empty, the generator exits with no changes.
 
 ### Validation
 

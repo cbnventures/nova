@@ -106,7 +106,7 @@ The comparison is an exact match on the message string — any difference in whi
 An orphan is a key on disk that no live source emits and whose message is not a plain default copy — for example, a translation for a component that was removed. Because an orphan may hold real translated content, it is never deleted silently.
 
 - **Interactive terminal** — `sync` prompts once per file, listing the orphaned keys and asking whether to delete them. Declining keeps them; cancelling aborts the run without writing anything.
-- **Non-interactive (<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, no TTY)** — `sync` blocks, writes nothing, and exits `1`, printing every orphan so the drift is visible in the log.
+- **Non-interactive (<Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, no TTY)** — `sync` blocks, writes nothing, and exits `1`, printing every orphan so the drift is visible in the log.
 - **`--delete-defunct`** — opt in to deleting orphans during a non-interactive run.
 
 This gate is the tool's core safety guarantee: a genuine translation is never dropped without either an interactive confirmation or an explicit `--delete-defunct` flag.

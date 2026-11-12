@@ -21,7 +21,7 @@ tags:
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-The <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file lives at the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root and drives every Nova command. This page documents each section and its fields.
+The <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file lives at the <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root and drives every Nova command. This page documents each section and its fields.
 
 For your first working file, follow the [first successful check](/docs/quickstart/setup#first-successful-check). Use this reference when you need every supported field, or run [`nova utility configure`](/docs/cli/utilities/configure) to edit the same schema interactively.
 
@@ -584,7 +584,7 @@ Controls the exact badges generated inside the README badges region.
 
 ## `workspaces`
 
-A map of relative paths to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
+A map of relative paths to <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
 
 | Field    | Type     | Description                                                                                                                                                              |
 |----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

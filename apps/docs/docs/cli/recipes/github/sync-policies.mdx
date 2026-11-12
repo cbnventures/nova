@@ -23,11 +23,11 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **repository policies** to GitHub from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+Sync **repository policies** to GitHub from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
 ## Summary
 
-The `sync-policies` recipe pushes repository-level governance settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub. It uses `gh repo edit` for repository and branch behavior, plus the GitHub API for merge-commit presentation and web commit signoff.
+The `sync-policies` recipe pushes repository-level governance settings from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub. It uses `gh repo edit` for repository and branch behavior, plus the GitHub API for merge-commit presentation and web commit signoff.
 
 If the `github.policies` block is missing entirely, or all policy fields are undefined, the recipe no-ops and emits a warning.
 

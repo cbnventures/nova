@@ -47,6 +47,18 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_ArtifactWorkspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageProjectWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedContainerEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PlainResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PnpmResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_Returns,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_WorkspaceGraph,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DefaultsEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEnvironment,
@@ -894,6 +906,130 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '            build/site-release',
     ].join('\n')), true);
     strictEqual(result.split('path: "build/site-release"').length, 4);
+
+    return;
+  });
+
+  it('checks only the workspaces a publish workflow ships', (): Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_Returns => {
+    const imageProjectWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageProjectWorkspaces = {
+      './': {
+        name: 'image-project',
+        role: 'project',
+        policy: 'freezable',
+      },
+      './apps/apple': {
+        name: 'image-app-apple',
+        role: 'app',
+        policy: 'trackable',
+      },
+      './apps/bot': {
+        name: 'image-app-bot',
+        role: 'app',
+        policy: 'trackable',
+      },
+      './apps/docs': {
+        name: 'image-docs',
+        role: 'docs',
+        policy: 'freezable',
+      },
+      './packages/shared': {
+        name: 'image-package-shared',
+        role: 'package',
+        policy: 'trackable',
+      },
+      './packages/ui': {
+        name: 'image-package-ui',
+        role: 'package',
+        policy: 'trackable',
+      },
+      './packages/docker': {
+        name: 'image-tool-docker',
+        role: 'tool',
+        policy: 'freezable',
+      },
+    };
+    const workspaceGraph: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_WorkspaceGraph = {
+      './apps/apple': {
+        dependencies: ['./packages/ui'],
+      },
+      './apps/bot': {
+        dependencies: ['./packages/shared'],
+      },
+      './apps/docs': {
+        dependencies: ['./packages/ui'],
+      },
+      './packages/shared': {
+        dependencies: [],
+      },
+      './packages/ui': {
+        dependencies: ['./apps/apple'],
+      },
+      './packages/docker': {
+        dependencies: [],
+      },
+    };
+    const imageWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageWorkspaces = [
+      './packages/shared',
+      './apps/bot',
+      './packages/docker',
+    ];
+    const containerEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: ['release'],
+      build: ['./apps/docs'],
+      deploy: [
+        {
+          to: 'ghcr',
+          path: './',
+          with: {
+            IMAGE_REPOSITORY: 'image',
+          },
+        },
+        {
+          to: 'github-pages',
+          path: './apps/docs',
+        },
+      ],
+    };
+    const docsOnlyEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: ['release'],
+      build: ['./apps/docs'],
+      deploy: [{
+        to: 'github-pages',
+        path: './apps/docs',
+      }],
+    };
+    const nestedContainerEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedContainerEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: ['release'],
+      build: ['./apps/docs'],
+      deploy: [{
+        to: 'ghcr',
+        path: './apps/bot',
+        with: {
+          IMAGE_REPOSITORY: 'image',
+        },
+      }],
+    };
+    const containerResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(containerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
+    const pnpmResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PnpmResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces, {}, [], 'pnpm', {}, undefined, workspaceGraph, imageWorkspaces));
+    const docsOnlyResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
+    const nestedResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(nestedContainerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
+    const plainResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PlainResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces));
+
+    ok(containerResult.includes('npm run check -- --workspace image-docs --workspace image-package-shared --workspace image-app-bot --workspace image-tool-docker --workspace image-package-ui --workspace image-app-apple\n'), 'a root image checks its build scopes, image workspaces, and every transitive dependency once each, keeping the root');
+    ok(containerResult.includes('npm run build -- --workspace image-docs\n'), 'the build step keeps only the configured build scopes');
+    ok(docsOnlyResult.includes('npm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'a workflow without a root image checks its shipped workspaces and dependencies but not the root');
+    ok(pnpmResult.includes('pnpm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'the check uses the configured package manager');
+    ok(nestedResult.includes('npm run check -- --workspace image-docs --workspace image-app-bot --workspace image-package-ui --workspace image-package-shared --workspace image-app-apple --exclude-workspace ./\n'), 'a container target outside the root is checked like any deployed workspace');
+    ok(plainResult.includes('npm run check -- --workspace image-docs --exclude-workspace ./\n'), 'without a dependency graph only the shipped workspaces are checked');
 
     return;
   });

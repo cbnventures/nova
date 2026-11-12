@@ -29,7 +29,7 @@ By default, methods are skipped (`skipMethods: true`) and only properties are ch
 
 ## Why Use This Rule?
 
-1. `#hash` fields are enforced at runtime by the JavaScript engine, not just at <Terminology title="translate source to lower-level form" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>compile</Terminology> time.
+1. `#hash` fields are enforced at runtime by the JavaScript engine, not just at <Terminology title="Turns source code into something a machine runs" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>compile</Terminology> time.
 2. Prevents accidental access from outside the class that `private` keyword alone cannot catch.
 3. Keeps the codebase consistent by using one notation for all private members.
 
@@ -86,7 +86,7 @@ By default, methods are skipped (`skipMethods: true`) and only properties are ch
 <Tabs groupId="require-hash-private-config">
   <TabItem value="default" label="Default" default>
 
-    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+    Enable the rule in your ESLint <Terminology title="One file with a flat list of configs, no cascading files" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
     ```ts
     import { RequireHashPrivate } from '@cbnventures/nova/rules/eslint';

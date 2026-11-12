@@ -22,11 +22,11 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **exports**, **main**, **type**, **browser**, and **imports** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
+Normalize **exports**, **main**, **type**, **browser**, and **imports** fields in <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-modules` recipe ensures that module resolution fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` follow the official Node.js module specification conventions.
+The `normalize-modules` recipe ensures that module resolution fields in each <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` follow the official Node.js module specification conventions.
 
 It handles exports map structure, main entry point, module type declaration, browser field, and import maps.
 
@@ -44,7 +44,7 @@ It handles exports map structure, main entry point, module type declaration, bro
 
 ## Behavior
 
-For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects module resolution fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+For each eligible <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects module resolution fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 - **`exports` (Conditional)** — Removed if the workspace role is not `config`, `package`, or `tool`. For allowed roles, a string value is normalized into `{ ".": { "default": value } }`, and a string at `exports['.']` becomes `{ "default": value }`. If an explicit `exports['.']` condition map puts `default` before other conditions, the recipe moves `default` last so those conditions remain reachable. It never invents `require` or `browser` conditions; declare them explicitly when the package actually provides those entry points.
 - **`main` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`. Otherwise preserved independently: `main` is a legacy fallback entry point for either module format, not a synonym for `exports['.'].require`. When `exports` is defined, Node.js uses it in preference to `main` for supported imports.

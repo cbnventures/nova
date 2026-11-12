@@ -27,6 +27,7 @@ import type {
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
   Shared_WorkflowStepKind,
+  Shared_WorkspaceGraph,
 } from '../../../../shared.d.ts';
 
 /**
@@ -165,6 +166,35 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuild
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir = Shared_BlueprintWorkflow;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Publish - Checks Only The Workspaces A Publish Workflow Ships.
+ *
+ * @since 0.41.1
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_Returns = void;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageProjectWorkspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_WorkspaceGraph = Shared_WorkspaceGraph;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageWorkspaces = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedContainerEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PnpmResult = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyResult = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedResult = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PlainResult = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Publish - Delivers A Build And Runtime Value Both Ways On Cloudflare Workers.

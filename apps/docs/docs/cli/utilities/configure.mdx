@@ -27,7 +27,7 @@ Generate or update the Nova config file with an interactive wizard that guides y
 
 ## Summary
 
-The `configure` command creates and maintains the complete <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file through focused editors for every supported configuration field.
+The `configure` command creates and maintains the complete <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file through focused editors for every supported configuration field.
 
 Existing values populate each prompt so you can edit an accurate snapshot and only persist changes when you confirm them.
 
@@ -41,15 +41,15 @@ Existing values populate each prompt so you can edit an accurate snapshot and on
 
 ## Use Cases
 
-- **Onboarding** — Create the first <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> for a new or migrated repository.
+- **Onboarding** — Create the first <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> for a new or migrated repository.
 - **Metadata refresh** — Keep project descriptions, entities, and canonical URLs in sync after ownership changes.
 - **Normalization** — Clean up manually edited entries without hunting for typos in raw JSON.
-- **<Terminology title="template command" to="/docs/quickstart/terminology#nova-concepts" color={true}>Generator</Terminology> support** — Feed consistent metadata to Nova <Terminology title="template command" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology> so docs, README files, and release notes stay accurate.
+- **<Terminology title="Writes a config file for you from a built-in template" to="/docs/quickstart/terminology#nova-concepts" color={true}>Generator</Terminology> support** — Feed consistent metadata to Nova <Terminology title="Writes a config file for you from a built-in template" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology> so docs, README files, and release notes stay accurate.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
-- **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root included).
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root included).
 - **Interactive terminal** — The session needs to support interactive prompts for the wizard to function.
 
 ## Usage
@@ -112,7 +112,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 ### Project
 
 - **Purpose**: Edit project display name, slug, short/long descriptions, keywords, legal name, pronouns, supported platforms, starting year, and license in one guided step.
-- **Nice to know**: Slug updates propagate to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent. Pronouns control first-person wording (we/us/our vs I/me/my), platforms help suggest initial issue fields and badges, and starting year plus license feed the LICENSE generator.
+- **Nice to know**: Slug updates propagate to <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent. Pronouns control first-person wording (we/us/our vs I/me/my), platforms help suggest initial issue fields and badges, and starting year plus license feed the LICENSE generator.
 - **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max); starting year must be an integer &ge; 1970. When a `dockerHub` section exists, the short-description prompt shows its current character count and rejects values longer than Docker Hub's 100-character limit.
 
 ### Entities
@@ -141,9 +141,9 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 ### Workspaces
 
-- **Purpose**: List detected <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> (`package.json`) and edit each with role/policy in one place.
-- **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies (<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology>, <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology>, <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology>) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
-- **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> can opt into syncing selected metadata fields.
+- **Purpose**: List detected <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> (`package.json`) and edit each with role/policy in one place.
+- **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies (<Terminology title="Version stays 0.0.0 and it never gets published" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology>, <Terminology title="Gets real version bumps but stays off the registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology>, <Terminology title="Versioned and ready to publish to a package registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology>) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
+- **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); <Terminology title="Versioned and ready to publish to a package registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> can opt into syncing selected metadata fields.
 
 :::note Environment variables
 Environment variables and secrets live in the top-level [`environment`](/docs/quickstart/nova-config#environment) block and are editable in the [Environment](#environment) category below.
@@ -218,7 +218,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ## Saving and Canceling
 
-- Choosing **Save & Exit** writes to a file called <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+- Choosing **Save & Exit** writes to a file called <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 - Choosing **Cancel** exits immediately without persisting changes and prints a debug log.
 
 ## Output Example
@@ -474,6 +474,6 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ## Troubleshooting
 
-- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> are not allowed.
+- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> are not allowed.
 - **Validation loops keep reappearing** — Fix the highlighted email or URL before continuing. To drop the value, enter a single space and press **Enter**.
-- **No file was created** — Confirm that <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> is writable and that `--dry-run` was not passed or **Cancel** was not chosen.
+- **No file was created** — Confirm that <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> is writable and that `--dry-run` was not passed or **Cancel** was not chosen.

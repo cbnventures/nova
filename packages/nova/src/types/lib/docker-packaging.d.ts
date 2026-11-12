@@ -394,6 +394,19 @@ export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_RuntimePaths = stri
 export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_PathParts = string[];
 
 /**
+ * Lib - Docker Packaging - Runner - Read Image Workspaces.
+ *
+ * @since 0.41.1
+ */
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_ProjectDirectory = string;
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_Returns = Promise<string[]>;
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackagePath = string;
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacesValue = unknown;
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePaths = string[];
+export type Lib_DockerPackaging_Runner_ReadImageWorkspaces_WorkspacePathTypeGuard = string;
+
+/**
  * Lib - Docker Packaging - Runner - ReadJsonObject.
  *
  * @since 0.34.0

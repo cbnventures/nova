@@ -3187,6 +3187,25 @@ export type Shared_WorkspaceManifest = {
 };
 
 /**
+ * Shared - Workspace Graph.
+ *
+ * @since 0.41.1
+ */
+export type Shared_WorkspaceGraphNode_Dependency = string;
+
+export type Shared_WorkspaceGraphNode_Dependencies = Shared_WorkspaceGraphNode_Dependency[];
+
+export type Shared_WorkspaceGraphNode = {
+  dependencies: Shared_WorkspaceGraphNode_Dependencies;
+};
+
+export type Shared_WorkspaceGraphPath = string;
+
+export type Shared_WorkspaceGraph = {
+  [key: Shared_WorkspaceGraphPath]: Shared_WorkspaceGraphNode;
+};
+
+/**
  * Shared - Vendor Integrations.
  *
  * @since 0.34.0

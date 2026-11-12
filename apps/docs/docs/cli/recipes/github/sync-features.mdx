@@ -22,11 +22,11 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **repository feature toggles** to GitHub from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+Sync **repository feature toggles** to GitHub from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
 ## Summary
 
-The `sync-features` recipe pushes repository feature enable/disable settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub. It uses `gh repo edit` for Issues, Wiki, Projects, and Discussions, and GitHub GraphQL for Sponsorships.
+The `sync-features` recipe pushes repository feature enable/disable settings from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub. It uses `gh repo edit` for Issues, Wiki, Projects, and Discussions, and GitHub GraphQL for Sponsorships.
 
 If the `github.features` block is missing entirely, or all five feature fields are undefined, the recipe no-ops and emits a warning.
 

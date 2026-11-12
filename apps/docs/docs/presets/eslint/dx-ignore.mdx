@@ -30,11 +30,11 @@ Exclude project-owned supporting files, build output, framework state, platform 
 3. Drops framework state from Astro, Docusaurus, Next.js, Svelte, and Vite so machine-written code stays out of your reports.
 4. Excludes Android, Apple, Gradle, and Rust build state from cross-language repositories.
 5. Ignores generated declarations, Vercel state, and Wrangler state so deployment tooling does not add noise.
-6. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
+6. Sits first in the layer order so every later <Terminology title="A ready-made config you stack instead of writing your own" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
 
 ## Usage
 
-Spread `dxIgnore` first in your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, ahead of the code style, language, and runtime layers.
+Spread `dxIgnore` first in your <Terminology title="One file with a flat list of configs, no cascading files" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, ahead of the code style, language, and runtime layers.
 
 ```ts title="eslint.config.mts"
 import {

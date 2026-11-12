@@ -59,7 +59,7 @@ jobs:
       - name: "Check project"
         timeout-minutes: 15
         run: |
-          npm run check -- --workspace sandbox-plain
+          npm run check -- --workspace sandbox-plain --exclude-workspace ./
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"

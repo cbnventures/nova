@@ -26,11 +26,11 @@ import loggerBasics from './_assets_/logger-1.png';
 import loggerScoped from './_assets_/logger-2.png';
 import loggerMultiline from './_assets_/logger-3.png';
 
-Deliver consistent log output across local runs and <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> without wiring custom formatting by hand.
+Deliver consistent log output across local runs and <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> without wiring custom formatting by hand.
 
 ## Summary
 
-The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-safe formatting so debug chatter stays in dev and production logs stay spotless.
+The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and <Terminology title="Hidden codes that color and style terminal text" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-safe formatting so debug chatter stays in dev and production logs stay spotless.
 
 ## Why Use This Battery?
 
@@ -48,7 +48,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
+Examples use TypeScript, but the <Terminology title="How one program asks another for data or actions" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="Modern modules that use import and export" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
 :::
 
 :::warning Development Logging
@@ -187,7 +187,7 @@ Scope tags (`name`, `type`, and `purpose` options) render only when `LOG_LEVEL` 
 ## Troubleshooting
 
 - **Nothing prints to the terminal** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
-- **Colors missing in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> logs** — Some environments disable <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
+- **Colors missing in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> logs** — Some environments disable <Terminology title="Hidden codes that color and style terminal text" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
 - **Extra blank lines surround messages** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
 - **Timestamps not appearing** — `LOG_TIME` expects the exact string `'true'`, not any other truthy value.
 - **Debug logs still hidden locally** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.

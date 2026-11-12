@@ -38,6 +38,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_ProjectDirectory,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_StderrSpy,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_DocsContent,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_PublishContent,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_Returns,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_WorkspacePackages,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_DollarBrace,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_ProjectDirectory,
@@ -1024,6 +1030,162 @@ describe('WorkflowsBlueprint.generate', async () => {
     ].join('');
 
     ok(publishContent.includes(`PUBLISH: "${dollarBrace}{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) || (github.event_name == 'workflow_dispatch' && !inputs.dry-run) }}"`) === true, 'missing tag-push PUBLISH condition');
+
+    return;
+  });
+
+  it('derives the check scope from what each publish workflow ships', async (): Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_Returns => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_ProjectDirectory = join(sandboxRoot, 'image-workspaces-mock');
+    const workspacePackages: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_WorkspacePackages = [
+      {
+        path: 'apps/apple',
+        contents: { name: 'image-app-apple' },
+      },
+      {
+        path: 'apps/bot',
+        contents: {
+          name: 'image-app-bot',
+          dependencies: { 'image-package-shared': '0.0.0' },
+        },
+      },
+      {
+        path: 'apps/docs',
+        contents: {
+          name: 'image-docs',
+          devDependencies: { 'ui-alias': 'file:../../packages/ui' },
+        },
+      },
+      {
+        path: 'packages/docker',
+        contents: { name: 'image-tool-docker' },
+      },
+      {
+        path: 'packages/shared',
+        contents: { name: 'image-package-shared' },
+      },
+      {
+        path: 'packages/ui',
+        contents: {
+          name: 'image-package-ui',
+          peerDependencies: { 'image-app-apple': '*' },
+        },
+      },
+    ];
+
+    await Promise.all(workspacePackages.map(async (workspacePackage) => {
+      await mkdir(join(projectDirectory, workspacePackage['path']), { recursive: true });
+
+      await writeFile(join(projectDirectory, workspacePackage['path'], 'package.json'), JSON.stringify(workspacePackage['contents'], null, 2));
+
+      return;
+    }));
+
+    await writeFile(join(projectDirectory, 'packages', 'docker', 'build-package.json'), JSON.stringify({
+      name: 'image-tool-docker-build',
+      private: true,
+      version: '0.0.0',
+      workspaces: [
+        'packages/shared',
+        'apps/bot',
+      ],
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'image-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_NovaConfig = {
+      project: {
+        name: {
+          title: 'Image',
+          slug: 'image',
+        },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          runsOn: 'ubuntu-24.04',
+          name: 'project',
+          triggers: ['release'],
+          build: ['./apps/docs'],
+          deploy: [{
+            to: 'ghcr',
+            path: './',
+            with: {
+              IMAGE_REPOSITORY: 'image',
+            },
+          }],
+        },
+        {
+          template: 'publish',
+          runsOn: 'ubuntu-24.04',
+          name: 'docs',
+          triggers: ['release'],
+          build: ['./apps/docs'],
+          deploy: [{
+            to: 'github-pages',
+            path: './apps/docs',
+          }],
+        },
+      ],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'image-project',
+        },
+        './apps/apple': {
+          role: 'app',
+          policy: 'trackable',
+          name: 'image-app-apple',
+        },
+        './apps/bot': {
+          role: 'app',
+          policy: 'trackable',
+          name: 'image-app-bot',
+        },
+        './apps/docs': {
+          role: 'docs',
+          policy: 'freezable',
+          name: 'image-docs',
+        },
+        './packages/docker': {
+          role: 'tool',
+          policy: 'freezable',
+          name: 'image-tool-docker',
+        },
+        './packages/shared': {
+          role: 'package',
+          policy: 'trackable',
+          name: 'image-package-shared',
+        },
+        './packages/ui': {
+          role: 'package',
+          policy: 'trackable',
+          name: 'image-package-ui',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await WorkflowsBlueprint.generate({});
+
+    const publishContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_PublishContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-project.yml'), 'utf-8');
+    const docsContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_DocsContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-docs.yml'), 'utf-8');
+
+    ok(publishContent.includes('npm run check -- --workspace image-docs --workspace image-package-shared --workspace image-app-bot --workspace image-tool-docker --workspace image-package-ui --workspace image-app-apple\n') === true, 'the image check covers the build scope, the image workspaces, and every transitive dependency');
+
+    ok(publishContent.includes('npm run build -- --workspace image-docs\n') === true, 'the build step keeps only the configured build scope');
+
+    ok(docsContent.includes('npm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n') === true, 'a docs workflow checks the docs, its local file dependency, and that package\'s peer dependency, and leaves out the root');
 
     return;
   });

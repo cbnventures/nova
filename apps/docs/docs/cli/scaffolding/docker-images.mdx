@@ -101,7 +101,7 @@ Workspace files needed after compilation are declared as workspace-relative runt
 
 Non-container deliverables continue through the normal workspace pipeline. If one workspace feeds both the container and another destination, it compiles once for each deliverable because the two outputs have independent build boundaries.
 
-Container publishing builds one OCI artifact once for the workflow's selected platforms. `linux/amd64` and `linux/arm64` are supported, and selecting both produces one multi-platform artifact. Docker Hub and GitHub Container Registry jobs distribute that same artifact instead of rebuilding registry-specific images.
+Container publishing builds one OCI artifact once for the workflow's selected platforms. `linux/amd64` and `linux/arm64` are supported, and selecting both produces one multi-platform artifact. Docker Hub and GitHub Container Registry jobs distribute that same artifact instead of rebuilding registry-specific images. Before that build, the publish workflow's check step runs `check` for every workspace the image ships, `packages/docker`, and the root's own checks.
 
 ## Documentation-Only Example
 
