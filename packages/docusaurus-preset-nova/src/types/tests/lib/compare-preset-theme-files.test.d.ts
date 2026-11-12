@@ -27,6 +27,13 @@ export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsAFoot
 export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsANavbarVariantSubfolderAfterTheNavbarWrapper_Result = number;
 
 /**
+ * Tests - Lib - Compare Preset Theme Files - Compare Preset Theme Files - Sorts Navbar Before Navbar Item When Given Windows Paths.
+ *
+ * @since 0.41.2
+ */
+export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarBeforeNavbarItemWhenGivenWindowsPaths_Result = number;
+
+/**
  * Tests - Lib - Compare Preset Theme Files - Compare Preset Theme Files - Sorts Navbar Variant Subfolders Alphabetically Among Themselves.
  *
  * @since 0.15.0
@@ -46,6 +53,13 @@ export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNonNa
  * @since 0.15.0
  */
 export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheFooterWrapperBeforeAnyFooterVariantSubfolder_Result = number;
+
+/**
+ * Tests - Lib - Compare Preset Theme Files - Compare Preset Theme Files - Sorts The Navbar Wrapper Before A Navbar Variant When Given Windows Paths.
+ *
+ * @since 0.41.2
+ */
+export type Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeANavbarVariantWhenGivenWindowsPaths_Result = number;
 
 /**
  * Tests - Lib - Compare Preset Theme Files - Compare Preset Theme Files - Sorts The Navbar Wrapper Before Any Navbar Variant Subfolder.

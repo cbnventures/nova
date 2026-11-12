@@ -1,15 +1,19 @@
+import { toPosixPath } from './posix-path.js';
+
 import type {
   Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A,
   Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B,
+  Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_PosixA,
+  Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_PosixB,
   Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns,
 } from '../types/lib/compare-preset-theme-files.d.ts';
 
 /**
  * Lib - Compare Preset Theme Files - Compare Preset Theme Files.
  *
- * Sorts wrapper files before their variant subfolder siblings so
- * variant rules ship later in the CSS bundle and win the cascade
- * for same-specificity selectors. All other paths sort alphabetically.
+ * Sorts wrapper files before their variant subfolder siblings so variant
+ * rules win the cascade, then sorts other paths alphabetically. Windows
+ * backslash paths sort the same as forward slash paths.
  *
  * @param {Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A} a - A.
  * @param {Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B} b - B.
@@ -19,37 +23,40 @@ import type {
  * @since 0.15.0
  */
 export function comparePresetThemeFiles(a: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A, b: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B): Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns {
+  const posixA: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_PosixA = toPosixPath(a);
+  const posixB: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_PosixB = toPosixPath(b);
+
   if (
-    a === 'Navbar/style.css'
-    && b.startsWith('Navbar/') === true
-    && b !== a
+    posixA === 'Navbar/style.css'
+    && posixB.startsWith('Navbar/') === true
+    && posixB !== posixA
   ) {
     return -1;
   }
 
   if (
-    b === 'Navbar/style.css'
-    && a.startsWith('Navbar/') === true
-    && a !== b
+    posixB === 'Navbar/style.css'
+    && posixA.startsWith('Navbar/') === true
+    && posixA !== posixB
   ) {
     return 1;
   }
 
   if (
-    a === 'Footer/style.css'
-    && b.startsWith('Footer/') === true
-    && b !== a
+    posixA === 'Footer/style.css'
+    && posixB.startsWith('Footer/') === true
+    && posixB !== posixA
   ) {
     return -1;
   }
 
   if (
-    b === 'Footer/style.css'
-    && a.startsWith('Footer/') === true
-    && a !== b
+    posixB === 'Footer/style.css'
+    && posixA.startsWith('Footer/') === true
+    && posixA !== posixB
   ) {
     return 1;
   }
 
-  return a.localeCompare(b);
+  return posixA.localeCompare(posixB);
 }

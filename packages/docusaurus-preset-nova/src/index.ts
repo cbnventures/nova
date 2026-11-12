@@ -17,6 +17,7 @@ import {
   loadCommonJsModule,
   resolveModulePath,
 } from './lib/module-loader.js';
+import { toPosixPath } from './lib/posix-path.js';
 import { generateProgressBarClientModule } from './lib/progress-bar.js';
 import { buildSearchIndex } from './lib/search/indexer.js';
 import { Runner as LibTranslations } from './lib/translations.js';
@@ -231,23 +232,25 @@ export class Runner {
 
     // Shared block and theme CSS files.
     const cssBlocksDirectory: Index_Runner_Default_CssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
-    const cssBlockFiles: Index_Runner_Default_CssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssBlocksDirectory, String(fileName)));
+    const cssBlockFiles: Index_Runner_Default_CssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).map((fileName) => toPosixPath(String(fileName))).filter((fileName) => fileName.endsWith('style.css')).sort().map((fileName) => resolve(cssBlocksDirectory, fileName));
     const cssThemeDirectory: Index_Runner_Default_CssThemeDirectory = resolve(currentDirectory, 'styles/theme');
-    const cssThemeFiles: Index_Runner_Default_CssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssThemeDirectory, String(fileName)));
+    const cssThemeFiles: Index_Runner_Default_CssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).map((fileName) => toPosixPath(String(fileName))).filter((fileName) => fileName.endsWith('style.css')).sort().map((fileName) => resolve(cssThemeDirectory, fileName));
 
     // Preset CSS files.
     const cssPresetDirectory: Index_Runner_Default_CssPresetDirectory = resolve(currentDirectory, `styles/presets/${presetName}`);
     const cssPresetPath: Index_Runner_Default_CssPresetPath = resolve(cssPresetDirectory, 'preset.css');
     const cssPresetBlocksDirectory: Index_Runner_Default_CssPresetBlocksDirectory = resolve(cssPresetDirectory, 'blocks');
-    const cssPresetBlockFiles: Index_Runner_Default_CssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
+    const cssPresetBlockFiles: Index_Runner_Default_CssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).map((fileName) => toPosixPath(String(fileName))).filter((fileName) => fileName.endsWith('style.css')).sort().map((fileName) => resolve(cssPresetBlocksDirectory, fileName));
     const cssPresetThemeDirectory: Index_Runner_Default_CssPresetThemeDirectory = resolve(cssPresetDirectory, 'theme');
     const activeNavbarPrefix: Index_Runner_Default_ActiveNavbarPrefix = `Navbar/${resolvedPreset['navbar'].charAt(0).toUpperCase()}${resolvedPreset['navbar'].slice(1)}/`;
     const activeFooterPrefix: Index_Runner_Default_ActiveFooterPrefix = `Footer/${resolvedPreset['footer'].charAt(0).toUpperCase()}${resolvedPreset['footer'].slice(1)}/`;
-    const cssPresetThemeFiles: Index_Runner_Default_CssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).filter(
-      (fileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
+    const cssPresetThemeFiles: Index_Runner_Default_CssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).map(
+      (fileName) => toPosixPath(String(fileName)),
+    ).filter(
+      (fileName) => filterPresetThemeFile(fileName, activeNavbarPrefix, activeFooterPrefix),
     ).sort(
-      (a, b) => comparePresetThemeFiles(String(a), String(b)),
-    ).map((fileName) => resolve(cssPresetThemeDirectory, String(fileName)));
+      (a, b) => comparePresetThemeFiles(a, b),
+    ).map((fileName) => resolve(cssPresetThemeDirectory, fileName));
 
     const i18nConfig: Index_Runner_Default_I18nConfig = context['i18n'] as Index_Runner_Default_I18nConfig;
     const currentLocale: Index_Runner_Default_CurrentLocale = i18nConfig['currentLocale'];

@@ -1,5 +1,9 @@
 # @cbnventures/nova
 
+## 0.41.2 - 2026-11-12
+
+No changes.
+
 ## 0.41.1 - 2026-11-12
 
 ### FIXED

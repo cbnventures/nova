@@ -9,9 +9,11 @@ import type {
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_ReturnsZeroWhenComparingIdenticalPaths_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsAFooterVariantSubfolderAfterTheFooterWrapper_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsANavbarVariantSubfolderAfterTheNavbarWrapper_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarBeforeNavbarItemWhenGivenWindowsPaths_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarVariantSubfoldersAlphabeticallyAmongThemselves_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNonNavbarNonFooterPathsAlphabetically_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheFooterWrapperBeforeAnyFooterVariantSubfolder_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeANavbarVariantWhenGivenWindowsPaths_Result,
   Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeAnyNavbarVariantSubfolder_Result,
 } from '../../types/tests/lib/compare-preset-theme-files.test.d.ts';
 
@@ -73,6 +75,22 @@ describe('comparePresetThemeFiles', async () => {
     const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_ReturnsZeroWhenComparingIdenticalPaths_Result = comparePresetThemeFiles('Navbar/style.css', 'Navbar/style.css');
 
     ok(result === 0);
+
+    return;
+  });
+
+  it('sorts the Navbar wrapper before a Navbar variant when given Windows paths', () => {
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeANavbarVariantWhenGivenWindowsPaths_Result = comparePresetThemeFiles('Navbar\\style.css', 'Navbar\\Canopy\\style.css');
+
+    ok(result < 0);
+
+    return;
+  });
+
+  it('sorts Navbar before NavbarItem when given Windows paths', () => {
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarBeforeNavbarItemWhenGivenWindowsPaths_Result = comparePresetThemeFiles('Navbar\\Canopy\\style.css', 'NavbarItem\\style.css');
+
+    ok(result < 0);
 
     return;
   });

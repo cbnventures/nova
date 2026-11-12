@@ -10,3 +10,9 @@ export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveNavbarPrefix =
 export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveFooterPrefix = string;
 
 export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_Returns = boolean;
+
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_PosixFileName = string;
+
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_PosixNavbarPrefix = string;
+
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_PosixFooterPrefix = string;

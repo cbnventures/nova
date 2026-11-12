@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.41.2 - 2026-11-12
+
+### FIXED
+- Theme CSS paths on Windows switched to forward slashes, so Windows builds kept only the active navbar and footer variant styles and ordered the CSS the same way as macOS and Linux.
+
 ## 0.41.1 - 2026-11-12
 
 No changes.

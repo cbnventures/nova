@@ -7,10 +7,13 @@ import { filterPresetThemeFile } from '../../lib/filter-preset-theme-file.js';
 import type {
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsFilesThatAreNotStyleCss_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsFooterFilesInInactiveVariantSubfolders_Result,
+  Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveFooterVariantsWhenGivenAWindowsPath_Result,
+  Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveNavbarVariantsWhenGivenAWindowsPath_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsNavbarFilesInInactiveVariantSubfolders_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsFooterFilesInTheActiveVariantSubfolder_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNavbarFilesInTheActiveVariantSubfolder_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNonNavbarNonFooterStyleFiles_Result,
+  Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheActiveNavbarVariantWhenGivenAWindowsPath_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheFooterWrapperFileRegardlessOfActiveVariant_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarWrapperFileRegardlessOfActiveVariant_Result,
 } from '../../types/tests/lib/filter-preset-theme-file.test.d.ts';
@@ -73,6 +76,30 @@ describe('filterPresetThemeFile', async () => {
     const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNonNavbarNonFooterStyleFiles_Result = filterPresetThemeFile('DocItem/Content/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
+
+    return;
+  });
+
+  it('keeps the active Navbar variant when given a Windows path', () => {
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheActiveNavbarVariantWhenGivenAWindowsPath_Result = filterPresetThemeFile('Navbar\\Canopy\\style.css', 'Navbar/Canopy/', 'Footer/Commons/');
+
+    strictEqual(result, true);
+
+    return;
+  });
+
+  it('drops inactive Navbar variants when given a Windows path', () => {
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveNavbarVariantsWhenGivenAWindowsPath_Result = filterPresetThemeFile('Navbar\\Monolith\\style.css', 'Navbar/Canopy/', 'Footer/Commons/');
+
+    strictEqual(result, false);
+
+    return;
+  });
+
+  it('drops inactive Footer variants when given a Windows path', () => {
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveFooterVariantsWhenGivenAWindowsPath_Result = filterPresetThemeFile('Footer\\Embassy\\style.css', 'Navbar/Canopy/', 'Footer/Commons/');
+
+    strictEqual(result, false);
 
     return;
   });

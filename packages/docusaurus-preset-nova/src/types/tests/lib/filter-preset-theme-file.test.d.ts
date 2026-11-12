@@ -13,6 +13,20 @@ export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsFilesThat
 export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsFooterFilesInInactiveVariantSubfolders_Result = boolean;
 
 /**
+ * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Drops Inactive Footer Variants When Given A Windows Path.
+ *
+ * @since 0.41.2
+ */
+export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveFooterVariantsWhenGivenAWindowsPath_Result = boolean;
+
+/**
+ * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Drops Inactive Navbar Variants When Given A Windows Path.
+ *
+ * @since 0.41.2
+ */
+export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_DropsInactiveNavbarVariantsWhenGivenAWindowsPath_Result = boolean;
+
+/**
  * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Drops Navbar Files In Inactive Variant Subfolders.
  *
  * @since 0.15.0
@@ -39,6 +53,13 @@ export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNavbarFil
  * @since 0.15.0
  */
 export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNonNavbarNonFooterStyleFiles_Result = boolean;
+
+/**
+ * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Keeps The Active Navbar Variant When Given A Windows Path.
+ *
+ * @since 0.41.2
+ */
+export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheActiveNavbarVariantWhenGivenAWindowsPath_Result = boolean;
 
 /**
  * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Keeps The Footer Wrapper File Regardless Of Active Variant.
