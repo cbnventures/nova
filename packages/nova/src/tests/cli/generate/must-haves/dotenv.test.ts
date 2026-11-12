@@ -390,6 +390,15 @@ describe('CliGenerateMustHavesDotenv.run', () => {
                 secret: true,
                 reach: 'runtime',
               },
+              {
+                key: 'SITE_URL',
+                secret: false,
+                reach: [
+                  'build',
+                  'runtime',
+                ],
+                defaultValue: 'https://example.com',
+              },
             ],
           },
         },
@@ -419,6 +428,8 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     ok(envTargetCall[1].includes('SECRET_TOKEN=""'), 'Expected .env content to include the secret config variable as a blank line');
 
+    strictEqual(envTargetCall[1].split('SITE_URL=').length - 1, 1, 'Expected .env content to list the build-and-runtime variable once');
+
     strictEqual((envTargetCall[3] !== undefined) ? envTargetCall[3]['mode'] : undefined, 'fillable');
 
     const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env.sample');
@@ -428,6 +439,10 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     ok(sampleTargetCall[1].includes('API_KEY="abc"'), 'Expected .env.sample content to seed the non-secret default value');
 
     ok(sampleTargetCall[1].includes('SECRET_TOKEN=""'), 'Expected .env.sample content to leave the secret variable blank');
+
+    strictEqual(sampleTargetCall[1].split('SITE_URL=').length - 1, 1, 'Expected .env.sample content to list the build-and-runtime variable once');
+
+    ok(sampleTargetCall[1].includes('SITE_URL="https://example.com"'), 'Expected .env.sample content to seed the build-and-runtime default value');
 
     strictEqual((sampleTargetCall[3] !== undefined) ? sampleTargetCall[3]['mode'] : undefined, 'strict');
 

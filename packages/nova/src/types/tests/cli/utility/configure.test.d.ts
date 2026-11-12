@@ -14,6 +14,9 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Config,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Mutate,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Returns,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns,
   Cli_Utility_Configure_Runner_PromptFlow_Config,
   Cli_Utility_Configure_Runner_PromptFlow_Returns,
   Cli_Utility_Configure_Runner_PromptGithub_Config,
@@ -264,6 +267,25 @@ export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_OffersTheRepoRo
 export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootBlock = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Environment Section - Preselects The Build And Runtime Choice When Editing A List Value.
+ *
+ * @since 0.41.0
+ */
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Question = PromptObject;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_PromptEnvironmentValueForm = (existing: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace) => Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Result = Awaited<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_ReachQuestion = PromptObject | undefined;
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Environment Section - Prompts Before Removing A Value.
  *
  * @since 0.21.0
@@ -320,6 +342,25 @@ export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAV
 export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment = (config: Cli_Utility_Configure_Runner_PromptEnvironment_Config) => Cli_Utility_Configure_Runner_PromptEnvironment_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_ErrorCalls = unknown[][];
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Environment Section - Saves The Build And Runtime Choice As A Reach List.
+ *
+ * @since 0.41.0
+ */
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Question = PromptObject;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_PromptEnvironmentValueForm = (existing: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace) => Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Result = Awaited<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_ReachQuestion = PromptObject | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Flow - Exposes Every Top Level Config Category.

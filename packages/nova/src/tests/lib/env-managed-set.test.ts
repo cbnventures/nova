@@ -272,5 +272,71 @@ describe('libEnvManagedSet', () => {
     return;
   });
 
+  it('provisions a build and runtime value once per profile', () => {
+    deepStrictEqual(
+      libEnvManagedSet.compute({
+        environment: {
+          workspaces: {
+            './apps/site': {
+              prefix: 'SITE_',
+              variables: [{
+                key: 'URL',
+                secret: false,
+                reach: [
+                  'build',
+                  'runtime',
+                ],
+              }],
+            },
+          },
+        },
+        workflows: [],
+      }),
+      [{
+        name: 'SITE_URL',
+        secret: false,
+        kind: 'workspace',
+      }],
+    );
+
+    deepStrictEqual(
+      libEnvManagedSet.compute({
+        environment: {
+          profiles: {
+            enabled: true,
+          },
+          workspaces: {
+            './apps/site': {
+              prefix: 'SITE_',
+              variables: [{
+                key: 'URL',
+                secret: false,
+                reach: [
+                  'build',
+                  'runtime',
+                ],
+              }],
+            },
+          },
+        },
+        workflows: [],
+      }),
+      [
+        {
+          name: 'SITE_STAGING_URL',
+          secret: false,
+          kind: 'workspace',
+        },
+        {
+          name: 'SITE_PRODUCTION_URL',
+          secret: false,
+          kind: 'workspace',
+        },
+      ],
+    );
+
+    return;
+  });
+
   return;
 });

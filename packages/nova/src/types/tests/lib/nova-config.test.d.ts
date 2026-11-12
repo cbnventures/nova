@@ -48,6 +48,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigK
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Messages = string[];
 
 /**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget.
+ *
+ * @since 0.41.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Messages = string[];
+
+/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry.
  *
  * @since 0.21.0
@@ -176,6 +189,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTh
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAReachListIsNotExactlyBuildAndRuntime.
+ *
+ * @since 0.41.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Serialized = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAReachLocalValueDeclaresSecret.
@@ -315,6 +341,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsS
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_ProjectDirectory = string;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_Serialized = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesABuildAndRuntimeReachListInEitherOrder.
+ *
+ * @since 0.41.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Serialized = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesAReachLocalValueWithNoSecret.

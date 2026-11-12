@@ -31,6 +31,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Messages,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Config,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Messages,
@@ -71,6 +75,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_Config,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_Messages,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_ProjectDirectory,
@@ -114,6 +122,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_OriginalCwd,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory,
@@ -4292,6 +4304,194 @@ describe('parseEnvironment (via load)', async () => {
     const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
 
     ok(messages.some((message) => message.includes('./apps/a') === true && message.includes('server-bearing') === true), `expected a runtime-value-without-server error naming the app; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a build and runtime value deploys to no server-bearing target', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ProjectDirectory = join(sandboxRoot, 'env-build-runtime-no-server');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'sites',
+        triggers: ['release'],
+        runsOn: 'ubuntu-24.04',
+        deploy: [{
+          to: 'npm',
+          path: './apps/a',
+        }],
+      }],
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        workspaces: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'URL',
+              secret: false,
+              reach: [
+                'build',
+                'runtime',
+              ],
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenABuildAndRuntimeValueDeploysToNoServerBearingTarget_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('./apps/a') === true && message.includes('server-bearing') === true), `expected a runtime-value-without-server error naming the app; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('parses a build and runtime reach list in either order', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_ProjectDirectory = join(sandboxRoot, 'env-build-runtime-list');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        workspaces: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'URL',
+                secret: false,
+                reach: [
+                  'build',
+                  'runtime',
+                ],
+                defaultValue: 'https://example.com',
+              },
+              {
+                key: 'TOKEN',
+                secret: true,
+                reach: [
+                  'runtime',
+                  'build',
+                ],
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Serialized = JSON.stringify(await config.load());
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesABuildAndRuntimeReachListInEitherOrder_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(serialized.includes('{"key":"URL","reach":["build","runtime"],"secret":false,"defaultValue":"https://example.com"}') === true, `expected URL to keep its build and runtime reach and default; got: ${serialized}`);
+    ok(serialized.includes('{"key":"TOKEN","reach":["build","runtime"],"secret":true}') === true, `expected TOKEN's reversed list to normalize to build then runtime; got: ${serialized}`);
+    ok(messages.some((message) => message.includes('"reach"') === true) === false, `expected no reach errors; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a reach list is not exactly build and runtime', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_ProjectDirectory = join(sandboxRoot, 'env-invalid-reach-list');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        workspaces: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'DUPLICATE',
+                secret: false,
+                reach: [
+                  'build',
+                  'build',
+                ],
+              },
+              {
+                key: 'OTHER_MEMBER',
+                secret: false,
+                reach: [
+                  'build',
+                  'managed',
+                ],
+              },
+              {
+                key: 'ONE_ITEM',
+                secret: false,
+                reach: ['build'],
+              },
+              {
+                key: 'EMPTY',
+                secret: false,
+                reach: [],
+              },
+              {
+                key: 'THREE_ITEMS',
+                secret: false,
+                reach: [
+                  'build',
+                  'runtime',
+                  'build',
+                ],
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Serialized = JSON.stringify(await config.load());
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachListIsNotExactlyBuildAndRuntime_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    for (const invalidKey of [
+      'DUPLICATE',
+      'OTHER_MEMBER',
+      'ONE_ITEM',
+      'EMPTY',
+      'THREE_ITEMS',
+    ]) {
+      ok(messages.some((message) => message.includes(`"${invalidKey}"`) === true && message.includes('the only list allowed is ["build", "runtime"]') === true), `expected an invalid-reach-list error naming ${invalidKey}; got: ${messages.join(' | ')}`);
+      ok(serialized.includes(`"${invalidKey}"`) === false, `expected ${invalidKey} to be dropped; got: ${serialized}`);
+    }
 
     return;
   });

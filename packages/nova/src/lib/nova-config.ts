@@ -334,8 +334,10 @@ import type {
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Name,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Raw,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_RawReach,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachList,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Returns,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SecretCandidate,
@@ -1743,16 +1745,38 @@ export class Runner {
 
       // Reach names where the key travels and is the required discriminant; without a valid
       // one the value cannot be routed (spec 2.1).
+      const rawReach: Lib_NovaConfig_Runner_ParseEnvironmentValues_RawReach = raw['reach'];
       const reachValues: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues = [
         'local',
         'managed',
         'build',
         'runtime',
       ];
-      const reachCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate = reachValues.find((reachValue) => reachValue === raw['reach']);
+      let reachCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate = reachValues.find((reachValue) => reachValue === rawReach);
+
+      // The only list is build plus runtime, in either order, which delivers one value both
+      // ways; any other list (duplicates, other members, one item, or empty) is rejected.
+      if (Array.isArray(rawReach) === true) {
+        const reachList: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachList = rawReach;
+
+        if (
+          reachList.length !== 2
+          || reachList.includes('build') === false
+          || reachList.includes('runtime') === false
+        ) {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has an invalid "reach" list; the only list allowed is ["build", "runtime"]. Skipping ...`);
+
+          continue;
+        }
+
+        reachCandidate = [
+          'build',
+          'runtime',
+        ];
+      }
 
       if (reachCandidate === undefined) {
-        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has no valid "reach" (local | managed | build | runtime). Skipping ...`);
+        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has no valid "reach" (local | managed | build | runtime | ["build", "runtime"]). Skipping ...`);
 
         continue;
       }
@@ -2037,13 +2061,14 @@ export class Runner {
       }
     }
 
-    // A reach "runtime" value needs a live server env to land in; a workspace declaring one but
-    // deploying to no server-bearing target would deliver it nowhere (spec 7).
+    // A reach "runtime" value (alone or in the build-and-runtime list) needs a live server env to
+    // land in; a workspace declaring one but deploying to no server-bearing target would deliver
+    // it nowhere (spec 7).
     if (workspacesGroup !== undefined) {
       for (const workspaceEntry of Object.entries(workspacesGroup)) {
         const runtimeWorkspacePath: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspacePath = workspaceEntry[0];
         const runtimeWorkspace: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspace = workspaceEntry[1];
-        const hasRuntimeValue: Lib_NovaConfig_Runner_ValidateCredContributors_HasRuntimeValue = (runtimeWorkspace['variables'] ?? []).some((variable) => variable['reach'] === 'runtime');
+        const hasRuntimeValue: Lib_NovaConfig_Runner_ValidateCredContributors_HasRuntimeValue = (runtimeWorkspace['variables'] ?? []).some((variable) => variable['reach'] === 'runtime' || Array.isArray(variable['reach']) === true);
 
         if (hasRuntimeValue === true && serverBearingWorkspaces.has(runtimeWorkspacePath) === false) {
           this.pushError('Runner.validateCredContributors', 'environment', `Environment workspace "${runtimeWorkspacePath}" declares a reach "runtime" value, but deploys to no server-bearing target. Skipping ...`);

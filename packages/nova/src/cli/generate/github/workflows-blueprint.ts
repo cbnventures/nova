@@ -410,7 +410,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dollar_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Declared,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Env,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_EscapedDefault,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_ExtraEnv,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Lines,
@@ -4825,6 +4827,20 @@ export class Runner {
     ];
 
     const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Lines = [];
+    const dollar: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Dollar = Runner.dollar();
+
+    // A declared default becomes a shell fallback so an unset GitHub Variable syncs the default
+    // instead of an empty value, matching the build-env bake (spec 5.4). Only plaintext Variables
+    // carry defaults; "${" trips the template-curly lint rule, so the opener comes from parts.
+    for (const variableValue of variableValues) {
+      if (variableValue['defaultValue'] === undefined) {
+        continue;
+      }
+
+      const escapedDefault: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_EscapedDefault = Runner.escapeShellDefault(variableValue['defaultValue']);
+
+      lines.push(`${variableValue['key']}="${dollar}${variableValue['key']}:-${escapedDefault}}"`);
+    }
 
     if (vendor === 'cloudflare') {
       // Encrypted channel: list the worker's secrets, drop any the config no
@@ -4913,9 +4929,9 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - App Build Values.
    *
-   * Returns an app's build-time values (reach build) from the
-   * environment block, each paired with its GitHub name and secret flag,
-   * so the build-env step bakes each value from its source.
+   * Returns an app's build-time values (reach build, alone or with runtime)
+   * from the environment block, each paired with its GitHub name and secret
+   * flag, so the build-env step bakes each value from its source.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment} environment - Environment.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath}     appPath     - App path.
@@ -4946,7 +4962,12 @@ export class Runner {
     const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix = workspace['prefix'];
 
     for (const variable of workspace['variables'] ?? []) {
-      if (variable['reach'] !== 'build') {
+      // A build-and-runtime value is also baked here; the runtime selector delivers its other half.
+      if (
+        variable['reach'] === 'local'
+        || variable['reach'] === 'managed'
+        || variable['reach'] === 'runtime'
+      ) {
         continue;
       }
 
@@ -4976,8 +4997,8 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - App Runtime Values.
    *
-   * Returns a workspace's runtime values (reach runtime) from the
-   * environment block, each paired with its GitHub name and secret flag,
+   * Returns a workspace's runtime values (reach runtime, alone or with build)
+   * from the environment block, each paired with its GitHub name and secret flag,
    * so the runtime-sync step delivers each on its channel.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Environment} environment - Environment.
@@ -5009,7 +5030,12 @@ export class Runner {
     const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = workspace['prefix'];
 
     for (const variable of workspace['variables'] ?? []) {
-      if (variable['reach'] !== 'runtime') {
+      // A build-and-runtime value is also synced here; the build selector bakes its other half.
+      if (
+        variable['reach'] === 'local'
+        || variable['reach'] === 'managed'
+        || variable['reach'] === 'build'
+      ) {
         continue;
       }
 

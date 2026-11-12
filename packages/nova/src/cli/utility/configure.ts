@@ -416,6 +416,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValueOutputKey,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValueOutputValue,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachChoice,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachIndex,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsLocal,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace,
@@ -435,6 +436,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretOutput,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretOutputKey,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretOutputValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SelectedReach,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Value,
   Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Config,
   Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Environment,
@@ -9533,8 +9535,8 @@ export class Runner {
       return undefined;
     }
 
-    // Reach names where the value travels; a workspace value chooses among all four kinds while a
-    // project value is always managed.
+    // Reach names where the value travels; a workspace value chooses among all five kinds while a
+    // project value is always managed. The "build-runtime" choice saves the ["build", "runtime"] list.
     let reach: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Reach = 'managed';
 
     if (isWorkspace === true) {
@@ -9543,11 +9545,13 @@ export class Runner {
         'managed',
         'build',
         'runtime',
+        'build-runtime',
       ];
       let reachInitial: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachInitial = reachValues.indexOf('build');
 
       if (existing !== undefined) {
-        const existingReachIndex: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachIndex = reachValues.indexOf(existing['reach']);
+        const existingReachChoice: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachChoice = (Array.isArray(existing['reach']) === true) ? 'build-runtime' : existing['reach'];
+        const existingReachIndex: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachIndex = reachValues.indexOf(existingReachChoice);
 
         if (existingReachIndex !== -1) {
           reachInitial = existingReachIndex;
@@ -9575,6 +9579,10 @@ export class Runner {
             title: 'runtime (GitHub, synced to the server)',
             value: 'runtime',
           },
+          {
+            title: 'build and runtime (GitHub, baked into the build and synced to the server)',
+            value: 'build-runtime',
+          },
         ],
         initial: reachInitial,
       });
@@ -9583,7 +9591,16 @@ export class Runner {
         return undefined;
       }
 
-      reach = reachOutput['result'].reach;
+      const selectedReach: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SelectedReach = reachOutput['result'].reach;
+
+      if (selectedReach === 'build-runtime') {
+        reach = [
+          'build',
+          'runtime',
+        ];
+      } else {
+        reach = selectedReach;
+      }
     }
 
     const isLocal: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsLocal = reach === 'local';

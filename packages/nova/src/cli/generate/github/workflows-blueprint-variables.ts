@@ -233,7 +233,12 @@ export class Runner {
       const scopeWorkspacePrefix: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspacePrefix = scopeWorkspace['prefix'];
 
       for (const scopeBuildVariable of scopeWorkspace['variables'] ?? []) {
-        if (scopeBuildVariable['reach'] !== 'build') {
+        // A build-and-runtime value reads the same GitHub name, so it is listed once here.
+        if (
+          scopeBuildVariable['reach'] === 'local'
+          || scopeBuildVariable['reach'] === 'managed'
+          || scopeBuildVariable['reach'] === 'runtime'
+        ) {
           continue;
         }
 

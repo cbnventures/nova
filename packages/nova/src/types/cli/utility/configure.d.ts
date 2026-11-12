@@ -92,6 +92,7 @@ import type {
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentValue_Reach,
+  Shared_NovaConfigEnvironmentValueBuildRuntime_Reach,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigOperatingSystemFileName,
@@ -1301,19 +1302,23 @@ export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_KeyOutput = 
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Key = string;
 
-export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Reach = Shared_NovaConfigEnvironmentValue_Reach;
+export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Reach = Shared_NovaConfigEnvironmentValue_Reach | Shared_NovaConfigEnvironmentValueBuildRuntime_Reach;
 
-export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachValues = Shared_NovaConfigEnvironmentValue_Reach[];
+export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachValues = (Shared_NovaConfigEnvironmentValue_Reach | 'build-runtime')[];
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachInitial = number;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachChoice = Shared_NovaConfigEnvironmentValue_Reach | 'build-runtime';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachIndex = number;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputKey = 'reach';
 
-export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputValue = Shared_NovaConfigEnvironmentValue_Reach;
+export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputValue = Shared_NovaConfigEnvironmentValue_Reach | 'build-runtime';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SelectedReach = Shared_NovaConfigEnvironmentValue_Reach | 'build-runtime';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsLocal = boolean;
 

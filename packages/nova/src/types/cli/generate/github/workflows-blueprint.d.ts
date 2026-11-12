@@ -1084,6 +1084,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_En
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Lines = string[];
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Dollar = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_EscapedDefault = string;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_SecretDeclared = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject = string;

@@ -529,14 +529,17 @@ GitHub also requires the downstream workflow file to exist on the repository's d
 
 A publish workflow reads workspace environment values declared under [`environment.workspaces`](/docs/quickstart/nova-config#environment). Every value has a required `reach`, which tells Nova where the value is allowed to travel:
 
-| `reach`   | Local `.env` | GitHub storage | CI build environment | Deployed runtime |
-|-----------|--------------|----------------|----------------------|------------------|
-| `local`   | Yes          | No             | No                   | No               |
-| `managed` | Yes, blank   | Yes            | No                   | No               |
-| `build`   | Yes          | Yes            | Yes                  | No               |
-| `runtime` | Yes          | Yes            | No                   | Yes              |
+| `reach`                | Local `.env` | GitHub storage | CI build environment | Deployed runtime |
+|------------------------|--------------|----------------|----------------------|------------------|
+| `local`                | Yes          | No             | No                   | No               |
+| `managed`              | Yes, blank   | Yes            | No                   | No               |
+| `build`                | Yes          | Yes            | Yes                  | No               |
+| `runtime`              | Yes          | Yes            | No                   | Yes              |
+| `["build", "runtime"]` | Yes          | Yes            | Yes                  | Yes              |
 
-For `managed`, `build`, and `runtime`, the independent `secret` flag controls storage: `secret: false` uses a GitHub Variable, while `secret: true` uses a GitHub Secret. A `local` value never leaves the developer's machine, so it does not accept `secret` and does not need a namespace prefix.
+The list form `["build", "runtime"]` delivers one value both ways from the same GitHub name: it is written into the build `.env` like a `build` value and synced to the deploy target like a `runtime` value. Nova provisions, checks, and lists it once.
+
+For `managed`, `build`, `runtime`, and `["build", "runtime"]`, the independent `secret` flag controls storage: `secret: false` uses a GitHub Variable, while `secret: true` uses a GitHub Secret. A `local` value never leaves the developer's machine, so it does not accept `secret` and does not need a namespace prefix.
 
 A build value exists only while the build runs on the <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner. A Variable that application code inlines (for example, `import.meta.env.PUBLIC_SITE_KEY`) can become part of the output; a Secret used for authentication can be consumed without being emitted. **"Build" means "available to the build process," not automatically "shipped to users."** Whether a value is exposed in client output depends on how the application uses it.
 
@@ -595,7 +598,7 @@ The generated workflow sets `CLOUDFLARE_ENV` for Wrangler and validates every Wo
 
 ### Build Delivery
 
-Every workspace value with `reach: "build"` is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`.
+Every workspace value with `reach: "build"` or `reach: ["build", "runtime"]` is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`.
 
 A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
 
@@ -603,7 +606,7 @@ The [Setup report](#setup-instructions) lists every GitHub Variable and Secret t
 
 ### Runtime Environment Sync
 
-On each deploy, Nova reconciles every workspace value with `reach: "runtime"` into the runtime store of **every server-bearing target** in the workspace's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, while a `secret: false` value is stored as a **plaintext** runtime variable.
+On each deploy, Nova reconciles every workspace value with `reach: "runtime"` or `reach: ["build", "runtime"]` into the runtime store of **every server-bearing target** in the workspace's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, while a `secret: false` value is stored as a **plaintext** runtime variable. A `secret: false` value with a `defaultValue` syncs that default when its GitHub Variable is unset.
 
 - **Upsert** — Every declared runtime value is pushed to the destination under its prefixed name, and the running app reads it as `env.NAME` on Workers or `process.env.NAME` on Vercel.
 - **Delete** — Any value already in the destination store but no longer declared in the config is removed, since Nova is the single source of truth for that target's runtime env.
@@ -686,7 +689,7 @@ When the config is clean, the generator scans `.github/workflows/` for existing 
 
 ### Setup Instructions
 
-After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic template `secret` and `var`, plus every `reach: "build"` workspace value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
+After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic template `secret` and `var`, plus every `reach: "build"` or `reach: ["build", "runtime"]` workspace value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
 
 Entries are deduplicated and listed once per output file, so a value used by two destinations in the same workflow appears a single time.
 

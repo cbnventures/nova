@@ -297,6 +297,14 @@ describe('Variables.collectSetupLines', () => {
               secret: true,
               reach: 'runtime',
             },
+            {
+              key: 'SITE_URL',
+              secret: false,
+              reach: [
+                'build',
+                'runtime',
+              ],
+            },
           ],
         },
       },
@@ -315,6 +323,9 @@ describe('Variables.collectSetupLines', () => {
 
     // A runtime value is never baked, so it must not appear in the build report.
     strictEqual(joined.includes('RUNTIME_TOKEN'), false);
+
+    // A build-and-runtime value reads one GitHub name, so it lists exactly once.
+    strictEqual(joined.split('Variable PKGA_SITE_URL').length - 1, 1);
 
     return;
   });

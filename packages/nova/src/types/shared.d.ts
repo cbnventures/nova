@@ -2171,11 +2171,35 @@ export type Shared_NovaConfigEnvironmentValueRuntime = {
   defaultValue?: Shared_NovaConfigEnvironmentValueRuntime_DefaultValue;
 };
 
+/**
+ * Shared - Nova Config Environment Value Build Runtime.
+ *
+ * A value delivered both ways from one GitHub name: written into the build ".env" like a
+ * build value and synced to the deploy target like a runtime value.
+ *
+ * @since 0.41.0
+ */
+export type Shared_NovaConfigEnvironmentValueBuildRuntime_Key = Shared_NovaConfigEnvironmentValue_Key;
+
+export type Shared_NovaConfigEnvironmentValueBuildRuntime_Reach = ['build', 'runtime'];
+
+export type Shared_NovaConfigEnvironmentValueBuildRuntime_Secret = Shared_NovaConfigEnvironmentValue_Secret;
+
+export type Shared_NovaConfigEnvironmentValueBuildRuntime_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
+
+export type Shared_NovaConfigEnvironmentValueBuildRuntime = {
+  key: Shared_NovaConfigEnvironmentValueBuildRuntime_Key;
+  reach: Shared_NovaConfigEnvironmentValueBuildRuntime_Reach;
+  secret: Shared_NovaConfigEnvironmentValueBuildRuntime_Secret;
+  defaultValue?: Shared_NovaConfigEnvironmentValueBuildRuntime_DefaultValue;
+};
+
 export type Shared_NovaConfigEnvironmentValue =
   | Shared_NovaConfigEnvironmentValueLocal
   | Shared_NovaConfigEnvironmentValueManaged
   | Shared_NovaConfigEnvironmentValueBuild
-  | Shared_NovaConfigEnvironmentValueRuntime;
+  | Shared_NovaConfigEnvironmentValueRuntime
+  | Shared_NovaConfigEnvironmentValueBuildRuntime;
 
 export type Shared_NovaConfigEnvironmentWorkspace_Prefix = string;
 

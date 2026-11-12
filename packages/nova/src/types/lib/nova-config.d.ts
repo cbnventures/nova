@@ -63,6 +63,7 @@ import type {
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentValue_Reach,
+  Shared_NovaConfigEnvironmentValueBuildRuntime_Reach,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigGithubActionsAllowedActions,
@@ -1091,9 +1092,13 @@ export type Lib_NovaConfig_Runner_ParseEnvironmentValues_Raw = unknown;
 
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_Key = string | undefined;
 
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_RawReach = unknown;
+
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues = Shared_NovaConfigEnvironmentValue_Reach[];
 
-export type Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate = Shared_NovaConfigEnvironmentValue_Reach | undefined;
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate = Shared_NovaConfigEnvironmentValue_Reach | Shared_NovaConfigEnvironmentValueBuildRuntime_Reach | undefined;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachList = unknown[];
 
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_IsLocal = boolean;
 

@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.41.0 - 2026-11-12
+
+### FIXED
+- Generated runtime sync steps for Cloudflare Workers and Vercel fall back to a plaintext value's `defaultValue` when its GitHub Variable is unset, instead of deploying an empty value, matching the build `.env` step.
+
+### ADDED
+- A `["build", "runtime"]` list for an environment value's `reach`, which writes one value into the build `.env` and syncs it to the deploy target from the same GitHub name, with a "build and runtime" choice in `nova utility configure`.
+
 ## 0.40.1 - 2026-11-10
 
 ### FIXED

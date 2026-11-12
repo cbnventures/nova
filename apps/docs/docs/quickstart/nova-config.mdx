@@ -867,12 +867,12 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 
 ### Value Fields
 
-| Field          | Type      | Description                                                                                                                                                                                          |
-|----------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `key`          | `string`  | Environment variable name. Nova joins the group's `prefix` when a non-local value needs a GitHub name; local `.env` files use the unprefixed key.                                                    |
-| `reach`        | `string`  | Required. One of `"local"`, `"managed"`, `"build"`, or `"runtime"`. See [Reach Values](#reach-values).                                                                                               |
-| `secret`       | `boolean` | Required for `managed`, `build`, and `runtime`; forbidden for `local`. `true` stores the GitHub value as a Secret, while `false` stores it as a Variable.                                            |
-| `defaultValue` | `string`  | Optional for non-secret `local`, `build`, and `runtime` values. Seeds `.env.sample`; for `build`, it is also the build fallback. Forbidden for `managed` values and every value with `secret: true`. |
+| Field          | Type                | Description                                                                                                                                                                                                                                                       |
+|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `key`          | `string`            | Environment variable name. Nova joins the group's `prefix` when a non-local value needs a GitHub name; local `.env` files use the unprefixed key.                                                                                                                 |
+| `reach`        | `string` or `array` | Required. One of `"local"`, `"managed"`, `"build"`, or `"runtime"`, or the list `["build", "runtime"]` to deliver one value both ways. See [Reach Values](#reach-values).                                                                                         |
+| `secret`       | `boolean`           | Required for `managed`, `build`, `runtime`, and `["build", "runtime"]`; forbidden for `local`. `true` stores the GitHub value as a Secret, while `false` stores it as a Variable.                                                                                 |
+| `defaultValue` | `string`            | Optional for non-secret `local`, `build`, `runtime`, and `["build", "runtime"]` values. Seeds `.env.sample`; for each CI delivery, it is also the fallback when the GitHub Variable is unset. Forbidden for `managed` values and every value with `secret: true`. |
 
 ### Reach Values
 
@@ -882,6 +882,9 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 | `managed`   |  ✔ (blank)   |   ✔    | None. Nova tracks the GitHub name but does not inject it into a build or server. |
 | `build`     |      ✔       |   ✔    | Injected into the build environment.                                        |
 | `runtime`   |      ✔       |   ✔    | Reconciled into every server-bearing deploy target for the workspace.       |
+| `["build", "runtime"]` | ✔ | ✔ | Injected into the build environment and reconciled into every server-bearing deploy target, both from the same GitHub name. |
+
+The list form accepts exactly `"build"` and `"runtime"`, in either order. Duplicates, other reach names, one-item lists, and empty lists are rejected, and `local` and `managed` are only written as single strings. Use the list when the same value is needed while building and in the running server, such as a site URL used for sitemap links at build time and for redirects at runtime.
 
 Project-scoped variables support only `managed`. Their Local `.env` column is not applicable because they do not belong to a workspace.
 
@@ -912,7 +915,8 @@ Project-scoped variables support only `managed`. Their Local `.env` column is no
           { "key": "LOCAL_API_MOCK", "reach": "local", "defaultValue": "http://127.0.0.1:8787" },
           { "key": "SENTRY_PROJECT", "reach": "managed", "secret": false },
           { "key": "PUBLIC_ANALYTICS_ID", "reach": "build", "secret": false, "defaultValue": "" },
-          { "key": "STRIPE_SECRET_KEY", "reach": "runtime", "secret": true }
+          { "key": "STRIPE_SECRET_KEY", "reach": "runtime", "secret": true },
+          { "key": "SITE_URL", "reach": ["build", "runtime"], "secret": false, "defaultValue": "https://www.example.com" }
         ]
       }
     },

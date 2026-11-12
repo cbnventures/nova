@@ -48,6 +48,31 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DefaultsEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BuildJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_DeployJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_DollarBrace,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_SyncEnv,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_SyncStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_WriteEnv,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_WriteEnvStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_BuildJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_DeployJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_PreflightStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_PreflightValues,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledWorkspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_SyncStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_SyncUrl,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_WriteEnvStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_WriteUrl,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Environment,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_GatesEveryJobOnTheFailureConclusionForTheFailureVariant_BuildJob,
@@ -972,6 +997,201 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       'build',
       'publish-cloudflare-workers-apps-public-app',
     ], 'the configured deploy order remains intact');
+
+    return;
+  });
+
+  it('delivers a build and runtime value both ways on Cloudflare Workers', () => {
+    const bothEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: ['release'],
+      build: ['./apps/site'],
+      deploy: [{
+        to: 'cloudflare-workers',
+        path: './apps/site',
+      }],
+    };
+    const bothWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothWorkspaces = {
+      './apps/site': {
+        name: 'site-app',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const bothEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEnvironment = {
+      project: {
+        prefix: 'PROJECT_',
+      },
+      workspaces: {
+        './apps/site': {
+          prefix: 'SITE_',
+          variables: [
+            {
+              key: 'URL',
+              secret: false,
+              reach: [
+                'build',
+                'runtime',
+              ],
+              defaultValue: 'https://example.com',
+            },
+            {
+              key: 'MAIL_KEY',
+              secret: true,
+              reach: [
+                'build',
+                'runtime',
+              ],
+            },
+          ],
+        },
+      },
+    };
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_Ir = WorkflowsBlueprint.buildPublish(bothEntry, bothWorkspaces, bothEnvironment);
+    const buildJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BuildJob = ir['jobs'].find((job) => job['id'] === 'build');
+    const deployJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_DeployJob = ir['jobs'].find((job) => job['id'] === 'publish-cloudflare-workers-apps-site');
+
+    ok(buildJob !== undefined && deployJob !== undefined, 'the build and deploy jobs exist');
+
+    const writeEnvStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_WriteEnvStep = buildJob['steps'].find((step) => step['name'] === 'Write environment file (apps-site)');
+    const syncStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_SyncStep = deployJob['steps'].find((step) => step['name'] === 'Sync worker runtime secrets');
+
+    ok(writeEnvStep !== undefined, 'the build job writes the scope env file');
+
+    ok(syncStep !== undefined, 'the deploy job syncs the runtime values');
+
+    const writeEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_WriteEnv = writeEnvStep['env'] ?? [];
+    const syncEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_SyncEnv = (syncStep['env'] ?? []).filter((entryPair) => entryPair['key'] === 'URL' || entryPair['key'] === 'MAIL_KEY');
+
+    strictEqual(writeEnv.map((entryPair) => entryPair['key']).join(','), 'URL,MAIL_KEY', 'both values are baked into the build env file');
+
+    strictEqual(syncEnv.map((entryPair) => entryPair['key']).join(','), 'URL,MAIL_KEY', 'both values are synced to the worker');
+
+    deepStrictEqual(writeEnv.map((entryPair) => String(entryPair['value'])), syncEnv.map((entryPair) => String(entryPair['value'])), 'both deliveries read the same GitHub names');
+
+    ok(writeEnv.some((entryPair) => entryPair['key'] === 'URL' && String(entryPair['value']).includes('vars.SITE_URL') === true), 'the plaintext value reads its GitHub Variable');
+
+    ok(writeEnv.some((entryPair) => entryPair['key'] === 'MAIL_KEY' && String(entryPair['value']).includes('secrets.SITE_MAIL_KEY') === true), 'the secret value reads its GitHub Secret');
+
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_Result = WorkflowsBlueprint.serialize(ir);
+
+    // Assemble the "${" opener with the join trick so the literal placeholder
+    // does not trip the template-curly lint rule.
+    const dollarBrace: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_DollarBrace = [
+      '$',
+      '{',
+    ].join('');
+
+    ok(result.includes(`echo "URL=\\"${dollarBrace}URL:-https://example.com}\\""`), `expected the build fallback for URL; got: ${result}`);
+
+    ok(result.includes(`URL="${dollarBrace}URL:-https://example.com}"`), `expected the runtime fallback for URL; got: ${result}`);
+
+    ok(result.includes('--var URL:"$URL"'), 'the plaintext value rides the deploy var channel');
+
+    ok(result.includes('jq -n \'env | {MAIL_KEY}\''), 'the secret value rides the encrypted channel');
+
+    return;
+  });
+
+  it('delivers a build and runtime value both ways with environment profiles', () => {
+    const profiledEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: [
+        'release',
+        'tag-push',
+      ],
+      build: ['./apps/site'],
+      deploy: [{
+        to: 'cloudflare-workers',
+        path: './apps/site',
+      }],
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'staging',
+          stable: 'production',
+        },
+        manual: true,
+      },
+    };
+    const profiledWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledWorkspaces = {
+      './apps/site': {
+        name: 'site-app',
+        role: 'app',
+        policy: 'trackable',
+      },
+    };
+    const profiledEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_ProfiledEnvironment = {
+      profiles: {
+        enabled: true,
+      },
+      project: {
+        prefix: 'PROJECT_',
+      },
+      workspaces: {
+        './apps/site': {
+          prefix: 'SITE_',
+          variables: [
+            {
+              key: 'URL',
+              secret: false,
+              reach: [
+                'build',
+                'runtime',
+              ],
+              defaultValue: 'https://example.com',
+            },
+            {
+              key: 'MAIL_KEY',
+              secret: true,
+              reach: [
+                'build',
+                'runtime',
+              ],
+            },
+          ],
+        },
+      },
+    };
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_Ir = WorkflowsBlueprint.buildPublish(profiledEntry, profiledWorkspaces, profiledEnvironment);
+    const buildJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_BuildJob = ir['jobs'].find((job) => job['id'] === 'build');
+    const deployJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_DeployJob = ir['jobs'].find((job) => job['id'] === 'publish-cloudflare-workers-apps-site');
+
+    ok(buildJob !== undefined && deployJob !== undefined, 'the build and deploy jobs exist');
+
+    const writeEnvStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_WriteEnvStep = buildJob['steps'].find((step) => step['name'] === 'Write environment file (apps-site)');
+    const syncStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_SyncStep = deployJob['steps'].find((step) => step['name'] === 'Sync worker runtime secrets');
+    const preflightStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_PreflightStep = buildJob['steps'].find((step) => step['name'] === 'Validate Cloudflare deployment environment');
+
+    ok(writeEnvStep !== undefined, 'the build job writes the scope env file');
+
+    ok(syncStep !== undefined, 'the deploy job syncs the runtime values');
+
+    ok(preflightStep !== undefined, 'the build job validates the selected environment');
+
+    const writeUrl: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_WriteUrl = (writeEnvStep['env'] ?? []).find((entryPair) => entryPair['key'] === 'URL');
+    const syncUrl: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_SyncUrl = (syncStep['env'] ?? []).find((entryPair) => entryPair['key'] === 'URL');
+
+    ok(writeUrl !== undefined && syncUrl !== undefined, 'URL is delivered both ways');
+
+    strictEqual(String(writeUrl['value']), String(syncUrl['value']), 'both deliveries pick the same profile name');
+
+    ok(String(writeUrl['value']).includes('vars.SITE_STAGING_URL') && String(writeUrl['value']).includes('vars.SITE_PRODUCTION_URL'), 'URL reads its staging and production profile names');
+
+    const preflightValues: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_PreflightValues = (preflightStep['env'] ?? []).map((entryPair) => String(entryPair['value']));
+
+    strictEqual(preflightValues.filter((value) => value.includes('secrets.SITE_PRODUCTION_MAIL_KEY') === true).length, 1, 'the preflight checks the both-ways secret once');
+
+    strictEqual(preflightValues.filter((value) => value.includes('SITE_PRODUCTION_URL') === true).length, 0, 'the defaulted value is not required by the preflight');
+
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysWithEnvironmentProfiles_Result = WorkflowsBlueprint.serialize(ir);
+
+    ok(result.includes('jq -n \'env | {MAIL_KEY}\''), 'the secret value is synced to the worker');
+
+    ok(result.includes('--var URL:"$URL"'), 'the plaintext value rides the deploy var channel');
 
     return;
   });

@@ -64,6 +64,13 @@ import type {
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Responses,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootBlock,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootQuestion,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Next,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_PromptEnvironmentValueForm,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Question,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_ReachQuestion,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Result,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_PromptsBeforeRemovingAValue_CapturedQuestions,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_PromptsBeforeRemovingAValue_Config,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_PromptsBeforeRemovingAValue_GlobalBlock,
@@ -80,6 +87,13 @@ import type {
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Next,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_PromptEnvironmentValueForm,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Question,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_ReachQuestion,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Result,
   Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CapturedQuestions,
   Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryChoices,
   Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryQuestion,
@@ -1125,6 +1139,89 @@ describe('prompt environment section', () => {
       'Expected a rejection telling the user to set a prefix before adding values',
     );
     ok(config['environment'] === undefined, 'Expected no namespace to persist without a prefix');
+
+    return;
+  });
+
+  it('saves the build and runtime choice as a reach list', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Responses = [
+      { key: 'URL' },
+      { reach: 'build-runtime' },
+      { secret: false },
+      { defaultValue: 'https://example.com' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const promptEnvironmentValueForm: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_PromptEnvironmentValueForm = Reflect.get(CliUtilityConfigure, 'promptEnvironmentValueForm') as Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_PromptEnvironmentValueForm;
+    const result: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Result = await promptEnvironmentValueForm(undefined, true);
+    const reachQuestion: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_ReachQuestion = capturedQuestions.find((entry) => entry['name'] === 'reach');
+
+    ok(reachQuestion !== undefined, 'Expected a reach prompt for a workspace value');
+    ok(JSON.stringify(reachQuestion['choices']).includes('{"title":"build and runtime (GitHub, baked into the build and synced to the server)","value":"build-runtime"}') === true, 'Expected the reach prompt to offer the build and runtime choice');
+
+    deepStrictEqual(result, {
+      key: 'URL',
+      reach: [
+        'build',
+        'runtime',
+      ],
+      secret: false,
+      defaultValue: 'https://example.com',
+    });
+
+    return;
+  });
+
+  it('preselects the build and runtime choice when editing a list value', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Responses = [
+      { key: 'URL' },
+      { reach: 'build-runtime' },
+      { secret: true },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const promptEnvironmentValueForm: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_PromptEnvironmentValueForm = Reflect.get(CliUtilityConfigure, 'promptEnvironmentValueForm') as Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_PromptEnvironmentValueForm;
+    const result: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_Result = await promptEnvironmentValueForm({
+      key: 'URL',
+      reach: [
+        'build',
+        'runtime',
+      ],
+      secret: true,
+    }, true);
+    const reachQuestion: Tests_Cli_Utility_Configure_PromptEnvironmentSection_PreselectsTheBuildAndRuntimeChoiceWhenEditingAListValue_ReachQuestion = capturedQuestions.find((entry) => entry['name'] === 'reach');
+
+    ok(reachQuestion !== undefined, 'Expected a reach prompt for a workspace value');
+    strictEqual(reachQuestion['initial'], 4, 'Expected the build and runtime choice to be preselected');
+
+    deepStrictEqual(result, {
+      key: 'URL',
+      reach: [
+        'build',
+        'runtime',
+      ],
+      secret: true,
+    });
 
     return;
   });
