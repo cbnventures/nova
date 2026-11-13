@@ -45,6 +45,15 @@ import type {
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_TemporaryDirectory,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_TemporaryPrefix,
   Tests_Cli_Utility_Configure_ConfigFieldCoverage,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_CwdSpy,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_FindPlainSampleLeftovers,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainConfig,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainLeftovers,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesConfig,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesLeftovers,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SandboxRoot,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SiteDirectory,
+  Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_WorkerDirectory,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result,
@@ -1389,6 +1398,72 @@ describe('read local filled keys', () => {
     cwdSpy.mockRestore();
 
     deepStrictEqual(filled['./apps/site'], ['API_KEY'], 'only the filled non-reserved key is returned');
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Find Plain Sample Leftovers.
+ *
+ * @since 0.42.0
+ */
+describe('find plain sample leftovers', () => {
+  it('flags a plain env sample only while profiles are enabled', async () => {
+    const sandboxRoot: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SandboxRoot = await mkdtemp(join(tmpdir(), `nova-${'test'}-`));
+    const siteDirectory: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SiteDirectory = join(sandboxRoot, 'apps', 'site');
+    const workerDirectory: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_WorkerDirectory = join(sandboxRoot, 'apps', 'worker');
+
+    await mkdir(siteDirectory, { recursive: true });
+    await mkdir(workerDirectory, { recursive: true });
+
+    await writeFile(join(siteDirectory, '.env.sample'), 'SITE_KEY=""\n', 'utf-8');
+    await writeFile(join(workerDirectory, '.env.development.sample'), 'WORKER_KEY=""\n', 'utf-8');
+
+    const profilesConfig: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesConfig = {
+      environment: {
+        profiles: {
+          enabled: true,
+        },
+        workspaces: {
+          './apps/site': {
+            prefix: 'SITE_',
+            variables: [],
+          },
+          './apps/worker': {
+            prefix: 'WORKER_',
+            variables: [],
+          },
+        },
+      },
+    };
+    const plainConfig: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainConfig = {
+      environment: {
+        workspaces: {
+          './apps/site': {
+            prefix: 'SITE_',
+            variables: [],
+          },
+        },
+      },
+    };
+    const cwdSpy: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_CwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(sandboxRoot);
+    const findPlainSampleLeftovers: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_FindPlainSampleLeftovers = Reflect.get(CliUtilityConfigure, 'findPlainSampleLeftovers') as Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_FindPlainSampleLeftovers;
+    const profilesLeftovers: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesLeftovers = await findPlainSampleLeftovers(profilesConfig);
+    const plainLeftovers: Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainLeftovers = await findPlainSampleLeftovers(plainConfig);
+
+    cwdSpy.mockRestore();
+
+    deepStrictEqual(profilesLeftovers, [join('apps', 'site', '.env.sample')], 'only the app still holding a plain sample is flagged');
+
+    deepStrictEqual(plainLeftovers, [], 'a plain sample is expected while profiles are off');
 
     await rm(sandboxRoot, {
       recursive: true,

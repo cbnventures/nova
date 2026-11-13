@@ -3,7 +3,6 @@ import {
   Canvas,
   Features,
   InstallStrip,
-  Stats,
   Typewriter,
 } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Head from '@docusaurus/Head';
@@ -17,18 +16,16 @@ import styles from './index.module.css';
 import type {
   PagesConfigSnippets,
   PagesContext,
-  PagesCustomFields,
   PagesFeatureItems,
   PagesIncludedItems,
   PagesSiteConfig,
-  PagesStatItems,
 } from '@site/src/types/pages/index.d.ts';
 
 /**
  * Pages - Home.
  *
  * Root landing page that composes the hero header, install strip, feature grid,
- * stats, and blog preview using theme components.
+ * and blog preview using theme components.
  *
  * @constructor
  *
@@ -39,8 +36,6 @@ import type {
 function Home() {
   const context: PagesContext = useDocusaurusContext();
   const siteConfig: PagesSiteConfig = context.siteConfig;
-  const customFields: PagesCustomFields = siteConfig.customFields as PagesCustomFields;
-  const statItems: PagesStatItems = customFields['statItems'];
 
   /**
    * Pages - Home - Feature Items.
@@ -269,8 +264,8 @@ function Home() {
               Every hand-wired ESLint rule, every copied TSConfig, every scaffold you&apos;ll forget to update. Nova replaces all of it with one opinionated package.
             </p>
             <div className={`nova-hero-actions ${styles['heroActions']}`}>
-              <Link className="nova-cta-primary" to="/docs/quickstart/">Get Started</Link>
-              <Link className="nova-cta-secondary" to="https://github.com/cbnventures/nova">View on GitHub</Link>
+              <Link className="nova-cta-primary" to="/docs/quickstart/setup/">Get Started</Link>
+              <Link className="nova-cta-secondary" to="/docs/quickstart/">Learn More</Link>
             </div>
           </div>
           <div className={styles['heroConfigs']} aria-hidden="true">
@@ -286,12 +281,12 @@ function Home() {
         <InstallStrip command="npm install -g @cbnventures/nova" copyTarget="block" />
         <Features items={featureItems} />
         <Features heading="What's Inside" items={includedItems} />
-        <Stats heading="The Receipts" items={statItems} />
         <BlogPreview
           heading="From the Blog"
-          description="Release notes, tooling insights, and automation patterns for JavaScript and TypeScript monorepos."
+          description="Launches, milestones, and what's new in Nova."
           auto={true}
           limit={3}
+          sort="newest"
         />
       </main>
     </Layout>

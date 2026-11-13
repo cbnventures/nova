@@ -1,5 +1,16 @@
 # @cbnventures/nova
 
+## 0.42.0 - 2026-11-13
+
+### FIXED
+- Generated publish workflows with environment selection label tag-push runs `staging` or `production` in the run name, matching the "Select Cloudflare deployment environment" step, instead of "from tag", and a digit-hyphen inside the configured tag prefix, such as `app2-v*`, is never read as a pre-release.
+- Nova's CLI and `Bootstrap.loadEnv` load the active profile's `.env.<profile>` file when environment profiles are enabled, choosing an explicit profile argument first, then `NODE_ENV` when it names a profile, then `development`, and fall back to `.env` when that file is missing.
+- The dotenv Vitest suite checks `.env.development`, `.env.staging`, `.env.production`, and their `.sample` files by default when environment profiles are enabled, instead of the plain `.env` and `.env.sample`; explicit `envPaths` still win.
+- Enabling environment profiles moves the plain `.env.sample` into `.env.development.sample` instead of leaving a copy nothing maintains, disabling them restores it, and `nova utility configure --status` flags a plain `.env.sample` left beside the profile files.
+
+### ADDED
+- `Bootstrap.isEnvProfilesEnabled()` and `Bootstrap.getEnvProfile()` report whether environment profiles are on and which profile is active, and `Bootstrap.loadEnv()` accepts an optional `profile` argument.
+
 ## 0.41.2 - 2026-11-12
 
 No changes.

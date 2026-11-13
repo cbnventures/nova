@@ -95,7 +95,7 @@ You can run this command in two ways:
 
 ### Read-Only Environment Status
 
-Use `--status` when you only want to compare the environment declarations with their GitHub Variable and Secret names. This path does not open the wizard and does not write `nova.config.json` or reconcile any values.
+Use `--status` when you only want to compare the environment declarations with their GitHub Variable and Secret names. This path does not open the wizard and does not write `nova.config.json` or reconcile any values. With [environment profiles](/docs/quickstart/nova-config#environment-profiles) enabled, it also warns about any workspace that still holds a plain `.env.sample`, even when the `gh` CLI is unavailable.
 
 ```bash
 nova utility configure --status

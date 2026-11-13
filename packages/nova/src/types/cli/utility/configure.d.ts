@@ -141,6 +141,25 @@ export type Cli_Utility_Configure_Runner_CheckPath_GreaterThanOneMessage = strin
 export type Cli_Utility_Configure_Runner_CheckPath_NotProjectRootDirectoryMessage = string;
 
 /**
+ * CLI - Utility - Configure - Find Plain Sample Leftovers.
+ *
+ * @since 0.42.0
+ */
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns = Promise<Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Leftovers>;
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Environment = Shared_NovaConfigEnvironment;
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_ProfilesEnabled = boolean;
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Leftovers = string[];
+
+export type Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_SamplePath = string;
+
+/**
  * CLI - Utility - Configure - Get Optional Boolean Initial.
  *
  * @since 0.32.0
@@ -1034,6 +1053,10 @@ export type Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ManagedEntry
 };
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ManagedSet = Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ManagedEntry[];
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleLeftovers = string[];
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleNotice = string;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_GithubState_Available = boolean;
 

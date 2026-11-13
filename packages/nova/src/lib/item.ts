@@ -15,6 +15,8 @@ import type {
   Lib_Item_CorepackKeys,
   Lib_Item_EcosystemKeys,
   Lib_Item_EmailFields,
+  Lib_Item_EnvironmentProfileDotenvFiles,
+  Lib_Item_EnvironmentProfiles,
   Lib_Item_GenericProtocols,
   Lib_Item_NodeJsKeys,
   Lib_Item_NpmKeys,
@@ -220,6 +222,37 @@ export const libItemReservedDotenvKeys: Lib_Item_ReservedDotenvKeys = [
   'NODE_ENV',
   'LOG_LEVEL',
   'LOG_TIME',
+];
+
+/**
+ * Lib - Item - Environment Profiles.
+ *
+ * Every environment profile Nova manages when environment profiles are enabled. Bootstrap
+ * accepts only these names when it picks the profile file to load.
+ *
+ * @since 0.42.0
+ */
+export const libItemEnvironmentProfiles: Lib_Item_EnvironmentProfiles = [
+  'development',
+  'staging',
+  'production',
+];
+
+/**
+ * Lib - Item - Environment Profile Dotenv Files.
+ *
+ * The dotenv files the dotenv generator writes when environment profiles are enabled.
+ * The generator and the dotenv Vitest suite share this list so both cover the same files.
+ *
+ * @since 0.42.0
+ */
+export const libItemEnvironmentProfileDotenvFiles: Lib_Item_EnvironmentProfileDotenvFiles = [
+  '.env.development',
+  '.env.development.sample',
+  '.env.staging',
+  '.env.staging.sample',
+  '.env.production',
+  '.env.production.sample',
 ];
 
 /**

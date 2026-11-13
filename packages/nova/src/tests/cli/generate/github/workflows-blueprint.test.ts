@@ -21,6 +21,15 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Serialized,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Expression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Labels,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Terms,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Expression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Labels,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Terms,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Expression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Labels,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Terms,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_BuildJob,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_PlainStep,
@@ -130,6 +139,10 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_ProfiledEnvironment,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ProfilesCloudflarePublishingByReleaseChannel_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_ExpectedExpression,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_PrefixedEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_PrefixedEnvironment,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleasePushEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleasePushEntryForBuild,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReleaseWorkflowRunEntry,
@@ -790,6 +803,96 @@ describe('WorkflowsBlueprint.dispatch', () => {
 });
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Pre Release Ref Expression.
+ *
+ * Each case evaluates the generated "contains(...) || ..." chain against sample refs, the
+ * way GitHub would, and compares the label with the one the deployment environment step's
+ * semver pre-release regex picks for the same ref.
+ *
+ * @since 0.42.0
+ */
+describe('WorkflowsBlueprint.buildPreReleaseRefExpression', () => {
+  it('keeps the digit hyphen terms for the default tags', () => {
+    const expression: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Expression = WorkflowsBlueprint.buildPreReleaseRefExpression(['v*']);
+    const terms: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Terms = expression.split(' || ').map((part) => part.slice(part.indexOf('\'') + 1, part.lastIndexOf('\'')));
+    const labels: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_KeepsTheDigitHyphenTermsForTheDefaultTags_Labels = [
+      'v1.2.3',
+      'v1.2.3-rc.1',
+      'v1.2.3+build',
+    ].map((ref) => ((terms.some((term) => ref.includes(term)) === true) ? 'staging' : 'production'));
+
+    deepStrictEqual(terms, [
+      '0-',
+      '1-',
+      '2-',
+      '3-',
+      '4-',
+      '5-',
+      '6-',
+      '7-',
+      '8-',
+      '9-',
+    ], 'the default tags keep one digit-hyphen term per digit');
+
+    deepStrictEqual(labels, [
+      'production',
+      'staging',
+      'production',
+    ]);
+
+    return;
+  });
+
+  it('skips a digit hyphen inside the tag prefix', () => {
+    const expression: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Expression = WorkflowsBlueprint.buildPreReleaseRefExpression(['app2-v*']);
+    const terms: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Terms = expression.split(' || ').map((part) => part.slice(part.indexOf('\'') + 1, part.lastIndexOf('\'')));
+    const labels: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_SkipsADigitHyphenInsideTheTagPrefix_Labels = [
+      'app2-v1.0.0',
+      'app2-v1.0.0-rc.1',
+      'app2-v1.0.12-beta',
+    ].map((ref) => ((terms.some((term) => ref.includes(term)) === true) ? 'staging' : 'production'));
+
+    strictEqual(terms.includes('2-'), false, 'the prefix hyphen is never read as a pre-release');
+
+    ok(terms.includes('12-') && terms.includes('.2-'), 'a patch ending in 2 is still read through its left neighbor');
+
+    deepStrictEqual(labels, [
+      'production',
+      'staging',
+      'staging',
+    ]);
+
+    return;
+  });
+
+  it('extends a colliding pair to three characters', () => {
+    const expression: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Expression = WorkflowsBlueprint.buildPreReleaseRefExpression(['app12-v*']);
+    const terms: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Terms = expression.split(' || ').map((part) => part.slice(part.indexOf('\'') + 1, part.lastIndexOf('\'')));
+    const labels: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPreReleaseRefExpression_ExtendsACollidingPairToThreeCharacters_Labels = [
+      'app12-v1.0.0',
+      'app12-v1.0.12',
+      'app12-v1.0.12-rc.1',
+      'app12-v1.0.112-rc.1',
+    ].map((ref) => ((terms.some((term) => ref.includes(term)) === true) ? 'staging' : 'production'));
+
+    strictEqual(terms.includes('12-'), false, 'the colliding pair is replaced');
+
+    ok(terms.includes('.12-') && terms.includes('112-'), 'the pair grows one character to the left');
+
+    deepStrictEqual(labels, [
+      'production',
+      'production',
+      'staging',
+      'staging',
+    ]);
+
+    return;
+  });
+
+  return;
+});
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Publish.
  *
  * @since 0.21.0
@@ -1108,6 +1211,10 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
     strictEqual(result.includes('contains(github.ref_name, \'-\')'), false, 'hyphens in project and package names do not imply a prerelease');
 
+    ok(ir['runName'].includes('github.event_name == \'push\' && ((contains(github.ref_name, \'0-\') || '), 'tag-push run names read a hyphen after a digit as a pre-release');
+
+    ok(ir['runName'].includes('contains(github.ref_name, \'9-\')) && \'staging\' || \'production\') || \'from tag\''), 'tag-push run names label stable tags production and keep the final fallback');
+
     ok(result.includes('PROJECT_STAGING_CLOUDFLARE_API_TOKEN'));
 
     ok(result.includes('PROJECT_PRODUCTION_CLOUDFLARE_API_TOKEN'));
@@ -1133,6 +1240,46 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       'build',
       'publish-cloudflare-workers-apps-public-app',
     ], 'the configured deploy order remains intact');
+
+    return;
+  });
+
+  it('reads the configured tag prefixes for the run name environment', () => {
+    const prefixedEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_PrefixedEntry = {
+      template: 'publish',
+      runsOn: 'ubuntu-24.04',
+      name: 'project',
+      triggers: [{
+        name: 'tag-push',
+        tags: ['app2-v*'],
+      }],
+      build: ['./apps/public-app'],
+      deploy: [{
+        to: 'cloudflare-workers',
+        path: './apps/public-app',
+      }],
+      environmentSelection: {
+        versionTags: {
+          prerelease: 'staging',
+          stable: 'production',
+        },
+        manual: true,
+      },
+    };
+    const prefixedEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_PrefixedEnvironment = {
+      profiles: {
+        enabled: true,
+      },
+      project: {
+        prefix: 'PROJECT_',
+      },
+    };
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_Ir = WorkflowsBlueprint.buildPublish(prefixedEntry, workspaces, prefixedEnvironment);
+    const expectedExpression: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ReadsTheConfiguredTagPrefixesForTheRunNameEnvironment_ExpectedExpression = WorkflowsBlueprint.buildPreReleaseRefExpression(['app2-v*']);
+
+    ok(ir['runName'].includes(`github.event_name == 'push' && ((${expectedExpression}) && 'staging' || 'production')`), 'the run name checks pre-releases against the configured tag prefix');
+
+    strictEqual(ir['runName'].includes('contains(github.ref_name, \'2-\')'), false, 'the "2-" inside "app2-v" is never read as a pre-release');
 
     return;
   });

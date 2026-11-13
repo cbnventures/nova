@@ -3,6 +3,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { Logger } from '../toolkit/index.js';
+import { libItemEnvironmentProfileDotenvFiles } from './item.js';
 import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
@@ -372,14 +373,7 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
   const profilesEnabled: Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled = options['profilesEnabled'] === true;
   const currentDirectory: Lib_Dotenv_WriteDotenvFiles_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
   const templateDirectory: Lib_Dotenv_WriteDotenvFiles_TemplateDirectory = resolve(currentDirectory, '../../templates/generators/must-haves/dotenv');
-  const files: Lib_Dotenv_WriteDotenvFiles_Files = (profilesEnabled === true) ? [
-    '.env.development',
-    '.env.development.sample',
-    '.env.staging',
-    '.env.staging.sample',
-    '.env.production',
-    '.env.production.sample',
-  ] : [
+  const files: Lib_Dotenv_WriteDotenvFiles_Files = (profilesEnabled === true) ? [...libItemEnvironmentProfileDotenvFiles] : [
     '.env',
     '.env.sample',
   ];

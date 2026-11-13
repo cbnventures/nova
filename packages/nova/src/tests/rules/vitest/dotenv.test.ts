@@ -13,6 +13,7 @@ import type {
   Tests_Rules_Vitest_Dotenv_FixtureRoot,
   Tests_Rules_Vitest_Dotenv_MissingViolations,
   Tests_Rules_Vitest_Dotenv_PresentViolations,
+  Tests_Rules_Vitest_Dotenv_ProfilesFixtureRoot,
 } from '../../../types/tests/rules/vitest/dotenv.test.d.ts';
 
 /**
@@ -70,5 +71,36 @@ registerDotenvSuite({
     '.env',
     '.env.sample',
   ],
+  enable: ['values-double-quoted'],
+});
+
+/**
+ * Tests - Rules - Vitest - Dotenv - Profiles Fixture Root.
+ *
+ * Fixture project with environment profiles enabled in its "nova.config.json". Its plain `.env`
+ * holds an unquoted value while `.env.development` is valid, so the suite registered below
+ * without `envPaths` stays green only when the default switches to the profile files.
+ *
+ * @since 0.42.0
+ */
+const profilesFixtureRoot: Tests_Rules_Vitest_Dotenv_ProfilesFixtureRoot = mkdtempSync(join(tmpdir(), 'nova-dotenv-kit-profiles-'));
+
+writeFileSync(join(profilesFixtureRoot, 'nova.config.json'), JSON.stringify({
+  environment: {
+    profiles: {
+      enabled: true,
+    },
+  },
+}));
+
+writeFileSync(join(profilesFixtureRoot, '.env'), 'A=unquoted\n');
+
+writeFileSync(join(profilesFixtureRoot, '.env.development'), 'A="x"\n');
+
+// Profile defaults: with no explicit envPaths, an enabled-profiles project scans the profile
+// files the dotenv generator writes and skips the stale plain `.env`, so the suite stays green.
+registerDotenvSuite({
+  vitest,
+  rootDir: profilesFixtureRoot,
   enable: ['values-double-quoted'],
 });

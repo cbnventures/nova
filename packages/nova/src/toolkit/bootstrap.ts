@@ -1,7 +1,8 @@
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { homedir, platform, tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
+import { libItemEnvironmentProfiles } from '../lib/item.js';
 import { LIB_REGEX_PATTERN_ENV_LINE } from '../lib/regex.js';
 import { Logger } from './index.js';
 
@@ -31,6 +32,10 @@ import type {
   Toolkit_Bootstrap_Runner_GetDataDir_Returns,
   Toolkit_Bootstrap_Runner_GetDataDir_WindowsBasePath,
   Toolkit_Bootstrap_Runner_GetDataDir_WindowsDataPath,
+  Toolkit_Bootstrap_Runner_GetEnvProfile_ExplicitProfile,
+  Toolkit_Bootstrap_Runner_GetEnvProfile_NodeEnvProfile,
+  Toolkit_Bootstrap_Runner_GetEnvProfile_Profile,
+  Toolkit_Bootstrap_Runner_GetEnvProfile_Returns,
   Toolkit_Bootstrap_Runner_GetProjectRoot_Content,
   Toolkit_Bootstrap_Runner_GetProjectRoot_Dir,
   Toolkit_Bootstrap_Runner_GetProjectRoot_FilePath,
@@ -38,12 +43,27 @@ import type {
   Toolkit_Bootstrap_Runner_GetProjectRoot_Parent,
   Toolkit_Bootstrap_Runner_GetProjectRoot_Parsed,
   Toolkit_Bootstrap_Runner_GetProjectRoot_Returns,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_ConfigPath,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Dir,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Directory,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Parent,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawConfig,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironment,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironmentValue,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfiles,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfilesValue,
+  Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Returns,
   Toolkit_Bootstrap_Runner_LoadEnv_Content,
   Toolkit_Bootstrap_Runner_LoadEnv_Directory,
+  Toolkit_Bootstrap_Runner_LoadEnv_EnvProfile,
+  Toolkit_Bootstrap_Runner_LoadEnv_FileName,
   Toolkit_Bootstrap_Runner_LoadEnv_FilePath,
   Toolkit_Bootstrap_Runner_LoadEnv_Key,
   Toolkit_Bootstrap_Runner_LoadEnv_Lines,
   Toolkit_Bootstrap_Runner_LoadEnv_Match,
+  Toolkit_Bootstrap_Runner_LoadEnv_Profile,
+  Toolkit_Bootstrap_Runner_LoadEnv_ProfileFileName,
+  Toolkit_Bootstrap_Runner_LoadEnv_ProfileFilePath,
   Toolkit_Bootstrap_Runner_LoadEnv_Returns,
   Toolkit_Bootstrap_Runner_LoadEnv_TrimmedLine,
   Toolkit_Bootstrap_Runner_LoadEnv_Value,
@@ -250,20 +270,111 @@ class Runner {
   }
 
   /**
+   * Toolkit - Bootstrap - Get Env Profile.
+   *
+   * Picks the environment profile whose dotenv file loads when profiles are enabled.
+   * An explicit profile wins, then NODE_ENV when it names a profile, then development, so
+   * local runs read ".env.development" unless told otherwise.
+   *
+   * @param {Toolkit_Bootstrap_Runner_GetEnvProfile_Profile} [profile] - Profile.
+   *
+   * @returns {Toolkit_Bootstrap_Runner_GetEnvProfile_Returns}
+   *
+   * @since 0.42.0
+   */
+  public static getEnvProfile(profile?: Toolkit_Bootstrap_Runner_GetEnvProfile_Profile): Toolkit_Bootstrap_Runner_GetEnvProfile_Returns {
+    const explicitProfile: Toolkit_Bootstrap_Runner_GetEnvProfile_ExplicitProfile = libItemEnvironmentProfiles.find((environmentProfile) => environmentProfile === profile);
+
+    if (explicitProfile !== undefined) {
+      return explicitProfile;
+    }
+
+    if (profile !== undefined) {
+      Logger.customize({
+        name: 'bootstrap',
+        purpose: 'getEnvProfile',
+      }).warn(`Unknown environment profile "${profile}". Expected one of: ${libItemEnvironmentProfiles.join(', ')}.`);
+    }
+
+    const nodeEnvProfile: Toolkit_Bootstrap_Runner_GetEnvProfile_NodeEnvProfile = libItemEnvironmentProfiles.find((environmentProfile) => environmentProfile === process.env['NODE_ENV']);
+
+    return nodeEnvProfile ?? 'development';
+  }
+
+  /**
+   * Toolkit - Bootstrap - Is Env Profiles Enabled.
+   *
+   * Walks up from the given directory to the nearest "nova.config.json"
+   * and reports whether its environment profiles are enabled. A missing or unreadable
+   * config counts as disabled, so plain ".env" files keep loading.
+   *
+   * @param {Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Directory} directory - Directory.
+   *
+   * @returns {Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Returns}
+   *
+   * @since 0.42.0
+   */
+  public static isEnvProfilesEnabled(directory: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Directory): Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Returns {
+    let dir: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Dir = resolve(directory);
+
+    while (dir !== dirname(dir)) {
+      const configPath: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_ConfigPath = join(dir, 'nova.config.json');
+
+      if (existsSync(configPath) === true) {
+        try {
+          const rawConfig: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawConfig = JSON.parse(readFileSync(configPath, 'utf-8')) as Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawConfig;
+          const rawEnvironmentValue: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironmentValue = rawConfig['environment'];
+          const rawEnvironment: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironment = (typeof rawEnvironmentValue === 'object' && rawEnvironmentValue !== null) ? rawEnvironmentValue as Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironment : {};
+          const rawProfilesValue: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfilesValue = rawEnvironment['profiles'];
+          const rawProfiles: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfiles = (typeof rawProfilesValue === 'object' && rawProfilesValue !== null) ? rawProfilesValue as Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfiles : {};
+
+          return rawProfiles['enabled'] === true;
+        } catch {
+          return false;
+        }
+      }
+
+      const parent: Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Parent = dirname(dir);
+
+      dir = parent;
+    }
+
+    return false;
+  }
+
+  /**
    * Toolkit - Bootstrap - Load Env.
    *
-   * Reads a .env file from the given directory and sets each
-   * KEY=value pair in process.env, without overriding existing environment variables.
-   * Supports optional quotes around values, ignoring comments and empty lines.
+   * Reads a .env file from the given directory and sets each KEY=value pair
+   * in process.env, without overriding existing variables. With environment profiles
+   * enabled it reads ".env.<profile>" and falls back to ".env".
    *
    * @param {Toolkit_Bootstrap_Runner_LoadEnv_Directory} directory - Directory.
+   * @param {Toolkit_Bootstrap_Runner_LoadEnv_Profile}   [profile] - Profile.
    *
    * @returns {Toolkit_Bootstrap_Runner_LoadEnv_Returns}
    *
    * @since 0.14.0
    */
-  public static loadEnv(directory: Toolkit_Bootstrap_Runner_LoadEnv_Directory): Toolkit_Bootstrap_Runner_LoadEnv_Returns {
-    const filePath: Toolkit_Bootstrap_Runner_LoadEnv_FilePath = join(directory, '.env');
+  public static loadEnv(directory: Toolkit_Bootstrap_Runner_LoadEnv_Directory, profile?: Toolkit_Bootstrap_Runner_LoadEnv_Profile): Toolkit_Bootstrap_Runner_LoadEnv_Returns {
+    let fileName: Toolkit_Bootstrap_Runner_LoadEnv_FileName = '.env';
+
+    if (Runner.isEnvProfilesEnabled(directory) === true) {
+      const envProfile: Toolkit_Bootstrap_Runner_LoadEnv_EnvProfile = Runner.getEnvProfile(profile);
+      const profileFileName: Toolkit_Bootstrap_Runner_LoadEnv_ProfileFileName = `.env.${envProfile}`;
+      const profileFilePath: Toolkit_Bootstrap_Runner_LoadEnv_ProfileFilePath = join(directory, profileFileName);
+
+      if (existsSync(profileFilePath) === true) {
+        fileName = profileFileName;
+      } else {
+        Logger.customize({
+          name: 'bootstrap',
+          purpose: 'loadEnv',
+        }).debug(`Environment profiles are enabled, but "${profileFileName}" is missing in "${directory}". Falling back to ".env" ...`);
+      }
+    }
+
+    const filePath: Toolkit_Bootstrap_Runner_LoadEnv_FilePath = join(directory, fileName);
 
     if (existsSync(filePath) === false) {
       return;
@@ -296,7 +407,7 @@ class Runner {
     Logger.customize({
       name: 'bootstrap',
       purpose: 'loadEnv',
-    }).debug(`Loaded .env from ${filePath}`);
+    }).debug(`Loaded "${fileName}" from "${filePath}".`);
 
     return;
   }

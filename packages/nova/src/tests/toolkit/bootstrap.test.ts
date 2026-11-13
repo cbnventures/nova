@@ -1,6 +1,6 @@
 import { doesNotThrow, ok, strictEqual } from 'node:assert/strict';
 import {
-  existsSync, mkdtempSync, rmSync, writeFileSync,
+  existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -45,6 +45,19 @@ import type {
   Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDir,
   Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDirPath,
   Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempTmpDir,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigContent,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_FallsBackToEnvWhenTheProfileFileIsMissing_EnvDirectory,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ConfigFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ProfileFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheDevelopmentProfileFileByDefault_ProfileFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheProfileFileNamedByTheNodeEnv_ProfileFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_OriginalNodeEnv,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PlainFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PrefersAnExplicitProfileOverTheNodeEnv_ProfileFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ReportsProfilesEnabledFromTheNearestNovaConfigJson_NestedDirectory,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDir,
+  Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDirPath,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_FilePath,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_Result,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_RespectsSearchOrder_FilePath,
@@ -460,6 +473,136 @@ describe('Bootstrap loadEnv', async () => {
 
       return;
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env.
+ *
+ * @since 0.42.0
+ */
+describe('Bootstrap profile env', async () => {
+  let tempDir: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDir = undefined;
+  let originalNodeEnv: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_OriginalNodeEnv = undefined;
+
+  beforeEach(() => {
+    const tempDirPath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDirPath = join(tmpdir(), 'nova-bootstrap-profile-env-');
+
+    tempDir = mkdtempSync(tempDirPath);
+
+    originalNodeEnv = process.env['NODE_ENV'];
+
+    Reflect.deleteProperty(process.env, 'NODE_ENV');
+
+    const configFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigFilePath = join(tempDir, 'nova.config.json');
+    const configContent: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigContent = JSON.stringify({
+      environment: {
+        profiles: {
+          enabled: true,
+        },
+      },
+    });
+    const plainFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PlainFilePath = join(tempDir, '.env');
+
+    writeFileSync(configFilePath, configContent);
+
+    writeFileSync(plainFilePath, 'NOVA_TEST_KEY="plain"\n');
+
+    return;
+  });
+
+  afterEach(() => {
+    rmSync(tempDir!, {
+      recursive: true,
+      force: true,
+    });
+
+    if (originalNodeEnv === undefined) {
+      Reflect.deleteProperty(process.env, 'NODE_ENV');
+    } else {
+      Reflect.set(process.env, 'NODE_ENV', originalNodeEnv);
+    }
+
+    Reflect.deleteProperty(process.env, 'NOVA_TEST_KEY');
+
+    return;
+  });
+
+  it('reports profiles enabled from the nearest nova.config.json', () => {
+    const nestedDirectory: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ReportsProfilesEnabledFromTheNearestNovaConfigJson_NestedDirectory = join(tempDir!, 'apps', 'site');
+
+    mkdirSync(nestedDirectory, { recursive: true });
+
+    strictEqual(Bootstrap.isEnvProfilesEnabled(nestedDirectory), true);
+
+    return;
+  });
+
+  it('loads the development profile file by default', () => {
+    const profileFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheDevelopmentProfileFileByDefault_ProfileFilePath = join(tempDir!, '.env.development');
+
+    writeFileSync(profileFilePath, 'NOVA_TEST_KEY="development"\n');
+
+    Bootstrap.loadEnv(tempDir!);
+
+    strictEqual(process.env['NOVA_TEST_KEY'], 'development');
+
+    return;
+  });
+
+  it('loads the profile file named by the node env', () => {
+    const profileFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheProfileFileNamedByTheNodeEnv_ProfileFilePath = join(tempDir!, '.env.production');
+
+    writeFileSync(profileFilePath, 'NOVA_TEST_KEY="production"\n');
+
+    Reflect.set(process.env, 'NODE_ENV', 'production');
+
+    Bootstrap.loadEnv(tempDir!);
+
+    strictEqual(process.env['NOVA_TEST_KEY'], 'production');
+
+    return;
+  });
+
+  it('prefers an explicit profile over the node env', () => {
+    const profileFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PrefersAnExplicitProfileOverTheNodeEnv_ProfileFilePath = join(tempDir!, '.env.staging');
+
+    writeFileSync(profileFilePath, 'NOVA_TEST_KEY="staging"\n');
+
+    Reflect.set(process.env, 'NODE_ENV', 'production');
+
+    Bootstrap.loadEnv(tempDir!, 'staging');
+
+    strictEqual(process.env['NOVA_TEST_KEY'], 'staging');
+
+    return;
+  });
+
+  it('falls back to .env when the profile file is missing', () => {
+    const envDirectory: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_FallsBackToEnvWhenTheProfileFileIsMissing_EnvDirectory = tempDir!;
+
+    Bootstrap.loadEnv(envDirectory);
+
+    strictEqual(process.env['NOVA_TEST_KEY'], 'plain');
+
+    return;
+  });
+
+  it('loads .env when profiles are disabled', () => {
+    const configFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ConfigFilePath = join(tempDir!, 'nova.config.json');
+    const profileFilePath: Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ProfileFilePath = join(tempDir!, '.env.development');
+
+    writeFileSync(configFilePath, '{}');
+
+    writeFileSync(profileFilePath, 'NOVA_TEST_KEY="development"\n');
+
+    Bootstrap.loadEnv(tempDir!);
+
+    strictEqual(process.env['NOVA_TEST_KEY'], 'plain');
 
     return;
   });

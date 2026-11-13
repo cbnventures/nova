@@ -841,6 +841,10 @@ Set `environment.profiles.enabled` to `true` when the project needs explicit env
 
 Explicit profiles use `.env.development`, `.env.staging`, and `.env.production`, with matching `.sample` files. Development remains local. A compatible Cloudflare Workers publish workflow may map prerelease tags and manual staging runs to `staging`, and stable tags and manual production runs to `production`.
 
+Turning profiles on in `nova utility configure` copies each workspace's `.env` into `.env.development` and moves `.env.sample` into `.env.development.sample`. The plain `.env` stays for tools that still read it, such as Wrangler; the plain `.env.sample` is removed because nothing maintains it while profiles are on, and `nova utility configure --status` flags one left behind. Turning profiles off restores both plain files from the development pair.
+
+With profiles on, the Nova CLI and [`Bootstrap.loadEnv`](/docs/toolkit/environment/bootstrap#environment-profiles) load `.env.development` locally, or the profile `NODE_ENV` names, and fall back to `.env` when that file is missing.
+
 | Field     | Type      | Description                                                                   |
 |-----------|-----------|-------------------------------------------------------------------------------|
 | `enabled` | `boolean` | Required. Enables explicit development, staging, and production env profiles. |

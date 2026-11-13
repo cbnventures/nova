@@ -5,6 +5,8 @@ import type { vi } from 'vitest';
 import type {
   Cli_Utility_Configure_Runner_CheckPath_CurrentDirectory,
   Cli_Utility_Configure_Runner_CheckPath_Returns,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns,
   Cli_Utility_Configure_Runner_PromptAgents_Config,
   Cli_Utility_Configure_Runner_PromptAgents_Returns,
   Cli_Utility_Configure_Runner_PromptDockerHub_Config,
@@ -207,6 +209,29 @@ export type Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SandboxRoot = str
  * @since 0.14.0
  */
 export type Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory = string;
+
+/**
+ * Tests - CLI - Utility - Configure - Find Plain Sample Leftovers - Flags A Plain Env Sample Only While Profiles Are Enabled.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SandboxRoot = string;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_SiteDirectory = string;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_WorkerDirectory = string;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesConfig = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainConfig = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_CwdSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_FindPlainSampleLeftovers = (config: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config) => Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns;
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_ProfilesLeftovers = string[];
+
+export type Tests_Cli_Utility_Configure_FindPlainSampleLeftovers_FlagsAPlainEnvSampleOnlyWhileProfilesAreEnabled_PlainLeftovers = string[];
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Agents - Removes The Optional Field When No Tools Are Selected.

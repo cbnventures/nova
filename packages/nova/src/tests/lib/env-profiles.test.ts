@@ -80,7 +80,7 @@ describe('migrateEnvironmentProfiles', async () => {
     });
 
     strictEqual(await readFile(join(workspaceDirectory, '.env'), 'utf-8'), originalEnv);
-    strictEqual(await readFile(join(workspaceDirectory, '.env.sample'), 'utf-8'), originalSample);
+    strictEqual((await readdir(workspaceDirectory)).includes('.env.sample'), false, 'the plain sample moves into the development pair');
     strictEqual(await readFile(join(workspaceDirectory, '.env.development'), 'utf-8'), originalEnv);
     strictEqual(await readFile(join(workspaceDirectory, '.env.development.sample'), 'utf-8'), originalSample);
 

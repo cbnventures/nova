@@ -1,3 +1,5 @@
+import type { Shared_NovaConfigEnvironmentProfile } from '../shared.d.ts';
+
 /**
  * Toolkit - Bootstrap - Get Cache Dir.
  *
@@ -64,6 +66,19 @@ export type Toolkit_Bootstrap_Runner_GetDataDir_DataPath = string;
 export type Toolkit_Bootstrap_Runner_GetDataDir_BasePath = string;
 
 /**
+ * Toolkit - Bootstrap - Get Env Profile.
+ *
+ * @since 0.42.0
+ */
+export type Toolkit_Bootstrap_Runner_GetEnvProfile_Profile = string | undefined;
+
+export type Toolkit_Bootstrap_Runner_GetEnvProfile_Returns = Shared_NovaConfigEnvironmentProfile;
+
+export type Toolkit_Bootstrap_Runner_GetEnvProfile_ExplicitProfile = Shared_NovaConfigEnvironmentProfile | undefined;
+
+export type Toolkit_Bootstrap_Runner_GetEnvProfile_NodeEnvProfile = Shared_NovaConfigEnvironmentProfile | undefined;
+
+/**
  * Toolkit - Bootstrap - Get Project Root.
  *
  * @since 0.14.0
@@ -83,13 +98,48 @@ export type Toolkit_Bootstrap_Runner_GetProjectRoot_Parsed = Record<string, unkn
 export type Toolkit_Bootstrap_Runner_GetProjectRoot_Parent = string;
 
 /**
+ * Toolkit - Bootstrap - Is Env Profiles Enabled.
+ *
+ * @since 0.42.0
+ */
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Directory = string;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Returns = boolean;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Dir = string;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_ConfigPath = string;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawConfig = Record<string, unknown>;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironmentValue = unknown;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawEnvironment = Record<string, unknown>;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfilesValue = unknown;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_RawProfiles = Record<string, unknown>;
+
+export type Toolkit_Bootstrap_Runner_IsEnvProfilesEnabled_Parent = string;
+
+/**
  * Toolkit - Bootstrap - Load Env.
  *
  * @since 0.14.0
  */
 export type Toolkit_Bootstrap_Runner_LoadEnv_Directory = string;
 
+export type Toolkit_Bootstrap_Runner_LoadEnv_Profile = string | undefined;
+
 export type Toolkit_Bootstrap_Runner_LoadEnv_Returns = void;
+
+export type Toolkit_Bootstrap_Runner_LoadEnv_FileName = string;
+
+export type Toolkit_Bootstrap_Runner_LoadEnv_EnvProfile = Shared_NovaConfigEnvironmentProfile;
+
+export type Toolkit_Bootstrap_Runner_LoadEnv_ProfileFileName = string;
+
+export type Toolkit_Bootstrap_Runner_LoadEnv_ProfileFilePath = string;
 
 export type Toolkit_Bootstrap_Runner_LoadEnv_FilePath = string;
 

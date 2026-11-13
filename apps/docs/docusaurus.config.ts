@@ -1,7 +1,5 @@
 import { NovaIdentity } from '@cbnventures/nova/toolkit';
 
-import { fetchStatItems } from './utils/getters/get-stat-items.js';
-
 import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/types/config';
 
 /**
@@ -48,9 +46,7 @@ const config: DocusaurusNovaConfig = {
   themes: [],
 
   // Custom Fields.
-  customFields: {
-    statItems: fetchStatItems(),
-  },
+  customFields: {},
 
   // Head Tags.
   headTags: [
@@ -272,46 +268,55 @@ const config: DocusaurusNovaConfig = {
       hideOnScroll: false,
       items: [
         {
-          label: 'Quickstart',
+          label: 'Docs',
           position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'quickstart',
-          icon: 'lucide:rocket',
+          type: 'dropdown',
+          icon: 'lucide:book-open',
+          items: [
+            {
+              label: 'Overview',
+              to: '/docs/quickstart/',
+              icon: 'lucide:rocket',
+              activeBaseRegex: '^/docs/(quickstart/|tags/)',
+            },
+            {
+              label: 'Presets',
+              to: '/docs/presets/',
+              icon: 'lucide:palette',
+              activeBaseRegex: '^/docs/presets/',
+            },
+            {
+              label: 'Rules',
+              to: '/docs/rules/',
+              icon: 'lucide:shield-check',
+              activeBaseRegex: '^/docs/rules/',
+            },
+            {
+              label: 'Toolkit',
+              to: '/docs/toolkit/',
+              icon: 'lucide:wrench',
+              activeBaseRegex: '^/docs/toolkit/',
+            },
+            {
+              label: 'Facades',
+              to: '/docs/facades/',
+              icon: 'lucide:layers',
+              activeBaseRegex: '^/docs/facades/',
+            },
+            {
+              label: 'CLI',
+              to: '/docs/cli/',
+              icon: 'lucide:terminal',
+              activeBaseRegex: '^/docs/cli/',
+            },
+          ],
         },
         {
-          label: 'Presets',
+          label: 'Quick Start',
           position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'presets',
-          icon: 'lucide:palette',
-        },
-        {
-          label: 'Rules',
-          position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'rules',
-          icon: 'lucide:shield-check',
-        },
-        {
-          label: 'Toolkit',
-          position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'toolkit',
-          icon: 'lucide:wrench',
-        },
-        {
-          label: 'Facades',
-          position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'facades',
-          icon: 'lucide:layers',
-        },
-        {
-          label: 'CLI',
-          position: 'left',
-          type: 'docSidebar',
-          sidebarId: 'cli',
-          icon: 'lucide:terminal',
+          type: undefined,
+          to: '/docs/quickstart/setup/',
+          icon: 'lucide:play',
         },
         {
           label: 'Blog',
@@ -319,6 +324,24 @@ const config: DocusaurusNovaConfig = {
           type: undefined,
           to: '/blog/',
           icon: 'lucide:pen-line',
+        },
+        {
+          label: 'Resources',
+          position: 'left',
+          type: 'dropdown',
+          icon: 'lucide:life-buoy',
+          items: [
+            {
+              label: 'Changelog',
+              href: 'https://github.com/cbnventures/nova/releases',
+              icon: 'lucide:history',
+            },
+            {
+              label: 'Report an Issue',
+              href: 'https://github.com/cbnventures/nova/issues',
+              icon: 'lucide:bug',
+            },
+          ],
         },
       ],
     },
@@ -373,46 +396,48 @@ const config: DocusaurusNovaConfig = {
     // Footer.
     footer: {
       sections: {
-        highlights: [
+        docs: [
           {
-            label: 'Agent Conventions',
-            href: '/docs/cli/generators/must-haves/agent-conventions/',
+            label: 'Overview',
+            href: '/docs/quickstart/',
           },
           {
-            label: 'Workspace Rules',
-            href: '/docs/quickstart/workspace-rules/',
+            label: 'Presets',
+            href: '/docs/presets/',
           },
           {
-            label: 'Monorepo Recipes',
-            href: '/docs/category/recipes/',
+            label: 'Rules',
+            href: '/docs/rules/',
           },
           {
-            label: 'nova.config.json',
-            href: '/docs/cli/utilities/configure/',
+            label: 'Toolkit',
+            href: '/docs/toolkit/',
+          },
+          {
+            label: 'Facades',
+            href: '/docs/facades/',
+          },
+          {
+            label: 'CLI',
+            href: '/docs/cli/',
           },
         ],
         resources: [
-          {
-            label: 'Documentation',
-            href: '/docs/quickstart/',
-          },
           {
             label: 'Blog',
             href: '/blog/',
           },
           {
-            label: 'GitHub',
-            href: 'https://github.com/cbnventures/nova',
-          },
-        ],
-        connect: [
-          {
-            label: 'Sponsors',
-            href: 'https://github.com/sponsors/cbnventures',
+            label: 'Changelog',
+            href: 'https://github.com/cbnventures/nova/releases',
           },
           {
             label: 'Report an Issue',
             href: 'https://github.com/cbnventures/nova/issues',
+          },
+          {
+            label: 'Source Code',
+            href: 'https://github.com/cbnventures/nova',
           },
         ],
         company: [
@@ -421,9 +446,23 @@ const config: DocusaurusNovaConfig = {
             href: 'https://www.cbnventures.io/',
           },
           {
-            label: 'Get In Touch',
+            label: 'Other Apps',
+            href: 'https://www.cbnventures.io/apps/',
+          },
+          {
+            label: 'Open Source',
+            href: 'https://www.cbnventures.io/open-source/',
+          },
+          {
+            label: 'Sponsor',
+            href: 'https://github.com/sponsors/cbnventures',
+          },
+          {
+            label: 'Get in Touch',
             href: 'https://www.cbnventures.io/get-in-touch/',
           },
+        ],
+        legal: [
           {
             label: 'Terms of Use',
             href: 'https://www.cbnventures.io/terms/',
@@ -435,21 +474,21 @@ const config: DocusaurusNovaConfig = {
         ],
       },
       layout: {
-        highlights: {
-          title: 'Highlights',
-          section: 'highlights',
+        docs: {
+          title: 'Docs',
+          section: 'docs',
         },
         resources: {
           title: 'Resources',
           section: 'resources',
         },
-        connect: {
-          title: 'Connect',
-          section: 'connect',
-        },
         company: {
           title: 'Company',
           section: 'company',
+        },
+        legal: {
+          title: 'Legal',
+          section: 'legal',
         },
       },
       socialLinks: [
@@ -491,7 +530,10 @@ const config: DocusaurusNovaConfig = {
       ],
       copyright: identity['copyright'],
       credit: true,
-      cta: undefined,
+      cta: {
+        label: 'Ready to set up your next project? Quick Start',
+        href: '/docs/quickstart/setup/',
+      },
     },
   },
 };

@@ -620,6 +620,8 @@ Configure the selection on a dedicated Cloudflare Workers publish workflow:
 | Prerelease tag or manual selection  | `staging`            | `.env.staging`         |
 | Stable tag or manual selection      | `production`         | `.env.production`      |
 
+The run name shows the selected profile in brackets. Tag-push runs show `staging` when the tag carries a pre-release suffix (a hyphen right after a version digit, such as `v1.2.0-beta.1`) and `production` otherwise, matching the profile the deploy step selects. A digit-hyphen inside the configured tag prefix is ignored, so `app2-v1.0.0` from an `app2-v*` pattern shows `production`.
+
 The generated workflow sets `CLOUDFLARE_ENV` for Wrangler and validates every Workers target before any project check or build begins. Missing profile-specific GitHub variables or secrets fail that preflight; Nova does not reuse values from another profile.
 
 ### Build Delivery

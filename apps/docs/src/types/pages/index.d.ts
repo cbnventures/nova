@@ -10,10 +10,6 @@ export type PagesContext = DocusaurusContextBase;
 
 export type PagesSiteConfig = DocusaurusConfig;
 
-export type PagesCustomFields = {
-  statItems: PagesStatItems;
-};
-
 /**
  * Pages - Index - Home.
  *
@@ -22,10 +18,6 @@ export type PagesCustomFields = {
 export type Pages_Index_Home_Context = PagesContext;
 
 export type Pages_Index_Home_SiteConfig = PagesSiteConfig;
-
-export type Pages_Index_Home_CustomFields = PagesCustomFields;
-
-export type Pages_Index_Home_StatItems = PagesStatItems;
 
 export type Pages_Index_Home_FeatureItems = PagesFeatureItems;
 
@@ -116,22 +108,3 @@ export type PagesIncludedItem = {
 };
 
 export type PagesIncludedItems = PagesIncludedItem[];
-
-/**
- * Pages - Home - Stat Items.
- *
- * @since 0.15.0
- */
-export type PagesStatItemValue = string;
-
-export type PagesStatItemLabel = string;
-
-export type PagesStatItemColor = 'primary' | 'accent';
-
-export type PagesStatItem = {
-  value: PagesStatItemValue;
-  label: PagesStatItemLabel;
-  color: PagesStatItemColor;
-};
-
-export type PagesStatItems = PagesStatItem[];

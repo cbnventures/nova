@@ -39,7 +39,8 @@ import type {
  * Lib - Env Profiles - Migrate Environment Profiles.
  *
  * Reversibly migrates plain environment files to or from profile pairs.
- * Existing destinations are backed up and inactive profiles remain untouched.
+ * Existing destinations are backed up and inactive profiles remain untouched, while
+ * the plain sample moves into the development pair until disabling restores it.
  *
  * @param {Lib_EnvProfiles_MigrateEnvironmentProfiles_Options} options - Options.
  *
@@ -94,8 +95,13 @@ export async function migrateEnvironmentProfiles(options: Lib_EnvProfiles_Migrat
         await fs.writeFile(developmentEnvPath, plainEnvContents, 'utf-8');
       }
 
+      // The plain sample moves into the development pair because nothing maintains it while
+      // profiles are on. The plain ".env" stays for tools that still read it (wrangler and
+      // Nova's bootstrap fallback). Disabling profiles rebuilds it from the development sample.
       if (plainSampleContents !== undefined) {
         await fs.writeFile(developmentSamplePath, plainSampleContents, 'utf-8');
+
+        await fs.rm(plainSamplePath, { force: true });
       }
 
       continue;
@@ -125,7 +131,7 @@ export async function migrateEnvironmentProfiles(options: Lib_EnvProfiles_Migrat
   Logger.customize({
     name: 'migrateEnvironmentProfiles',
     purpose: 'complete',
-  }).info((nextEnabled === true) ? 'Enabled environment profiles. Plain files remain available while development, staging, and production pairs are active.' : 'Disabled environment profiles. The development pair was restored to the plain names; staging and production files remain untouched but inactive.');
+  }).info((nextEnabled === true) ? 'Enabled environment profiles. The plain ".env.sample" moved into the development pair; the plain ".env" remains for tools that still read it while development, staging, and production pairs are active.' : 'Disabled environment profiles. The development pair was restored to the plain names; staging and production files remain untouched but inactive.');
 
   return;
 }

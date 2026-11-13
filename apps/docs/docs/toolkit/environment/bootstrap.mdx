@@ -41,6 +41,7 @@ The `Bootstrap` battery resolves platform-specific directories (XDG on macOS and
 - Discovers files across a configurable search order using keywords like `cwd`, `config-dir`, `data-dir`, `cache-dir`, `home`, `temp`, and `project-root`.
 - Accepts absolute paths alongside keywords for custom search locations.
 - Creates directories automatically when accessed through app-scoped getter methods (`getConfigDir`, `getDataDir`, `getCacheDir`).
+- Loads the active profile's `.env.<profile>` file when [environment profiles](/docs/quickstart/nova-config#environment-profiles) are enabled in the nearest `nova.config.json`, falling back to `.env` when that file is missing.
 - Logs `.env` loading activity through `Logger.debug` for development visibility.
 
 ## Usage
@@ -65,6 +66,10 @@ Examples use TypeScript, but the <Terminology title="How one program asks anothe
     // Load it (silently skips if not found)
     if (envDir !== undefined) {
       Bootstrap.loadEnv(envDir);
+
+      // Or, with environment profiles enabled, pick the profile explicitly
+      // -> reads .env.staging, or .env when .env.staging is missing
+      Bootstrap.loadEnv(envDir, 'staging');
     }
     ```
 
@@ -130,7 +135,9 @@ Examples use TypeScript, but the <Terminology title="How one program asks anothe
 | `appName`           | Directory getters and file resolvers | —                    | Required application namespace appended to platform-managed directories. |
 | `filename`          | `resolveFileDir`, `resolveFileDirs`  | —                    | Required file name searched for in each resolved location.               |
 | `searchOrder`       | `resolveFileDir`, `resolveFileDirs`  | —                    | Required ordered array of search keywords or absolute directory paths.   |
-| `directory`         | `loadEnv`                            | —                    | Required directory containing the `.env` file to load.                   |
+| `directory`         | `loadEnv`, `isEnvProfilesEnabled`    | —                    | Required directory containing the `.env` file to load.                   |
+| `profile`           | `loadEnv`, `getEnvProfile`           | `NODE_ENV`           | Optional `development`, `staging`, or `production` profile to load.      |
+| `NODE_ENV`          | `loadEnv`, `getEnvProfile`           | `development`        | Picks the profile when no `profile` is passed and it names a profile.    |
 | `XDG_CONFIG_HOME`   | `getConfigDir` on macOS and Linux    | Platform path        | Overrides the base configuration directory.                              |
 | `XDG_DATA_HOME`     | `getDataDir` on Linux                | `~/.local/share`     | Overrides the base data directory.                                       |
 | `XDG_CACHE_HOME`    | `getCacheDir` on Linux               | `~/.cache`           | Overrides the base cache directory.                                      |
@@ -215,11 +222,23 @@ KEY='single quoted value'
 
 Variables already present in `process.env` are not overridden.
 
+## Environment Profiles
+
+`isEnvProfilesEnabled(directory)` walks up from `directory` to the nearest `nova.config.json` and returns `true` when `environment.profiles.enabled` is `true`. A missing or unreadable config counts as disabled.
+
+When profiles are enabled, `loadEnv` reads `.env.<profile>` instead of `.env`. `getEnvProfile` picks the profile in this order:
+
+1. The `profile` argument, when it is `development`, `staging`, or `production`.
+2. `NODE_ENV`, when it names one of those profiles.
+3. `development`.
+
+If the profile file is missing, `loadEnv` loads `.env` and logs the fallback through `Logger.debug`. The Nova CLI loads its own environment the same way, so `NODE_ENV=production nova …` reads `.env.production`.
+
 ## Troubleshooting
 
 **`.env` is not being loaded**
 
-Confirm the file exists in the directory passed to `loadEnv`. Set `LOG_LEVEL=debug` to see the search output in the terminal.
+Confirm the file exists in the directory passed to `loadEnv`. With environment profiles enabled, `loadEnv` reads `.env.<profile>` first, so check `NODE_ENV` and the `profile` argument. Set `LOG_LEVEL=debug` to see the search output in the terminal.
 
 **Directory getters return unexpected paths**
 

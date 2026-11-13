@@ -72,6 +72,8 @@ registerDotenvSuite({
 
 The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sample` from the project root. In a <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>, Vitest runs in the <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory but the `.env` can live at the repo root, so set `rootDir` to the repo root and list every env file in `envPaths`.
 
+When [environment profiles](/docs/quickstart/nova-config#environment-profiles) are enabled in the nearest `nova.config.json` above `rootDir`, the default `envPaths` switch to the files the [dotenv generator](/docs/cli/generators/must-haves/dotenv) writes: `.env.development`, `.env.staging`, `.env.production`, and their `.sample` files. An explicit `envPaths` always wins.
+
 ## Configuration
 
 | Field      | Type                      | Default                   | Description                                               |

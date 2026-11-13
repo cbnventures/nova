@@ -660,6 +660,33 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Sig
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseSigningKey = string;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Pre Release Ref Expression.
+ *
+ * @since 0.42.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_TagPatterns = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Returns = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_GlobCharacters = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Digits = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_LeftCharacters = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefixes = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefix = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Terms = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Pending = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Term = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Collides = boolean;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -698,6 +725,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNamePa
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameParts = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNamePart[];
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushTagPatterns = string[];
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers = Shared_BlueprintConfigWorkflow_Triggers;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = Shared_BlueprintConfigWorkflow_Deploy;
@@ -705,8 +734,6 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets =
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection = Shared_NovaConfigWorkflowEnvironmentSelection | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = boolean;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = boolean;
 
@@ -751,6 +778,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DispatchI
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameLabel = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreReleaseRefExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameEnvironmentSuffix = string;
 

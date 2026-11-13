@@ -141,7 +141,33 @@ import type {
   Cli_Index_CLI_StyleText_TitleStyles,
   Cli_Index_CLI_StyleText_Type,
   Cli_Index_EnvDir,
+  Cli_Index_EnvProfileFileName,
+  Cli_Index_EnvSearchOrder,
 } from '../types/cli/index.d.ts';
+
+/**
+ * CLI - Env Search Order.
+ *
+ * Lists the places searched for the Nova dotenv file, nearest first, so a project
+ * file wins over the user's config directory.
+ *
+ * @since 0.42.0
+ */
+const envSearchOrder: Cli_Index_EnvSearchOrder = [
+  'cwd',
+  'project-root',
+  'config-dir',
+];
+
+/**
+ * CLI - Env Profile File Name.
+ *
+ * Names the active profile's dotenv file so a project with environment profiles
+ * enabled and no plain ".env" still loads its values.
+ *
+ * @since 0.42.0
+ */
+const envProfileFileName: Cli_Index_EnvProfileFileName = `.env.${Bootstrap.getEnvProfile()}`;
 
 /**
  * CLI - Env Dir.
@@ -151,11 +177,7 @@ import type {
  *
  * @since 0.21.0
  */
-const envDir: Cli_Index_EnvDir = Bootstrap.resolveFileDir('nova', '.env', [
-  'cwd',
-  'project-root',
-  'config-dir',
-]);
+const envDir: Cli_Index_EnvDir = Bootstrap.resolveFileDir('nova', '.env', envSearchOrder) ?? Bootstrap.resolveFileDir('nova', envProfileFileName, envSearchOrder);
 
 if (envDir !== undefined) {
   Bootstrap.loadEnv(envDir);

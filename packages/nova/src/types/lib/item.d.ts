@@ -5,6 +5,7 @@ import type {
   Shared_NovaConfigAgent,
   Shared_NovaConfigDockerHubRecipeName,
   Shared_NovaConfigEntityRole,
+  Shared_NovaConfigEnvironmentProfile,
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
   Shared_NovaConfigMiscellaneousRecipeName,
@@ -131,6 +132,27 @@ export type Lib_Item_ReservedDotenvKeys = readonly [
   'NODE_ENV',
   'LOG_LEVEL',
   'LOG_TIME',
+];
+
+/**
+ * Lib - Item - Environment Profiles.
+ *
+ * @since 0.42.0
+ */
+export type Lib_Item_EnvironmentProfiles = readonly Shared_NovaConfigEnvironmentProfile[];
+
+/**
+ * Lib - Item - Environment Profile Dotenv Files.
+ *
+ * @since 0.42.0
+ */
+export type Lib_Item_EnvironmentProfileDotenvFiles = readonly [
+  '.env.development',
+  '.env.development.sample',
+  '.env.staging',
+  '.env.staging.sample',
+  '.env.production',
+  '.env.production.sample',
 ];
 
 /**

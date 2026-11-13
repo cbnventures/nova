@@ -14,6 +14,8 @@ export type Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Returns = void;
 
 export type Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_RootDir = string;
 
+export type Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_ProfilesEnabled = boolean;
+
 export type Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_EnvPaths = string[];
 
 export type Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_Enable = 'all' | Rules_Vitest_Index_DotenvToggleKey[];

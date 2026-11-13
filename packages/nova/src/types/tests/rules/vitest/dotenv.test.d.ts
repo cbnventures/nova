@@ -17,3 +17,5 @@ export type Tests_Rules_Vitest_Dotenv_Violation = {
 export type Tests_Rules_Vitest_Dotenv_PresentViolations = Tests_Rules_Vitest_Dotenv_Violation[];
 
 export type Tests_Rules_Vitest_Dotenv_MissingViolations = Tests_Rules_Vitest_Dotenv_Violation[];
+
+export type Tests_Rules_Vitest_Dotenv_ProfilesFixtureRoot = string;

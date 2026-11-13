@@ -150,6 +150,67 @@ export type Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsKEYValue_EnvFilePath =
 export type Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsSingleQuotedValue_EnvFilePath = string;
 
 /**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDir = string | undefined;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_OriginalNodeEnv = string | undefined;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_TempDirPath = string;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigFilePath = string;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ConfigContent = string;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PlainFilePath = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Falls Back To Env When The Profile File Is Missing.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_FallsBackToEnvWhenTheProfileFileIsMissing_EnvDirectory = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Loads Env When Profiles Are Disabled.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ConfigFilePath = string;
+
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsEnvWhenProfilesAreDisabled_ProfileFilePath = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Loads The Development Profile File By Default.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheDevelopmentProfileFileByDefault_ProfileFilePath = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Loads The Profile File Named By The Node Env.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_LoadsTheProfileFileNamedByTheNodeEnv_ProfileFilePath = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Prefers An Explicit Profile Over The Node Env.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_PrefersAnExplicitProfileOverTheNodeEnv_ProfileFilePath = string;
+
+/**
+ * Tests - Toolkit - Bootstrap - Bootstrap Profile Env - Reports Profiles Enabled From The Nearest Nova Config Json.
+ *
+ * @since 0.42.0
+ */
+export type Tests_Toolkit_Bootstrap_BootstrapProfileEnv_ReportsProfilesEnabledFromTheNearestNovaConfigJson_NestedDirectory = string;
+
+/**
  * Tests - Toolkit - Bootstrap - Bootstrap ResolveFileDir.
  *
  * @since 0.14.0

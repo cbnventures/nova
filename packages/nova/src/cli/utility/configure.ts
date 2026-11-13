@@ -61,6 +61,13 @@ import type {
   Cli_Utility_Configure_Runner_CheckPath_Locations,
   Cli_Utility_Configure_Runner_CheckPath_NotProjectRootDirectoryMessage,
   Cli_Utility_Configure_Runner_CheckPath_Returns,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Environment,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Leftovers,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_ProfilesEnabled,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_SamplePath,
+  Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Workspaces,
   Cli_Utility_Configure_Runner_GetOptionalBooleanInitial_Returns,
   Cli_Utility_Configure_Runner_GetOptionalBooleanInitial_Value,
   Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Exists,
@@ -355,6 +362,8 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_LocalOrphanLines,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ManagedSet,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Mutate,
+  Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleLeftovers,
+  Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleNotice,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Plan,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ResultMessage,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Returns,
@@ -9020,6 +9029,42 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Find Plain Sample Leftovers.
+   *
+   * Lists each configured app that still holds a plain ".env.sample"
+   * while environment profiles are enabled. Nothing maintains that file once profiles
+   * are on, so status flags it for removal.
+   *
+   * @param {Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns}
+   *
+   * @since 0.42.0
+   */
+  private static async findPlainSampleLeftovers(config: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Config): Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns {
+    const environment: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Environment = config['environment'] ?? {};
+    const workspaces: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Workspaces = environment['workspaces'] ?? {};
+    const profilesEnabled: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_ProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
+    const leftovers: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Leftovers = [];
+
+    if (profilesEnabled === false) {
+      return leftovers;
+    }
+
+    for (const appPath of Object.keys(workspaces)) {
+      const samplePath: Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_SamplePath = join(process.cwd(), appPath, '.env.sample');
+
+      if (await pathExists(samplePath) === true) {
+        leftovers.push(join(appPath, '.env.sample'));
+      }
+    }
+
+    return leftovers;
+  }
+
+  /**
    * CLI - Utility - Configure - Prompt Environment Reconcile.
    *
    * Computes the managed key set and reads the current GitHub names.
@@ -9038,6 +9083,25 @@ export class Runner {
   private static async promptEnvironmentReconcile(config: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Config, mutate: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Mutate): Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Returns {
     const environment: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Environment = (config['environment'] !== undefined) ? config['environment'] : {};
     const managedSet: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_ManagedSet = libEnvManagedSet.compute(config);
+
+    // A plain ".env.sample" left beside the profile pairs goes stale because nothing maintains
+    // it, so flag it before the GitHub check, which needs the "gh" CLI.
+    const plainSampleLeftovers: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleLeftovers = await Runner.findPlainSampleLeftovers(config);
+
+    if (plainSampleLeftovers.length > 0) {
+      const plainSampleNotice: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_PlainSampleNotice = [
+        `Environment profiles are enabled, but plain ".env.sample" files remain: ${plainSampleLeftovers.join(', ')}.`,
+        'Nothing maintains them while profiles are on. Delete them; ".env.development.sample" replaces them.',
+      ].join('\n');
+
+      Logger.customize({
+        name: 'Runner.promptEnvironmentReconcile',
+        purpose: 'plain-sample-leftover',
+        padTop: 1,
+        padBottom: 1,
+      }).warn(plainSampleNotice);
+    }
+
     const githubState: Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_GithubState = await libEnvGithub.read();
 
     if (githubState['available'] === false) {

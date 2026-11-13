@@ -8,6 +8,10 @@ import type { Shared_GeneratorRunResult, Shared_RunScriptsOptions, Shared_RunWor
  *
  * @since 0.14.0
  */
+export type Cli_Index_EnvSearchOrder = string[];
+
+export type Cli_Index_EnvProfileFileName = string;
+
 export type Cli_Index_EnvDir = string | undefined;
 
 /**

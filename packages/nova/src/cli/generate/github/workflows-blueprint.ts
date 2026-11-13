@@ -263,6 +263,17 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Collides,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Digits,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_GlobCharacters,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_LeftCharacters,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Pending,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefixes,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_TagPatterns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Term,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Terms,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifact,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths,
@@ -317,9 +328,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_OnNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreReleaseRefExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushTagPatterns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Reference,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Referenced,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ResolvedRootDir,
@@ -1401,11 +1414,11 @@ export class Runner {
     const on: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_On = [];
     const publishConditionParts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts = [];
     const runNameParts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameParts = [];
+    const pushTagPatterns: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushTagPatterns = [];
     const triggers: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers = entry['triggers'];
     const targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = entry['deploy'] ?? [];
     const environmentSelection: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection = entry['environmentSelection'];
     const profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = environmentSelection !== undefined;
-    const selectedEnvironmentExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = 'github.event_name == \'workflow_dispatch\' && (inputs.environment || \'staging\') || github.event_name == \'release\' && github.event.release.prerelease && \'staging\' || github.event_name == \'release\' && \'production\' || \'from tag\'';
     const hasContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = targets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
     const hasPfsenseTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget = targets.some((target) => target['to'] === 'pfsense');
     const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = entry['containerPlatforms'] ?? [
@@ -1470,6 +1483,8 @@ export class Runner {
         const tagPushTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_TagPushTags = (typeof trigger === 'string') ? undefined : trigger['tags'];
 
         on.push(Runner.buildTagPushTrigger(tagPushTags));
+
+        pushTagPatterns.push(...(tagPushTags ?? ['v*']));
 
         publishConditionParts.push('github.event_name == \'push\' && startsWith(github.ref, \'refs/tags/\')');
 
@@ -1620,6 +1635,11 @@ export class Runner {
       ...runNameParts.map((part) => ((part.includes('&&') === true) ? `(${part})` : part)),
       '\'manually\'',
     ].join(' || ');
+
+    // Push runs mirror the "Select Cloudflare deployment environment" step, which treats a ref
+    // ending in "X.Y.Z-<pre-release>" as staging; the tag patterns keep that check exact.
+    const preReleaseRefExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreReleaseRefExpression = Runner.buildPreReleaseRefExpression(pushTagPatterns);
+    const selectedEnvironmentExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_SelectedEnvironmentExpression = `github.event_name == 'workflow_dispatch' && (inputs.environment || 'staging') || github.event_name == 'release' && github.event.release.prerelease && 'staging' || github.event_name == 'release' && 'production' || github.event_name == 'push' && ((${preReleaseRefExpression}) && 'staging' || 'production') || 'from tag'`;
     const runNameEnvironmentSuffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameEnvironmentSuffix = (profileAware === true) ? ` [${Runner.expr(selectedEnvironmentExpression)}]` : '';
     const runName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunName = `Publishing ${Runner.expr(runNameLabel)}${workflowId}${runNameEnvironmentSuffix}\${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}`;
 
@@ -2254,6 +2274,86 @@ export class Runner {
       event: 'release',
       types: ['published'],
     };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Pre Release Ref Expression.
+   *
+   * Builds the run-name check for a pre-release ref, since expressions lack regex.
+   * Each "D-" term (digit, hyphen) gains digit or dot characters on its left until no literal
+   * tag prefix contains it, so "app2-v*" tags never read their own "2-".
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_TagPatterns} tagPatterns - Tag patterns.
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Returns}
+   *
+   * @since 0.42.0
+   */
+  public static buildPreReleaseRefExpression(tagPatterns: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_TagPatterns): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Returns {
+    const globCharacters: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_GlobCharacters = [
+      '*',
+      '?',
+      '[',
+      '+',
+    ];
+    const digits: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Digits = [
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+    ];
+    const leftCharacters: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_LeftCharacters = [
+      ...digits,
+      '.',
+    ];
+    const prefixes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefixes = [];
+
+    // A ref always starts with its pattern's literal text, the part before the first glob
+    // character. Negated patterns never start a run, so they add no prefix.
+    for (const tagPattern of tagPatterns) {
+      if (tagPattern.startsWith('!') === true) {
+        continue;
+      }
+
+      let prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Prefix = '';
+
+      for (const character of tagPattern) {
+        if (globCharacters.includes(character) === true) {
+          break;
+        }
+
+        prefix += character;
+      }
+
+      prefixes.push(prefix);
+    }
+
+    // A pre-release hyphen follows the patch digit, which follows a digit or a dot. A term found
+    // inside a prefix grows by one such character on its left until no prefix contains it, which
+    // ends because a term longer than every prefix cannot collide.
+    const terms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Terms = [];
+    const pending: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Pending = digits.map((digit) => `${digit}-`);
+
+    while (pending.length > 0) {
+      const term: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Term = pending.shift() ?? '';
+      const collides: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Collides = prefixes.some((prefix) => prefix.includes(term));
+
+      if (collides === false) {
+        terms.push(term);
+
+        continue;
+      }
+
+      pending.unshift(...leftCharacters.map((leftCharacter) => `${leftCharacter}${term}`));
+    }
+
+    return terms.map((term) => `contains(github.ref_name, '${term}')`).join(' || ');
   }
 
   /**
