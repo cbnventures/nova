@@ -7,6 +7,7 @@
 - Nova's CLI and `Bootstrap.loadEnv` load the active profile's `.env.<profile>` file when environment profiles are enabled, choosing an explicit profile argument first, then `NODE_ENV` when it names a profile, then `development`, and fall back to `.env` when that file is missing.
 - The dotenv Vitest suite checks `.env.development`, `.env.staging`, `.env.production`, and their `.sample` files by default when environment profiles are enabled, instead of the plain `.env` and `.env.sample`; explicit `envPaths` still win.
 - Enabling environment profiles moves the plain `.env.sample` into `.env.development.sample` instead of leaving a copy nothing maintains, disabling them restores it, and `nova utility configure --status` flags a plain `.env.sample` left beside the profile files.
+- The App Store Connect integration tests wait up to 20 seconds of real time for a fake operation to settle, instead of giving up after 500 timer ticks, so slow file reads on a busy CI runner no longer fail the publish check.
 
 ### ADDED
 - `Bootstrap.isEnvProfilesEnabled()` and `Bootstrap.getEnvProfile()` report whether environment profiles are on and which profile is active, and `Bootstrap.loadEnv()` accepts an optional `profile` argument.
@@ -674,7 +675,7 @@ No changes.
 
 ## 0.15.4 - 2026-04-19
 
-No changes
+No changes.
 
 ## 0.15.3 - 2026-04-19
 
@@ -768,13 +769,13 @@ No changes
 - The `npm-run-all` dependency is gone, replaced by built-in `run-scripts` utility.
 - The `pin-versions`, `sync-lts-engines`, and `sync-packages` recipes are gone. Their functionality has been split into 8 granular `package-json` recipes.
 
-## 0.13.1 (2026-02-28)
+## 0.13.1 - 2026-02-28
 
 ### FIXED
 - Removed the unnecessary `./` prefix from the `bin` path in `package.json`.
 - Toolkit export paths now point to ./build/src/toolkit/ instead of ./build/src/presets/toolkit/
 
-## 0.13.0 (2026-02-27)
+## 0.13.0 - 2026-02-27
 
 ### UPDATED
 - Broadened `engines.node` from `^22` to `^20 || ^22 || ^24` to support all active Node.js LTS versions.
@@ -816,7 +817,7 @@ No changes
 ### REMOVED
 - The `sync-versions` CLI command is gone. Its `packageManager` validation is now part of `sync-packages`.
 
-## 0.12.0 (2025-11-02)
+## 0.12.0 - 2025-11-02
 
 ### UPDATED
 - The `Logger.customize` function now has the ability for developer to declare the type and purpose of logging (in addition to the function name).
@@ -827,7 +828,7 @@ No changes
 - Custom ESLint rules to be exported for usage (starting with the `no-logger-dev` rule).
 - Tests (to test for the `discoverPathsWithFile`).
 
-## 0.11.0 (2025-10-30)
+## 0.11.0 - 2025-10-30
 
 ### UPDATED
 - Renamed "Foundation Nova" to "Nova".
@@ -847,7 +848,7 @@ No changes
 ### ADDED
 - Support for `workspaces` in Nova config to better manage apps/packages inside the monorepo.
 
-## 0.10.0 (2025-10-26)
+## 0.10.0 - 2025-10-26
 
 ### UPDATED
 - The CLI "CURRENTLY RUNNING:" text also includes the base command used (`nova`) for better debugging purposes.
@@ -858,7 +859,7 @@ No changes
 ### REMOVED
 - The `inspect` CLI command is gone now that we decided not to wrap ESLint/TypeScript print-config.
 
-## 0.9.0 (2025-10-24)
+## 0.9.0 - 2025-10-24
 
 ### UPDATED
 - Prevent usage of `console` completely. Either use the `Logger` toolkit battery or write to the process directly. This is to prevent over-reliance of `console.log`.

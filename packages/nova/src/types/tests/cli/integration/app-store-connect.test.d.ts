@@ -849,7 +849,7 @@ export type Tests_Cli_Integration_AppStoreConnect_RequestData_Parsed = Record<st
  */
 export type Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled = () => boolean;
 
-export type Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Attempt = number;
+export type Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Deadline = number;
 
 export type Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Returns = Promise<void>;
 

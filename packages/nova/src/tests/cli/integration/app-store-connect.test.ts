@@ -311,7 +311,7 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_RequestData_Options,
   Tests_Cli_Integration_AppStoreConnect_RequestData_Parsed,
   Tests_Cli_Integration_AppStoreConnect_RequestData_Returns,
-  Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Attempt,
+  Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Deadline,
   Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Returns,
   Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled,
   Tests_Cli_Integration_AppStoreConnect_RunWithTimers_Operation,
@@ -1338,21 +1338,22 @@ async function prepareScreenshotFiles(directory: Tests_Cli_Integration_AppStoreC
  * Tests - CLI - Integration - App Store Connect - Run Pending Timers Until.
  *
  * Recursively drains pending timeout work while the observed operation remains
- * unsettled, avoiding sequential-await loops in the test orchestration.
+ * unsettled, avoiding sequential-await loops in the test orchestration. The
+ * deadline uses real time, so slow file reads on a busy runner still settle.
  *
- * @param {Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled} settled - Settled.
- * @param {Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Attempt} attempt - Attempt.
+ * @param {Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled}  settled  - Settled.
+ * @param {Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Deadline} deadline - Deadline.
  *
  * @returns {Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Returns}
  *
  * @since 0.39.0
  */
-async function runPendingTimersUntil(settled: Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled, attempt: Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Attempt = 0): Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Returns {
+async function runPendingTimersUntil(settled: Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Settled, deadline: Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Deadline = vi.getRealSystemTime() + 20000): Tests_Cli_Integration_AppStoreConnect_RunPendingTimersUntil_Returns {
   if (settled() === true) {
     return;
   }
 
-  if (attempt >= 500) {
+  if (vi.getRealSystemTime() >= deadline) {
     throw new Error('The fake App Store Connect operation did not settle.');
   }
 
@@ -1360,7 +1361,7 @@ async function runPendingTimersUntil(settled: Tests_Cli_Integration_AppStoreConn
 
   await vi.runOnlyPendingTimersAsync();
 
-  await runPendingTimersUntil(settled, attempt + 1);
+  await runPendingTimersUntil(settled, deadline);
 
   return;
 }

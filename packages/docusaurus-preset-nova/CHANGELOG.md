@@ -311,7 +311,7 @@ No changes.
 
 ## 0.17.0 - 2026-04-23
 
-No changes
+No changes.
 
 ## 0.16.2 - 2026-04-21
 
@@ -327,7 +327,7 @@ No changes
 
 ## 0.16.1 - 2026-04-21
 
-No changes
+No changes.
 
 ## 0.16.0 - 2026-04-20
 
@@ -351,7 +351,7 @@ No changes
 
 ## 0.15.3 - 2026-04-19
 
-No changes
+No changes.
 
 ## 0.15.2 - 2026-04-19
 
@@ -360,7 +360,7 @@ No changes
 
 ## 0.15.1 - 2026-04-19
 
-No changes
+No changes.
 
 ## 0.15.0 - 2026-04-18
 
