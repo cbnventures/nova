@@ -241,7 +241,7 @@
       }
     },
     "next": {
-      "value": "16.4.3",
+      "value": "16.4.6",
       "placeholder": "[__SCAFFOLD_VERSION_NEXT__]",
       "group": "nextjs",
       "source": {

@@ -1,0 +1,303 @@
+/**
+ * ============================
+ * Browser Frame - Container
+ * ============================
+ *
+ * Chrome on macOS without Chrome's branding. Every size below was measured
+ * from a real 1280px-wide Chrome window and is written in --nova-browser-u,
+ * one CSS pixel of that window, so the chrome shrinks and grows with the
+ * screenshot inside it. Set --nova-browser-frame-viewport on the block when
+ * the screenshot was captured at a viewport other than 1280.
+ */
+
+.nova-browser-frame {
+  --nova-browser-u: calc(100cqw / var(--nova-browser-frame-viewport, 1280));
+  --nova-browser-frame-chrome: #dfe3e8;
+  --nova-browser-frame-surface: #ffffff;
+  --nova-browser-frame-omnibox: #eef1f5;
+  --nova-browser-frame-icon: #474747;
+  --nova-browser-frame-text: #1f1f1f;
+  --nova-browser-frame-edge: rgba(0, 0, 0, 0.3);
+
+  display: block;
+  container-type: inline-size;
+  margin-block: 2rem 0;
+  margin-inline: 0;
+}
+
+[data-theme="dark"] .nova-browser-frame {
+  --nova-browser-frame-chrome: #1f1f1f;
+  --nova-browser-frame-surface: #35363a;
+  --nova-browser-frame-omnibox: #282828;
+  --nova-browser-frame-icon: #c4c7c5;
+  --nova-browser-frame-text: #e3e3e3;
+  --nova-browser-frame-edge: rgba(0, 0, 0, 0.9);
+}
+
+.nova-browser-frame-window {
+  overflow: hidden;
+
+  background: var(--nova-browser-frame-surface);
+  border-radius: calc(10 * var(--nova-browser-u));
+  box-shadow:
+    0 0 0 0.5px var(--nova-browser-frame-edge),
+    0 22px 70px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nova-browser-frame-window {
+  box-shadow:
+    0 0 0 0.5px var(--nova-browser-frame-edge),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.14),
+    0 22px 70px 4px rgba(0, 0, 0, 0.6);
+}
+
+/**
+ * ============================
+ * Browser Frame - Tab Strip
+ * ============================
+ *
+ * 40 tall. Lights, tab search, tab contents and the + all center on y 20.2.
+ */
+
+.nova-browser-frame-tabs {
+  display: flex;
+  align-items: flex-end;
+  height: calc(40 * var(--nova-browser-u));
+  padding-inline: calc(13.2 * var(--nova-browser-u)) calc(8 * var(--nova-browser-u));
+
+  background: var(--nova-browser-frame-chrome);
+}
+
+/* 14 lights, 9 apart (centers 20.2, 43.2, 66.2). */
+.nova-browser-frame-lights {
+  display: flex;
+  flex: none;
+  gap: calc(9 * var(--nova-browser-u));
+  margin-block-end: calc(12.8 * var(--nova-browser-u));
+  margin-inline-end: calc(19 * var(--nova-browser-u));
+}
+
+.nova-browser-frame-lights > span {
+  width: calc(14 * var(--nova-browser-u));
+  height: calc(14 * var(--nova-browser-u));
+
+  border-radius: 50%;
+}
+
+.nova-browser-frame-lights > span:nth-child(1) {
+  background: #ff5f57;
+  box-shadow: inset 0 0 0 0.5px #e0443e;
+}
+
+.nova-browser-frame-lights > span:nth-child(2) {
+  background: #febc2e;
+  box-shadow: inset 0 0 0 0.5px #dea123;
+}
+
+.nova-browser-frame-lights > span:nth-child(3) {
+  background: #28c840;
+  box-shadow: inset 0 0 0 0.5px #1aab29;
+}
+
+/* Tab search: 28x28 at x 92.2. */
+.nova-browser-frame-tab-search {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: calc(28 * var(--nova-browser-u));
+  height: calc(28 * var(--nova-browser-u));
+  margin-block-end: calc(6 * var(--nova-browser-u));
+  margin-inline-end: calc(6.5 * var(--nova-browser-u));
+
+  background: color-mix(in srgb, var(--nova-browser-frame-chrome), #ffffff 45%);
+  border-radius: calc(10 * var(--nova-browser-u));
+}
+
+[data-theme="dark"] .nova-browser-frame-tab-search {
+  background: color-mix(in srgb, var(--nova-browser-frame-chrome), #ffffff 8%);
+}
+
+.nova-browser-frame-tab-search-icon {
+  width: calc(16 * var(--nova-browser-u));
+  height: calc(16 * var(--nova-browser-u));
+
+  color: var(--nova-browser-frame-icon);
+}
+
+/*
+ * The active tab, measured on its straight sides: 6 below the window top,
+ * 34 tall, 10 top corners, 7 outward bottom curves. Body 126.7 to 357.7;
+ * favicon 7.7 in, 12px title at 158.7, close centered at 342. The contents
+ * sit on the strip's center line, not the tab's middle.
+ */
+.nova-browser-frame-tab {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: calc(8.3 * var(--nova-browser-u));
+  box-sizing: border-box;
+  width: calc(231 * var(--nova-browser-u));
+  min-width: 0;
+  height: calc(34 * var(--nova-browser-u));
+  padding-block-end: calc(5 * var(--nova-browser-u));
+  padding-inline: calc(7.7 * var(--nova-browser-u)) calc(8.7 * var(--nova-browser-u));
+
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: calc(12 * var(--nova-browser-u));
+  text-align: left;
+  color: var(--nova-browser-frame-text);
+
+  background: var(--nova-browser-frame-surface);
+  border-radius: calc(10 * var(--nova-browser-u)) calc(10 * var(--nova-browser-u)) 0 0;
+}
+
+.nova-browser-frame-tab::before,
+.nova-browser-frame-tab::after {
+  content: "";
+
+  position: absolute;
+  bottom: 0;
+
+  width: calc(7 * var(--nova-browser-u));
+  height: calc(7 * var(--nova-browser-u));
+}
+
+.nova-browser-frame-tab::before {
+  left: calc(-7 * var(--nova-browser-u));
+
+  background: radial-gradient(circle at 0 0, transparent calc(7 * var(--nova-browser-u)), var(--nova-browser-frame-surface) calc(7.5 * var(--nova-browser-u)));
+}
+
+.nova-browser-frame-tab::after {
+  right: calc(-7 * var(--nova-browser-u));
+
+  background: radial-gradient(circle at 100% 0, transparent calc(7 * var(--nova-browser-u)), var(--nova-browser-frame-surface) calc(7.5 * var(--nova-browser-u)));
+}
+
+.nova-browser-frame-favicon {
+  flex: none;
+  width: calc(16 * var(--nova-browser-u));
+  height: calc(16 * var(--nova-browser-u));
+}
+
+.nova-browser-frame-tab-title {
+  flex: 1;
+  min-width: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.nova-browser-frame-tab-close {
+  flex: none;
+  width: calc(14 * var(--nova-browser-u));
+  height: calc(14 * var(--nova-browser-u));
+
+  color: var(--nova-browser-frame-icon);
+}
+
+/* New tab +: 16 box, center x 378.2. */
+.nova-browser-frame-new-tab {
+  flex: none;
+  width: calc(16 * var(--nova-browser-u));
+  height: calc(16 * var(--nova-browser-u));
+  margin-block-end: calc(11.8 * var(--nova-browser-u));
+  margin-inline-start: calc(12.5 * var(--nova-browser-u));
+
+  color: var(--nova-browser-frame-icon);
+}
+
+/**
+ * ============================
+ * Browser Frame - Toolbar
+ * ============================
+ *
+ * 46 tall; 20 icon slots centered at x 23.3, 59.3 and 95.3 (arrows drawn
+ * at 18, reload at 15); the 34-tall address bar starts at x 121.3 and its
+ * URL lines up under the tab title at 158.7.
+ */
+
+.nova-browser-frame-toolbar {
+  display: flex;
+  align-items: center;
+  gap: calc(16 * var(--nova-browser-u));
+  height: calc(46 * var(--nova-browser-u));
+  padding-inline: calc(13.3 * var(--nova-browser-u));
+
+  background: var(--nova-browser-frame-surface);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .nova-browser-frame-toolbar {
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+.nova-browser-frame-icon {
+  flex: none;
+  box-sizing: border-box;
+  width: calc(20 * var(--nova-browser-u));
+  height: calc(20 * var(--nova-browser-u));
+  padding: calc(1 * var(--nova-browser-u));
+
+  color: var(--nova-browser-frame-icon);
+}
+
+.nova-browser-frame-icon-dim {
+  opacity: 0.4;
+}
+
+.nova-browser-frame-icon-reload {
+  padding: calc(2.5 * var(--nova-browser-u));
+}
+
+.nova-browser-frame-omnibox {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: calc(12.2 * var(--nova-browser-u));
+  min-width: 0;
+  height: calc(34 * var(--nova-browser-u));
+  padding-inline: calc(9.2 * var(--nova-browser-u)) calc(12 * var(--nova-browser-u));
+
+  background: var(--nova-browser-frame-omnibox);
+  border-radius: calc(17 * var(--nova-browser-u));
+}
+
+.nova-browser-frame-omnibox-icon {
+  flex: none;
+  width: calc(16 * var(--nova-browser-u));
+  height: calc(16 * var(--nova-browser-u));
+
+  color: var(--nova-browser-frame-icon);
+}
+
+.nova-browser-frame-url {
+  min-width: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: calc(14 * var(--nova-browser-u));
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--nova-browser-frame-text);
+
+  overflow: hidden;
+}
+
+/**
+ * ============================
+ * Browser Frame - Media
+ * ============================
+ */
+
+.nova-browser-frame-media > img,
+.nova-browser-frame-media > picture > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}

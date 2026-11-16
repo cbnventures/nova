@@ -21,8 +21,6 @@ export type Pages_Index_Home_SiteConfig = PagesSiteConfig;
 
 export type Pages_Index_Home_FeatureItems = PagesFeatureItems;
 
-export type Pages_Index_Home_IncludedItems = PagesIncludedItems;
-
 /**
  * Pages - Home - Config Snippets.
  *
@@ -91,20 +89,58 @@ export type PagesFeatureItem = {
 export type PagesFeatureItems = PagesFeatureItem[];
 
 /**
- * Pages - Home - Included Items.
+ * Pages - Home - Shots.
  *
- * @since 0.15.0
+ * @since 0.11.0
  */
-export type PagesIncludedItemIcon = string;
+export type PagesShotKey = string;
 
-export type PagesIncludedItemTitle = string;
+export type PagesShotLabel = string;
 
-export type PagesIncludedItemDescription = string | ReactNode;
+export type PagesShotHeading = string;
 
-export type PagesIncludedItem = {
-  icon: PagesIncludedItemIcon;
-  title: PagesIncludedItemTitle;
-  description: PagesIncludedItemDescription;
+export type PagesShotDescription = ReactNode;
+
+export type PagesShotLinkTo = string;
+
+export type PagesShotLinkLabel = string;
+
+export type PagesShotAlt = string;
+
+export type PagesShotTerminalTitle = string;
+
+export type PagesShotOutput = string;
+
+export type PagesShot = {
+  key: PagesShotKey;
+  label: PagesShotLabel;
+  heading: PagesShotHeading;
+  description: PagesShotDescription;
+  linkTo: PagesShotLinkTo;
+  linkLabel: PagesShotLinkLabel;
+  alt: PagesShotAlt;
+  terminalTitle: PagesShotTerminalTitle;
+  output: PagesShotOutput;
 };
 
-export type PagesIncludedItems = PagesIncludedItem[];
+export type PagesShots = PagesShot[];
+
+/**
+ * Pages - Terminal Line Tone.
+ *
+ * @since 0.11.0
+ */
+export type Pages_Index_TerminalLineTone_Line = string;
+
+export type Pages_Index_TerminalLineTone_Returns = string;
+
+export type Pages_Index_TerminalLineTone_FirstCharacter = string;
+
+/**
+ * Pages - Markers.
+ *
+ * @since 0.11.0
+ */
+export type Pages_Index_PromptMarkers = string[];
+
+export type Pages_Index_FrameMarkers = string[];

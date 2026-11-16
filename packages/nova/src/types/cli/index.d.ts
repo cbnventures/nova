@@ -39,6 +39,16 @@ export type Cli_Index_CLI_ExecuteCommand_Target<Options> = (options: Cli_Index_C
 
 export type Cli_Index_CLI_ExecuteCommand_Returns = Promise<void>;
 
+export type Cli_Index_CLI_ExecuteCommand_CommandArguments = string[];
+
+export type Cli_Index_CLI_ExecuteCommand_RedactNextArgument = boolean;
+
+export type Cli_Index_CLI_ExecuteCommand_RedactedCommandArguments = string[];
+
+export type Cli_Index_CLI_ExecuteCommand_MatchedSecretOptionFlag = string | undefined;
+
+export type Cli_Index_CLI_ExecuteCommand_MatchedInlineSecretOptionFlag = string | undefined;
+
 export type Cli_Index_CLI_ExecuteCommand_Command = RegExpMatchArray | null;
 
 export type Cli_Index_CLI_ExecuteCommand_CommandLabel = string;

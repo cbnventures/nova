@@ -1,0 +1,117 @@
+---
+id: "workflow-run-frame"
+title: "Workflow Run Frame"
+description: "Show a GitHub Actions run the way its job page looks, with the steps and an open step's log as text."
+sidebar_position: 16
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "workflow run frame block"
+  - "github actions"
+  - "workflow run"
+  - "ci logs"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "workflow-run-frame"
+  - "github-actions"
+---
+
+Show a GitHub Actions run the way its job page looks, with the steps and an open step's log as text.
+
+## Summary
+
+The Workflow Run Frame block renders a `<figure class="nova-workflow-run-frame">` laid out like a GitHub job page. The header links back to the workflow and shows the run's status, title, and number. The sidebar lists all jobs with the shown one marked, and the job panel shows the job's name, its summary, and each step with its duration. A step with a `log` opens to its numbered log lines, drawn as text in GitHub's colors, so it stays sharp and never goes stale the way a screenshot does.
+
+## Why Use This Block?
+
+- **Show what your action does** — readers see the exact log lines your action prints, in the place they'll see them on GitHub.
+- **Real GitHub look** — GitHub's octicons and Primer colors, in GitHub's light theme or dark theme to match the site.
+- **Readable on phones** — the sidebar hides below 640px so the steps keep the room, and long log lines wrap.
+
+## Usage
+
+```tsx title="src/pages/index.tsx"
+import { WorkflowRunFrame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+<WorkflowRunFrame
+  workflow="Lock Inactive Issues (lock-inactive)"
+  title="Locking inactive issues (lock-inactive)"
+  runNumber={42}
+  jobs={[
+    {
+      name: 'lock-inactive-issues',
+      summary: 'succeeded yesterday in 8s',
+      steps: [
+        { name: 'Set up job', duration: '1s' },
+        {
+          name: 'Lock inactive threads',
+          duration: '6s',
+          log: [
+            { title: 'Run mrjackyliang/lock-inactive-threads@v1', hiddenLines: 13 },
+            { title: 'Configuration', hiddenLines: 12 },
+            { title: 'Context', hiddenLines: 151 },
+            {
+              title: 'Running',
+              lines: [
+                'Found 1 inactive issue(s) and 0 inactive pull request(s)',
+                'Locking issue #118: Export drops the last row',
+                'Locked 1 of 1 thread(s)',
+              ],
+            },
+          ],
+        },
+        { name: 'Complete job', duration: '0s' },
+      ],
+    },
+  ]}
+/>
+```
+
+## Options
+
+| Prop        | Type                                  | Default     | Description                                                                     |
+|-------------|---------------------------------------|-------------|---------------------------------------------------------------------------------|
+| `title`     | `string`                              | —           | The run title, as GitHub shows it at the top of the run. Required.              |
+| `jobs`      | `Job[]`                               | —           | The jobs in the sidebar. The first job with `steps` is the one shown. Required. |
+| `workflow`  | `string \| undefined`                 | `undefined` | The workflow's name, shown in the link back to the workflow above the title.    |
+| `runNumber` | `number \| undefined`                 | `undefined` | The run number, shown after the title as `#42`.                                 |
+| `status`    | `'success' \| 'failure' \| 'skipped'` | `'success'` | The run's status icon in front of the title.                                    |
+| `label`     | `string \| undefined`                 | `undefined` | Accessible label for the frame, read by screen readers.                         |
+| `className` | `string \| undefined`                 | `undefined` | Additional class names merged with the base `nova-workflow-run-frame` class.    |
+| `style`     | `CSSProperties \| undefined`          | `undefined` | Inline style overrides applied to the outer `<figure>` element.                 |
+
+### Job
+
+| Field     | Type                                  | Default     | Description                                                       |
+|-----------|---------------------------------------|-------------|-------------------------------------------------------------------|
+| `name`    | `string`                              | —           | The job's name, as in the workflow file. Required.                |
+| `status`  | `'success' \| 'failure' \| 'skipped'` | `'success'` | The job's status icon in the sidebar.                             |
+| `summary` | `string \| undefined`                 | `undefined` | The line under the job name, such as `succeeded yesterday in 8s`. |
+| `steps`   | `Step[] \| undefined`                 | `undefined` | The job's steps. Give them to the job you want to show.           |
+
+### Step
+
+| Field      | Type                                  | Default     | Description                                       |
+|------------|---------------------------------------|-------------|---------------------------------------------------|
+| `name`     | `string`                              | —           | The step's name, as GitHub shows it. Required.    |
+| `status`   | `'success' \| 'failure' \| 'skipped'` | `'success'` | The step's status icon.                           |
+| `duration` | `string \| undefined`                 | `undefined` | How long the step took, such as `6s`.             |
+| `log`      | `(string \| Group)[] \| undefined`    | `undefined` | The step's log. When set, the step is shown open. |
+
+### Group
+
+| Field         | Type                    | Default     | Description                                                                    |
+|---------------|-------------------------|-------------|--------------------------------------------------------------------------------|
+| `title`       | `string`                | —           | The group's title, as `core.startGroup()` names it. Required.                  |
+| `lines`       | `string[] \| undefined` | `undefined` | The lines inside the group. When set, the group is shown open.                 |
+| `hiddenLines` | `number \| undefined`   | `0`         | How many lines a closed group holds. The line numbers after it skip past them. |
+
+## Log Lines
+
+The log is a list of plain lines and groups, numbered the way GitHub numbers them:
+
+- **Lines** — each string is one numbered line. Lines starting with `##[warning]` or `##[error]` become GitHub's yellow and red annotations.
+- **Open groups** — a group with `lines` shows a down triangle, and its lines follow with their own numbers.
+- **Closed groups** — a group without `lines` shows a right triangle. Set `hiddenLines` to how many lines it holds, so the next number jumps past them like on GitHub, such as `1`, `15`, `28`, then `180`.

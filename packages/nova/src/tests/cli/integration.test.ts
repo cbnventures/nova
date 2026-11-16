@@ -13,8 +13,17 @@ import type {
   Tests_Cli_Integration_CliIntegrationGooglePlayConsoleJs_MockedRunner,
   Tests_Cli_Integration_IntegrationOptions_OriginalArgv,
   Tests_Cli_Integration_IntegrationOptions_PassesAppStoreConnectOptionsThroughAliases_ExpectedOptions,
+  Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_CapturedOutput,
   Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_ExpectedOptions,
+  Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Output,
+  Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_StdoutSpy,
+  Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Token,
   Tests_Cli_Integration_IntegrationOptions_PassesGooglePlayConsoleOptionsThroughAliases_ExpectedOptions,
+  Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_CapturedOutput,
+  Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_ExpectedOptions,
+  Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Output,
+  Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_StdoutSpy,
+  Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Token,
   Tests_Cli_Integration_RunnerMocks,
 } from '../../types/tests/cli/integration.test.d.ts';
 
@@ -136,30 +145,94 @@ describe('integration options', () => {
   });
 
   it('passes Discord Developer Portal options', async () => {
+    const token: Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Token = 'discord-token';
     const expectedOptions: Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_ExpectedOptions = {
-      token: 'discord-token',
+      token,
       workspace: 'bot',
     };
+    const capturedOutput: Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_CapturedOutput = [];
+    const stdoutSpy: Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_StdoutSpy = vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      capturedOutput.push(String(chunk));
 
-    process.argv = [
-      'node',
-      'nova',
-      'integration',
-      'discord-developer-portal',
-      'validate-token',
-      '--token',
-      'discord-token',
-      '--workspace',
-      'bot',
-    ];
-
-    await import('../../cli/index.js');
-
-    await vi.waitFor(() => {
-      expect(runnerMocks['discordDeveloperPortalValidateToken']).toHaveBeenCalledWith(expectedOptions);
-
-      return;
+      return true;
     });
+
+    try {
+      process.argv = [
+        'node',
+        'nova',
+        'integration',
+        'discord-developer-portal',
+        'validate-token',
+        '--token',
+        token,
+        '--workspace',
+        'bot',
+      ];
+
+      await import('../../cli/index.js');
+
+      await vi.waitFor(() => {
+        expect(runnerMocks['discordDeveloperPortalValidateToken']).toHaveBeenCalledWith(expectedOptions);
+
+        return;
+      });
+    } finally {
+      stdoutSpy.mockRestore();
+    }
+
+    const output: Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Output = capturedOutput.join('');
+
+    expect(output).not.toContain(token);
+
+    expect(output).toContain('--token [REDACTED]');
+
+    expect(output).toContain('--workspace bot');
+
+    return;
+  });
+
+  it('redacts inline Discord Developer Portal token', async () => {
+    const token: Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Token = 'discord-inline-token';
+    const expectedOptions: Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_ExpectedOptions = {
+      token,
+      workspace: 'bot',
+    };
+    const capturedOutput: Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_CapturedOutput = [];
+    const stdoutSpy: Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_StdoutSpy = vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      capturedOutput.push(String(chunk));
+
+      return true;
+    });
+
+    try {
+      process.argv = [
+        'node',
+        'nova',
+        'integration',
+        'discord-developer-portal',
+        'validate-token',
+        `--token=${token}`,
+        '--workspace',
+        'bot',
+      ];
+
+      await import('../../cli/index.js');
+
+      await vi.waitFor(() => {
+        expect(runnerMocks['discordDeveloperPortalValidateToken']).toHaveBeenCalledWith(expectedOptions);
+
+        return;
+      });
+    } finally {
+      stdoutSpy.mockRestore();
+    }
+
+    const output: Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Output = capturedOutput.join('');
+
+    expect(output).not.toContain(token);
+
+    expect(output).toContain('--token=[REDACTED]');
 
     return;
   });

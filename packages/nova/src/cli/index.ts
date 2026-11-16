@@ -3,7 +3,10 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import packageJson from '../../package.json' with { type: 'json' };
-import { LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY } from '../lib/constants.js';
+import {
+  LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY,
+  libConstantsSecretOptionFlags,
+} from '../lib/constants.js';
 import {
   LIB_REGEX_PATTERN_ANSI,
   LIB_REGEX_PATTERN_ERROR_PREFIX,
@@ -76,8 +79,13 @@ import { Runner as CliUtilityVersion } from './utility/version.js';
 import type {
   Cli_Index_CLI_Constructor_HeaderText,
   Cli_Index_CLI_ExecuteCommand_Command,
+  Cli_Index_CLI_ExecuteCommand_CommandArguments,
   Cli_Index_CLI_ExecuteCommand_CommandLabel,
+  Cli_Index_CLI_ExecuteCommand_MatchedInlineSecretOptionFlag,
+  Cli_Index_CLI_ExecuteCommand_MatchedSecretOptionFlag,
   Cli_Index_CLI_ExecuteCommand_Options,
+  Cli_Index_CLI_ExecuteCommand_RedactedCommandArguments,
+  Cli_Index_CLI_ExecuteCommand_RedactNextArgument,
   Cli_Index_CLI_ExecuteCommand_Returns,
   Cli_Index_CLI_ExecuteCommand_Target,
   Cli_Index_CLI_GetCommandUsage_AliasCommand,
@@ -1469,8 +1477,8 @@ class CLI {
   /**
    * CLI - Execute Command.
    *
-   * Prints the CLI header and the currently running command label, then delegates to the
-   * target handler. Every leaf command in registerCommands calls this.
+   * Prints the CLI header and a command label with sensitive values redacted.
+   * Every leaf command delegates through this boundary before its target runs.
    *
    * @param {Cli_Index_CLI_ExecuteCommand_Options<Options>} options - Options.
    * @param {Cli_Index_CLI_ExecuteCommand_Target<Options>}  target  - Target.
@@ -1482,7 +1490,43 @@ class CLI {
    * @since 0.11.0
    */
   private async executeCommand<Options>(options: Cli_Index_CLI_ExecuteCommand_Options<Options>, target: Cli_Index_CLI_ExecuteCommand_Target<Options>): Cli_Index_CLI_ExecuteCommand_Returns {
-    const command: Cli_Index_CLI_ExecuteCommand_Command = process.argv.join(' ').match(LIB_REGEX_PATTERN_NOVA_PREFIX);
+    const commandArguments: Cli_Index_CLI_ExecuteCommand_CommandArguments = process.argv;
+    let redactNextArgument: Cli_Index_CLI_ExecuteCommand_RedactNextArgument = false;
+    const redactedCommandArguments: Cli_Index_CLI_ExecuteCommand_RedactedCommandArguments = [];
+
+    for (const commandArgument of commandArguments) {
+      if (redactNextArgument === true) {
+        redactedCommandArguments.push('[REDACTED]');
+        redactNextArgument = false;
+
+        continue;
+      }
+
+      const matchedSecretOptionFlag: Cli_Index_CLI_ExecuteCommand_MatchedSecretOptionFlag = libConstantsSecretOptionFlags.find(
+        (secretOptionFlag) => secretOptionFlag === commandArgument,
+      );
+
+      if (matchedSecretOptionFlag !== undefined) {
+        redactedCommandArguments.push(matchedSecretOptionFlag);
+        redactNextArgument = true;
+
+        continue;
+      }
+
+      const matchedInlineSecretOptionFlag: Cli_Index_CLI_ExecuteCommand_MatchedInlineSecretOptionFlag = libConstantsSecretOptionFlags.find(
+        (secretOptionFlag) => commandArgument.startsWith(`${secretOptionFlag}=`) === true,
+      );
+
+      if (matchedInlineSecretOptionFlag !== undefined) {
+        redactedCommandArguments.push(`${matchedInlineSecretOptionFlag}=[REDACTED]`);
+
+        continue;
+      }
+
+      redactedCommandArguments.push(commandArgument);
+    }
+
+    const command: Cli_Index_CLI_ExecuteCommand_Command = redactedCommandArguments.join(' ').match(LIB_REGEX_PATTERN_NOVA_PREFIX);
 
     // Write the header.
     process.stdout.write(`${this.getHeader()}\n`);

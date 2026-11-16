@@ -94,7 +94,7 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 
 When `--docker-image` is enabled, Nova writes `.dockerignore`, `Dockerfile`, and `compose.yml` at the project root and keeps private assembly files under `packages/docker`. Static output becomes a supervised static service, while Node.js server rendering contributes Astro's standalone server to the same repository image.
 
-Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime. See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared s6 contract.
+Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime. See [Docker Images](/docs/cli/scaffolding/concepts/docker-images) for the shared s6 contract.
 
 A server-rendered Cloudflare workspace also receives `public/.assetsignore`, which keeps `_worker.js` and `_routes.json` out of the copied public asset set. Nova registers that exact path in `ignoreFiles` with the `cloudflare-astro` bundle so the generic ignore-files generator can reproduce it later.
 

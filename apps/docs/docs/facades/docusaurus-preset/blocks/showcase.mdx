@@ -1,0 +1,91 @@
+---
+id: "showcase"
+title: "Showcase"
+description: "Show several product views in one section, one at a time, with a tab pill to switch between them instead of one stacked section per screenshot."
+sidebar_position: 14
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "showcase block"
+  - "screenshot tabs"
+  - "product tour"
+  - "tabbed section"
+  - "homepage screenshots"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "showcase"
+  - "tabs"
+---
+
+One section that shows several product views, one at a time. Each view has its own heading, description, link, and content, usually a Browser Frame or Terminal Frame. A tab pill switches between them.
+
+## Summary
+
+The Showcase block renders a `<div class="nova-showcase">` with a tab pill (`role="tablist"`) and one panel. Only the selected view's heading, description, link, and content are shown, so three screenshots take the space of one. With a single item, the tab pill is left out.
+
+## Why Use This Block?
+
+- **One section, several screenshots** — instead of a stacked section for every screenshot.
+- **Works with the frames** — put a Browser Frame or Terminal Frame in each item's `content`.
+- **Accessible tabs** — buttons carry `role="tab"`, `aria-selected`, and `aria-controls`, and the panel is labelled by the selected tab.
+- **Fits narrow screens** — the tab pill stays on one line down to 320px.
+
+## Usage
+
+```tsx title="src/pages/index.tsx"
+import {
+  BrowserFrame,
+  Showcase,
+  Spotlight,
+} from '@cbnventures/docusaurus-preset-nova/blocks';
+import ThemedImage from '@theme/ThemedImage';
+
+<Spotlight heading="Inside the dashboard">
+  <Showcase
+    tabsLabel="Dashboard pages"
+    items={[
+      {
+        label: 'Overview',
+        heading: 'Every container on one page',
+        description: 'The Overview shows the next scheduled update and every result from the last run.',
+        link: { label: 'Tour the Dashboard', to: '/docs/features/dashboard/' },
+        content: (
+          <BrowserFrame title="Outpost" url="localhost:22601" favicon="/favicon.svg">
+            <ThemedImage sources={{ light: overviewLight, dark: overviewDark }} alt="Overview page" width={1280} height={1210} />
+          </BrowserFrame>
+        ),
+      },
+      {
+        label: 'History',
+        heading: 'A record of every run',
+        content: (
+          <BrowserFrame title="Outpost" url="localhost:22601/history">
+            <ThemedImage sources={{ light: historyLight, dark: historyDark }} alt="History page" width={1280} height={998} />
+          </BrowserFrame>
+        ),
+      },
+    ]}
+  />
+</Spotlight>
+```
+
+## Options
+
+| Prop        | Type                         | Default     | Description                                                        |
+|-------------|------------------------------|-------------|--------------------------------------------------------------------|
+| `items`     | `ShowcaseItem[]`             | —           | The views, in tab order. Required.                                 |
+| `tabsLabel` | `string \| undefined`        | `undefined` | Accessible label for the tab pill, read by screen readers.         |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-showcase` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer element.               |
+
+Each item:
+
+| Field         | Type                                         | Description                                             |
+|---------------|----------------------------------------------|---------------------------------------------------------|
+| `label`       | `string`                                     | Text on the tab. Required.                              |
+| `heading`     | `string`                                     | Heading shown above the view. Required.                 |
+| `description` | `ReactNode \| undefined`                     | Paragraph under the heading.                            |
+| `link`        | `{ label: string; to: string } \| undefined` | Link under the description, such as the matching guide. |
+| `content`     | `ReactNode`                                  | The view itself, usually a framed screenshot. Required. |

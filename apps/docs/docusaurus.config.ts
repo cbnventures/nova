@@ -23,7 +23,7 @@ const config: DocusaurusNovaConfig = {
 
   // Deployment.
   url: identity['url'] ?? '',
-  baseUrl: identity['baseUrl'] ?? '',
+  baseUrl: identity['baseUrl'] ?? '/',
   organizationName: identity['organizationName'],
   projectName: identity['projectName'],
   deploymentBranch: undefined,
@@ -163,9 +163,17 @@ const config: DocusaurusNovaConfig = {
         docs: {
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
-          editUrl: undefined,
+          editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/docs/',
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'Current',
+              badge: false,
+              banner: 'none',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -185,7 +193,11 @@ const config: DocusaurusNovaConfig = {
             description: 'Release notes, tooling insights, and automation patterns for JavaScript and TypeScript monorepos.',
           },
         },
-        pages: undefined,
+        pages: {
+          editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/docs/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
+        },
         sitemap: {
           lastmod: 'date',
           changefreq: 'weekly',
@@ -393,6 +405,24 @@ const config: DocusaurusNovaConfig = {
     // Back to Top Button.
     backToTopButton: true,
 
+    // Error Pages - overrides Nova's randomized defaults with consumer copy.
+    // Any unset field falls through to the Nova-flavored randomized pool.
+    errorPages: {
+      notFound: {
+        title: 'This page is not in the workspace.',
+        description: 'The link may be out of date, or the page may have moved. Head back to the docs.',
+        backHomeLabel: 'Back to the docs',
+        backHomeHref: '/docs/quickstart/',
+      },
+      errorPageContent: {
+        title: 'This page could not be loaded.',
+        retryLabel: 'Reload the page',
+      },
+      error: {
+        retryLabel: 'Try again',
+      },
+    },
+
     // Footer.
     footer: {
       sections: {
@@ -531,7 +561,7 @@ const config: DocusaurusNovaConfig = {
       copyright: identity['copyright'],
       credit: true,
       cta: {
-        label: 'Ready to set up your next project? Quick Start',
+        label: 'Ready to set up a project?',
         href: '/docs/quickstart/setup/',
       },
     },

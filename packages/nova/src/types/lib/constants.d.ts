@@ -18,3 +18,10 @@ export type Lib_Constants_GhMinVersion = string;
  * @since 0.33.0
  */
 export type Lib_Constants_RunWorkspacesDefaultConcurrency = number;
+
+/**
+ * Lib - Constants - Secret Option Flags.
+ *
+ * @since 0.43.0
+ */
+export type Lib_Constants_SecretOptionFlags = readonly string[];

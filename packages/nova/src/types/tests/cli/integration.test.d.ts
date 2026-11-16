@@ -87,7 +87,15 @@ export type Tests_Cli_Integration_IntegrationOptions_PassesAppStoreConnectOption
  *
  * @since 0.34.0
  */
+export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Token = string;
+
 export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_ExpectedOptions = Shared_DiscordDeveloperPortalOptions;
+
+export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_CapturedOutput = string[];
+
+export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_StdoutSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPortalOptions_Output = string;
 
 /**
  * Tests - CLI - Integration - Integration Options - Passes Google Play Console Options Through Aliases.
@@ -95,3 +103,18 @@ export type Tests_Cli_Integration_IntegrationOptions_PassesDiscordDeveloperPorta
  * @since 0.34.0
  */
 export type Tests_Cli_Integration_IntegrationOptions_PassesGooglePlayConsoleOptionsThroughAliases_ExpectedOptions = Shared_GooglePlayConsoleIntegrationOptions;
+
+/**
+ * Tests - CLI - Integration - Integration Options - Redacts Inline Discord Developer Portal Token.
+ *
+ * @since 0.43.0
+ */
+export type Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Token = string;
+
+export type Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_ExpectedOptions = Shared_DiscordDeveloperPortalOptions;
+
+export type Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_CapturedOutput = string[];
+
+export type Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_StdoutSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Integration_IntegrationOptions_RedactsInlineDiscordDeveloperPortalToken_Output = string;

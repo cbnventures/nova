@@ -1,0 +1,73 @@
+---
+id: "terminal-frame"
+title: "Terminal Frame"
+description: "Show command-line output as sharp text inside a macOS Terminal window that keeps a real 80-column window's proportions."
+sidebar_position: 13
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "terminal frame block"
+  - "terminal mockup"
+  - "cli output"
+  - "macos terminal"
+  - "command line"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "terminal-frame"
+  - "cli"
+---
+
+Terminal window around command-line output. The window looks like macOS Terminal: a white title bar with traffic lights, the folder icon, and a left-aligned title, then a black body in SF Mono.
+
+## Summary
+
+The Terminal Frame block renders a `<figure class="nova-terminal-frame">` with the title bar and a `<pre>` body that holds your output as text. Text stays sharp at any zoom and needs no screenshot files. Every size was measured from a real 80-column Terminal window and scales with the frame's width, so the window keeps its proportions on any screen.
+
+## Why Use This Block?
+
+- **Real output, no images** — paste the actual text your CLI prints; nothing goes stale the way a screenshot does.
+- **Real proportions** — the title bar, lights, and font size match an 80x24 Terminal window.
+- **Your own colors** — pass one element per line and give each line its own class to color it the way your CLI does.
+
+## Usage
+
+Children can be plain text with newlines:
+
+```tsx title="src/pages/index.tsx"
+import { TerminalFrame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+<TerminalFrame title="project — mytool — 80×24" label="mytool's main menu">
+  {[
+    '? What would you like to do? › - Use arrow-keys. Return to submit.',
+    '❯   Add',
+    '    Edit',
+    '    Exit',
+  ].join('\n')}
+</TerminalFrame>
+```
+
+Or one element per line, each with its own class:
+
+```tsx title="src/pages/index.tsx"
+<TerminalFrame title="project — mytool deploy — 80×24">
+  {lines.map((line) => (
+    <span key={line} className={toneFor(line)}>{line}</span>
+  ))}
+</TerminalFrame>
+```
+
+## Options
+
+| Prop        | Type                         | Default     | Description                                                              |
+|-------------|------------------------------|-------------|--------------------------------------------------------------------------|
+| `children`  | `ReactNode`                  | —           | The output: text with newlines, or one element per line. Required.       |
+| `title`     | `string`                     | —           | Window title, Terminal style (`folder — command — 80×24`). Required.     |
+| `label`     | `string \| undefined`        | `undefined` | Accessible label for the output, read by screen readers.                 |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-terminal-frame` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer `<figure>` element.          |
+
+## Width
+
+The window is drawn as an 80-column Terminal 890pt wide. To match a window of another width, set `--nova-terminal-frame-width` (in points) through `style`.

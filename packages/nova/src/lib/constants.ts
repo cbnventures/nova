@@ -2,6 +2,7 @@ import type {
   Lib_Constants_DocsBaseUrl,
   Lib_Constants_GhMinVersion,
   Lib_Constants_RunWorkspacesDefaultConcurrency,
+  Lib_Constants_SecretOptionFlags,
 } from '../types/lib/constants.d.ts';
 
 /**
@@ -34,3 +35,13 @@ export const LIB_GH_MIN_VERSION: Lib_Constants_GhMinVersion = '2.40.0';
  * @since 0.33.0
  */
 export const LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY: Lib_Constants_RunWorkspacesDefaultConcurrency = 10;
+
+/**
+ * Lib - Constants - Secret Option Flags.
+ *
+ * Lists CLI option names whose values must be hidden from command banners.
+ * The CLI entry point uses this list for separate and inline option values.
+ *
+ * @since 0.43.0
+ */
+export const libConstantsSecretOptionFlags: Lib_Constants_SecretOptionFlags = ['--token'];

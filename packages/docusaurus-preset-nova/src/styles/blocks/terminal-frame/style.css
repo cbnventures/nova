@@ -1,0 +1,151 @@
+/**
+ * ============================
+ * Terminal Frame - Container
+ * ============================
+ *
+ * A macOS 26 Terminal window, measured from a real 80x24 window that is
+ * 890pt wide. Every size is in --nova-terminal-u, one point of that window,
+ * so the window keeps its proportions at any width. Set
+ * --nova-terminal-frame-width on the block to use another reference width.
+ */
+
+.nova-terminal-frame {
+  --nova-terminal-u: calc(100cqw / var(--nova-terminal-frame-width, 890));
+  --nova-terminal-frame-bar: #ffffff;
+  --nova-terminal-frame-title: #585858;
+
+  display: block;
+  container-type: inline-size;
+  margin-block: 2rem 0;
+  margin-inline: 0;
+}
+
+[data-theme="dark"] .nova-terminal-frame {
+  --nova-terminal-frame-bar: #323232;
+  --nova-terminal-frame-title: #d0d0d0;
+}
+
+/* 18 corners, pure black body. */
+.nova-terminal-frame-window {
+  overflow: hidden;
+
+  background: #000000;
+  border-radius: calc(18 * var(--nova-terminal-u));
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.25),
+    0 22px 70px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nova-terminal-frame-window {
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    0 22px 70px 4px rgba(0, 0, 0, 0.6);
+}
+
+/**
+ * ============================
+ * Terminal Frame - Title Bar
+ * ============================
+ *
+ * 32 tall, no divider. Lights 14, 9 in and 9 apart; folder icon at x 82;
+ * title left-aligned at x 101 in 13pt semibold.
+ */
+
+.nova-terminal-frame-bar {
+  display: flex;
+  align-items: center;
+  height: calc(32 * var(--nova-terminal-u));
+  padding-inline: calc(9 * var(--nova-terminal-u));
+
+  background: var(--nova-terminal-frame-bar);
+}
+
+.nova-terminal-frame-lights {
+  display: flex;
+  flex: none;
+  gap: calc(9 * var(--nova-terminal-u));
+  margin-inline-end: calc(12 * var(--nova-terminal-u));
+}
+
+.nova-terminal-frame-lights > span {
+  width: calc(14 * var(--nova-terminal-u));
+  height: calc(14 * var(--nova-terminal-u));
+
+  border-radius: 50%;
+}
+
+.nova-terminal-frame-lights > span:nth-child(1) {
+  background: #ff5f57;
+  box-shadow: inset 0 0 0 0.5px #e0443e;
+}
+
+.nova-terminal-frame-lights > span:nth-child(2) {
+  background: #febc2e;
+  box-shadow: inset 0 0 0 0.5px #dea123;
+}
+
+.nova-terminal-frame-lights > span:nth-child(3) {
+  background: #28c840;
+  box-shadow: inset 0 0 0 0.5px #1aab29;
+}
+
+/* The folder proxy icon, filled in Finder blue (14.5x12 drawn). */
+.nova-terminal-frame-folder {
+  flex: none;
+  width: calc(16.5 * var(--nova-terminal-u));
+  height: calc(16.5 * var(--nova-terminal-u));
+  margin-inline-end: calc(3.5 * var(--nova-terminal-u));
+
+  color: #4ba3f2;
+}
+
+.nova-terminal-frame-folder path {
+  fill: currentColor;
+}
+
+.nova-terminal-frame-title {
+  min-width: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-size: calc(13 * var(--nova-terminal-u));
+  font-weight: 600;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--nova-terminal-frame-title);
+
+  overflow: hidden;
+}
+
+/**
+ * ============================
+ * Terminal Frame - Body
+ * ============================
+ *
+ * First line 9 below the bar, text 12 in, 18pt SF Mono on a 23pt line.
+ * A flex column so each child element is its own line.
+ */
+
+.nova-terminal-frame-body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: calc(6 * var(--nova-terminal-u)) calc(12 * var(--nova-terminal-u)) calc(14 * var(--nova-terminal-u));
+
+  font-family: "SF Mono", ui-monospace, Menlo, Monaco, var(--nova-font-code), monospace;
+  font-size: calc(18 * var(--nova-terminal-u));
+  line-height: calc(23 * var(--nova-terminal-u));
+  text-align: left;
+  white-space: pre;
+  color: #ffffff;
+
+  overflow-x: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.nova-terminal-frame-body > * {
+  min-height: calc(23 * var(--nova-terminal-u));
+}

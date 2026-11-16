@@ -1,0 +1,516 @@
+/**
+ * ============================
+ * Workflow Run Frame - Container
+ * ============================
+ *
+ * A GitHub Actions job page in GitHub's own Primer colors. The whole page,
+ * job panel and log included, follows the site's light or dark theme the way
+ * GitHub's light and dark themes do.
+ */
+
+.nova-workflow-run-frame {
+  --nova-workflow-run-canvas: #ffffff;
+  --nova-workflow-run-inset: #f6f8fa;
+  --nova-workflow-run-border: #d1d9e0;
+  --nova-workflow-run-border-muted: rgba(209, 217, 224, 0.7);
+  --nova-workflow-run-fg: #1f2328;
+  --nova-workflow-run-fg-muted: #59636e;
+  --nova-workflow-run-accent: #0969da;
+  --nova-workflow-run-accent-emphasis: #0969da;
+  --nova-workflow-run-selected: rgba(129, 139, 152, 0.15);
+  --nova-workflow-run-step-open: #e6eaef;
+  --nova-workflow-run-success: #1a7f37;
+  --nova-workflow-run-failure: #d1242f;
+  --nova-workflow-run-attention: #9a6700;
+  --nova-workflow-run-attention-muted: #fff8c5;
+  --nova-workflow-run-danger-muted: #ffebe9;
+
+  display: block;
+  container-type: inline-size;
+  margin-block: 2rem 0;
+  margin-inline: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: start;
+}
+
+[data-theme="dark"] .nova-workflow-run-frame {
+  --nova-workflow-run-canvas: #0d1117;
+  --nova-workflow-run-inset: #010409;
+  --nova-workflow-run-border: #3d444d;
+  --nova-workflow-run-border-muted: rgba(61, 68, 77, 0.7);
+  --nova-workflow-run-fg: #f0f6fc;
+  --nova-workflow-run-fg-muted: #9198a1;
+  --nova-workflow-run-accent: #4493f8;
+  --nova-workflow-run-accent-emphasis: #1f6feb;
+  --nova-workflow-run-selected: rgba(101, 108, 118, 0.2);
+  --nova-workflow-run-step-open: #2a313c;
+  --nova-workflow-run-success: #3fb950;
+  --nova-workflow-run-failure: #f85149;
+  --nova-workflow-run-attention: #d29922;
+  --nova-workflow-run-attention-muted: rgba(187, 128, 9, 0.15);
+  --nova-workflow-run-danger-muted: rgba(248, 81, 73, 0.1);
+}
+
+.nova-workflow-run-frame-window {
+  padding: 1rem;
+
+  overflow: hidden;
+
+  color: var(--nova-workflow-run-fg);
+
+  background: var(--nova-workflow-run-canvas);
+  border: 1px solid var(--nova-workflow-run-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+}
+
+@container (min-width: 640px) {
+  .nova-workflow-run-frame-window {
+    padding: 1.5rem;
+  }
+}
+
+/**
+ * ============================
+ * Workflow Run Frame - Header
+ * ============================
+ *
+ * The link back to the workflow, then the run's status icon, title, and run
+ * number, left-aligned the way GitHub heads a run page.
+ */
+
+.nova-workflow-run-frame-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding-block-end: 1rem;
+}
+
+.nova-workflow-run-frame-workflow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+  max-width: 100%;
+
+  overflow: hidden;
+
+  font-size: 14px;
+  color: var(--nova-workflow-run-fg-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nova-workflow-run-frame-workflow svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.nova-workflow-run-frame-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.nova-workflow-run-frame-title-status {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-block-start: 4px;
+}
+
+.nova-workflow-run-frame-number {
+  font-weight: 400;
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-status-success {
+  color: var(--nova-workflow-run-success);
+}
+
+.nova-workflow-run-frame-status-failure {
+  color: var(--nova-workflow-run-failure);
+}
+
+.nova-workflow-run-frame-status-skipped {
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+/**
+ * ============================
+ * Workflow Run Frame - Sidebar
+ * ============================
+ *
+ * Summary, all jobs with the shown job marked by a blue bar, and run details.
+ * Hidden when the frame is narrower than 640px so the steps keep the room.
+ */
+
+.nova-workflow-run-frame-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+@container (min-width: 640px) {
+  .nova-workflow-run-frame-body {
+    grid-template-columns: 12rem minmax(0, 1fr);
+  }
+}
+
+@container (min-width: 960px) {
+  .nova-workflow-run-frame-body {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+}
+
+.nova-workflow-run-frame-sidebar {
+  display: none;
+}
+
+@container (min-width: 640px) {
+  .nova-workflow-run-frame-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+}
+
+.nova-workflow-run-frame-sidebar-heading {
+  padding: 0.5rem 0.5rem 0.25rem;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-sidebar-divider {
+  height: 1px;
+  margin-block: 0.5rem;
+
+  background: var(--nova-workflow-run-border-muted);
+}
+
+.nova-workflow-run-frame-sidebar-item {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 6px 8px;
+
+  font-size: 14px;
+  line-height: 20px;
+
+  border-radius: 6px;
+}
+
+.nova-workflow-run-frame-sidebar-item svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-sidebar-item .nova-workflow-run-frame-status-success {
+  color: var(--nova-workflow-run-success);
+}
+
+.nova-workflow-run-frame-sidebar-item .nova-workflow-run-frame-status-failure {
+  color: var(--nova-workflow-run-failure);
+}
+
+.nova-workflow-run-frame-sidebar-label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nova-workflow-run-frame-sidebar-item-active {
+  font-weight: 600;
+
+  background: var(--nova-workflow-run-selected);
+}
+
+.nova-workflow-run-frame-sidebar-item-active::after {
+  position: absolute;
+  inset-block-start: calc(50% - 12px);
+  inset-inline-start: -8px;
+
+  width: 4px;
+  height: 24px;
+
+  content: "";
+
+  background: var(--nova-workflow-run-accent-emphasis);
+  border-radius: 6px;
+}
+
+/**
+ * ============================
+ * Workflow Run Frame - Job
+ * ============================
+ *
+ * The job panel: the job name as a blue heading with its summary, the logs
+ * toolbar, and one row per step. An open step shows its numbered log.
+ */
+
+.nova-workflow-run-frame-job {
+  container-type: inline-size;
+  min-width: 0;
+  padding-block-end: 1rem;
+
+  background: var(--nova-workflow-run-inset);
+  border: 1px solid var(--nova-workflow-run-border-muted);
+  border-radius: 6px;
+}
+
+.nova-workflow-run-frame-job-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  margin-block-end: 0.5rem;
+
+  border-block-end: 1px solid var(--nova-workflow-run-border-muted);
+}
+
+@container (min-width: 480px) {
+  .nova-workflow-run-frame-job-header {
+    padding-inline-start: 1.5rem;
+  }
+}
+
+.nova-workflow-run-frame-job-heading {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nova-workflow-run-frame-job-name {
+  overflow: hidden;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--nova-workflow-run-accent);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nova-workflow-run-frame-job-summary {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-job-tools {
+  display: none;
+}
+
+@container (min-width: 560px) {
+  .nova-workflow-run-frame-job-tools {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+.nova-workflow-run-frame-job-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 13rem;
+  height: 28px;
+  padding-inline: 0.5rem;
+
+  font-size: 12px;
+  color: var(--nova-workflow-run-fg-muted);
+
+  background: var(--nova-workflow-run-canvas);
+  border: 1px solid var(--nova-workflow-run-border);
+  border-radius: 6px;
+}
+
+.nova-workflow-run-frame-job-search svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.nova-workflow-run-frame-job-tool {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-steps {
+  margin: 0;
+  padding: 0 0.25rem 0 0.5rem;
+
+  list-style: none;
+}
+
+.nova-workflow-run-frame-step-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 36px;
+  padding: 8px;
+  margin-block-end: 4px;
+  margin-inline-start: 8px;
+
+  line-height: 20px;
+  color: var(--nova-workflow-run-fg-muted);
+
+  border-radius: 6px;
+}
+
+.nova-workflow-run-frame-step-open .nova-workflow-run-frame-step-row {
+  color: var(--nova-workflow-run-fg);
+
+  background: var(--nova-workflow-run-step-open);
+}
+
+.nova-workflow-run-frame-step-chevron,
+.nova-workflow-run-frame-step-status {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.nova-workflow-run-frame-step-chevron {
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-step-status.nova-workflow-run-frame-status-success {
+  color: currentColor;
+}
+
+.nova-workflow-run-frame-step-name {
+  flex: 1;
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nova-workflow-run-frame-step-duration {
+  flex-shrink: 0;
+
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+/**
+ * ============================
+ * Workflow Run Frame - Log
+ * ============================
+ *
+ * Monospace log lines with muted, right-aligned line numbers. A group row
+ * shows a right triangle when closed and a down triangle when open, and long
+ * lines wrap so the log stays readable on phones.
+ */
+
+.nova-workflow-run-frame-log {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0.5rem;
+  padding: 0.25rem 0;
+
+  overflow: visible;
+
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--nova-workflow-run-fg);
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.nova-workflow-run-frame-log-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.nova-workflow-run-frame-log-number {
+  flex-shrink: 0;
+  width: 48px;
+
+  overflow: hidden;
+
+  color: var(--nova-workflow-run-fg-muted);
+  text-align: right;
+  white-space: nowrap;
+
+  user-select: none;
+}
+
+.nova-workflow-run-frame-log-content {
+  display: block;
+  min-width: 0;
+  padding-inline: 12px 8px;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.nova-workflow-run-frame-log-line-group .nova-workflow-run-frame-log-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.nova-workflow-run-frame-log-line-nested .nova-workflow-run-frame-log-content {
+  padding-inline-start: 28px;
+}
+
+.nova-workflow-run-frame-log-triangle {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-block-start: 2px;
+
+  color: var(--nova-workflow-run-fg-muted);
+}
+
+.nova-workflow-run-frame-log-line-warning {
+  background: var(--nova-workflow-run-attention-muted);
+}
+
+.nova-workflow-run-frame-log-line-warning .nova-workflow-run-frame-log-number,
+.nova-workflow-run-frame-log-warning {
+  color: var(--nova-workflow-run-attention);
+}
+
+.nova-workflow-run-frame-log-line-error {
+  background: var(--nova-workflow-run-danger-muted);
+}
+
+.nova-workflow-run-frame-log-line-error .nova-workflow-run-frame-log-number,
+.nova-workflow-run-frame-log-error {
+  color: var(--nova-workflow-run-failure);
+}

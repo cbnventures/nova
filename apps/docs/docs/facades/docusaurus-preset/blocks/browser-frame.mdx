@@ -1,0 +1,79 @@
+---
+id: "browser-frame"
+title: "Browser Frame"
+description: "Show a web app screenshot inside an unbranded Chrome-on-macOS window whose tab strip and toolbar scale with the screenshot."
+sidebar_position: 12
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "browser frame block"
+  - "browser mockup"
+  - "chrome window"
+  - "screenshot frame"
+  - "web app screenshot"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "browser-frame"
+  - "screenshot"
+---
+
+Browser window around a web app screenshot. The window looks like Chrome on macOS without Chrome's branding: traffic lights, tab search, one tab, the new-tab button, then back, forward, reload, the address bar, and the menu.
+
+## Summary
+
+The Browser Frame block renders a `<figure class="nova-browser-frame">` that holds the window chrome and your screenshot. Every size in the chrome was measured from a real 1280px-wide Chrome window and is expressed as a fraction of the frame's width, so the tabs, icons, and address bar stay in proportion with the screenshot at any page width.
+
+## Why Use This Block?
+
+- **Matches the screenshot's scale** — a screenshot captured at a 1280px viewport and shown at 700px gets chrome drawn at the same 700/1280 scale, so nothing looks oversized.
+- **Real proportions** — the tab, address bar, and icons sit where a real Chrome window puts them, including the tab title lining up with the URL.
+- **Light and dark** — the chrome follows the site's color mode.
+- **Same window everywhere** — it does not change between presets, because it represents a real browser.
+
+## Usage
+
+```tsx title="src/pages/index.tsx"
+import { BrowserFrame } from '@cbnventures/docusaurus-preset-nova/blocks';
+import ThemedImage from '@theme/ThemedImage';
+
+import dashboardLight from './_assets_/dashboard-light.png';
+import dashboardDark from './_assets_/dashboard-dark.png';
+
+<BrowserFrame title="Outpost" url="localhost:22601" favicon="/favicon.svg">
+  <ThemedImage
+    sources={{ light: dashboardLight, dark: dashboardDark }}
+    alt="Outpost Overview page"
+    width={1280}
+    height={1210}
+  />
+</BrowserFrame>
+```
+
+If the screenshot was captured at a different viewport width, set it so the chrome scales correctly:
+
+```tsx title="src/pages/index.tsx"
+<BrowserFrame
+  title="Console"
+  url="localhost:8080"
+  style={{ '--nova-browser-frame-viewport': '1440' } as React.CSSProperties}
+>
+  <img src="/img/console.png" alt="The console" width={1440} height={900} />
+</BrowserFrame>
+```
+
+## Options
+
+| Prop        | Type                         | Default     | Description                                                                                                           |
+|-------------|------------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------|
+| `children`  | `ReactNode`                  | —           | The screenshot (image or themed image). Required.                                                                     |
+| `title`     | `string`                     | —           | Text in the tab. Required.                                                                                            |
+| `url`       | `string`                     | —           | Text in the address bar. Required.                                                                                    |
+| `favicon`   | `string \| undefined`        | `undefined` | Image shown at the start of the tab. A path starting with `/` resolves against the site's base URL. Omit for no icon. |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-browser-frame` class.                                               |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer `<figure>` element.                                                       |
+
+## Sharpness on Retina Screens
+
+The frame can only be as sharp as the screenshot inside it. A screenshot captured at 1× and shown wider than half its pixel width looks soft on a 2× screen. Capture at a device scale factor of 2 to show it at full size.

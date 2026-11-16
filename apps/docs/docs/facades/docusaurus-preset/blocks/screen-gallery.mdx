@@ -1,0 +1,83 @@
+---
+id: "screen-gallery"
+title: "Screen Gallery"
+description: "Show app screens side by side, each with a heading, a short description, and an optional link."
+sidebar_position: 15
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "screen gallery block"
+  - "app screenshots"
+  - "phone screenshots"
+  - "mobile app"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "screen-gallery"
+---
+
+Show app screens side by side, each with a heading, a short description, and an optional link.
+
+## Summary
+
+The Screen Gallery block renders a `<div class="nova-screen-gallery">` with one column per screen. Each screen sits above its heading, description, and link, and the links line up along the bottom. Below 997px, the columns turn into a row you swipe through, so every screen stays a readable size on a phone.
+
+## Why Use This Block?
+
+- **Screens that explain themselves** — every screenshot gets a heading and a sentence or two, so readers know what they're looking at.
+- **Any device** — you pass the image, so phone, tablet, or watch shots work the same way, framed or not.
+- **Readable on phones** — tall screenshots don't shrink into slivers; the row scrolls instead.
+
+## Usage
+
+Wrap it in a [Spotlight](/docs/facades/docusaurus-preset/blocks/spotlight/) to give the section a heading:
+
+```tsx title="src/pages/index.tsx"
+import { ScreenGallery, Spotlight } from '@cbnventures/docusaurus-preset-nova/blocks';
+import ThemedImage from '@theme/ThemedImage';
+
+import homeDark from './_assets_/home-dark.webp';
+import homeLight from './_assets_/home-light.webp';
+
+<Spotlight heading="A Closer Look" surface="alt">
+  <ScreenGallery
+    items={[
+      {
+        image: (
+          <ThemedImage
+            sources={{ light: homeLight, dark: homeDark }}
+            alt="The home screen"
+            width={1350}
+            height={2760}
+          />
+        ),
+        heading: 'Everything on One Screen',
+        description: 'Your items, sorted by what needs attention first.',
+        link: { label: 'Tour the App', to: '/docs/app-tour/' },
+      },
+    ]}
+  />
+</Spotlight>
+```
+
+## Options
+
+| Prop        | Type                         | Default     | Description                                                              |
+|-------------|------------------------------|-------------|--------------------------------------------------------------------------|
+| `items`     | `Item[]`                     | —           | The screens to show, in order. Required.                                 |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-screen-gallery` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer `<div>` element.             |
+
+### Item
+
+| Field         | Type                                         | Default     | Description                                             |
+|---------------|----------------------------------------------|-------------|---------------------------------------------------------|
+| `image`       | `ReactNode`                                  | —           | The screen, such as a `ThemedImage`. Required.          |
+| `heading`     | `string`                                     | —           | Heading under the screen. Required.                     |
+| `description` | `ReactNode`                                  | `undefined` | A sentence or two about the screen.                     |
+| `link`        | `{ label: string; to: string } \| undefined` | `undefined` | A link under the description, pinned to the item's end. |
+
+## Width
+
+Each screen is at most 17rem wide. A Spotlight keeps its content to a medium width, so three phone screens fit side by side. For more screens, widen the Spotlight with its `className`.

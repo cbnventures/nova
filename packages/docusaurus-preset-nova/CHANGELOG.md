@@ -1,5 +1,14 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.43.0 - 2026-11-16
+
+### ADDED
+- BrowserFrame block shows a web app screenshot inside an unbranded Chrome-on-macOS window, measured from the real window and scaled with the frame so the chrome stays in proportion at any width.
+- TerminalFrame block shows command-line output as text inside a macOS Terminal window, measured from the real window and scaled with the frame so the chrome stays in proportion at any width.
+- Showcase block shows several framed views in one section, with a tab pill to switch between them.
+- ScreenGallery block shows app screens side by side, each with a heading, description, and link.
+- WorkflowRunFrame block lays out a GitHub Actions run like its job page, with the workflow link and run title, the jobs sidebar, and the steps and an open step's numbered log drawn as text in GitHub's light or dark colors.
+
 ## 0.42.0 - 2026-11-13
 
 No changes.

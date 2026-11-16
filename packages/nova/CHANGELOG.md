@@ -1,5 +1,11 @@
 # @cbnventures/nova
 
+## 0.43.0 - 2026-11-16
+
+### FIXED
+- The CURRENTLY RUNNING banner shows secret options such as --token as [REDACTED], in both the --token value and --token=value forms, so tokens stay out of terminals and CI logs.
+- The Next.js scaffold starts on Next.js 16.4.6, since `next build` now stops on the 16.4.3 security advisory.
+
 ## 0.42.0 - 2026-11-13
 
 ### FIXED

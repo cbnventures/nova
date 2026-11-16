@@ -9,12 +9,17 @@
  */
 export { default as AppMarketDownload } from './app-market-download/index.js';
 export { default as BlogPreview } from './blog-preview/index.js';
+export { default as BrowserFrame } from './browser-frame/index.js';
 export { default as Canvas } from './canvas/index.js';
 export { default as Features } from './features/index.js';
 export { default as Frame } from './frame/index.js';
 export { default as Hero } from './hero/index.js';
 export { default as InstallStrip } from './install-strip/index.js';
+export { default as ScreenGallery } from './screen-gallery/index.js';
+export { default as Showcase } from './showcase/index.js';
 export { default as Spotlight } from './spotlight/index.js';
 export { default as Stats } from './stats/index.js';
+export { default as TerminalFrame } from './terminal-frame/index.js';
 export { default as Terminology } from './terminology/index.js';
 export { default as Typewriter } from './typewriter/index.js';
+export { default as WorkflowRunFrame } from './workflow-run-frame/index.js';
