@@ -271,8 +271,6 @@ export type Shared_DockerPackagingService_Name = string;
 
 export type Shared_DockerPackagingService_Port = number;
 
-export type Shared_DockerPackagingService_PortEnvironment = string;
-
 export type Shared_DockerPackagingService_RequiredForHealth = boolean;
 
 export type Shared_DockerPackagingService_RunAsRoot = boolean;
@@ -292,7 +290,6 @@ export type Shared_DockerPackagingService = {
   kind: Shared_DockerPackagingService_Kind;
   name: Shared_DockerPackagingService_Name;
   port?: Shared_DockerPackagingService_Port;
-  portEnvironment?: Shared_DockerPackagingService_PortEnvironment;
   requiredForHealth: Shared_DockerPackagingService_RequiredForHealth;
   runAsRoot: Shared_DockerPackagingService_RunAsRoot;
   workspace: Shared_DockerPackagingService_Workspace;
@@ -321,8 +318,6 @@ export type Shared_DockerPackagingServiceInput_Name = string;
 
 export type Shared_DockerPackagingServiceInput_Port = number;
 
-export type Shared_DockerPackagingServiceInput_PortEnvironment = string;
-
 export type Shared_DockerPackagingServiceInput_RequiredForHealth = boolean;
 
 export type Shared_DockerPackagingServiceInput_RunAsRoot = boolean;
@@ -340,7 +335,6 @@ export type Shared_DockerPackagingServiceInput = {
   kind?: Shared_DockerPackagingServiceInput_Kind;
   name: Shared_DockerPackagingServiceInput_Name;
   port?: Shared_DockerPackagingServiceInput_Port;
-  portEnvironment?: Shared_DockerPackagingServiceInput_PortEnvironment;
   requiredForHealth?: Shared_DockerPackagingServiceInput_RequiredForHealth;
   runAsRoot?: Shared_DockerPackagingServiceInput_RunAsRoot;
   writablePaths?: Shared_DockerPackagingServiceInput_WritablePaths;
@@ -375,8 +369,6 @@ export type Shared_DockerPackagingManifest_LegacyStatePaths = Shared_DockerPacka
 
 export type Shared_DockerPackagingManifest_NetworkMode = 'bridge' | 'host';
 
-export type Shared_DockerPackagingManifest_Ports = Record<string, number>;
-
 export type Shared_DockerPackagingManifest_SchemaVersion = number;
 
 export type Shared_DockerPackagingManifest_Services = Shared_DockerPackagingServices;
@@ -389,7 +381,6 @@ export type Shared_DockerPackagingManifest = {
   healthPath: Shared_DockerPackagingManifest_HealthPath;
   legacyStatePaths: Shared_DockerPackagingManifest_LegacyStatePaths;
   networkMode: Shared_DockerPackagingManifest_NetworkMode;
-  ports: Shared_DockerPackagingManifest_Ports;
   schemaVersion: Shared_DockerPackagingManifest_SchemaVersion;
   services: Shared_DockerPackagingManifest_Services;
   stateEnvironment?: Shared_DockerPackagingManifest_StateEnvironment;
@@ -405,8 +396,6 @@ export type Shared_DockerPackagingGenerateOptions_IgnoreFileEntry = Shared_NovaC
 export type Shared_DockerPackagingGenerateOptions_LegacyStatePaths = Shared_DockerPackagingManifest_LegacyStatePaths;
 
 export type Shared_DockerPackagingGenerateOptions_NetworkMode = Shared_DockerPackagingManifest_NetworkMode;
-
-export type Shared_DockerPackagingGenerateOptions_Ports = Shared_DockerPackagingManifest_Ports;
 
 export type Shared_DockerPackagingGenerateOptions_Profile = Shared_DockerImageProfile;
 
@@ -434,7 +423,6 @@ export type Shared_DockerPackagingGenerateOptions = {
   ignoreFileEntry?: Shared_DockerPackagingGenerateOptions_IgnoreFileEntry;
   legacyStatePaths?: Shared_DockerPackagingGenerateOptions_LegacyStatePaths;
   networkMode?: Shared_DockerPackagingGenerateOptions_NetworkMode;
-  ports?: Shared_DockerPackagingGenerateOptions_Ports;
   profile: Shared_DockerPackagingGenerateOptions_Profile;
   projectDirectory: Shared_DockerPackagingGenerateOptions_ProjectDirectory;
   reportFiles?: Shared_DockerPackagingGenerateOptions_ReportFiles;

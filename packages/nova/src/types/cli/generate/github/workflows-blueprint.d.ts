@@ -891,6 +891,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub
   dockerHub: Shared_NovaConfig_DockerHub;
 };
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasGithubActionTarget = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PinnedStepWith = Shared_BlueprintWithMap;
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *

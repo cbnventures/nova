@@ -80,7 +80,6 @@ ENV NODE_ENV=production \
   S6_KILL_GRACETIME=1000 \
   S6_SERVICES_GRACETIME=6000 \
   TZ=UTC
-[__DOCKER_PORT_ENVIRONMENT__]
 WORKDIR /app
 COPY --from=s6-overlay /s6-rootfs/ /
 COPY packages/docker/rootfs/ /

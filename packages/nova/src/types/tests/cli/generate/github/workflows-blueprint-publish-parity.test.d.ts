@@ -37,6 +37,25 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsB
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry = Shared_BlueprintConfigWorkflow;
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Action - Pins Other Checkouts To The Triggering Commit.
+ *
+ * @since 0.45.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedWorkspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_Generated = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesJob = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_ActionJob = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyEntry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyGenerated = string;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Action - Publishes Distinct Commits When Runtime Bytes Are Unchanged.
  *
  * @since 0.30.0

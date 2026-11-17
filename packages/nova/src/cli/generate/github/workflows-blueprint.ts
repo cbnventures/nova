@@ -310,6 +310,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelection,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_EnvironmentSelectionStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasGithubActionTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasRootContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
@@ -327,6 +328,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_On,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_OnNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PinnedStepWith,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreflightStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PreReleaseRefExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware,
@@ -2003,6 +2005,35 @@ export class Runner {
         jobs.push(Runner.buildPfsenseTarget(context));
       } else if (deployTarget['to'] === 'vercel-nextjs') {
         jobs.push(Runner.buildVercelNextjsTarget(context));
+      }
+    }
+
+    // A github-action target force-moves the release tag to its own release
+    // commit while the other jobs may still be starting, so they check out the
+    // triggering commit by SHA instead of the tag that can move under them.
+    const hasGithubActionTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasGithubActionTarget = targets.some((target) => target['to'] === 'github-action');
+
+    if (hasGithubActionTarget === true) {
+      for (const pinnedJob of jobs) {
+        if (pinnedJob['id'].startsWith('publish-github-action-') === true) {
+          continue;
+        }
+
+        for (const pinnedStep of pinnedJob['steps']) {
+          const pinnedStepWith: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PinnedStepWith = pinnedStep['with'] ?? [];
+
+          if (pinnedStep['kind'] !== 'checkout' || pinnedStepWith.some((withEntry) => withEntry['key'] === 'ref') === true) {
+            continue;
+          }
+
+          Reflect.set(pinnedStep, 'with', [
+            ...pinnedStepWith,
+            {
+              key: 'ref',
+              value: Runner.expr('github.sha'),
+            },
+          ]);
+        }
       }
     }
 

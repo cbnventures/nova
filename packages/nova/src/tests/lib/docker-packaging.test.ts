@@ -17,12 +17,15 @@ import { join } from 'node:path';
 
 import {
   afterAll,
+  afterEach,
   describe,
   it,
+  vi,
 } from 'vitest';
 
 import { Runner as LibDockerPackaging } from '../../lib/docker-packaging.js';
 import { getScaffoldVersion } from '../../lib/scaffold-versions.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_AddsASecondWorkspaceToTheSameImageAndBuildsItsInternalDependencyClosure_ApiDirectory,
@@ -270,6 +273,12 @@ describe('LibDockerPackaging', async () => {
     return;
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+
+    return;
+  });
+
   it('generates one root s6 appliance and a private packages/docker workspace', async () => {
     const projectDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ProjectDirectory = join(sandboxRoot, 'single');
 
@@ -282,13 +291,20 @@ describe('LibDockerPackaging', async () => {
         'database/app.sqlite',
         'settings.json',
       ],
-      ports: {
-        METRICS_PORT: 9090,
-        WEB_PORT: 3000,
-      },
       profile: 'http-service',
       projectDirectory,
       replaceFile: true,
+      services: [
+        {
+          name: 'api',
+          port: 3000,
+        },
+        {
+          command: 'node build/metrics.js',
+          name: 'metrics',
+          port: 9090,
+        },
+      ],
       stateEnvironment: 'APP_STATE_DIRECTORY',
       workspaceDirectory,
       workspaceName: 'api',
@@ -353,8 +369,9 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('PUID=1000'), true);
     strictEqual(dockerfileContent.includes('PGID=1000'), true);
     strictEqual(dockerfileContent.includes('TZ=UTC'), true);
-    strictEqual(dockerfileContent.includes('WEB_PORT=3000'), true);
-    strictEqual(dockerfileContent.includes('METRICS_PORT=9090'), true);
+    strictEqual(dockerfileContent.includes('WEB_PORT'), false);
+    strictEqual(dockerfileContent.includes('METRICS_PORT'), false);
+    strictEqual(dockerfileContent.includes('_PORT='), false);
     strictEqual(dockerfileContent.includes('S6_BEHAVIOUR_IF_STAGE2_FAILS=2'), true);
     strictEqual(dockerfileContent.includes('S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0'), true);
     strictEqual(dockerfileContent.includes('S6_SERVICES_GRACETIME=6000'), true);
@@ -372,8 +389,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(composeContent.includes('context: .'), true);
     strictEqual(composeContent.includes('init: true'), false);
     strictEqual(composeContent.includes(`PUID: "${shellVariableMarker}{PUID:-1000}"`), true);
-    strictEqual(composeContent.includes(`WEB_PORT: "${shellVariableMarker}{WEB_PORT:-3000}"`), true);
-    strictEqual(composeContent.includes(`METRICS_PORT: "${shellVariableMarker}{METRICS_PORT:-9090}"`), true);
+    strictEqual(composeContent.includes('WEB_PORT'), false);
+    strictEqual(composeContent.includes('METRICS_PORT'), false);
     strictEqual(composeContent.includes('S6_READ_ONLY_ROOT'), false);
     strictEqual(composeContent.includes('ports:'), false);
     strictEqual(composeContent.includes('restart: always'), true);
@@ -440,11 +457,12 @@ describe('LibDockerPackaging', async () => {
     ]);
     strictEqual(manifest['healthPath'], '/health');
     strictEqual(manifest['networkMode'], 'host');
-    deepStrictEqual(manifest['ports'], {
-      METRICS_PORT: 9090,
-      WEB_PORT: 3000,
-    });
-    strictEqual((manifest['services'][0] === undefined) ? undefined : manifest['services'][0]['portEnvironment'], 'WEB_PORT');
+    strictEqual(Reflect.has(manifest, 'ports'), false);
+    deepStrictEqual(manifest['services'].map((service) => service['port']), [
+      3000,
+      9090,
+    ]);
+    strictEqual(manifest['services'].some((service) => Reflect.has(service, 'portEnvironment')), false);
     strictEqual(manifest['stateEnvironment'], 'APP_STATE_DIRECTORY');
     strictEqual(legacyStatePathsContent, [
       'database/app.sqlite',
@@ -472,6 +490,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(initUserContent.includes('NOVA_INSTALLATION_KEY_FILE'), true);
     strictEqual(initUserContent.includes('NOVA_DATABASE_DIRECTORY'), true);
     strictEqual(initUserContent.includes('APP_STATE_DIRECTORY'), true);
+    strictEqual(initUserContent.includes('WEB_PORT'), false);
+    strictEqual(initUserContent.includes('METRICS_PORT'), false);
     strictEqual(initUserContent.includes('touch '), false);
     strictEqual(initUserContent.includes(`chown -R "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{STATE_DIRECTORY}"`), true);
     strictEqual(initUserContent.includes(`chown "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{writable_path}"`), true);
@@ -484,7 +504,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(initUserContent.includes('. /usr/local/libexec/nova-docker/log'), true);
     strictEqual(serviceRunContent.startsWith('#!/command/with-contenv sh\n'), true);
     strictEqual(serviceRunContent.includes('. /run/nova-docker/environment'), true);
-    strictEqual(serviceRunContent.includes(`export PORT="${shellVariableMarker}{WEB_PORT}"`), true);
+    strictEqual(serviceRunContent.includes('unset PORT'), true);
+    strictEqual(serviceRunContent.includes('WEB_PORT'), false);
     strictEqual(serviceRunContent.includes('nova_log INFO \'api\' \'Starting service.\''), true);
     strictEqual(serviceRunContent.includes('--require=/app/.pnp.cjs'), true);
     strictEqual(serviceRunContent.includes('--experimental-loader=/app/.pnp.loader.mjs'), true);
@@ -493,7 +514,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(healthcheckContent.indexOf('. /run/nova-docker/environment') < healthcheckContent.indexOf('/etc/nova-docker/healthcheck'), true);
     strictEqual(healthcheckContent.includes('/command/s6-svstat -o up /run/service/api'), true);
     strictEqual(healthcheckContent.includes(`if [ "${shellVariableMarker}{service_status}" != true ]`), true);
-    strictEqual(healthcheckContent.includes(`http://127.0.0.1:${shellVariableMarker}{WEB_PORT}/health`), true);
+    strictEqual(healthcheckContent.includes('http://127.0.0.1:3000/health'), true);
+    strictEqual(healthcheckContent.includes('WEB_PORT'), false);
     strictEqual(healthcheckContent.includes('--write-out \'%{http_code}\''), true);
     strictEqual(healthcheckContent.includes('--show-error'), false);
     strictEqual(healthcheckContent.includes('2??) ;;'), true);
@@ -984,6 +1006,38 @@ describe('LibDockerPackaging', async () => {
     strictEqual(await readFile(serviceRunPath, 'utf-8'), artifactSentinel);
     strictEqual(await readFile(manifestPath, 'utf-8'), duplicateManifestContent);
 
+    await writeFile(manifestPath, `${JSON.stringify({
+      ...manifest,
+      services: [
+        {
+          ...manifest['services'][0],
+          port: 22601,
+        },
+        {
+          ...manifest['services'][0],
+          name: 'worker-two',
+          port: 22601,
+        },
+      ],
+    }, null, 2)}\n`, 'utf-8');
+
+    await rejects(
+      () => LibDockerPackaging.generateForTarget({
+        profile: 'background-service',
+        projectDirectory,
+        replaceFile: true,
+        workspaceDirectory,
+        workspaceName: 'worker',
+      }),
+      {
+        message: 'Docker service port 22601 is declared more than once in the assembly manifest.',
+      },
+    );
+
+    strictEqual(await readFile(join(projectDirectory, 'Dockerfile'), 'utf-8'), artifactSentinel);
+    strictEqual(await readFile(join(projectDirectory, 'compose.yml'), 'utf-8'), artifactSentinel);
+    strictEqual(await readFile(serviceRunPath, 'utf-8'), artifactSentinel);
+
     return;
   });
 
@@ -1037,6 +1091,40 @@ describe('LibDockerPackaging', async () => {
       },
     );
 
+    await rejects(
+      () => LibDockerPackaging.generateForTarget({
+        profile: 'http-service',
+        projectDirectory,
+        replaceFile: true,
+        services: [{
+          name: 'worker',
+          port: 0,
+        }],
+        workspaceDirectory,
+        workspaceName: 'worker',
+      }),
+      {
+        message: 'Docker service "worker" port must be an integer between 1 and 65535.',
+      },
+    );
+
+    await rejects(
+      () => LibDockerPackaging.generateForTarget({
+        profile: 'http-service',
+        projectDirectory,
+        replaceFile: true,
+        services: [{
+          name: 'worker',
+          port: 65_536,
+        }],
+        workspaceDirectory,
+        workspaceName: 'worker',
+      }),
+      {
+        message: 'Docker service "worker" port must be an integer between 1 and 65535.',
+      },
+    );
+
     strictEqual(await pathExists(join(projectDirectory, 'Dockerfile')), false);
     strictEqual(await pathExists(join(projectDirectory, 'compose.yml')), false);
     strictEqual(await pathExists(join(projectDirectory, '.dockerignore')), false);
@@ -1076,11 +1164,8 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('RUN npm run build --workspace=\'fixture-docs\''), true);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
     strictEqual(composeContent.includes('network_mode: bridge'), true);
-    strictEqual(composeContent.includes([
-      '$',
-      '{WEB_PORT:-8080}:$',
-      '{WEB_PORT:-8080}',
-    ].join('')), true);
+    strictEqual(composeContent.includes('- "8080:8080"'), true);
+    strictEqual(composeContent.includes('WEB_PORT'), false);
     strictEqual(composeContent.includes('read_only: true'), false);
 
     return;
@@ -1109,10 +1194,13 @@ describe('LibDockerPackaging', async () => {
     Reflect.deleteProperty(legacyManifest, 'healthPath');
     Reflect.deleteProperty(legacyManifest, 'legacyStatePaths');
     Reflect.deleteProperty(legacyManifest, 'networkMode');
-    Reflect.deleteProperty(legacyManifest, 'ports');
+
+    Reflect.set(legacyManifest, 'ports', {
+      WEB_PORT: 8080,
+    });
 
     for (const service of legacyManifest['services']) {
-      Reflect.deleteProperty(service, 'portEnvironment');
+      Reflect.set(service, 'portEnvironment', 'WEB_PORT');
     }
 
     if (legacyManifest['workspaces'][0] !== undefined) {
@@ -1122,6 +1210,8 @@ describe('LibDockerPackaging', async () => {
     const legacyManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent = `${JSON.stringify(legacyManifest, null, 2)}\n`;
 
     await writeFile(manifestPath, legacyManifestContent, 'utf-8');
+
+    vi.spyOn(Logger, 'warn').mockReturnValue(undefined);
 
     await LibDockerPackaging.generateForTarget({
       profile: 'static-site',
@@ -1137,11 +1227,15 @@ describe('LibDockerPackaging', async () => {
     strictEqual(generatedManifestContent.includes('buildDirectory'), false);
     strictEqual(legacyManifestContent.includes('"buildDirectory": "dist"'), true);
     strictEqual(legacyManifestContent.includes('healthPath'), false);
-    strictEqual(legacyManifestContent.includes('portEnvironment'), false);
+    strictEqual(legacyManifestContent.includes('"ports"'), true);
+    strictEqual(legacyManifestContent.includes('"portEnvironment": "WEB_PORT"'), true);
     strictEqual(manifestContent.includes('buildDirectory'), false);
     strictEqual(manifestContent.includes('"healthPath": "/health"'), true);
     strictEqual(manifestContent.includes('"networkMode": "host"'), true);
-    strictEqual(manifestContent.includes('"portEnvironment": "WEB_PORT"'), true);
+    strictEqual(manifestContent.includes('"ports"'), false);
+    strictEqual(manifestContent.includes('portEnvironment'), false);
+    strictEqual(vi.mocked(Logger['warn']).mock.calls.length, 1);
+    deepStrictEqual(vi.mocked(Logger['warn']).mock.calls[0], ['Docker appliance ports are fixed; manifest "ports" and service "portEnvironment" keys are ignored and can be removed.']);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/web/build /app/sites/web'), true);
     strictEqual(dockerfileContent.includes('/workspace/apps/docs/dist'), false);

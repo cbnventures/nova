@@ -68,14 +68,14 @@ Every generated image starts as root through s6-overlay's `/init`. Initializatio
 | `PUID`                       | `1000`              | Numeric service user ID. The accepted range is `1` through `60000`.    |
 | `PGID`                       | `1000`              | Numeric service group ID. The accepted range is `1` through `60000`.   |
 | `TZ`                         | `UTC`               | Installed IANA timezone used for `/etc/localtime` and `/etc/timezone`. |
-| `WEB_PORT`                   | Manifest value      | Main HTTP listener and health-check port.                              |
-| `<NAME>_PORT`                | Manifest value      | An additional named listener declared by the appliance.                |
 | `NOVA_STATE_DIRECTORY`       | Resolved at startup | Active app-state directory, normally `/config`.                        |
 | `NOVA_KEYS_DIRECTORY`        | Resolved at startup | Private key directory inside app state.                                |
 | `NOVA_INSTALLATION_KEY_FILE` | Resolved at startup | Installation key path. The application creates the key itself.         |
 | `NOVA_DATABASE_DIRECTORY`    | Resolved at startup | SQLite parent directory or PostgreSQL data directory.                  |
 
 Startup rejects identity values outside the accepted range and unknown or unsafe timezone names. It links `/etc/localtime` to the selected zoneinfo entry and writes `/etc/timezone` before any application service starts.
+
+Application ports are fixed numbers, not runtime environment variables. Each service listens on the numeric `services[].port` declared by the assembly manifest. The generated Dockerfile exposes that port, and bridge-mode Compose maps the same host port to it by default. To use another host port, change only the left side of the mapping, such as `"8080:22604"`. Host networking has no mapping layer, so the service always uses its fixed port.
 
 ### Persistent State
 
@@ -109,17 +109,15 @@ Declare only safe, specific relative markers such as `settings.json` or `databas
 
 `packages/docker/manifest.json` is the source of truth for the appliance-level runtime contract. Nova preserves manifests created before these fields existed and fills in the current defaults when it next generates the assembly.
 
-| Field                        | Default      | Purpose                                                                 |
-|------------------------------|--------------|-------------------------------------------------------------------------|
-| `healthPath`                 | `/health`    | Absolute path requested from the main HTTP listener.                    |
-| `legacyStatePaths`           | `[]`         | Relative app-state markers eligible for migration from `/data`.         |
-| `networkMode`                | `host`       | Compose network mode; `bridge` enables generated port mappings.         |
-| `ports.WEB_PORT`             | Profile port | Main HTTP port default.                                                 |
-| `ports.<NAME>_PORT`          | None         | Additional port environment name and default.                           |
-| `stateEnvironment`           | None         | Optional app-specific alias for `NOVA_STATE_DIRECTORY`.                 |
-| `services[].critical`        | `false`      | Halts the container after a non-zero or abnormal service exit.          |
-| `services[].portEnvironment` | Derived      | Maps a service's compatibility `PORT` variable to a declared port name. |
-| `services[].writablePaths`   | `[]`         | Additional absolute paths whose top level is owned by `PUID:PGID`.      |
+| Field                      | Default      | Purpose                                                              |
+|----------------------------|--------------|----------------------------------------------------------------------|
+| `healthPath`               | `/health`    | Absolute path requested from the first port-bearing HTTP longrun.    |
+| `legacyStatePaths`         | `[]`         | Relative app-state markers eligible for migration from `/data`.      |
+| `networkMode`              | `host`       | Compose network mode; `bridge` enables generated port mappings.      |
+| `stateEnvironment`         | None         | Optional app-specific alias for `NOVA_STATE_DIRECTORY`.              |
+| `services[].critical`      | `false`      | Halts the container after a non-zero or abnormal service exit.       |
+| `services[].port`          | Profile port | Fixed container port, from `1` through `65535` and unique per image. |
+| `services[].writablePaths` | `[]`         | Additional absolute paths whose top level is owned by `PUID:PGID`.   |
 
 For example:
 
@@ -131,10 +129,6 @@ For example:
     "database/app.sqlite"
   ],
   "networkMode": "host",
-  "ports": {
-    "WEB_PORT": 8080,
-    "METRICS_PORT": 9090
-  },
   "schemaVersion": 1,
   "services": [
     {
@@ -144,8 +138,7 @@ For example:
       "environment": {},
       "kind": "longrun",
       "name": "app",
-      "port": 8080,
-      "portEnvironment": "WEB_PORT",
+      "port": 22604,
       "requiredForHealth": true,
       "runAsRoot": false,
       "workspace": "apps/app",
@@ -157,7 +150,9 @@ For example:
 }
 ```
 
-`WEB_PORT` is the only main HTTP port convention. Additional ports use distinct UPPER_SNAKE_CASE names ending in `_PORT`. The generated Dockerfile sets their defaults, and bridge-mode Compose maps each effective host port to the same container port. Host mode does not emit `ports` mappings.
+Every numeric service port must be unique within the image. The generated Dockerfile emits literal `EXPOSE` instructions, service commands and health checks use the same literal values, and bridge-mode Compose emits fixed `"PORT:PORT"` mappings. Host mode does not emit `ports` mappings.
+
+Nova ignores the retired top-level `ports` map and retired `services[].portEnvironment` keys when it reads an older manifest. It prints one notice that ports are fixed and that those keys can be removed, then writes the current manifest without them.
 
 ## Supervision, Health, and Shutdown
 
@@ -165,7 +160,7 @@ The generated Dockerfile configures a 30-second health interval, 5-second timeou
 
 1. Runs `/etc/nova-docker/healthcheck` instead when that executable project override exists.
 2. Requires every declared s6 longrun to report `up`.
-3. Sends `GET http://127.0.0.1:${WEB_PORT}${healthPath}` and accepts only a `2xx` response when `WEB_PORT` is declared.
+3. Sends `GET` to the fixed port of the first port-bearing longrun, such as `http://127.0.0.1:22604/health`, and accepts only a `2xx` response.
 
 The legacy `services[].requiredForHealth` field remains readable for older manifests, but it no longer excludes a longrun from supervision health. Every longrun must be up.
 
@@ -203,7 +198,9 @@ sudo docker run \
     example/example-app:latest
 ```
 
-When a manifest opts into bridge mode, place each required `-p` flag after the environment flags and use `--net=bridge`. Add `--cap-add` or `--device` flags in that same position only when the application requires them. The generated default does not add capabilities, devices, a read-only root, `tmpfs`, capability drops, `no-new-privileges`, or shared-memory overrides.
+When a manifest opts into bridge mode, place each required `-p` flag after the environment flags and use `--net=bridge`. Keep the fixed container port on the right and select the host port on the left, such as `-p "8080:22604"`. Add `--cap-add` or `--device` flags in that same position only when the application requires them. The generated default does not add capabilities, devices, a read-only root, `tmpfs`, capability drops, `no-new-privileges`, or shared-memory overrides.
+
+With host networking, no host-to-container mapping exists. The appliance listens on its fixed container port, such as `22604`.
 
 The equivalent host-network Compose file is:
 
@@ -222,7 +219,14 @@ services:
       - "/srv/example-app/config:/config"
 ```
 
-For bridge mode, change `network_mode` to `bridge` and add a `ports` entry for each declared port, such as `"8080:8080"` for `WEB_PORT=8080`.
+For bridge mode, change `network_mode` to `bridge` and add a `ports` entry for each fixed container port. The generated mapping uses the same value on both sides, such as `"22604:22604"`. Change only the host side to publish it elsewhere:
+
+```yaml
+services:
+  app:
+    ports:
+      - "8080:22604"
+```
 
 ## OCI Image Labels
 

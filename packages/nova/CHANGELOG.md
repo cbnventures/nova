@@ -1,5 +1,14 @@
 # @cbnventures/nova
 
+## 0.45.0 - 2026-11-17
+
+### UPDATED
+- Generated Docker appliances use fixed container ports instead of WEB_PORT and *_PORT variables; another port is set by mapping a different host port, and existing ports or portEnvironment keys in manifest.json are ignored with a notice.
+
+### FIXED
+- Publish workflows with a github-action target check out the triggering commit in every other job, so a GitHub Pages or other deploy job no longer fails when the action release moves the tag first.
+- Generated pfSense packages mark an About tab update as installed once pfSense reports the new version, instead of spinning on "Installing version" when pkg add -f replaced the package before the update could finish.
+
 ## 0.44.0 - 2026-11-17
 
 ### UPDATED

@@ -7,7 +7,6 @@ services:
       PGID: "${PGID:-1000}"
       PUID: "${PUID:-1000}"
       TZ: "${TZ:-UTC}"
-[__DOCKER_COMPOSE_ENVIRONMENT__]
 [__DOCKER_COMPOSE_ENV_FILES__]
 [__DOCKER_COMPOSE_PORTS__]
     restart: always

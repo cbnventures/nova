@@ -30,6 +30,13 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_AssertWorkflowFixture_Returns,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_UpdateWorkflowFixtures,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_ActionJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_Generated,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyGenerated,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedWorkspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitCount,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitSubjects,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_OriginPath,
@@ -1007,6 +1014,67 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
     strictEqual(generated.includes('git commit --allow-empty -m "Release $TAG_NAME"'), true, 'Every published version must receive its own action release commit, even when the runtime bytes are unchanged');
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('actions/attest-build-provenance@v2'), false);
+
+    return;
+  });
+
+  it('pins other checkouts to the triggering commit', () => {
+    const pinnedWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedWorkspaces = {
+      ...workspaces,
+      './apps/docs': {
+        name: 'sandbox-docs',
+        role: 'docs',
+        policy: 'freezable',
+      },
+    };
+    const pinnedEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PinnedEntry = {
+      ...entry,
+      build: [
+        './apps/docs',
+        './packages/action',
+      ],
+      deploy: [
+        {
+          to: 'github-pages',
+          path: './apps/docs',
+        },
+        {
+          to: 'github-action',
+          path: './packages/action',
+        },
+      ],
+    };
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_Generated = WorkflowsBlueprint.dispatch(pinnedEntry, pinnedWorkspaces);
+    const pagesJob: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesJob = generated.slice(generated.indexOf('  publish-github-pages-apps-docs:'), generated.indexOf('  publish-github-action-packages-action:'));
+    const actionJob: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_ActionJob = generated.slice(generated.indexOf('  publish-github-action-packages-action:'));
+
+    // The action job force-moves the release tag, so the Pages job must not check out that tag.
+    strictEqual(pagesJob.includes([
+      'ref: "',
+      '$',
+      '{{ github.sha }}"',
+    ].join('')), true, 'The GitHub Pages job checks out the triggering commit');
+    strictEqual(actionJob.includes([
+      'ref: "',
+      '$',
+      '{{ github.sha }}"',
+    ].join('')), false, 'The github-action job keeps its own checkout');
+
+    const pagesOnlyEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyEntry = {
+      ...pinnedEntry,
+      build: ['./apps/docs'],
+      deploy: [{
+        to: 'github-pages',
+        path: './apps/docs',
+      }],
+    };
+    const pagesOnlyGenerated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PinsOtherCheckoutsToTheTriggeringCommit_PagesOnlyGenerated = WorkflowsBlueprint.dispatch(pagesOnlyEntry, pinnedWorkspaces);
+
+    strictEqual(pagesOnlyGenerated.includes([
+      'ref: "',
+      '$',
+      '{{ github.sha }}"',
+    ].join('')), false, 'Workflows without a github-action target keep the default checkout');
 
     return;
   });
