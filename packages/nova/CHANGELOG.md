@@ -1,5 +1,16 @@
 # @cbnventures/nova
 
+## 0.46.0 - 2026-11-17
+
+### FIXED
+- Generated Docker images put s6's /command folder on PATH, so scripts run with docker exec find s6's tools instead of failing with "unable to exec".
+- Generated Docker appliances add a nova-<id> user and group entry when PUID or PGID has none, so tools that look up their own user, such as PostgreSQL's initdb, start instead of failing.
+- Generated Docker appliances write the resolved NOVA_* state paths into s6's container environment too, so service scripts that start with with-contenv no longer lose them and stop the container at startup.
+- Regenerating a Docker appliance removes the halting finish script from a service that is no longer marked critical, so a crash restarts it in place instead of stopping the container.
+
+### ADDED
+- A finishCommand setting for each Docker appliance service, which runs the app's own cleanup with the exit code and signal whenever the service stops, before a critical service halts the container.
+
 ## 0.45.0 - 2026-11-17
 
 ### UPDATED

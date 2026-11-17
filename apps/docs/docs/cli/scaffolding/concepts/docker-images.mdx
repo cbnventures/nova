@@ -92,7 +92,7 @@ Initialization creates this standard layout beneath the resolved state directory
 
 The initializer creates and permissions the directories but does not create `installation.key`. On every start, it recursively changes ownership of the complete state directory to `PUID:PGID`, and changes ownership of each service `writablePaths` entry itself, without descending into it, so content folders such as downloads under `/data` are never walked. It then restores mode `0700` on `keys/` and mode `0600` on every regular file below it.
 
-The manifest can map the resolved state directory to one additional application-specific variable with `stateEnvironment`. Services receive that variable together with the four `NOVA_*` paths through `/run/nova-docker/environment`.
+The manifest can map the resolved state directory to one additional application-specific variable with `stateEnvironment`. Services receive that variable together with the four `NOVA_*` paths through `/run/nova-docker/environment`. Initialization also writes them into s6's container environment, so a service script that starts with `#!/command/with-contenv` sees the same values.
 
 ### Legacy `/data` Migration
 
@@ -109,15 +109,16 @@ Declare only safe, specific relative markers such as `settings.json` or `databas
 
 `packages/docker/manifest.json` is the source of truth for the appliance-level runtime contract. Nova preserves manifests created before these fields existed and fills in the current defaults when it next generates the assembly.
 
-| Field                      | Default      | Purpose                                                              |
-|----------------------------|--------------|----------------------------------------------------------------------|
-| `healthPath`               | `/health`    | Absolute path requested from the first port-bearing HTTP longrun.    |
-| `legacyStatePaths`         | `[]`         | Relative app-state markers eligible for migration from `/data`.      |
-| `networkMode`              | `host`       | Compose network mode; `bridge` enables generated port mappings.      |
-| `stateEnvironment`         | None         | Optional app-specific alias for `NOVA_STATE_DIRECTORY`.              |
-| `services[].critical`      | `false`      | Halts the container after a non-zero or abnormal service exit.       |
-| `services[].port`          | Profile port | Fixed container port, from `1` through `65535` and unique per image. |
-| `services[].writablePaths` | `[]`         | Additional absolute paths whose top level is owned by `PUID:PGID`.   |
+| Field                      | Default      | Purpose                                                                                           |
+|----------------------------|--------------|---------------------------------------------------------------------------------------------------|
+| `healthPath`               | `/health`    | Absolute path requested from the first port-bearing HTTP longrun.                                 |
+| `legacyStatePaths`         | `[]`         | Relative app-state markers eligible for migration from `/data`.                                   |
+| `networkMode`              | `host`       | Compose network mode; `bridge` enables generated port mappings.                                   |
+| `stateEnvironment`         | None         | Optional app-specific alias for `NOVA_STATE_DIRECTORY`.                                           |
+| `services[].critical`      | `false`      | Halts the container after a non-zero or abnormal service exit.                                    |
+| `services[].finishCommand` | None         | App command run with the exit code and signal whenever a longrun stops, before any critical halt. |
+| `services[].port`          | Profile port | Fixed container port, from `1` through `65535` and unique per image.                              |
+| `services[].writablePaths` | `[]`         | Additional absolute paths whose top level is owned by `PUID:PGID`.                                |
 
 For example:
 

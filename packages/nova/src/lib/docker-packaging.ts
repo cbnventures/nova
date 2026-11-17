@@ -159,6 +159,7 @@ import type {
   Lib_DockerPackaging_Runner_BuildService_Command,
   Lib_DockerPackaging_Runner_BuildService_Environment,
   Lib_DockerPackaging_Runner_BuildService_ExistingServices,
+  Lib_DockerPackaging_Runner_BuildService_FinishCommand,
   Lib_DockerPackaging_Runner_BuildService_HealthCommand,
   Lib_DockerPackaging_Runner_BuildService_Input,
   Lib_DockerPackaging_Runner_BuildService_IsProtectedWritablePath,
@@ -1189,6 +1190,12 @@ export class Runner {
       service.healthCommand = healthCommand;
     }
 
+    const finishCommand: Lib_DockerPackaging_Runner_BuildService_FinishCommand = input['finishCommand'] ?? ((previousService === undefined) ? undefined : previousService['finishCommand']);
+
+    if (finishCommand !== undefined) {
+      service.finishCommand = finishCommand;
+    }
+
     if (port !== undefined) {
       service.port = port;
     }
@@ -1774,20 +1781,31 @@ export class Runner {
           fs.writeFile(join(serviceDirectory, 'timeout-kill'), '6000\n', 'utf-8'),
         ]);
 
-        if (service['critical'] === true) {
+        if (service['critical'] === true || service['finishCommand'] !== undefined) {
+          // The app's own finish command runs first, so its cleanup happens before a critical halt.
           const criticalFinishScript: Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = [
             '#!/command/with-contenv sh',
             'set -eu',
             '. /usr/local/libexec/nova-docker/log',
-            `if [ "${shellVariableMarker}{1:-0}" -ne 0 ]; then`,
-            `  nova_log ERROR ${Runner.shellQuote(service['name'])} "Critical service exited abnormally with code ${shellVariableMarker}{1:-0} and signal ${shellVariableMarker}{2:-0}; halting the container."`,
-            '  exec /run/s6/basedir/bin/halt',
-            'fi',
+            ...((service['finishCommand'] === undefined) ? [] : [
+              `if ! ${service['finishCommand']} "${shellVariableMarker}@"; then`,
+              `  nova_log WARN ${Runner.shellQuote(service['name'])} 'The service finish command failed.'`,
+              'fi',
+            ]),
+            ...((service['critical'] === true) ? [
+              `if [ "${shellVariableMarker}{1:-0}" -ne 0 ]; then`,
+              `  nova_log ERROR ${Runner.shellQuote(service['name'])} "Critical service exited abnormally with code ${shellVariableMarker}{1:-0} and signal ${shellVariableMarker}{2:-0}; halting the container."`,
+              '  exec /run/s6/basedir/bin/halt',
+              'fi',
+            ] : []),
             'exit 0',
             '',
           ].join('\n');
 
           await Runner.writeExecutable(join(serviceDirectory, 'finish'), criticalFinishScript);
+        } else {
+          // A service with neither a halt nor a finish command must not keep an older finish script.
+          await fs.rm(join(serviceDirectory, 'finish'), { force: true });
         }
       }
     }
@@ -1964,6 +1982,14 @@ export class Runner {
       'else',
       `  nova_log WARN init "The root filesystem is read-only, so the container clock files were not changed; services use TZ=${shellVariableMarker}{TZ_VALUE} from the environment."`,
       'fi',
+      `if ! getent group "${shellVariableMarker}{PGID_VALUE}" > /dev/null 2>&1; then`,
+      `  printf 'nova-%s:x:%s:${shellNewline}' "${shellVariableMarker}{PGID_VALUE}" "${shellVariableMarker}{PGID_VALUE}" >> /etc/group 2>/dev/null \\`,
+      `    || nova_log WARN init "The root filesystem is read-only, so no group entry was added for GID ${shellVariableMarker}{PGID_VALUE}."`,
+      'fi',
+      `if ! getent passwd "${shellVariableMarker}{PUID_VALUE}" > /dev/null 2>&1; then`,
+      `  printf 'nova-%s:x:%s:%s::/config:/usr/sbin/nologin${shellNewline}' "${shellVariableMarker}{PUID_VALUE}" "${shellVariableMarker}{PUID_VALUE}" "${shellVariableMarker}{PGID_VALUE}" >> /etc/passwd 2>/dev/null \\`,
+      `    || nova_log WARN init "The root filesystem is read-only, so no user entry was added for UID ${shellVariableMarker}{PUID_VALUE}."`,
+      'fi',
       '',
       'mkdir -p /config /data /run/nova-docker',
       'CONFIG_HAS_STATE=0',
@@ -2054,6 +2080,15 @@ export class Runner {
       `} > "${shellVariableMarker}{ENVIRONMENT_TEMP}"`,
       `chmod 0600 "${shellVariableMarker}{ENVIRONMENT_TEMP}"`,
       `mv -- "${shellVariableMarker}{ENVIRONMENT_TEMP}" "${shellVariableMarker}{ENVIRONMENT_FILE}"`,
+      'if [ -d /run/s6/container_environment ]; then',
+      '  umask 022',
+      `  printf '%s' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_STATE_DIRECTORY`,
+      `  printf '%s/keys' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_KEYS_DIRECTORY`,
+      `  printf '%s/keys/installation.key' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_INSTALLATION_KEY_FILE`,
+      `  printf '%s/database' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_DATABASE_DIRECTORY`,
+      ...((manifest['stateEnvironment'] === undefined) ? [] : [`  printf '%s' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/${manifest['stateEnvironment']}`]),
+      '  umask 077',
+      'fi',
       `nova_log INFO init "Using ${shellVariableMarker}{STATE_DIRECTORY} for app state."`,
       `nova_log INFO init "Initialized app state ownership for UID ${shellVariableMarker}{PUID_VALUE} and GID ${shellVariableMarker}{PGID_VALUE}."`,
       '',

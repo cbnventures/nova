@@ -484,6 +484,17 @@ describe('LibDockerPackaging', async () => {
     strictEqual(initUserContent.includes('App state exists in both /config and deprecated /data; using /config'), true);
     strictEqual(initUserContent.includes('Using deprecated /data for app state; change the app-state mount from /data to /config.'), true);
     strictEqual(initUserContent.includes(`Moved app state ${shellVariableMarker}{legacy_path} from /data to /config.`), true);
+
+    // Scripts run through with-contenv only see the s6 container environment, so the resolved paths are mirrored there.
+    strictEqual(initUserContent.includes(`printf '%s' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_STATE_DIRECTORY`), true);
+    strictEqual(initUserContent.includes(`printf '%s/database' "${shellVariableMarker}{STATE_DIRECTORY}" > /run/s6/container_environment/NOVA_DATABASE_DIRECTORY`), true);
+
+    // Tools such as PostgreSQL's initdb look up their own user, so PUID and PGID get entries when the image has none.
+    strictEqual(initUserContent.includes(`if ! getent passwd "${shellVariableMarker}{PUID_VALUE}" > /dev/null 2>&1; then`), true);
+    strictEqual(initUserContent.includes(`if ! getent group "${shellVariableMarker}{PGID_VALUE}" > /dev/null 2>&1; then`), true);
+
+    // Non-root services read the container environment through s6-envdir, so those files stay world-readable.
+    strictEqual(initUserContent.indexOf('  umask 022') < initUserContent.indexOf('/run/s6/container_environment/NOVA_STATE_DIRECTORY'), true);
     strictEqual(initUserContent.includes(`mkdir -p "${shellVariableMarker}{STATE_DIRECTORY}/keys" "${shellVariableMarker}{STATE_DIRECTORY}/database"`), true);
     strictEqual(initUserContent.includes('NOVA_STATE_DIRECTORY'), true);
     strictEqual(initUserContent.includes('NOVA_KEYS_DIRECTORY'), true);
@@ -784,6 +795,7 @@ describe('LibDockerPackaging', async () => {
           command: 'node build/worker.js',
           critical: true,
           dependencies: ['prepare'],
+          finishCommand: '/app/bin/worker-finish worker',
           name: 'worker',
           requiredForHealth: false,
           writablePaths: ['/app/data'],
@@ -814,6 +826,10 @@ describe('LibDockerPackaging', async () => {
     strictEqual(workerFinish.includes('/run/s6/basedir/bin/halt'), true);
     strictEqual(workerFinish.includes(`${shellVariableMarker}{2:-0}`), true);
     strictEqual(workerFinish.includes('nova_log ERROR \'worker\''), true);
+
+    // The app's own finish command runs before the critical halt so its cleanup is never skipped.
+    strictEqual(workerFinish.includes(`if ! /app/bin/worker-finish worker "${shellVariableMarker}@"; then`), true);
+    strictEqual(workerFinish.indexOf('/app/bin/worker-finish worker') < workerFinish.indexOf('/run/s6/basedir/bin/halt'), true);
     strictEqual(healthcheckContent.includes('/command/s6-svstat -o up /run/service/worker'), true);
     strictEqual(healthcheckContent.includes('http://127.0.0.1'), false);
     strictEqual(writablePathsContent, [

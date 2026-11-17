@@ -263,6 +263,8 @@ export type Shared_DockerPackagingService_Dependencies = Shared_DockerPackagingS
 
 export type Shared_DockerPackagingService_Environment = Shared_DockerPackagingStringMap;
 
+export type Shared_DockerPackagingService_FinishCommand = string;
+
 export type Shared_DockerPackagingService_HealthCommand = string;
 
 export type Shared_DockerPackagingService_Kind = Shared_DockerPackagingServiceKind;
@@ -286,6 +288,7 @@ export type Shared_DockerPackagingService = {
   critical: Shared_DockerPackagingService_Critical;
   dependencies: Shared_DockerPackagingService_Dependencies;
   environment: Shared_DockerPackagingService_Environment;
+  finishCommand?: Shared_DockerPackagingService_FinishCommand;
   healthCommand?: Shared_DockerPackagingService_HealthCommand;
   kind: Shared_DockerPackagingService_Kind;
   name: Shared_DockerPackagingService_Name;
@@ -310,6 +313,8 @@ export type Shared_DockerPackagingServiceInput_Dependencies = Shared_DockerPacka
 
 export type Shared_DockerPackagingServiceInput_Environment = Shared_DockerPackagingStringMap;
 
+export type Shared_DockerPackagingServiceInput_FinishCommand = string;
+
 export type Shared_DockerPackagingServiceInput_HealthCommand = string;
 
 export type Shared_DockerPackagingServiceInput_Kind = Shared_DockerPackagingServiceKind;
@@ -331,6 +336,7 @@ export type Shared_DockerPackagingServiceInput = {
   critical?: Shared_DockerPackagingServiceInput_Critical;
   dependencies?: Shared_DockerPackagingServiceInput_Dependencies;
   environment?: Shared_DockerPackagingServiceInput_Environment;
+  finishCommand?: Shared_DockerPackagingServiceInput_FinishCommand;
   healthCommand?: Shared_DockerPackagingServiceInput_HealthCommand;
   kind?: Shared_DockerPackagingServiceInput_Kind;
   name: Shared_DockerPackagingServiceInput_Name;

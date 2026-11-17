@@ -72,6 +72,7 @@ RUN apt-get update \
     util-linux \
   && rm -rf /var/lib/apt/lists/*
 ENV NODE_ENV=production \
+  PATH="/command:${PATH}" \
   PGID=1000 \
   PUID=1000 \
   S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \

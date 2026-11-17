@@ -258,6 +258,7 @@ export type Lib_DockerPackaging_Runner_BuildService_PathParts = string[];
 export type Lib_DockerPackaging_Runner_BuildService_IsProtectedWritablePath = boolean;
 export type Lib_DockerPackaging_Runner_BuildService_Service = Shared_DockerPackagingService;
 export type Lib_DockerPackaging_Runner_BuildService_HealthCommand = string | undefined;
+export type Lib_DockerPackaging_Runner_BuildService_FinishCommand = string | undefined;
 
 /**
  * Lib - Docker Packaging - Runner - BuildSyntheticWorkspacePackage.
