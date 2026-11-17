@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.44.0 - 2026-11-17
+
+### UPDATED
+- Generated Docker appliances keep their state in `/config` and move it over from `/data` when both are mounted, own every file as PUID:PGID on each start, write TZ into the container's clock, log plain `time LEVEL component: message` lines, and share one health check, start-failure, critical-service and stop policy, with `WEB_PORT` and named `*_PORT` variables for their ports.
+
+### FIXED
+- Generated publish workflows pass the GitHub token to the Check project step and to container builds as the github_token build secret, so Dockerfile calls to the GitHub API aren't rate limited.
+
 ## 0.43.0 - 2026-11-16
 
 ### FIXED

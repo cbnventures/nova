@@ -22,6 +22,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import heroPreviewLight from './_assets_/hero-preview-light.png';
+import heroPreviewDark from './_assets_/hero-preview-dark.png';
+
 Full-width hero section with a heading, tagline, primary call-to-action link, and optional secondary link. Supports an eyebrow label and alternate surface styling.
 
 ## Summary
@@ -33,6 +39,12 @@ The Hero block renders a `<header>` element containing a heading, tagline paragr
 - **Consistent hero layout** across all pages without writing custom CSS.
 - **Preset-aware** — colors, typography, and spacing adapt to the active preset.
 - **Flexible** — optional eyebrow, secondary CTA, and surface variant cover common hero patterns.
+
+## Preview
+
+<Frame caption="Hero block — light and dark mode preview">
+  <ThemedImage sources={{ light: heroPreviewLight, dark: heroPreviewDark }} alt="Hero block preview" width={680} height={349} />
+</Frame>
 
 ## Usage
 

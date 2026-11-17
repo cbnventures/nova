@@ -22,6 +22,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import featuresPreviewLight from './_assets_/features-preview-light.png';
+import featuresPreviewDark from './_assets_/features-preview-dark.png';
+
 Responsive grid of feature cards with optional icons, titles, and descriptions.
 
 Use it to showcase product capabilities on a landing page.
@@ -37,6 +43,12 @@ The grid adapts from one column on mobile to three columns on desktop.
 - **Responsive grid** that adapts to screen width without custom breakpoint CSS.
 - **Iconify integration** — pass any Iconify icon identifier for visual variety.
 - **Preset-aware** — card styling, spacing, and typography adapt to the active preset.
+
+## Preview
+
+<Frame caption="Features block — light and dark mode preview">
+  <ThemedImage sources={{ light: featuresPreviewLight, dark: featuresPreviewDark }} alt="Features block preview" width={1280} height={258} />
+</Frame>
 
 ## Usage
 

@@ -5,6 +5,9 @@ import type {
   Shared_DockerPackagingGenerateOptions,
   Shared_DockerPackagingGenerateResult,
   Shared_DockerPackagingManifest,
+  Shared_DockerPackagingManifest_LegacyStatePaths,
+  Shared_DockerPackagingManifest_NetworkMode,
+  Shared_DockerPackagingManifest_Ports,
   Shared_DockerPackagingService,
   Shared_DockerPackagingServiceInput,
   Shared_DockerPackagingServiceInputs,
@@ -41,12 +44,11 @@ export type Lib_DockerPackaging_Runner_BuildCompose_Template = string;
 export type Lib_DockerPackaging_Runner_BuildCompose_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_BuildCompose_Returns = string;
 export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles = string[];
-export type Lib_DockerPackaging_Runner_BuildCompose_PortSet = Set<number>;
-export type Lib_DockerPackaging_Runner_BuildCompose_Ports = number[];
+export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentLines = string[];
 export type Lib_DockerPackaging_Runner_BuildCompose_PortLines = string[];
-export type Lib_DockerPackaging_Runner_BuildCompose_HasContainerNativeService = boolean;
 export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_InteractiveBlock = string;
+export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentBlock = string;
+export type Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock = string;
 export type Lib_DockerPackaging_Runner_BuildCompose_PortBlock = string;
 export type Lib_DockerPackaging_Runner_BuildCompose_Replacements = Shared_DockerPackagingStringMap;
 export type Lib_DockerPackaging_Runner_BuildCompose_Content = string;
@@ -105,8 +107,9 @@ export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspaceP
 export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceServices = Shared_DockerPackagingServices;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePackage = Shared_DockerPackagingWorkspacePackage;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_IsSelectedWorkspace = boolean;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PortSet = Set<number>;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_Ports = number[];
+export type Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironmentLines = string[];
+export type Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironment = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase = string;
 export type Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths = string[];
@@ -138,16 +141,29 @@ export type Lib_DockerPackaging_Runner_BuildDockerfile_Content = string;
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_Returns = string;
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_Lines = string[];
-export type Lib_DockerPackaging_Runner_BuildHealthcheck_RequiredServices = Shared_DockerPackagingServices;
+export type Lib_DockerPackaging_Runner_BuildHealthcheck_LongrunServices = Shared_DockerPackagingServices;
+export type Lib_DockerPackaging_Runner_BuildHealthcheck_ShellVariableMarker = string;
 
 /**
  * Lib - Docker Packaging - Runner - BuildInitUser.
  *
  * @since 0.34.0
  */
+export type Lib_DockerPackaging_Runner_BuildInitUser_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_BuildInitUser_Returns = string;
+export type Lib_DockerPackaging_Runner_BuildInitUser_ShellNewline = string;
 export type Lib_DockerPackaging_Runner_BuildInitUser_ShellVariableMarker = string;
 export type Lib_DockerPackaging_Runner_BuildInitUser_ProtectedWritablePatterns = string;
+export type Lib_DockerPackaging_Runner_BuildInitUser_PortEnvironmentLines = string[];
+
+/**
+ * Lib - Docker Packaging - Runner - BuildLogHelper.
+ *
+ * @since 0.43.1
+ */
+export type Lib_DockerPackaging_Runner_BuildLogHelper_Returns = string;
+export type Lib_DockerPackaging_Runner_BuildLogHelper_ShellNewline = string;
+export type Lib_DockerPackaging_Runner_BuildLogHelper_ShellVariableMarker = string;
 
 /**
  * Lib - Docker Packaging - Runner - BuildPackageJsonRecipes.
@@ -214,9 +230,12 @@ export type Lib_DockerPackaging_Runner_BuildService_Name = string;
 export type Lib_DockerPackaging_Runner_BuildService_WorkspacePath = string;
 export type Lib_DockerPackaging_Runner_BuildService_PreviousService = Shared_DockerPackagingService | undefined;
 export type Lib_DockerPackaging_Runner_BuildService_PreviousPort = number | undefined;
+export type Lib_DockerPackaging_Runner_BuildService_PreviousPortEnvironment = string | undefined;
 export type Lib_DockerPackaging_Runner_BuildService_PreferredPort = number | undefined;
 export type Lib_DockerPackaging_Runner_BuildService_Port = number | undefined;
 export type Lib_DockerPackaging_Runner_BuildService_OccupiedPorts = Set<number>;
+export type Lib_DockerPackaging_Runner_BuildService_OccupiedPortEnvironments = Set<string>;
+export type Lib_DockerPackaging_Runner_BuildService_PortEnvironment = string | undefined;
 export type Lib_DockerPackaging_Runner_BuildService_Kind = Shared_DockerPackagingServiceKind;
 export type Lib_DockerPackaging_Runner_BuildService_Environment = Shared_DockerPackagingStringMap;
 export type Lib_DockerPackaging_Runner_BuildService_Command = string;
@@ -304,6 +323,11 @@ export type Lib_DockerPackaging_Runner_GenerateForTarget_RequestedServices = Sha
 export type Lib_DockerPackaging_Runner_GenerateForTarget_RetainedServices = Shared_DockerPackagingServices;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_ConflictingService = Shared_DockerPackagingService | undefined;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_RetainedWorkspaces = Shared_DockerPackagingWorkspaces;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_HealthPath = string;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_LegacyStatePaths = Shared_DockerPackagingManifest_LegacyStatePaths;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode = Shared_DockerPackagingManifest_NetworkMode;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_Ports = Shared_DockerPackagingManifest_Ports;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment = string | undefined;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_AvailableServiceNames = Set<string>;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_ServicesByName = Shared_DockerPackagingServicesByName;
@@ -381,6 +405,14 @@ export type Lib_DockerPackaging_Runner_NormalizeManifest_Value = Record<string, 
 export type Lib_DockerPackaging_Runner_NormalizeManifest_Returns = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_ServiceNames = Set<string>;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_HealthPath = string;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_LegacyStatePaths = Shared_DockerPackagingManifest_LegacyStatePaths;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_NetworkMode = Shared_DockerPackagingManifest_NetworkMode;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_Ports = Shared_DockerPackagingManifest_Ports;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_StateEnvironment = string | undefined;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_PortEnvironment = string;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_PortValue = unknown;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_ServicePortEnvironment = string;
 
 /**
  * Lib - Docker Packaging - Runner - NormalizeRuntimePaths.
@@ -532,6 +564,7 @@ export type Lib_DockerPackaging_Runner_WriteRootfs_InitServiceDirectory = string
 export type Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory = string;
 export type Lib_DockerPackaging_Runner_WriteRootfs_WritablePaths = string[];
 export type Lib_DockerPackaging_Runner_WriteRootfs_ShellVariableMarker = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = string;
+export type Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths = string;
 export type Lib_DockerPackaging_Runner_WriteRootfs_ServiceDirectory = string;
 export type Lib_DockerPackaging_Runner_WriteRootfs_DependenciesDirectory = string;
+export type Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = string;

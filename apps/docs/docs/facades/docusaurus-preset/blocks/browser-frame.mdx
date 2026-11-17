@@ -19,6 +19,12 @@ tags:
   - "screenshot"
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import browserFramePreviewLight from './_assets_/browser-frame-preview-light.png';
+import browserFramePreviewDark from './_assets_/browser-frame-preview-dark.png';
+
 Browser window around a web app screenshot. The window looks like Chrome on macOS without Chrome's branding: traffic lights, tab search, one tab, the new-tab button, then back, forward, reload, the address bar, and the menu.
 
 ## Summary
@@ -31,6 +37,12 @@ The Browser Frame block renders a `<figure class="nova-browser-frame">` that hol
 - **Real proportions** — the tab, address bar, and icons sit where a real Chrome window puts them, including the tab title lining up with the URL.
 - **Light and dark** — the chrome follows the site's color mode.
 - **Same window everywhere** — it does not change between presets, because it represents a real browser.
+
+## Preview
+
+<Frame caption="Browser Frame block — light and dark mode preview">
+  <ThemedImage sources={{ light: browserFramePreviewLight, dark: browserFramePreviewDark }} alt="Browser Frame block preview" width={1148} height={820} />
+</Frame>
 
 ## Usage
 

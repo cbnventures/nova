@@ -3,6 +3,7 @@ import {
   rejects,
   strictEqual,
 } from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import {
   access,
   mkdir,
@@ -41,6 +42,7 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DockerfileContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DocsWorkspaceDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_GeneratedManifestContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifest,
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestPath,
@@ -55,6 +57,10 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_GitAttributesContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_HealthcheckContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_InitUserContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LegacyStatePathsContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LogHelperContent,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LogOutput,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_Manifest,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_NovaConfig,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ProjectDirectory,
   Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_RootPackage,
@@ -102,6 +108,7 @@ import type {
   Tests_Lib_DockerPackaging_LibDockerPackaging_SandboxRoot,
   Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_CycleCaughtError,
   Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_CycleErrorMessage,
+  Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_HealthcheckContent,
   Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_PrepareScript,
   Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_PrepareType,
   Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_PrepareUp,
@@ -271,9 +278,18 @@ describe('LibDockerPackaging', async () => {
     const workspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_WorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/api', 'fixture-app-api');
 
     await LibDockerPackaging.generateForTarget({
+      legacyStatePaths: [
+        'database/app.sqlite',
+        'settings.json',
+      ],
+      ports: {
+        METRICS_PORT: 9090,
+        WEB_PORT: 3000,
+      },
       profile: 'http-service',
       projectDirectory,
       replaceFile: true,
+      stateEnvironment: 'APP_STATE_DIRECTORY',
       workspaceDirectory,
       workspaceName: 'api',
     });
@@ -287,6 +303,14 @@ describe('LibDockerPackaging', async () => {
     const novaConfig: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_NovaConfig = JSON.parse(await readFile(join(projectDirectory, 'nova.config.json'), 'utf-8'));
     const initUserContent: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_InitUserContent = await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'init-user'), 'utf-8');
     const healthcheckContent: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_HealthcheckContent = await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'healthcheck'), 'utf-8');
+    const legacyStatePathsContent: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LegacyStatePathsContent = await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 'nova-docker', 'legacy-state-paths'), 'utf-8');
+    const logHelperContent: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LogHelperContent = await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'log'), 'utf-8');
+    const logOutput: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_LogOutput = execFileSync(join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'log'), [
+      'INFO',
+      'api',
+      'One fact.',
+    ]).toString();
+    const manifest: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_Manifest = JSON.parse(await readFile(join(projectDirectory, 'packages', 'docker', 'manifest.json'), 'utf-8'));
     const serviceRunContent: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ServiceRunContent = await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'run'), 'utf-8');
     const containerBuildPackage: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ContainerBuildPackage = JSON.parse(await readFile(join(projectDirectory, 'packages', 'docker', 'build-package.json'), 'utf-8'));
     const shellVariableMarker: Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesOneRootS6ApplianceAndAPrivatePackagesDockerWorkspace_ShellVariableMarker = '$';
@@ -329,11 +353,38 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('PUID=1000'), true);
     strictEqual(dockerfileContent.includes('PGID=1000'), true);
     strictEqual(dockerfileContent.includes('TZ=UTC'), true);
+    strictEqual(dockerfileContent.includes('WEB_PORT=3000'), true);
+    strictEqual(dockerfileContent.includes('METRICS_PORT=9090'), true);
+    strictEqual(dockerfileContent.includes('S6_BEHAVIOUR_IF_STAGE2_FAILS=2'), true);
+    strictEqual(dockerfileContent.includes('S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0'), true);
+    strictEqual(dockerfileContent.includes('S6_SERVICES_GRACETIME=6000'), true);
+    strictEqual(dockerfileContent.includes('S6_KILL_GRACETIME=1000'), true);
+    strictEqual(dockerfileContent.includes('S6_KILL_FINISH_MAXTIME=1000'), true);
+    strictEqual(dockerfileContent.includes('curl \\'), true);
+    strictEqual(dockerfileContent.includes('diffutils \\'), true);
+    strictEqual(dockerfileContent.includes('util-linux \\'), true);
+    strictEqual(dockerfileContent.includes('wget \\'), false);
+    strictEqual(dockerfileContent.includes('EXPOSE 3000'), true);
+    strictEqual(dockerfileContent.includes('EXPOSE 9090'), true);
+    strictEqual(dockerfileContent.includes('HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3'), true);
+    strictEqual(dockerfileContent.includes('RUN mkdir -p /config /data'), true);
+    strictEqual(dockerfileContent.includes('\nUSER '), false);
     strictEqual(composeContent.includes('context: .'), true);
     strictEqual(composeContent.includes('init: true'), false);
     strictEqual(composeContent.includes(`PUID: "${shellVariableMarker}{PUID:-1000}"`), true);
-    strictEqual(composeContent.includes(`S6_READ_ONLY_ROOT: "${shellVariableMarker}{S6_READ_ONLY_ROOT:-0}"`), true);
-    strictEqual(composeContent.includes('"3000:3000"'), true);
+    strictEqual(composeContent.includes(`WEB_PORT: "${shellVariableMarker}{WEB_PORT:-3000}"`), true);
+    strictEqual(composeContent.includes(`METRICS_PORT: "${shellVariableMarker}{METRICS_PORT:-9090}"`), true);
+    strictEqual(composeContent.includes('S6_READ_ONLY_ROOT'), false);
+    strictEqual(composeContent.includes('ports:'), false);
+    strictEqual(composeContent.includes('restart: always'), true);
+    strictEqual(composeContent.includes('user: "0:0"'), true);
+    strictEqual(composeContent.includes('network_mode: host'), true);
+    strictEqual(composeContent.includes('- "./config:/config"'), true);
+    strictEqual(composeContent.includes('read_only:'), false);
+    strictEqual(composeContent.includes('tmpfs:'), false);
+    strictEqual(composeContent.includes('cap_drop:'), false);
+    strictEqual(composeContent.includes('security_opt:'), false);
+    strictEqual(composeContent.includes('shm_size:'), false);
     strictEqual(dockerignoreContent.includes('#### Shared ####'), true);
     strictEqual(dockerignoreContent.includes('#### Version Control - Git / GitHub ####'), true);
     strictEqual(dockerignoreContent.includes('#### Language - Node.js ####'), true);
@@ -383,20 +434,99 @@ describe('LibDockerPackaging', async () => {
     strictEqual(await pathExists(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'nova-container-init', 'dependencies.d', 'base')), true);
     strictEqual(await pathExists(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 'user-bundles.d', 'user', 'contents.d', 'api')), true);
     strictEqual(await pathExists(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'user')), false);
-    strictEqual(initUserContent.includes('PUID must be between 1 and 2147483647.'), true);
+    deepStrictEqual(manifest['legacyStatePaths'], [
+      'database/app.sqlite',
+      'settings.json',
+    ]);
+    strictEqual(manifest['healthPath'], '/health');
+    strictEqual(manifest['networkMode'], 'host');
+    deepStrictEqual(manifest['ports'], {
+      METRICS_PORT: 9090,
+      WEB_PORT: 3000,
+    });
+    strictEqual((manifest['services'][0] === undefined) ? undefined : manifest['services'][0]['portEnvironment'], 'WEB_PORT');
+    strictEqual(manifest['stateEnvironment'], 'APP_STATE_DIRECTORY');
+    strictEqual(legacyStatePathsContent, [
+      'database/app.sqlite',
+      'settings.json',
+      '',
+    ].join('\n'));
+    strictEqual(initUserContent.includes('PUID must be an integer between 1 and 60000.'), true);
+    strictEqual(initUserContent.includes('PGID must be an integer between 1 and 60000.'), true);
     strictEqual(initUserContent.includes('TZ must name an installed IANA timezone.'), true);
+    strictEqual(initUserContent.includes(`if ln -snf "/usr/share/zoneinfo/${shellVariableMarker}{TZ_VALUE}" /etc/localtime 2>/dev/null`), true);
+    strictEqual(initUserContent.includes('> /etc/timezone 2>/dev/null; then'), true);
+    strictEqual(initUserContent.includes('The root filesystem is read-only, so the container clock files were not changed'), true);
+    strictEqual(initUserContent.includes('mountpoint -q /config'), true);
+    strictEqual(initUserContent.includes('stat -c \'%d\''), true);
+    strictEqual(initUserContent.includes(`cp -a -- "${shellVariableMarker}{source_path}" "${shellVariableMarker}{temporary_destination}"`), true);
+    strictEqual(initUserContent.includes('diff --brief --recursive --no-dereference'), true);
+    strictEqual(initUserContent.indexOf('diff --brief --recursive --no-dereference') < initUserContent.indexOf(`rm -rf -- "${shellVariableMarker}{source_path}"`), true);
+    strictEqual(initUserContent.includes('Refusing to overwrite existing state path'), true);
+    strictEqual(initUserContent.includes('App state exists in both /config and deprecated /data; using /config'), true);
+    strictEqual(initUserContent.includes('Using deprecated /data for app state; change the app-state mount from /data to /config.'), true);
+    strictEqual(initUserContent.includes(`Moved app state ${shellVariableMarker}{legacy_path} from /data to /config.`), true);
+    strictEqual(initUserContent.includes(`mkdir -p "${shellVariableMarker}{STATE_DIRECTORY}/keys" "${shellVariableMarker}{STATE_DIRECTORY}/database"`), true);
+    strictEqual(initUserContent.includes('NOVA_STATE_DIRECTORY'), true);
+    strictEqual(initUserContent.includes('NOVA_KEYS_DIRECTORY'), true);
+    strictEqual(initUserContent.includes('NOVA_INSTALLATION_KEY_FILE'), true);
+    strictEqual(initUserContent.includes('NOVA_DATABASE_DIRECTORY'), true);
+    strictEqual(initUserContent.includes('APP_STATE_DIRECTORY'), true);
+    strictEqual(initUserContent.includes('touch '), false);
+    strictEqual(initUserContent.includes(`chown -R "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{STATE_DIRECTORY}"`), true);
     strictEqual(initUserContent.includes(`chown "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{writable_path}"`), true);
-    strictEqual(initUserContent.includes('chown -R'), false);
+    strictEqual(initUserContent.includes(`chown -R "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{writable_path}"`), false);
+    strictEqual(initUserContent.includes(`chmod 0700 "${shellVariableMarker}{STATE_DIRECTORY}/keys"`), true);
+    strictEqual(initUserContent.includes(`find "${shellVariableMarker}{STATE_DIRECTORY}/keys" -type f -exec chmod 0600 {} +`), true);
     strictEqual(initUserContent.includes('groupmod'), false);
-    strictEqual(initUserContent.includes('/etc/localtime'), false);
     strictEqual(initUserContent.includes('/etc|/etc/*'), true);
     strictEqual(initUserContent.startsWith('#!/command/with-contenv sh\n'), true);
+    strictEqual(initUserContent.includes('. /usr/local/libexec/nova-docker/log'), true);
     strictEqual(serviceRunContent.startsWith('#!/command/with-contenv sh\n'), true);
+    strictEqual(serviceRunContent.includes('. /run/nova-docker/environment'), true);
+    strictEqual(serviceRunContent.includes(`export PORT="${shellVariableMarker}{WEB_PORT}"`), true);
+    strictEqual(serviceRunContent.includes('nova_log INFO \'api\' \'Starting service.\''), true);
     strictEqual(serviceRunContent.includes('--require=/app/.pnp.cjs'), true);
     strictEqual(serviceRunContent.includes('--experimental-loader=/app/.pnp.loader.mjs'), true);
     strictEqual(serviceRunContent.includes(`/command/s6-applyuidgid -u "${shellVariableMarker}{PUID:-1000}" -g "${shellVariableMarker}{PGID:-1000}"`), true);
-    strictEqual(healthcheckContent.includes('/command/s6-svstat -u /run/service/api'), true);
+    strictEqual(healthcheckContent.includes('/etc/nova-docker/healthcheck'), true);
+    strictEqual(healthcheckContent.indexOf('. /run/nova-docker/environment') < healthcheckContent.indexOf('/etc/nova-docker/healthcheck'), true);
+    strictEqual(healthcheckContent.includes('/command/s6-svstat -o up /run/service/api'), true);
+    strictEqual(healthcheckContent.includes(`if [ "${shellVariableMarker}{service_status}" != true ]`), true);
+    strictEqual(healthcheckContent.includes(`http://127.0.0.1:${shellVariableMarker}{WEB_PORT}/health`), true);
+    strictEqual(healthcheckContent.includes('--write-out \'%{http_code}\''), true);
+    strictEqual(healthcheckContent.includes('--show-error'), false);
+    strictEqual(healthcheckContent.includes('2??) ;;'), true);
+    strictEqual(healthcheckContent.includes('nova_log ERROR healthcheck'), true);
+    strictEqual(logHelperContent.includes('date -u \'+%Y-%m-%dT%H:%M:%SZ\''), true);
+    strictEqual(logHelperContent.includes([
+      'printf \'%s %s %s: %s',
+      'n\'',
+    ].join('\\')), true);
+    strictEqual(logHelperContent.includes('DEBUG|INFO|WARN|ERROR'), true);
+    strictEqual(logOutput.endsWith('Z INFO api: One fact.\n'), true);
+    strictEqual(await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'timeout-down'), 'utf-8'), '6000\n');
+    strictEqual(await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'timeout-kill'), 'utf-8'), '6000\n');
+    strictEqual(await readFile(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'timeout-finish'), 'utf-8'), '1000\n');
+    strictEqual(await pathExists(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'finish')), false);
     strictEqual(serviceRunContent.includes('cd \'/app/apps/api\''), true);
+
+    execFileSync('/bin/sh', [
+      '-n',
+      join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'init-user'),
+    ]);
+    execFileSync('/bin/sh', [
+      '-n',
+      join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'healthcheck'),
+    ]);
+    execFileSync('/bin/sh', [
+      '-n',
+      join(projectDirectory, 'packages', 'docker', 'rootfs', 'usr', 'local', 'libexec', 'nova-docker', 'log'),
+    ]);
+    execFileSync('/bin/sh', [
+      '-n',
+      join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'run'),
+    ]);
 
     return;
   });
@@ -633,6 +763,7 @@ describe('LibDockerPackaging', async () => {
           critical: true,
           dependencies: ['prepare'],
           name: 'worker',
+          requiredForHealth: false,
           writablePaths: ['/app/data'],
         },
       ],
@@ -647,6 +778,7 @@ describe('LibDockerPackaging', async () => {
     const prepareScript: Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_PrepareScript = await readFile(join(rootfsDirectory, 'usr', 'local', 'libexec', 'nova-docker', 'services', 'prepare'), 'utf-8');
     const workerType: Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_WorkerType = await readFile(join(rootfsDirectory, 'etc', 's6-overlay', 's6-rc.d', 'worker', 'type'), 'utf-8');
     const workerFinish: Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_WorkerFinish = await readFile(join(rootfsDirectory, 'etc', 's6-overlay', 's6-rc.d', 'worker', 'finish'), 'utf-8');
+    const healthcheckContent: Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_HealthcheckContent = await readFile(join(rootfsDirectory, 'usr', 'local', 'libexec', 'nova-docker', 'healthcheck'), 'utf-8');
     const shellVariableMarker: Tests_Lib_DockerPackaging_LibDockerPackaging_SupportsMultipleNativeS6ServicesFromOneWorkspaceWithDependenciesAndCriticalHaltBehavior_ShellVariableMarker = '$';
 
     strictEqual(prepareType, 'oneshot\n');
@@ -659,7 +791,18 @@ describe('LibDockerPackaging', async () => {
     strictEqual(await pathExists(join(rootfsDirectory, 'etc', 's6-overlay', 's6-rc.d', 'worker', 'dependencies.d', 'prepare')), true);
     strictEqual(workerFinish.includes('/run/s6/basedir/bin/halt'), true);
     strictEqual(workerFinish.includes(`${shellVariableMarker}{2:-0}`), true);
-    strictEqual(writablePathsContent, '/app/data\n');
+    strictEqual(workerFinish.includes('nova_log ERROR \'worker\''), true);
+    strictEqual(healthcheckContent.includes('/command/s6-svstat -o up /run/service/worker'), true);
+    strictEqual(healthcheckContent.includes('http://127.0.0.1'), false);
+    strictEqual(writablePathsContent, [
+      '/app/data',
+      '',
+    ].join('\n'));
+
+    execFileSync('/bin/sh', [
+      '-n',
+      join(rootfsDirectory, 'etc', 's6-overlay', 's6-rc.d', 'worker', 'finish'),
+    ]);
 
     await LibDockerPackaging.generateForTarget({
       profile: 'background-service',
@@ -910,6 +1053,8 @@ describe('LibDockerPackaging', async () => {
     const workspaceDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_KeepsADocsOnlyDocusaurusApplianceOptInAndIndependentFromPagesDelivery_WorkspaceDirectory = await writeWorkspace(projectDirectory, 'apps/docs', 'fixture-docs');
 
     await LibDockerPackaging.generateForTarget({
+      healthPath: '/',
+      networkMode: 'bridge',
       profile: 'static-site',
       projectDirectory,
       replaceFile: true,
@@ -930,8 +1075,13 @@ describe('LibDockerPackaging', async () => {
     deepStrictEqual(manifest['services'].map((service) => service['name']), ['docs']);
     strictEqual(dockerfileContent.includes('RUN npm run build --workspace=\'fixture-docs\''), true);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
-    strictEqual(composeContent.includes('"8080:8080"'), true);
-    strictEqual(composeContent.includes('read_only: true'), true);
+    strictEqual(composeContent.includes('network_mode: bridge'), true);
+    strictEqual(composeContent.includes([
+      '$',
+      '{WEB_PORT:-8080}:$',
+      '{WEB_PORT:-8080}',
+    ].join('')), true);
+    strictEqual(composeContent.includes('read_only: true'), false);
 
     return;
   });
@@ -954,10 +1104,22 @@ describe('LibDockerPackaging', async () => {
 
     const manifestPath: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_ManifestPath = join(projectDirectory, 'packages', 'docker', 'manifest.json');
     const generatedManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_GeneratedManifestContent = await readFile(manifestPath, 'utf-8');
-    const legacyManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent = generatedManifestContent.replace('"packageName": "fixture-app-docs"', [
-      '"buildDirectory": "dist",',
-      '      "packageName": "fixture-app-docs"',
-    ].join('\n'));
+    const legacyManifest: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifest = JSON.parse(generatedManifestContent);
+
+    Reflect.deleteProperty(legacyManifest, 'healthPath');
+    Reflect.deleteProperty(legacyManifest, 'legacyStatePaths');
+    Reflect.deleteProperty(legacyManifest, 'networkMode');
+    Reflect.deleteProperty(legacyManifest, 'ports');
+
+    for (const service of legacyManifest['services']) {
+      Reflect.deleteProperty(service, 'portEnvironment');
+    }
+
+    if (legacyManifest['workspaces'][0] !== undefined) {
+      Reflect.set(legacyManifest['workspaces'][0], 'buildDirectory', 'dist');
+    }
+
+    const legacyManifestContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_LegacyManifestContent = `${JSON.stringify(legacyManifest, null, 2)}\n`;
 
     await writeFile(manifestPath, legacyManifestContent, 'utf-8');
 
@@ -974,7 +1136,12 @@ describe('LibDockerPackaging', async () => {
 
     strictEqual(generatedManifestContent.includes('buildDirectory'), false);
     strictEqual(legacyManifestContent.includes('"buildDirectory": "dist"'), true);
+    strictEqual(legacyManifestContent.includes('healthPath'), false);
+    strictEqual(legacyManifestContent.includes('portEnvironment'), false);
     strictEqual(manifestContent.includes('buildDirectory'), false);
+    strictEqual(manifestContent.includes('"healthPath": "/health"'), true);
+    strictEqual(manifestContent.includes('"networkMode": "host"'), true);
+    strictEqual(manifestContent.includes('"portEnvironment": "WEB_PORT"'), true);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/docs/build /app/sites/docs'), true);
     strictEqual(dockerfileContent.includes('COPY --from=build /workspace/apps/web/build /app/sites/web'), true);
     strictEqual(dockerfileContent.includes('/workspace/apps/docs/dist'), false);

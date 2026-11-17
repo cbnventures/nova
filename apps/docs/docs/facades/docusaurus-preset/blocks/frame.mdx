@@ -19,6 +19,11 @@ tags:
   - "figure"
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+
+import framePreviewLight from './_assets_/frame-preview-light.png';
+import framePreviewDark from './_assets_/frame-preview-dark.png';
+
 Figure wrapper with an optional caption. Wraps any media child (themed image, image, video, embed) with preset-specific framing identity — radius, border, shadow, and caption typography.
 
 ## Summary
@@ -31,6 +36,10 @@ The Frame block renders a `<figure>` element with two parts: a `<div class="nova
 - **Caption support** — pass a `caption` prop to render a styled `<figcaption>` below the media.
 - **Pass-through styling** — `className` and `style` props merge with the base `nova-frame` class for one-off overrides.
 - **Semantic HTML** — uses `<figure>` + `<figcaption>` so screen readers announce the caption as related to the media.
+
+## Preview
+
+<ThemedImage sources={{ light: framePreviewLight, dark: framePreviewDark }} alt="Frame block preview" width={1148} height={781} style={{ height: 'auto' }} />
 
 ## Usage
 

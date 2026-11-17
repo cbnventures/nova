@@ -61,17 +61,168 @@ Nova does not retain compatibility with generated `Dockerfile`, `compose.yml`, o
 
 ## Runtime Contract
 
-Every generated image exposes the same identity and timezone settings:
+Every generated image starts as root through s6-overlay's `/init`. Initialization prepares persistent storage and then each non-root service uses `s6-applyuidgid` with the configured numeric identity.
 
-| Variable | Default | Purpose                                                  |
-|----------|---------|----------------------------------------------------------|
-| `PUID`   | `1000`  | Numeric user ID for the primary runtime identity.        |
-| `PGID`   | `1000`  | Numeric group ID for the primary runtime identity.       |
-| `TZ`     | `UTC`   | Effective timezone applied inside the running container. |
+| Variable                     | Default             | Purpose                                                                |
+|------------------------------|---------------------|------------------------------------------------------------------------|
+| `PUID`                       | `1000`              | Numeric service user ID. The accepted range is `1` through `60000`.    |
+| `PGID`                       | `1000`              | Numeric service group ID. The accepted range is `1` through `60000`.   |
+| `TZ`                         | `UTC`               | Installed IANA timezone used for `/etc/localtime` and `/etc/timezone`. |
+| `WEB_PORT`                   | Manifest value      | Main HTTP listener and health-check port.                              |
+| `<NAME>_PORT`                | Manifest value      | An additional named listener declared by the appliance.                |
+| `NOVA_STATE_DIRECTORY`       | Resolved at startup | Active app-state directory, normally `/config`.                        |
+| `NOVA_KEYS_DIRECTORY`        | Resolved at startup | Private key directory inside app state.                                |
+| `NOVA_INSTALLATION_KEY_FILE` | Resolved at startup | Installation key path. The application creates the key itself.         |
+| `NOVA_DATABASE_DIRECTORY`    | Resolved at startup | SQLite parent directory or PostgreSQL data directory.                  |
 
-Initialization starts as root so the image can prepare its declared writable paths and runtime identity. Primary long-running services then drop privileges to the configured identity instead of running as root.
+Startup rejects identity values outside the accepted range and unknown or unsafe timezone names. It links `/etc/localtime` to the selected zoneinfo entry and writes `/etc/timezone` before any application service starts.
 
-The appliance writes only to paths declared writable by its service contract. Adding a service therefore includes deciding which persistent or temporary paths it owns before that service enters the s6 graph.
+### Persistent State
+
+Mount application state at `/config`. Files a user imports, downloads, or otherwise manages as content remain beneath `/data` and are not part of the app-state mount.
+
+Initialization creates this standard layout beneath the resolved state directory:
+
+```text
+<state-directory>/
+├── database/
+└── keys/                         # mode 0700
+    └── installation.key          # mode 0600 when the app creates it
+```
+
+The initializer creates and permissions the directories but does not create `installation.key`. On every start, it recursively changes ownership of the complete state directory to `PUID:PGID`, and changes ownership of each service `writablePaths` entry itself, without descending into it, so content folders such as downloads under `/data` are never walked. It then restores mode `0700` on `keys/` and mode `0600` on every regular file below it.
+
+The manifest can map the resolved state directory to one additional application-specific variable with `stateEnvironment`. Services receive that variable together with the four `NOVA_*` paths through `/run/nova-docker/environment`.
+
+### Legacy `/data` Migration
+
+`legacyStatePaths` identifies relative files or directories that prove an older install stores app state beneath `/data`. Nova uses those markers as follows:
+
+1. If `/config` is a mountpoint, its markers are absent, and `/data` has markers, initialization moves each declared entry into `/config`.
+2. A same-filesystem move uses `rename`; a cross-filesystem move copies metadata, verifies the copy, renames the verified temporary entry into place, and only then removes the source.
+3. Existing destinations are never overwritten. If both locations contain state, `/config` wins and initialization logs a warning.
+4. If `/config` is not a mountpoint and only `/data` contains state, the appliance keeps using `/data` for that start and logs one warning recommending that the app-state mount move to `/config`.
+
+Declare only safe, specific relative markers such as `settings.json` or `database/app.sqlite`. An empty marker list disables legacy detection while new installs still use `/config`.
+
+## Assembly Manifest
+
+`packages/docker/manifest.json` is the source of truth for the appliance-level runtime contract. Nova preserves manifests created before these fields existed and fills in the current defaults when it next generates the assembly.
+
+| Field                        | Default      | Purpose                                                                 |
+|------------------------------|--------------|-------------------------------------------------------------------------|
+| `healthPath`                 | `/health`    | Absolute path requested from the main HTTP listener.                    |
+| `legacyStatePaths`           | `[]`         | Relative app-state markers eligible for migration from `/data`.         |
+| `networkMode`                | `host`       | Compose network mode; `bridge` enables generated port mappings.         |
+| `ports.WEB_PORT`             | Profile port | Main HTTP port default.                                                 |
+| `ports.<NAME>_PORT`          | None         | Additional port environment name and default.                           |
+| `stateEnvironment`           | None         | Optional app-specific alias for `NOVA_STATE_DIRECTORY`.                 |
+| `services[].critical`        | `false`      | Halts the container after a non-zero or abnormal service exit.          |
+| `services[].portEnvironment` | Derived      | Maps a service's compatibility `PORT` variable to a declared port name. |
+| `services[].writablePaths`   | `[]`         | Additional absolute paths whose top level is owned by `PUID:PGID`.      |
+
+For example:
+
+```json
+{
+  "healthPath": "/health",
+  "legacyStatePaths": [
+    "settings.json",
+    "database/app.sqlite"
+  ],
+  "networkMode": "host",
+  "ports": {
+    "WEB_PORT": 8080,
+    "METRICS_PORT": 9090
+  },
+  "schemaVersion": 1,
+  "services": [
+    {
+      "command": "node build/index.js",
+      "critical": true,
+      "dependencies": [],
+      "environment": {},
+      "kind": "longrun",
+      "name": "app",
+      "port": 8080,
+      "portEnvironment": "WEB_PORT",
+      "requiredForHealth": true,
+      "runAsRoot": false,
+      "workspace": "apps/app",
+      "writablePaths": []
+    }
+  ],
+  "stateEnvironment": "APP_STATE_DIRECTORY",
+  "workspaces": []
+}
+```
+
+`WEB_PORT` is the only main HTTP port convention. Additional ports use distinct UPPER_SNAKE_CASE names ending in `_PORT`. The generated Dockerfile sets their defaults, and bridge-mode Compose maps each effective host port to the same container port. Host mode does not emit `ports` mappings.
+
+## Supervision, Health, and Shutdown
+
+The generated Dockerfile configures a 30-second health interval, 5-second timeout, 30-second start period, and three retries. Its one generated helper:
+
+1. Runs `/etc/nova-docker/healthcheck` instead when that executable project override exists.
+2. Requires every declared s6 longrun to report `up`.
+3. Sends `GET http://127.0.0.1:${WEB_PORT}${healthPath}` and accepts only a `2xx` response when `WEB_PORT` is declared.
+
+The legacy `services[].requiredForHealth` field remains readable for older manifests, but it no longer excludes a longrun from supervision health. Every longrun must be up.
+
+`critical: true` adds a finish script that halts the container after a non-zero exit or signal so Docker's restart policy can restart the whole appliance cleanly. Non-critical longruns remain under normal s6 restart supervision.
+
+Stage-two failures stop the image instead of leaving a partially started appliance. Generated longruns receive six seconds to stop before `SIGKILL`; finish and final-kill windows are one second each so shutdown remains below Docker's default ten-second stop timeout.
+
+## Log Lines
+
+Generated scripts write one plain-text fact per line with this shape:
+
+```text
+2026-01-15T18:42:07Z INFO component: message
+```
+
+The level is one of `DEBUG`, `INFO`, `WARN`, or `ERROR`, and timestamps are UTC ISO-8601 values ending in `Z`. Application code should use the same shape. Shell services can source `/usr/local/libexec/nova-docker/log` and call `nova_log INFO app "message"`, or invoke the helper directly with the same three arguments.
+
+## Installation
+
+The generated image expects a root start and drops privileges inside s6. A host-network install can use this form:
+
+```sh
+sudo docker rm --force example-app && \
+sudo docker rmi example/example-app:latest && \
+sudo docker run \
+    -d \
+    -v "/srv/example-app/config:/config" \
+    -e "PGID=1000" \
+    -e "PUID=1000" \
+    -e "TZ=America/New_York" \
+    --restart always \
+    --user 0:0 \
+    --net=host \
+    --name example-app \
+    example/example-app:latest
+```
+
+When a manifest opts into bridge mode, place each required `-p` flag after the environment flags and use `--net=bridge`. Add `--cap-add` or `--device` flags in that same position only when the application requires them. The generated default does not add capabilities, devices, a read-only root, `tmpfs`, capability drops, `no-new-privileges`, or shared-memory overrides.
+
+The equivalent host-network Compose file is:
+
+```yaml
+services:
+  app:
+    image: example/example-app:latest
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: "America/New_York"
+    network_mode: host
+    restart: always
+    user: "0:0"
+    volumes:
+      - "/srv/example-app/config:/config"
+```
+
+For bridge mode, change `network_mode` to `bridge` and add a `ports` entry for each declared port, such as `"8080:8080"` for `WEB_PORT=8080`.
 
 ## OCI Image Labels
 

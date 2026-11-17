@@ -19,6 +19,12 @@ tags:
   - "tabs"
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import showcasePreviewLight from './_assets_/showcase-preview-light.png';
+import showcasePreviewDark from './_assets_/showcase-preview-dark.png';
+
 One section that shows several product views, one at a time. Each view has its own heading, description, link, and content, usually a Browser Frame or Terminal Frame. A tab pill switches between them.
 
 ## Summary
@@ -31,6 +37,12 @@ The Showcase block renders a `<div class="nova-showcase">` with a tab pill (`rol
 - **Works with the frames** — put a Browser Frame or Terminal Frame in each item's `content`.
 - **Accessible tabs** — buttons carry `role="tab"`, `aria-selected`, and `aria-controls`, and the panel is labelled by the selected tab.
 - **Fits narrow screens** — the tab pill stays on one line down to 320px.
+
+## Preview
+
+<Frame caption="Showcase block — light and dark mode preview">
+  <ThemedImage sources={{ light: showcasePreviewLight, dark: showcasePreviewDark }} alt="Showcase block preview" width={800} height={868} />
+</Frame>
 
 ## Usage
 

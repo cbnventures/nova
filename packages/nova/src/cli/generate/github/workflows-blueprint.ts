@@ -1797,6 +1797,10 @@ export class Runner {
     steps.push({
       name: 'Check project',
       kind: 'check',
+      env: [{
+        key: 'GITHUB_TOKEN',
+        value: Runner.expr('secrets.GITHUB_TOKEN'),
+      }],
       run: checkCommand,
       runBlock: true,
       workingDirectory: Runner.expr('env.ROOT_DIR'),
@@ -3993,6 +3997,11 @@ export class Runner {
             {
               key: 'outputs',
               value: `type=oci,dest=${Runner.expr('runner.temp')}/container-oci/layout,tar=false`,
+            },
+            {
+              key: 'secrets',
+              value: `github_token=${Runner.expr('secrets.GITHUB_TOKEN')}`,
+              block: true,
             },
           ],
         },

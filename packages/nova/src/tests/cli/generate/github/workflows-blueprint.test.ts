@@ -1127,8 +1127,37 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     const nestedResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(nestedContainerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
     const plainResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PlainResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces));
 
+    ok(containerResult.includes([
+      '      - name: "Check project"',
+      '        timeout-minutes: 15',
+      '        env:',
+      [
+        '          GITHUB_TOKEN: "',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}"',
+      ].join(''),
+      '        run: |',
+    ].join('\n')), 'the check step receives the automatic GitHub token');
     ok(containerResult.includes('npm run check -- --workspace image-docs --workspace image-package-shared --workspace image-app-bot --workspace image-tool-docker --workspace image-package-ui --workspace image-app-apple\n'), 'a root image checks its build scopes, image workspaces, and every transitive dependency once each, keeping the root');
     ok(containerResult.includes('npm run build -- --workspace image-docs\n'), 'the build step keeps only the configured build scopes');
+    ok(containerResult.includes([
+      [
+        '          outputs: "type=oci,dest=',
+        '$',
+        '{{ runner.temp }}/container-oci/layout,tar=false"',
+      ].join(''),
+      '          secrets: |',
+      [
+        '            github_token=',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}',
+      ].join(''),
+    ].join('\n')), 'the container build receives the GitHub token after outputs as a BuildKit secret');
+    strictEqual(containerResult.split('uses: "docker/build-push-action@v7"').length - 1, containerResult.split([
+      'github_token=',
+      '$',
+      '{{ secrets.GITHUB_TOKEN }}',
+    ].join('')).length - 1, 'every per-platform container build receives the GitHub token secret');
     ok(docsOnlyResult.includes('npm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'a workflow without a root image checks its shipped workspaces and dependencies but not the root');
     ok(pnpmResult.includes('pnpm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'the check uses the configured package manager');
     ok(nestedResult.includes('npm run check -- --workspace image-docs --workspace image-app-bot --workspace image-package-ui --workspace image-package-shared --workspace image-app-apple --exclude-workspace ./\n'), 'a container target outside the root is checked like any deployed workspace');

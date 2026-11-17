@@ -18,6 +18,12 @@ tags:
   - "github-actions"
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import workflowRunFramePreviewLight from './_assets_/workflow-run-frame-preview-light.png';
+import workflowRunFramePreviewDark from './_assets_/workflow-run-frame-preview-dark.png';
+
 Show a GitHub Actions run the way its job page looks, with the steps and an open step's log as text.
 
 ## Summary
@@ -29,6 +35,12 @@ The Workflow Run Frame block renders a `<figure class="nova-workflow-run-frame">
 - **Show what your action does** — readers see the exact log lines your action prints, in the place they'll see them on GitHub.
 - **Real GitHub look** — GitHub's octicons and Primer colors, in GitHub's light theme or dark theme to match the site.
 - **Readable on phones** — the sidebar hides below 640px so the steps keep the room, and long log lines wrap.
+
+## Preview
+
+<Frame caption="Workflow Run Frame block — light and dark mode preview">
+  <ThemedImage sources={{ light: workflowRunFramePreviewLight, dark: workflowRunFramePreviewDark }} alt="Workflow Run Frame block preview" width={1148} height={619} />
+</Frame>
 
 ## Usage
 

@@ -63,6 +63,8 @@ jobs:
 
       - name: "Check project"
         timeout-minutes: 8
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           npm run check -- --workspace pfsense-pkg-firewall --exclude-workspace ./
         working-directory: "${{ env.ROOT_DIR }}"

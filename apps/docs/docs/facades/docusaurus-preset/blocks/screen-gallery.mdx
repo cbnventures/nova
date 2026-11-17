@@ -17,6 +17,12 @@ tags:
   - "screen-gallery"
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import screenGalleryPreviewLight from './_assets_/screen-gallery-preview-light.png';
+import screenGalleryPreviewDark from './_assets_/screen-gallery-preview-dark.png';
+
 Show app screens side by side, each with a heading, a short description, and an optional link.
 
 ## Summary
@@ -28,6 +34,12 @@ The Screen Gallery block renders a `<div class="nova-screen-gallery">` with one 
 - **Screens that explain themselves** — every screenshot gets a heading and a sentence or two, so readers know what they're looking at.
 - **Any device** — you pass the image, so phone, tablet, or watch shots work the same way, framed or not.
 - **Readable on phones** — tall screenshots don't shrink into slivers; the row scrolls instead.
+
+## Preview
+
+<Frame caption="Screen Gallery block — light and dark mode preview">
+  <ThemedImage sources={{ light: screenGalleryPreviewLight, dark: screenGalleryPreviewDark }} alt="Screen Gallery block preview" width={480} height={819} />
+</Frame>
 
 ## Usage
 

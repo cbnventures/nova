@@ -66,13 +66,21 @@ LABEL org.opencontainers.image.title="[__PROJECT_NAME__]" \
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
+    curl \
+    diffutils \
     tzdata \
-    wget \
+    util-linux \
   && rm -rf /var/lib/apt/lists/*
 ENV NODE_ENV=production \
   PGID=1000 \
   PUID=1000 \
+  S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+  S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+  S6_KILL_FINISH_MAXTIME=1000 \
+  S6_KILL_GRACETIME=1000 \
+  S6_SERVICES_GRACETIME=6000 \
   TZ=UTC
+[__DOCKER_PORT_ENVIRONMENT__]
 WORKDIR /app
 COPY --from=s6-overlay /s6-rootfs/ /
 COPY packages/docker/rootfs/ /
@@ -81,9 +89,10 @@ RUN find /usr/local/libexec/nova-docker -type f -exec sed -i 's/\r$//' {} \; \
   && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec sed -i 's/\r$//' {} \; \
   && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec chmod 0755 {} \;
 [__DOCKER_RUNTIME_COPIES__]
+RUN mkdir -p /config /data
 [__DOCKER_WRITABLE_DIRECTORIES__]
 [__DOCKER_EXPOSE_DIRECTIVES__]
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD ["/usr/local/libexec/nova-docker/healthcheck"]
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/init"]

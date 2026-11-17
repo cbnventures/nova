@@ -20,6 +20,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import appMarketDownloadPreviewLight from './_assets_/app-market-download-preview-light.png';
+import appMarketDownloadPreviewDark from './_assets_/app-market-download-preview-dark.png';
+
 App store download buttons for Apple App Store and Google Play. Renders styled buttons that open in a new tab.
 
 Returns nothing if both URLs are omitted.
@@ -35,6 +41,12 @@ The block renders nothing if neither `appStoreUrl` nor `googlePlayUrl` is provid
 - **Consistent download buttons** that match the active preset styling.
 - **Conditional rendering** — only shows buttons for stores where a URL is provided.
 - **Accessible** — links open in a new tab with proper `rel="noopener noreferrer"` attributes.
+
+## Preview
+
+<Frame caption="App Market Download block — light and dark mode preview">
+  <ThemedImage sources={{ light: appMarketDownloadPreviewLight, dark: appMarketDownloadPreviewDark }} alt="App Market Download block preview" width={424} height={169} />
+</Frame>
 
 ## Usage
 

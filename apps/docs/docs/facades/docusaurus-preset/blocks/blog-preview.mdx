@@ -21,6 +21,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import blogPreviewPreviewLight from './_assets_/blog-preview-preview-light.png';
+import blogPreviewPreviewDark from './_assets_/blog-preview-preview-dark.png';
+
 Responsive grid of blog post cards showing date, title, description, and a "Read more" link. Use it on a landing page to surface recent content.
 
 ## Summary
@@ -34,6 +40,12 @@ Dates are formatted using the site's current locale with the year, long month, a
 - **Surface recent content** on your landing page without building a custom blog feed.
 - **Consistent card layout** across all presets — spacing, typography, and depth are preset-aware.
 - **Formatted dates** — pass a date string and the block handles locale-aware formatting.
+
+## Preview
+
+<Frame caption="Blog Preview block — light and dark mode preview">
+  <ThemedImage sources={{ light: blogPreviewPreviewLight, dark: blogPreviewPreviewDark }} alt="Blog Preview block preview" width={1280} height={297} />
+</Frame>
 
 ## Usage
 

@@ -797,6 +797,35 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     strictEqual(generated.includes('runs-on: "ubuntu-24.04-arm"'), true);
     strictEqual(generated.includes('cache-from: "type=gha,scope=container-linux-arm64"'), true);
     strictEqual(generated.includes('cache-to: "type=gha,mode=max,scope=container-linux-arm64"'), true);
+    strictEqual(generated.includes([
+      '      - name: "Check project"',
+      '        timeout-minutes: 45',
+      '        env:',
+      [
+        '          GITHUB_TOKEN: "',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}"',
+      ].join(''),
+      '        run: |',
+    ].join('\n')), true);
+    strictEqual(generated.includes([
+      [
+        '          outputs: "type=oci,dest=',
+        '$',
+        '{{ runner.temp }}/container-oci/layout,tar=false"',
+      ].join(''),
+      '          secrets: |',
+      [
+        '            github_token=',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}',
+      ].join(''),
+    ].join('\n')), true);
+    strictEqual(generated.split([
+      'github_token=',
+      '$',
+      '{{ secrets.GITHUB_TOKEN }}',
+    ].join('')).length - 1, 1);
     strictEqual(generated.includes('needs: ["build", "build-container-linux-arm64"]'), true);
     strictEqual(generated.split('needs: "build-container"').length - 1, 2, 'registry jobs wait for the merged index');
     strictEqual(generated.includes('oras manifest index create --oci-layout'), true);

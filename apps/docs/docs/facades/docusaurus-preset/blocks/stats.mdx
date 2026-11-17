@@ -22,6 +22,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import statsPreviewLight from './_assets_/stats-preview-light.png';
+import statsPreviewDark from './_assets_/stats-preview-dark.png';
+
 Responsive grid of metric items with labeled values. Each item can be tinted with a primary or accent color.
 
 Use it to display key numbers on a landing page.
@@ -35,6 +41,12 @@ The Stats block renders a `<section>` containing a grid of value–label pairs. 
 - **Highlight key numbers** with consistent formatting across pages.
 - **Color-coded values** using the active preset's primary or accent palette.
 - **Preset-aware** — typography and spacing adapt to the active preset.
+
+## Preview
+
+<Frame caption="Stats block — light and dark mode preview">
+  <ThemedImage sources={{ light: statsPreviewLight, dark: statsPreviewDark }} alt="Stats block preview" width={763} height={148} />
+</Frame>
 
 ## Usage
 

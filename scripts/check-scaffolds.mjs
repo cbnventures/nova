@@ -1144,6 +1144,8 @@ async function verifyGeneratedDockerRuntime(novaCliPath, temporaryDirectory) {
         '/run:rw,exec,nosuid,size=64m',
         '--tmpfs',
         '/tmp:rw,noexec,nosuid,size=64m',
+        '--tmpfs',
+        '/config:rw,nosuid,size=64m',
         '--env',
         'PGID=1234',
         '--env',

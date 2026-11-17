@@ -1647,6 +1647,16 @@ export const LIB_REGEX_PATTERN_DOCKER_HUB_CATEGORY_SLUG = /^[a-z0-9]+(?:-[a-z0-9
 export const LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT = /^[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
 
 /**
+ * Lib - Regex - Pattern Docker Health Path.
+ *
+ * Accepts an absolute HTTP path without whitespace, query parameters, fragments,
+ * or shell metacharacters for generated local appliance health requests.
+ *
+ * @since 0.43.1
+ */
+export const LIB_REGEX_PATTERN_DOCKER_HEALTH_PATH = /^\/[A-Za-z0-9._~/-]*$/;
+
+/**
  * Lib - Regex - Pattern Docker Runtime Path.
  *
  * Accepts literal workspace-relative path characters for runtime assets while

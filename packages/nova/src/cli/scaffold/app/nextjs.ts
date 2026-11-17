@@ -102,6 +102,7 @@ export class Runner {
       projectFinalizer: async (workspaceDirectory, workspaceName, configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
           await LibDockerPackaging.generateForTarget({
+            healthPath: '/',
             profile: 'nextjs-standalone',
             projectDirectory: configRoot,
             reportFiles: false,

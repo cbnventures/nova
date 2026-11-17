@@ -1181,9 +1181,47 @@ describe('WorkflowsBlueprint.generate', async () => {
     const publishContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_PublishContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-project.yml'), 'utf-8');
     const docsContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_DocsContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-docs.yml'), 'utf-8');
 
+    ok(publishContent.includes([
+      '      - name: "Check project"',
+      '        timeout-minutes: 15',
+      '        env:',
+      [
+        '          GITHUB_TOKEN: "',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}"',
+      ].join(''),
+      '        run: |',
+    ].join('\n')) === true, 'the container workflow check receives the automatic GitHub token');
+
     ok(publishContent.includes('npm run check -- --workspace image-docs --workspace image-package-shared --workspace image-app-bot --workspace image-tool-docker --workspace image-package-ui --workspace image-app-apple\n') === true, 'the image check covers the build scope, the image workspaces, and every transitive dependency');
 
     ok(publishContent.includes('npm run build -- --workspace image-docs\n') === true, 'the build step keeps only the configured build scope');
+
+    ok(publishContent.includes([
+      [
+        '          outputs: "type=oci,dest=',
+        '$',
+        '{{ runner.temp }}/container-oci/layout,tar=false"',
+      ].join(''),
+      '          secrets: |',
+      [
+        '            github_token=',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}',
+      ].join(''),
+    ].join('\n')) === true, 'the per-platform container build receives the GitHub token after outputs as a BuildKit secret');
+
+    ok(docsContent.includes([
+      '      - name: "Check project"',
+      '        timeout-minutes: 15',
+      '        env:',
+      [
+        '          GITHUB_TOKEN: "',
+        '$',
+        '{{ secrets.GITHUB_TOKEN }}"',
+      ].join(''),
+      '        run: |',
+    ].join('\n')) === true, 'the non-container workflow check receives the automatic GitHub token');
 
     ok(docsContent.includes('npm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n') === true, 'a docs workflow checks the docs, its local file dependency, and that package\'s peer dependency, and leaves out the root');
 

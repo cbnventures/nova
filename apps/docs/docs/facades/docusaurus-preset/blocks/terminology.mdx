@@ -21,6 +21,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import terminologyPreviewLight from './_assets_/terminology-preview-light.png';
+import terminologyPreviewDark from './_assets_/terminology-preview-dark.png';
+
 Inline glossary block that expands abbreviations on hover. Wrap any text to add a tooltip with the expanded form.
 
 Optionally links to a glossary page and supports a color accent.
@@ -37,6 +43,12 @@ The optional `color` prop adds a visual accent to distinguish glossary terms fro
 - **Linked glossary** — optionally navigate to a terminology page on click.
 - **Accessible** — uses the native `title` attribute for screen readers, plus `aria-label` on the linked variant.
 - **Preset-aware** — the color accent uses the active preset's primary color.
+
+## Preview
+
+<Frame caption="Terminology block — light and dark mode preview">
+  <ThemedImage sources={{ light: terminologyPreviewLight, dark: terminologyPreviewDark }} alt="Terminology block preview" width={516} height={105} />
+</Frame>
 
 ## Usage
 

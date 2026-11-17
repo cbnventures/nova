@@ -331,6 +331,8 @@ The workflow builds one multi-platform OCI artifact from the root `Dockerfile` c
 
 Each platform builds in its own job on the CPU type that matches the workflow's pinned `runsOn` label. For example, `ubuntu-24.04` produces an `ubuntu-24.04` x64 job for `linux/amd64` and an `ubuntu-24.04-arm` arm64 job for `linux/arm64`. Nova verifies both derived labels and architectures against GitHub's runner-images list before generation. Each job reuses a GitHub Actions Buildx cache scoped to its platform, so a release that leaves a Dockerfile stage unchanged skips rebuilding it. A merge job then combines the per-platform images into one multi-platform index. Registry jobs start only after the merge succeeds, so a failed platform build publishes no tags.
 
+GitHub's automatic `GITHUB_TOKEN` is available to the shared **Check project** step, and each per-platform `docker/build-push-action` receives it as the BuildKit secret `github_token`. A Dockerfile can read it with `RUN --mount=type=secret,id=github_token,required=false` so GitHub API calls are authenticated without storing the token in an image layer.
+
 Registry jobs do not compile workspaces, rebuild the image, or check out source after publishing. A release publishes and verifies the image without changing the Docker Hub repository description or overview.
 
 The Docker Hub target reads its image namespace and repository from the top-level `dockerHub` section. The section is required, and a target-level `with.IMAGE_NAMESPACE` or `with.IMAGE_REPOSITORY` is rejected with guidance to move those values into `dockerHub`. `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` authenticate publishing; they do not decide the image name.

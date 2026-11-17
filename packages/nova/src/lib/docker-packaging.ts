@@ -13,6 +13,8 @@ import { renderIgnoreFile } from './ignore-files.js';
 import { libItemAllowedRecipes } from './item.js';
 import { normalizeNovaConfigTopLevelOrder } from './nova-config-order.js';
 import {
+  LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE,
+  LIB_REGEX_PATTERN_DOCKER_HEALTH_PATH,
   LIB_REGEX_PATTERN_DOCKER_RUNTIME_PATH,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
 } from './regex.js';
@@ -35,15 +37,14 @@ import type {
   Lib_DockerPackaging_DockerReservedServiceNames,
   Lib_DockerPackaging_DockerWorkspaceBuildDirectory,
   Lib_DockerPackaging_Runner_BuildCompose_Content,
+  Lib_DockerPackaging_Runner_BuildCompose_EnvironmentBlock,
   Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock,
   Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles,
-  Lib_DockerPackaging_Runner_BuildCompose_HasContainerNativeService,
-  Lib_DockerPackaging_Runner_BuildCompose_InteractiveBlock,
+  Lib_DockerPackaging_Runner_BuildCompose_EnvironmentLines,
   Lib_DockerPackaging_Runner_BuildCompose_Manifest,
+  Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock,
   Lib_DockerPackaging_Runner_BuildCompose_PortBlock,
   Lib_DockerPackaging_Runner_BuildCompose_PortLines,
-  Lib_DockerPackaging_Runner_BuildCompose_Ports,
-  Lib_DockerPackaging_Runner_BuildCompose_PortSet,
   Lib_DockerPackaging_Runner_BuildCompose_Replacements,
   Lib_DockerPackaging_Runner_BuildCompose_Returns,
   Lib_DockerPackaging_Runner_BuildCompose_Template,
@@ -73,8 +74,9 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue,
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerVersion,
   Lib_DockerPackaging_Runner_BuildDockerfile_PackageName,
+  Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironment,
+  Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironmentLines,
   Lib_DockerPackaging_Runner_BuildDockerfile_Ports,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PortSet,
   Lib_DockerPackaging_Runner_BuildDockerfile_Project,
   Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription,
   Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue,
@@ -115,12 +117,19 @@ import type {
   Lib_DockerPackaging_Runner_BuildDockerfile_WritableDirectories,
   Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths,
   Lib_DockerPackaging_Runner_BuildHealthcheck_Lines,
+  Lib_DockerPackaging_Runner_BuildHealthcheck_LongrunServices,
   Lib_DockerPackaging_Runner_BuildHealthcheck_Manifest,
-  Lib_DockerPackaging_Runner_BuildHealthcheck_RequiredServices,
   Lib_DockerPackaging_Runner_BuildHealthcheck_Returns,
+  Lib_DockerPackaging_Runner_BuildHealthcheck_ShellVariableMarker,
+  Lib_DockerPackaging_Runner_BuildInitUser_Manifest,
+  Lib_DockerPackaging_Runner_BuildInitUser_PortEnvironmentLines,
   Lib_DockerPackaging_Runner_BuildInitUser_ProtectedWritablePatterns,
   Lib_DockerPackaging_Runner_BuildInitUser_Returns,
+  Lib_DockerPackaging_Runner_BuildInitUser_ShellNewline,
   Lib_DockerPackaging_Runner_BuildInitUser_ShellVariableMarker,
+  Lib_DockerPackaging_Runner_BuildLogHelper_Returns,
+  Lib_DockerPackaging_Runner_BuildLogHelper_ShellNewline,
+  Lib_DockerPackaging_Runner_BuildLogHelper_ShellVariableMarker,
   Lib_DockerPackaging_Runner_BuildPackageJsonRecipes_Recipes,
   Lib_DockerPackaging_Runner_BuildPackageJsonRecipes_Returns,
   Lib_DockerPackaging_Runner_BuildRequestedServices_DefaultName,
@@ -156,12 +165,15 @@ import type {
   Lib_DockerPackaging_Runner_BuildService_IsProtectedWritablePath,
   Lib_DockerPackaging_Runner_BuildService_Kind,
   Lib_DockerPackaging_Runner_BuildService_Name,
+  Lib_DockerPackaging_Runner_BuildService_OccupiedPortEnvironments,
   Lib_DockerPackaging_Runner_BuildService_OccupiedPorts,
   Lib_DockerPackaging_Runner_BuildService_Options,
   Lib_DockerPackaging_Runner_BuildService_PathParts,
   Lib_DockerPackaging_Runner_BuildService_Port,
+  Lib_DockerPackaging_Runner_BuildService_PortEnvironment,
   Lib_DockerPackaging_Runner_BuildService_PreferredPort,
   Lib_DockerPackaging_Runner_BuildService_PreviousPort,
+  Lib_DockerPackaging_Runner_BuildService_PreviousPortEnvironment,
   Lib_DockerPackaging_Runner_BuildService_PreviousService,
   Lib_DockerPackaging_Runner_BuildService_RequestedServices,
   Lib_DockerPackaging_Runner_BuildService_Returns,
@@ -205,13 +217,16 @@ import type {
   Lib_DockerPackaging_Runner_GenerateForTarget_ExistingManifestValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_ExistingWorkspace,
   Lib_DockerPackaging_Runner_GenerateForTarget_GitAttributesContent,
+  Lib_DockerPackaging_Runner_GenerateForTarget_HealthPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry,
   Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFilesValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnBerry,
   Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnClassic,
+  Lib_DockerPackaging_Runner_GenerateForTarget_LegacyStatePaths,
   Lib_DockerPackaging_Runner_GenerateForTarget_Manifest,
   Lib_DockerPackaging_Runner_GenerateForTarget_ManifestPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_NeedsSyntheticWorkspaceManifests,
+  Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode,
   Lib_DockerPackaging_Runner_GenerateForTarget_NovaConfig,
   Lib_DockerPackaging_Runner_GenerateForTarget_NovaConfigPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_Options,
@@ -220,6 +235,7 @@ import type {
   Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerVersion,
   Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceContent,
   Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceLines,
+  Lib_DockerPackaging_Runner_GenerateForTarget_Ports,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectDirectory,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectNameValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectSlugValue,
@@ -235,6 +251,7 @@ import type {
   Lib_DockerPackaging_Runner_GenerateForTarget_RootPackagePath,
   Lib_DockerPackaging_Runner_GenerateForTarget_RuntimePaths,
   Lib_DockerPackaging_Runner_GenerateForTarget_ServicesByName,
+  Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment,
   Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestContent,
   Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifests,
@@ -266,9 +283,17 @@ import type {
   Lib_DockerPackaging_Runner_MergeScripts_Merged,
   Lib_DockerPackaging_Runner_MergeScripts_Returns,
   Lib_DockerPackaging_Runner_MergeScripts_Scripts,
+  Lib_DockerPackaging_Runner_NormalizeManifest_HealthPath,
+  Lib_DockerPackaging_Runner_NormalizeManifest_LegacyStatePaths,
   Lib_DockerPackaging_Runner_NormalizeManifest_Manifest,
+  Lib_DockerPackaging_Runner_NormalizeManifest_NetworkMode,
+  Lib_DockerPackaging_Runner_NormalizeManifest_PortEnvironment,
+  Lib_DockerPackaging_Runner_NormalizeManifest_Ports,
+  Lib_DockerPackaging_Runner_NormalizeManifest_PortValue,
   Lib_DockerPackaging_Runner_NormalizeManifest_Returns,
   Lib_DockerPackaging_Runner_NormalizeManifest_ServiceNames,
+  Lib_DockerPackaging_Runner_NormalizeManifest_ServicePortEnvironment,
+  Lib_DockerPackaging_Runner_NormalizeManifest_StateEnvironment,
   Lib_DockerPackaging_Runner_NormalizeManifest_Value,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_PathParts,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_Returns,
@@ -348,6 +373,7 @@ import type {
   Lib_DockerPackaging_Runner_WriteRootfs_HelperDirectory,
   Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory,
   Lib_DockerPackaging_Runner_WriteRootfs_InitServiceDirectory,
+  Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths,
   Lib_DockerPackaging_Runner_WriteRootfs_Manifest,
   Lib_DockerPackaging_Runner_WriteRootfs_NovaConfigDirectory,
   Lib_DockerPackaging_Runner_WriteRootfs_Returns,
@@ -524,7 +550,19 @@ export class Runner {
     }
 
     const retainedWorkspaces: Lib_DockerPackaging_Runner_GenerateForTarget_RetainedWorkspaces = manifest['workspaces'].filter((workspace) => workspace['path'] !== workspacePathValue);
-    const updatedManifest: Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest = {
+    const healthPath: Lib_DockerPackaging_Runner_GenerateForTarget_HealthPath = options['healthPath'] ?? manifest['healthPath'];
+    const legacyStatePaths: Lib_DockerPackaging_Runner_GenerateForTarget_LegacyStatePaths = options['legacyStatePaths'] ?? manifest['legacyStatePaths'];
+    const networkMode: Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode = options['networkMode'] ?? manifest['networkMode'];
+    const ports: Lib_DockerPackaging_Runner_GenerateForTarget_Ports = {
+      ...manifest['ports'],
+      ...(options['ports'] ?? {}),
+    };
+    const stateEnvironment: Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment = options['stateEnvironment'] ?? manifest['stateEnvironment'];
+    const updatedManifest: Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest = Runner.normalizeManifest({
+      healthPath,
+      legacyStatePaths,
+      networkMode,
+      ports,
       schemaVersion: dockerManifestSchemaVersion,
       services: [
         ...retainedServices,
@@ -534,7 +572,8 @@ export class Runner {
         ...retainedWorkspaces,
         workspaceDefinition,
       ].sort((firstWorkspace, secondWorkspace) => firstWorkspace['path'].localeCompare(secondWorkspace['path'])),
-    };
+      ...((stateEnvironment === undefined) ? {} : { stateEnvironment }),
+    });
     const availableServiceNames: Lib_DockerPackaging_Runner_GenerateForTarget_AvailableServiceNames = new Set(updatedManifest['services'].map((service) => service['name']));
 
     for (const service of updatedManifest['services']) {
@@ -851,6 +890,10 @@ export class Runner {
   private static normalizeManifest(value: Lib_DockerPackaging_Runner_NormalizeManifest_Value): Lib_DockerPackaging_Runner_NormalizeManifest_Returns {
     if (value === undefined) {
       return {
+        healthPath: '/health',
+        legacyStatePaths: [],
+        networkMode: 'host',
+        ports: {},
         schemaVersion: dockerManifestSchemaVersion,
         services: [],
         workspaces: [],
@@ -867,6 +910,53 @@ export class Runner {
 
     const manifest: Lib_DockerPackaging_Runner_NormalizeManifest_Manifest = value as Lib_DockerPackaging_Runner_NormalizeManifest_Manifest;
     const serviceNames: Lib_DockerPackaging_Runner_NormalizeManifest_ServiceNames = new Set();
+    const healthPath: Lib_DockerPackaging_Runner_NormalizeManifest_HealthPath = manifest['healthPath'] ?? '/health';
+    const legacyStatePaths: Lib_DockerPackaging_Runner_NormalizeManifest_LegacyStatePaths = Runner.normalizeRuntimePaths(manifest['legacyStatePaths'] ?? [], 'legacy state migration');
+    const networkMode: Lib_DockerPackaging_Runner_NormalizeManifest_NetworkMode = manifest['networkMode'] ?? 'host';
+    const ports: Lib_DockerPackaging_Runner_NormalizeManifest_Ports = {};
+    const stateEnvironment: Lib_DockerPackaging_Runner_NormalizeManifest_StateEnvironment = manifest['stateEnvironment'];
+
+    if (LIB_REGEX_PATTERN_DOCKER_HEALTH_PATH.test(healthPath) === false) {
+      throw new Error(`Docker health path "${healthPath}" must be a safe absolute HTTP path without a query or fragment.`);
+    }
+
+    if (networkMode !== 'bridge' && networkMode !== 'host') {
+      throw new Error('Docker network mode must be either "host" or "bridge".');
+    }
+
+    if (stateEnvironment !== undefined && LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE.test(stateEnvironment) === false) {
+      throw new Error(`Docker state environment name "${stateEnvironment}" must use UPPER_SNAKE_CASE.`);
+    }
+
+    if (isPlainObject(manifest['ports']) === false && manifest['ports'] !== undefined) {
+      throw new Error('Docker manifest ports must contain an object of environment names and defaults.');
+    }
+
+    for (const portEntry of Object.entries(manifest['ports'] ?? {})) {
+      const portEnvironment: Lib_DockerPackaging_Runner_NormalizeManifest_PortEnvironment = portEntry[0];
+      const portValue: Lib_DockerPackaging_Runner_NormalizeManifest_PortValue = portEntry[1];
+
+      if (
+        LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE.test(portEnvironment) === false
+        || (
+          portEnvironment !== 'WEB_PORT'
+          && portEnvironment.endsWith('_PORT') === false
+        )
+      ) {
+        throw new Error(`Docker port environment name "${portEnvironment}" must be WEB_PORT or end in _PORT using UPPER_SNAKE_CASE.`);
+      }
+
+      if (
+        typeof portValue !== 'number'
+        || Number.isInteger(portValue) === false
+        || portValue < 1
+        || portValue > 65535
+      ) {
+        throw new Error(`Docker port default for "${portEnvironment}" must be an integer between 1 and 65535.`);
+      }
+
+      Reflect.set(ports, portEnvironment, portValue);
+    }
 
     for (const service of manifest['services']) {
       Runner.validateServiceName(service['name']);
@@ -876,10 +966,51 @@ export class Runner {
       }
 
       serviceNames.add(service['name']);
+
+      if (service['port'] !== undefined) {
+        if (
+          Number.isInteger(service['port']) === false
+          || service['port'] < 1
+          || service['port'] > 65535
+        ) {
+          throw new Error(`Docker service "${service['name']}" port must be an integer between 1 and 65535.`);
+        }
+
+        let servicePortEnvironment: Lib_DockerPackaging_Runner_NormalizeManifest_ServicePortEnvironment = service['portEnvironment'] ?? '';
+
+        if (servicePortEnvironment === '') {
+          servicePortEnvironment = (Reflect.has(ports, 'WEB_PORT') === false) ? 'WEB_PORT' : `${service['name'].split('-').join('_').toUpperCase()}_PORT`;
+        }
+
+        if (
+          LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE.test(servicePortEnvironment) === false
+          || (
+            servicePortEnvironment !== 'WEB_PORT'
+            && servicePortEnvironment.endsWith('_PORT') === false
+          )
+        ) {
+          throw new Error(`Docker service "${service['name']}" port environment must be WEB_PORT or end in _PORT using UPPER_SNAKE_CASE.`);
+        }
+
+        if (Reflect.has(ports, servicePortEnvironment) === true && ports[servicePortEnvironment] !== service['port']) {
+          service.port = ports[servicePortEnvironment] ?? service['port'];
+        } else {
+          Reflect.set(ports, servicePortEnvironment, service['port']);
+        }
+
+        service.portEnvironment = servicePortEnvironment;
+        Reflect.deleteProperty(service['environment'], 'PORT');
+      }
     }
 
     return {
-      ...manifest,
+      healthPath,
+      legacyStatePaths,
+      networkMode,
+      ports,
+      schemaVersion: dockerManifestSchemaVersion,
+      services: manifest['services'],
+      ...((stateEnvironment === undefined) ? {} : { stateEnvironment }),
       workspaces: manifest['workspaces'].map((workspace) => ({
         packageName: workspace['packageName'],
         path: workspace['path'],
@@ -997,6 +1128,7 @@ export class Runner {
     const workspacePath: Lib_DockerPackaging_Runner_BuildService_WorkspacePath = relative(options['projectDirectory'], options['workspaceDirectory']).split(sep).join('/');
     const previousService: Lib_DockerPackaging_Runner_BuildService_PreviousService = existingServices.find((service) => service['name'] === name && service['workspace'] === workspacePath);
     const previousPort: Lib_DockerPackaging_Runner_BuildService_PreviousPort = (previousService === undefined) ? undefined : previousService['port'];
+    const previousPortEnvironment: Lib_DockerPackaging_Runner_BuildService_PreviousPortEnvironment = (previousService === undefined) ? undefined : previousService['portEnvironment'];
     let preferredPort: Lib_DockerPackaging_Runner_BuildService_PreferredPort = undefined;
 
     if (options['profile'] === 'astro-node') {
@@ -1014,16 +1146,25 @@ export class Runner {
     }
 
     const occupiedPorts: Lib_DockerPackaging_Runner_BuildService_OccupiedPorts = new Set();
+    const occupiedPortEnvironments: Lib_DockerPackaging_Runner_BuildService_OccupiedPortEnvironments = new Set();
 
     for (const service of existingServices) {
       if (service['workspace'] !== workspacePath && service['port'] !== undefined) {
         occupiedPorts.add(service['port']);
+      }
+
+      if (service['workspace'] !== workspacePath && service['portEnvironment'] !== undefined) {
+        occupiedPortEnvironments.add(service['portEnvironment']);
       }
     }
 
     for (const service of requestedServices) {
       if (service['port'] !== undefined) {
         occupiedPorts.add(service['port']);
+      }
+
+      if (service['portEnvironment'] !== undefined) {
+        occupiedPortEnvironments.add(service['portEnvironment']);
       }
     }
 
@@ -1035,12 +1176,66 @@ export class Runner {
       port += 1;
     }
 
+    if (
+      port !== undefined
+      && (
+        Number.isInteger(port) === false
+        || port < 1
+        || port > 65535
+      )
+    ) {
+      throw new Error(`Docker service "${name}" port must be an integer between 1 and 65535.`);
+    }
+
+    let portEnvironment: Lib_DockerPackaging_Runner_BuildService_PortEnvironment = input['portEnvironment'] ?? previousPortEnvironment;
+
+    if (port !== undefined && portEnvironment === undefined) {
+      portEnvironment = (occupiedPortEnvironments.has('WEB_PORT') === false) ? 'WEB_PORT' : `${name.split('-').join('_').toUpperCase()}_PORT`;
+    }
+
+    if (portEnvironment !== undefined) {
+      if (
+        LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE.test(portEnvironment) === false
+        || (
+          portEnvironment !== 'WEB_PORT'
+          && portEnvironment.endsWith('_PORT') === false
+        )
+      ) {
+        throw new Error(`Docker service "${name}" port environment must be WEB_PORT or end in _PORT using UPPER_SNAKE_CASE.`);
+      }
+
+      if (input['portEnvironment'] !== undefined && occupiedPortEnvironments.has(portEnvironment) === true) {
+        throw new Error(`Docker service "${name}" requests port environment "${portEnvironment}", but another service already uses it.`);
+      }
+
+      if (
+        input['port'] === undefined
+        && options['ports'] !== undefined
+        && options['ports'][portEnvironment] !== undefined
+      ) {
+        port = options['ports'][portEnvironment];
+      }
+    }
+
+    if (portEnvironment !== undefined && port === undefined) {
+      throw new Error(`Docker service "${name}" cannot declare a port environment without a port default.`);
+    }
+
+    if (
+      port !== undefined
+      && (
+        Number.isInteger(port) === false
+        || port < 1
+        || port > 65535
+      )
+    ) {
+      throw new Error(`Docker service "${name}" port must be an integer between 1 and 65535.`);
+    }
+
     const kind: Lib_DockerPackaging_Runner_BuildService_Kind = input['kind'] ?? 'longrun';
     const environment: Lib_DockerPackaging_Runner_BuildService_Environment = { ...(input['environment'] ?? {}) };
 
-    if (port !== undefined) {
-      Reflect.set(environment, 'PORT', `${port}`);
-    }
+    Reflect.deleteProperty(environment, 'PORT');
 
     if (options['profile'] === 'astro-node') {
       Reflect.set(environment, 'HOST', '0.0.0.0');
@@ -1060,7 +1255,7 @@ export class Runner {
       } else if (options['profile'] === 'nextjs-standalone') {
         command = 'node server.js';
       } else if (options['profile'] === 'static-site') {
-        command = `httpd -f -p ${port ?? 8080} -h /app/sites/${name}`;
+        command = `httpd -f -p "\${PORT}" -h /app/sites/${name}`;
       }
     }
 
@@ -1096,7 +1291,7 @@ export class Runner {
       workspace: workspacePath,
       writablePaths,
     };
-    const healthCommand: Lib_DockerPackaging_Runner_BuildService_HealthCommand = input['healthCommand'] ?? ((port === undefined) ? undefined : `wget --spider --quiet http://127.0.0.1:${port}/`);
+    const healthCommand: Lib_DockerPackaging_Runner_BuildService_HealthCommand = input['healthCommand'] ?? ((previousService === undefined) ? undefined : previousService['healthCommand']);
 
     if (healthCommand !== undefined) {
       service.healthCommand = healthCommand;
@@ -1104,6 +1299,10 @@ export class Runner {
 
     if (port !== undefined) {
       service.port = port;
+    }
+
+    if (portEnvironment !== undefined) {
+      service.portEnvironment = portEnvironment;
     }
 
     return service;
@@ -1482,15 +1681,14 @@ export class Runner {
       }
     }
 
-    const portSet: Lib_DockerPackaging_Runner_BuildDockerfile_PortSet = new Set();
-
-    for (const service of manifest['services']) {
-      if (service['port'] !== undefined) {
-        portSet.add(service['port']);
-      }
-    }
-
-    const ports: Lib_DockerPackaging_Runner_BuildDockerfile_Ports = [...portSet].sort((firstPort, secondPort) => firstPort - secondPort);
+    const ports: Lib_DockerPackaging_Runner_BuildDockerfile_Ports = [...new Set(Object.values(manifest['ports']))].sort((firstPort, secondPort) => firstPort - secondPort);
+    const portEnvironmentLines: Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironmentLines = Object.entries(manifest['ports'])
+      .sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))
+      .map((portEntry) => `${portEntry[0]}=${portEntry[1]}`);
+    const portEnvironment: Lib_DockerPackaging_Runner_BuildDockerfile_PortEnvironment = (portEnvironmentLines.length === 0) ? '# This appliance does not declare a network port.' : `ENV ${portEnvironmentLines.join([
+      ' \\',
+      '  ',
+    ].join('\n'))}`;
     const exposeDirectives: Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives = ports.map((port) => `EXPOSE ${port}`).join('\n');
     const runtimeBase: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase = (needsNodeRuntime === true) ? 'node:[__SCAFFOLD_VERSION_DOCKER_NODE__]' : 'debian:[__SCAFFOLD_VERSION_DOCKER_DEBIAN__]';
     const writablePaths: Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths = [...new Set(manifest['services'].flatMap((service) => service['writablePaths']))].sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
@@ -1525,6 +1723,7 @@ export class Runner {
       '[__DOCKER_EXPOSE_DIRECTIVES__]': (exposeDirectives === '') ? '# This appliance does not expose a network port.' : exposeDirectives,
       '[__DOCKER_INSTALL_COMMAND__]': installCommand,
       '[__DOCKER_PACKAGE_MANAGER_CONFIG_COPIES__]': packageManagerConfigCopies,
+      '[__DOCKER_PORT_ENVIRONMENT__]': portEnvironment,
       '[__DOCKER_PRUNE_COMMAND__]': pruneCommand,
       '[__DOCKER_RUNTIME_ASSEMBLY__]': runtimeAssembly,
       '[__DOCKER_RUNTIME_BASE__]': runtimeBase,
@@ -1577,8 +1776,8 @@ export class Runner {
   /**
    * Lib - Docker Packaging - Build Compose.
    *
-   * Renders the single root Compose service for every assembled process and keeps
-   * read-only mode available without forcing it on generated projects.
+   * Renders the single root Compose service with the appliance's root-start,
+   * state-mount, restart, network, and declared port contract.
    *
    * @param {Lib_DockerPackaging_String}                       template - Template.
    * @param {Lib_DockerPackaging_Runner_BuildCompose_Manifest} manifest - Manifest.
@@ -1594,32 +1793,26 @@ export class Runner {
     const environmentFiles: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles = manifest['workspaces']
       .filter((workspace) => workspace['profile'] === 'background-service')
       .map((workspace) => `      - ./${workspace['path']}/.env`);
-    const portSet: Lib_DockerPackaging_Runner_BuildCompose_PortSet = new Set();
-
-    for (const service of manifest['services']) {
-      if (service['port'] !== undefined) {
-        portSet.add(service['port']);
-      }
-    }
-
-    const ports: Lib_DockerPackaging_Runner_BuildCompose_Ports = [...portSet].sort((firstPort, secondPort) => firstPort - secondPort);
-    const portLines: Lib_DockerPackaging_Runner_BuildCompose_PortLines = ports.map((port) => `      - "${port}:${port}"`);
-    const hasContainerNativeService: Lib_DockerPackaging_Runner_BuildCompose_HasContainerNativeService = manifest['workspaces'].some((workspace) => workspace['profile'] === 'container-native');
+    const environmentLines: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentLines = Object.entries(manifest['ports'])
+      .sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))
+      .map((portEntry) => `      ${portEntry[0]}: "\${${portEntry[0]}:-${portEntry[1]}}"`);
+    const portLines: Lib_DockerPackaging_Runner_BuildCompose_PortLines = (manifest['networkMode'] === 'bridge') ? Object.entries(manifest['ports'])
+      .sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))
+      .map((portEntry) => `      - "\${${portEntry[0]}:-${portEntry[1]}}:\${${portEntry[0]}:-${portEntry[1]}}"`) : [];
     const environmentFileBlock: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock = (environmentFiles.length === 0) ? '' : [
       '    env_file:',
       ...environmentFiles,
     ].join('\n');
-    const interactiveBlock: Lib_DockerPackaging_Runner_BuildCompose_InteractiveBlock = (hasContainerNativeService === true) ? [
-      '    stdin_open: true',
-      '    tty: true',
-    ].join('\n') : '';
+    const environmentBlock: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentBlock = environmentLines.join('\n');
+    const networkBlock: Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock = `    network_mode: ${manifest['networkMode']}`;
     const portBlock: Lib_DockerPackaging_Runner_BuildCompose_PortBlock = (portLines.length === 0) ? '' : [
       '    ports:',
       ...portLines,
     ].join('\n');
     const replacements: Lib_DockerPackaging_Runner_BuildCompose_Replacements = {
+      '[__DOCKER_COMPOSE_ENVIRONMENT__]': environmentBlock,
       '[__DOCKER_COMPOSE_ENV_FILES__]': environmentFileBlock,
-      '[__DOCKER_COMPOSE_INTERACTIVE__]': interactiveBlock,
+      '[__DOCKER_COMPOSE_NETWORK__]': networkBlock,
       '[__DOCKER_COMPOSE_PORTS__]': portBlock,
     };
     let content: Lib_DockerPackaging_Runner_BuildCompose_Content = template;
@@ -1657,15 +1850,7 @@ export class Runner {
     const initDependenciesDirectory: Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory = join(initServiceDirectory, 'dependencies.d');
     const writablePaths: Lib_DockerPackaging_Runner_WriteRootfs_WritablePaths = [...new Set(manifest['services'].flatMap((service) => service['writablePaths']))].sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
     const shellVariableMarker: Lib_DockerPackaging_Runner_WriteRootfs_ShellVariableMarker = '$';
-    const criticalFinishScript: Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = [
-      '#!/command/with-contenv sh',
-      'set -eu',
-      `if [ "${shellVariableMarker}{1:-0}" -ne 0 ] || [ "${shellVariableMarker}{2:-0}" -ne 0 ]; then`,
-      '  exec /run/s6/basedir/bin/halt',
-      'fi',
-      'exit 0',
-      '',
-    ].join('\n');
+    const legacyStatePaths: Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths = (manifest['legacyStatePaths'].length === 0) ? '' : `${manifest['legacyStatePaths'].join('\n')}\n`;
 
     await Promise.all([
       fs.mkdir(userBundleDirectory, { recursive: true }),
@@ -1679,8 +1864,10 @@ export class Runner {
       fs.writeFile(join(initServiceDirectory, 'up'), '/usr/local/libexec/nova-docker/init-user\n', 'utf-8'),
       fs.writeFile(join(initDependenciesDirectory, 'base'), '', 'utf-8'),
       fs.writeFile(join(userBundleDirectory, 'nova-container-init'), '', 'utf-8'),
-      Runner.writeExecutable(join(helperDirectory, 'init-user'), Runner.buildInitUser()),
+      Runner.writeExecutable(join(helperDirectory, 'init-user'), Runner.buildInitUser(manifest)),
       Runner.writeExecutable(join(helperDirectory, 'healthcheck'), Runner.buildHealthcheck(manifest)),
+      Runner.writeExecutable(join(helperDirectory, 'log'), Runner.buildLogHelper()),
+      fs.writeFile(join(novaConfigDirectory, 'legacy-state-paths'), legacyStatePaths, 'utf-8'),
       fs.writeFile(join(novaConfigDirectory, 'writable-paths'), (writablePaths.length === 0) ? '' : `${writablePaths.join('\n')}\n`, 'utf-8'),
     ]);
 
@@ -1706,9 +1893,26 @@ export class Runner {
           fs.writeFile(join(serviceDirectory, 'up'), `/usr/local/libexec/nova-docker/services/${service['name']}\n`, 'utf-8'),
         ]);
       } else {
-        await Runner.writeExecutable(join(serviceDirectory, 'run'), Runner.buildRunScript(service));
+        await Promise.all([
+          Runner.writeExecutable(join(serviceDirectory, 'run'), Runner.buildRunScript(service)),
+          fs.writeFile(join(serviceDirectory, 'timeout-down'), '6000\n', 'utf-8'),
+          fs.writeFile(join(serviceDirectory, 'timeout-finish'), '1000\n', 'utf-8'),
+          fs.writeFile(join(serviceDirectory, 'timeout-kill'), '6000\n', 'utf-8'),
+        ]);
 
         if (service['critical'] === true) {
+          const criticalFinishScript: Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = [
+            '#!/command/with-contenv sh',
+            'set -eu',
+            '. /usr/local/libexec/nova-docker/log',
+            `if [ "${shellVariableMarker}{1:-0}" -ne 0 ]; then`,
+            `  nova_log ERROR ${Runner.shellQuote(service['name'])} "Critical service exited abnormally with code ${shellVariableMarker}{1:-0} and signal ${shellVariableMarker}{2:-0}; halting the container."`,
+            '  exec /run/s6/basedir/bin/halt',
+            'fi',
+            'exit 0',
+            '',
+          ].join('\n');
+
           await Runner.writeExecutable(join(serviceDirectory, 'finish'), criticalFinishScript);
         }
       }
@@ -1736,6 +1940,8 @@ export class Runner {
     const lines: Lib_DockerPackaging_Runner_BuildRunScript_Lines = [
       '#!/command/with-contenv sh',
       'set -eu',
+      '. /usr/local/libexec/nova-docker/log',
+      '. /run/nova-docker/environment',
     ];
     const shellVariableMarker: Lib_DockerPackaging_Runner_BuildRunScript_ShellVariableMarker = '$';
 
@@ -1756,6 +1962,12 @@ export class Runner {
       lines.push(`export ${environmentEntry[0]}=${Runner.shellQuote(environmentEntry[1])}`);
     }
 
+    if (service['portEnvironment'] !== undefined) {
+      lines.push(`export PORT="${shellVariableMarker}{${service['portEnvironment']}}"`);
+    }
+
+    lines.push(`nova_log INFO ${Runner.shellQuote(service['name'])} 'Starting service.'`);
+
     if (service['runAsRoot'] === true) {
       lines.push(`exec ${service['command']}`);
     } else {
@@ -1766,10 +1978,62 @@ export class Runner {
   }
 
   /**
+   * Lib - Docker Packaging - Build Log Helper.
+   *
+   * Renders the shared POSIX logger used by generated init, health, finish, and
+   * service scripts so container output has one stable machine-readable prefix.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_BuildLogHelper_Returns}
+   *
+   * @since 0.43.1
+   */
+  private static buildLogHelper(): Lib_DockerPackaging_Runner_BuildLogHelper_Returns {
+    const shellNewline: Lib_DockerPackaging_Runner_BuildLogHelper_ShellNewline = [
+      '\\',
+      'n',
+    ].join('');
+    const shellVariableMarker: Lib_DockerPackaging_Runner_BuildLogHelper_ShellVariableMarker = '$';
+
+    return [
+      '#!/bin/sh',
+      'set -eu',
+      'nova_log() {',
+      `  NOVA_LOG_LEVEL="${shellVariableMarker}{1:-INFO}"`,
+      `  NOVA_LOG_COMPONENT="${shellVariableMarker}{2:-nova-docker}"`,
+      `  NOVA_LOG_MESSAGE="${shellVariableMarker}{3:-}"`,
+      `  case "${shellVariableMarker}{NOVA_LOG_LEVEL}" in`,
+      '    DEBUG|INFO|WARN|ERROR) ;;',
+      '    *)',
+      `      NOVA_LOG_MESSAGE="Invalid log level ${shellVariableMarker}{NOVA_LOG_LEVEL}: ${shellVariableMarker}{NOVA_LOG_MESSAGE}"`,
+      '      NOVA_LOG_LEVEL=ERROR',
+      '      ;;',
+      '  esac',
+      `  NOVA_LOG_TIMESTAMP="${shellVariableMarker}(date -u '+%Y-%m-%dT%H:%M:%SZ')"`,
+      `  case "${shellVariableMarker}{NOVA_LOG_LEVEL}" in`,
+      '    WARN|ERROR)',
+      `      printf '%s %s %s: %s${shellNewline}' "${shellVariableMarker}{NOVA_LOG_TIMESTAMP}" "${shellVariableMarker}{NOVA_LOG_LEVEL}" "${shellVariableMarker}{NOVA_LOG_COMPONENT}" "${shellVariableMarker}{NOVA_LOG_MESSAGE}" >&2`,
+      '      ;;',
+      '    *)',
+      `      printf '%s %s %s: %s${shellNewline}' "${shellVariableMarker}{NOVA_LOG_TIMESTAMP}" "${shellVariableMarker}{NOVA_LOG_LEVEL}" "${shellVariableMarker}{NOVA_LOG_COMPONENT}" "${shellVariableMarker}{NOVA_LOG_MESSAGE}"`,
+      '      ;;',
+      '  esac',
+      '}',
+      `if [ "${shellVariableMarker}{0##*/}" = log ]; then`,
+      `  nova_log "${shellVariableMarker}{1:-INFO}" "${shellVariableMarker}{2:-nova-docker}" "${shellVariableMarker}{3:-}"`,
+      'fi',
+      '',
+    ].join('\n');
+  }
+
+  /**
    * Lib - Docker Packaging - Build Init User.
    *
-   * Renders startup validation for identity and timezone while changing ownership
-   * only on explicitly declared writable paths.
+   * Resolves and migrates app state, validates runtime settings, prepares standard
+   * state paths, and applies numeric ownership before services start.
+   *
+   * @param {Lib_DockerPackaging_Runner_BuildInitUser_Manifest} manifest - Manifest.
    *
    * @private
    *
@@ -1778,59 +2042,164 @@ export class Runner {
    * @since 0.34.0
    */
 
-  private static buildInitUser(): Lib_DockerPackaging_Runner_BuildInitUser_Returns {
+  private static buildInitUser(manifest: Lib_DockerPackaging_Runner_BuildInitUser_Manifest): Lib_DockerPackaging_Runner_BuildInitUser_Returns {
+    const shellNewline: Lib_DockerPackaging_Runner_BuildInitUser_ShellNewline = [
+      '\\',
+      'n',
+    ].join('');
     const shellVariableMarker: Lib_DockerPackaging_Runner_BuildInitUser_ShellVariableMarker = '$';
     const protectedWritablePatterns: Lib_DockerPackaging_Runner_BuildInitUser_ProtectedWritablePatterns = dockerProtectedWritablePaths.flatMap((protectedPath) => [
       protectedPath,
       `${protectedPath}/*`,
     ]).join('|');
+    const portEnvironmentLines: Lib_DockerPackaging_Runner_BuildInitUser_PortEnvironmentLines = [];
+
+    for (const portEntry of Object.entries(manifest['ports']).sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))) {
+      portEnvironmentLines.push(
+        `${portEntry[0]}_VALUE="${shellVariableMarker}{${portEntry[0]}:-${portEntry[1]}}"`,
+        `case "${shellVariableMarker}{${portEntry[0]}_VALUE}" in`,
+        `  ''|*[!0-9]*) nova_log ERROR init '${portEntry[0]} must be an integer between 1 and 65535.'; exit 1 ;;`,
+        'esac',
+        `if [ "${shellVariableMarker}{${portEntry[0]}_VALUE}" -le 0 ] || [ "${shellVariableMarker}{${portEntry[0]}_VALUE}" -gt 65535 ]; then`,
+        `  nova_log ERROR init '${portEntry[0]} must be an integer between 1 and 65535.'`,
+        '  exit 1',
+        'fi',
+        `export ${portEntry[0]}="${shellVariableMarker}{${portEntry[0]}_VALUE}"`,
+        '',
+      );
+    }
 
     return [
       '#!/command/with-contenv sh',
       'set -eu',
+      '. /usr/local/libexec/nova-docker/log',
       '',
       `PUID_VALUE="${shellVariableMarker}{PUID:-1000}"`,
       `PGID_VALUE="${shellVariableMarker}{PGID:-1000}"`,
       `TZ_VALUE="${shellVariableMarker}{TZ:-UTC}"`,
       '',
       `case "${shellVariableMarker}{PUID_VALUE}" in`,
-      '  \'\'|*[!0-9]*) echo \'PUID must be a positive integer.\' >&2; exit 1 ;;',
+      '  \'\'|*[!0-9]*) nova_log ERROR init \'PUID must be an integer between 1 and 60000.\'; exit 1 ;;',
       'esac',
       `case "${shellVariableMarker}{PGID_VALUE}" in`,
-      '  \'\'|*[!0-9]*) echo \'PGID must be a positive integer.\' >&2; exit 1 ;;',
+      '  \'\'|*[!0-9]*) nova_log ERROR init \'PGID must be an integer between 1 and 60000.\'; exit 1 ;;',
       'esac',
-      `if [ "${shellVariableMarker}{PUID_VALUE}" -le 0 ] || [ "${shellVariableMarker}{PUID_VALUE}" -gt 2147483647 ]; then`,
-      '  echo \'PUID must be between 1 and 2147483647.\' >&2',
+      `if [ "${shellVariableMarker}{PUID_VALUE}" -le 0 ] || [ "${shellVariableMarker}{PUID_VALUE}" -gt 60000 ]; then`,
+      '  nova_log ERROR init \'PUID must be an integer between 1 and 60000.\'',
       '  exit 1',
       'fi',
-      `if [ "${shellVariableMarker}{PGID_VALUE}" -le 0 ] || [ "${shellVariableMarker}{PGID_VALUE}" -gt 2147483647 ]; then`,
-      '  echo \'PGID must be between 1 and 2147483647.\' >&2',
+      `if [ "${shellVariableMarker}{PGID_VALUE}" -le 0 ] || [ "${shellVariableMarker}{PGID_VALUE}" -gt 60000 ]; then`,
+      '  nova_log ERROR init \'PGID must be an integer between 1 and 60000.\'',
       '  exit 1',
       'fi',
       '',
       `case "${shellVariableMarker}{TZ_VALUE}" in`,
-      '  \'\'|/*|*..*) echo \'TZ must name an installed IANA timezone.\' >&2; exit 1 ;;',
+      '  \'\'|/*|*..*) nova_log ERROR init \'TZ must name an installed IANA timezone.\'; exit 1 ;;',
       'esac',
       `if [ ! -f "/usr/share/zoneinfo/${shellVariableMarker}{TZ_VALUE}" ]; then`,
-      `  echo "Unknown timezone: ${shellVariableMarker}{TZ_VALUE}" >&2`,
+      `  nova_log ERROR init "Unknown timezone: ${shellVariableMarker}{TZ_VALUE}"`,
       '  exit 1',
       'fi',
+      `if ln -snf "/usr/share/zoneinfo/${shellVariableMarker}{TZ_VALUE}" /etc/localtime 2>/dev/null \\`,
+      `  && printf '%s${shellNewline}' "${shellVariableMarker}{TZ_VALUE}" > /etc/timezone 2>/dev/null; then`,
+      '  :',
+      'else',
+      `  nova_log WARN init "The root filesystem is read-only, so the container clock files were not changed; services use TZ=${shellVariableMarker}{TZ_VALUE} from the environment."`,
+      'fi',
       '',
+      ...portEnvironmentLines,
+      'mkdir -p /config /data /run/nova-docker',
+      'CONFIG_HAS_STATE=0',
+      'DATA_HAS_STATE=0',
+      'while IFS= read -r legacy_path; do',
+      `  [ -n "${shellVariableMarker}{legacy_path}" ] || continue`,
+      `  if [ -e "/config/${shellVariableMarker}{legacy_path}" ] || [ -L "/config/${shellVariableMarker}{legacy_path}" ]; then`,
+      '    CONFIG_HAS_STATE=1',
+      '  fi',
+      `  if [ -e "/data/${shellVariableMarker}{legacy_path}" ] || [ -L "/data/${shellVariableMarker}{legacy_path}" ]; then`,
+      '    DATA_HAS_STATE=1',
+      '  fi',
+      'done < /etc/nova-docker/legacy-state-paths',
+      '',
+      'STATE_DIRECTORY=/config',
+      `if [ "${shellVariableMarker}{CONFIG_HAS_STATE}" -eq 1 ] && [ "${shellVariableMarker}{DATA_HAS_STATE}" -eq 1 ]; then`,
+      '  nova_log WARN init \'App state exists in both /config and deprecated /data; using /config without overwriting either location.\'',
+      `elif [ "${shellVariableMarker}{DATA_HAS_STATE}" -eq 1 ]; then`,
+      '  if mountpoint -q /config; then',
+      '    while IFS= read -r legacy_path; do',
+      `      [ -n "${shellVariableMarker}{legacy_path}" ] || continue`,
+      `      source_path="/data/${shellVariableMarker}{legacy_path}"`,
+      `      destination_path="/config/${shellVariableMarker}{legacy_path}"`,
+      `      if [ ! -e "${shellVariableMarker}{source_path}" ] && [ ! -L "${shellVariableMarker}{source_path}" ]; then`,
+      '        continue',
+      '      fi',
+      `      if [ -e "${shellVariableMarker}{destination_path}" ] || [ -L "${shellVariableMarker}{destination_path}" ]; then`,
+      `        nova_log ERROR init "Refusing to overwrite existing state path ${shellVariableMarker}{destination_path}."`,
+      '        exit 1',
+      '      fi',
+      `      destination_parent="${shellVariableMarker}(dirname -- "${shellVariableMarker}{destination_path}")"`,
+      `      mkdir -p -- "${shellVariableMarker}{destination_parent}"`,
+      `      source_device="${shellVariableMarker}(stat -c '%d' -- "${shellVariableMarker}{source_path}")"`,
+      `      destination_device="${shellVariableMarker}(stat -c '%d' -- "${shellVariableMarker}{destination_parent}")"`,
+      `      if [ "${shellVariableMarker}{source_device}" = "${shellVariableMarker}{destination_device}" ]; then`,
+      `        mv -- "${shellVariableMarker}{source_path}" "${shellVariableMarker}{destination_path}"`,
+      '      else',
+      `        temporary_destination="${shellVariableMarker}{destination_path}.nova-migration-${shellVariableMarker}${shellVariableMarker}"`,
+      `        if [ -e "${shellVariableMarker}{temporary_destination}" ] || [ -L "${shellVariableMarker}{temporary_destination}" ]; then`,
+      `          nova_log ERROR init "Refusing to overwrite migration path ${shellVariableMarker}{temporary_destination}."`,
+      '          exit 1',
+      '        fi',
+      `        cp -a -- "${shellVariableMarker}{source_path}" "${shellVariableMarker}{temporary_destination}"`,
+      `        if ! diff --brief --recursive --no-dereference -- "${shellVariableMarker}{source_path}" "${shellVariableMarker}{temporary_destination}" >/dev/null; then`,
+      `          nova_log ERROR init "State migration verification failed for ${shellVariableMarker}{legacy_path}."`,
+      '          exit 1',
+      '        fi',
+      `        mv -- "${shellVariableMarker}{temporary_destination}" "${shellVariableMarker}{destination_path}"`,
+      `        rm -rf -- "${shellVariableMarker}{source_path}"`,
+      '      fi',
+      `      nova_log INFO init "Moved app state ${shellVariableMarker}{legacy_path} from /data to /config."`,
+      '    done < /etc/nova-docker/legacy-state-paths',
+      '  else',
+      '    STATE_DIRECTORY=/data',
+      '    nova_log WARN init \'Using deprecated /data for app state; change the app-state mount from /data to /config.\'',
+      '  fi',
+      'fi',
+      '',
+      `mkdir -p "${shellVariableMarker}{STATE_DIRECTORY}/keys" "${shellVariableMarker}{STATE_DIRECTORY}/database"`,
+      `chown -R "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{STATE_DIRECTORY}"`,
       'while IFS= read -r writable_path; do',
       `  [ -n "${shellVariableMarker}{writable_path}" ] || continue`,
       `  case "${shellVariableMarker}{writable_path}" in`,
       '    /*) ;;',
-      `    *) echo "Writable path must be absolute: ${shellVariableMarker}{writable_path}" >&2; exit 1 ;;`,
+      `    *) nova_log ERROR init "Writable path must be absolute: ${shellVariableMarker}{writable_path}"; exit 1 ;;`,
       '  esac',
       `  case "${shellVariableMarker}{writable_path}" in`,
       `    /|${protectedWritablePatterns}|*/../*|*/./*)`,
-      `      echo "Unsafe writable path: ${shellVariableMarker}{writable_path}" >&2`,
+      `      nova_log ERROR init "Unsafe writable path: ${shellVariableMarker}{writable_path}"`,
       '      exit 1',
       '      ;;',
       '  esac',
       `  mkdir -p -- "${shellVariableMarker}{writable_path}"`,
       `  chown "${shellVariableMarker}{PUID_VALUE}:${shellVariableMarker}{PGID_VALUE}" -- "${shellVariableMarker}{writable_path}"`,
       'done < /etc/nova-docker/writable-paths',
+      '',
+      `chmod 0700 "${shellVariableMarker}{STATE_DIRECTORY}/keys"`,
+      `find "${shellVariableMarker}{STATE_DIRECTORY}/keys" -type f -exec chmod 0600 {} +`,
+      'ENVIRONMENT_FILE=/run/nova-docker/environment',
+      `ENVIRONMENT_TEMP="${shellVariableMarker}{ENVIRONMENT_FILE}.tmp.${shellVariableMarker}${shellVariableMarker}"`,
+      'umask 077',
+      '{',
+      `  printf 'export NOVA_STATE_DIRECTORY=%s${shellNewline}' "${shellVariableMarker}{STATE_DIRECTORY}"`,
+      `  printf 'export NOVA_KEYS_DIRECTORY=%s/keys${shellNewline}' "${shellVariableMarker}{STATE_DIRECTORY}"`,
+      `  printf 'export NOVA_INSTALLATION_KEY_FILE=%s/keys/installation.key${shellNewline}' "${shellVariableMarker}{STATE_DIRECTORY}"`,
+      `  printf 'export NOVA_DATABASE_DIRECTORY=%s/database${shellNewline}' "${shellVariableMarker}{STATE_DIRECTORY}"`,
+      ...((manifest['stateEnvironment'] === undefined) ? [] : [`  printf 'export ${manifest['stateEnvironment']}=%s${shellNewline}' "${shellVariableMarker}{STATE_DIRECTORY}"`]),
+      ...Object.keys(manifest['ports']).sort((firstPortEnvironment, secondPortEnvironment) => firstPortEnvironment.localeCompare(secondPortEnvironment)).map((portEnvironment) => `  printf 'export ${portEnvironment}=%s${shellNewline}' "${shellVariableMarker}{${portEnvironment}}"`),
+      `} > "${shellVariableMarker}{ENVIRONMENT_TEMP}"`,
+      `chmod 0600 "${shellVariableMarker}{ENVIRONMENT_TEMP}"`,
+      `mv -- "${shellVariableMarker}{ENVIRONMENT_TEMP}" "${shellVariableMarker}{ENVIRONMENT_FILE}"`,
+      `nova_log INFO init "Using ${shellVariableMarker}{STATE_DIRECTORY} for app state."`,
+      `nova_log INFO init "Initialized app state ownership for UID ${shellVariableMarker}{PUID_VALUE} and GID ${shellVariableMarker}{PGID_VALUE}."`,
       '',
     ].join('\n');
   }
@@ -1854,20 +2223,41 @@ export class Runner {
     const lines: Lib_DockerPackaging_Runner_BuildHealthcheck_Lines = [
       '#!/bin/sh',
       'set -eu',
+      '. /usr/local/libexec/nova-docker/log',
+      'if [ -f /run/nova-docker/environment ]; then',
+      '  . /run/nova-docker/environment',
+      'fi',
       'if [ -x /etc/nova-docker/healthcheck ]; then',
       '  exec /etc/nova-docker/healthcheck',
       'fi',
     ];
-    const requiredServices: Lib_DockerPackaging_Runner_BuildHealthcheck_RequiredServices = manifest['services'].filter((service) => service['requiredForHealth'] === true);
+    const longrunServices: Lib_DockerPackaging_Runner_BuildHealthcheck_LongrunServices = manifest['services'].filter((service) => service['kind'] === 'longrun');
+    const shellVariableMarker: Lib_DockerPackaging_Runner_BuildHealthcheck_ShellVariableMarker = '$';
 
-    for (const service of requiredServices) {
-      if (service['kind'] === 'longrun') {
-        lines.push(`/command/s6-svstat -u /run/service/${service['name']} >/dev/null`);
-      }
+    for (const service of longrunServices) {
+      lines.push(
+        `service_status="$(/command/s6-svstat -o up /run/service/${service['name']} 2>/dev/null || true)"`,
+        `if [ "${shellVariableMarker}{service_status}" != true ]; then`,
+        `  nova_log ERROR healthcheck 's6 service ${service['name']} is down.'`,
+        '  exit 1',
+        'fi',
+      );
+    }
 
-      if (service['healthCommand'] !== undefined) {
-        lines.push(service['healthCommand']);
-      }
+    if (manifest['ports']['WEB_PORT'] !== undefined) {
+      lines.push(
+        `if ! http_status="$(curl --silent --output /dev/null --write-out '%{http_code}' --max-time 4 --request GET "http://127.0.0.1:\${WEB_PORT}${manifest['healthPath']}")"; then`,
+        `  nova_log ERROR healthcheck 'GET ${manifest['healthPath']} failed.'`,
+        '  exit 1',
+        'fi',
+        `case "${shellVariableMarker}{http_status}" in`,
+        '  2??) ;;',
+        '  *)',
+        `    nova_log ERROR healthcheck "GET ${manifest['healthPath']} returned HTTP \${http_status}."`,
+        '    exit 1',
+        '    ;;',
+        'esac',
+      );
     }
 
     lines.push('exit 0');

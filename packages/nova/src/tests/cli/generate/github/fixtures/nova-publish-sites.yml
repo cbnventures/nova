@@ -84,6 +84,8 @@ jobs:
 
       - name: "Check project"
         timeout-minutes: 15
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           npm run check -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang --exclude-workspace ./
         working-directory: "${{ env.ROOT_DIR }}"

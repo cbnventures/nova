@@ -58,6 +58,8 @@ jobs:
 
       - name: "Check project"
         timeout-minutes: 30
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
           npm run check -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs --exclude-workspace ./
         working-directory: "${{ env.ROOT_DIR }}"

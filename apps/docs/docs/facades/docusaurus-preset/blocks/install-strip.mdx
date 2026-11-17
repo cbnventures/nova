@@ -21,6 +21,12 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import installStripPreviewLight from './_assets_/install-strip-preview-light.png';
+import installStripPreviewDark from './_assets_/install-strip-preview-dark.png';
+
 Copyable installation command display. Renders a code-styled command with a copy-to-clipboard button.
 
 Supports three copy target behaviors: block, icon, or text.
@@ -34,6 +40,12 @@ The Install Strip block renders a `<section>` containing a command string and a 
 - **One-click copy** — readers can copy installation commands without selecting text.
 - **Three copy styles** — whole block, icon button, or text button to match your page layout.
 - **Preset-aware** — code font, colors, and spacing adapt to the active preset.
+
+## Preview
+
+<Frame caption="Install Strip block — light and dark mode preview">
+  <ThemedImage sources={{ light: installStripPreviewLight, dark: installStripPreviewDark }} alt="Install Strip block preview" width={454} height={135} />
+</Frame>
 
 ## Usage
 
