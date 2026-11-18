@@ -1,5 +1,14 @@
 # @cbnventures/nova
 
+## 0.47.1 - 2026-11-18
+
+### UPDATED
+- A manual update check on the pfSense package scaffold's About tab files no notice, since the About tab already shows the result, and later scheduled checks don't announce that version again.
+
+### FIXED
+- The pfSense package scaffold's About tab update check works while the package's task runs instead of failing with "Another package operation is already running", and an install from the About tab waits for the task to finish.
+- The pfSense package scaffold removes its configuration-restore recovery job on every deliberate uninstall, keeps a checksum-verified copy of the package for offline reinstalls, and never starts a second recovery run while one is still working.
+
 ## 0.47.0 - 2026-11-18
 
 ### ADDED

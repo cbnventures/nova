@@ -181,7 +181,7 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure(
  * another package's command, then applies pfSense's normal config and cron flow.
  *
  * @param string|null $command      - Verified current restore command, or null.
- * @param bool        $keepExisting - Whether restore or settings retention owns it.
+ * @param bool        $keepExisting - Whether a configuration restore owns it.
  *
  * @return void
  *
@@ -225,6 +225,12 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallRestoreHealCron(
     ?callable $metadataLookup = null,
 ): void {
     try {
+        UpdateManager::removeLegacyRestoreHealCacheFile();
+    } catch (Throwable $throwable) {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
+    }
+
+    try {
         $cronItems = config_get_path('cron/item', []);
         $cronItems = is_array($cronItems) ? $cronItems : [];
         $installedVersion = UpdateManager::installedVersion();
@@ -254,6 +260,10 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallRestoreHealCron(
 
     try {
         pfsensePackage[__WORKSPACE_IDENTIFIER__]ConfigureRestoreHealCron($command);
+
+        if (is_string($command) && is_string($installedVersion)) {
+            UpdateManager::pruneRestoreHealCache($installedVersion);
+        }
     } catch (Throwable $throwable) {
         pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
     }
@@ -291,10 +301,10 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
 }
 
 /**
- * Removes package cron jobs, package notices, and the idle lock file.
+ * Removes package cron jobs, restore-heal cache, notices, and idle lock files.
  *
  * Persistent release state is retained across pfSense's remove-and-reinstall upgrade
- * lifecycle so notice de-duplication and the last successful check survive upgrades.
+ * lifecycle. Restore-driven removal alone retains the recovery cron entry and cache.
  *
  * @param bool $keepSettings - Whether a deliberate removal retains package settings.
  *
@@ -322,18 +332,33 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove(bool $keepSettings = fal
         pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
     }
 
+    if ($keepRestoreHealEntry === false) {
+        try {
+            UpdateManager::removeRestoreHealCache();
+        } catch (Throwable $throwable) {
+            pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
+        }
+    }
+
     UpdateManager::closePackageNotices();
 
-    $fileLock = new FileLock(PackagePaths::LOCK_FILE);
+    $lockFiles = [
+        PackagePaths::LOCK_FILE,
+        PackagePaths::RELEASE_LOCK_FILE,
+    ];
 
-    try {
-        if ($fileLock->acquire()) {
-            @unlink(PackagePaths::LOCK_FILE);
+    foreach ($lockFiles as $lockFile) {
+        $fileLock = new FileLock($lockFile);
+
+        try {
+            if ($fileLock->acquire() === true) {
+                @unlink($lockFile);
+            }
+        } catch (Throwable) {
+            // Removal must not fail when an active run or filesystem owns the lock.
+        } finally {
+            $fileLock->release();
         }
-    } catch (Throwable) {
-        // Removal must not fail when an active run or filesystem owns the lock.
-    } finally {
-        $fileLock->release();
     }
 }
 

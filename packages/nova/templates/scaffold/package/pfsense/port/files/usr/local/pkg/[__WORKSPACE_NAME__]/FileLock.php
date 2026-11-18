@@ -7,10 +7,10 @@ namespace PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime;
 use RuntimeException;
 
 /**
- * Coordinates package runs with a non-blocking filesystem lock.
+ * Coordinates package runs with a bounded-wait filesystem lock.
  *
- * The open descriptor owns the lock for the process lifetime. A second scheduled
- * or manual run exits without reading state or starting an update.
+ * The open descriptor owns the lock for the process lifetime. Callers choose
+ * whether a competing operation fails immediately or waits for a bounded time.
  *
  * @since UNRELEASED
  */
@@ -37,7 +37,9 @@ final class FileLock
     }
 
     /**
-     * Attempts to acquire the package lock without waiting.
+     * Attempts to acquire the lock within a caller-selected timeout.
+     *
+     * @param int $timeoutSeconds - Maximum seconds to wait for the lock.
      *
      * @return bool
      *
@@ -45,7 +47,7 @@ final class FileLock
      *
      * @since UNRELEASED
      */
-    public function acquire(): bool
+    public function acquire(int $timeoutSeconds = 0): bool
     {
         if (is_resource($this->handle)) {
             return true;
@@ -63,10 +65,16 @@ final class FileLock
             throw new RuntimeException(gettext('The package lock is unavailable.'));
         }
 
-        if (flock($handle, LOCK_EX | LOCK_NB) === false) {
-            fclose($handle);
+        $deadline = microtime(true) + max(0, $timeoutSeconds);
 
-            return false;
+        while (flock($handle, LOCK_EX | LOCK_NB) === false) {
+            if (microtime(true) >= $deadline) {
+                fclose($handle);
+
+                return false;
+            }
+
+            usleep(100000);
         }
 
         ftruncate($handle, 0);

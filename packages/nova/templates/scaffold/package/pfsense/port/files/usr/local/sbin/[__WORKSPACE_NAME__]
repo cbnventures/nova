@@ -34,37 +34,70 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]EnvironmentOverride(string $nam
 }
 
 /**
- * Runs a release check or verified self-update under the package lock.
+ * Runs a release check or verified self-update under ordered release locks.
  *
- * @param bool $selfUpdate Whether to install instead of only checking.
+ * Checks serialize independently from the package task. Installs hold the release
+ * lock first, then wait for the package task lock before changing the package.
+ *
+ * @param bool   $selfUpdate               - Whether to install instead of only checking.
+ * @param bool   $fileNotice               - Whether a check may file a pfSense notice.
+ * @param string $packageLockFile           - Package task lock path.
+ * @param string $releaseLockFile           - Release operation lock path.
+ * @param int    $releaseLockTimeoutSeconds - Maximum release lock wait.
+ * @param int    $packageLockTimeoutSeconds - Maximum package task lock wait.
  *
  * @return int Process exit code.
  *
  * @since UNRELEASED
  */
-function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(bool $selfUpdate): int
-{
-    $fileLock = new FileLock(PackagePaths::LOCK_FILE);
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(
+    bool $selfUpdate,
+    bool $fileNotice = true,
+    string $packageLockFile = PackagePaths::LOCK_FILE,
+    string $releaseLockFile = PackagePaths::RELEASE_LOCK_FILE,
+    int $releaseLockTimeoutSeconds = 30,
+    int $packageLockTimeoutSeconds = 30 * 60,
+): int {
+    $releaseFileLock = new FileLock($releaseLockFile);
+    $packageFileLock = null;
 
     try {
-        UpdateManager::assertEnvironment();
+        if ($releaseFileLock->acquire($releaseLockTimeoutSeconds) === false) {
+            $message = gettext('An update check or install is already running.');
 
-        $installedVersion = UpdateManager::installedVersion();
-
-        if ($installedVersion === null) {
-            throw new RuntimeException(gettext('The installed package version could not be determined.'));
-        }
-
-        if ($fileLock->acquire() === false) {
-            $message = gettext('Another package operation is already running.');
-
-            if ($selfUpdate) {
+            if ($selfUpdate === true) {
                 UpdateManager::failQueuedSelfUpdate($message);
             }
 
             fwrite(STDOUT, $message . PHP_EOL);
 
             return 0;
+        }
+
+        if ($selfUpdate === true) {
+            $packageFileLock = new FileLock($packageLockFile);
+
+            if ($packageFileLock->acquire() === false) {
+                UpdateManager::markQueuedSelfUpdateWaitingForTask();
+
+                if ($packageFileLock->acquire($packageLockTimeoutSeconds) === false) {
+                    $message = gettext('The package\'s task is still running. Try again when it finishes.');
+
+                    UpdateManager::failQueuedSelfUpdate($message);
+
+                    fwrite(STDOUT, $message . PHP_EOL);
+
+                    return 0;
+                }
+            }
+        }
+
+        UpdateManager::assertEnvironment();
+
+        $installedVersion = UpdateManager::installedVersion();
+
+        if ($installedVersion === null) {
+            throw new RuntimeException(gettext('The installed package version could not be determined.'));
         }
 
         $settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
@@ -83,7 +116,7 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(bool $selfUpda
         );
         $state = $selfUpdate
             ? $updateManager->selfUpdate($remoteNotifications)
-            : $updateManager->check($remoteNotifications);
+            : $updateManager->check($remoteNotifications, $fileNotice);
 
         if ($selfUpdate === false) {
             fwrite(
@@ -97,7 +130,7 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(bool $selfUpda
 
         return 0;
     } catch (Throwable $throwable) {
-        if ($selfUpdate) {
+        if ($selfUpdate === true) {
             try {
                 UpdateManager::failQueuedSelfUpdate($throwable->getMessage());
             } catch (Throwable) {
@@ -109,7 +142,11 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(bool $selfUpda
 
         return 1;
     } finally {
-        $fileLock->release();
+        if ($packageFileLock instanceof FileLock) {
+            $packageFileLock->release();
+        }
+
+        $releaseFileLock->release();
     }
 }
 
@@ -169,12 +206,20 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]RunTask(): int
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]Main(array $arguments): int
 {
     $checkUpdates = false;
+    $noNotice = false;
     $selfUpdate = false;
+    $showHelp = false;
+    $usage = gettext('Usage: [__WORKSPACE_NAME__] [--check-updates [--no-notice] | --self-update | --help]');
 
     foreach (array_slice($arguments, 1) as $argument) {
         switch ($argument) {
             case '--check-updates': {
                 $checkUpdates = true;
+                break;
+            }
+
+            case '--no-notice': {
+                $noNotice = true;
                 break;
             }
 
@@ -184,12 +229,8 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Main(array $arguments): int
             }
 
             case '--help': {
-                fwrite(STDOUT, implode(PHP_EOL, [
-                    gettext('Usage: [__WORKSPACE_NAME__] [--check-updates | --self-update | --help]'),
-                    gettext('Without an option, the configured background task runs.'),
-                ]) . PHP_EOL);
-
-                return 0;
+                $showHelp = true;
+                break;
             }
 
             default: {
@@ -200,14 +241,39 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Main(array $arguments): int
         }
     }
 
-    if ($checkUpdates && $selfUpdate) {
+    if ($checkUpdates === true && $selfUpdate === true) {
         fwrite(STDERR, gettext('Update commands cannot be combined.') . PHP_EOL);
 
         return 64;
     }
 
-    if ($checkUpdates || $selfUpdate) {
-        return pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand($selfUpdate);
+    if (
+        $noNotice === true
+        && (
+            $checkUpdates === false
+            || $selfUpdate === true
+            || $showHelp === true
+        )
+    ) {
+        fwrite(STDERR, $usage . PHP_EOL);
+
+        return 64;
+    }
+
+    if ($showHelp === true) {
+        fwrite(STDOUT, implode(PHP_EOL, [
+            $usage,
+            gettext('Without an option, the configured background task runs.'),
+        ]) . PHP_EOL);
+
+        return 0;
+    }
+
+    if ($checkUpdates === true || $selfUpdate === true) {
+        return pfsensePackage[__WORKSPACE_IDENTIFIER__]RunUpdateCommand(
+            $selfUpdate,
+            $noNotice === false,
+        );
     }
 
     return pfsensePackage[__WORKSPACE_IDENTIFIER__]RunTask();

@@ -61,10 +61,15 @@ if ($updatesAvailable && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if (isset($_POST['check_updates'])) {
         $actionOutputLines = [];
 
-        exec(PackagePaths::UPDATE_CHECK_COMMAND . ' 2>&1', $actionOutputLines, $returnCode);
+        exec(PackagePaths::MANUAL_UPDATE_CHECK_COMMAND . ' 2>&1', $actionOutputLines, $returnCode);
         $actionOutput = implode(PHP_EOL, $actionOutputLines);
+        $actionOutputMessage = trim($actionOutput);
 
-        if ($returnCode !== 0 || trim($actionOutput) === gettext('Another package operation is already running.')) {
+        if (
+            $returnCode !== 0
+            || $actionOutputMessage === gettext('Another package operation is already running.')
+            || $actionOutputMessage === gettext('An update check or install is already running.')
+        ) {
             $updateActionError = $actionOutput !== ''
                 ? $actionOutput
                 : gettext('The update check could not initialize a secure GitHub request.');

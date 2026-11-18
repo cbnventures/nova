@@ -87,7 +87,7 @@ Installing a `.pkg` file from GitHub bypasses Netgate's package repository revie
 | `port/files/pkg-install.in` and `port/files/pkg-deinstall.in`                                                                                                                                           | Standard pfSense package lifecycle hooks.                                               |
 | `port/files/usr/local/pkg/<name>.xml`                                                                                                                                                                   | WebGUI menu, settings fields, validation, and package lifecycle callbacks.              |
 | `port/files/usr/local/pkg/<name>.inc`                                                                                                                                                                   | Settings lookup, validation, notices, and pfSense-managed cron synchronization.         |
-| `port/files/usr/local/pkg/<name>/{FileLock,PackagePaths,UpdateManager}.php`                                                                                                                             | Shared locking, package paths, and verified GitHub update runtime.                      |
+| `port/files/usr/local/pkg/<name>/{FileLock,PackagePaths,UpdateManager}.php`                                                                                                                             | Separate task and release locking, package paths, and verified GitHub update runtime.   |
 | `port/files/usr/local/sbin/<name>`                                                                                                                                                                      | Non-interactive PHP task and update-check/self-update entry point.                      |
 | `port/files/usr/local/share/pfSense-pkg-<Name>/info.xml`                                                                                                                                                | pfSense package manifest.                                                               |
 | `port/files/usr/local/share/pfSense-pkg-<Name>/logo.svg`                                                                                                                                                | Default package mark embedded by the About tab.                                         |
@@ -115,7 +115,24 @@ The tested-release matrix starts empty and stays hidden. After you verify instal
 
 When the project's `urls.repository` value is a `github.com` repository, the generated settings include **Update Checks** with Daily, Weekly, Monthly, and Never frequencies. Weekly is the default. The first enabled synchronization stores one randomized minute, hour, weekday, and month day in pfSense configuration, then reuses that stable schedule when the frequency changes. Selecting Never removes the update-check cron entry while leaving **Check Now** available on the About tab.
 
-Each newly discovered version raises one pfSense bell notice. Notices stay local by default; administrators can turn on **Remote Notifications** to use configured email, Telegram, Pushover, or other pfSense remote notification channels. Installing or already running that version closes its notice. The About tab shows the latest check state and release version, offers **Check Now**, and displays **Update to &lt;version&gt;** when a newer package exists. An update runs through the detached package CLI while the page polls a private status file for progress.
+Each version first discovered by a scheduled check raises one pfSense bell notice. Notices stay local by default; administrators can turn on **Remote Notifications** to use configured email, Telegram, Pushover, or other pfSense remote notification channels. A manual **Check Now** request files no local or remote notice and records the version as seen, so a later scheduled check does not announce it.
+
+Installing or already running a version closes its notice. The About tab shows the latest check state and release version, offers **Check Now**, and displays **Update to &lt;version&gt;** when a newer package exists.
+
+Checks use a release-operation lock that stays independent from the package's background-task lock, so **Check Now** works while that task runs. An About-tab install takes the release lock first, shows that it is waiting when the package task is active, and waits up to 30 minutes for that task to finish before failing the queued job.
+
+### Package Update CLI
+
+The installed package command uses these non-interactive options for scheduled and About-tab update work:
+
+| Flag                          | Description                                                                                |
+|-------------------------------|--------------------------------------------------------------------------------------------|
+| `--check-updates`             | Check GitHub and file the normal update notice when a scheduled check discovers a version. |
+| `--check-updates --no-notice` | Check GitHub for the About tab without filing a local or remote notice.                    |
+| `--self-update`               | Install the checked release after waiting for any running package task to finish.          |
+| `--help`                      | Show the package command's usage text.                                                     |
+
+`--no-notice` is valid only with `--check-updates`. Cron keeps using `--check-updates`, while **Check Now** uses the notice-free combination.
 
 Before `pkg add -f` runs, the updater:
 
@@ -124,7 +141,7 @@ Before `pkg add -f` runs, the updater:
 3. Verifies SHA-256 using GitHub's API digest or the release's hash-only `.sha256` asset.
 4. If the installed `release-signing.pub` contains a key, verifies the detached signature with `/usr/bin/ssh-keygen -Y verify`, using the port name as both principal and namespace.
 5. Uses `pkg query -F` to require the expected package name and release version.
-6. Holds the package file lock throughout installation and removes its private temporary directory afterward.
+6. Holds the release lock and package-task lock throughout installation, then removes its private temporary directory afterward.
 
 The publishing workflow installs its public signing key into built packages. See [Signing pfSense Releases](/docs/cli/generators/github/workflows#signing-pfsense-releases) for secret setup and key rotation.
 
@@ -136,7 +153,11 @@ After an **All** configuration restore on the same firewall, pfSense can report 
 
 Each install and synchronization also refreshes one tagged root cron entry in `config.xml` with the installed version's release URL and SHA-256 digest. If the restored configuration starts on a new firewall, the detached job waits for pfSense's stock package synchronization to finish, then retries every 15 minutes until it can verify and reinstall that exact package release.
 
-The job uses a verified local package under `/conf/<name>/restore-heal/` when available and otherwise downloads the pinned GitHub Release asset to a temporary file. Development builds and releases without a verifiable API digest or hash-only `.sha256` asset get no recovery entry, so an unverifiable package is never installed automatically.
+The job keeps a checksum-verified package under `/conf/<name>/restore-heal/` for offline reinstalls and downloads the pinned GitHub Release asset when that copy is unavailable. Development builds and releases without a verifiable API digest or hash-only `.sha256` asset get no recovery entry, so an unverifiable package is never installed automatically.
+
+Recovery activity logs `deferred`, `cache`, `fetch`, `fetch-failed`, `checksum-failed`, `cache-failed`, `install`, `install-failed`, and `installed` under the `<name>-restore-heal` tag. A pidfile lock held for the job's lifetime makes a second scheduled run exit immediately while the first is working.
+
+A deliberate uninstall removes the tagged cron entry and the restore-heal folder whether or not **Keep Settings** is selected. Removal during pfSense package synchronization for a configuration restore retains both so recovery can continue.
 
 ## Check, Stage, and Package
 

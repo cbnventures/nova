@@ -50,6 +50,9 @@ final class UpdateManager
     /** Largest command accepted by FreeBSD cron, excluding its terminating NUL. @since UNRELEASED */
     public const RESTORE_HEAL_COMMAND_LIMIT = 999;
 
+    /** Exact shared restore-heal shell script. @since UNRELEASED */
+    public const RESTORE_HEAL_SCRIPT = 'p=$1;r=$2;h=$3;v=$4;g=$5-restore-heal;d=/conf/$5/restore-heal;n=$p-$v.pkg;c=$d/$n;t=$c.tmp;L(){ /usr/bin/logger -t $g "$1 $v";};[ -e /conf/needs_package_sync ]&&{ L deferred;exit 0;};/usr/local/sbin/pkg info -e $p&&exit 0;k(){ [ "$(/sbin/sha256 -q $1 2>/dev/null)" = $h ];};if k $c;then L cache;else /bin/rm -f $t;L fetch;/bin/mkdir -p $d&&/usr/bin/fetch -q -T 30 -o $t https://github.com/$r/releases/download/v$v/$n||{ /bin/rm -f $t;L fetch-failed;exit 1;};k $t||{ /bin/rm -f $t;L checksum-failed;exit 1;};/bin/rm -f $d/*.pkg;/bin/mv -f $t $c||{ L cache-failed;exit 1;};fi;L install;/usr/local/sbin/pkg add -f $c >/dev/null 2>&1||{ L install-failed;exit 1;};L installed';
+
     /** Package name recorded in the FreeBSD package manifest. @since UNRELEASED */
     public const PACKAGE_NAME = 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]';
 
@@ -86,15 +89,6 @@ final class UpdateManager
     /** Fixed FreeBSD daemon executable used by the restore-heal cron entry. @since UNRELEASED */
     private const DAEMON_COMMAND = '/usr/sbin/daemon';
 
-    /** Fixed FreeBSD fetch executable used by the restore-heal cron entry. @since UNRELEASED */
-    private const FETCH_COMMAND = '/usr/bin/fetch';
-
-    /** Fixed FreeBSD logger executable used by the restore-heal cron entry. @since UNRELEASED */
-    private const LOGGER_COMMAND = '/usr/bin/logger';
-
-    /** Fixed FreeBSD SHA-256 executable used by the restore-heal cron entry. @since UNRELEASED */
-    private const SHA256_COMMAND = '/sbin/sha256';
-
     /** Fixed base shell used by the restore-heal cron entry. @since UNRELEASED */
     private const SHELL_COMMAND = '/bin/sh';
 
@@ -110,13 +104,14 @@ final class UpdateManager
      * The WebGUI never constructs endpoint overrides. Only the CLI reads the
      * documented test environment variables and passes their values here.
      *
-     * @param string $installedVersion - Installed package version.
-     * @param string $releasesApi      - Latest-release API endpoint.
-     * @param string $downloadPrefix   - Allowed release asset URL prefix.
-     * @param string $updatesFile      - Persistent update metadata path.
-     * @param string $statusFile       - Background update status path.
-     * @param string $signingKeysFile  - Test-only release signing key path.
-     * @param string $sshKeygenCommand - Test-only OpenSSH executable path.
+     * @param string $installedVersion     - Installed package version.
+     * @param string $releasesApi          - Latest-release API endpoint.
+     * @param string $downloadPrefix       - Allowed release asset URL prefix.
+     * @param string $updatesFile          - Persistent update metadata path.
+     * @param string $statusFile           - Background update status path.
+     * @param string $signingKeysFile      - Test-only release signing key path.
+     * @param string $sshKeygenCommand     - Test-only OpenSSH executable path.
+     * @param string $restoreHealDirectory - Persistent verified package directory.
      *
      * @since UNRELEASED
      */
@@ -128,6 +123,7 @@ final class UpdateManager
         private readonly string $statusFile = PackagePaths::UPDATE_STATUS_FILE,
         private readonly string $signingKeysFile = self::SIGNING_KEYS_FILE,
         private readonly string $sshKeygenCommand = self::SSH_KEYGEN_COMMAND,
+        private readonly string $restoreHealDirectory = PackagePaths::RESTORE_HEAL_DIRECTORY,
     ) {
     }
 
@@ -455,6 +451,7 @@ final class UpdateManager
      * localized error and attempt timestamp for the About tab.
      *
      * @param bool $remoteNotifications - Whether pfSense may notify remote channels.
+     * @param bool $fileNotice          - Whether the check may file a pfSense notice.
      *
      * @return array
      *
@@ -462,7 +459,7 @@ final class UpdateManager
      *
      * @since UNRELEASED
      */
-    public function check(bool $remoteNotifications): array
+    public function check(bool $remoteNotifications, bool $fileNotice): array
     {
         $this->clearStatus();
 
@@ -485,6 +482,7 @@ final class UpdateManager
                 $this->installedVersion,
                 $release['version'],
                 $remoteNotifications,
+                $fileNotice,
             );
 
             self::writeJsonAtomically($this->updatesFile, $state);
@@ -900,45 +898,40 @@ final class UpdateManager
         $url = $metadata['url'] ?? null;
         $sha256 = $metadata['sha256'] ?? null;
         $fileName = $metadata['file_name'] ?? null;
+        $name = '[__WORKSPACE_NAME__]';
+        $repository = self::restoreHealRepository();
+        $expectedFileName = is_string($version)
+            ? self::PACKAGE_NAME . '-' . $version . '.pkg'
+            : null;
+        $expectedUrl = is_string($repository) && is_string($version) && is_string($expectedFileName)
+            ? 'https://github.com/' . $repository . '/releases/download/v' . $version . '/' . $expectedFileName
+            : null;
 
         if (
             !is_string($version)
             || preg_match('/^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][0-9A-Za-z.-]+)?$/', $version) !== 1
+            || !is_string($repository)
+            || preg_match('/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/', $repository) !== 1
+            || preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $name) !== 1
+            || preg_match('/^pfSense-pkg-[A-Za-z0-9][A-Za-z0-9._-]*$/', self::PACKAGE_NAME) !== 1
             || !is_string($url)
+            || $url !== $expectedUrl
             || self::isAllowedAssetUrl($url) === false
-            || str_contains(strtolower($url), '/latest/')
             || !is_string($sha256)
             || preg_match('/^[a-fA-F0-9]{64}$/', $sha256) !== 1
             || !is_string($fileName)
-            || $fileName !== self::PACKAGE_NAME . '-' . $version . '.pkg'
+            || $fileName !== $expectedFileName
         ) {
             return null;
         }
 
-        $loggerTag = '[__WORKSPACE_NAME__]-restore-heal';
-        $packagePath = PackagePaths::RESTORE_HEAL_DIRECTORY . '/' . $fileName;
-        $scriptCommands = [
-            '[ -e "$1" ]&&exit',
-            self::PKG_COMMAND . ' info -e "$2"&&exit',
-            'v=$6',
-            'g=$7',
-            't=/tmp/rh.$$.pkg',
-            'L(){ ' . self::LOGGER_COMMAND . ' -t "$g" "$1 $v"||:;}',
-            'C(){ /bin/rm -f "$t";}',
-            'trap C 0 1 2 15',
-            'if ' . self::SHA256_COMMAND . ' -c "$5" "$3";then L using-local;i=$3;else if [ -e "$3" ];then L discarding-local;/bin/rm -f "$3";fi;L fetching;C;' . self::FETCH_COMMAND . ' -q -T 30 -o "$t" "$4"||{ L fetch-failed;exit 1;};' . self::SHA256_COMMAND . ' -c "$5" "$t"||{ L checksum-failed;exit 1;};i=$t;fi',
-            'L installing',
-            self::PKG_COMMAND . ' add -f "$i"&&L installed||{ L install-failed;exit 1;}',
-        ];
-        $script = implode(';', $scriptCommands) . ';';
+        $pidFile = '/var/run/' . $name . '-restore-heal.pid';
         $commandArguments = [
-            PackagePaths::PACKAGE_SYNC_FLAG,
             self::PACKAGE_NAME,
-            $packagePath,
-            $url,
+            $repository,
             strtolower($sha256),
             $version,
-            $loggerTag,
+            $name,
         ];
         $escapedCommandArguments = array_map(
             static fn (string $commandArgument): string => escapeshellarg($commandArgument),
@@ -947,31 +940,210 @@ final class UpdateManager
         $command = self::RESTORE_HEAL_COMMAND_MARKER
             . ' '
             . self::DAEMON_COMMAND
-            . ' -f '
+            . ' -f -p '
+            . $pidFile
+            . ' '
             . self::SHELL_COMMAND
             . ' -c '
-            . escapeshellarg($script)
-            . ' '
-            . escapeshellarg('restore-heal')
-            . ' '
+            . escapeshellarg(self::RESTORE_HEAL_SCRIPT)
+            . ' rh '
             . implode(' ', $escapedCommandArguments);
 
         $cronCommand = str_replace('%', '\\%', $command);
 
-        return strlen($cronCommand) <= self::RESTORE_HEAL_COMMAND_LIMIT
-            ? $cronCommand
-            : null;
+        if (strlen($cronCommand) > self::RESTORE_HEAL_COMMAND_LIMIT) {
+            self::logRestoreHealFailure(new RuntimeException(self::translate(
+                'The restore-heal cron command exceeds the %1$d-byte limit.',
+                [self::RESTORE_HEAL_COMMAND_LIMIT],
+            )));
+
+            return null;
+        }
+
+        return $cronCommand;
+    }
+
+    /**
+     * Copies one verified package into the persistent restore-heal cache.
+     *
+     * Self-update calls this only after package verification and installation.
+     * The private replacement keeps the last verified release available offline.
+     *
+     * @param string $packagePath - Verified downloaded package path.
+     * @param string $version     - Verified package version.
+     * @param string $directory   - Persistent restore-heal cache directory.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When the verified package cannot be cached privately.
+     *
+     * @since UNRELEASED
+     */
+    public static function cacheRestoreHealPackage(
+        string $packagePath,
+        string $version,
+        string $directory = PackagePaths::RESTORE_HEAL_DIRECTORY,
+    ): void {
+        $fileName = self::restoreHealFileName($version);
+
+        if (
+            $fileName === null
+            || is_file($packagePath) === false
+            || is_readable($packagePath) === false
+            || self::isSafeRestoreHealDirectory($directory) === false
+        ) {
+            throw new RuntimeException(self::translate('The verified package could not be saved for configuration-restore recovery.'));
+        }
+
+        if (
+            is_dir($directory) === false
+            && @mkdir($directory, 0700, true) === false
+            && is_dir($directory) === false
+        ) {
+            throw new RuntimeException(self::translate('The verified package could not be saved for configuration-restore recovery.'));
+        }
+
+        if (@chmod($directory, 0700) === false) {
+            throw new RuntimeException(self::translate('The verified package could not be saved for configuration-restore recovery.'));
+        }
+
+        $cachedPackagePath = $directory . '/' . $fileName;
+        $temporaryPackagePath = $cachedPackagePath . '.tmp';
+
+        @unlink($temporaryPackagePath);
+
+        if (
+            @copy($packagePath, $temporaryPackagePath) === false
+            || @chmod($temporaryPackagePath, 0600) === false
+            || @rename($temporaryPackagePath, $cachedPackagePath) === false
+        ) {
+            @unlink($temporaryPackagePath);
+
+            throw new RuntimeException(self::translate('The verified package could not be saved for configuration-restore recovery.'));
+        }
+
+        self::pruneRestoreHealCache($version, $directory);
+    }
+
+    /**
+     * Removes cached files that do not belong to one verified release pin.
+     *
+     * Synchronization calls this only after the matching cron command is written.
+     * The current package remains available while stale packages and temp files go.
+     *
+     * @param string $version   - Current verified package version.
+     * @param string $directory - Persistent restore-heal cache directory.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When stale cache files cannot be inspected or removed.
+     *
+     * @since UNRELEASED
+     */
+    public static function pruneRestoreHealCache(
+        string $version,
+        string $directory = PackagePaths::RESTORE_HEAL_DIRECTORY,
+    ): void {
+        $fileName = self::restoreHealFileName($version);
+
+        if ($fileName === null || self::isSafeRestoreHealDirectory($directory) === false) {
+            throw new RuntimeException(self::translate('The restore-heal package cache could not be pruned.'));
+        }
+
+        if (is_dir($directory) === false) {
+            return;
+        }
+
+        $entries = @scandir($directory);
+
+        if (!is_array($entries)) {
+            throw new RuntimeException(self::translate('The restore-heal package cache could not be pruned.'));
+        }
+
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..' || $entry === $fileName) {
+                continue;
+            }
+
+            $entryPath = $directory . '/' . $entry;
+
+            if (
+                (is_file($entryPath) || is_link($entryPath))
+                && @unlink($entryPath) === false
+            ) {
+                throw new RuntimeException(self::translate('The restore-heal package cache could not be pruned.'));
+            }
+        }
+    }
+
+    /**
+     * Removes the complete persistent restore-heal cache directory.
+     *
+     * Deliberate uninstall calls this regardless of settings retention. Restore-
+     * driven removal skips it so the verified package remains available.
+     *
+     * @param string $directory - Persistent restore-heal cache directory.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When the cache directory cannot be removed.
+     *
+     * @since UNRELEASED
+     */
+    public static function removeRestoreHealCache(
+        string $directory = PackagePaths::RESTORE_HEAL_DIRECTORY,
+    ): void {
+        if (self::isSafeRestoreHealDirectory($directory) === false) {
+            throw new RuntimeException(self::translate('The restore-heal package cache could not be removed.'));
+        }
+
+        if (file_exists($directory) === false && is_link($directory) === false) {
+            return;
+        }
+
+        self::removeRestoreHealDirectory($directory);
+    }
+
+    /**
+     * Removes the legacy unversioned restore-heal cache file during synchronization.
+     *
+     * The shared job reads only versioned package filenames, so the former
+     * "package.pkg" name can be discarded without affecting a retained pin.
+     *
+     * @param string $directory - Persistent restore-heal cache directory.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When the legacy file cannot be removed.
+     *
+     * @since UNRELEASED
+     */
+    public static function removeLegacyRestoreHealCacheFile(
+        string $directory = PackagePaths::RESTORE_HEAL_DIRECTORY,
+    ): void {
+        if (self::isSafeRestoreHealDirectory($directory) === false) {
+            throw new RuntimeException(self::translate('The legacy restore-heal package cache could not be removed.'));
+        }
+
+        $legacyPackagePath = $directory . '/package.pkg';
+
+        if (
+            (file_exists($legacyPackagePath) || is_link($legacyPackagePath))
+            && @unlink($legacyPackagePath) === false
+        ) {
+            throw new RuntimeException(self::translate('The legacy restore-heal package cache could not be removed.'));
+        }
     }
 
     /**
      * Replaces every package-owned restore cron entry with at most one current item.
      *
      * Prefix matching removes stale pinned commands without touching another
-     * package's cron work. A retained uninstall returns the original list unchanged.
+     * package's cron work. Restore-driven removal returns the original list unchanged.
      *
      * @param array       $items        - Current pfSense cron items.
      * @param string|null $command      - Current verified command, or null to remove.
-     * @param bool        $keepExisting - Whether restore or settings retention owns it.
+     * @param bool        $keepExisting - Whether a configuration restore owns it.
      *
      * @return array
      *
@@ -1028,11 +1200,11 @@ final class UpdateManager
     /**
      * Reports whether deinstall must preserve the restore-heal cron entry.
      *
-     * Restore-driven removal and an explicit Keep Settings choice both retain the
-     * only package code capable of reinstalling onto a newly restored firewall.
+     * Only restore-driven removal retains the recovery state. Keep Settings affects
+     * package configuration without turning a deliberate uninstall into a reinstall.
      *
      * @param bool $restoreInProgress - Whether pfSense is reconciling a restore.
-     * @param bool $keepSettings      - Whether package settings must be retained.
+     * @param bool $keepSettings      - Whether the framework retains package settings.
      *
      * @return bool
      *
@@ -1042,7 +1214,7 @@ final class UpdateManager
         bool $restoreInProgress,
         bool $keepSettings,
     ): bool {
-        return $restoreInProgress === true || $keepSettings === true;
+        return $restoreInProgress === true;
     }
 
     /**
@@ -1149,6 +1321,42 @@ final class UpdateManager
             'message' => self::translate('The update is starting.'),
             'version' => $version,
             'started_at' => $timestamp,
+            'updated_at' => $timestamp,
+            'finished_at' => null,
+        ]);
+    }
+
+    /**
+     * Marks a queued install as waiting for the package task lock.
+     *
+     * The detached CLI writes this state before its bounded wait so the About
+     * tab explains why an otherwise healthy update has not started downloading.
+     *
+     * @param string $path - Status file path.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     */
+    public static function markQueuedSelfUpdateWaitingForTask(
+        string $path = PackagePaths::UPDATE_STATUS_FILE,
+    ): void {
+        $timestamp = gmdate(DATE_ATOM);
+        $queuedState = null;
+
+        try {
+            $queuedState = self::readStatusState($path);
+        } catch (Throwable) {
+            // A fresh waiting state safely replaces malformed queued state.
+        }
+
+        self::writeJsonAtomically($path, [
+            'state' => 'running',
+            'message' => self::translate('Waiting for the package\'s running task to finish.'),
+            'version' => is_array($queuedState) ? ($queuedState['version'] ?? null) : null,
+            'started_at' => is_array($queuedState)
+                ? ($queuedState['started_at'] ?? $timestamp)
+                : $timestamp,
             'updated_at' => $timestamp,
             'finished_at' => null,
         ]);
@@ -1655,6 +1863,16 @@ final class UpdateManager
                 throw new RuntimeException(self::translate('pkg add -f failed with exit code %1$d. The installed version was not changed successfully.', [$installResult['exit_code']]));
             }
 
+            try {
+                self::cacheRestoreHealPackage(
+                    $packagePath,
+                    $version,
+                    $this->restoreHealDirectory,
+                );
+            } catch (Throwable $cacheThrowable) {
+                self::logRestoreHealFailure($cacheThrowable);
+            }
+
             $state = $this->saveReleaseState($release, $version, $remoteNotifications);
 
             $this->writeStatus(
@@ -1731,13 +1949,14 @@ final class UpdateManager
     /**
      * Creates or closes the single update notice and records de-duplication state.
      *
-     * A release can create only one bell notice. Remote notification delivery follows
-     * the explicit checkbox by inverting it for pfSense's local_only argument.
+     * A release can create only one bell notice. Manual checks record the release
+     * as seen without filing one, while scheduled checks follow the remote setting.
      *
      * @param array  $state               - Update state.
      * @param string $installedVersion    - Installed version.
      * @param string $latestVersion       - Latest version.
      * @param bool   $remoteNotifications - Whether remote delivery is enabled.
+     * @param bool   $fileNotice           - Whether a notice may be filed.
      *
      * @return array
      *
@@ -1748,6 +1967,7 @@ final class UpdateManager
         string $installedVersion,
         string $latestVersion,
         bool $remoteNotifications,
+        bool $fileNotice,
     ): array {
         if (self::isNewerVersion($installedVersion, $latestVersion) === false) {
             if (function_exists('close_notice')) {
@@ -1758,6 +1978,12 @@ final class UpdateManager
         }
 
         if (($state['notified_version'] ?? null) === $latestVersion) {
+            return $state;
+        }
+
+        if ($fileNotice === false) {
+            $state['notified_version'] = $latestVersion;
+
             return $state;
         }
 
@@ -2212,6 +2438,30 @@ final class UpdateManager
     }
 
     /**
+     * Logs a restore-heal construction failure without interrupting synchronization.
+     *
+     * Command-length validation runs inside the static builder, so it uses this
+     * guarded logger instead of depending on the package lifecycle include.
+     *
+     * @param Throwable $throwable - Failure to log.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function logRestoreHealFailure(Throwable $throwable): void
+    {
+        try {
+            if (function_exists('log_error')) {
+                \log_error('[__WORKSPACE_TITLE__] restore heal: ' . $throwable->getMessage());
+            }
+        } catch (Throwable) {
+            // A logging failure must not interrupt package synchronization.
+        }
+    }
+
+    /**
      * Logs a restore-reassurance failure without interrupting package startup.
      *
      * @param Throwable $throwable - Failure to log.
@@ -2248,10 +2498,54 @@ final class UpdateManager
     }
 
     /**
+     * Returns the exact cache filename for one validated package version.
+     *
+     * Cache writers and pruners share this validation so no untrusted version can
+     * select a path outside the package-owned restore-heal directory.
+     *
+     * @param string $version - Package version.
+     *
+     * @return string|null
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function restoreHealFileName(string $version): ?string
+    {
+        if (preg_match('/^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][0-9A-Za-z.-]+)?$/', $version) !== 1) {
+            return null;
+        }
+
+        return self::PACKAGE_NAME . '-' . $version . '.pkg';
+    }
+
+    /**
+     * Extracts the generated GitHub owner and repository from the trusted prefix.
+     *
+     * The restore job accepts only the repository already used by update downloads,
+     * keeping its constructed release URL inside the existing trust boundary.
+     *
+     * @return string|null
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function restoreHealRepository(): ?string
+    {
+        $pattern = '~\Ahttps://github\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/releases/download/\z~';
+
+        if (preg_match($pattern, self::DOWNLOAD_PREFIX, $matches) !== 1) {
+            return null;
+        }
+
+        return $matches[1];
+    }
+
+    /**
      * Parses pinned metadata from one exact builder-produced cron command.
      *
-     * The final fixed arguments expose the filename, URL, SHA-256, and version.
-     * Rebuilding the whole command verifies every unparsed script byte as well.
+     * The final fixed arguments expose the repository, SHA-256, and version.
+     * Rebuilding verifies the script, pidfile, package identity, and every argument.
      *
      * @param string $command - Tagged restore-heal cron command.
      *
@@ -2262,21 +2556,22 @@ final class UpdateManager
      */
     private static function parseRestoreHealCommand(string $command): ?array
     {
-        $packageSyncFlagPattern = preg_quote(PackagePaths::PACKAGE_SYNC_FLAG, '~');
         $packageNamePattern = preg_quote(self::PACKAGE_NAME, '~');
-        $restoreHealDirectoryPattern = preg_quote(PackagePaths::RESTORE_HEAL_DIRECTORY, '~');
-        $loggerTagPattern = preg_quote('[__WORKSPACE_NAME__]-restore-heal', '~');
-        $pattern = "~ 'restore-heal' '$packageSyncFlagPattern' '$packageNamePattern' '$restoreHealDirectoryPattern/([^']+)' '([^']+)' '([a-fA-F0-9]{64})' '([^']+)' '$loggerTagPattern'\\z~";
+        $namePattern = preg_quote('[__WORKSPACE_NAME__]', '~');
+        $pattern = "~ rh '$packageNamePattern' '([^']+)' '([a-f0-9]{64})' '([^']+)' '$namePattern'\\z~";
 
         if (preg_match($pattern, $command, $matches) !== 1) {
             return null;
         }
 
+        $repository = $matches[1];
+        $version = $matches[3];
+        $fileName = self::PACKAGE_NAME . '-' . $version . '.pkg';
         $metadata = [
-            'version' => $matches[4],
-            'url' => str_replace('\\%', '%', $matches[2]),
-            'sha256' => strtolower($matches[3]),
-            'file_name' => $matches[1],
+            'version' => $version,
+            'url' => 'https://github.com/' . $repository . '/releases/download/v' . $version . '/' . $fileName,
+            'sha256' => $matches[2],
+            'file_name' => $fileName,
         ];
         $rebuiltCommand = self::buildRestoreHealCommand($metadata);
 
@@ -2317,6 +2612,80 @@ final class UpdateManager
         }
 
         return $decoded;
+    }
+
+    /**
+     * Reports whether a restore-heal directory is a non-root absolute path.
+     *
+     * Cache cleanup accepts a test directory override, so destructive operations
+     * reject empty, relative, and filesystem-root targets before inspecting files.
+     *
+     * @param string $directory - Restore-heal cache directory.
+     *
+     * @return bool
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function isSafeRestoreHealDirectory(string $directory): bool
+    {
+        return $directory !== ''
+            && $directory !== '/'
+            && str_starts_with($directory, '/');
+    }
+
+    /**
+     * Recursively removes one validated restore-heal cache path.
+     *
+     * Symlinks are unlinked without following them. Real directories are walked so
+     * a deliberate uninstall removes temporary or unexpected nested cache content.
+     *
+     * @param string $directory - Validated restore-heal cache path.
+     *
+     * @return void
+     *
+     * @throws RuntimeException When any cache entry cannot be removed.
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function removeRestoreHealDirectory(string $directory): void
+    {
+        if (is_link($directory) || is_dir($directory) === false) {
+            if (@unlink($directory) === false) {
+                throw new RuntimeException(self::translate('The restore-heal package cache could not be removed.'));
+            }
+
+            return;
+        }
+
+        $entries = @scandir($directory);
+
+        if (!is_array($entries)) {
+            throw new RuntimeException(self::translate('The restore-heal package cache could not be removed.'));
+        }
+
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $entryPath = $directory . '/' . $entry;
+
+            if (is_dir($entryPath) && is_link($entryPath) === false) {
+                self::removeRestoreHealDirectory($entryPath);
+
+                continue;
+            }
+
+            if (@unlink($entryPath) === false) {
+                throw new RuntimeException(self::translate('The restore-heal package cache could not be removed.'));
+            }
+        }
+
+        if (@rmdir($directory) === false) {
+            throw new RuntimeException(self::translate('The restore-heal package cache could not be removed.'));
+        }
     }
 
     /**
@@ -2426,6 +2795,7 @@ final class UpdateManager
             $effectiveVersion,
             $release['version'],
             $remoteNotifications,
+            true,
         );
 
         self::writeJsonAtomically($this->updatesFile, $state);

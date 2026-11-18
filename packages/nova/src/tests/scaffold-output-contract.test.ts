@@ -1893,6 +1893,8 @@ describe('scaffold output contract', async () => {
     strictEqual(settingsHandlerContent.includes('UpdateManager::stableCronSchedule($storedSchedule)'), true);
     strictEqual(settingsHandlerContent.includes('$frequency === \'never\''), true);
     strictEqual(settingsHandlerContent.includes('UpdateManager::closePackageNotices()'), true);
+    strictEqual(settingsHandlerContent.includes('PackagePaths::RELEASE_LOCK_FILE'), true);
+    strictEqual(settingsHandlerContent.includes('@unlink($lockFile)'), true);
     strictEqual(settingsHandlerContent.includes('UpdateManager::reassureAfterRestore()'), true);
     strictEqual(settingsHandlerContent.includes('function pfsensePackage[__WORKSPACE_IDENTIFIER__]ConfigureRestoreHealCron('), true);
     strictEqual(settingsHandlerContent.includes('function pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallRestoreHealCron('), true);
@@ -1906,6 +1908,9 @@ describe('scaffold output contract', async () => {
     strictEqual(settingsHandlerContent.includes('configure_cron()'), true);
     strictEqual(settingsHandlerContent.includes('file_exists(PackagePaths::PACKAGE_SYNC_FLAG)'), true);
     strictEqual(settingsHandlerContent.includes('UpdateManager::shouldKeepRestoreHealEntry('), true);
+    strictEqual(settingsHandlerContent.includes('UpdateManager::removeLegacyRestoreHealCacheFile()'), true);
+    strictEqual(settingsHandlerContent.includes('UpdateManager::pruneRestoreHealCache($installedVersion)'), true);
+    strictEqual(settingsHandlerContent.includes('UpdateManager::removeRestoreHealCache()'), true);
     strictEqual(aboutPageContent.includes('simplexml_'), false);
     strictEqual(aboutPageContent.includes('$installedPackageVersion = UpdateManager::installedVersion()'), true);
     strictEqual(aboutPageContent.includes('gettext(\'Unknown\')'), true);
@@ -1930,6 +1935,9 @@ describe('scaffold output contract', async () => {
     strictEqual(aboutPageContent.includes('target="_blank" rel="noopener noreferrer"'), true);
     strictEqual(aboutPageContent.includes('$escape($packageVersion)'), true);
     strictEqual(aboutPageContent.includes('if ($updatesAvailable):'), true);
+    strictEqual(aboutPageContent.includes('PackagePaths::MANUAL_UPDATE_CHECK_COMMAND'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'Another package operation is already running.\')'), true);
+    strictEqual(aboutPageContent.includes('gettext(\'An update check or install is already running.\')'), true);
     strictEqual(aboutPageContent.includes('UpdateManager::queueSelfUpdate($queuedVersion)'), true);
     strictEqual(aboutPageContent.includes('mwexec_bg(PackagePaths::SELF_UPDATE_COMMAND)'), true);
     strictEqual(aboutPageContent.includes('gettext(\'Check Now\')'), true);
@@ -1944,7 +1952,11 @@ describe('scaffold output contract', async () => {
     strictEqual(aboutPageContent.includes('Project Links'), false);
     strictEqual(aboutPageContent.includes('\'Homepage\''), false);
     strictEqual(fileLockContent.includes('flock($handle, LOCK_EX | LOCK_NB)'), true);
+    strictEqual(fileLockContent.includes('public function acquire(int $timeoutSeconds = 0): bool'), true);
+    strictEqual(fileLockContent.includes('usleep(100000)'), true);
     strictEqual(fileLockContent.includes('fchmod('), false);
+    strictEqual(packagePathsContent.includes('RELEASE_LOCK_FILE = \'/var/run/[__WORKSPACE_NAME__]-release.lock\''), true);
+    strictEqual(packagePathsContent.includes('MANUAL_UPDATE_CHECK_COMMAND = self::UPDATE_CHECK_COMMAND . \' --no-notice\''), true);
     strictEqual(packagePathsContent.includes('UPDATE_SCHEDULE_PATH = \'installedpackages/[__PFSENSE_CONFIG_NAME__]/update_schedule\''), true);
     strictEqual(packagePathsContent.includes('RESTORE_HEAL_DIRECTORY = \'/conf/[__WORKSPACE_NAME__]/restore-heal\''), true);
     strictEqual(packagePathsContent.includes('PACKAGE_SYNC_FLAG = \'/conf/needs_package_sync\''), true);
@@ -1963,14 +1975,27 @@ describe('scaffold output contract', async () => {
     strictEqual(updateManagerContent.includes('$statusCode === 404'), true);
     strictEqual(updateManagerContent.includes('public function restoreHealMetadata(): ?array'), true);
     strictEqual(updateManagerContent.includes('public static function buildRestoreHealCommand(array $metadata): ?string'), true);
+    strictEqual(updateManagerContent.includes('public const RESTORE_HEAL_SCRIPT = \'p=$1;r=$2;h=$3;v=$4;g=$5-restore-heal;'), true);
+    strictEqual(updateManagerContent.includes('self::DAEMON_COMMAND\n            . \' -f -p \''), true);
+    strictEqual(updateManagerContent.includes('escapeshellarg(self::RESTORE_HEAL_SCRIPT)'), true);
+    strictEqual(updateManagerContent.includes('public static function cacheRestoreHealPackage('), true);
+    strictEqual(updateManagerContent.includes('public static function removeRestoreHealCache('), true);
+    strictEqual(updateManagerContent.includes('self::logRestoreHealFailure($cacheThrowable)'), true);
+    strictEqual(updateManagerContent.includes('return $restoreInProgress === true;'), true);
     strictEqual(updateManagerContent.includes('\'minute\' => \'*/15\''), true);
     strictEqual(updateManagerContent.includes('\'who\' => \'root\''), true);
-    strictEqual(updateManagerContent.includes('self::FETCH_COMMAND . \' -q -T 30 -o "$t" "$4"'), true);
-    strictEqual(updateManagerContent.includes('self::PKG_COMMAND . \' add -f "$i"'), true);
+    strictEqual(updateManagerContent.includes('private const FETCH_COMMAND'), false);
+    strictEqual(updateManagerContent.includes('L fetch;/bin/mkdir -p $d&&/usr/bin/fetch -q -T 30'), true);
+    strictEqual(updateManagerContent.includes('/usr/local/sbin/pkg add -f $c'), true);
     strictEqual(updateManagerContent.includes('64 * 1024 * 1024'), true);
     strictEqual(updateManagerContent.includes('64 * 1024'), true);
     strictEqual(updateManagerContent.includes('SSH_KEYGEN_COMMAND = \'/usr/bin/ssh-keygen\''), true);
     strictEqual(updateManagerContent.includes('private const PKG_COMMAND = \'/usr/local/sbin/pkg\''), true);
+    strictEqual(updateManagerContent.includes('public function check(bool $remoteNotifications, bool $fileNotice): array'), true);
+    strictEqual(updateManagerContent.includes('public static function markQueuedSelfUpdateWaitingForTask('), true);
+    strictEqual(updateManagerContent.includes('Waiting for the package\\\'s running task to finish.'), true);
+    strictEqual(updateManagerContent.includes('if ($fileNotice === false)'), true);
+    strictEqual(updateManagerContent.includes('$state[\'notified_version\'] = $latestVersion'), true);
     strictEqual(updateManagerContent.indexOf('$this->verifyReleaseSignature(') < updateManagerContent.indexOf('$this->verifyPackageMetadata('), true);
     strictEqual(updateManagerContent.includes([
       '                \'add\',',
@@ -1978,7 +2003,29 @@ describe('scaffold output contract', async () => {
     ].join('\n')), true);
     strictEqual(updateManagerContent.includes('Translator'), false);
     strictEqual(packageScriptContent.includes('case \'--check-updates\''), true);
+    strictEqual(packageScriptContent.includes('case \'--no-notice\''), true);
     strictEqual(packageScriptContent.includes('case \'--self-update\''), true);
+    strictEqual(packageScriptContent.includes('Usage: [__WORKSPACE_NAME__] [--check-updates [--no-notice] | --self-update | --help]'), true);
+    strictEqual(packageScriptContent.includes([
+      '        $noNotice === true',
+      '        && (',
+      '            $checkUpdates === false',
+      '            || $selfUpdate === true',
+      '            || $showHelp === true',
+    ].join('\n')), true);
+    strictEqual(packageScriptContent.includes([
+      '        fwrite(STDERR, $usage . PHP_EOL);',
+      '',
+      '        return 64;',
+    ].join('\n')), true);
+    strictEqual(packageScriptContent.includes('$releaseFileLock->acquire($releaseLockTimeoutSeconds)'), true);
+    strictEqual(packageScriptContent.includes('$packageFileLock->acquire($packageLockTimeoutSeconds)'), true);
+    strictEqual(packageScriptContent.includes('UpdateManager::markQueuedSelfUpdateWaitingForTask()'), true);
+    strictEqual(packageScriptContent.includes('An update check or install is already running.'), true);
+    strictEqual(packageScriptContent.includes('The package\\\'s task is still running. Try again when it finishes.'), true);
+    strictEqual(packageScriptContent.indexOf('new FileLock($releaseLockFile)') < packageScriptContent.indexOf('new FileLock($packageLockFile)'), true);
+    strictEqual(packageScriptContent.indexOf('$packageFileLock->release()') < packageScriptContent.indexOf('$releaseFileLock->release()'), true);
+    strictEqual(packageScriptContent.includes('$noNotice === false'), true);
     strictEqual(packageScriptContent.includes('\'NOVA_PFSENSE_UPDATE_RELEASES_API\''), true);
     strictEqual(packageScriptContent.includes('\'NOVA_PFSENSE_UPDATE_DOWNLOAD_PREFIX\''), true);
     strictEqual(packageScriptContent.includes('SIGNING_KEYS'), false);
@@ -2015,6 +2062,12 @@ describe('scaffold output contract', async () => {
     strictEqual(checkPackageContent.includes('releaseSigningKeyPattern.test(releaseSigningKeyLine)'), true);
     strictEqual(checkPackageContent.includes('WWW=\\t[__PROJECT_HOMEPAGE__]'), true);
     strictEqual(updateTestsContent.includes('UpdateManager::stableCronSchedule([], $randomInteger)'), true);
+    strictEqual(updateTestsContent.includes('A manual check must file no notice.'), true);
+    strictEqual(updateTestsContent.includes('A later scheduled check must not announce a manually observed version.'), true);
+    strictEqual(updateTestsContent.includes('An update check must acquire its release lock while the package task lock is held.'), true);
+    strictEqual(updateTestsContent.includes('A second update check must time out while the release lock is held.'), true);
+    strictEqual(updateTestsContent.includes('An injected zero-second package-task wait must time out immediately.'), true);
+    strictEqual(updateTestsContent.includes('A timed-out package-task wait must report the task-still-running message.'), true);
     strictEqual(updateTestsContent.includes('->verifyReleaseSignature('), true);
     strictEqual(updateTestsContent.includes('function get_notices(): array|false'), true);
     strictEqual(updateTestsContent.includes('$noticeKey = $updateTestNoticeTime'), true);
@@ -2035,6 +2088,11 @@ describe('scaffold output contract', async () => {
     strictEqual(updateTestsContent.includes('A successful lookup must replace the stale pinned command.'), true);
     strictEqual(updateTestsContent.includes('exec(\'/bin/sh -n \''), true);
     strictEqual(updateTestsContent.includes('UpdateManager::shouldKeepRestoreHealEntry(true, false)'), true);
+    strictEqual(updateTestsContent.includes('Known restore-heal inputs must produce the exact shared cron command.'), true);
+    strictEqual(updateTestsContent.includes('An invalid restore-heal SHA-256 digest must produce no command.'), true);
+    strictEqual(updateTestsContent.includes('A deliberate uninstall with Keep Settings must remove the restore-heal cache folder.'), true);
+    strictEqual(updateTestsContent.includes('An uninstall during a restore must keep the restore-heal cache folder.'), true);
+    strictEqual(updateTestsContent.includes('Writing a new restore-heal pin must prune stale package files.'), true);
     strictEqual(updateTestsContent.includes('A release without a verifiable hash must create no metadata.'), true);
 
     return;
