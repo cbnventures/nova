@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime\RestoreHealUnavailableException;
 use PfSense\[__WORKSPACE_IDENTIFIER__]\Runtime\UpdateManager;
 
 require_once(__DIR__ . '/../port/files/usr/local/pkg/[__WORKSPACE_NAME__]/UpdateManager.php');
@@ -12,15 +13,33 @@ if (UpdateManager::isAvailable() === false) {
     exit(0);
 }
 
-/** @var list<array> Captured pfSense notices. */
+/** @var array<int|string, array<string, string>> Simulated pfSense notice queue. */
 $updateTestNotices = [];
 
-/** @var list<string> Captured closed pfSense notice identifiers. */
+/** @var list<int|string> Captured closed pfSense notice identifiers and queue keys. */
 $updateTestClosedNotices = [];
+
+/** @var list<bool> Captured local-only arguments, which pfSense does not store. */
+$updateTestNoticeLocalOnlyValues = [];
+
+/** @var int Controlled replacement for time() in the pfSense notice stub. */
+$updateTestNoticeTime = 1700000000;
+
+/** @var list<array> Simulated installed pfSense packages. */
+$updateTestInstalledPackages = [];
+
+/** @var string Simulated pfSense product label. */
+$updateTestProductLabel = 'pfSense';
+
+/** @var list<string> Captured pfSense error log entries. */
+$updateTestLogErrors = [];
 
 if (function_exists('file_notice') === false) {
     /**
      * Captures one pfSense notice for update tests.
+     *
+     * The stub preserves notices.inc timestamp keys and stored field encoding.
+     * Local-only delivery remains separate because pfSense does not persist it.
      *
      * @param string $id        - Notice identifier.
      * @param string $notice    - Notice text.
@@ -41,27 +60,162 @@ if (function_exists('file_notice') === false) {
         int $priority = 1,
         bool $localOnly = false,
     ): void {
+        global $updateTestNoticeLocalOnlyValues;
+        global $updateTestNoticeTime;
         global $updateTestNotices;
 
-        $updateTestNotices[] = compact('id', 'notice', 'category', 'url', 'priority', 'localOnly');
+        $noticeKey = $updateTestNoticeTime;
+
+        while (array_key_exists($noticeKey, $updateTestNotices)) {
+            $noticeKey++;
+        }
+
+        $updateTestNotices[$noticeKey] = [
+            'id' => htmlentities($id),
+            'notice' => htmlentities($notice),
+            'url' => htmlentities($url),
+            'category' => htmlentities($category),
+            'priority' => htmlentities((string) $priority),
+        ];
+        $updateTestNoticeLocalOnlyValues[] = $localOnly;
+    }
+}
+
+if (function_exists('get_notices') === false) {
+    /**
+     * Returns the simulated pfSense notice queue.
+     *
+     * An empty queue matches notices.inc by returning false rather than an
+     * empty array so production callers exercise the real boundary.
+     *
+     * @return array|false
+     *
+     * @since UNRELEASED
+     */
+    function get_notices(): array|false
+    {
+        global $updateTestNotices;
+
+        return count($updateTestNotices) > 0
+            ? $updateTestNotices
+            : false;
     }
 }
 
 if (function_exists('close_notice') === false) {
     /**
-     * Captures one closed pfSense notice identifier.
+     * Closes one matching simulated pfSense notice.
      *
-     * @param string $id - Notice identifier.
+     * Queue keys take precedence over stored identifiers, and each call removes
+     * no more than one entry just like notices.inc.
+     *
+     * @param mixed $id - Notice identifier or queue key.
      *
      * @return void
      *
      * @since UNRELEASED
      */
-    function close_notice(string $id): void
+    function close_notice(mixed $id): void
     {
         global $updateTestClosedNotices;
+        global $updateTestNotices;
 
         $updateTestClosedNotices[] = $id;
+
+        if ($id === 'all') {
+            $updateTestNotices = [];
+
+            return;
+        }
+
+        if (
+            (is_int($id) || is_string($id))
+            && array_key_exists($id, $updateTestNotices)
+        ) {
+            unset($updateTestNotices[$id]);
+
+            return;
+        }
+
+        foreach ($updateTestNotices as $noticeKey => $notice) {
+            if (($notice['id'] ?? null) !== $id) {
+                continue;
+            }
+
+            unset($updateTestNotices[$noticeKey]);
+
+            return;
+        }
+    }
+}
+
+if (function_exists('config_get_path') === false) {
+    /**
+     * Returns one simulated pfSense configuration path.
+     *
+     * Restore reassurance reads only the installed package collection; other
+     * paths retain the default supplied by the caller.
+     *
+     * @param string $path    - Configuration path.
+     * @param mixed  $default - Default value.
+     *
+     * @return mixed
+     *
+     * @since UNRELEASED
+     */
+    function config_get_path(string $path, mixed $default = null): mixed
+    {
+        global $updateTestInstalledPackages;
+
+        if ($path === 'installedpackages/package') {
+            return $updateTestInstalledPackages;
+        }
+
+        return $default;
+    }
+}
+
+if (function_exists('g_get') === false) {
+    /**
+     * Returns one simulated pfSense global value.
+     *
+     * The reassurance path reads only product_label; unknown keys remain absent
+     * so the stub does not invent unrelated pfSense state.
+     *
+     * @param string $key - Global key.
+     *
+     * @return mixed
+     *
+     * @since UNRELEASED
+     */
+    function g_get(string $key): mixed
+    {
+        global $updateTestProductLabel;
+
+        return $key === 'product_label'
+            ? $updateTestProductLabel
+            : null;
+    }
+}
+
+if (function_exists('log_error') === false) {
+    /**
+     * Captures one simulated pfSense error log entry.
+     *
+     * Restore tests inspect this collection to ensure an empty notice file is a
+     * normal state rather than a logged synchronization error.
+     *
+     * @param string $message - Error message.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     */
+    function log_error(string $message): void
+    {
+        global $updateTestLogErrors;
+
+        $updateTestLogErrors[] = $message;
     }
 }
 
@@ -113,6 +267,34 @@ function assertUpdateFailure(callable $callback, string $message): void
     }
 
     throw new RuntimeException('The update operation was expected to fail.');
+}
+
+/**
+ * Applies one resolved restore-heal action while counting configuration writes.
+ *
+ * False models the synchronization fast path that returns before the existing
+ * cron writer runs. Null and string actions exercise its normal transformer.
+ *
+ * @param array             $items      - Current pfSense cron items.
+ * @param string|false|null $command    - Resolved restore-heal command action.
+ * @param int               $writeCount - Simulated configuration write count.
+ *
+ * @return array
+ *
+ * @since UNRELEASED
+ */
+function applyResolvedRestoreHealCommand(
+    array $items,
+    string|false|null $command,
+    int &$writeCount,
+): array {
+    if ($command === false) {
+        return $items;
+    }
+
+    $writeCount++;
+
+    return UpdateManager::restoreHealCronItems($items, $command);
 }
 
 /**
@@ -352,24 +534,29 @@ $noticeState = [
     'notified_version' => null,
 ];
 $noticeState = UpdateManager::synchronizeNotice($noticeState, '2.0.1', '2.1.0', false);
+$updateNoticeValues = array_values($updateTestNotices);
 
 assertUpdateSame('2.1.0', $noticeState['notified_version'], 'The noticed version must be persisted.');
 assertUpdateSame(1, count($updateTestNotices), 'A new version must create one notice.');
 assertUpdateSame(
     '[__WORKSPACE_TITLE__] 2.1.0 is available.',
-    $updateTestNotices[0]['notice'],
+    $updateNoticeValues[0]['notice'],
     'The bell notice must use plain localized package and version text.',
 );
-assertUpdateSame('[__WORKSPACE_TITLE__]', $updateTestNotices[0]['category'], 'The notice category must be the package name.');
-assertUpdateSame(true, $updateTestNotices[0]['localOnly'], 'Remote notifications must be off by default.');
-assertUpdateSame(UpdateManager::ABOUT_PAGE, $updateTestNotices[0]['url'], 'The notice must link to the About tab.');
+assertUpdateSame('[__WORKSPACE_TITLE__]', $updateNoticeValues[0]['category'], 'The notice category must be the package name.');
+assertUpdateSame(true, $updateTestNoticeLocalOnlyValues[0], 'Remote notifications must be off by default.');
+assertUpdateSame(UpdateManager::ABOUT_PAGE, $updateNoticeValues[0]['url'], 'The notice must link to the About tab.');
+assertUpdateSame(false, array_key_exists('localOnly', $updateNoticeValues[0]), 'pfSense must not store the local-only argument.');
 
 $noticeState = UpdateManager::synchronizeNotice($noticeState, '2.0.1', '2.1.0', true);
 assertUpdateSame(1, count($updateTestNotices), 'The same version must not create a duplicate notice.');
 
 $noticeState = UpdateManager::synchronizeNotice($noticeState, '2.0.1', '2.2.0', true);
+$updateNoticeValues = array_values($updateTestNotices);
+
 assertUpdateSame(2, count($updateTestNotices), 'A later version must create one new notice.');
-assertUpdateSame(false, $updateTestNotices[1]['localOnly'], 'The opt-in must allow pfSense remote notifications.');
+assertUpdateSame(false, $updateTestNoticeLocalOnlyValues[1], 'The opt-in must allow pfSense remote notifications.');
+assertUpdateSame('[__WORKSPACE_TITLE__] 2.2.0 is available.', $updateNoticeValues[1]['notice'], 'A later version must store a second notice.');
 
 UpdateManager::synchronizeNotice($noticeState, '2.2.0', '2.2.0', true);
 assertUpdateSame(
@@ -377,6 +564,284 @@ assertUpdateSame(
     $updateTestClosedNotices[array_key_last($updateTestClosedNotices)],
     'The notice must close when the installed version is current.',
 );
+
+$restoreInstalledPackages = [
+    [
+        'name' => '[__WORKSPACE_TITLE__]',
+        'internal_name' => '[__WORKSPACE_IDENTIFIER__]',
+        'version' => '2.1.0',
+    ],
+];
+$updateTestInstalledPackages = $restoreInstalledPackages;
+$englishTranslator = static fn (string $message): string => $message;
+
+$restoreCloseNotice = static function (mixed $noticeId): void {
+    close_notice($noticeId);
+};
+
+$restoreFileNotice = static function (
+    string $noticeId,
+    string $notice,
+    string $category,
+    string $url,
+    int $priority,
+    bool $localOnly,
+): void {
+    file_notice(
+        $noticeId,
+        $notice,
+        $category,
+        $url,
+        $priority,
+        $localOnly,
+    );
+};
+
+$updateTestNotices = [];
+$updateTestClosedNotices = [];
+$updateTestNoticeLocalOnlyValues = [];
+$updateTestLogErrors = [];
+$updateTestNoticeTime = 1700000100;
+
+UpdateManager::reassureAfterRestore();
+
+assertUpdateSame(false, get_notices(), 'An empty pfSense notice file must remain empty.');
+assertUpdateSame([], $updateTestNoticeLocalOnlyValues, 'An empty notice file must create no reassurance.');
+assertUpdateSame([], $updateTestLogErrors, 'An empty notice file must not log a synchronization error.');
+
+$englishFalseRemovalNotice = 'Package [__WORKSPACE_TITLE__] does not exist in current pfSense version and it has been removed.';
+
+file_notice(
+    'Package reinstall',
+    $englishFalseRemovalNotice,
+    'Package reinstall',
+);
+
+UpdateManager::reassureAfterRestore();
+
+file_notice(
+    'Package reinstall',
+    $englishFalseRemovalNotice,
+    'Package reinstall',
+);
+
+UpdateManager::reassureAfterRestore();
+
+$restoreTestNotices = get_notices();
+
+if ($restoreTestNotices === false) {
+    throw new RuntimeException('The restore reassurance notice was not filed.');
+}
+
+$storedRestoreNoticeId = htmlentities(UpdateManager::RESTORE_NOTICE_ID);
+$storedEnglishFalseRemovalNotice = htmlentities($englishFalseRemovalNotice);
+$restoreReassuranceNotices = array_filter(
+    $restoreTestNotices,
+    static fn (array $restoreTestNotice): bool => ($restoreTestNotice['id'] ?? null) === $storedRestoreNoticeId,
+);
+$remainingFalseRemovalNotices = array_filter(
+    $restoreTestNotices,
+    static fn (array $restoreTestNotice): bool => ($restoreTestNotice['notice'] ?? null) === $storedEnglishFalseRemovalNotice,
+);
+
+assertUpdateSame(1, count($restoreReassuranceNotices), 'Two restores in a row must leave exactly one reassurance.');
+assertUpdateSame(0, count($remainingFalseRemovalNotices), 'Every matching false-removal notice must close.');
+assertUpdateSame(
+    [
+        1700000100,
+        1700000101,
+    ],
+    $updateTestClosedNotices,
+    'Each restore must close its false-removal notice by queue key.',
+);
+assertUpdateSame(
+    [
+        false,
+        true,
+        false,
+    ],
+    $updateTestNoticeLocalOnlyValues,
+    'A second restore must not file another local-only reassurance.',
+);
+
+$restoreReassuranceNotice = array_values($restoreReassuranceNotices)[0];
+
+assertUpdateSame(
+    htmlentities('[__WORKSPACE_TITLE__] is still installed and its settings are unchanged. pfSense reported it as removed after the configuration restore only because it isn\'t installed from Netgate\'s package repository. No action is needed.'),
+    $restoreReassuranceNotice['notice'],
+    'The stored reassurance must match pfSense htmlentities encoding.',
+);
+assertUpdateSame(
+    htmlentities(UpdateManager::ABOUT_PAGE),
+    $restoreReassuranceNotice['url'],
+    'The restore reassurance must link to the About page.',
+);
+assertUpdateSame(
+    htmlentities('[__WORKSPACE_TITLE__]'),
+    $restoreReassuranceNotice['category'],
+    'The restore reassurance must use the package notice category.',
+);
+assertUpdateSame(
+    false,
+    array_key_exists(UpdateManager::RESTORE_NOTICE_ID, $restoreTestNotices),
+    'pfSense must store the reassurance under a timestamp rather than its identifier.',
+);
+
+$updateTestNotices = [];
+$updateTestClosedNotices = [];
+$updateTestNoticeTime = 1700000190;
+
+file_notice(UpdateManager::RESTORE_NOTICE_ID, 'Duplicate reassurance one.');
+file_notice(UpdateManager::RESTORE_NOTICE_ID, 'Duplicate reassurance two.');
+
+close_notice(UpdateManager::RESTORE_NOTICE_ID);
+
+$singleCloseNotices = get_notices();
+
+if ($singleCloseNotices === false) {
+    throw new RuntimeException('One close_notice call removed more than one matching entry.');
+}
+
+assertUpdateSame(1, count($singleCloseNotices), 'One close_notice call must remove only one matching entry.');
+
+close_notice('all');
+
+assertUpdateSame(false, get_notices(), 'The all identifier must clear the simulated notice queue.');
+
+$updateTestNotices = [];
+$updateTestClosedNotices = [];
+$updateTestNoticeLocalOnlyValues = [];
+$updateTestNoticeTime = 1700000200;
+
+file_notice(UpdateManager::RESTORE_NOTICE_ID, 'Stale reassurance one.');
+file_notice(UpdateManager::RESTORE_NOTICE_ID, 'Stale reassurance two.');
+file_notice(UpdateManager::NOTICE_ID, 'Stale update one.');
+file_notice(UpdateManager::NOTICE_ID, 'Stale update two.');
+file_notice('unrelated', 'An unrelated notice.');
+
+UpdateManager::closePackageNotices();
+
+$remainingPackageNotices = get_notices();
+
+if ($remainingPackageNotices === false) {
+    throw new RuntimeException('Package notice cleanup removed an unrelated notice.');
+}
+
+assertUpdateSame(
+    [
+        1700000200,
+        1700000201,
+        1700000202,
+        1700000203,
+    ],
+    $updateTestClosedNotices,
+    'Uninstall must close every stale reassurance and update notice by queue key.',
+);
+assertUpdateSame(1, count($remainingPackageNotices), 'Uninstall must preserve unrelated notices.');
+assertUpdateSame(
+    htmlentities('unrelated'),
+    array_values($remainingPackageNotices)[0]['id'],
+    'Uninstall must leave the unrelated notice open.',
+);
+
+$frenchFalseNoticeTemplate = 'Le paquet %s n\'existe pas dans la version actuelle de %s et a été supprimé.';
+$frenchReassuranceTemplate = '%s est toujours installé et ses paramètres sont inchangés. pfSense a signalé sa suppression après la restauration uniquement parce qu\'il ne provient pas du dépôt de paquets Netgate. Aucune action n\'est nécessaire.';
+$frenchTranslator = static function (string $message) use (
+    $frenchFalseNoticeTemplate,
+    $frenchReassuranceTemplate,
+): string {
+    return match ($message) {
+        'Package %s does not exist in current %s version and it has been removed.' => $frenchFalseNoticeTemplate,
+        '%s is still installed and its settings are unchanged. pfSense reported it as removed after the configuration restore only because it isn\'t installed from Netgate\'s package repository. No action is needed.' => $frenchReassuranceTemplate,
+        '[__WORKSPACE_TITLE__]' => 'Paquet Exemple',
+        default => $message,
+    };
+};
+$frenchFalseRemovalNotice = sprintf(
+    $frenchFalseNoticeTemplate,
+    '[__WORKSPACE_TITLE__] ([__WORKSPACE_IDENTIFIER__])',
+    'pfSense FR',
+);
+$updateTestNotices = [];
+$updateTestClosedNotices = [];
+$updateTestNoticeLocalOnlyValues = [];
+$updateTestNoticeTime = 1700000300;
+
+file_notice(
+    'Réinstallation du paquet',
+    $frenchFalseRemovalNotice,
+    'Réinstallation du paquet',
+);
+
+$restoreTestNotices = get_notices();
+
+if ($restoreTestNotices === false) {
+    throw new RuntimeException('The localized false-removal notice was not filed.');
+}
+
+UpdateManager::reconcileRestoreNotices(
+    $restoreTestNotices,
+    $restoreInstalledPackages,
+    'pfSense FR',
+    $frenchTranslator,
+    $restoreCloseNotice,
+    $restoreFileNotice,
+);
+
+$restoreTestNotices = get_notices();
+
+if ($restoreTestNotices === false) {
+    throw new RuntimeException('The localized reassurance notice was not filed.');
+}
+
+$localizedReassuranceNotice = array_values($restoreTestNotices)[0];
+
+assertUpdateSame(
+    [1700000300],
+    $updateTestClosedNotices,
+    'The localized name-and-internal-name false notice must close.',
+);
+assertUpdateSame(1, count($restoreTestNotices), 'A localized false notice must create one localized reassurance.');
+assertUpdateSame(
+    htmlentities(sprintf($frenchReassuranceTemplate, 'Paquet Exemple')),
+    $localizedReassuranceNotice['notice'],
+    'The reassurance must match an htmlentities-encoded non-English template.',
+);
+assertUpdateSame(
+    htmlentities('Paquet Exemple'),
+    $localizedReassuranceNotice['category'],
+    'The localized reassurance must keep the translated package category.',
+);
+assertUpdateSame(
+    htmlentities(UpdateManager::RESTORE_NOTICE_ID),
+    $localizedReassuranceNotice['id'],
+    'The localized reassurance must retain its stored identifier.',
+);
+
+$updateTestNotices = [];
+$updateTestClosedNotices = [];
+$updateTestNoticeLocalOnlyValues = [];
+$updateTestNoticeTime = 1700000400;
+
+file_notice('unrelated', 'An unrelated notice.', 'System');
+
+$restoreTestNotices = get_notices();
+
+if ($restoreTestNotices === false) {
+    throw new RuntimeException('The unrelated notice was not filed.');
+}
+
+UpdateManager::reconcileRestoreNotices(
+    $restoreTestNotices,
+    $restoreInstalledPackages,
+    'pfSense',
+    $englishTranslator,
+    $restoreCloseNotice,
+    $restoreFileNotice,
+);
+
+assertUpdateSame([], $updateTestClosedNotices, 'An unrelated notice must stay open.');
+assertUpdateSame(1, count($updateTestNotices), 'No false-removal notice must produce no reassurance.');
 
 $digestPath = tempnam(sys_get_temp_dir(), '[__WORKSPACE_NAME__]-digest-');
 
@@ -432,6 +897,318 @@ assertUpdateSame(
     null,
     UpdateManager::checksumDigest($checksumHash . '  package.pkg'),
     'A checksum file with extra fields must fail closed.',
+);
+
+assertUpdateSame(
+    'https://api.github.com/repos/example/contract-pfsense/releases/tags/v2.1.0',
+    UpdateManager::releaseApiForVersion(UpdateManager::RELEASES_API, '2.1.0'),
+    'Restore metadata must query the exact installed release instead of latest.',
+);
+
+$restoreHealMetadata = UpdateManager::createRestoreHealMetadata($release, '2.1.0');
+
+assertUpdateSame(true, is_array($restoreHealMetadata), 'An API digest must create restore-heal metadata.');
+assertUpdateSame('2.1.0', $restoreHealMetadata['version'], 'Restore metadata must pin the installed version.');
+assertUpdateSame(str_repeat('a', 64), $restoreHealMetadata['sha256'], 'Restore metadata must pin the API SHA-256 digest.');
+
+$restoreHealCommand = UpdateManager::buildRestoreHealCommand($restoreHealMetadata);
+
+assertUpdateSame(true, is_string($restoreHealCommand), 'Verified metadata must create one restore-heal command.');
+assertUpdateSame(
+    true,
+    str_starts_with($restoreHealCommand, UpdateManager::RESTORE_HEAL_COMMAND_MARKER),
+    'The restore-heal command must start with its package marker.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, '/conf/needs_package_sync'),
+    'The restore-heal command must wait for the stock package reinstaller.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, 'pkg info -e'),
+    'The restore-heal command must exit when the package is already installed.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, UpdateManager::DOWNLOAD_PREFIX . 'v2.1.0/'),
+    'The restore-heal command must contain a versioned release URL.',
+);
+assertUpdateSame(
+    false,
+    str_contains(strtolower($restoreHealCommand), '/latest/'),
+    'The restore-heal command must never use a latest-release URL.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, '/conf/[__WORKSPACE_NAME__]/restore-heal/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]-2.1.0.pkg'),
+    'The restore-heal command must check the exact local package path.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, str_repeat('a', 64)),
+    'The restore-heal command must contain the pinned SHA-256 digest.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, 'pkg add -f'),
+    'The restore-heal command must reinstall through pkg add -f.',
+);
+assertUpdateSame(
+    true,
+    strlen($restoreHealCommand) <= UpdateManager::RESTORE_HEAL_COMMAND_LIMIT,
+    'The restore-heal command must fit FreeBSD cron\'s command buffer.',
+);
+assertUpdateSame(
+    true,
+    str_contains($restoreHealCommand, '/usr/sbin/daemon -f /bin/sh -c'),
+    'The restore-heal command must detach from cron.',
+);
+
+$restoreShellTestDirectory = makeUpdateTestDirectory();
+$restoreShellTestPath = $restoreShellTestDirectory . '/restore-heal.sh';
+
+try {
+    file_put_contents($restoreShellTestPath, $restoreHealCommand . PHP_EOL);
+    $restoreShellCheckOutput = [];
+
+    exec('/bin/sh -n ' . escapeshellarg($restoreShellTestPath), $restoreShellCheckOutput, $restoreShellCheckExitCode);
+
+    assertUpdateSame(0, $restoreShellCheckExitCode, 'The generated restore-heal cron command must pass sh -n.');
+} finally {
+    removeUpdateTestDirectory($restoreShellTestDirectory);
+}
+
+$unrelatedCronItem = [
+    'minute' => '5',
+    'hour' => '*',
+    'mday' => '*',
+    'month' => '*',
+    'wday' => '*',
+    'who' => 'root',
+    'command' => '/usr/local/sbin/unrelated-task',
+];
+$writtenRestoreCronItems = UpdateManager::restoreHealCronItems(
+    [$unrelatedCronItem],
+    $restoreHealCommand,
+);
+$writtenRestoreCronItem = $writtenRestoreCronItems[1];
+
+assertUpdateSame(2, count($writtenRestoreCronItems), 'Writing restore heal must preserve another package cron item.');
+assertUpdateSame('*/15', $writtenRestoreCronItem['minute'], 'Restore heal must run every 15 minutes.');
+assertUpdateSame('root', $writtenRestoreCronItem['who'], 'Restore heal must run as root.');
+assertUpdateSame($restoreHealCommand, $writtenRestoreCronItem['command'], 'Restore heal must write the verified command.');
+
+$currentRestoreCronItems = [
+    $unrelatedCronItem,
+    $writtenRestoreCronItem,
+];
+$currentRestoreLookupCount = 0;
+$currentRestoreMetadataLookup = static function (string $version) use (
+    &$currentRestoreLookupCount,
+    $restoreHealMetadata,
+): ?array {
+    $currentRestoreLookupCount++;
+
+    return $restoreHealMetadata;
+};
+$currentRestoreCommand = UpdateManager::resolveRestoreHealCommand(
+    $currentRestoreCronItems,
+    '2.1.0',
+    $currentRestoreMetadataLookup,
+);
+$currentRestoreWriteCount = 0;
+$unchangedCurrentRestoreCronItems = applyResolvedRestoreHealCommand(
+    $currentRestoreCronItems,
+    $currentRestoreCommand,
+    $currentRestoreWriteCount,
+);
+
+assertUpdateSame(false, $currentRestoreCommand, 'A current restore-heal command must require no cron action.');
+assertUpdateSame(0, $currentRestoreLookupCount, 'A current restore-heal command must skip release lookup.');
+assertUpdateSame(0, $currentRestoreWriteCount, 'A current restore-heal command must skip the configuration write.');
+assertUpdateSame(
+    $currentRestoreCronItems,
+    $unchangedCurrentRestoreCronItems,
+    'A current restore-heal command must remain byte-for-byte unchanged.',
+);
+
+$staleRestoreCronItem = $writtenRestoreCronItem;
+$staleRestoreCronItem['command'] = UpdateManager::RESTORE_HEAL_COMMAND_MARKER . ' /usr/sbin/daemon -f /bin/sh -c old';
+$existingStaleRestoreCronItems = [
+    $staleRestoreCronItem,
+    $unrelatedCronItem,
+];
+$transientRestoreLookupCount = 0;
+$transientRestoreLogCount = 0;
+$transientRestoreMetadataLookup = static function (string $version) use (&$transientRestoreLookupCount): ?array {
+    $transientRestoreLookupCount++;
+
+    throw new RuntimeException('Temporary restore-heal lookup failure.');
+};
+$transientRestoreFailureLogger = static function (Throwable $throwable) use (&$transientRestoreLogCount): void {
+    $transientRestoreLogCount++;
+};
+$transientRestoreCommand = UpdateManager::resolveRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    '2.1.0',
+    $transientRestoreMetadataLookup,
+    $transientRestoreFailureLogger,
+);
+$transientRestoreWriteCount = 0;
+$unchangedTransientRestoreCronItems = applyResolvedRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    $transientRestoreCommand,
+    $transientRestoreWriteCount,
+);
+
+assertUpdateSame(false, $transientRestoreCommand, 'A transient lookup failure must require no cron action.');
+assertUpdateSame(1, $transientRestoreLookupCount, 'A stale restore-heal command must attempt one release lookup.');
+assertUpdateSame(1, $transientRestoreLogCount, 'A transient lookup failure must log exactly once.');
+assertUpdateSame(0, $transientRestoreWriteCount, 'A transient lookup failure must skip the configuration write.');
+assertUpdateSame(
+    $existingStaleRestoreCronItems,
+    $unchangedTransientRestoreCronItems,
+    'A transient lookup failure must leave every existing cron item unchanged.',
+);
+
+$definitiveRestoreLogCount = 0;
+$definitiveRestoreMetadataLookup = static function (string $version): ?array {
+    throw new RestoreHealUnavailableException('The installed release returned HTTP 404.');
+};
+$definitiveRestoreFailureLogger = static function (Throwable $throwable) use (&$definitiveRestoreLogCount): void {
+    $definitiveRestoreLogCount++;
+};
+$definitiveRestoreCommand = UpdateManager::resolveRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    '2.1.0',
+    $definitiveRestoreMetadataLookup,
+    $definitiveRestoreFailureLogger,
+);
+$definitiveRestoreWriteCount = 0;
+$removedDefinitiveRestoreCronItems = applyResolvedRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    $definitiveRestoreCommand,
+    $definitiveRestoreWriteCount,
+);
+
+assertUpdateSame(null, $definitiveRestoreCommand, 'A definite HTTP 404 must remove stale restore heal.');
+assertUpdateSame(0, $definitiveRestoreLogCount, 'A definite HTTP 404 must not use the transient failure logger.');
+assertUpdateSame(1, $definitiveRestoreWriteCount, 'A definite HTTP 404 removal must write the changed cron list.');
+assertUpdateSame(
+    [$unrelatedCronItem],
+    $removedDefinitiveRestoreCronItems,
+    'A definite HTTP 404 must remove only the package-owned restore entry.',
+);
+
+$newRestoreHealMetadata = [
+    'version' => '2.2.0',
+    'url' => UpdateManager::DOWNLOAD_PREFIX . 'v2.2.0/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]-2.2.0.pkg',
+    'sha256' => str_repeat('b', 64),
+    'file_name' => 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]-2.2.0.pkg',
+];
+$newRestoreHealCommand = UpdateManager::buildRestoreHealCommand($newRestoreHealMetadata);
+$successfulRestoreLookupCount = 0;
+$successfulRestoreMetadataLookup = static function (string $version) use (
+    &$successfulRestoreLookupCount,
+    $newRestoreHealMetadata,
+): ?array {
+    $successfulRestoreLookupCount++;
+
+    return $newRestoreHealMetadata;
+};
+$replacementRestoreCommand = UpdateManager::resolveRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    '2.2.0',
+    $successfulRestoreMetadataLookup,
+);
+$replacementRestoreWriteCount = 0;
+$replacedRestoreCronItems = applyResolvedRestoreHealCommand(
+    $existingStaleRestoreCronItems,
+    $replacementRestoreCommand,
+    $replacementRestoreWriteCount,
+);
+
+assertUpdateSame(1, $successfulRestoreLookupCount, 'A new installed version must perform one release lookup.');
+assertUpdateSame($newRestoreHealCommand, $replacementRestoreCommand, 'A successful lookup must resolve the new pinned command.');
+assertUpdateSame(1, $replacementRestoreWriteCount, 'A successful lookup must write the replacement cron list.');
+assertUpdateSame(2, count($replacedRestoreCronItems), 'A successful lookup must preserve unrelated cron work.');
+assertUpdateSame($unrelatedCronItem, $replacedRestoreCronItems[0], 'A successful lookup must preserve the unrelated cron item.');
+assertUpdateSame($newRestoreHealCommand, $replacedRestoreCronItems[1]['command'], 'A successful lookup must replace the stale pinned command.');
+
+$refreshedRestoreCronItems = UpdateManager::restoreHealCronItems(
+    $existingStaleRestoreCronItems,
+    $restoreHealCommand,
+);
+
+assertUpdateSame(
+    [
+        $unrelatedCronItem,
+        $writtenRestoreCronItem,
+    ],
+    $refreshedRestoreCronItems,
+    'Refreshing restore heal must replace only the stale package-owned command.',
+);
+assertUpdateSame(
+    [$unrelatedCronItem],
+    UpdateManager::restoreHealCronItems($refreshedRestoreCronItems, null),
+    'A deliberate deinstall must remove only the package-owned restore entry.',
+);
+assertUpdateSame(
+    [
+        $staleRestoreCronItem,
+        $unrelatedCronItem,
+    ],
+    UpdateManager::restoreHealCronItems(
+        [
+            $staleRestoreCronItem,
+            $unrelatedCronItem,
+        ],
+        null,
+        true,
+    ),
+    'A retained deinstall must leave the restore entry unchanged.',
+);
+assertUpdateSame(
+    false,
+    UpdateManager::shouldKeepRestoreHealEntry(false, false),
+    'A deliberate uninstall without Keep Settings must remove restore heal.',
+);
+assertUpdateSame(
+    true,
+    UpdateManager::shouldKeepRestoreHealEntry(true, false),
+    'A restore-driven removal must keep restore heal.',
+);
+assertUpdateSame(
+    true,
+    UpdateManager::shouldKeepRestoreHealEntry(false, true),
+    'Keep Settings must keep restore heal.',
+);
+
+$checksumRestoreHealMetadata = UpdateManager::createRestoreHealMetadata(
+    $checksumRelease,
+    '2.1.0',
+    $checksumHash . PHP_EOL,
+);
+
+assertUpdateSame(
+    $checksumHash,
+    $checksumRestoreHealMetadata['sha256'],
+    'Restore heal must use the updater checksum-asset fallback.',
+);
+
+$unverifiableRelease = $release;
+$unverifiableRelease['assets'][0]['digest'] = null;
+$unverifiableRestoreHealMetadata = UpdateManager::createRestoreHealMetadata(
+    $unverifiableRelease,
+    '2.1.0',
+);
+
+assertUpdateSame(null, $unverifiableRestoreHealMetadata, 'A release without a verifiable hash must create no metadata.');
+assertUpdateSame(
+    [],
+    UpdateManager::restoreHealCronItems([$staleRestoreCronItem], null),
+    'A release without a verifiable hash must remove a stale restore entry.',
 );
 
 
@@ -713,6 +1490,6 @@ try {
     removeUpdateTestDirectory($statusTestDirectory);
 }
 
-fwrite(STDOUT, "Update checks, notices, schedules, checksums, and signatures passed.\n");
+fwrite(STDOUT, "Update checks, restore recovery, notices, schedules, checksums, and signatures passed.\n");
 
 exit(0);

@@ -130,6 +130,14 @@ The publishing workflow installs its public signing key into built packages. See
 
 For a non-GitHub repository, scaffolding still succeeds. Update checks default to Never, the settings explain why they are unavailable, no update cron is installed, and the About tab hides the update bar.
 
+## Restoring a Configuration
+
+After an **All** configuration restore on the same firewall, pfSense can report that a GitHub-installed package was removed even though its files and settings remain. The generated resynchronization hook closes that exact false notice and replaces it with a package notice that confirms the installation and links to the About page.
+
+Each install and synchronization also refreshes one tagged root cron entry in `config.xml` with the installed version's release URL and SHA-256 digest. If the restored configuration starts on a new firewall, the detached job waits for pfSense's stock package synchronization to finish, then retries every 15 minutes until it can verify and reinstall that exact package release.
+
+The job uses a verified local package under `/conf/<name>/restore-heal/` when available and otherwise downloads the pinned GitHub Release asset to a temporary file. Development builds and releases without a verifiable API digest or hash-only `.sha256` asset get no recovery entry, so an unverifiable package is never installed automatically.
+
 ## Check, Stage, and Package
 
 ```bash

@@ -37,4 +37,10 @@ final class PackagePaths
 
     /** Stable randomized update-check schedule in the pfSense configuration. @since UNRELEASED */
     public const UPDATE_SCHEDULE_PATH = 'installedpackages/[__PFSENSE_CONFIG_NAME__]/update_schedule';
+
+    /** Restore-heal local package directory retained with the firewall configuration. @since UNRELEASED */
+    public const RESTORE_HEAL_DIRECTORY = '/conf/[__WORKSPACE_NAME__]/restore-heal';
+
+    /** Stock pfSense flag present while restored packages are being reconciled. @since UNRELEASED */
+    public const PACKAGE_SYNC_FLAG = '/conf/needs_package_sync';
 }

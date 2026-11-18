@@ -11,6 +11,18 @@ use Throwable;
 require_once(__DIR__ . '/PackagePaths.php');
 
 /**
+ * Reports a definitive absence of verifiable restore-heal release metadata.
+ *
+ * Exact release and checksum 404s use this type so synchronization can remove
+ * stale protection without treating temporary transport failures as absence.
+ *
+ * @since UNRELEASED
+ */
+final class RestoreHealUnavailableException extends RuntimeException
+{
+}
+
+/**
  * Checks GitHub releases and installs checksum-verified package updates.
  *
  * Scheduled checks, notices, and the About tab share this boundary so release
@@ -29,8 +41,23 @@ final class UpdateManager
     /** Stable pfSense notice identifier for available releases. @since UNRELEASED */
     public const NOTICE_ID = '[__WORKSPACE_NAME__]-update-available';
 
+    /** Stable pfSense notice identifier for restore reassurance. @since UNRELEASED */
+    public const RESTORE_NOTICE_ID = '[__WORKSPACE_NAME__]-restore-reassurance';
+
+    /** Package-specific prefix for the persistent restore-heal cron command. @since UNRELEASED */
+    public const RESTORE_HEAL_COMMAND_MARKER = ': "[__WORKSPACE_NAME__]-restore-heal";';
+
+    /** Largest command accepted by FreeBSD cron, excluding its terminating NUL. @since UNRELEASED */
+    public const RESTORE_HEAL_COMMAND_LIMIT = 999;
+
     /** Package name recorded in the FreeBSD package manifest. @since UNRELEASED */
     public const PACKAGE_NAME = 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]';
+
+    /** Package display name recorded in pfSense configuration. @since UNRELEASED */
+    public const REGISTERED_NAME = '[__WORKSPACE_TITLE__]';
+
+    /** Package internal name recorded in pfSense configuration. @since UNRELEASED */
+    public const REGISTERED_INTERNAL_NAME = '[__WORKSPACE_IDENTIFIER__]';
 
     /** Package data directory containing the fallback version metadata. @since UNRELEASED */
     public const PACKAGE_DATA_DIRECTORY = '/usr/local/share/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]';
@@ -55,6 +82,27 @@ final class UpdateManager
 
     /** Fixed package executable used for metadata checks and installation. @since UNRELEASED */
     private const PKG_COMMAND = '/usr/local/sbin/pkg';
+
+    /** Fixed FreeBSD daemon executable used by the restore-heal cron entry. @since UNRELEASED */
+    private const DAEMON_COMMAND = '/usr/sbin/daemon';
+
+    /** Fixed FreeBSD fetch executable used by the restore-heal cron entry. @since UNRELEASED */
+    private const FETCH_COMMAND = '/usr/bin/fetch';
+
+    /** Fixed FreeBSD logger executable used by the restore-heal cron entry. @since UNRELEASED */
+    private const LOGGER_COMMAND = '/usr/bin/logger';
+
+    /** Fixed FreeBSD SHA-256 executable used by the restore-heal cron entry. @since UNRELEASED */
+    private const SHA256_COMMAND = '/sbin/sha256';
+
+    /** Fixed base shell used by the restore-heal cron entry. @since UNRELEASED */
+    private const SHELL_COMMAND = '/bin/sh';
+
+    /** Exact stock pfSense false-removal notice template. @since UNRELEASED */
+    private const FALSE_REMOVAL_NOTICE = 'Package %s does not exist in current %s version and it has been removed.';
+
+    /** Package reassurance filed after a false restore-removal notice. @since UNRELEASED */
+    private const RESTORE_REASSURANCE_NOTICE = '%s is still installed and its settings are unchanged. pfSense reported it as removed after the configuration restore only because it isn\'t installed from Netgate\'s package repository. No action is needed.';
 
     /**
      * Creates an update coordinator with production or test-only CLI endpoints.
@@ -148,6 +196,256 @@ final class UpdateManager
         if (function_exists('curl_init') === false) {
             throw new RuntimeException(self::translate('The required cURL support is unavailable.'));
         }
+    }
+
+    /**
+     * Replaces pfSense's false restore-removal notice with package reassurance.
+     *
+     * The synchronization hook calls this after the stock package reinstaller.
+     * Every dependency and callback stays inside the failure boundary so boot
+     * continues.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     */
+    public static function reassureAfterRestore(): void
+    {
+        try {
+            $requiredFunctions = [
+                'close_notice',
+                'config_get_path',
+                'file_notice',
+                'g_get',
+                'get_notices',
+            ];
+
+            foreach ($requiredFunctions as $requiredFunction) {
+                if (function_exists($requiredFunction) === false) {
+                    return;
+                }
+            }
+
+            $notices = \get_notices();
+
+            if ($notices === false) {
+                return;
+            }
+
+            $installedPackages = \config_get_path('installedpackages/package', []);
+            $productLabel = \g_get('product_label');
+
+            if (
+                !is_array($notices)
+                || !is_array($installedPackages)
+                || !is_string($productLabel)
+                || $productLabel === ''
+            ) {
+                return;
+            }
+
+            $translator = static fn (string $message): string => function_exists('gettext')
+                ? (string) \gettext($message)
+                : $message;
+            $closeNotice = static function (mixed $noticeId): void {
+                \close_notice($noticeId);
+            };
+            $fileNotice = static function (
+                string $noticeId,
+                string $notice,
+                string $category,
+                string $url,
+                int $priority,
+                bool $localOnly,
+            ): void {
+                \file_notice(
+                    $noticeId,
+                    $notice,
+                    $category,
+                    $url,
+                    $priority,
+                    $localOnly,
+                );
+            };
+
+            self::reconcileRestoreNotices(
+                $notices,
+                $installedPackages,
+                $productLabel,
+                $translator,
+                $closeNotice,
+                $fileNotice,
+            );
+        } catch (Throwable $throwable) {
+            self::logRestoreFailure($throwable);
+        }
+    }
+
+    /**
+     * Closes every package-owned notice by its pfSense queue key.
+     *
+     * Uninstall uses the live queue because close_notice() removes only one
+     * matching entry per call and pfSense stores notices under timestamp keys.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     */
+    public static function closePackageNotices(): void
+    {
+        if (
+            function_exists('close_notice') === false
+            || function_exists('get_notices') === false
+        ) {
+            return;
+        }
+
+        $notices = \get_notices();
+
+        if ($notices === false || !is_array($notices)) {
+            return;
+        }
+
+        $noticeIds = [
+            self::NOTICE_ID,
+            self::RESTORE_NOTICE_ID,
+        ];
+        $storedNoticeIds = array_map(
+            static fn (string $noticeId): string => htmlentities($noticeId),
+            $noticeIds,
+        );
+
+        foreach ($notices as $noticeKey => $notice) {
+            $noticeId = is_array($notice)
+                ? ($notice['id'] ?? null)
+                : null;
+
+            if (
+                in_array($noticeKey, $noticeIds, true) === false
+                && (
+                    !is_string($noticeId)
+                    || in_array($noticeId, $storedNoticeIds, true) === false
+                )
+            ) {
+                continue;
+            }
+
+            \close_notice($noticeKey);
+        }
+    }
+
+    /**
+     * Reconciles one snapshot of pfSense notices after a configuration restore.
+     *
+     * Tests provide localized translators and notice stubs. Production passes the
+     * matching pfSense functions after reading the live package and notice arrays.
+     *
+     * @param array    $notices           - Current pfSense notices.
+     * @param array    $installedPackages - Registered pfSense packages.
+     * @param string   $productLabel      - Localized pfSense product label.
+     * @param callable $translator        - Package message translator.
+     * @param callable $closeNotice       - Notice close callback.
+     * @param callable $fileNotice        - Notice creation callback.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     */
+    public static function reconcileRestoreNotices(
+        array $notices,
+        array $installedPackages,
+        string $productLabel,
+        callable $translator,
+        callable $closeNotice,
+        callable $fileNotice,
+    ): void {
+        $installedPackage = self::findInstalledPackage($installedPackages);
+
+        if ($installedPackage === null) {
+            return;
+        }
+
+        $packageName = $installedPackage['name'] ?? null;
+        $packageInternalName = $installedPackage['internal_name'] ?? null;
+
+        if (!is_string($packageName) || $packageName === '') {
+            return;
+        }
+
+        $noticePackageNames = [
+            $packageName,
+        ];
+
+        if (is_string($packageInternalName) && $packageInternalName !== '') {
+            $noticePackageNames[] = sprintf('%s (%s)', $packageName, $packageInternalName);
+        }
+
+        $falseNoticeTemplate = (string) $translator(self::FALSE_REMOVAL_NOTICE);
+        $plainFalseNoticeTexts = array_map(
+            static fn (string $noticePackageName): string => sprintf(
+                $falseNoticeTemplate,
+                $noticePackageName,
+                $productLabel,
+            ),
+            $noticePackageNames,
+        );
+        $storedFalseNoticeTexts = array_map(
+            static fn (string $falseNoticeText): string => htmlentities($falseNoticeText),
+            $plainFalseNoticeTexts,
+        );
+        $falseNoticeTexts = array_values(array_unique([
+            ...$plainFalseNoticeTexts,
+            ...$storedFalseNoticeTexts,
+        ]));
+        $matchedNoticeKeys = [];
+        $reassuranceNoticeExists = false;
+        $storedRestoreNoticeId = htmlentities(self::RESTORE_NOTICE_ID);
+
+        foreach ($notices as $noticeKey => $notice) {
+            if (!is_array($notice)) {
+                continue;
+            }
+
+            $noticeId = $notice['id'] ?? null;
+            $noticeText = $notice['notice'] ?? null;
+
+            if ($noticeId === $storedRestoreNoticeId || $noticeKey === self::RESTORE_NOTICE_ID) {
+                $reassuranceNoticeExists = true;
+            }
+
+            if (
+                is_string($noticeText)
+                && in_array($noticeText, $falseNoticeTexts, true)
+                && in_array($noticeKey, $matchedNoticeKeys, true) === false
+            ) {
+                $matchedNoticeKeys[] = $noticeKey;
+            }
+        }
+
+        if (count($matchedNoticeKeys) === 0) {
+            return;
+        }
+
+        foreach ($matchedNoticeKeys as $matchedNoticeKey) {
+            $closeNotice($matchedNoticeKey);
+        }
+
+        if ($reassuranceNoticeExists === true) {
+            return;
+        }
+
+        $translatedPackageName = (string) $translator($packageName);
+        $reassuranceTemplate = (string) $translator(self::RESTORE_REASSURANCE_NOTICE);
+        $reassuranceNotice = sprintf($reassuranceTemplate, $translatedPackageName);
+
+        $fileNotice(
+            self::RESTORE_NOTICE_ID,
+            $reassuranceNotice,
+            $translatedPackageName,
+            self::ABOUT_PAGE,
+            1,
+            true,
+        );
     }
 
     /**
@@ -246,16 +544,13 @@ final class UpdateManager
             $installedPackages = config_get_path('installedpackages/package', []);
 
             if (is_array($installedPackages)) {
-                foreach ($installedPackages as $installedPackage) {
-                    if (!is_array($installedPackage) || ($installedPackage['name'] ?? null) !== '[__WORKSPACE_TITLE__]') {
-                        continue;
-                    }
+                $installedPackage = self::findInstalledPackage($installedPackages);
+                $installedPackageVersion = is_array($installedPackage)
+                    ? ($installedPackage['version'] ?? null)
+                    : null;
 
-                    $installedPackageVersion = $installedPackage['version'] ?? null;
-
-                    if (is_string($installedPackageVersion) && $installedPackageVersion !== '') {
-                        return $installedPackageVersion;
-                    }
+                if (is_string($installedPackageVersion) && $installedPackageVersion !== '') {
+                    return $installedPackageVersion;
                 }
             }
         }
@@ -356,6 +651,398 @@ final class UpdateManager
         $normalizedLatestVersion = self::normalizeVersion($latestVersion);
 
         return version_compare($normalizedLatestVersion, $normalizedInstalledVersion, '>');
+    }
+
+    /**
+     * Returns the exact-version GitHub API endpoint for one installed release.
+     *
+     * Restore metadata must describe the version that wrote the cron entry rather
+     * than whichever release happens to be latest when a later boot synchronizes.
+     *
+     * @param string $releasesApi - Latest-release API endpoint.
+     * @param string $version     - Installed package version.
+     *
+     * @return string|null
+     *
+     * @since UNRELEASED
+     */
+    public static function releaseApiForVersion(string $releasesApi, string $version): ?string
+    {
+        $latestSuffix = '/releases/latest';
+        $normalizedVersion = self::normalizeVersion($version);
+
+        if (
+            str_ends_with($releasesApi, $latestSuffix) === false
+            || preg_match('/^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][0-9A-Za-z.-]+)?$/', $normalizedVersion) !== 1
+        ) {
+            return null;
+        }
+
+        $releasesBase = substr($releasesApi, 0, -strlen($latestSuffix));
+        $releaseTag = rawurlencode('v' . $normalizedVersion);
+
+        return $releasesBase . '/releases/tags/' . $releaseTag;
+    }
+
+    /**
+     * Resolves the restore-heal command action for one package synchronization.
+     *
+     * False preserves the current cron list without a write, null definitively
+     * removes stale entries, and a string replaces them with verified metadata.
+     *
+     * @param array         $items            - Current pfSense cron items.
+     * @param string|null   $installedVersion - Installed package version.
+     * @param callable      $metadataLookup   - Installed release metadata lookup.
+     * @param callable|null $failureLogger    - Transient lookup failure logger.
+     *
+     * @return string|false|null
+     *
+     * @since UNRELEASED
+     */
+    public static function resolveRestoreHealCommand(
+        array $items,
+        ?string $installedVersion,
+        callable $metadataLookup,
+        ?callable $failureLogger = null,
+    ): string|false|null {
+        if ($installedVersion === null) {
+            $throwable = new RuntimeException(self::translate('The installed package version could not be determined.'));
+
+            if ($failureLogger !== null) {
+                $failureLogger($throwable);
+            }
+
+            return false;
+        }
+
+        $currentCommand = self::findCurrentRestoreHealCommand(
+            $items,
+            $installedVersion,
+        );
+
+        if (is_string($currentCommand)) {
+            return false;
+        }
+
+        if (
+            self::isAvailable() === false
+            || self::releaseApiForVersion(self::RELEASES_API, $installedVersion) === null
+        ) {
+            return null;
+        }
+
+        try {
+            $metadata = $metadataLookup($installedVersion);
+        } catch (RestoreHealUnavailableException) {
+            return null;
+        } catch (Throwable $throwable) {
+            if ($failureLogger !== null) {
+                $failureLogger($throwable);
+            }
+
+            return false;
+        }
+
+        if ($metadata === null) {
+            return null;
+        }
+
+        if (!is_array($metadata)) {
+            $throwable = new RuntimeException(self::translate('The restore-heal lookup returned invalid release metadata.'));
+
+            if ($failureLogger !== null) {
+                $failureLogger($throwable);
+            }
+
+            return false;
+        }
+
+        return self::buildRestoreHealCommand($metadata);
+    }
+
+    /**
+     * Resolves the current installed release into pinned restore-heal metadata.
+     *
+     * GitHub's API digest wins. When only a checksum asset exists, this method
+     * downloads that small file and applies the updater's strict hash-only parser.
+     *
+     * @return array{version: string, url: string, sha256: string, file_name: string}|null
+     *
+     * @throws RestoreHealUnavailableException When an exact release or checksum asset returns HTTP 404.
+     * @throws Throwable When release metadata or checksum transport fails transiently.
+     *
+     * @since UNRELEASED
+     */
+    public function restoreHealMetadata(): ?array
+    {
+        $release = $this->fetchReleaseForVersion($this->installedVersion);
+
+        try {
+            $assets = self::selectUpdateAssets($release, $this->downloadPrefix);
+        } catch (RuntimeException) {
+            return null;
+        }
+
+        $temporaryDirectory = null;
+        $checksumContents = null;
+
+        try {
+            if (is_array($assets['checksum'])) {
+                $temporaryDirectory = $this->createTemporaryDirectory();
+                $checksumPath = $temporaryDirectory . '/' . $assets['checksum']['name'];
+
+                $this->downloadFile(
+                    $assets['checksum']['url'],
+                    $checksumPath,
+                    self::AUXILIARY_DOWNLOAD_LIMIT,
+                    notFoundIsDefinitive: true,
+                );
+
+                $downloadedChecksum = @file_get_contents($checksumPath);
+                $checksumContents = is_string($downloadedChecksum)
+                    ? $downloadedChecksum
+                    : null;
+            }
+
+            return self::createRestoreHealMetadata(
+                $release,
+                $this->installedVersion,
+                $checksumContents,
+                $this->downloadPrefix,
+            );
+        } finally {
+            if (is_string($temporaryDirectory)) {
+                $this->removeTemporaryDirectory($temporaryDirectory);
+            }
+        }
+    }
+
+    /**
+     * Creates verified restore-heal metadata from one parsed GitHub release.
+     *
+     * A missing API digest requires downloaded checksum contents. Invalid, stale,
+     * or unverifiable releases return null so callers remove any older cron entry.
+     *
+     * @param array       $release          - Parsed GitHub release.
+     * @param string      $installedVersion - Installed package version.
+     * @param string|null $checksumContents - Downloaded hash-only checksum.
+     * @param string      $downloadPrefix   - Allowed asset URL prefix.
+     *
+     * @return array{version: string, url: string, sha256: string, file_name: string}|null
+     *
+     * @since UNRELEASED
+     */
+    public static function createRestoreHealMetadata(
+        array $release,
+        string $installedVersion,
+        ?string $checksumContents = null,
+        string $downloadPrefix = self::DOWNLOAD_PREFIX,
+    ): ?array {
+        $releaseVersion = $release['version'] ?? null;
+        $normalizedInstalledVersion = self::normalizeVersion($installedVersion);
+
+        if (
+            !is_string($releaseVersion)
+            || self::normalizeVersion($releaseVersion) !== $normalizedInstalledVersion
+        ) {
+            return null;
+        }
+
+        try {
+            $assets = self::selectUpdateAssets($release, $downloadPrefix);
+        } catch (RuntimeException) {
+            return null;
+        }
+
+        $digest = $assets['digest'];
+
+        if (!is_string($digest) && is_string($checksumContents)) {
+            $digest = self::checksumDigest($checksumContents);
+        }
+
+        $packageAssetName = $assets['package']['name'] ?? null;
+        $packageAssetUrl = $assets['package']['url'] ?? null;
+        $expectedPackageAssetName = self::PACKAGE_NAME . '-' . $normalizedInstalledVersion . '.pkg';
+
+        if (
+            !is_string($digest)
+            || preg_match('/^sha256:([a-fA-F0-9]{64})$/', $digest, $digestMatches) !== 1
+            || $packageAssetName !== $expectedPackageAssetName
+            || !is_string($packageAssetUrl)
+            || self::isAllowedAssetUrl($packageAssetUrl, $downloadPrefix) === false
+        ) {
+            return null;
+        }
+
+        return [
+            'version' => $normalizedInstalledVersion,
+            'url' => $packageAssetUrl,
+            'sha256' => strtolower($digestMatches[1]),
+            'file_name' => $packageAssetName,
+        ];
+    }
+
+    /**
+     * Builds the detached, self-contained restore-heal cron command.
+     *
+     * Every runtime value is pinned and shell-quoted before being saved in
+     * "config.xml". The command needs only pfSense and FreeBSD base utilities.
+     *
+     * @param array $metadata - Verified restore-heal release metadata.
+     *
+     * @return string|null
+     *
+     * @since UNRELEASED
+     */
+    public static function buildRestoreHealCommand(array $metadata): ?string
+    {
+        $version = $metadata['version'] ?? null;
+        $url = $metadata['url'] ?? null;
+        $sha256 = $metadata['sha256'] ?? null;
+        $fileName = $metadata['file_name'] ?? null;
+
+        if (
+            !is_string($version)
+            || preg_match('/^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][0-9A-Za-z.-]+)?$/', $version) !== 1
+            || !is_string($url)
+            || self::isAllowedAssetUrl($url) === false
+            || str_contains(strtolower($url), '/latest/')
+            || !is_string($sha256)
+            || preg_match('/^[a-fA-F0-9]{64}$/', $sha256) !== 1
+            || !is_string($fileName)
+            || $fileName !== self::PACKAGE_NAME . '-' . $version . '.pkg'
+        ) {
+            return null;
+        }
+
+        $loggerTag = '[__WORKSPACE_NAME__]-restore-heal';
+        $packagePath = PackagePaths::RESTORE_HEAL_DIRECTORY . '/' . $fileName;
+        $scriptCommands = [
+            '[ -e "$1" ]&&exit',
+            self::PKG_COMMAND . ' info -e "$2"&&exit',
+            'v=$6',
+            'g=$7',
+            't=/tmp/rh.$$.pkg',
+            'L(){ ' . self::LOGGER_COMMAND . ' -t "$g" "$1 $v"||:;}',
+            'C(){ /bin/rm -f "$t";}',
+            'trap C 0 1 2 15',
+            'if ' . self::SHA256_COMMAND . ' -c "$5" "$3";then L using-local;i=$3;else if [ -e "$3" ];then L discarding-local;/bin/rm -f "$3";fi;L fetching;C;' . self::FETCH_COMMAND . ' -q -T 30 -o "$t" "$4"||{ L fetch-failed;exit 1;};' . self::SHA256_COMMAND . ' -c "$5" "$t"||{ L checksum-failed;exit 1;};i=$t;fi',
+            'L installing',
+            self::PKG_COMMAND . ' add -f "$i"&&L installed||{ L install-failed;exit 1;}',
+        ];
+        $script = implode(';', $scriptCommands) . ';';
+        $commandArguments = [
+            PackagePaths::PACKAGE_SYNC_FLAG,
+            self::PACKAGE_NAME,
+            $packagePath,
+            $url,
+            strtolower($sha256),
+            $version,
+            $loggerTag,
+        ];
+        $escapedCommandArguments = array_map(
+            static fn (string $commandArgument): string => escapeshellarg($commandArgument),
+            $commandArguments,
+        );
+        $command = self::RESTORE_HEAL_COMMAND_MARKER
+            . ' '
+            . self::DAEMON_COMMAND
+            . ' -f '
+            . self::SHELL_COMMAND
+            . ' -c '
+            . escapeshellarg($script)
+            . ' '
+            . escapeshellarg('restore-heal')
+            . ' '
+            . implode(' ', $escapedCommandArguments);
+
+        $cronCommand = str_replace('%', '\\%', $command);
+
+        return strlen($cronCommand) <= self::RESTORE_HEAL_COMMAND_LIMIT
+            ? $cronCommand
+            : null;
+    }
+
+    /**
+     * Replaces every package-owned restore cron entry with at most one current item.
+     *
+     * Prefix matching removes stale pinned commands without touching another
+     * package's cron work. A retained uninstall returns the original list unchanged.
+     *
+     * @param array       $items        - Current pfSense cron items.
+     * @param string|null $command      - Current verified command, or null to remove.
+     * @param bool        $keepExisting - Whether restore or settings retention owns it.
+     *
+     * @return array
+     *
+     * @throws RuntimeException When a non-package command is supplied.
+     *
+     * @since UNRELEASED
+     */
+    public static function restoreHealCronItems(
+        array $items,
+        ?string $command,
+        bool $keepExisting = false,
+    ): array {
+        if ($keepExisting === true) {
+            return $items;
+        }
+
+        if (
+            is_string($command)
+            && str_starts_with($command, self::RESTORE_HEAL_COMMAND_MARKER) === false
+        ) {
+            throw new RuntimeException(self::translate('The restore-heal cron command is invalid.'));
+        }
+
+        $updatedItems = [];
+
+        foreach ($items as $item) {
+            $itemCommand = is_array($item) ? ($item['command'] ?? null) : null;
+
+            if (
+                is_string($itemCommand)
+                && str_starts_with($itemCommand, self::RESTORE_HEAL_COMMAND_MARKER) === true
+            ) {
+                continue;
+            }
+
+            $updatedItems[] = $item;
+        }
+
+        if (is_string($command)) {
+            $updatedItems[] = [
+                'minute' => '*/15',
+                'hour' => '*',
+                'mday' => '*',
+                'month' => '*',
+                'wday' => '*',
+                'who' => 'root',
+                'command' => $command,
+            ];
+        }
+
+        return $updatedItems;
+    }
+
+    /**
+     * Reports whether deinstall must preserve the restore-heal cron entry.
+     *
+     * Restore-driven removal and an explicit Keep Settings choice both retain the
+     * only package code capable of reinstalling onto a newly restored firewall.
+     *
+     * @param bool $restoreInProgress - Whether pfSense is reconciling a restore.
+     * @param bool $keepSettings      - Whether package settings must be retained.
+     *
+     * @return bool
+     *
+     * @since UNRELEASED
+     */
+    public static function shouldKeepRestoreHealEntry(
+        bool $restoreInProgress,
+        bool $keepSettings,
+    ): bool {
+        return $restoreInProgress === true || $keepSettings === true;
     }
 
     /**
@@ -1182,19 +1869,25 @@ final class UpdateManager
     /**
      * Downloads one release asset with pfSense proxy and TLS settings.
      *
-     * @param string $url       - Validated asset URL.
-     * @param string $path      - Private destination path.
-     * @param int    $byteLimit - Maximum accepted download size.
+     * @param string $url                  - Validated asset URL.
+     * @param string $path                 - Private destination path.
+     * @param int    $byteLimit            - Maximum accepted download size.
+     * @param bool   $notFoundIsDefinitive - Whether HTTP 404 proves absence.
      *
      * @return void
      *
+     * @throws RestoreHealUnavailableException When a definitive checksum lookup returns HTTP 404.
      * @throws RuntimeException When transport or HTTP validation fails.
      *
      * @since UNRELEASED
      * @private
      */
-    private function downloadFile(string $url, string $path, int $byteLimit): void
-    {
+    private function downloadFile(
+        string $url,
+        string $path,
+        int $byteLimit,
+        bool $notFoundIsDefinitive = false,
+    ): void {
         $fileHandle = fopen($path, 'wb');
 
         if ($fileHandle === false || chmod($path, 0600) === false) {
@@ -1254,6 +1947,16 @@ final class UpdateManager
             throw new RuntimeException(self::translate('The release asset exceeds the allowed download size, so the update was not installed.'));
         }
 
+        if (
+            $result === true
+            && $statusCode === 404
+            && $notFoundIsDefinitive === true
+        ) {
+            @unlink($path);
+
+            throw new RestoreHealUnavailableException(self::translate('The installed release checksum asset does not exist.'));
+        }
+
         if ($result !== true || $statusCode < 200 || $statusCode >= 300) {
             @unlink($path);
             $detail = $curlError !== '' ? $curlError : (string) $statusCode;
@@ -1274,8 +1977,56 @@ final class UpdateManager
      */
     private function fetchLatestRelease(): array
     {
+        return $this->fetchRelease($this->releasesApi);
+    }
+
+    /**
+     * Fetches the GitHub release that exactly matches one installed version.
+     *
+     * @param string $version - Installed package version.
+     *
+     * @return array
+     *
+     * @throws RestoreHealUnavailableException When the version or exact release definitively does not exist.
+     * @throws RuntimeException When the release lookup fails transiently.
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private function fetchReleaseForVersion(string $version): array
+    {
+        $releaseApi = self::releaseApiForVersion($this->releasesApi, $version);
+
+        if ($releaseApi === null) {
+            throw new RestoreHealUnavailableException(self::translate('The installed package version does not have a verifiable GitHub release.'));
+        }
+
+        return $this->fetchRelease(
+            $releaseApi,
+            notFoundIsDefinitive: true,
+        );
+    }
+
+    /**
+     * Fetches and parses one GitHub release API endpoint.
+     *
+     * @param string $releaseApi           - Exact GitHub release API endpoint.
+     * @param bool   $notFoundIsDefinitive - Whether HTTP 404 proves absence.
+     *
+     * @return array
+     *
+     * @throws RestoreHealUnavailableException When a definitive release lookup returns HTTP 404.
+     * @throws RuntimeException When GitHub rejects or rate-limits the request.
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private function fetchRelease(
+        string $releaseApi,
+        bool $notFoundIsDefinitive = false,
+    ): array {
         $responseHeaders = [];
-        $curlHandle = curl_init($this->releasesApi);
+        $curlHandle = curl_init($releaseApi);
 
         if ($curlHandle === false) {
             throw new RuntimeException(self::translate('The update check could not initialize a secure GitHub request.'));
@@ -1293,7 +2044,7 @@ final class UpdateManager
             return strlen($headerLine);
         };
 
-        $this->configureCurl($curlHandle, $this->releasesApi, [
+        $this->configureCurl($curlHandle, $releaseApi, [
             CURLOPT_HEADERFUNCTION => $headerCallback,
             CURLOPT_HTTPHEADER => [
                 'Accept: application/vnd.github+json',
@@ -1310,6 +2061,10 @@ final class UpdateManager
 
         if ($response === false) {
             throw new RuntimeException(self::translate('The update check could not connect to GitHub: %1$s', [$curlError]));
+        }
+
+        if ($statusCode === 404 && $notFoundIsDefinitive === true) {
+            throw new RestoreHealUnavailableException(self::translate('The installed package release does not exist on GitHub.'));
         }
 
         if ($statusCode === 403 || $statusCode === 429) {
@@ -1365,6 +2120,81 @@ final class UpdateManager
     }
 
     /**
+     * Finds an exact builder-produced command for the installed version.
+     *
+     * Parsing recovers the pinned values, while rebuilding rejects marker-only
+     * lookalikes and commands whose executable script or arguments were changed.
+     *
+     * @param array  $items            - Current pfSense cron items.
+     * @param string $installedVersion - Installed package version.
+     *
+     * @return string|null
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function findCurrentRestoreHealCommand(
+        array $items,
+        string $installedVersion,
+    ): ?string {
+        $normalizedInstalledVersion = self::normalizeVersion($installedVersion);
+
+        foreach ($items as $item) {
+            $command = is_array($item) ? ($item['command'] ?? null) : null;
+
+            if (
+                !is_string($command)
+                || str_starts_with($command, self::RESTORE_HEAL_COMMAND_MARKER) === false
+            ) {
+                continue;
+            }
+
+            $metadata = self::parseRestoreHealCommand($command);
+            $metadataVersion = is_array($metadata) ? ($metadata['version'] ?? null) : null;
+
+            if (
+                is_string($metadataVersion)
+                && self::normalizeVersion($metadataVersion) === $normalizedInstalledVersion
+            ) {
+                return $command;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds this package's live registration in pfSense configuration.
+     *
+     * @param array $installedPackages - Registered pfSense packages.
+     *
+     * @return array|null
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function findInstalledPackage(array $installedPackages): ?array
+    {
+        foreach ($installedPackages as $installedPackage) {
+            if (!is_array($installedPackage)) {
+                continue;
+            }
+
+            $installedPackageName = $installedPackage['name'] ?? null;
+            $installedPackageInternalName = $installedPackage['internal_name'] ?? null;
+
+            if (
+                $installedPackageName === self::REGISTERED_NAME
+                || $installedPackageInternalName === self::REGISTERED_INTERNAL_NAME
+            ) {
+                return $installedPackage;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Logs one safe update failure through pfSense.
      *
      * @param Throwable $throwable - Failure to log.
@@ -1382,6 +2212,27 @@ final class UpdateManager
     }
 
     /**
+     * Logs a restore-reassurance failure without interrupting package startup.
+     *
+     * @param Throwable $throwable - Failure to log.
+     *
+     * @return void
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function logRestoreFailure(Throwable $throwable): void
+    {
+        try {
+            if (function_exists('log_error')) {
+                \log_error('[__WORKSPACE_TITLE__] restore notice: ' . $throwable->getMessage());
+            }
+        } catch (Throwable) {
+            // A logging failure must not interrupt package startup.
+        }
+    }
+
+    /**
      * Normalizes a package version or Git tag for version_compare().
      *
      * @param string $version - Package version or tag.
@@ -1394,6 +2245,44 @@ final class UpdateManager
     private static function normalizeVersion(string $version): string
     {
         return preg_replace('/^[vV]/', '', trim($version), 1) ?? trim($version);
+    }
+
+    /**
+     * Parses pinned metadata from one exact builder-produced cron command.
+     *
+     * The final fixed arguments expose the filename, URL, SHA-256, and version.
+     * Rebuilding the whole command verifies every unparsed script byte as well.
+     *
+     * @param string $command - Tagged restore-heal cron command.
+     *
+     * @return array{version: string, url: string, sha256: string, file_name: string}|null
+     *
+     * @since UNRELEASED
+     * @private
+     */
+    private static function parseRestoreHealCommand(string $command): ?array
+    {
+        $packageSyncFlagPattern = preg_quote(PackagePaths::PACKAGE_SYNC_FLAG, '~');
+        $packageNamePattern = preg_quote(self::PACKAGE_NAME, '~');
+        $restoreHealDirectoryPattern = preg_quote(PackagePaths::RESTORE_HEAL_DIRECTORY, '~');
+        $loggerTagPattern = preg_quote('[__WORKSPACE_NAME__]-restore-heal', '~');
+        $pattern = "~ 'restore-heal' '$packageSyncFlagPattern' '$packageNamePattern' '$restoreHealDirectoryPattern/([^']+)' '([^']+)' '([a-fA-F0-9]{64})' '([^']+)' '$loggerTagPattern'\\z~";
+
+        if (preg_match($pattern, $command, $matches) !== 1) {
+            return null;
+        }
+
+        $metadata = [
+            'version' => $matches[4],
+            'url' => str_replace('\\%', '%', $matches[2]),
+            'sha256' => strtolower($matches[3]),
+            'file_name' => $matches[1],
+        ];
+        $rebuiltCommand = self::buildRestoreHealCommand($metadata);
+
+        return $rebuiltCommand === $command
+            ? $metadata
+            : null;
     }
 
     /**

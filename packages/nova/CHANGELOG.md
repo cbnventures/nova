@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.47.0 - 2026-11-18
+
+### ADDED
+- The pfSense package scaffold survives a full configuration restore: it replaces pfSense's false "has been removed" notice with a notice that the package and its settings are unchanged, and on a new firewall it reinstalls itself within 15 minutes from its checksum-verified release.
+
 ## 0.46.0 - 2026-11-17
 
 ### FIXED

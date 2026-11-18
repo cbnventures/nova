@@ -154,12 +154,120 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallUpdateCron(): void
 }
 
 /**
+ * Logs a restore-heal failure without interrupting package synchronization.
+ *
+ * @param Throwable $throwable - Failure to log.
+ *
+ * @return void
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure(
+    Throwable $throwable,
+): void {
+    try {
+        if (function_exists('log_error')) {
+            log_error('[__WORKSPACE_TITLE__] restore heal: ' . $throwable->getMessage());
+        }
+    } catch (Throwable) {
+        // A logging failure must not interrupt package synchronization.
+    }
+}
+
+/**
+ * Writes the single package-owned restore-heal cron item when it changes.
+ *
+ * The marker-based transformer removes stale pinned releases without matching
+ * another package's command, then applies pfSense's normal config and cron flow.
+ *
+ * @param string|null $command      - Verified current restore command, or null.
+ * @param bool        $keepExisting - Whether restore or settings retention owns it.
+ *
+ * @return void
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]ConfigureRestoreHealCron(
+    ?string $command,
+    bool $keepExisting = false,
+): void {
+    $cronItems = config_get_path('cron/item', []);
+    $cronItems = is_array($cronItems) ? $cronItems : [];
+    $updatedCronItems = UpdateManager::restoreHealCronItems(
+        $cronItems,
+        $command,
+        $keepExisting,
+    );
+
+    if ($updatedCronItems === $cronItems) {
+        return;
+    }
+
+    config_set_path('cron/item', $updatedCronItems);
+
+    write_config(gettext('Updated the [__WORKSPACE_TITLE__] configuration-restore recovery job.'));
+    configure_cron();
+}
+
+/**
+ * Refreshes the restore-heal cron item for the exact installed release.
+ *
+ * Current commands skip lookup entirely. Definite absence removes stale entries,
+ * while temporary lookup failures leave every existing entry untouched.
+ *
+ * @param callable|null $metadataLookup - Test-only release metadata lookup.
+ *
+ * @return void
+ *
+ * @since UNRELEASED
+ */
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallRestoreHealCron(
+    ?callable $metadataLookup = null,
+): void {
+    try {
+        $cronItems = config_get_path('cron/item', []);
+        $cronItems = is_array($cronItems) ? $cronItems : [];
+        $installedVersion = UpdateManager::installedVersion();
+        $restoreHealMetadataLookup = $metadataLookup ?? static function (string $version): ?array {
+            $updateManager = new UpdateManager($version);
+
+            return $updateManager->restoreHealMetadata();
+        };
+        $failureLogger = static function (Throwable $throwable): void {
+            pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
+        };
+        $command = UpdateManager::resolveRestoreHealCommand(
+            $cronItems,
+            $installedVersion,
+            $restoreHealMetadataLookup,
+            $failureLogger,
+        );
+    } catch (Throwable $throwable) {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
+
+        return;
+    }
+
+    if ($command === false) {
+        return;
+    }
+
+    try {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]ConfigureRestoreHealCron($command);
+    } catch (Throwable $throwable) {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
+    }
+}
+
+/**
  * Synchronizes the package cron jobs with the saved WebGUI settings.
  *
  * @since UNRELEASED
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
 {
+    UpdateManager::reassureAfterRestore();
+
     $command = PackagePaths::COMMAND;
 
     install_cron_job($command, false);
@@ -179,24 +287,42 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
     }
 
     pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallUpdateCron();
+    pfsensePackage[__WORKSPACE_IDENTIFIER__]InstallRestoreHealCron();
 }
 
 /**
- * Removes package cron jobs, the available-update notice, and the idle lock file.
+ * Removes package cron jobs, package notices, and the idle lock file.
  *
  * Persistent release state is retained across pfSense's remove-and-reinstall upgrade
  * lifecycle so notice de-duplication and the last successful check survive upgrades.
  *
+ * @param bool $keepSettings - Whether a deliberate removal retains package settings.
+ *
+ * @return void
+ *
  * @since UNRELEASED
  */
-function pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove(): void
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]Remove(bool $keepSettings = false): void
 {
     install_cron_job(PackagePaths::COMMAND, false);
     install_cron_job(PackagePaths::UPDATE_CHECK_COMMAND, false);
 
-    if (function_exists('close_notice')) {
-        close_notice(UpdateManager::NOTICE_ID);
+    $restoreInProgress = file_exists(PackagePaths::PACKAGE_SYNC_FLAG);
+    $keepRestoreHealEntry = UpdateManager::shouldKeepRestoreHealEntry(
+        $restoreInProgress,
+        $keepSettings,
+    );
+
+    try {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]ConfigureRestoreHealCron(
+            null,
+            $keepRestoreHealEntry,
+        );
+    } catch (Throwable $throwable) {
+        pfsensePackage[__WORKSPACE_IDENTIFIER__]LogRestoreHealFailure($throwable);
     }
+
+    UpdateManager::closePackageNotices();
 
     $fileLock = new FileLock(PackagePaths::LOCK_FILE);
 
