@@ -1976,7 +1976,10 @@ describe('scaffold output contract', async () => {
     strictEqual(updateManagerContent.includes('public function restoreHealMetadata(): ?array'), true);
     strictEqual(updateManagerContent.includes('public static function buildRestoreHealCommand(array $metadata): ?string'), true);
     strictEqual(updateManagerContent.includes('public const RESTORE_HEAL_SCRIPT = \'p=$1;r=$2;h=$3;v=$4;g=$5-restore-heal;'), true);
-    strictEqual(updateManagerContent.includes('self::DAEMON_COMMAND\n            . \' -f -p \''), true);
+    strictEqual(updateManagerContent.includes([
+      'self::DAEMON_COMMAND',
+      '            . \' -f -p \'',
+    ].join('\n')), true);
     strictEqual(updateManagerContent.includes('escapeshellarg(self::RESTORE_HEAL_SCRIPT)'), true);
     strictEqual(updateManagerContent.includes('public static function cacheRestoreHealPackage('), true);
     strictEqual(updateManagerContent.includes('public static function removeRestoreHealCache('), true);
