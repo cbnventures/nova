@@ -109,6 +109,43 @@ export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProductio
 export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Shown = boolean;
 
 /**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Keeps Newlines Inside String Messages.
+ *
+ * @since 0.48.1
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Lines = string[];
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Prints A Long Object On One Line Without A Tty.
+ *
+ * @since 0.48.1
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Lines = string[];
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Wraps A Long Object Across Lines With A Tty.
+ *
+ * @since 0.48.1
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Expected = string;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_ExpectedLines = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Lines = string[];
+
+/**
  * Tests - Toolkit - Logger - Logger Output Levels - Accepts Multiple Arguments.
  *
  * @since 0.13.0

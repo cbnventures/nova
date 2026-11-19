@@ -1,4 +1,5 @@
 import { doesNotThrow, strictEqual } from 'node:assert/strict';
+import { format } from 'node:util';
 
 import { describe, it, vi } from 'vitest';
 
@@ -20,6 +21,17 @@ import type {
   Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Shown,
   Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Captured,
   Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Shown,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Expected,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_ExpectedLines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_OriginalIsTty,
   Tests_Toolkit_Logger_LoggerOutputLevels_AcceptsMultipleArguments_Message,
   Tests_Toolkit_Logger_LoggerOutputLevels_DebugDoesNotThrow_Message,
   Tests_Toolkit_Logger_LoggerOutputLevels_ErrorDoesNotThrow_Message,
@@ -363,6 +375,126 @@ describe('Logger level selection', async () => {
     const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Shown = captured.some((entry) => entry.includes('probe-line'));
 
     strictEqual(shown, false);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting.
+ *
+ * @since 0.48.1
+ */
+describe('Logger output formatting', async () => {
+  it('prints a long object on one line without a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', false);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.warn('GitHub request failed', {
+      path: '/repos/example-owner/example-network-prefix-updater',
+      status: 403,
+    });
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Lines = captured.join('').split('\n');
+
+    strictEqual(lines.length, 2);
+    strictEqual((lines[0] ?? '').endsWith('GitHub request failed { path: \'/repos/example-owner/example-network-prefix-updater\', status: 403 }'), true);
+    strictEqual(lines[1], '');
+
+    return;
+  });
+
+  it('wraps a long object across lines with a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const expected: Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Expected = format('GitHub request failed', {
+      path: '/repos/example-owner/example-network-prefix-updater',
+      status: 403,
+    });
+    const expectedLines: Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_ExpectedLines = expected.split('\n');
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', true);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.warn('GitHub request failed', {
+      path: '/repos/example-owner/example-network-prefix-updater',
+      status: 403,
+    });
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Lines = captured.join('').split('\n');
+
+    strictEqual(expectedLines.length > 1, true);
+    strictEqual(lines.length, expectedLines.length + 1);
+    strictEqual((lines[0] ?? '').endsWith(expectedLines[0] ?? ''), true);
+    strictEqual((lines[1] ?? '').trimStart(), (expectedLines[1] ?? '').trimStart());
+
+    return;
+  });
+
+  it('keeps newlines inside string messages', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', false);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.warn([
+      'first line',
+      'second line',
+    ].join('\n'));
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Lines = captured.join('').split('\n');
+
+    strictEqual(lines.length, 3);
+    strictEqual((lines[0] ?? '').endsWith('first line'), true);
+    strictEqual(lines[1], `${' '.repeat((lines[0] ?? '').indexOf('first line'))}second line`);
 
     return;
   });

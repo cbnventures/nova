@@ -1,4 +1,4 @@
-import { format } from 'node:util';
+import { format, formatWithOptions } from 'node:util';
 
 import chalk from 'chalk';
 
@@ -240,7 +240,20 @@ class Runner {
     const padBottom: Toolkit_Logger_Runner_Emit_PadBottom = '\n'.repeat(padBottomCount);
 
     const stream: Toolkit_Logger_Runner_Emit_Stream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
-    const formattedMessage: Toolkit_Logger_Runner_Emit_FormattedMessage = (message.length > 0) ? format(...message) : '';
+    let formattedMessage: Toolkit_Logger_Runner_Emit_FormattedMessage = '';
+
+    // Non-interactive output (Workers logs, CI, pipes) stores each line as its own entry, so inspected objects stay on one line.
+    if (
+      message.length > 0
+      && stream.isTTY !== true
+    ) {
+      formattedMessage = formatWithOptions({
+        breakLength: Infinity,
+        compact: true,
+      }, ...message);
+    } else if (message.length > 0) {
+      formattedMessage = format(...message);
+    }
 
     if (padTop.length > 0) {
       stream.write(padTop);

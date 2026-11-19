@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.48.1 - 2026-11-19
+
+### FIXED
+- Logger output to a non-interactive stream, such as Cloudflare Workers logs or CI, keeps each entry on one line instead of splitting object details across several lines.
+
 ## 0.48.0 - 2026-11-19
 
 ### ADDED
