@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.47.2 - 2026-11-19
+
+### FIXED
+- The pfSense package scaffold's update check offers a new version only once its package and checksum, and its signature when release signing is set up, are attached to the release, so Update never fails while a release is still being built.
+
 ## 0.47.1 - 2026-11-18
 
 ### UPDATED

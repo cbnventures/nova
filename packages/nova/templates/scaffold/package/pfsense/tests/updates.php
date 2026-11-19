@@ -554,6 +554,56 @@ assertUpdateFailure(
     'The release contains an asset URL outside the trusted repository path.',
 );
 
+$installableTestDirectory = makeUpdateTestDirectory();
+
+try {
+    file_put_contents(
+        $installableTestDirectory . '/keys.pub',
+        'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEcEuM8O7kQQkKHAgao93cat1D9++Xd8gX4JXKEza6HH' . PHP_EOL,
+    );
+
+    $signedInstallableManager = new UpdateManager(
+        installedVersion: '2.0.1',
+        signingKeysFile: $installableTestDirectory . '/keys.pub',
+    );
+    $unsignedInstallableManager = new UpdateManager(
+        installedVersion: '2.0.1',
+        signingKeysFile: $installableTestDirectory . '/missing.pub',
+    );
+    $bareRelease = $release;
+    $bareRelease['assets'] = [];
+    $unpinnedRelease = $unsignedRelease;
+    $unpinnedRelease['assets'][0]['digest'] = null;
+
+    assertUpdateSame(
+        true,
+        $signedInstallableManager->releaseInstallable($release),
+        'A release with its package, digest, and signature is installable.',
+    );
+    assertUpdateSame(
+        false,
+        $signedInstallableManager->releaseInstallable($bareRelease),
+        'A release whose build hasn\'t attached files yet must not be offered.',
+    );
+    assertUpdateSame(
+        false,
+        $signedInstallableManager->releaseInstallable($unsignedRelease),
+        'With signing keys installed, a release without its signature must not be offered.',
+    );
+    assertUpdateSame(
+        true,
+        $unsignedInstallableManager->releaseInstallable($unsignedRelease),
+        'Without signing keys installed, a release needs no signature to be offered.',
+    );
+    assertUpdateSame(
+        false,
+        $unsignedInstallableManager->releaseInstallable($unpinnedRelease),
+        'A release without a digest or checksum asset must not be offered.',
+    );
+} finally {
+    removeUpdateTestDirectory($installableTestDirectory);
+}
+
 $randomValues = [17, 4, 2, 23];
 $randomCalls = 0;
 $randomInteger = static function (int $minimum, int $maximum) use (&$randomValues, &$randomCalls): int {
