@@ -477,6 +477,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingEntries,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasSponsorGatedIssuesWorkflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasValidationErrors,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ImageWorkspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsAtProjectRoot,
@@ -501,6 +502,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupMessage,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptExists,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Suffix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_TargetPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Template,
@@ -678,7 +681,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Returns}
    *
-   * @since 0.39.0
+   * @since 0.48.0
    */
   public static async generate(options: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Options): Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Returns {
     const currentDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CurrentDirectory = process.cwd();
@@ -792,6 +795,7 @@ export class Runner {
     // one exact Corepack descriptor before any workflow file is touched. The
     // maintenance-only templates do not install project dependencies.
     const hasPublishWorkflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow = validatedWorkflows.some((workflow) => workflow['template'] === 'publish');
+    const hasSponsorGatedIssuesWorkflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasSponsorGatedIssuesWorkflow = validatedWorkflows.some((workflow) => workflow['template'] === 'check-sponsor-gated-issues');
 
     let packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager = 'npm';
 
@@ -883,6 +887,27 @@ export class Runner {
       const targetPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_TargetPath = join(workflowsDirectory, outputFileName);
 
       await saveGeneratedFile(targetPath, serialized, isReplaceFile);
+    }
+
+    if (hasSponsorGatedIssuesWorkflow === true) {
+      const sponsorExemptPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptPath = join(currentDirectory, 'SPONSOR_EXEMPT');
+      const sponsorExemptExists: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptExists = await pathExists(sponsorExemptPath);
+
+      if (sponsorExemptExists !== true) {
+        if (isDryRun === true) {
+          Logger.customize({
+            name: 'Runner.generate',
+            purpose: 'dry-run',
+          }).info(`Would generate ${chalk.cyan('"SPONSOR_EXEMPT"')}.`);
+        } else {
+          await fs.writeFile(sponsorExemptPath, '', 'utf-8');
+
+          Logger.customize({
+            name: 'Runner.generate',
+            purpose: 'generated',
+          }).info(`Generated ${chalk.cyan('"SPONSOR_EXEMPT"')}.`);
+        }
+      }
     }
 
     // Clean up orphans, but only when the config validated cleanly. A rejected

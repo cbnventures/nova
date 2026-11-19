@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.48.0 - 2026-11-19
+
+### ADDED
+- Generating the sponsor-gated issues workflow creates an empty SPONSOR_EXEMPT file at the project root when it's missing, ready for exempt logins, and never changes an existing one.
+
 ## 0.47.2 - 2026-11-19
 
 ### FIXED

@@ -1188,7 +1188,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Expr_DollarBrace = str
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
- * @since 0.21.0
+ * @since 0.48.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Options_DryRun = true;
 
@@ -1255,6 +1255,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic = 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow = boolean;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasSponsorGatedIssuesWorkflow = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonPath = string;
@@ -1288,6 +1290,10 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_TargetPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SponsorExemptExists = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingEntries = Dirent[];
 

@@ -38,12 +38,18 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_ProjectDirectory,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_StderrSpy,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_SponsorExemptContent,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_DocsContent,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_ProjectDirectory,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_PublishContent,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_Returns,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_WorkspacePackages,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_RootEntries,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_DollarBrace,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_ProjectDirectory,
@@ -56,6 +62,11 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_ProjectDirectory,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_StderrSpy,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_OriginalCwd,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_CurrentContent,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ExistingContent,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_SponsorExemptPath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_Entries,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_NovaConfig,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_ObservedExitCode,
@@ -78,6 +89,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrChunks,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrSpy,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrText,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_NovaConfig,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_ProjectDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_RootEntries,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutChunks,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutSpy,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutText,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_BackupFiles,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_CheckContent,
   Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_CheckFixture,
@@ -222,6 +239,235 @@ describe('WorkflowsBlueprint.generate', async () => {
     const entries: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Entries = await readdir(join(projectDirectory, '.github')).catch(() => []);
 
     strictEqual(entries.length, 0, 'workflow files were written after the runner list failed');
+
+    return;
+  });
+
+  it('creates an empty SPONSOR_EXEMPT file when the sponsor template is configured', async () => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_ProjectDirectory = join(sandboxRoot, 'sponsor-exempt-create-mock');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'sponsor-exempt-create-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), [
+      'node_modules',
+      '',
+    ].join('\n'), 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_NovaConfig = {
+      project: {
+        name: {
+          title: 'Sponsor Exempt Create',
+          slug: 'sponsor-exempt-create',
+        },
+      },
+      workflows: [{
+        template: 'check-sponsor-gated-issues',
+        runsOn: 'ubuntu-24.04',
+        name: 'project',
+        triggers: ['issues'],
+      }],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'sponsor-exempt-create-project',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await WorkflowsBlueprint.generate({});
+
+    const sponsorExemptContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_SponsorExemptContent = await readFile(join(projectDirectory, 'SPONSOR_EXEMPT'), 'utf-8');
+
+    strictEqual(sponsorExemptContent, '', 'SPONSOR_EXEMPT was not created empty');
+
+    return;
+  });
+
+  it('preserves an existing SPONSOR_EXEMPT file byte-for-byte', async () => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ProjectDirectory = join(sandboxRoot, 'sponsor-exempt-existing-mock');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'sponsor-exempt-existing-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), [
+      'node_modules',
+      '',
+    ].join('\n'), 'utf-8');
+
+    const sponsorExemptPath: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_SponsorExemptPath = join(projectDirectory, 'SPONSOR_EXEMPT');
+    const existingContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ExistingContent = [
+      'octocat',
+      'hubot ',
+      '',
+      '',
+    ].join('\n');
+
+    await writeFile(sponsorExemptPath, existingContent, 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_NovaConfig = {
+      project: {
+        name: {
+          title: 'Sponsor Exempt Existing',
+          slug: 'sponsor-exempt-existing',
+        },
+      },
+      workflows: [{
+        template: 'check-sponsor-gated-issues',
+        runsOn: 'ubuntu-24.04',
+        name: 'project',
+        triggers: ['issues'],
+      }],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'sponsor-exempt-existing-project',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await WorkflowsBlueprint.generate({});
+
+    const currentContent: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_CurrentContent = await readFile(sponsorExemptPath, 'utf-8');
+
+    strictEqual(currentContent, existingContent, 'existing SPONSOR_EXEMPT content changed');
+
+    return;
+  });
+
+  it('reports SPONSOR_EXEMPT without creating it during a dry run', async () => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_ProjectDirectory = join(sandboxRoot, 'sponsor-exempt-dry-run-mock');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'sponsor-exempt-dry-run-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), [
+      'node_modules',
+      '',
+    ].join('\n'), 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_NovaConfig = {
+      project: {
+        name: {
+          title: 'Sponsor Exempt Dry Run',
+          slug: 'sponsor-exempt-dry-run',
+        },
+      },
+      workflows: [{
+        template: 'check-sponsor-gated-issues',
+        runsOn: 'ubuntu-24.04',
+        name: 'project',
+        triggers: ['issues'],
+      }],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'sponsor-exempt-dry-run-project',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    const stdoutChunks: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutChunks = [];
+    const stdoutSpy: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutSpy = vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      stdoutChunks.push(String(chunk));
+
+      return true;
+    });
+
+    await WorkflowsBlueprint.generate({ dryRun: true });
+
+    stdoutSpy.mockRestore();
+
+    const rootEntries: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_RootEntries = await readdir(projectDirectory);
+    const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
+
+    strictEqual(rootEntries.includes('SPONSOR_EXEMPT'), false, 'dry run created SPONSOR_EXEMPT');
+    strictEqual(stdoutText.includes('Would generate "SPONSOR_EXEMPT".'), true, 'dry run did not report SPONSOR_EXEMPT');
+
+    return;
+  });
+
+  it('does not create SPONSOR_EXEMPT when the sponsor template is absent', async () => {
+    const projectDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_ProjectDirectory = join(sandboxRoot, 'sponsor-exempt-absent-mock');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'sponsor-exempt-absent-project',
+      version: '0.0.0',
+      private: true,
+      packageManager: 'npm@11.18.0',
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, '.gitignore'), [
+      'node_modules',
+      '',
+    ].join('\n'), 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_NovaConfig = {
+      project: {
+        name: {
+          title: 'Sponsor Exempt Absent',
+          slug: 'sponsor-exempt-absent',
+        },
+      },
+      workflows: [{
+        template: 'lock-inactive-issues',
+        runsOn: 'ubuntu-24.04',
+        name: 'project',
+        triggers: ['schedule-weekly'],
+      }],
+      workspaces: {
+        './': {
+          role: 'project',
+          policy: 'freezable',
+          name: 'sponsor-exempt-absent-project',
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await WorkflowsBlueprint.generate({});
+
+    const rootEntries: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_RootEntries = await readdir(projectDirectory);
+
+    strictEqual(rootEntries.includes('SPONSOR_EXEMPT'), false, 'non-sponsor template created SPONSOR_EXEMPT');
 
     return;
   });

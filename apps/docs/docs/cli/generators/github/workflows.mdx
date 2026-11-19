@@ -424,6 +424,8 @@ The generator bundles three templates, each with its own trigger set.
 
 This template declares the following variables. `GITHUB_TOKEN` is supplied automatically, so the only `secret` you create manually is `PERSONAL_ACCESS_TOKEN`.
 
+The generator creates an empty `SPONSOR_EXEMPT` file at the project root when it is missing and never changes an existing one.
+
 The remaining values are `var`-format, not `literal` - they resolve to `${{ vars.NAME }}` references and are configured as GitHub repository variables.
 
 | Variable                       | Format   | Description                                                                       |

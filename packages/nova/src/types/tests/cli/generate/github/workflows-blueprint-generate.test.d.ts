@@ -50,6 +50,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CancelsWithoutWritingWhenGitHubRunnerImagesCannotBeRead_Entries = string[];
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Creates An Empty Sponsor Exempt File When The Sponsor Template Is Configured.
+ *
+ * @since 0.48.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_CreatesAnEmptySPONSOREXEMPTFileWhenTheSponsorTemplateIsConfigured_SponsorExemptContent = string;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Derives The Check Scope From What Each Publish Workflow Ships.
  *
  * @since 0.41.1
@@ -74,6 +85,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_PublishContent = string;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DerivesTheCheckScopeFromWhatEachPublishWorkflowShips_DocsContent = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Does Not Create Sponsor Exempt When The Sponsor Template Is Absent.
+ *
+ * @since 0.48.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_DoesNotCreateSPONSOREXEMPTWhenTheSponsorTemplateIsAbsent_RootEntries = string[];
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Generates A Tag Push Publish Workflow With A Tags Filtered On Block.
@@ -106,6 +128,21 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_StderrSpy = ReturnType<typeof vi['spyOn']>;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_Entries = string[];
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Preserves An Existing Sponsor Exempt File Byte For Byte.
+ *
+ * @since 0.48.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_SponsorExemptPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_ExistingContent = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_PreservesAnExistingSPONSOREXEMPTFileByteForByte_CurrentContent = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reports A Diagnostic And Skips The File For An Unknown Template.
@@ -165,6 +202,23 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBluepr
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_ObservedExitCode = number | string | null | undefined;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrText = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reports Sponsor Exempt Without Creating It During A Dry Run.
+ *
+ * @since 0.48.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_RootEntries = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsSPONSOREXEMPTWithoutCreatingItDuringADryRun_StdoutText = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reproduces All Three Portfolio Workflows Byte For Byte And Skips On A Second Run.
