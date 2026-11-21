@@ -1,0 +1,94 @@
+---
+id: "sync-references"
+title: "Sync References"
+description: "Point every reference-only tsconfig.json at its sibling tsconfig.*.json projects without touching a tsconfig.json that compiles files."
+keywords:
+  - "nova"
+  - "tsconfig"
+  - "project references"
+  - "sync references"
+  - "recipe"
+tags:
+  - "cli"
+  - "sync-references"
+  - "recipe"
+  - "tsconfig"
+---
+
+Point every reference-only `tsconfig.json` at its sibling `tsconfig.*.json` projects.
+
+## Summary
+
+The `sync-references` recipe looks at the project root and every workspace in `nova.config.json`. Where a `tsconfig.json` is reference-only, it sets `references` to the sibling `tsconfig.*.json` files in that folder, sorted by name. Every other key keeps its value and position.
+
+A `tsconfig.json` is reference-only when `files` is an empty array and there is no `include`. A `tsconfig.json` that compiles files belongs to its own project and is never edited. A file with comments is not plain JSON, so the recipe skips it with a warning.
+
+```json title="tsconfig.json"
+{
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    },
+    {
+      "path": "./tsconfig.scripts.json"
+    },
+    {
+      "path": "./tsconfig.tests.json"
+    }
+  ],
+  "files": []
+}
+```
+
+## Why Use This Command?
+
+1. Editors only look for `tsconfig.json`, so a complete `references` list lets the TypeScript server find every project in the folder.
+2. Adding or removing a `tsconfig.*.json` project updates the list on the next recipe run instead of by hand.
+3. Leaves source projects, such as a GitHub Action's `tsconfig.json` that `ncc` reads, exactly as written.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Run the command from a project root containing a readable `nova.config.json`.
+- **Recipe toggle** — Set `recipes.tsconfig.sync-references.enabled` to `true`.
+
+```json title="nova.config.json"
+{
+  "recipes": {
+    "tsconfig": {
+      "sync-references": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+New Nova scaffolds turn this recipe on.
+
+## Usage
+
+```shell
+nova recipe tsconfig sync-references
+```
+
+Use `--replace-file` to update the existing files without creating dated Nova backups:
+
+```shell
+nova recipe tsconfig sync-references --replace-file
+```
+
+Preview which files would change without writing them:
+
+```shell
+nova recipe tsconfig sync-references --dry-run
+```
+
+The recipe is also included in `nova utility run-recipes` when its toggle is enabled.
+
+## Options
+
+| Flag                 | Description                                                             |
+|----------------------|-------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview which `tsconfig.json` files would change without writing them.  |
+| `-r, --replace-file` | Overwrite the original files instead of creating `.nova-backup` copies. |

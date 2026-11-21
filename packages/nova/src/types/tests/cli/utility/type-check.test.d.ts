@@ -43,6 +43,28 @@ export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnostic
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_IndexPath = string;
 
 /**
+ * Tests - CLI - Utility - Type Check - Run - Passes A Project With No Inputs Only When Pass With No Inputs Is Set.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_Messages = string[];
+
+/**
+ * Tests - CLI - Utility - Type Check - Run - Refuses Skip Lib Check From An Extended Config.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_Messages = string[];
+
+/**
  * Tests - CLI - Utility - Type Check - Run - Rejects Invalid Compiler Option.
  *
  * @since 0.26.0
@@ -91,6 +113,15 @@ export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForIn
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents = string;
 
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_IndexPath = string;
+
+/**
+ * Tests - CLI - Utility - Type Check - Run - Still Fails A Project With No Inputs And Another Config Error.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_TsconfigPath = string;
 
 /**
  * Tests - CLI - Utility - Type Check - Run - Supports Incremental Project Configurations.

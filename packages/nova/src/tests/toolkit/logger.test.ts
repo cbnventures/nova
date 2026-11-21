@@ -24,9 +24,30 @@ import type {
   Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Captured,
   Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Lines,
   Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_AlignedLines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Error,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Expected,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_ExpectedLines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Indent,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_OriginalIsTty,
   Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Captured,
   Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Lines,
   Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Error,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Frames,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_OriginalIsTty,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Captured,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Error,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Frames,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Lines,
+  Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_OriginalIsTty,
   Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Captured,
   Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_Expected,
   Tests_Toolkit_Logger_LoggerOutputFormatting_WrapsALongObjectAcrossLinesWithATty_ExpectedLines,
@@ -495,6 +516,156 @@ describe('Logger output formatting', async () => {
     strictEqual(lines.length, 3);
     strictEqual((lines[0] ?? '').endsWith('first line'), true);
     strictEqual(lines[1], `${' '.repeat((lines[0] ?? '').indexOf('first line'))}second line`);
+
+    return;
+  });
+
+  it('prints an error on one line without a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const error: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Error = new Error('boom');
+    const frames: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Frames = (error.stack ?? '').split('\n').slice(1).map((frame) => frame.trim());
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', false);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.error('Request failed', error);
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Lines = captured.join('').split('\n');
+
+    strictEqual(frames.length > 0, true);
+    strictEqual(lines.length, 2);
+    strictEqual((lines[0] ?? '').includes(`Request failed Error: boom ↵ ${frames[0] ?? ''}`), true);
+    strictEqual(frames.every((frame) => (lines[0] ?? '').includes(frame)), true);
+    strictEqual(lines[1], '');
+
+    return;
+  });
+
+  it('prints an error nested in an object on one line without a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const error: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Error = new Error('boom');
+    const frames: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Frames = (error.stack ?? '').split('\n').slice(1).map((frame) => frame.trim());
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', false);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.error('Request failed', {
+      cause: error,
+      status: 500,
+    });
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Lines = captured.join('').split('\n');
+
+    strictEqual(lines.length, 2);
+    strictEqual((lines[0] ?? '').includes('Request failed { cause: Error: boom ↵ '), true);
+    strictEqual(frames.every((frame) => (lines[0] ?? '').includes(frame)), true);
+    strictEqual((lines[0] ?? '').endsWith('status: 500 }'), true);
+    strictEqual(lines[1], '');
+
+    return;
+  });
+
+  it('keeps string newlines next to an error without a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', false);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.error([
+      'first line',
+      'second line',
+    ].join('\n'), new Error('boom'));
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Lines = captured.join('').split('\n');
+
+    strictEqual(lines.length, 3);
+    strictEqual((lines[0] ?? '').endsWith('first line'), true);
+    strictEqual((lines[1] ?? '').startsWith(`${' '.repeat((lines[0] ?? '').indexOf('first line'))}second line Error: boom ↵ at `), true);
+    strictEqual(lines[2], '');
+
+    return;
+  });
+
+  it('keeps the error output unchanged with a tty', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const error: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Error = new Error('boom');
+    const expected: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Expected = format('Request failed', error);
+    const expectedLines: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_ExpectedLines = expected.split('\n');
+    const originalIsTty: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_OriginalIsTty = Reflect.get(process.stderr, 'isTTY');
+    const captured: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Captured = [];
+
+    Reflect.set(process.stderr, 'isTTY', true);
+
+    vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.error('Request failed', error);
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    Reflect.set(process.stderr, 'isTTY', originalIsTty);
+
+    const lines: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Lines = captured.join('').split('\n');
+    const indent: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Indent = ' '.repeat((lines[0] ?? '').indexOf('Request failed'));
+    const alignedLines: Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_AlignedLines = expectedLines.slice(1).map((line) => `${indent}${line}`);
+
+    strictEqual(expectedLines.length > 1, true);
+    strictEqual(lines.length, expectedLines.length + 1);
+    strictEqual((lines[0] ?? '').endsWith(expectedLines[0] ?? ''), true);
+    strictEqual(lines.slice(1, -1).join('\n'), alignedLines.join('\n'));
+    strictEqual(lines[lines.length - 1], '');
 
     return;
   });

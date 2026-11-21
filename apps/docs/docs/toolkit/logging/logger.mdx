@@ -41,7 +41,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Capabilities
 
 - Messages with line breaks are indented on subsequent lines for readability.
-- Non-interactive output, such as Cloudflare Workers logs or CI, keeps each log entry on one line.
+- Non-interactive output, such as Cloudflare Workers logs or CI, keeps each log entry on one line, including error stack traces, whose frames are joined with ` ↵ `.
 - Automatically adapts to environment signals (frontend vs. backend) and the `LOG_LEVEL` setting.
 - Add timestamps to prefixes by setting the `LOG_TIME` environment flag.
 - Teams can call `Logger.customize` to reuse shared options like padding or component names.

@@ -1,10 +1,7 @@
 import { promises as fs } from 'node:fs';
-import {
-  basename,
-  dirname,
-  join,
-} from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { basename, join } from 'node:path';
+
+import { resolveTemplatePath } from './utility.js';
 
 import type {
   Lib_IgnoreFiles_GetSupportedIgnoreFileBundles_BaseName,
@@ -23,7 +20,6 @@ import type {
   Lib_IgnoreFiles_RenderIgnoreFile_Bundles,
   Lib_IgnoreFiles_RenderIgnoreFile_Content,
   Lib_IgnoreFiles_RenderIgnoreFile_ContentParts,
-  Lib_IgnoreFiles_RenderIgnoreFile_CurrentDirectory,
   Lib_IgnoreFiles_RenderIgnoreFile_Entry,
   Lib_IgnoreFiles_RenderIgnoreFile_FileBundles,
   Lib_IgnoreFiles_RenderIgnoreFile_Patterns,
@@ -147,8 +143,7 @@ export async function renderIgnoreFile(targetPath: Lib_IgnoreFiles_RenderIgnoreF
     throw new Error(`Unsupported ignore file path "${targetPath}".`);
   }
 
-  const currentDirectory: Lib_IgnoreFiles_RenderIgnoreFile_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
-  const templateRoot: Lib_IgnoreFiles_RenderIgnoreFile_TemplateRoot = join(currentDirectory, '..', '..', 'templates');
+  const templateRoot: Lib_IgnoreFiles_RenderIgnoreFile_TemplateRoot = resolveTemplatePath(import.meta.url, '');
   const bundleContents: Lib_IgnoreFiles_RenderIgnoreFile_BundleContents = [];
   const bundles: Lib_IgnoreFiles_RenderIgnoreFile_Bundles = entry['bundles'];
 

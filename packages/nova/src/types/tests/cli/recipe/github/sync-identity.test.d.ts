@@ -246,86 +246,76 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NeitherTopicsNorKeywordsResultsInNoApiCall_TopicsCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Deduplicates Topics Keeping First Occurrence.
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - No Duplicate Topics Sent When Keywords Repeat.
  *
  * @since 0.19.0
  */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_Calls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_Calls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TopicsCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TopicsCall = unknown[] | undefined;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TypescriptCount = number;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TypescriptCount = number;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Drops Keywords That Become Empty After Stripping.
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Non Topic Characters In Keywords Set Exit Code1.
  *
  * @since 0.19.0
  */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_Calls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_Calls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_TopicsCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_TopicsCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Drops Topics Exceeding50 Chars With Warn.
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Non Topic Length Over50 Chars Sets Exit Code1.
  *
  * @since 0.19.0
  */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoggerWarnSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_Calls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_WarnCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_HasTooLongWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_TopicsCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Trims To20 Topics With Warn When More Than20 Provided.
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Non Topic Total Over20 Keywords Sets Exit Code1.
  *
  * @since 0.19.0
  */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Keywords = string[];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Keywords = string[];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoggerWarnSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Calls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_WarnCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_HasTrimWarn = boolean;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Calls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicsCall = unknown[] | undefined;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicMatches = RegExpMatchArray | null;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_TopicsCall = unknown[] | undefined;
 
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Only Description Set Calls Gh Repo Edit With Only Description Flag.
@@ -508,18 +498,18 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_TopicsCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Topics Derived From Project Keywords Are Normalized In API Call.
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Topics Derived From Project Keywords Are Sent In API Call.
  *
  * @since 0.19.0
  */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_Calls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_Calls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_TopicsCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_TopicsCall = unknown[] | undefined;

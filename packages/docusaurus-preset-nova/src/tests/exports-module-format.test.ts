@@ -131,7 +131,7 @@ function loadProject(packageRoot: Tests_ExportsModuleFormat_LoadProject_PackageR
 /**
  * Tests - Exports Module Format - Resolve Export Source.
  *
- * Maps a build-facing export target (for example `./build/src/icons.js`)
+ * Maps a build-facing export target (for example `./build/icons.js`)
  * back to the source file that produced it, trying the `.ts` then `.tsx`
  * extensions. Returns `undefined` when no source file exists.
  *
@@ -143,7 +143,7 @@ function loadProject(packageRoot: Tests_ExportsModuleFormat_LoadProject_PackageR
  * @since 0.21.0
  */
 function resolveExportSource(packageRoot: Tests_ExportsModuleFormat_ResolveExportSource_PackageRoot, target: Tests_ExportsModuleFormat_ResolveExportSource_Target): Tests_ExportsModuleFormat_ResolveExportSource_Returns {
-  const withoutBuild: Tests_ExportsModuleFormat_ResolveExportSource_WithoutBuild = target.replace('./build/', '');
+  const withoutBuild: Tests_ExportsModuleFormat_ResolveExportSource_WithoutBuild = target.replace('./build/', './src/');
   const relativeSource: Tests_ExportsModuleFormat_ResolveExportSource_RelativeSource = (withoutBuild.endsWith('.js') === true) ? withoutBuild.slice(0, withoutBuild.length - '.js'.length) : withoutBuild;
   const extensions: Tests_ExportsModuleFormat_ResolveExportSource_Extensions = [
     '.ts',

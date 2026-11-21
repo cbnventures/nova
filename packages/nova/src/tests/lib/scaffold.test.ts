@@ -414,6 +414,11 @@ describe('workspace contract', () => {
       const configPath: Tests_Lib_Scaffold_WorkspaceContract_DisablesPfSenseUpdatesForNonGitHubRepositories_ConfigPath = join(projectDirectory, 'nova.config.json');
 
       await writeFile(configPath, JSON.stringify({
+        project: {
+          description: {
+            short: 'Firewall package',
+          },
+        },
         entities: [{
           name: 'Project Author',
           email: 'author@example.com',

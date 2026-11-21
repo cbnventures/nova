@@ -35,6 +35,7 @@ export class Runner {
   public static run(options: Cli_Utility_TypeCheck_Runner_Run_Options): Cli_Utility_TypeCheck_Runner_Run_Returns {
     const exitCode: Cli_Utility_TypeCheck_Runner_Run_ExitCode = runTypeCheck({
       project: options['project'],
+      passWithNoInputs: options['passWithNoInputs'] === true,
       printError: Runner['printError'],
       printInfo: Runner['printInfo'],
     });

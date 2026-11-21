@@ -29,6 +29,7 @@ import {
 
 import novaPackageJson from '../../package.json' with { type: 'json' };
 
+import { Runner as LibDockerRender } from '../lib/docker-render.js';
 import {
   libItemAllowedRecipes,
   libItemSortOrderKeys,
@@ -47,6 +48,7 @@ import {
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
   LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
   LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX,
@@ -79,7 +81,6 @@ import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent,
-  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_GeneratedWorkspaceDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Messages,
@@ -191,6 +192,7 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_VitestConfigContent,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames,
@@ -317,6 +319,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scripts/run-android.mjs',
       'scripts/run-gradle.mjs',
       'settings.gradle.kts',
+      'tests/tooling.test.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -389,6 +392,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'package.json',
       'project.yml',
       'scripts/run-apple.mjs',
+      'scripts/tests/tooling.test.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -601,15 +605,20 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/worker/landing-page.ts',
       'tsconfig.cli.json',
       'tsconfig.config.json',
+      'tsconfig.json',
       'tsconfig.tests.json',
       'tsconfig.worker.json',
       'vitest.config.mts',
+      'vitest.setup.ts',
       'wrangler.build.toml',
       'wrangler.toml',
     ],
     expectedScripts: {
-      manage: 'tsx src/index.ts status',
-      tail: 'wrangler tail --config ./wrangler.toml',
+      'check:generate-types': 'wrangler types --config ./wrangler.toml',
+      'check:coverage': 'vitest run --coverage',
+      'build:generate-types': 'wrangler types --config ./wrangler.toml',
+      'manage': 'tsx src/index.ts status',
+      'tail': 'wrangler tail --config ./wrangler.toml',
     },
     replacements: new Map([
       [
@@ -660,13 +669,16 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'tsconfig.cli.json',
       'tsconfig.config.json',
       'tsconfig.functions.json',
+      'tsconfig.json',
       'tsconfig.tests.json',
       'vercel.json',
       'vitest.config.mts',
+      'vitest.setup.ts',
     ],
     expectedScripts: {
-      manage: 'tsx src/index.ts status',
-      tail: 'vercel logs --follow',
+      'check:coverage': 'vitest run --coverage',
+      'manage': 'tsx src/index.ts status',
+      'tail': 'vercel logs --follow',
     },
     replacements: new Map([
       [
@@ -705,9 +717,11 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'tsconfig.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
+      'vitest.setup.ts',
     ],
     expectedScripts: {
       'dev:local': 'local-action run ../.. packages/my-action/src/run.ts .env',
+      'check:coverage': 'vitest run --coverage',
     },
     replacements: new Map([
       [
@@ -828,6 +842,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scripts/check-package.mjs',
       'scripts/regex.mjs',
       'scripts/stage-package.mjs',
+      'tests/tooling.test.ts',
       'tests/updates.php',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
@@ -857,6 +872,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       [
         LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
         'mypackage',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT,
+        'A generated pfSense package',
       ],
       [
         LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
@@ -1297,6 +1316,14 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     strictEqual(generatedFiles.includes('vitest.config.mts'), true, `Generated JavaScript or TypeScript tooling must include a Vitest config in "${targetDirectory}".`);
   }
 
+  if (generatedFiles.includes('vitest.config.mts') === true) {
+    const vitestConfigContent: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_VitestConfigContent = generatedContents[generatedFiles.indexOf('vitest.config.mts')] ?? '';
+
+    strictEqual(vitestConfigContent.includes('globals: false,'), true, `Generated Vitest config must turn off globals in "${targetDirectory}".`);
+    strictEqual(vitestConfigContent.includes('testTimeout: 30000, // 30 seconds.'), true, `Generated Vitest config must use the 30-second test timeout in "${targetDirectory}".`);
+    strictEqual(vitestConfigContent.includes('sequence:'), false, `Generated Vitest config must not set a sequence block in "${targetDirectory}".`);
+  }
+
   const tsconfigFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFiles = generatedFiles.filter((generatedFile) => (
     generatedFile === 'tsconfig.json'
     || (
@@ -1311,6 +1338,11 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     const tsconfig: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig = JSON.parse(tsconfigRaw) as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig;
     const tsconfigReferences: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences = tsconfig['references'];
     const tsconfigFileList: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFileList = tsconfig['files'];
+
+    // Every generated test imports from "vitest", so no TSConfig declares the global test types,
+    // and none turns on "skipLibCheck".
+    strictEqual(tsconfigRaw.includes('vitest/globals'), false, `Generated TSConfig "${tsconfigFile}" must not declare "vitest/globals" in "${targetDirectory}".`);
+    strictEqual(tsconfigRaw.includes('skipLibCheck'), false, `Generated TSConfig "${tsconfigFile}" must not set "skipLibCheck" in "${targetDirectory}".`);
 
     // A solution-style config only references role configs, so it compiles nothing and needs no extends chain.
     if (
@@ -1398,6 +1430,8 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
     'tests/project.test.ts',
     'tests/setup.ts',
     'tsconfig.config.json',
+    'tsconfig.json',
+    'tsconfig.scripts.json',
     'tsconfig.tests.json',
     'vitest.config.mts',
   ], true);
@@ -1434,6 +1468,13 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   strictEqual(Object.keys(generatedScripts).some((scriptName) => scriptName.endsWith(':workspaces')), false);
   strictEqual(generatedScripts['changelog'], 'nova utility changelog');
   strictEqual(generatedScripts['recipes'], 'nova utility run-recipes --replace-file');
+  strictEqual(generatedScripts['check:lint'], 'eslint ./ --max-warnings=0');
+  strictEqual(generatedScripts['check:types-scripts'], 'nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs');
+  deepStrictEqual(generatedRecipes['tsconfig'], {
+    'sync-references': {
+      enabled: true,
+    },
+  });
   deepStrictEqual(generatedRunWorkspacesSettings['concurrency'], {
     build: 2,
     check: 2,
@@ -1682,16 +1723,45 @@ describe('scaffold output contract', async () => {
   });
 
   it('keeps the Docker image OCI label contract', async () => {
-    const dockerfilePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath = join(packageDirectory, 'templates', 'scaffold-options', 'docker-image', 'common', 'Dockerfile');
-    const dockerfileContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = await readFile(dockerfilePath, 'utf-8');
+    const dockerfileContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = LibDockerRender.renderDockerfile({
+      buildOrder: new Map(),
+      manifest: {
+        healthPath: '/health',
+        legacyStatePaths: [],
+        networkMode: 'host',
+        schemaVersion: 2,
+        services: [],
+        workspaces: [],
+      },
+      novaConfig: {
+        project: {
+          description: {
+            short: 'Contract image',
+          },
+          legalName: 'Contract Vendor',
+          license: 'MIT',
+          name: {
+            slug: 'contract',
+            title: 'Contract',
+          },
+        },
+        urls: {
+          documentation: 'https://example.com/docs',
+          homepage: 'https://example.com/',
+          repository: 'https://example.com/repository',
+        },
+      },
+      rootPackage: {},
+      stageFragments: new Map(),
+    });
 
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="[__PROJECT_NAME__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.description="[__PROJECT_DESCRIPTION__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="[__PROJECT_HOMEPAGE__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="[__PROJECT_REPOSITORY__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="[__PROJECT_DOCUMENTATION__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="[__PROJECT_LICENSE__]"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="[__PROJECT_VENDOR__]"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="Contract"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.description="Contract image"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="https://example.com/"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="https://example.com/repository"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="https://example.com/docs"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="MIT"'), true);
+    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="Contract Vendor"'), true);
 
     return;
   });
@@ -2063,7 +2133,9 @@ describe('scaffold output contract', async () => {
     strictEqual(checkPackageContent.includes('\'port/files/usr/local/share/pfSense-pkg-[__WORKSPACE_IDENTIFIER__]/release-signing.pub\''), true);
     strictEqual(checkPackageContent.includes('\'tests/updates.php\''), true);
     strictEqual(checkPackageContent.includes('releaseSigningKeyPattern.test(releaseSigningKeyLine)'), true);
-    strictEqual(checkPackageContent.includes('WWW=\\t[__PROJECT_HOMEPAGE__]'), true);
+    strictEqual(checkPackageContent.includes('[__PROJECT_HOMEPAGE__]'), false);
+    strictEqual(checkPackageContent.includes('makefileTemplateLine.startsWith(\'WWW=\')'), true);
+    strictEqual(makefileContent.includes('COMMENT=\t[__PFSENSE_PORT_COMMENT__]'), true);
     strictEqual(updateTestsContent.includes('UpdateManager::stableCronSchedule([], $randomInteger)'), true);
     strictEqual(updateTestsContent.includes('A manual check must file no notice.'), true);
     strictEqual(updateTestsContent.includes('A later scheduled check must not announce a manually observed version.'), true);

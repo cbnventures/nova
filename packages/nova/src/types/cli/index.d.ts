@@ -2,12 +2,19 @@ import type { Command, CommandUnknownOpts } from '@commander-js/extra-typings';
 import type { ChalkInstance } from 'chalk';
 
 import type { Shared_GeneratorRunResult, Shared_RunScriptsOptions, Shared_RunWorkspacesOptions } from '../shared.d.ts';
+import type { Cli_Utility_CrossEnv_Runner_Run_Options } from './utility/cross-env.d.ts';
 
 /**
  * CLI - Env Dir.
  *
  * @since 0.14.0
  */
+export type Cli_Index_PackageJson_Version = string;
+
+export type Cli_Index_PackageJson = {
+  version: Cli_Index_PackageJson_Version;
+};
+
 export type Cli_Index_EnvSearchOrder = string[];
 
 export type Cli_Index_EnvProfileFileName = string;
@@ -152,15 +159,23 @@ export type Cli_Index_CLI_RegisterCommands_RecipePackageJson = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeNovaConfig = Command;
 
+export type Cli_Index_CLI_RegisterCommands_RecipePfsense = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeDocker = Command;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeDockerHub = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeGithub = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeGithubAction = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeLicense = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeReadMe = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeTsconfig = Command;
 
 export type Cli_Index_CLI_RegisterCommands_Scaffold = Command;
 
@@ -175,6 +190,8 @@ export type Cli_Index_CLI_RegisterCommands_ScaffoldStarter = Command;
 export type Cli_Index_CLI_RegisterCommands_ScaffoldTool = Command;
 
 export type Cli_Index_CLI_RegisterCommands_Utility = Command;
+
+export type Cli_Index_CLI_RegisterCommands_CrossEnvOptions = Cli_Utility_CrossEnv_Runner_Run_Options;
 
 export type Cli_Index_CLI_RegisterCommands_RunScriptsOptions = Shared_RunScriptsOptions;
 

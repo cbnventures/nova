@@ -7,6 +7,7 @@ import {
 import chalk from 'chalk';
 
 import { Runner as ApiSpdxLicenses } from '../../../api/spdx-licenses.js';
+import { resolveKeywordLimitMessages } from '../../../lib/keyword-limits.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { Runner as LibReleaseHistory } from '../../../lib/release-history.js';
 import {
@@ -59,6 +60,7 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_KeywordLimitMessages,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_PackageJsonRecipesFilter,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeEntryFilter,
@@ -176,6 +178,22 @@ export class Runner {
         name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-identity. No workspaces have this recipe enabled.');
+
+      return;
+    }
+
+    // Homebridge plugins publish "project.keywords" as npm keywords, which must keep "homebridge-plugin".
+    const keywordLimitMessages: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_KeywordLimitMessages = resolveKeywordLimitMessages(workingFile, 'homebridge-plugin');
+
+    if (keywordLimitMessages.length > 0) {
+      for (const keywordLimitMessage of keywordLimitMessages) {
+        Logger.customize({
+          name: 'Runner.run',
+          purpose: 'keywords',
+        }).error(keywordLimitMessage);
+      }
+
+      process.exitCode = 1;
 
       return;
     }

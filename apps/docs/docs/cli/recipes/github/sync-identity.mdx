@@ -31,7 +31,7 @@ If all three fields (`description`, `homepage`, and `topics`) are undefined in t
 ## Why Use This Command?
 
 1. Keeps the public repository description, homepage, and topics aligned with the same project metadata used elsewhere.
-2. Normalizes derived topics so invalid GitHub topic values do not need manual cleanup.
+2. Catches topics GitHub would reject before any repository setting changes.
 3. Makes identity updates repeatable after branding or ownership changes.
 
 ## Requirements
@@ -44,16 +44,15 @@ If all three fields (`description`, `homepage`, and `topics`) are undefined in t
 
 - **`description`** — Sourced from `project.description.short` in <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If undefined, the field is skipped.
 - **`homepage`** — Sourced from `urls.homepage`. If undefined, the field is skipped.
-- **`topics`** — Sourced from `github.topics` if set. If `github.topics` is not defined, topics are derived from `project.keywords` using the normalization rules below. If `github.topics` is set to an empty array (`[]`), all topics are cleared on GitHub.
+- **`topics`** — Sourced from `github.topics` if set. If `github.topics` is not defined, topics come from `project.keywords`, sent once each. If `github.topics` is set to an empty array (`[]`), all topics are cleared on GitHub.
 
-Topic normalization rules applied to `project.keywords` when `github.topics` is not set:
+Whichever list is sent must follow GitHub's topic rules:
 
-- Converted to lowercase.
-- Spaces and underscores replaced with hyphens.
-- Characters outside `[a-z0-9-]` are stripped.
-- Duplicates are removed.
-- Topics longer than 50 characters are dropped and a warning is emitted.
-- Capped at 20 topics.
+- At most 20 topics.
+- Each topic uses only lowercase letters, numbers, and hyphens, and starts with a letter or number.
+- Each topic is at most 50 characters.
+
+When the list breaks a rule, the recipe stops with an error before it changes anything on GitHub. The message names the field to fix, either `project.keywords` or `github.topics`. See [Keyword Limits](/docs/quickstart/nova-config#keyword-limits) for how the two fields relate.
 
 ## Settings
 

@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 
+import { resolveCoverageBadgeEndpointUrl } from '../../../lib/coverage-badge.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { wrapReadMeRegion } from '../../../lib/read-me-regions.js';
 import {
@@ -19,6 +20,8 @@ import { Logger } from '../../../toolkit/index.js';
 import type {
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_BadgeId,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageEndpointUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageHref,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo,
@@ -28,6 +31,7 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_BadgeIds,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_CoverageEndpointUrl,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerUrl,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources,
@@ -253,8 +257,9 @@ export class Runner {
     const dockerUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerUrl = (urls !== undefined) ? (urls['docker'] ?? '') : '';
     const dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage = dockerUrl.replace(LIB_REGEX_URL_PREFIX_DOCKER_HUB, '');
     const fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
+    const coverageEndpointUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_CoverageEndpointUrl = resolveCoverageBadgeEndpointUrl(config);
 
-    return Runner.buildBadges(badgeIds, githubRepo, npmPackage, dockerImage, fundSources);
+    return Runner.buildBadges(badgeIds, githubRepo, npmPackage, dockerImage, fundSources, coverageEndpointUrl);
   }
 
   /**
@@ -408,11 +413,12 @@ export class Runner {
    * identifier resolves through one source-specific branch, while the funding identifier
    * expands to the configured funding sources at that position.
    *
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges}      badges      - Badges.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo}  githubRepo  - Github repo.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage}  npmPackage  - Npm package.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage} dockerImage - Docker image.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources} fundSources - Fund sources.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges}              badges              - Badges.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo}          githubRepo          - Github repo.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage}          npmPackage          - Npm package.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage}         dockerImage         - Docker image.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources}         fundSources         - Fund sources.
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageEndpointUrl} coverageEndpointUrl - Coverage endpoint url.
    *
    * @private
    *
@@ -420,7 +426,7 @@ export class Runner {
    *
    * @since 0.15.0
    */
-  private static buildBadges(badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges, githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo, npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage, dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage, fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns {
+  private static buildBadges(badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges, githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo, npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage, dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage, fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources, coverageEndpointUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageEndpointUrl): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns {
     const lines: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Lines = [];
 
     for (const badge of badges) {
@@ -503,6 +509,23 @@ export class Runner {
           lines.push(
             `  <a href="https://github.com/${githubRepo}/blob/HEAD/LICENSE">`,
             `    <img alt="GitHub License" src="https://img.shields.io/github/license/${githubRepo}?style=for-the-badge&logo=googledocs&logoColor=%23ffffff&color=%2348a56a">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'coverage': {
+          // The badge reads the endpoint JSON the publish workflow writes, so it only
+          // appears when coverage is on and that JSON has a URL.
+          if (coverageEndpointUrl === undefined) {
+            break;
+          }
+
+          const coverageHref: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageHref = (githubRepo !== '') ? `https://github.com/${githubRepo}/actions` : coverageEndpointUrl;
+
+          lines.push(
+            `  <a href="${coverageHref}">`,
+            `    <img alt="Test Coverage" src="https://img.shields.io/endpoint?url=${encodeURIComponent(coverageEndpointUrl)}&style=for-the-badge&logo=vitest&logoColor=%23ffffff">`,
             '  </a>',
           );
           break;

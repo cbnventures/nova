@@ -1,7 +1,7 @@
   - type: "input"
     id: "device-model"
     attributes:
-      label: "Device model"
+      label: "Device Model"
       description: "What device are you using? You can find this in __Settings > About Phone__."
       placeholder: "e.g. Samsung Galaxy S25, Google Pixel 9"
     validations:
@@ -9,7 +9,7 @@
   - type: "input"
     id: "android-version"
     attributes:
-      label: "Android version"
+      label: "Android Version"
       description: "What version of Android are you using? You can find this in __Settings > About Phone > Software Information__."
       placeholder: "e.g. Android 16 (API 36)"
     validations:

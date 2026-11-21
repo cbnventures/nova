@@ -1,0 +1,43 @@
+  - type: "textarea"
+    id: "steps-to-reproduce"
+    attributes:
+      label: "Steps to Reproduce"
+      description: "List the shortest sequence that shows the problem. Include setup details that affect the result."
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "expected-behavior"
+    attributes:
+      label: "Expected Behavior"
+      description: "Describe the result you expected after following those steps."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "actual-behavior"
+    attributes:
+      label: "Actual Behavior"
+      description: "Describe what happened instead. Include the exact error text when available."
+    validations:
+      required: true
+  - type: "input"
+    id: "affected-version"
+    attributes:
+      label: "Affected Version or Date"
+      description: "Enter the affected version. If no version is visible, enter the date the problem was observed."
+      placeholder: "e.g. 1.0.0"
+    validations:
+      required: true
+  - type: "dropdown"
+    id: "frequency"
+    attributes:
+      label: "Frequency"
+      description: "Select how consistently the problem occurs."
+      options:
+        - "Every Time"
+        - "Often"
+        - "Sometimes"
+        - "Once"
+        - "Not Sure"
+    validations:
+      required: true

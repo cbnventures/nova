@@ -182,7 +182,7 @@ describe('Compiled Nova CLI integration', () => {
   it('loads the binary from a filesystem path containing spaces and an ampersand', async () => {
     const packageDirectory = join(temporaryDirectory, 'launcher path & value');
     const binDirectory = join(packageDirectory, 'bin');
-    const buildDirectory = join(packageDirectory, 'build', 'src', 'cli');
+    const buildDirectory = join(packageDirectory, 'build', 'cli');
     const copiedLauncherPath = join(binDirectory, 'nova.mjs');
     const copiedCliPath = join(buildDirectory, 'index.js');
 
@@ -240,7 +240,7 @@ describe('Compiled Nova CLI integration', () => {
 
   it('starts the Shiki rewrite watcher before its nested build directory exists', async () => {
     const projectDirectory = join(temporaryDirectory, 'shiki watcher path & value');
-    const compiledDirectory = join(projectDirectory, 'build', 'src', 'lib');
+    const compiledDirectory = join(projectDirectory, 'build', 'lib');
     const compiledFilePath = join(compiledDirectory, 'rehype-shiki.js');
     const watcherPath = resolve(repositoryDirectory, 'scripts', 'fix-shiki-import.mjs');
     const originalContents = 'const shiki = Promise.resolve().then(() => __importStar(require("shiki")));\n';

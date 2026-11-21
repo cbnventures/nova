@@ -99,6 +99,12 @@ export type Lib_Scaffold_CreateMonorepoRoot_AppsDirectory = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory = string;
 
+export type Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson_Version = string;
+
+export type Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson = {
+  version: Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson_Version;
+};
+
 export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent = Record<string, unknown>;
 
 export type Lib_Scaffold_CreateMonorepoRoot_PackageJson = string;
@@ -458,6 +464,8 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget = Shared_NovaCon
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix = string | undefined;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_PublishesToNpm = boolean;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = Record<string, unknown> | undefined;
@@ -559,8 +567,6 @@ export type Lib_Scaffold_ReportError_Returns = void;
  * @since 0.29.0
  */
 export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns = string;
-
-export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory = string;
 
 /**
  * Lib - Scaffold - Resolve Scaffold Environment Prefix.
@@ -672,6 +678,8 @@ export type Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipe = Shared_NovaC
  */
 export type Lib_Scaffold_ResolveScaffoldPolicy_Category = 'app' | 'docs' | 'package' | 'tool';
 
+export type Lib_Scaffold_ResolveScaffoldPolicy_PublishesToNpm = boolean;
+
 export type Lib_Scaffold_ResolveScaffoldPolicy_Returns = Shared_NovaConfigWorkspace_Policy;
 
 /**
@@ -778,6 +786,17 @@ export type Lib_Scaffold_ResolveWorkspacePackageName_Category = 'app' | 'docs' |
 export type Lib_Scaffold_ResolveWorkspacePackageName_Returns = string;
 
 /**
+ * Lib - Scaffold - Resolve Workspace Title.
+ *
+ * @since 0.49.0
+ */
+export type Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceName = string;
+
+export type Lib_Scaffold_ResolveWorkspaceTitle_Returns = string;
+
+export type Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceNameSegments = string[];
+
+/**
  * Lib - Scaffold - Run Scaffold.
  *
  * @since 0.15.0
@@ -824,6 +843,8 @@ export type Lib_Scaffold_RunScaffold_Definition_Platforms = Shared_NovaConfig_Pr
 export type Lib_Scaffold_RunScaffold_Definition_PrimaryScript = string;
 
 export type Lib_Scaffold_RunScaffold_Definition_ProjectFinalizer = (workspaceDirectory: string, workspaceName: string, configRoot: string, answers: Shared_ScaffoldTemplateResolution_Answers, replacements: Map<RegExp, string>) => Promise<void>;
+
+export type Lib_Scaffold_RunScaffold_Definition_PublishesToNpm = boolean;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveAllowScriptProfiles = (answers: Shared_ScaffoldTemplateResolution_Answers) => Lib_Scaffold_RunScaffold_Definition_AllowScriptProfiles;
 
@@ -877,6 +898,7 @@ export type Lib_Scaffold_RunScaffold_Definition = {
   platforms: Lib_Scaffold_RunScaffold_Definition_Platforms;
   primaryScript?: Lib_Scaffold_RunScaffold_Definition_PrimaryScript;
   projectFinalizer?: Lib_Scaffold_RunScaffold_Definition_ProjectFinalizer;
+  publishesToNpm?: Lib_Scaffold_RunScaffold_Definition_PublishesToNpm;
   resolveAllowScriptProfiles?: Lib_Scaffold_RunScaffold_Definition_ResolveAllowScriptProfiles;
   resolveArtifact?: Lib_Scaffold_RunScaffold_Definition_ResolveArtifact;
   resolveDeployTarget?: Lib_Scaffold_RunScaffold_Definition_ResolveDeployTarget;

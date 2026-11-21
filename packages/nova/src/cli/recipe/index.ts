@@ -1,5 +1,7 @@
 import { Runner as CliRecipeDockerHubSyncIdentity } from './docker-hub/sync-identity.js';
 import { Runner as CliRecipeDockerHubSyncPolicies } from './docker-hub/sync-policies.js';
+import { Runner as CliRecipeDockerSyncImage } from './docker/sync-image.js';
+import { Runner as CliRecipeGithubActionSyncIdentity } from './github-action/sync-identity.js';
 import { Runner as CliRecipeGithubSyncActions } from './github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './github/sync-identity.js';
@@ -20,11 +22,13 @@ import { Runner as CliRecipePackageJsonNormalizeTooling } from './package-json/n
 import { Runner as CliRecipePackageJsonSyncEnvironment } from './package-json/sync-environment.js';
 import { Runner as CliRecipePackageJsonSyncIdentity } from './package-json/sync-identity.js';
 import { Runner as CliRecipePackageJsonSyncOwnership } from './package-json/sync-ownership.js';
+import { Runner as CliRecipePfsenseSyncIdentity } from './pfsense/sync-identity.js';
 import { Runner as CliRecipeReadMeUpdateBadges } from './read-me/update-badges.js';
 import { Runner as CliRecipeReadMeUpdateCredits } from './read-me/update-credits.js';
 import { Runner as CliRecipeReadMeUpdateDocumentation } from './read-me/update-documentation.js';
 import { Runner as CliRecipeReadMeUpdateHeader } from './read-me/update-header.js';
 import { Runner as CliRecipeReadMeUpdateIntroduction } from './read-me/update-introduction.js';
+import { Runner as CliRecipeTsconfigSyncReferences } from './tsconfig/sync-references.js';
 
 import type { Cli_Recipe_Registry } from '../../types/cli/recipe/index.d.ts';
 
@@ -37,6 +41,10 @@ import type { Cli_Recipe_Registry } from '../../types/cli/recipe/index.d.ts';
  * @since 0.14.0
  */
 export const registry: Cli_Recipe_Registry = {
+  'docker': [{
+    name: 'sync-image',
+    run: CliRecipeDockerSyncImage['run'],
+  }],
   'docker-hub': [
     {
       name: 'sync-identity',
@@ -77,6 +85,10 @@ export const registry: Cli_Recipe_Registry = {
       run: CliRecipeGithubSyncSecurity['run'],
     },
   ],
+  'github-action': [{
+    name: 'sync-identity',
+    run: CliRecipeGithubActionSyncIdentity['run'],
+  }],
   'license': [{
     name: 'update-copyright',
     run: CliRecipeLicenseUpdateCopyright['run'],
@@ -94,6 +106,10 @@ export const registry: Cli_Recipe_Registry = {
   'nova-config': [{
     name: 'normalize-order',
     run: CliRecipeNovaConfigNormalizeOrder['run'],
+  }],
+  'pfsense': [{
+    name: 'sync-identity',
+    run: CliRecipePfsenseSyncIdentity['run'],
   }],
   'read-me': [
     {
@@ -117,6 +133,10 @@ export const registry: Cli_Recipe_Registry = {
       run: CliRecipeReadMeUpdateIntroduction['run'],
     },
   ],
+  'tsconfig': [{
+    name: 'sync-references',
+    run: CliRecipeTsconfigSyncReferences['run'],
+  }],
   'package-json': [
     {
       name: 'sync-identity',

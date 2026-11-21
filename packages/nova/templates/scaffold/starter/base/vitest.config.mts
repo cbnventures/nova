@@ -11,11 +11,16 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     setupFiles: ['./tests/setup.ts'],
-    include: ['tests/**/*.test.ts'],
+    include: [
+      'scripts/**/*.test.mjs',
+      'tests/**/*.test.ts',
+    ],
     exclude: [
       'apps/**',
       'packages/**',
       '**/node_modules/**',
     ],
+    globals: false,
+    testTimeout: 30000, // 30 seconds.
   },
 });

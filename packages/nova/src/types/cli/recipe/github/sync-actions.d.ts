@@ -34,10 +34,10 @@ export type Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActions = Shared_No
 
 export type Cli_Recipe_Github_SyncActions_Runner_Run_Commands = string[];
 
-export type Cli_Recipe_Github_SyncActions_Runner_Run_PermissionFlags = string[];
+export type Cli_Recipe_Github_SyncActions_Runner_Run_PermissionsCommand = string | undefined;
 
-export type Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionFlags = string[];
+export type Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionsCommand = string | undefined;
 
-export type Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowFlags = string[];
+export type Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowCommand = string | undefined;
 
 export type Cli_Recipe_Github_SyncActions_Runner_Run_DidSucceed = boolean;

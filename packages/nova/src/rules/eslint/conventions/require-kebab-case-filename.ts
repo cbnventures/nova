@@ -43,7 +43,14 @@ export class Runner {
    */
   static readonly #knownExtensions = [
     '.test.d.ts',
+    '.test.tsx',
+    '.test.mts',
+    '.test.cts',
     '.test.ts',
+    '.test.mjs',
+    '.test.cjs',
+    '.test.jsx',
+    '.test.js',
     '.d.mts',
     '.d.cts',
     '.d.ts',

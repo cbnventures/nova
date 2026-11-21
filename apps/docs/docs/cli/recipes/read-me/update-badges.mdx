@@ -23,7 +23,7 @@ Refresh the **badges** in your `README.md` from <Terminology title="The one file
 
 ## Summary
 
-The `update-badges` recipe rewrites the badges of a `README.md` file so the npm, Docker, GitHub, and funding shields stay in sync with `nova.config.json`. It reuses the exact builder the `generate must-haves read-me` command uses, so the spliced badges are byte-identical to a freshly generated region.
+The `update-badges` recipe rewrites the badges of a `README.md` file so the npm, Docker, GitHub, coverage, and funding shields stay in sync with `nova.config.json`. It reuses the exact builder the `generate must-haves read-me` command uses, so the spliced badges are byte-identical to a freshly generated region.
 
 The recipe only touches the marked region. Everything before the `<!-- nova-region: badges -->` marker and everything after the `<!-- nova-region-end: badges -->` marker is left byte-identical, so hand-written prose around the badges is never disturbed.
 
@@ -38,7 +38,7 @@ The recipe only touches the marked region. Everything before the `<!-- nova-regi
 - **An existing `README.md`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves read-me` to create the initial file.
 - **The `badges` region markers** — The `README.md` must contain the `<!-- nova-region: badges -->` and `<!-- nova-region-end: badges -->` markers. A `generate must-haves read-me` file has them by default.
 - **Badge selection** — Configure `readme.badges` with the exact ordered identifiers to render, or use an empty array to clear the region.
-- **Badge inputs** — Selected npm, Docker, GitHub, and funding badges require their corresponding source fields in `nova.config.json`.
+- **Badge inputs** — Selected npm, Docker, GitHub, and funding badges require their corresponding source fields in `nova.config.json`. The `coverage` badge needs `settings.coverage.minimum` and a docs site or GitHub repository to point at; without them it is left out.
 
 ## Behavior
 

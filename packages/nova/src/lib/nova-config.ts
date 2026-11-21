@@ -2,6 +2,12 @@ import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 
 import { Logger } from '../toolkit/index.js';
+import {
+  getSupportedAttributeFileBundles,
+  isSupportedAttributeFileConfigPath,
+  mergeAttributeLines,
+} from './attribute-files.js';
+import { resolveDescriptionLimitMessages } from './description-limits.js';
 import { libEnvNamespace } from './env-namespace.js';
 import {
   getSupportedIgnoreFileBundles,
@@ -18,6 +24,7 @@ import {
   libItemRepositoryProtocols,
   libItemUrlFields,
 } from './item.js';
+import { resolveKeywordLimitMessages } from './keyword-limits.js';
 import {
   LIB_REGEX_PATTERN_DOCKER_HUB_CATEGORY_SLUG,
   LIB_REGEX_PATTERN_DOCKER_IMAGE_COMPONENT,
@@ -28,6 +35,7 @@ import {
   LIB_REGEX_PATTERN_SLUG_SCOPED,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
 } from './regex.js';
+import { libSchemaGithubIssueFormQuestion } from './schema.js';
 import {
   isFileIdentical,
   isPlainObject,
@@ -38,6 +46,7 @@ import {
   libWorkflowStepKinds,
   libWorkflowTemplatesMetadata,
 } from './workflow-templates.js';
+import { resolveDistributablePolicyMessages } from './workspace-policy.js';
 
 import type {
   Lib_NovaConfig_Runner_Config,
@@ -80,14 +89,30 @@ import type {
   Lib_NovaConfig_Runner_GetGithubFeatures_Sponsorships,
   Lib_NovaConfig_Runner_GetGithubFeatures_Value,
   Lib_NovaConfig_Runner_GetGithubFeatures_Wiki,
-  Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields,
-  Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField,
-  Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_CustomQuestions,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns,
-  Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_AllowedBugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportField,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_RawBugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_Returns,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_SeenBugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_AllowedForms,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Form,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_FormName,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssuePath,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssueText,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_ParsedQuestion,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Question,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Questions,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_RawQuestions,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Result,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Returns,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_SeenIds,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Value,
   Lib_NovaConfig_Runner_GetGithubLabels_Color,
   Lib_NovaConfig_Runner_GetGithubLabels_ColorCandidate,
   Lib_NovaConfig_Runner_GetGithubLabels_Description,
@@ -214,6 +239,7 @@ import type {
   Lib_NovaConfig_Runner_Load_Returns,
   Lib_NovaConfig_Runner_Parse_Agents,
   Lib_NovaConfig_Runner_Parse_Artifacts,
+  Lib_NovaConfig_Runner_Parse_AttributeFiles,
   Lib_NovaConfig_Runner_Parse_DockerHub,
   Lib_NovaConfig_Runner_Parse_Emails,
   Lib_NovaConfig_Runner_Parse_Entities,
@@ -254,9 +280,22 @@ import type {
   Lib_NovaConfig_Runner_ParseArtifacts_TypedBuildEntry,
   Lib_NovaConfig_Runner_ParseArtifacts_Value,
   Lib_NovaConfig_Runner_ParseArtifacts_Workspaces,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Bundles,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_ConfigPath,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Conflicts,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Entry,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_RawEntry,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_RawPatterns,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Result,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Returns,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_SupportedBundles,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_UnsupportedBundle,
+  Lib_NovaConfig_Runner_ParseAttributeFiles_Value,
   Lib_NovaConfig_Runner_ParseDockerHub_Categories,
   Lib_NovaConfig_Runner_ParseDockerHub_CategoriesValue,
   Lib_NovaConfig_Runner_ParseDockerHub_Category,
+  Lib_NovaConfig_Runner_ParseDockerHub_Description,
+  Lib_NovaConfig_Runner_ParseDockerHub_DescriptionValue,
   Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidCategory,
   Lib_NovaConfig_Runner_ParseDockerHub_HasInvalidImmutableTagRule,
   Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagRule,
@@ -407,15 +446,19 @@ import type {
   Lib_NovaConfig_Runner_ParseReadMe_Urls,
   Lib_NovaConfig_Runner_ParseReadMe_Value,
   Lib_NovaConfig_Runner_ParseReadMe_ValueBadges,
+  Lib_NovaConfig_Runner_ParseRecipes_Docker,
   Lib_NovaConfig_Runner_ParseRecipes_DockerHub,
   Lib_NovaConfig_Runner_ParseRecipes_Github,
+  Lib_NovaConfig_Runner_ParseRecipes_GithubAction,
   Lib_NovaConfig_Runner_ParseRecipes_License,
   Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous,
   Lib_NovaConfig_Runner_ParseRecipes_NovaConfig,
   Lib_NovaConfig_Runner_ParseRecipes_PackageJson,
+  Lib_NovaConfig_Runner_ParseRecipes_Pfsense,
   Lib_NovaConfig_Runner_ParseRecipes_ReadMe,
   Lib_NovaConfig_Runner_ParseRecipes_Result,
   Lib_NovaConfig_Runner_ParseRecipes_Returns,
+  Lib_NovaConfig_Runner_ParseRecipes_Tsconfig,
   Lib_NovaConfig_Runner_ParseRecipes_Value,
   Lib_NovaConfig_Runner_ParseSettings_Cache,
   Lib_NovaConfig_Runner_ParseSettings_CacheDirectory,
@@ -428,7 +471,10 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit,
   Lib_NovaConfig_Runner_ParseSettings_ConcurrencyScript,
   Lib_NovaConfig_Runner_ParseSettings_ConcurrencyValue,
+  Lib_NovaConfig_Runner_ParseSettings_Coverage,
+  Lib_NovaConfig_Runner_ParseSettings_CoverageValue,
   Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning,
+  Lib_NovaConfig_Runner_ParseSettings_MinimumValue,
   Lib_NovaConfig_Runner_ParseSettings_Result,
   Lib_NovaConfig_Runner_ParseSettings_Returns,
   Lib_NovaConfig_Runner_ParseSettings_RootValue,
@@ -507,6 +553,8 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflowWith_SortedEntries,
   Lib_NovaConfig_Runner_ParseWorkflowWith_Value,
   Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies,
+  Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionDescription,
+  Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionValue,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Base,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Descriptor,
@@ -516,6 +564,8 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkspaces_NameCandidate,
   Lib_NovaConfig_Runner_ParseWorkspaces_Options,
   Lib_NovaConfig_Runner_ParseWorkspaces_Path,
+  Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseComment,
+  Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseValue,
   Lib_NovaConfig_Runner_ParseWorkspaces_Policy,
   Lib_NovaConfig_Runner_ParseWorkspaces_PolicyCandidate,
   Lib_NovaConfig_Runner_ParseWorkspaces_Returns,
@@ -524,6 +574,7 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkspaces_Slug,
   Lib_NovaConfig_Runner_ParseWorkspaces_SortedWorkspaces,
   Lib_NovaConfig_Runner_ParseWorkspaces_Value,
+  Lib_NovaConfig_Runner_ParseWorkspaces_Workspace,
   Lib_NovaConfig_Runner_ParseWorkspaces_WorkspaceKeys,
   Lib_NovaConfig_Runner_ParseWorkspaces_Workspaces,
   Lib_NovaConfig_Runner_PushError_Message,
@@ -775,20 +826,11 @@ export class Runner {
     const artifacts: Lib_NovaConfig_Runner_Parse_Artifacts = this.parseArtifacts(value['artifacts'], workspaces);
     const workflows: Lib_NovaConfig_Runner_Parse_Workflows = this.parseWorkflows(value['workflows'], artifacts);
     const ignoreFiles: Lib_NovaConfig_Runner_Parse_IgnoreFiles = this.parseIgnoreFiles(value['ignoreFiles']);
+    const attributeFiles: Lib_NovaConfig_Runner_Parse_AttributeFiles = this.parseAttributeFiles(value['attributeFiles']);
     const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
     const environment: Lib_NovaConfig_Runner_Parse_Environment = this.parseEnvironment(value['environment'], workspaces, workflows);
     const settings: Lib_NovaConfig_Runner_Parse_Settings = this.parseSettings(value['settings']);
-
-    if (
-      dockerHub !== undefined
-      && project !== undefined
-      && project['description'] !== undefined
-      && project['description']['short'] !== undefined
-      && project['description']['short'].length > 100
-    ) {
-      this.pushWarning('Runner.parse', 'dockerHub', 'Project short description exceeds Docker Hub\'s 100-character limit. The sync-identity recipe will not update the repository.');
-    }
 
     // Cross-check deploy-credential scope against the environment namespaces so a
     // scoped target without its required prefix fails at load instead of silently
@@ -839,6 +881,10 @@ export class Runner {
       result.ignoreFiles = ignoreFiles;
     }
 
+    if (attributeFiles !== undefined) {
+      result.attributeFiles = attributeFiles;
+    }
+
     if (agents !== undefined) {
       result.agents = agents;
     }
@@ -853,6 +899,21 @@ export class Runner {
 
     if (settings !== undefined) {
       result.settings = settings;
+    }
+
+    // Warn about every destination whose description breaks its length limit. Loading only
+    // warns so unrelated commands keep working; the commands that publish the value fail.
+    for (const descriptionLimitMessage of resolveDescriptionLimitMessages(result)) {
+      this.pushWarning('Runner.parse', 'description', descriptionLimitMessage);
+    }
+
+    // Keywords follow the same rule: loading warns, the commands that publish them fail.
+    for (const keywordLimitMessage of resolveKeywordLimitMessages(result, undefined)) {
+      this.pushWarning('Runner.parse', 'keywords', keywordLimitMessage);
+    }
+
+    for (const distributablePolicyMessage of resolveDistributablePolicyMessages(result)) {
+      this.pushWarning('Runner.parse', 'workspaces', distributablePolicyMessage);
     }
 
     return result;
@@ -1108,6 +1169,7 @@ export class Runner {
       'github-release',
       'github-top-language',
       'github-license',
+      'coverage',
       'funding',
     ]);
     const seenBadges: Lib_NovaConfig_Runner_ParseReadMe_SeenBadges = new Set();
@@ -1477,11 +1539,49 @@ export class Runner {
         continue;
       }
 
-      Reflect.set(workspaces, path, {
+      const workspace: Lib_NovaConfig_Runner_ParseWorkspaces_Workspace = {
         role: matchedRole,
         policy,
         name: nameCandidate,
-      });
+      };
+      const githubActionValue: Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionValue = options['githubAction'];
+      const pfsenseValue: Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseValue = options['pfsense'];
+
+      // Keep the optional GitHub Marketplace description override for this workspace.
+      if (githubActionValue !== undefined) {
+        if (isPlainObject(githubActionValue) === false) {
+          this.pushError('Runner.parseWorkspaces', 'workspaces', `Workspace "${path}" field "githubAction" must be an object. Skipping ...`);
+        } else if (githubActionValue['description'] !== undefined) {
+          const githubActionDescription: Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionDescription = this.getNonEmptyString(githubActionValue['description']);
+
+          if (githubActionDescription === undefined) {
+            this.pushError('Runner.parseWorkspaces', 'workspaces', `Workspace "${path}" field "githubAction.description" must be a non-empty string. Skipping ...`);
+          } else {
+            workspace.githubAction = {
+              description: githubActionDescription,
+            };
+          }
+        }
+      }
+
+      // Keep the optional FreeBSD port COMMENT override for this pfSense workspace.
+      if (pfsenseValue !== undefined) {
+        if (isPlainObject(pfsenseValue) === false) {
+          this.pushError('Runner.parseWorkspaces', 'workspaces', `Workspace "${path}" field "pfsense" must be an object. Skipping ...`);
+        } else if (pfsenseValue['comment'] !== undefined) {
+          const pfsenseComment: Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseComment = this.getNonEmptyString(pfsenseValue['comment']);
+
+          if (pfsenseComment === undefined) {
+            this.pushError('Runner.parseWorkspaces', 'workspaces', `Workspace "${path}" field "pfsense.comment" must be a non-empty string. Skipping ...`);
+          } else {
+            workspace.pfsense = {
+              comment: pfsenseComment,
+            };
+          }
+        }
+      }
+
+      Reflect.set(workspaces, path, workspace);
     }
 
     const workspaceKeys: Lib_NovaConfig_Runner_ParseWorkspaces_WorkspaceKeys = Object.keys(workspaces);
@@ -2564,10 +2664,21 @@ export class Runner {
       }
     }
 
+    const descriptionValue: Lib_NovaConfig_Runner_ParseDockerHub_DescriptionValue = value['description'];
+    const description: Lib_NovaConfig_Runner_ParseDockerHub_Description = this.getNonEmptyString(descriptionValue);
+
+    if (descriptionValue !== undefined && description === undefined) {
+      this.pushError('Runner.parseDockerHub', 'dockerHub', 'The "dockerHub.description" field must be a non-empty string. Skipping ...');
+    }
+
     const result: Lib_NovaConfig_Runner_ParseDockerHub_Result = {
       namespace,
       repository,
     };
+
+    if (description !== undefined) {
+      result.description = description;
+    }
 
     if (visibility !== undefined) {
       result.visibility = visibility;
@@ -2692,6 +2803,12 @@ export class Runner {
 
     const result: Lib_NovaConfig_Runner_ParseRecipes_Result = {};
 
+    const docker: Lib_NovaConfig_Runner_ParseRecipes_Docker = this.getRecipeEntries(value['docker'], libItemRecipesByCategory['docker']);
+
+    if (docker !== undefined) {
+      result.docker = docker;
+    }
+
     const dockerHub: Lib_NovaConfig_Runner_ParseRecipes_DockerHub = this.getRecipeEntries(value['docker-hub'], libItemRecipesByCategory['docker-hub']);
 
     if (dockerHub !== undefined) {
@@ -2702,6 +2819,12 @@ export class Runner {
 
     if (github !== undefined) {
       result.github = github;
+    }
+
+    const githubAction: Lib_NovaConfig_Runner_ParseRecipes_GithubAction = this.getRecipeEntries(value['github-action'], libItemRecipesByCategory['github-action']);
+
+    if (githubAction !== undefined) {
+      Reflect.set(result, 'github-action', githubAction);
     }
 
     const license: Lib_NovaConfig_Runner_ParseRecipes_License = this.getRecipeEntries(value['license'], libItemRecipesByCategory['license']);
@@ -2722,10 +2845,22 @@ export class Runner {
       Reflect.set(result, 'nova-config', novaConfig);
     }
 
+    const pfsense: Lib_NovaConfig_Runner_ParseRecipes_Pfsense = this.getRecipeEntries(value['pfsense'], libItemRecipesByCategory['pfsense']);
+
+    if (pfsense !== undefined) {
+      result.pfsense = pfsense;
+    }
+
     const readMe: Lib_NovaConfig_Runner_ParseRecipes_ReadMe = this.getRecipeEntries(value['read-me'], libItemRecipesByCategory['read-me']);
 
     if (readMe !== undefined) {
       Reflect.set(result, 'read-me', readMe);
+    }
+
+    const tsconfig: Lib_NovaConfig_Runner_ParseRecipes_Tsconfig = this.getRecipeEntries(value['tsconfig'], libItemRecipesByCategory['tsconfig']);
+
+    if (tsconfig !== undefined) {
+      result.tsconfig = tsconfig;
     }
 
     const packageJson: Lib_NovaConfig_Runner_ParseRecipes_PackageJson = this.getPackageJsonRecipes(value['package-json']);
@@ -3091,6 +3226,89 @@ export class Runner {
   }
 
   /**
+   * Lib - Nova Config - Parse Attribute Files.
+   *
+   * Parses path-keyed ".gitattributes" entries with Nova bundles and project patterns,
+   * dropping an entry whose patterns set a bundle path to different attributes.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseAttributeFiles_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseAttributeFiles_Returns}
+   *
+   * @since 0.49.0
+   */
+  private parseAttributeFiles(value: Lib_NovaConfig_Runner_ParseAttributeFiles_Value): Lib_NovaConfig_Runner_ParseAttributeFiles_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.parseAttributeFiles', 'attributeFiles', 'Attribute files must be an object keyed by project-relative file paths. Skipping ...');
+
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_ParseAttributeFiles_Result = {};
+    const supportedBundles: Lib_NovaConfig_Runner_ParseAttributeFiles_SupportedBundles = getSupportedAttributeFileBundles();
+
+    for (const valueEntry of Object.entries(value)) {
+      const configPath: Lib_NovaConfig_Runner_ParseAttributeFiles_ConfigPath = valueEntry[0];
+      const rawEntry: Lib_NovaConfig_Runner_ParseAttributeFiles_RawEntry = valueEntry[1];
+
+      if (isSupportedAttributeFileConfigPath(configPath) === false) {
+        this.pushError('Runner.parseAttributeFiles', 'attributeFiles', `Attribute file path "${configPath}" must start with "./", stay inside the project, and target a .gitattributes file. Skipping ...`);
+
+        continue;
+      }
+
+      if (isPlainObject(rawEntry) === false || Array.isArray(rawEntry['bundles']) === false) {
+        this.pushError('Runner.parseAttributeFiles', 'attributeFiles', `Attribute file "${configPath}" must contain an object with a bundles array. Skipping ...`);
+
+        continue;
+      }
+
+      const bundles: Lib_NovaConfig_Runner_ParseAttributeFiles_Bundles = this.getArrayOfNonEmptyStrings(rawEntry['bundles']) ?? [];
+      const unsupportedBundle: Lib_NovaConfig_Runner_ParseAttributeFiles_UnsupportedBundle = bundles.find((bundle) => supportedBundles.includes(bundle) === false);
+
+      if (unsupportedBundle !== undefined) {
+        this.pushError('Runner.parseAttributeFiles', 'attributeFiles', `Attribute bundle "${unsupportedBundle}" is not supported for "${configPath}". Use ${supportedBundles.map((supportedBundle) => `"${supportedBundle}"`).join(', ')}. Skipping ...`);
+
+        continue;
+      }
+
+      const rawPatterns: Lib_NovaConfig_Runner_ParseAttributeFiles_RawPatterns = rawEntry['patterns'];
+
+      if (rawPatterns !== undefined && Array.isArray(rawPatterns) === false) {
+        this.pushError('Runner.parseAttributeFiles', 'attributeFiles', `Attribute file "${configPath}" patterns must be an array. Skipping ...`);
+
+        continue;
+      }
+
+      const entry: Lib_NovaConfig_Runner_ParseAttributeFiles_Entry = {
+        bundles,
+      };
+
+      if (rawPatterns !== undefined) {
+        entry.patterns = this.getArrayOfNonEmptyStrings(rawPatterns) ?? [];
+      }
+
+      const conflicts: Lib_NovaConfig_Runner_ParseAttributeFiles_Conflicts = mergeAttributeLines(entry)['conflicts'];
+
+      if (conflicts.length > 0) {
+        this.pushError('Runner.parseAttributeFiles', 'attributeFiles', `Attribute file "${configPath}" is invalid. ${conflicts.join(' ')} Skipping ...`);
+
+        continue;
+      }
+
+      Reflect.set(result, configPath, entry);
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
    * Lib - Nova Config - Parse Settings.
    *
    * Parses the top-level "settings" field into project-wide behavior toggles.
@@ -3110,6 +3328,28 @@ export class Runner {
     }
 
     const result: Lib_NovaConfig_Runner_ParseSettings_Result = {};
+    const coverageValue: Lib_NovaConfig_Runner_ParseSettings_CoverageValue = value['coverage'];
+    let coverage: Lib_NovaConfig_Runner_ParseSettings_Coverage = undefined;
+
+    if (isPlainObject(coverageValue) === true) {
+      const minimumValue: Lib_NovaConfig_Runner_ParseSettings_MinimumValue = coverageValue['minimum'];
+
+      if (
+        typeof minimumValue === 'number'
+        && Number.isFinite(minimumValue) === true
+        && minimumValue >= 0
+        && minimumValue <= 100
+      ) {
+        coverage = {
+          minimum: minimumValue,
+        };
+      } else if (minimumValue !== undefined) {
+        this.pushError('Runner.parseSettings', 'settings', 'The "settings.coverage.minimum" field must be a number from 0 to 100. Skipping ...');
+      }
+    } else if (coverageValue !== undefined) {
+      this.pushError('Runner.parseSettings', 'settings', 'The "settings.coverage" field must be an object. Skipping ...');
+    }
+
     const lockStepVersioning: Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = (value['lockStepVersioning'] === true) ? true : undefined;
     const runWorkspacesValue: Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue = value['runWorkspaces'];
     let runWorkspaces: Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces = undefined;
@@ -3191,6 +3431,10 @@ export class Runner {
 
     if (versionStrategyValue !== undefined && versionStrategy === undefined) {
       this.pushError('Runner.parseSettings', 'settings', 'The "settings.versionStrategy" field must be "semver" or "calver". Skipping ...');
+    }
+
+    if (coverage !== undefined) {
+      result.coverage = coverage;
     }
 
     if (lockStepVersioning !== undefined) {
@@ -3587,17 +3831,42 @@ export class Runner {
     const result: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {};
     const rawBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields = value['bugReportFields'];
 
-    if (rawBugReportFields === undefined) {
-      return undefined;
-    }
-
-    if (Array.isArray(rawBugReportFields) === false) {
+    if (
+      rawBugReportFields !== undefined
+      && Array.isArray(rawBugReportFields) === false
+    ) {
       this.pushError('Runner.getGithubIssueTemplate', 'github', 'GitHub issue-template "bugReportFields" must be an array. Skipping ...');
-
-      return undefined;
     }
 
-    const allowedBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields = new Set([
+    if (Array.isArray(rawBugReportFields) === true) {
+      result.bugReportFields = this.getGithubIssueTemplateBugReportFields(rawBugReportFields);
+    }
+
+    const customQuestions: Lib_NovaConfig_Runner_GetGithubIssueTemplate_CustomQuestions = this.getGithubIssueTemplateCustomQuestions(value['customQuestions']);
+
+    if (customQuestions !== undefined) {
+      result.customQuestions = customQuestions;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Issue Template Bug Report Fields.
+   *
+   * Keeps the supported repo-type question sets in their configured order and
+   * drops unsupported or repeated names. An empty list stays a valid choice.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_RawBugReportFields} rawBugReportFields - Raw bug report fields.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_Returns}
+   *
+   * @since 0.49.0
+   */
+  private getGithubIssueTemplateBugReportFields(rawBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_RawBugReportFields): Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_Returns {
+    const allowedBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_AllowedBugReportFields = new Set([
       'nodejs',
       'apple',
       'android',
@@ -3610,9 +3879,15 @@ export class Runner {
       'docker',
       'web',
       'screenshots',
+      'cloudflare-worker',
+      'pfsense-package',
+      'github-action',
+      'native-app',
+      'docs-site',
+      'notifications',
     ]);
-    const seenBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields = new Set();
-    const bugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = [];
+    const seenBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_SeenBugReportFields = new Set();
+    const bugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportFields = [];
 
     for (const item of rawBugReportFields) {
       if (typeof item !== 'string' || allowedBugReportFields.has(item) === false) {
@@ -3629,12 +3904,98 @@ export class Runner {
 
       seenBugReportFields.add(item);
 
-      bugReportFields.push(item as Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField);
+      bugReportFields.push(item as Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportField);
     }
 
-    result.bugReportFields = bugReportFields;
+    return bugReportFields;
+  }
 
-    return result;
+  /**
+   * Lib - Nova Config - Get GitHub Issue Template Custom Questions.
+   *
+   * Validates each custom question against GitHub's issue-form schema per form,
+   * dropping invalid questions and repeated ids with an error for each.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Returns}
+   *
+   * @since 0.49.0
+   */
+  private getGithubIssueTemplateCustomQuestions(value: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Value): Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.getGithubIssueTemplate', 'github', 'GitHub issue-template "customQuestions" must be an object with "bug", "feature", or "support" lists. Skipping ...');
+
+      return undefined;
+    }
+
+    const allowedForms: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_AllowedForms = [
+      'bug',
+      'feature',
+      'support',
+    ];
+    const result: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Result = {};
+
+    for (const formEntry of Object.entries(value)) {
+      const formName: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_FormName = formEntry[0];
+      const rawQuestions: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_RawQuestions = formEntry[1];
+      const form: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Form = allowedForms.find((allowedForm) => allowedForm === formName);
+
+      if (form === undefined) {
+        this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub issue-template "customQuestions" has an unknown form "${formName}". Use "bug", "feature", or "support". Skipping ...`);
+
+        continue;
+      }
+
+      if (Array.isArray(rawQuestions) === false) {
+        this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub issue-template "customQuestions.${form}" must be an array. Skipping ...`);
+
+        continue;
+      }
+
+      const seenIds: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_SeenIds = new Set();
+      const questions: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Questions = [];
+
+      for (let i = 0; i < rawQuestions.length; i += 1) {
+        const parsedQuestion: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_ParsedQuestion = libSchemaGithubIssueFormQuestion.safeParse(rawQuestions[i]);
+
+        if (parsedQuestion['success'] === false) {
+          const issueText: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssueText = parsedQuestion['error']['issues'].map((issue) => {
+            const issuePath: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssuePath = issue['path'].map((segment) => String(segment)).join('.');
+
+            return (issuePath === '') ? issue['message'] : `${issuePath}: ${issue['message']}`;
+          }).join('; ');
+
+          this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub issue-template "customQuestions.${form}[${i}]" is not a valid issue-form question (${issueText}). Skipping ...`);
+
+          continue;
+        }
+
+        const question: Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Question = parsedQuestion['data'] as Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Question;
+
+        if (question['type'] !== 'markdown') {
+          if (seenIds.has(question['id']) === true) {
+            this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub issue-template "customQuestions.${form}" repeats the id "${question['id']}". Skipping ...`);
+
+            continue;
+          }
+
+          seenIds.add(question['id']);
+        }
+
+        questions.push(question);
+      }
+
+      Reflect.set(result, form, questions);
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
   }
 
   /**

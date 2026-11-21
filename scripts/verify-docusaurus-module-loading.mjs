@@ -27,7 +27,7 @@ const rejectExternalValidation = () => fail('Nova delegated schema normalization
  */
 async function run() {
   const packageUrl = new URL('../packages/docusaurus-preset-nova/', import.meta.url);
-  const buildUrl = new URL('build/src/', packageUrl);
+  const buildUrl = new URL('build/', packageUrl);
   const optionsUrl = new URL('options.js', buildUrl);
   const siteContextUrl = new URL('lib/i18n/site-context.js', buildUrl);
   const themeUrl = new URL('index.js', buildUrl);

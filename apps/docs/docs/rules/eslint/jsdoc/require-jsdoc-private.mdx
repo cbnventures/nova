@@ -28,6 +28,8 @@ The `require-jsdoc-private` rule reports any private class member (method or pro
 
 A member is considered private if it uses the `private` keyword or a `#` private identifier. Members without a JSDoc block are not flagged.
 
+In JavaScript files (`.js`, `.mjs`, `.cjs`, `.jsx`), `#` members work the other way round. The `#` already makes them private, and TypeScript's `checkJs` reads a JSDoc `@private` tag as an access modifier, which it rejects on a `#` member (TS18010). So the rule does not ask for `@private` on those members, and it reports the tag if one is there. Other private members in JavaScript files still need the tag. TypeScript files are not affected.
+
 ## Why Use This Rule?
 
 1. Keeps JSDoc tags consistent with TypeScript access modifiers so readers do not have to check two places.
@@ -83,6 +85,22 @@ A member is considered private if it uses the `private` keyword or a `#` private
       private static execute() {
         // ...
       }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+    In a `.mjs` file, leave `@private` off `#` members:
+
+    ```js
+    class Runner {
+      /**
+       * Runner - Config.
+       *
+       * @since UNRELEASED
+       */
+      #config = {};
     }
     ```
 
@@ -166,8 +184,11 @@ npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-private: error'
 
 The fix inserts the `@private` tag immediately before the `@since` tag. If the JSDoc block has no `@since` tag, no automatic fix is applied and the member must be fixed manually.
 
+A `@private` tag on a `#` member in a JavaScript file is not removed automatically. Delete it by hand.
+
 ## Troubleshooting
 
 - **Warning does not fire for members without JSDoc** — The rule only checks members that already have a JSDoc block. If a private member has no JSDoc comment, the rule does not report it.
 - **Public members with `@private` are not flagged** — This rule only checks that private members have the tag. It does not check for mismatched tags on public members.
+- **`@private` is reported on a `#` member** — The file is JavaScript, where `checkJs` rejects the tag on `#` members (TS18010). Remove the tag; the `#` already makes the member private.
 - **Autofix does not insert `@private`** — The fix anchors on `@since`; if the JSDoc block has no `@since` tag, add one or insert `@private` by hand.

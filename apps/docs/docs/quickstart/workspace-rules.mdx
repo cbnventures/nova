@@ -124,6 +124,8 @@ A policy describes how the workspace is **versioned and package-published**. It 
 
 Deployment is independent of workspace policy. A freezable documentation site can deploy to a hosting platform while its package version remains locked at `0.0.0`; a trackable application can deploy without becoming registry-publishable.
 
+Only npm packages are `distributable`. A package published anywhere else, such as a GitHub Action released to a branch or a pfSense package attached to GitHub Releases, is `trackable`: it keeps a version and a changelog without becoming an npm package. The GitHub Action and pfSense scaffolds register their workspaces as `trackable`. So do the serverless tool scaffolds, such as Cloudflare Workers and Vercel Functions, which deploy to their platform: like a new `package.json` that starts with `"private": true`, they start out `trackable`, and a workspace becomes `distributable` only when you choose to publish it to npm. Loading `nova.config.json` warns about a `distributable` workspace that a publish workflow sends to a target other than `npm` or `github-packages`, and [`nova utility configure`](/docs/cli/utilities/configure#workspaces) does not offer `distributable` for such a workspace.
+
 `0.0.0` belongs exclusively to freezable workspaces. A new non-freezable workspace starts at `0.0.1` under SemVer or the current UTC `YYYY.M.0` period under CalVer. When lock-step versioning is enabled in an existing project, a newly scaffolded non-freezable workspace inherits the one shared project version instead.
 
 ### Policy-Gated Fields

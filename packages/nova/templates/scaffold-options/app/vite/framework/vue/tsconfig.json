@@ -10,8 +10,7 @@
   "compilerOptions": {
     "types": [
       "node",
-      "vite/client",
-      "vitest/globals"
+      "vite/client"
     ]
   },
   "include": [

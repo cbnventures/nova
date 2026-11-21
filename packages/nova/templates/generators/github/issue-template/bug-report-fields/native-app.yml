@@ -1,0 +1,33 @@
+  - type: "input"
+    id: "app-device"
+    attributes:
+      label: "Device Model"
+      description: "Enter the device model."
+      placeholder: "e.g. iPhone 17 Pro, MacBook Air (M4)"
+    validations:
+      required: true
+  - type: "input"
+    id: "app-os-version"
+    attributes:
+      label: "Operating System Version"
+      description: "Enter the complete operating system version."
+      placeholder: "e.g. iOS 26.1, macOS 26.1"
+    validations:
+      required: true
+  - type: "dropdown"
+    id: "device-environment"
+    attributes:
+      label: "Device Environment"
+      description: "Select the environment where the problem occurs."
+      options:
+        - "Physical Device"
+        - "Simulator or Emulator"
+    validations:
+      required: true
+  - type: "input"
+    id: "installation-source"
+    attributes:
+      label: "Installation Source"
+      description: "Enter where the affected app build was installed from, such as an app store, a beta program, or a local build."
+    validations:
+      required: true

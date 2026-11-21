@@ -1,14 +1,11 @@
-import {
-  executeShell,
-  shellQuote,
-} from '../../../lib/utility.js';
+import { Runner as ApiGithub } from '../../../api/github.js';
+import { executeShell } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 import { ghPrecheck } from './gh-precheck.js';
 import { handleGhFailure } from './handle-gh-failure.js';
 
 import type {
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Features,
-  Cli_Recipe_Github_SyncFeatures_Runner_Run_Flags,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Github,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_IsDryRun,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Options,
@@ -23,7 +20,6 @@ import type {
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Sponsorships,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsCommand,
-  Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsMutation,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsResult,
 } from '../../../types/cli/recipe/github/sync-features.d.ts';
 
@@ -68,28 +64,11 @@ export class Runner {
       return;
     }
 
-    const flags: Cli_Recipe_Github_SyncFeatures_Runner_Run_Flags = [];
-
-    if (features['issues'] !== undefined) {
-      flags.push(`--enable-issues=${features['issues']}`);
-    }
-
-    if (features['wiki'] !== undefined) {
-      flags.push(`--enable-wiki=${features['wiki']}`);
-    }
-
-    if (features['projects'] !== undefined) {
-      flags.push(`--enable-projects=${features['projects']}`);
-    }
-
-    if (features['discussions'] !== undefined) {
-      flags.push(`--enable-discussions=${features['discussions']}`);
-    }
-
+    const repoEditCommand: Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditCommand = ApiGithub.buildFeaturesEditCommand(owner, repo, features);
     const sponsorships: Cli_Recipe_Github_SyncFeatures_Runner_Run_Sponsorships = features['sponsorships'];
 
     if (
-      flags.length === 0
+      repoEditCommand === undefined
       && sponsorships === undefined
     ) {
       Logger.warn('Skipping sync-features. No values found under "github.features" in the "nova.config.json" file.');
@@ -97,11 +76,7 @@ export class Runner {
       return;
     }
 
-    let repoEditCommand: Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditCommand = undefined;
-
-    if (flags.length > 0) {
-      repoEditCommand = `gh repo edit ${owner}/${repo} ${flags.join(' ')}`;
-
+    if (repoEditCommand !== undefined) {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'command',
@@ -111,7 +86,7 @@ export class Runner {
     let sponsorshipsCommand: Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsCommand = undefined;
 
     if (sponsorships !== undefined) {
-      const repositoryIdCommand: Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdCommand = `gh repo view ${owner}/${repo} --json id --jq .id`;
+      const repositoryIdCommand: Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdCommand = ApiGithub.buildRepositoryIdCommand(owner, repo);
       const repositoryIdResult: Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdResult = await executeShell(repositoryIdCommand);
 
       if (repositoryIdResult['code'] !== 0) {
@@ -130,9 +105,7 @@ export class Runner {
         return;
       }
 
-      const sponsorshipsMutation: Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsMutation = 'mutation($repositoryId: ID!, $enabled: Boolean!) { updateRepository(input: { repositoryId: $repositoryId, hasSponsorshipsEnabled: $enabled }) { repository { id } } }';
-
-      sponsorshipsCommand = `gh api graphql -f query=${shellQuote(sponsorshipsMutation)} -F repositoryId=${shellQuote(repositoryId)} -F enabled=${sponsorships}`;
+      sponsorshipsCommand = ApiGithub.buildSponsorshipsCommand(repositoryId, sponsorships);
 
       Logger.customize({
         name: 'Runner.run',

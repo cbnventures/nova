@@ -14,7 +14,7 @@
     "verbatimModuleSyntax": false,
     "noEmitOnError": false,
     "outDir": "./build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "types": [
       "@docusaurus/module-type-aliases",
       "@docusaurus/types",
@@ -25,7 +25,8 @@
     ]
   },
   "include": [
-    "./*",
+    "./nova-config.d.ts",
+    "./nova-sidebars.d.ts",
     "./src/**/*"
   ],
   "exclude": [

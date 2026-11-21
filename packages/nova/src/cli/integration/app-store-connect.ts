@@ -63,8 +63,15 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_PlannedFile,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Returns,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Totals,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_UploadedFile,
   Cli_Integration_AppStoreConnect_Runner_CreativeAssets_WorkspaceContext,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_ByteCount,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Files,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_FileStats,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_LocaleCount,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Returns,
+  Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Targets,
   Cli_Integration_AppStoreConnect_Runner_FileBuffer_Buffer,
   Cli_Integration_AppStoreConnect_Runner_FileBuffer_Buffers,
   Cli_Integration_AppStoreConnect_Runner_FileBuffer_FileName,
@@ -72,12 +79,28 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_FileBuffer_Returns,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesLocale,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesPlatform,
+  Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesTarget,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Options,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Returns,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedLocales,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedPlatforms,
+  Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedTargets,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target,
   Cli_Integration_AppStoreConnect_Runner_FilterTargets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_FormatByteCount_ByteCount,
+  Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Returns,
+  Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Unit,
+  Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Units,
+  Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Value,
+  Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Returns,
+  Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Value,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_DeleteCount,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_KeepCount,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Order,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_OrderDescription,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_RelativePath,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Returns,
+  Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_UploadCount,
   Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Buffer,
   Cli_Integration_AppStoreConnect_Runner_InspectScreenshotImage_Returns,
   Cli_Integration_AppStoreConnect_Runner_InspectScreenshotJpeg_Buffer,
@@ -102,15 +125,25 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_InspectScreenshotPng_Width,
   Cli_Integration_AppStoreConnect_Runner_Metadata_App,
   Cli_Integration_AppStoreConnect_Runner_Metadata_AppId,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_ChangedAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_ChangedFields,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Client,
   Cli_Integration_AppStoreConnect_Runner_Metadata_CollectedTargets,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Context,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Lines,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_LocaleCount,
   Cli_Integration_AppStoreConnect_Runner_Metadata_LocalizationId,
   Cli_Integration_AppStoreConnect_Runner_Metadata_MetadataDirectory,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_MismatchedFields,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Options,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_PlatformCount,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_RemoteAttributes,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Returns,
   Cli_Integration_AppStoreConnect_Runner_Metadata_Targets,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_UnchangedCount,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedAttributes,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedCount,
+  Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedLocalization,
   Cli_Integration_AppStoreConnect_Runner_Metadata_WorkspaceContext,
   Cli_Integration_AppStoreConnect_Runner_OrderPlacements_Client,
   Cli_Integration_AppStoreConnect_Runner_OrderPlacements_LocalizationId,
@@ -122,6 +155,78 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Placement,
   Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Relationships,
   Cli_Integration_AppStoreConnect_Runner_PlacementImageId_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_App,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_AssetLibrary,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_AssetLibraryId,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Buffers,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Client,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Context,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Image,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_ImageId,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Lines,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Options,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_PlacementType,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_PlannedFile,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_WorkspaceContext,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_App,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_ChangedEntries,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_ChangedTargetCount,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Client,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Context,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Label,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Options,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_RemoteAttributes,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_TargetLines,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Targets,
+  Cli_Integration_AppStoreConnect_Runner_PlanMetadata_WorkspaceContext,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_AvailablePlacements,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Client,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Context,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ExistingPlacements,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ImageId,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ImageIds,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_MatchingPlacementIndex,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Order,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementType,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Query,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Response,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Target,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_App,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AppId,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AssetLibrary,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AssetLibraryId,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AvailableScreenshots,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Buffers,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Client,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_CompleteAttributes,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_CompleteScreenshots,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Context,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DisplayType,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoContext,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoLines,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoTargets,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_ExistingScreenshots,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_FileBuffers,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_FileChecksum,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_ImageIds,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Images,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Lines,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_MatchingChecksum,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_MatchingScreenshotIndex,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Options,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Order,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_PlacementGroup,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Returns,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Set,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Sets,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_StandardTargets,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Targets,
+  Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_WorkspaceContext,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BaseSettings,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BundleIdentifier,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Options,
@@ -138,6 +243,16 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_TargetValues,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Version,
   Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Workspace,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_ApiPlatform,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_App,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Client,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Locale,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Localization,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Localizations,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Platform,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_Version,
+  Cli_Integration_AppStoreConnect_Runner_ReadContext_VersionResource,
   Cli_Integration_AppStoreConnect_Runner_ReadFiles_Returns,
   Cli_Integration_AppStoreConnect_Runner_ReadFiles_Target,
   Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_Directory,
@@ -344,9 +459,42 @@ import type {
   Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardContext,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardTargets,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_Targets,
+  Cli_Integration_AppStoreConnect_Runner_Screenshots_Totals,
   Cli_Integration_AppStoreConnect_Runner_Screenshots_WorkspaceContext,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_AcceptedDescription,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_ActualSize,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_DisplayPath,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Failures,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileEntries,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileEntry,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileResult,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileResults,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FitsSize,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Image,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_PreflightFailureLines,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_ReadFailure,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_SkipImageChecks,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Specification,
+  Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Targets,
   Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Returns,
   Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_CharacterCount,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_CharacterLimit,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_DisplayPath,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_FailureLines,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Failures,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Field,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_KeywordByteCount,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_KeywordEntries,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Keywords,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_NormalizedKeyword,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_ParsedUrl,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Returns,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_SeenKeywords,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Targets,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_UrlValue,
+  Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Value,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedDescription,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_AcceptedSizes,
   Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotImages_ActualSize,
@@ -564,6 +712,92 @@ const creativePlacementTypes = new Map([
 ]);
 
 /**
+ * CLI - Integration - App Store Connect - Creative Asset Specifications.
+ *
+ * Mirrors the image tables on Apple's "Creative assets specifications" App
+ * Store Connect help page, fetched on 2026-11-20.
+ *
+ * @since 0.49.0
+ */
+const creativeAssetSpecifications = new Map([
+  [
+    'product-page-header',
+    {
+      aspectHeight: 823,
+      aspectWidth: 1920,
+      formats: ['PNG'],
+      maximumHeight: 1646,
+      maximumWidth: 3840,
+      minimumHeight: 1646,
+      minimumWidth: 3840,
+      sizeDescription: '3840x1646',
+    },
+  ],
+  [
+    'search-results',
+    {
+      aspectHeight: 2,
+      aspectWidth: 3,
+      formats: [
+        'JPEG',
+        'PNG',
+      ],
+      maximumHeight: 2560,
+      maximumWidth: 3840,
+      minimumHeight: 1280,
+      minimumWidth: 1920,
+      sizeDescription: '3:2 from 1920x1280 through 3840x2560',
+    },
+  ],
+]);
+
+/**
+ * CLI - Integration - App Store Connect - Metadata Character Limits.
+ *
+ * Mirrors the limits on Apple's "Platform version information" App Store
+ * Connect help page, fetched on 2026-11-20.
+ *
+ * @since 0.49.0
+ */
+const metadataCharacterLimits = new Map([
+  [
+    'description',
+    4000,
+  ],
+  [
+    'promotionalText',
+    170,
+  ],
+  [
+    'whatsNew',
+    4000,
+  ],
+]);
+
+/**
+ * CLI - Integration - App Store Connect - Metadata Keyword Byte Limit.
+ *
+ * Apple counts the keyword field in bytes, so multi-byte scripts reach the
+ * limit sooner than a character count suggests.
+ *
+ * @since 0.49.0
+ */
+const metadataKeywordByteLimit = 100;
+
+/**
+ * CLI - Integration - App Store Connect - Metadata URL Fields.
+ *
+ * Apple requires each URL field to name its full address, including the
+ * http or https protocol.
+ *
+ * @since 0.49.0
+ */
+const metadataUrlFields = [
+  'marketingUrl',
+  'supportUrl',
+];
+
+/**
  * CLI - Integration - App Store Connect - Maximum Placement Counts.
  *
  * Records Apple's documented per-group limits so replacement stages new
@@ -623,10 +857,22 @@ export class Runner {
     const collectedTargets: Cli_Integration_AppStoreConnect_Runner_Metadata_CollectedTargets = await collectMetadataTargets(metadataDirectory, metadataFields);
     const targets: Cli_Integration_AppStoreConnect_Runner_Metadata_Targets = Runner.filterTargets(collectedTargets, options);
     const lines: Cli_Integration_AppStoreConnect_Runner_Metadata_Lines = targets.map((target) => `${target['platform']}/${target['locale']}: ${Object.keys(target['attributes']).join(', ')}`);
+    const platformCount: Cli_Integration_AppStoreConnect_Runner_Metadata_PlatformCount = new Set(targets.map((target) => target['platform'])).size;
+    const localeCount: Cli_Integration_AppStoreConnect_Runner_Metadata_LocaleCount = new Set(targets.map((target) => target['locale'])).size;
+    let updatedCount: Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedCount = 0;
+    let unchangedCount: Cli_Integration_AppStoreConnect_Runner_Metadata_UnchangedCount = 0;
 
     Runner.validateTargets(targets);
 
-    reportPlan(`Update App Store Connect metadata for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']}:`, lines);
+    Runner.validateMetadataTargets(targets);
+
+    reportPlan(`Update App Store Connect metadata for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${targets.length} target(s) across ${platformCount} platform(s) and ${localeCount} locale(s)):`, lines);
+
+    if (options['plan'] === true) {
+      await Runner.planMetadata(options, workspaceContext, targets);
+
+      return;
+    }
 
     if (await confirmPlan(options['dryRun'] === true, options['nonInteractive'] === true, options['yes'] === true) === false || options['dryRun'] === true) {
       return;
@@ -639,13 +885,30 @@ export class Runner {
     await AppStoreConnect.runOperations(targets, async (target) => {
       const context: Cli_Integration_AppStoreConnect_Runner_Metadata_Context = await Runner.resolveContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
       const localizationId: Cli_Integration_AppStoreConnect_Runner_Metadata_LocalizationId = Runner.resourceId(context['localization'], `${target['locale']} localization`);
+      const remoteAttributes: Cli_Integration_AppStoreConnect_Runner_Metadata_RemoteAttributes = requireObject(context['localization']['attributes'], `${target['locale']} localization attributes`);
+      const changedAttributes: Cli_Integration_AppStoreConnect_Runner_Metadata_ChangedAttributes = Object.fromEntries(Object.entries(target['attributes']).filter((entry) => remoteAttributes[entry[0]] !== entry[1]));
+      const changedFields: Cli_Integration_AppStoreConnect_Runner_Metadata_ChangedFields = Object.keys(changedAttributes);
 
-      await client.updateLocalization(localizationId, target['attributes']);
+      if (changedFields.length === 0) {
+        unchangedCount += 1;
+
+        return;
+      }
+
+      const updatedLocalization: Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedLocalization = await client.updateLocalization(localizationId, changedAttributes);
+      const updatedAttributes: Cli_Integration_AppStoreConnect_Runner_Metadata_UpdatedAttributes = requireObject(updatedLocalization['attributes'], `Updated ${target['locale']} localization attributes`);
+      const mismatchedFields: Cli_Integration_AppStoreConnect_Runner_Metadata_MismatchedFields = changedFields.filter((changedField) => updatedAttributes[changedField] !== changedAttributes[changedField]);
+
+      if (mismatchedFields.length > 0) {
+        throw new Error(`App Store Connect returned different ${mismatchedFields.join(', ')} values after updating ${target['platform']}/${target['locale']}.`);
+      }
+
+      updatedCount += 1;
 
       return;
     });
 
-    Logger.info(`Updated ${targets.length} App Store Connect metadata target(s) for app ${appId}.`);
+    Logger.info(`Updated ${updatedCount} App Store Connect metadata target(s) for app ${appId}; ${unchangedCount} target(s) already matched.`);
 
     return;
   }
@@ -682,7 +945,15 @@ export class Runner {
 
     await Runner.validateScreenshotImages(targets, options['skipImageChecks'] === true);
 
-    reportPlan(`Replace App Store Connect screenshots for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']}:`, lines);
+    const totals: Cli_Integration_AppStoreConnect_Runner_Screenshots_Totals = await Runner.describeAssetTotals(targets);
+
+    reportPlan(`Replace App Store Connect screenshots for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${totals}):`, lines);
+
+    if (options['plan'] === true) {
+      await Runner.planScreenshots(options, workspaceContext, targets);
+
+      return;
+    }
 
     if (await confirmPlan(options['dryRun'] === true, options['nonInteractive'] === true, options['yes'] === true) === false || options['dryRun'] === true) {
       return;
@@ -890,7 +1161,17 @@ export class Runner {
 
     Runner.validateCreativeTargets(targets);
 
-    reportPlan(`Replace App Store Connect creative assets for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']}:`, lines);
+    await Runner.validateCreativeImages(targets, options['skipImageChecks'] === true);
+
+    const totals: Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Totals = await Runner.describeAssetTotals(targets);
+
+    reportPlan(`Replace App Store Connect creative assets for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${totals}):`, lines);
+
+    if (options['plan'] === true) {
+      await Runner.planCreativeAssets(options, workspaceContext, targets);
+
+      return;
+    }
 
     if (await confirmPlan(options['dryRun'] === true, options['nonInteractive'] === true, options['yes'] === true) === false || options['dryRun'] === true) {
       return;
@@ -928,6 +1209,324 @@ export class Runner {
     Logger.info(`Updated ${targets.length} App Store Connect creative asset target(s).`);
 
     return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Plan Metadata.
+   *
+   * Signs in, reads each target's current localization, and reports every field
+   * that would change without sending any write request.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Options}          options          - Options.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanMetadata_WorkspaceContext} workspaceContext - Workspace context.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Targets}          targets          - Targets.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async planMetadata(options: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Options, workspaceContext: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_WorkspaceContext, targets: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Targets): Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Returns {
+    const client: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Client = await Runner.createClient(options);
+    const app: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_App = await client.findApp(workspaceContext['bundleIdentifier']);
+    const targetLines: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_TargetLines = await AppStoreConnect.runOperations(targets, async (target) => {
+      const context: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Context = await Runner.readContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
+      const remoteAttributes: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_RemoteAttributes = (context['localization'] === undefined) ? {} : requireObject(context['localization']['attributes'], `${target['locale']} localization attributes`);
+      const changedEntries: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_ChangedEntries = Object.entries(target['attributes']).filter((entry) => remoteAttributes[entry[0]] !== entry[1]);
+      const label: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_Label = (context['localization'] === undefined) ? `${target['platform']}/${target['locale']} (new localization)` : `${target['platform']}/${target['locale']}`;
+
+      if (changedEntries.length === 0) {
+        return [`${label}: no changes`];
+      }
+
+      return changedEntries.map((changedEntry) => `${label} ${changedEntry[0]}: ${Runner.formatPlanValue(remoteAttributes[changedEntry[0]])} -> ${Runner.formatPlanValue(changedEntry[1])}`);
+    });
+    const changedTargetCount: Cli_Integration_AppStoreConnect_Runner_PlanMetadata_ChangedTargetCount = targetLines.filter((lines) => lines.some((line) => line.endsWith(': no changes') === false)).length;
+
+    reportPlan(`Planned App Store Connect metadata changes for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${changedTargetCount} of ${targets.length} target(s) would change; nothing was changed):`, targetLines.flat());
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Plan Screenshots.
+   *
+   * Signs in, compares each target's current screenshots by checksum, and
+   * reports the deletes, uploads, and final order without sending any write request.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Options}          options          - Options.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_WorkspaceContext} workspaceContext - Workspace context.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Targets}          targets          - Targets.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async planScreenshots(options: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Options, workspaceContext: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_WorkspaceContext, targets: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Targets): Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Returns {
+    const client: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Client = await Runner.createClient(options);
+    const app: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_App = await client.findApp(workspaceContext['bundleIdentifier']);
+    const appId: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AppId = Runner.resourceId(app, 'App');
+    const duoTargets: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoTargets = targets.filter((target) => target['target'] === 'iphone-duo');
+    const standardTargets: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_StandardTargets = targets.filter((target) => target['target'] !== 'iphone-duo');
+    const lines: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Lines = await AppStoreConnect.runOperations(standardTargets, async (target) => {
+      const context: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Context = await Runner.readContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
+      const displayType: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DisplayType = screenshotDisplayTypes.get(target['target']);
+      let existingScreenshots: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_ExistingScreenshots = [];
+
+      if (displayType === undefined) {
+        throw new Error(`Unsupported App Store screenshot target: ${target['target']}.`);
+      }
+
+      if (context['localization'] !== undefined) {
+        const sets: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Sets = await client.listScreenshotSets(Runner.resourceId(context['localization'], `${target['locale']} localization`));
+        const set: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Set = sets.find((candidate) => requireObject(candidate['attributes'], 'Screenshot set attributes')['screenshotDisplayType'] === displayType);
+
+        if (set !== undefined) {
+          existingScreenshots = await client.listScreenshots(Runner.resourceId(set, `${displayType} screenshot set`));
+        }
+      }
+
+      const completeScreenshots: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_CompleteScreenshots = existingScreenshots.filter((screenshot) => {
+        const completeAttributes: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_CompleteAttributes = requireObject(screenshot['attributes'], 'Existing screenshot attributes');
+
+        return requireObject(completeAttributes['assetDeliveryState'], 'Existing screenshot delivery state')['state'] === 'COMPLETE';
+      });
+      const fileBuffers: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_FileBuffers = await Runner.readFiles(target);
+      const availableScreenshots: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AvailableScreenshots = [...completeScreenshots];
+      const order: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Order = target['files'].map((file, fileIndex) => {
+        const fileChecksum: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_FileChecksum = createHash('md5').update(Runner.fileBuffer(fileBuffers, fileIndex, file['fileName'])).digest('hex');
+        const matchingScreenshotIndex: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_MatchingScreenshotIndex = availableScreenshots.findIndex((availableScreenshot) => {
+          const matchingChecksum: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_MatchingChecksum = requireObject(availableScreenshot['attributes'], 'Existing screenshot attributes')['sourceFileChecksum'];
+
+          return typeof matchingChecksum === 'string' && matchingChecksum.toLowerCase() === fileChecksum;
+        });
+
+        if (matchingScreenshotIndex === -1) {
+          return {
+            action: 'upload',
+            fileName: file['fileName'],
+          };
+        }
+
+        availableScreenshots.splice(matchingScreenshotIndex, 1);
+
+        return {
+          action: 'keep',
+          fileName: file['fileName'],
+        };
+      });
+
+      return Runner.formatReplacementPlan(target['relativePath'], existingScreenshots.length - completeScreenshots.length + availableScreenshots.length, order);
+    });
+
+    if (duoTargets.length > 0) {
+      const assetLibrary: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AssetLibrary = await client.findAssetLibrary(appId);
+      const assetLibraryId: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_AssetLibraryId = Runner.resourceId(assetLibrary, 'App asset library');
+      const placementGroup: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_PlacementGroup = await Runner.resolveDuoPlacementGroup(client);
+      const duoLines: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoLines = await AppStoreConnect.runOperations(duoTargets, async (target) => {
+        const duoContext: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_DuoContext = await Runner.readContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
+        const buffers: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Buffers = await Runner.readFiles(target);
+        const images: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_Images = await AppStoreConnect.runOperations(target['files'], (file, index) => client.findAssetLibraryImage(assetLibraryId, 'APP_SCREENSHOTS_AND_PREVIEWS', `${workspaceContext['workspace']['name']} ${target['platform']} ${target['locale']} iPhone Duo ${file['position']}`, Runner.fileBuffer(buffers, index, file['fileName'])));
+        const imageIds: Cli_Integration_AppStoreConnect_Runner_PlanScreenshots_ImageIds = images.map((image) => (image === undefined) ? undefined : Runner.resourceId(image, 'Existing iPhone Duo screenshot'));
+
+        return Runner.planPlacement(client, duoContext, 'APP_SCREENSHOT', placementGroup, target, imageIds);
+      });
+
+      lines.push(...duoLines);
+    }
+
+    reportPlan(`Planned App Store Connect screenshot changes for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${targets.length} target(s); nothing was changed):`, lines);
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Plan Creative Assets.
+   *
+   * Signs in, compares each target's current placement with the local asset,
+   * and reports the replacement without sending any write request.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Options}          options          - Options.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_WorkspaceContext} workspaceContext - Workspace context.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Targets}          targets          - Targets.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async planCreativeAssets(options: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Options, workspaceContext: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_WorkspaceContext, targets: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Targets): Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Returns {
+    const client: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Client = await Runner.createClient(options);
+    const app: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_App = await client.findApp(workspaceContext['bundleIdentifier']);
+    const assetLibrary: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_AssetLibrary = await client.findAssetLibrary(Runner.resourceId(app, 'App'));
+    const assetLibraryId: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_AssetLibraryId = Runner.resourceId(assetLibrary, 'App asset library');
+    const lines: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Lines = await AppStoreConnect.runOperations(targets, async (target) => {
+      const placementType: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_PlacementType = creativePlacementTypes.get(target['target']);
+      const plannedFile: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_PlannedFile = target['files'][0];
+
+      if (placementType === undefined) {
+        throw new Error(`Unsupported App Store creative asset target: ${target['target']}.`);
+      }
+
+      if (plannedFile === undefined) {
+        throw new Error(`Creative asset target is empty: ${target['relativePath']}.`);
+      }
+
+      const context: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Context = await Runner.readContext(client, app, workspaceContext['version'], target['platform'], target['locale']);
+      const buffers: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Buffers = await Runner.readFiles(target);
+      const image: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_Image = await client.findAssetLibraryImage(assetLibraryId, 'CREATIVE_ASSETS', `${workspaceContext['workspace']['name']} ${target['platform']} ${target['locale']} ${target['target']}`, Runner.fileBuffer(buffers, 0, plannedFile['fileName']));
+      const imageId: Cli_Integration_AppStoreConnect_Runner_PlanCreativeAssets_ImageId = (image === undefined) ? undefined : Runner.resourceId(image, 'Existing creative asset');
+
+      return Runner.planPlacement(client, context, placementType, 'DEFAULT_PROFILE', target, [imageId]);
+    });
+
+    reportPlan(`Planned App Store Connect creative asset changes for ${workspaceContext['bundleIdentifier']} ${workspaceContext['version']} (${targets.length} target(s); nothing was changed):`, lines);
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Plan Placement.
+   *
+   * Lists one placement group and matches it against the images an upload
+   * would reuse, so plan mode can report deletes, uploads, and order.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Client}         client         - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Context}        context        - Context.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementType}  placementType  - Placement type.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementGroup} placementGroup - Placement group.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Target}         target         - Target.
+   * @param {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ImageIds}       imageIds       - Image ids.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async planPlacement(client: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Client, context: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Context, placementType: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementType, placementGroup: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_PlacementGroup, target: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Target, imageIds: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ImageIds): Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Returns {
+    let existingPlacements: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ExistingPlacements = [];
+
+    if (context['localization'] !== undefined) {
+      const query: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Query = new URLSearchParams({
+        'fields[appAssetLibraryImages]': 'referenceName',
+        'fields[appAssetLibraryPlacements]': 'image,placementGroup,placementType',
+        'filter[placementGroup]': placementGroup,
+        'filter[placementType]': placementType,
+        'include': 'image',
+        'limit': '50',
+      });
+      const response: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Response = await client.request(`/v1/appStoreVersionLocalizations/${Runner.resourceId(context['localization'], 'App Store localization')}/placements?${query.toString()}`);
+
+      existingPlacements = (response === undefined) ? [] : requireArray(response['data'], 'Existing asset placements').map((placement) => requireObject(placement, 'Asset placement'));
+    }
+
+    const availablePlacements: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_AvailablePlacements = [...existingPlacements];
+    const order: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_Order = target['files'].map((file, fileIndex) => {
+      const imageId: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_ImageId = imageIds[fileIndex];
+      const matchingPlacementIndex: Cli_Integration_AppStoreConnect_Runner_PlanPlacement_MatchingPlacementIndex = (imageId === undefined) ? -1 : availablePlacements.findIndex((availablePlacement) => Runner.placementImageId(availablePlacement) === imageId);
+
+      if (matchingPlacementIndex === -1) {
+        return {
+          action: 'upload',
+          fileName: file['fileName'],
+        };
+      }
+
+      availablePlacements.splice(matchingPlacementIndex, 1);
+
+      return {
+        action: 'keep',
+        fileName: file['fileName'],
+      };
+    });
+
+    return Runner.formatReplacementPlan(target['relativePath'], availablePlacements.length, order);
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Format Replacement Plan.
+   *
+   * Summarizes one image target's planned deletes, uploads, and kept images,
+   * followed by the final order of the local files.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_RelativePath} relativePath - Relative path.
+   * @param {Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_DeleteCount}  deleteCount  - Delete count.
+   * @param {Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Order}        order        - Order.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static formatReplacementPlan(relativePath: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_RelativePath, deleteCount: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_DeleteCount, order: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Order): Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_Returns {
+    const uploadCount: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_UploadCount = order.filter((entry) => entry['action'] === 'upload').length;
+    const keepCount: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_KeepCount = order.length - uploadCount;
+    const orderDescription: Cli_Integration_AppStoreConnect_Runner_FormatReplacementPlan_OrderDescription = order.map((entry) => `${entry['fileName']} (${entry['action']})`).join(', ');
+
+    return `${relativePath}: delete ${deleteCount}, upload ${uploadCount}, keep ${keepCount}; order: ${orderDescription}`;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Format Plan Value.
+   *
+   * Renders a metadata value for plan output so empty fields and strings with
+   * surrounding whitespace stay distinguishable.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static formatPlanValue(value: Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Value): Cli_Integration_AppStoreConnect_Runner_FormatPlanValue_Returns {
+    if (value === undefined || value === null) {
+      return '(empty)';
+    }
+
+    return JSON.stringify(value);
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Read Context.
+   *
+   * Resolves an editable platform version and its locale without creating a
+   * missing localization, for plan mode's read-only comparison.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReadContext_Client}   client   - Client.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReadContext_App}      app      - App.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReadContext_Version}  version  - Version.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReadContext_Platform} platform - Platform.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ReadContext_Locale}   locale   - Locale.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ReadContext_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async readContext(client: Cli_Integration_AppStoreConnect_Runner_ReadContext_Client, app: Cli_Integration_AppStoreConnect_Runner_ReadContext_App, version: Cli_Integration_AppStoreConnect_Runner_ReadContext_Version, platform: Cli_Integration_AppStoreConnect_Runner_ReadContext_Platform, locale: Cli_Integration_AppStoreConnect_Runner_ReadContext_Locale): Cli_Integration_AppStoreConnect_Runner_ReadContext_Returns {
+    const apiPlatform: Cli_Integration_AppStoreConnect_Runner_ReadContext_ApiPlatform = platforms.get(platform);
+
+    if (apiPlatform === undefined) {
+      throw new Error(`Unsupported App Store platform: ${platform}.`);
+    }
+
+    const versionResource: Cli_Integration_AppStoreConnect_Runner_ReadContext_VersionResource = await client.findVersion(Runner.resourceId(app, 'App'), version, apiPlatform);
+    const localizations: Cli_Integration_AppStoreConnect_Runner_ReadContext_Localizations = await client.listLocalizations(Runner.resourceId(versionResource, `${platform} version`));
+    const localization: Cli_Integration_AppStoreConnect_Runner_ReadContext_Localization = localizations.find((candidate) => requireObject(candidate['attributes'], 'Localization attributes')['locale'] === locale);
+
+    return {
+      localization,
+      version: versionResource,
+    };
   }
 
   /**
@@ -1109,6 +1708,10 @@ export class Runner {
    * @since 0.34.0
    */
   private static async prepareWorkspace(options: Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Options): Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Returns {
+    if (options['plan'] === true && options['dryRun'] === true) {
+      throw new Error('--plan cannot be combined with --dry-run. Use --dry-run for a local-only plan or --plan to compare with App Store Connect.');
+    }
+
     const workspace: Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Workspace = await resolveWorkspace(options, ['project.yml']);
     let bundleIdentifier: Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BundleIdentifier = options['bundleId'];
     let version: Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Version = options['version'];
@@ -1159,8 +1762,8 @@ export class Runner {
   /**
    * CLI - Integration - App Store Connect - Filter Targets.
    *
-   * Applies optional platform and locale selections after validating the whole
-   * local asset structure, then rejects filters that select nothing.
+   * Applies optional platform, locale, and asset-target selections after
+   * validating the whole local asset structure, then rejects filters that select nothing.
    *
    * @param {Cli_Integration_AppStoreConnect_Runner_FilterTargets_Targets<Target>} targets - Targets.
    * @param {Cli_Integration_AppStoreConnect_Runner_FilterTargets_Options}         options - Options.
@@ -1174,12 +1777,24 @@ export class Runner {
   private static filterTargets<Target extends Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target>(targets: Cli_Integration_AppStoreConnect_Runner_FilterTargets_Targets<Target>, options: Cli_Integration_AppStoreConnect_Runner_FilterTargets_Options): Cli_Integration_AppStoreConnect_Runner_FilterTargets_Returns<Target> {
     const selectedPlatforms: Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedPlatforms = parseCommaSeparated(options['platforms']);
     const selectedLocales: Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedLocales = parseCommaSeparated(options['locales']);
+    const selectedTargets: Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedTargets = parseCommaSeparated(options['targets']);
 
     return targets.filter((target) => {
       const matchesPlatform: Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesPlatform = selectedPlatforms === undefined || selectedPlatforms.includes(target['platform']);
       const matchesLocale: Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesLocale = selectedLocales === undefined || selectedLocales.includes(target['locale']);
+      const matchesTarget: Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesTarget = (
+        selectedTargets === undefined
+        || (
+          'target' in target
+          && selectedTargets.includes(target['target'])
+        )
+      );
 
-      return matchesPlatform && matchesLocale;
+      return (
+        matchesPlatform
+        && matchesLocale
+        && matchesTarget
+      );
     });
   }
 
@@ -1592,6 +2207,257 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Validate Creative Images.
+   *
+   * Reads every selected creative asset before authentication and reports all
+   * format, transparency, and dimension failures against Apple's specifications.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Targets}         targets         - Targets.
+   * @param {Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_SkipImageChecks} skipImageChecks - Skip image checks.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async validateCreativeImages(targets: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Targets, skipImageChecks: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_SkipImageChecks): Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Returns {
+    if (skipImageChecks === true) {
+      return;
+    }
+
+    const failures: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Failures = [];
+    const fileEntries: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileEntries = targets.flatMap((target) => target['files'].map((file) => ({
+      file,
+      target,
+    })));
+    const fileResults: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileResults = await Promise.allSettled(fileEntries.map((fileEntry) => fs.readFile(fileEntry['file']['filePath'])));
+
+    for (let fileIndex = 0; fileIndex < fileEntries.length; fileIndex += 1) {
+      const fileEntry: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileEntry = fileEntries[fileIndex];
+      const fileResult: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FileResult = fileResults[fileIndex];
+
+      if (fileEntry === undefined) {
+        failures.push(`Selected creative asset index ${fileIndex}: actual missing local file entry.`);
+
+        continue;
+      }
+
+      const displayPath: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_DisplayPath = `${fileEntry['target']['relativePath']}/${fileEntry['file']['fileName']}`;
+      const specification: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Specification = creativeAssetSpecifications.get(fileEntry['target']['target']);
+
+      if (specification === undefined) {
+        failures.push(`${displayPath}: unsupported creative asset target ${fileEntry['target']['target']}.`);
+
+        continue;
+      }
+
+      const acceptedDescription: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_AcceptedDescription = `opaque ${specification['formats'].join(' or ')} at ${specification['sizeDescription']}`;
+
+      if (fileResult === undefined || fileResult.status === 'rejected') {
+        const readFailure: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_ReadFailure = (fileResult === undefined) ? 'missing read result' : String(fileResult.reason);
+
+        failures.push(`${displayPath}: actual unreadable file (${readFailure}); accepted ${acceptedDescription}.`);
+
+        continue;
+      }
+
+      let image: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_Image = undefined;
+
+      try {
+        image = Runner.inspectScreenshotImage(fileResult.value);
+      } catch (error) {
+        failures.push(`${displayPath}: actual ${String(error)}; accepted ${acceptedDescription}.`);
+
+        continue;
+      }
+
+      const actualSize: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_ActualSize = `${image['width']}x${image['height']}`;
+      const fitsSize: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_FitsSize = (
+        image['width'] >= specification['minimumWidth']
+        && image['width'] <= specification['maximumWidth']
+        && image['height'] >= specification['minimumHeight']
+        && image['height'] <= specification['maximumHeight']
+        && image['width'] * specification['aspectHeight'] === image['height'] * specification['aspectWidth']
+      );
+
+      if (specification['formats'].includes(image['format']) === false || fitsSize === false) {
+        failures.push(`${displayPath}: actual ${actualSize} ${image['format']}; accepted ${acceptedDescription}.`);
+      }
+
+      if (image['hasAlpha'] === true) {
+        failures.push(`${displayPath}: actual ${actualSize} PNG with alpha; accepted ${acceptedDescription}.`);
+      }
+    }
+
+    if (failures.length > 0) {
+      const preflightFailureLines: Cli_Integration_AppStoreConnect_Runner_ValidateCreativeImages_PreflightFailureLines = [
+        'Creative asset preflight failed before any App Store Connect request:',
+        ...failures.map((failure) => `- ${failure}`),
+      ];
+
+      throw new Error(preflightFailureLines.join('\n'));
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Validate Metadata Targets.
+   *
+   * Applies Apple's documented field limits before authentication and reports
+   * every length, keyword, and URL failure across all selected files together.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Targets} targets - Targets.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static validateMetadataTargets(targets: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Targets): Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Returns {
+    const failures: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Failures = [];
+
+    for (const target of targets) {
+      const displayPath: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_DisplayPath = `${target['platform']}/${target['locale']}`;
+
+      for (const characterLimitEntry of metadataCharacterLimits) {
+        const field: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Field = characterLimitEntry[0];
+        const characterLimit: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_CharacterLimit = characterLimitEntry[1];
+        const value: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Value = target['attributes'][field];
+
+        if (value === undefined) {
+          continue;
+        }
+
+        const characterCount: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_CharacterCount = [...value].length;
+
+        if (characterCount > characterLimit) {
+          failures.push(`${displayPath}: ${field} has ${characterCount} characters; Apple allows ${characterLimit}.`);
+        }
+      }
+
+      const keywords: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_Keywords = target['attributes']['keywords'];
+
+      if (keywords !== undefined) {
+        const keywordByteCount: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_KeywordByteCount = Buffer.byteLength(keywords, 'utf-8');
+        const keywordEntries: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_KeywordEntries = keywords.split(',').map((keyword) => keyword.trim());
+        const seenKeywords: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_SeenKeywords = new Set();
+
+        if (keywordByteCount > metadataKeywordByteLimit) {
+          failures.push(`${displayPath}: keywords use ${keywordByteCount} bytes; Apple allows ${metadataKeywordByteLimit}.`);
+        }
+
+        for (const keywordEntry of keywordEntries) {
+          if (keywordEntry === '') {
+            failures.push(`${displayPath}: keywords contain an empty entry.`);
+
+            continue;
+          }
+
+          const normalizedKeyword: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_NormalizedKeyword = keywordEntry.toLocaleLowerCase(target['locale']);
+
+          if (seenKeywords.has(normalizedKeyword) === true) {
+            failures.push(`${displayPath}: keywords repeat "${keywordEntry}".`);
+          }
+
+          seenKeywords.add(normalizedKeyword);
+        }
+      }
+
+      for (const urlField of metadataUrlFields) {
+        const urlValue: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_UrlValue = target['attributes'][urlField];
+
+        if (urlValue === undefined) {
+          continue;
+        }
+
+        const parsedUrl: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_ParsedUrl = URL.parse(urlValue) ?? undefined;
+
+        if (
+          parsedUrl === undefined
+          || (
+            parsedUrl.protocol !== 'http:'
+            && parsedUrl.protocol !== 'https:'
+          )
+        ) {
+          failures.push(`${displayPath}: ${urlField} must be a full http or https URL.`);
+        }
+      }
+    }
+
+    if (failures.length > 0) {
+      const failureLines: Cli_Integration_AppStoreConnect_Runner_ValidateMetadataTargets_FailureLines = [
+        'Metadata preflight failed before any App Store Connect request:',
+        ...failures.map((failure) => `- ${failure}`),
+      ];
+
+      throw new Error(failureLines.join('\n'));
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Describe Asset Totals.
+   *
+   * Summarizes the selected files, targets, locales, and bytes so a dry run
+   * shows the same counts a reviewer would otherwise tally by hand.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Targets} targets - Targets.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async describeAssetTotals(targets: Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Targets): Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Returns {
+    const files: Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_Files = targets.flatMap((target) => target['files']);
+    const fileStats: Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_FileStats = await Promise.all(files.map((file) => fs.stat(file['filePath'])));
+    const byteCount: Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_ByteCount = fileStats.reduce((total, fileStat) => total + fileStat.size, 0);
+    const localeCount: Cli_Integration_AppStoreConnect_Runner_DescribeAssetTotals_LocaleCount = new Set(targets.map((target) => target['locale'])).size;
+
+    return `${files.length} file(s) in ${targets.length} target(s) across ${localeCount} locale(s), ${Runner.formatByteCount(byteCount)}`;
+  }
+
+  /**
+   * CLI - Integration - App Store Connect - Format Byte Count.
+   *
+   * Renders a byte total in binary units with two decimals so large screenshot
+   * sets read as MiB or GiB instead of a long raw number.
+   *
+   * @param {Cli_Integration_AppStoreConnect_Runner_FormatByteCount_ByteCount} byteCount - Byte count.
+   *
+   * @private
+   *
+   * @returns {Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static formatByteCount(byteCount: Cli_Integration_AppStoreConnect_Runner_FormatByteCount_ByteCount): Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Returns {
+    const units: Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Units = [
+      'KiB',
+      'MiB',
+      'GiB',
+    ];
+    let value: Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Value = byteCount;
+    let unit: Cli_Integration_AppStoreConnect_Runner_FormatByteCount_Unit = 'B';
+
+    for (const nextUnit of units) {
+      if (value < 1024) {
+        break;
+      }
+
+      value /= 1024;
+      unit = nextUnit;
+    }
+
+    return (unit === 'B') ? `${value} B` : `${value.toFixed(2)} ${unit}`;
   }
 
   /**

@@ -11,6 +11,7 @@ import {
   Runner as GithubRunnerImages,
 } from '../../../api/github-runner-images.js';
 import { Runner as LibCorepack } from '../../../lib/corepack.js';
+import { resolveCoverageBadge } from '../../../lib/coverage-badge.js';
 import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import { libEnvNamespace } from '../../../lib/env-namespace.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
@@ -162,8 +163,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagPushPrereleaseExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_BadgePath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_DockerHub,
@@ -195,9 +199,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ForceRetagRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_InitializeReleaseWorkspaceRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_Metadata,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_MissingTagDescription,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_PrereleaseExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ReleaseBranchName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_StageReleaseTreeRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagNameExpression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagPushPrereleaseExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_VerifyReleaseContextRun,
@@ -258,6 +266,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_SignReleaseRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_StagedShareDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TagPushPrereleaseExpression,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables,
@@ -294,6 +303,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerJobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadge,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeDocsPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeSitePath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnTrigger,
@@ -334,6 +346,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushesCoverageBadgeBranch,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushTagPatterns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Reference,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Referenced,
@@ -418,6 +431,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_CoverageBadge,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment,
@@ -467,6 +481,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Config,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ConfigPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CoverageBadge,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CurrentDirectory,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_DockerHub,
@@ -524,6 +539,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_PushContainerArtifactRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_PushCoverageBadgeRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Value,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar,
@@ -536,7 +552,18 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_WorkspaceGraph,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Workspaces,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_PromotesPushedTags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifact,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_ArtifactName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifacts,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DestinationSegments,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsSource,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Targets,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Namespace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeliveryValueExpr_Value,
@@ -719,6 +746,7 @@ export class Runner {
     const artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Artifacts = config['artifacts'] ?? {};
     const dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_DockerHub = config['dockerHub'];
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = config['environment'] ?? {};
+    const coverageBadge: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CoverageBadge = resolveCoverageBadge(config);
 
     // Read the raw nova.config.json so the validator inspects untyped
     // fields (missing or typo'd) that the parsed config would have dropped.
@@ -868,7 +896,7 @@ export class Runner {
 
       // Build output filename: nova-<template>[-<name>].yml.
       const outputFileName: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName = (suffix !== undefined) ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
-      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces);
+      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces, coverageBadge);
       const entrySetupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = Variables.collectSetupLines(entry, outputFileName, environment);
 
       generatedSet.add(outputFileName);
@@ -996,12 +1024,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub}       [dockerHub]       - Docker hub.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph}  [workspaceGraph]  - Workspace graph.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces} [imageWorkspaces] - Image workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_CoverageBadge}   [coverageBadge]   - Coverage badge.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
    *
    * @since 0.39.0
    */
-  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces = []): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
+  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces = [], coverageBadge: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_CoverageBadge = undefined): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
     const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = entry['template'];
 
     let workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = undefined;
@@ -1011,7 +1040,7 @@ export class Runner {
     } else if (template === 'lock-inactive-issues') {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
-      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces);
+      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces, coverageBadge);
     }
 
     const runsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = entry['runsOn'];
@@ -1427,12 +1456,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub}       [dockerHub]       - Docker hub.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph}  [workspaceGraph]  - Workspace graph.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces} [imageWorkspaces] - Image workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadge}   [coverageBadge]   - Coverage badge.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
    *
    * @since 0.39.0
    */
-  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces = []): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
+  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm', artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Artifacts = {}, dockerHub: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub = undefined, workspaceGraph: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph = {}, imageWorkspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces = [], coverageBadge: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadge = undefined): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
     const suffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = entry['name'];
     const workflowId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId = Runner.resolveWorkflowId(suffix);
 
@@ -1843,6 +1873,46 @@ export class Runner {
       });
     }
 
+    // The coverage badge is a shields.io endpoint JSON built from the coverage summaries the
+    // check wrote. A docs site serves it from its build output; without one, a later job
+    // pushes it to the "badges" branch. Without a coverage minimum nothing is added.
+    const coverageBadgeDocsPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeDocsPath = (coverageBadge === undefined) ? undefined : coverageBadge['docsPath'];
+    const coverageBadgeSitePath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeSitePath = (coverageBadgeDocsPath === undefined) ? undefined : Runner.resolveCoverageBadgeSitePath(coverageBadgeDocsPath, targets, artifacts);
+    const pushesCoverageBadgeBranch: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushesCoverageBadgeBranch = coverageBadge !== undefined && coverageBadgeDocsPath === undefined;
+
+    if (coverageBadgeSitePath !== undefined) {
+      steps.push(Runner.buildCoverageBadgeStep(coverageBadgeSitePath));
+    }
+
+    if (pushesCoverageBadgeBranch === true) {
+      steps.push(
+        Runner.buildCoverageBadgeStep('coverage-badge/coverage.json'),
+        {
+          name: 'Upload coverage badge',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionUploadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: 'coverage-badge',
+            },
+            {
+              key: 'retention-days',
+              value: 1,
+            },
+            {
+              key: 'if-no-files-found',
+              value: 'ignore',
+            },
+            {
+              key: 'path',
+              value: 'coverage-badge/coverage.json',
+            },
+          ],
+        },
+      );
+    }
+
     if (hasContainerTarget === true) {
       steps.push({
         name: 'Validate manual container tag',
@@ -2001,6 +2071,9 @@ export class Runner {
         packageManager,
         timeoutMinutes: deployTimeoutMinutes,
         ...((environmentSelection === undefined) ? {} : { environmentSelection }),
+
+        // Only a "tag-push" trigger fills the tag patterns, so release-only workflows keep their output.
+        ...((pushTagPatterns.length === 0) ? {} : { tagPushPrereleaseExpression: preReleaseRefExpression }),
       };
 
       // Every buildable deploy destination gets an explicit branch. There is no
@@ -2031,6 +2104,48 @@ export class Runner {
       } else if (deployTarget['to'] === 'vercel-nextjs') {
         jobs.push(Runner.buildVercelNextjsTarget(context));
       }
+    }
+
+    if (pushesCoverageBadgeBranch === true) {
+      jobs.push({
+        id: 'publish-coverage-badge',
+        needs: ['build'],
+        runsOn: 'ubuntu-latest',
+        timeoutMinutes: configuredTimeoutMinutes ?? 15,
+        permissions: {
+          contents: 'write',
+        },
+        steps: [
+          {
+            name: 'Checkout repository',
+            kind: 'checkout',
+            uses: getScaffoldVersion('workflowActionCheckout'),
+          },
+          {
+            name: 'Download coverage badge',
+            kind: 'artifact',
+            uses: getScaffoldVersion('workflowActionDownloadArtifact'),
+            continueOnError: true,
+            with: [
+              {
+                key: 'name',
+                value: 'coverage-badge',
+              },
+              {
+                key: 'path',
+                value: 'coverage-badge',
+              },
+            ],
+          },
+          {
+            name: 'Push coverage badge',
+            kind: 'deploy',
+            if: Runner.expr('env.PUBLISH == \'true\''),
+            run: Runner.pushCoverageBadgeRun(),
+            runBlock: true,
+          },
+        ],
+      });
     }
 
     // A github-action target force-moves the release tag to its own release
@@ -2598,6 +2713,7 @@ export class Runner {
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Environment = context['environment'];
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_AppPath = context['workingDir'];
     const workspaceName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName = basename(context['workingDir']);
+    const tagPushPrereleaseExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TagPushPrereleaseExpression = context['tagPushPrereleaseExpression'];
     const validateAndStageRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun = [
       `node "${context['workingDir']}/scripts/check-package.mjs"`,
       `node "${context['workingDir']}/scripts/stage-package.mjs"`,
@@ -2848,7 +2964,7 @@ export class Runner {
             },
           ],
         },
-        {
+        (tagPushPrereleaseExpression === undefined) ? {
           name: 'Upload GitHub release assets',
           kind: 'deploy',
           if: Runner.expr('env.PUBLISH == \'true\''),
@@ -2863,6 +2979,39 @@ export class Runner {
             },
           ],
           run: `gh release upload "$RELEASE_TAG" "${releaseDirectory}/"* --clobber`,
+          runBlock: true,
+        } : {
+          name: 'Upload GitHub release assets',
+          kind: 'deploy',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          env: [
+            {
+              key: 'GH_TOKEN',
+              value: Runner.expr('github.token'),
+            },
+            {
+              key: 'IS_PRERELEASE',
+              value: Runner.expr(`github.event.release.prerelease || (${tagPushPrereleaseExpression})`),
+            },
+            {
+              key: 'RELEASE_TAG',
+              value: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+            },
+          ],
+          run: [
+            'set -euo pipefail',
+            '',
+            '# A pushed tag has no GitHub release yet, so create one to hold the packages.',
+            'if ! gh release view "$RELEASE_TAG" > /dev/null 2>&1; then',
+            '  if [ "$IS_PRERELEASE" = "true" ]; then',
+            '    gh release create "$RELEASE_TAG" --verify-tag --title "$RELEASE_TAG" --notes "" --prerelease',
+            '  else',
+            '    gh release create "$RELEASE_TAG" --verify-tag --title "$RELEASE_TAG" --notes ""',
+            '  fi',
+            'fi',
+            '',
+            `gh release upload "$RELEASE_TAG" "${releaseDirectory}/"* --clobber`,
+          ].join('\n'),
           runBlock: true,
         },
       ],
@@ -3463,10 +3612,17 @@ export class Runner {
       'git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"',
     ].join('\n');
 
+    // A "tag-push" trigger lets a pushed tag stand in for the release event; release-only
+    // workflows keep reading the release payload alone.
+    const tagPushPrereleaseExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagPushPrereleaseExpression = context['tagPushPrereleaseExpression'];
+    const tagNameExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagNameExpression = (tagPushPrereleaseExpression === undefined) ? 'github.event.release.tag_name' : 'github.event.release.tag_name || (github.ref_type == \'tag\' && github.ref_name) || \'\'';
+    const prereleaseExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_PrereleaseExpression = (tagPushPrereleaseExpression === undefined) ? 'github.event.release.prerelease' : `github.event_name == 'release' && github.event.release.prerelease || github.event_name == 'push' && (${tagPushPrereleaseExpression})`;
+    const missingTagDescription: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_MissingTagDescription = (tagPushPrereleaseExpression === undefined) ? 'a release.published event with a tag name' : 'a release.published event or a pushed tag';
+
     const verifyReleaseContextRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_VerifyReleaseContextRun = [
       'set -euo pipefail',
       'if [ -z "$TAG_NAME" ]; then',
-      '  echo "::error::The github-action target requires a release.published event with a tag name. Manual workflow_dispatch with dry-run=false is not supported."',
+      `  echo "::error::The github-action target requires ${missingTagDescription}. Manual workflow_dispatch with dry-run=false is not supported."`,
       '  exit 1',
       'fi',
     ].join('\n');
@@ -3610,7 +3766,7 @@ export class Runner {
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [{
             key: 'TAG_NAME',
-            value: Runner.expr('github.event.release.tag_name'),
+            value: Runner.expr(tagNameExpression),
           }],
           run: verifyReleaseContextRun,
         },
@@ -3625,7 +3781,7 @@ export class Runner {
             },
             {
               key: 'TAG_NAME',
-              value: Runner.expr('github.event.release.tag_name'),
+              value: Runner.expr(tagNameExpression),
             },
           ],
           run: initializeReleaseWorkspaceRun,
@@ -3642,7 +3798,7 @@ export class Runner {
           if: Runner.expr('env.PUBLISH == \'true\''),
           env: [{
             key: 'TAG_NAME',
-            value: Runner.expr('github.event.release.tag_name'),
+            value: Runner.expr(tagNameExpression),
           }],
           run: commitAndPushReleaseRun,
         },
@@ -3653,11 +3809,11 @@ export class Runner {
           env: [
             {
               key: 'TAG_NAME',
-              value: Runner.expr('github.event.release.tag_name'),
+              value: Runner.expr(tagNameExpression),
             },
             {
               key: 'IS_PRERELEASE',
-              value: Runner.expr('github.event.release.prerelease'),
+              value: Runner.expr(prereleaseExpression),
             },
           ],
           run: forceRetagRun,
@@ -4219,7 +4375,8 @@ export class Runner {
     const loginStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep = config['loginStep'];
     const extraPermissions: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions = config['extraPermissions'];
     const postAttestationSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PostAttestationSteps = config['postAttestationSteps'] ?? [];
-    const resolveTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = Runner.resolveContainerTagsRun();
+    const tagPushPrereleaseExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagPushPrereleaseExpression = context['tagPushPrereleaseExpression'];
+    const resolveTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = Runner.resolveContainerTagsRun(tagPushPrereleaseExpression !== undefined);
     const checkImmutableTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun = Runner.checkImmutableContainerTagsRun();
     const pushRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PushRun = Runner.pushContainerArtifactRun();
     const verifyRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun = Runner.verifyContainerArtifactRun();
@@ -4312,6 +4469,10 @@ export class Runner {
               key: 'SOURCE_SHA',
               value: Runner.expr('github.event_name == \'workflow_run\' && github.event.workflow_run.head_sha || github.sha'),
             },
+            ...((tagPushPrereleaseExpression === undefined) ? [] : [{
+              key: 'TAG_PRERELEASE',
+              value: Runner.expr(`(${tagPushPrereleaseExpression}) && 'true' || 'false'`),
+            }]),
             {
               key: 'WORKFLOW_BRANCH',
               value: Runner.expr('github.event.workflow_run.head_branch || \'\''),
@@ -4385,7 +4546,9 @@ export class Runner {
    *
    * Resolves the registry coordinate and tags. Immutable exact tags are
    * separated from normalized branch/workflow channels, while latest waits
-   * for stable release publishing, verification, and attestation.
+   * for a stable release, or a stable pushed tag when tag-push publishes.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_PromotesPushedTags} promotesPushedTags - Promotes pushed tags.
    *
    * @private
    *
@@ -4393,7 +4556,7 @@ export class Runner {
    *
    * @since 0.26.0
    */
-  private static resolveContainerTagsRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns {
+  private static resolveContainerTagsRun(promotesPushedTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_PromotesPushedTags): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns {
     return [
       'set -euo pipefail',
       '',
@@ -4497,6 +4660,12 @@ export class Runner {
       '      validate_exact_tag "$REF_NAME" "pushed"',
       '      append_unique "$REF_NAME"',
       '      append_immutable "$REF_NAME"',
+      ...((promotesPushedTags === true) ? [
+        '',
+        '      if [ "$TAG_PRERELEASE" = "false" ]; then',
+        '        publish_latest=true',
+        '      fi',
+      ] : []),
       '    else',
       '      append_unique "branch-$(normalize_channel "$REF_NAME")"',
       '    fi',
@@ -5049,6 +5218,184 @@ export class Runner {
       '  echo "[Publish] Dry run."',
       '  npm publish --dry-run',
       'fi',
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Coverage Badge Step.
+   *
+   * Returns the build step that sums the line totals of each coverage summary
+   * the check wrote, then saves a shields.io endpoint JSON file at the badge path.
+   * With no summaries, the step writes nothing.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_BadgePath} badgePath - Badge path.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static buildCoverageBadgeStep(badgePath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_BadgePath): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_Returns {
+    return {
+      name: 'Write coverage badge',
+      kind: 'build',
+      env: [{
+        key: 'BADGE_PATH',
+        value: badgePath,
+      }],
+      run: [
+        'node --input-type=module <<\'NODE\'',
+        'import { mkdirSync, readdirSync, readFileSync, writeFileSync } from \'node:fs\';',
+        'import { dirname, join } from \'node:path\';',
+        '',
+        'const summaryPaths = [];',
+        'const visit = (directory) => {',
+        '  for (const entry of readdirSync(directory, { withFileTypes: true })) {',
+        '    if (entry.name === \'node_modules\' || entry.name === \'.git\') {',
+        '      continue;',
+        '    }',
+        '',
+        '    const entryPath = join(directory, entry.name);',
+        '',
+        '    if (entry.isDirectory() === true) {',
+        '      visit(entryPath);',
+        '    } else if (entry.name === \'coverage-summary.json\' && directory.endsWith(\'coverage\') === true) {',
+        '      summaryPaths.push(entryPath);',
+        '    }',
+        '  }',
+        '};',
+        '',
+        'visit(\'.\');',
+        '',
+        'let covered = 0;',
+        'let total = 0;',
+        '',
+        'for (const summaryPath of summaryPaths) {',
+        '  const lines = JSON.parse(readFileSync(summaryPath, \'utf-8\'))[\'total\'][\'lines\'];',
+        '',
+        '  covered += lines[\'covered\'];',
+        '  total += lines[\'total\'];',
+        '}',
+        '',
+        'if (total === 0) {',
+        '  console.log(\'No coverage summaries were found, so no coverage badge was written.\');',
+        '  process.exit(0);',
+        '}',
+        '',
+        'const percent = Math.floor((covered / total) * 1000) / 10;',
+        'const colors = [[90, \'brightgreen\'], [80, \'green\'], [70, \'yellowgreen\'], [60, \'yellow\'], [50, \'orange\']];',
+        'const match = colors.find((entry) => percent >= entry[0]);',
+        'const color = (match === undefined) ? \'red\' : match[1];',
+        '',
+        'mkdirSync(dirname(process.env.BADGE_PATH), { recursive: true });',
+        'writeFileSync(process.env.BADGE_PATH, JSON.stringify({ schemaVersion: 1, label: \'coverage\', message: percent + \'%\', color }) + String.fromCharCode(10));',
+        'console.log(\'Wrote a \' + percent + \'% coverage badge to \' + process.env.BADGE_PATH + \'.\');',
+        'NODE',
+      ].join('\n'),
+      runBlock: true,
+      workingDirectory: Runner.expr('env.ROOT_DIR'),
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Coverage Badge Site Path.
+   *
+   * Returns where the coverage badge goes in the docs site's deployed output, or undefined
+   * when this workflow does not deploy the docs workspace to Cloudflare Pages or GitHub Pages.
+   * An assembled artifact uses the place its sources put the docs build.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsPath}  docsPath  - Docs path.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Targets}   targets   - Targets.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifacts} artifacts - Artifacts.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static resolveCoverageBadgeSitePath(docsPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsPath, targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Targets, artifacts: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifacts): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Returns {
+    const docsDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsDirectory = docsPath.replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
+    const docsTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsTarget = targets.find((target) => (
+      target['path'] === docsPath
+      && (
+        target['to'] === 'cloudflare-pages'
+        || target['to'] === 'github-pages'
+      )
+    ));
+
+    if (docsTarget === undefined) {
+      return undefined;
+    }
+
+    const artifactName: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_ArtifactName = docsTarget['artifact'];
+
+    if (artifactName === undefined) {
+      return `${docsDirectory}/build/badges/coverage.json`;
+    }
+
+    const artifact: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifact = artifacts[artifactName];
+    const docsSource: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsSource = (artifact === undefined) ? undefined : artifact['sources'].find((source) => source['from'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '') === `${docsDirectory}/build`);
+
+    if (docsSource === undefined) {
+      return undefined;
+    }
+
+    const destinationSegments: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DestinationSegments = docsSource['to']
+      .split('/')
+      .filter((segment) => segment !== '' && segment !== '.');
+
+    return [
+      'build',
+      artifactName,
+      ...destinationSegments,
+      'badges',
+      'coverage.json',
+    ].join('/');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Push Coverage Badge Run.
+   *
+   * Returns the command that commits the downloaded coverage badge to the "badges" branch,
+   * creating that branch as an orphan the first time. An unchanged badge is not committed.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_PushCoverageBadgeRun_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static pushCoverageBadgeRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_PushCoverageBadgeRun_Returns {
+    return [
+      'if [ ! -f coverage-badge/coverage.json ]; then',
+      '  echo "[Badge] No coverage badge was built, so the badges branch is unchanged."',
+      '  exit 0',
+      'fi',
+      '',
+      'cp coverage-badge/coverage.json "$RUNNER_TEMP/coverage.json"',
+      '',
+      'git config user.name "github-actions[bot]"',
+      'git config user.email "41898282+github-actions[bot]@users.noreply.github.com"',
+      '',
+      'if git ls-remote --exit-code --heads origin badges > /dev/null; then',
+      '  git fetch --depth=1 origin badges',
+      '  git checkout -B badges FETCH_HEAD',
+      'else',
+      '  git switch --orphan badges',
+      'fi',
+      '',
+      'cp "$RUNNER_TEMP/coverage.json" coverage.json',
+      'git add coverage.json',
+      '',
+      'if git diff --cached --quiet; then',
+      '  echo "[Badge] The coverage badge is already up to date."',
+      '  exit 0',
+      'fi',
+      '',
+      'git commit -m "Update coverage badge"',
+      'git push origin badges',
     ].join('\n');
   }
 

@@ -74,15 +74,20 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 
 ## Output Files
 
-| File              | Description                                                 |
-|-------------------|-------------------------------------------------------------|
-| `action.yml`      | Root action metadata using the generated package build.     |
-| `.env`            | Untracked Nova defaults and the local action input.         |
-| `.env.sample`     | Shareable Nova defaults with an example `INPUT_NAME` value. |
-| `src/index.ts`    | Action entry point with failure reporting.                  |
-| `src/run.ts`      | Import-safe action logic and output generation.             |
-| `src/run.test.ts` | Vitest smoke test for the action logic.                     |
-| `package.json`    | GitHub toolkit dependencies, local runner, and NCC build.   |
+| File                  | Description                                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------------|
+| `action.yml`          | Root action metadata using the generated package build.                                         |
+| `.env`                | Untracked Nova defaults and the local action input.                                             |
+| `.env.sample`         | Shareable Nova defaults with an example `INPUT_NAME` value.                                     |
+| `src/index.ts`        | Action entry point with failure reporting.                                                      |
+| `src/run.ts`          | Import-safe action logic and output generation.                                                 |
+| `src/run.test.ts`     | Vitest smoke test for the action logic.                                                         |
+| `vitest.setup.ts`     | Mutes Logger output and resets `process.exitCode`, which a failed run sets through `setFailed`. |
+| `tsconfig.json`       | Source project that `ncc` reads, using ESNext and Bundler resolution.                           |
+| `tsconfig.tests.json` | Tests project, using the same ESNext and Bundler resolution as the source.                      |
+| `package.json`        | GitHub toolkit dependencies, local runner, and NCC build.                                       |
+
+The Vitest config registers `vitest.setup.ts` through `setupFiles`, runs with `globals: false` and a 30-second test timeout, and reads its coverage options from [`VitestCoverage`](/docs/toolkit/testing/vitest-coverage). `check:coverage` runs `vitest run --coverage` with the pinned `@vitest/coverage-v8` and fails below `settings.coverage.minimum` when that is set.
 
 ## Local Development
 
@@ -101,6 +106,6 @@ nova scaffold package github-action --non-interactive --workspace-name my-action
 
 ## Registration
 
-Nova registers the workspace with the `package` role and `distributable` policy. The generated `action.yml` uses `./packages/{workspaceName}/build/index.js`, so a custom output path is also added to the root npm workspace list when needed.
+Nova registers the workspace with the `package` role and `trackable` policy, because a GitHub Action is released to a branch rather than published to npm. The generated `action.yml` uses `./packages/{workspaceName}/build/index.js`, so a custom output path is also added to the root npm workspace list when needed.
 
 Nova also registers a same-named file artifact with `action.yml` at its root and the bundled JavaScript under `action/`. The generated publish workflow can hand that exact assembled tree to the action release job.

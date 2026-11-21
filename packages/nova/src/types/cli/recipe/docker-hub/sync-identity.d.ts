@@ -1,4 +1,5 @@
 import type {
+  Shared_DescriptionDestination,
   Shared_DockerHubCategories,
   Shared_DockerHubCategory,
   Shared_DockerHubRepository,
@@ -37,7 +38,11 @@ export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Repository = Shared_Doc
 
 export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_IsDryRun = boolean;
 
+export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionDestination = Shared_DescriptionDestination;
+
 export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Description = string | undefined;
+
+export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionLimitMessage = string | undefined;
 
 export type Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_ReadmePath = string;
 

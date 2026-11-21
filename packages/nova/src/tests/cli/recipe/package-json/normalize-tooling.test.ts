@@ -36,6 +36,11 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Scripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_Output,
@@ -122,6 +127,11 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_TemporaryDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Scripts,
 } from '../../../../types/tests/cli/recipe/package-json/normalize-tooling.test.d.ts';
 
 /**
@@ -509,13 +519,116 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     strictEqual(scripts['prod:workspaces'], undefined);
     strictEqual(scripts['build:workspaces'], undefined);
     strictEqual(scripts['deploy:workspaces'], undefined);
+    strictEqual(scripts['check:lint'], 'eslint ./ --max-warnings=0');
 
     // Customized scripts are never rewritten or deleted.
     strictEqual(scripts['check:workspaces'], 'nova utility run-workspaces --concurrency 2 check');
     strictEqual(scripts['clean'], 'node ./scripts/clean.mjs');
     strictEqual(scripts['clean:workspaces'], 'nova utility run-workspaces clean');
-    strictEqual(scripts['check:lint'], 'eslint . --max-warnings=0');
     strictEqual(scripts['deploy:container'], 'docker compose up --build --detach');
+
+    return;
+  });
+
+  it('updates generated root tooling scripts and leaves customized ones', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_ProjectDirectory = join(sandboxRoot, 'root-tooling-scripts');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_PackageJsonPath = join(projectDirectory, 'package.json');
+
+    await writeFile(packageJsonPath, JSON.stringify({
+      name: 'root-tooling-scripts',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'eslint . --max-warnings=0 --cache',
+        'check:types-scripts': 'nova utility type-check --project tsconfig.scripts.json',
+      },
+    }, null, 2), 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './': {
+            'normalize-tooling': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeTooling.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Output = await readFile(packageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Parsed = JSON.parse(output);
+    const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Scripts;
+
+    strictEqual(scripts['check:lint'], 'eslint . --max-warnings=0 --cache');
+    strictEqual(scripts['check:types-scripts'], 'nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs');
+
+    return;
+  });
+
+  it('adds the scripts type check when the root has a scripts TSConfig', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_ProjectDirectory = join(sandboxRoot, 'root-scripts-tsconfig');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_PackageJsonPath = join(projectDirectory, 'package.json');
+
+    await writeFile(packageJsonPath, JSON.stringify({
+      name: 'root-scripts-tsconfig',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:types-config': 'nova utility type-check --project tsconfig.config.json',
+      },
+    }, null, 2), 'utf-8');
+    await writeFile(join(projectDirectory, 'tsconfig.scripts.json'), '{}\n', 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './': {
+            'normalize-tooling': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeTooling.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Output = await readFile(packageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Parsed = JSON.parse(output);
+    const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Scripts;
+
+    strictEqual(scripts['check:types-scripts'], 'nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs');
 
     return;
   });

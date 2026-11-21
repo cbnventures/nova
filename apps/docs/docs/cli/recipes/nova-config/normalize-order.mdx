@@ -26,17 +26,28 @@ Recognized sections are ordered as follows:
 2. `entities`
 3. `emails`
 4. `github`
-5. `workflows`
-6. `urls`
-7. `readme`
-8. `workspaces`
-9. `ignoreFiles`
-10. `agents`
-11. `recipes`
-12. `environment`
-13. `settings`
+5. `dockerHub`
+6. `workflows`
+7. `urls`
+8. `readme`
+9. `workspaces`
+10. `artifacts`
+11. `ignoreFiles`
+12. `attributeFiles`
+13. `agents`
+14. `recipes`
+15. `environment`
+16. `settings`
 
 Unrecognized top-level keys follow the recognized sections in their existing relative order.
+
+Three sections also have their fields ordered, with unrecognized fields kept after the recognized ones:
+
+| Section     | Field order                                                                                                                                    |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dockerHub` | `namespace`, `repository`, `visibility`, `categories`, `immutableTags`                                                                         |
+| `recipes`   | `docker`, `docker-hub`, `github`, `github-action`, `license`, `miscellaneous`, `nova-config`, `pfsense`, `read-me`, `tsconfig`, `package-json` |
+| `settings`  | `coverage`, `lockStepVersioning`, `runWorkspaces`, `versionStrategy`                                                                           |
 
 ## Why Use This Command?
 

@@ -1,0 +1,2 @@
+        - label: "I have read the [documentation]([__DOCUMENTATION_URL__]), and this is __NOT__ a duplicate bug report"
+          required: true

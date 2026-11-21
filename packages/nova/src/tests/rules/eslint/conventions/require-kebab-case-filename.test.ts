@@ -45,6 +45,22 @@ ruleTester.run('requireKebabCaseFilename', RequireKebabCaseFilename['rule'], {
     },
     {
       code: 'const x = 1;',
+      filename: '/path/to/command-lifecycle.test.mjs',
+    },
+    {
+      code: 'const x = 1;',
+      filename: '/path/to/my-view.test.tsx',
+    },
+    {
+      code: 'const x = 1;',
+      filename: '/path/to/my-config.test.mts',
+    },
+    {
+      code: 'const x = 1;',
+      filename: '/path/to/my-script.test.js',
+    },
+    {
+      code: 'const x = 1;',
       filename: '/path/to/MyComponent.ts',
       options: [{
         extraExtensions: [],
@@ -80,6 +96,11 @@ ruleTester.run('requireKebabCaseFilename', RequireKebabCaseFilename['rule'], {
     {
       code: 'const x = 1;',
       filename: '/path/to/myComponent.tsx',
+      errors: [{ messageId: 'requireKebabCase' }],
+    },
+    {
+      code: 'const x = 1;',
+      filename: '/path/to/commandLifecycle.test.mjs',
       errors: [{ messageId: 'requireKebabCase' }],
     },
     {

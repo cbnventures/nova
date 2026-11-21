@@ -73,6 +73,21 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Adds The Scripts Type Check When The Root Has A Scripts TSConfig.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Parsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsTheScriptsTypeCheckWhenTheRootHasAScriptsTSConfig_Scripts = Record<string, unknown>;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Does Not Modify Files During Dry Run.
  *
  * @since 0.14.0
@@ -280,3 +295,18 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_Output = string;
 
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_Parsed = Record<string, unknown>;
+
+/**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Updates Generated Root Tooling Scripts And Leaves Customized Ones.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Parsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_UpdatesGeneratedRootToolingScriptsAndLeavesCustomizedOnes_Scripts = Record<string, unknown>;

@@ -1,0 +1,46 @@
+/**
+ * Tests - CLI - Recipe - Tsconfig - Sync References - Run.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_OriginalCwd = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_TemporaryBase = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SandboxRoot = string;
+
+/**
+ * Tests - CLI - Recipe - Tsconfig - Sync References - Run - Leaves Every Tsconfig Untouched When The Recipe Is Disabled.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_LeavesEveryTsconfigUntouchedWhenTheRecipeIsDisabled_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_LeavesEveryTsconfigUntouchedWhenTheRecipeIsDisabled_Stale = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_LeavesEveryTsconfigUntouchedWhenTheRecipeIsDisabled_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Tsconfig - Sync References - Run - Syncs Reference Only Files And Never Edits A Compiling Tsconfig.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_WorkspaceDirectory = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_Compiling = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_Jsonc = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_RootOutput = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_RootParsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_CompilingOutput = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_JsoncOutput = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_RootRerun = string;
+
+export type Tests_Cli_Recipe_Tsconfig_SyncReferences_CliRecipeTsconfigSyncReferencesRun_SyncsReferenceOnlyFilesAndNeverEditsACompilingTsconfig_WorkspaceOutput = string;

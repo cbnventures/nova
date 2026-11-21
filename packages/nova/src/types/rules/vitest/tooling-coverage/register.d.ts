@@ -1,0 +1,31 @@
+import type {
+  Rules_Vitest_Index_ToolingCoverageSuiteConfig,
+  Rules_Vitest_Index_ToolingCoverageToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Tooling Coverage - Register - Register Tooling Coverage Suite.
+ *
+ * @since 0.49.0
+ */
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_Config = Rules_Vitest_Index_ToolingCoverageSuiteConfig;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_Returns = void;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_RootDir = string;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_ScriptsTsconfigPath = string;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Enable = 'all' | Rules_Vitest_Index_ToolingCoverageToggleKey[];
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_RootDir = string;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_ScriptsTsconfigPath = string;
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_Enable = 'all' | Rules_Vitest_Index_ToolingCoverageToggleKey[];
+
+export type Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved = {
+  rootDir: Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_RootDir;
+  scriptsTsconfigPath: Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_ScriptsTsconfigPath;
+  enable: Rules_Vitest_ToolingCoverage_Register_RegisterToolingCoverageSuite_ToolingCoverage_Resolved_Enable;
+};

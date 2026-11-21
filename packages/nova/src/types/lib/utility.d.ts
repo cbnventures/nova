@@ -661,6 +661,8 @@ export type Lib_Utility_ResolveTemplatePath_FilePath = string;
 
 export type Lib_Utility_ResolveTemplatePath_CurrentDirectory = string;
 
+export type Lib_Utility_ResolveTemplatePath_ParentDirectory = string;
+
 /**
  * Lib - Utility - Save Generated File.
  *

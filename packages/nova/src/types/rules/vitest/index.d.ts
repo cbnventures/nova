@@ -411,6 +411,53 @@ export type Rules_Vitest_Index_TerminologyToggleKey =
   | 'terminology-component-validation';
 
 /**
+ * Rules - Vitest - Index - Tooling Coverage Resolved Config.
+ *
+ * @since 0.49.0
+ */
+export type Rules_Vitest_Index_ToolingCoverageResolvedConfig_RootDir = string;
+
+export type Rules_Vitest_Index_ToolingCoverageResolvedConfig_ScriptsTsconfigPath = string;
+
+export type Rules_Vitest_Index_ToolingCoverageResolvedConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_ToolingCoverageToggleKey>;
+
+export type Rules_Vitest_Index_ToolingCoverageResolvedConfig = {
+  rootDir: Rules_Vitest_Index_ToolingCoverageResolvedConfig_RootDir;
+  scriptsTsconfigPath: Rules_Vitest_Index_ToolingCoverageResolvedConfig_ScriptsTsconfigPath;
+  enable: Rules_Vitest_Index_ToolingCoverageResolvedConfig_Enable;
+};
+
+/**
+ * Rules - Vitest - Index - Tooling Coverage Suite Config.
+ *
+ * @since 0.49.0
+ */
+export type Rules_Vitest_Index_ToolingCoverageSuiteConfig_Vitest = Shared_ActiveVitest;
+
+export type Rules_Vitest_Index_ToolingCoverageSuiteConfig_RootDir = string;
+
+export type Rules_Vitest_Index_ToolingCoverageSuiteConfig_ScriptsTsconfigPath = string;
+
+export type Rules_Vitest_Index_ToolingCoverageSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_ToolingCoverageToggleKey>;
+
+export type Rules_Vitest_Index_ToolingCoverageSuiteConfig = {
+  vitest: Rules_Vitest_Index_ToolingCoverageSuiteConfig_Vitest;
+  rootDir?: Rules_Vitest_Index_ToolingCoverageSuiteConfig_RootDir;
+  scriptsTsconfigPath?: Rules_Vitest_Index_ToolingCoverageSuiteConfig_ScriptsTsconfigPath;
+  enable: Rules_Vitest_Index_ToolingCoverageSuiteConfig_Enable;
+};
+
+/**
+ * Rules - Vitest - Index - Tooling Coverage Toggle Key.
+ *
+ * @since 0.49.0
+ */
+export type Rules_Vitest_Index_ToolingCoverageToggleKey =
+  | 'scripts-linted'
+  | 'scripts-type-checked'
+  | 'no-skip-lib-check';
+
+/**
  * Rules - Vitest - Index - Type Declaration Resolved Config.
  *
  * @since 0.20.0

@@ -166,12 +166,22 @@ const makefileInstallsReleaseSigningKey = makefileTemplateLines.some((makefileTe
     && makefileTemplateLine.includes('/release-signing.pub') === true;
 });
 
+/**
+ * Check Package - Makefile Homepage Line.
+ *
+ * Finds the port's WWW assignment. Its value is kept current by
+ * "nova recipe pfsense sync-identity", so the check only requires one.
+ *
+ * @since UNRELEASED
+ */
+const makefileHomepageLine = makefileTemplateLines.find((makefileTemplateLine) => makefileTemplateLine.startsWith('WWW=') === true);
+
 if (makefileTemplate.includes('%%NOVA_PORTVERSION%%') === false) {
   throw new Error('port/Makefile.template must retain the %%NOVA_PORTVERSION%% build placeholder.');
 }
 
-if (makefileTemplate.includes('WWW=\t[__PROJECT_HOMEPAGE__]') === false) {
-  throw new Error('port/Makefile.template must publish the configured project homepage.');
+if (makefileHomepageLine === undefined || makefileHomepageLine.slice('WWW='.length).trim() === '') {
+  throw new Error('port/Makefile.template must publish the project homepage in WWW.');
 }
 
 if (makefileInstallsReleaseSigningKey === false) {

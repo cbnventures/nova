@@ -59,6 +59,17 @@ For each eligible <Terminology title="One folder in the repo with its own packag
 - Project roots receive any missing standard `dev`, `prod`, `check`, `build`, `deploy`, `clean`, `changelog`, and `recipes` commands plus their workspace-runner children. Existing command bodies remain project-owned and are never replaced by the defaults.
 - Generated projects register Nova's package-script Vitest suite so ordering drift, missing parents, recursive hooks, and ambiguous phase-less aliases fail checks.
 
+### Root Tooling Scripts
+
+On the project root, the recipe also brings tooling scripts from older scaffolds up to date. Only an exact match moves; a customized command stays as written.
+
+| Script                | Old command                                               | New command                                                                     |
+|-----------------------|-----------------------------------------------------------|---------------------------------------------------------------------------------|
+| `check:lint`          | `eslint . --max-warnings=0`                               | `eslint ./ --max-warnings=0`                                                    |
+| `check:types-scripts` | `nova utility type-check --project tsconfig.scripts.json` | `nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs` |
+
+When the root has a `tsconfig.scripts.json` and no `check:types-scripts` script, the recipe adds `nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs`.
+
 Nova rejects only exact top-level aliases; their scoped forms remain valid:
 
 - **Runtime aliases** — `develop`, `development`, `production`, `run`, `serve`, `start`, `preview`, and `watch` must move under `dev:*` or `prod:*` according to whether they execute source or compiled output.

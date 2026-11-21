@@ -25,7 +25,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
  *
  * @since 0.36.0
  */
-const cli = resolve(root, 'build', 'src', 'cli', 'index.js');
+const cli = resolve(root, 'build', 'cli', 'index.js');
 
 if (existsSync(cli) === false) {
   process.stderr.write('theme-nova CLI has not been built yet. Run "npm run build" first.\n');

@@ -1667,6 +1667,146 @@ export const LIB_REGEX_PATTERN_DOCKER_HEALTH_PATH = /^\/[A-Za-z0-9._~/-]*$/;
 export const LIB_REGEX_PATTERN_DOCKER_RUNTIME_PATH = /^[A-Za-z0-9._/-]+$/;
 
 /**
+ * Lib - Regex - Pattern Docker Argument Name.
+ *
+ * Accepts one Dockerfile ARG or ENV variable name. Rendered build arguments and
+ * runtime environment keys must match it before they reach the Dockerfile.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_ARGUMENT_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Copy Path.
+ *
+ * Accepts one literal COPY source or destination path. Whitespace, quotes, and
+ * shell syntax are excluded so the path can be written without quoting.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_COPY_PATH = /^[A-Za-z0-9._@+/-]+$/;
+
+/**
+ * Lib - Regex - Pattern Docker Image Reference.
+ *
+ * Accepts a pinned base image reference such as "node:24-trixie-slim" with an
+ * optional "@sha256:" digest. Whitespace and shell syntax are excluded.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_IMAGE_REFERENCE = /^[A-Za-z0-9][A-Za-z0-9._/:-]*(?:@sha256:[a-f0-9]{64})?$/;
+
+/**
+ * Lib - Regex - Pattern Docker Label Key.
+ *
+ * Accepts one lowercase OCI-style label key such as "com.example.role". The
+ * runtime image appends project labels after Nova's OCI annotations.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_LABEL_KEY = /^[a-z0-9][a-z0-9._-]*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Package Name.
+ *
+ * Accepts one Debian package name for the runtime apt-get install list. The
+ * optional version is validated separately because it may name a build argument.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_PACKAGE_NAME = /^[a-z0-9][a-z0-9+.-]*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Plain Value.
+ *
+ * Accepts a single-line value without whitespace or quotes, such as a package
+ * version, a Compose port mapping, a device path, or a volume source.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_PLAIN_VALUE = /^[^\s"'#]+$/;
+
+/**
+ * Lib - Regex - Pattern Docker Script Name.
+ *
+ * Accepts one package.json script name such as "build" or "build:web" for the
+ * workspace build step of the generated build stage.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_SCRIPT_NAME = /^[A-Za-z0-9:._-]+$/;
+
+/**
+ * Lib - Regex - Pattern Docker Single Line.
+ *
+ * Accepts text that stays on one line. Comments, commands, and environment
+ * values copied into generated files must not inject extra lines.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_SINGLE_LINE = /^[^\r\n]*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Stage From.
+ *
+ * Captures the base and the stage name of one "FROM <base> AS <name>" line,
+ * including an optional "--platform" flag, in a project stage fragment.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_STAGE_FROM = /^FROM\s+(?:--platform=\S+\s+)?(\S+)\s+AS\s+(\S+)\s*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Stage Name.
+ *
+ * Accepts one lowercase Dockerfile stage, Compose project, Compose service, or
+ * network name with single separators between words.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_STAGE_NAME = /^[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
+
+/**
+ * Lib - Regex - Pattern Docker Find Name.
+ *
+ * Accepts one "find -name" glob such as "*.sh" for project executables that
+ * need the same line-ending and permission fix as the Nova rootfs.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_FIND_NAME = /^[A-Za-z0-9*?._-]+$/;
+
+/**
+ * Lib - Regex - Pattern Docker File Mode.
+ *
+ * Accepts one octal file mode such as "0755" for the COPY "--chmod" flag of a
+ * declared runtime copy.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_FILE_MODE = /^[0-7]{3,4}$/;
+
+/**
+ * Lib - Regex - Pattern Docker Identity.
+ *
+ * Accepts one user or "user:group" pair, by name or number, for the COPY
+ * "--chown" flag and the Compose "user" field.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_IDENTITY = /^[A-Za-z0-9._-]+(?::[A-Za-z0-9._-]+)?$/;
+
+/**
+ * Lib - Regex - Pattern Docker Capability.
+ *
+ * Accepts one Linux capability name such as "NET_ADMIN" for the Compose
+ * "cap_add" list.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_CAPABILITY = /^[A-Z][A-Z0-9_]*$/;
+
+/**
  * Lib - Regex - Placeholder Docusaurus Content.
  *
  * Matches the docs-only or docs-and-blog content selection token. It controls
@@ -1817,14 +1957,64 @@ export const LIB_REGEX_PLACEHOLDER_OUR = /\[__OUR__\]/;
 export const LIB_REGEX_PLACEHOLDER_PLATFORM_BADGES = /\[__PLATFORM_BADGES__\]/;
 
 /**
- * Lib - Regex - Placeholder Platform Fields.
+ * Lib - Regex - Placeholder Question Fields.
  *
- * Matches the "[__PLATFORM_FIELDS__]" token in issue templates. Used by the issue-template
- * generator to insert platform-specific fields.
+ * Matches the "[__QUESTION_FIELDS__]" token in issue templates. The issue-template
+ * generator replaces it with the global, repo-type, and custom questions of that form.
  *
- * @since 0.11.0
+ * @since 0.49.0
  */
-export const LIB_REGEX_PLACEHOLDER_PLATFORM_FIELDS = /\[__PLATFORM_FIELDS__\]/;
+export const LIB_REGEX_PLACEHOLDER_QUESTION_FIELDS = /\[__QUESTION_FIELDS__\]/;
+
+/**
+ * Lib - Regex - Placeholder Documentation Check.
+ *
+ * Matches the "[__DOCUMENTATION_CHECK__]" token in the bug report template. It becomes
+ * the linked documentation checkbox, or nothing when no documentation link exists.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCUMENTATION_CHECK = /\[__DOCUMENTATION_CHECK__\]/;
+
+/**
+ * Lib - Regex - Placeholder Documentation URL.
+ *
+ * Matches the "[__DOCUMENTATION_URL__]" token in issue-template fragments. It holds
+ * urls.documentation, or the repository README on GitHub when that is not set.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCUMENTATION_URL = /\[__DOCUMENTATION_URL__\]/;
+
+/**
+ * Lib - Regex - Placeholder Sponsor Notice.
+ *
+ * Matches the "[__SPONSOR_NOTICE__]" token in the support request template. It becomes
+ * the sponsor-gated notice only when support is sponsor-gated.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_SPONSOR_NOTICE = /\[__SPONSOR_NOTICE__\]/;
+
+/**
+ * Lib - Regex - Placeholder Sponsor Check.
+ *
+ * Matches the "[__SPONSOR_CHECK__]" token in the support request template. It becomes
+ * the sponsor checkbox only when support is sponsor-gated.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_SPONSOR_CHECK = /\[__SPONSOR_CHECK__\]/;
+
+/**
+ * Lib - Regex - Placeholder Contributors Note.
+ *
+ * Matches the "[__CONTRIBUTORS_NOTE__]" token in the sponsor notice. It becomes a note
+ * linking the documentation, or nothing when no documentation link exists.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_CONTRIBUTORS_NOTE = /\[__CONTRIBUTORS_NOTE__\]/;
 
 /**
  * Lib - Regex - Placeholder Pfsense Config Name.
@@ -1836,6 +2026,16 @@ export const LIB_REGEX_PLACEHOLDER_PLATFORM_FIELDS = /\[__PLATFORM_FIELDS__\]/;
  * @since 0.31.0
  */
 export const LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME = /\[__PFSENSE_CONFIG_NAME__\]/;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Port Comment.
+ *
+ * Matches the "[__PFSENSE_PORT_COMMENT__]" token in the pfSense port Makefile.
+ * The pfSense scaffold fills it with the same COMMENT the sync-identity recipe writes.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT = /\[__PFSENSE_PORT_COMMENT__\]/;
 
 /**
  * Lib - Regex - Placeholder Pfsense Update API URL.
@@ -2347,6 +2547,16 @@ export const LIB_REGEX_PATTERN_WORKFLOW_VAR_REFERENCE = /\$\{\{\s*vars\.(\w+)\s*
 export const LIB_REGEX_PATTERN_GH_VERSION = /^gh version (\d+\.\d+\.\d+)/;
 
 /**
+ * Lib - Regex - Pattern GitHub Issue Form ID.
+ *
+ * Validates the "id" of an issue-form question. GitHub accepts letters, numbers,
+ * hyphens, and underscores, and the custom-question schema checks each id with it.
+ *
+ * @since 0.49.0
+ */
+export const LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID = /^[A-Za-z0-9_-]+$/;
+
+/**
  * Lib - Regex - Pattern GitHub Label Color.
  *
  * Matches the six hexadecimal characters accepted by GitHub label settings.
@@ -2388,24 +2598,24 @@ export const LIB_REGEX_PATTERN_GITHUB_REPO = /^[A-Za-z0-9._-]+$/;
 export const LIB_REGEX_PATTERN_GITHUB_RUNNER_LABEL = /^[a-z0-9.-]+$/;
 
 /**
- * Lib - Regex - Pattern Leading Or Trailing Hyphen.
+ * Lib - Regex - Pattern GitHub Topic.
  *
- * Strips leading or trailing hyphens from a string. Used by sync-identity's
- * topic normalizer to clean up topic slugs after character removal.
+ * Validates one GitHub repository topic: lowercase letters, numbers, and hyphens,
+ * starting with a letter or number. The keyword limits check every topic with it.
  *
- * @since 0.18.0
+ * @since 0.49.0
  */
-export const LIB_REGEX_PATTERN_LEADING_OR_TRAILING_HYPHEN = /^-+|-+$/;
+export const LIB_REGEX_PATTERN_GITHUB_TOPIC = /^[a-z0-9][a-z0-9-]*$/;
 
 /**
- * Lib - Regex - Pattern Non Topic Char.
+ * Lib - Regex - Pattern Homebridge Plugin Name.
  *
- * Matches any character that is not a lowercase letter, digit, or hyphen. Used
- * by sync-identity's topic normalizer to strip invalid GitHub topic characters.
+ * Matches a Homebridge plugin package name, "homebridge-" with an optional npm
+ * scope. The Homebridge scaffold enforces this prefix on every plugin it creates.
  *
- * @since 0.18.0
+ * @since 0.49.0
  */
-export const LIB_REGEX_PATTERN_NON_TOPIC_CHAR = /[^a-z0-9-]/;
+export const LIB_REGEX_PATTERN_HOMEBRIDGE_PLUGIN_NAME = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?homebridge-/;
 
 /**
  * Lib - Regex - Pattern Rate Limit Reset.
@@ -2418,31 +2628,10 @@ export const LIB_REGEX_PATTERN_NON_TOPIC_CHAR = /[^a-z0-9-]/;
 export const LIB_REGEX_PATTERN_RATE_LIMIT_RESET = /X-RateLimit-Reset:\s*(\d+)/;
 
 /**
- * Lib - Regex - Pattern Whitespace Or Underscore.
- *
- * Matches one or more whitespace characters or underscores. Used by sync-identity's
- * topic normalizer to replace word separators with hyphens.
- *
- * @since 0.18.0
- */
-export const LIB_REGEX_PATTERN_WHITESPACE_OR_UNDERSCORE = /[\s_]+/;
-
-/**
- * Lib - Regex - Pattern Topic Flag.
- *
- * Matches a `-f "names[]=` flag segment in a gh api topics command, where the
- * entire `names[]=<topic>` token is shell-quoted. Used by sync-identity tests to
- * count the number of topic flags in the command string.
- *
- * @since 0.18.0
- */
-export const LIB_REGEX_PATTERN_TOPIC_FLAG = /-f "names\[\]=/;
-
-/**
  * Lib - Regex - Pattern Topic TypeScript.
  *
  * Matches the literal word "typescript" anywhere in a string. Used by
- * sync-identity tests to verify topic normalization of keyword input.
+ * sync-identity tests to verify duplicate keywords are sent once.
  *
  * @since 0.18.0
  */

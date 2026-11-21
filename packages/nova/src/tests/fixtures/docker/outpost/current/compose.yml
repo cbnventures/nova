@@ -1,0 +1,32 @@
+services:
+  outpost:
+    image: "${OUTPOST_IMAGE:-cbnventures/outpost:latest}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PGID: "${PGID:-1000}"
+      PUID: "${PUID:-1000}"
+      TZ: "${TZ:-UTC}"
+    network_mode: host
+    restart: always
+    user: "0:0"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Dashboard account, access tokens, notification destinations, registry
+      # sign-ins, and update history. Keep /config on a volume: Outpost needs it to
+      # update itself.
+      - outpost-data:/config
+
+    # Dashboard at http://localhost:22601/admin/. On the first visit, create the
+    # account with the setup code from "docker compose logs outpost". Access
+    # tokens for POST /v1/update, GET /v1/status, and GET /metrics are made
+    # on the dashboard's Access tokens page.
+    # Outpost follows the same labels for its own container, so it updates
+    # itself too, last in each check. Uncomment to keep it on its current image.
+    # labels:
+    #   io.cbnventures.outpost.enable: "false"
+
+volumes:
+  outpost-data:

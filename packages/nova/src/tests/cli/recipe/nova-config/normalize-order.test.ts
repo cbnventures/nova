@@ -31,6 +31,12 @@ import type {
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_PackageJsonPath,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ParsedOutput,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ProjectDirectory,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ConfigPath,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Output,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ParsedOutput,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ProjectDirectory,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Recipes,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Settings,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OriginalCwd,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_SandboxRoot,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_TemporaryBase,
@@ -159,6 +165,74 @@ describe.sequential('CliRecipeNovaConfigNormalizeOrder.run', async () => {
     deepStrictEqual(parsedOutput['settings'], config['settings']);
     deepStrictEqual(parsedOutput['experimentalFirst'], config['experimentalFirst']);
     strictEqual(parsedOutput['experimentalSecond'], config['experimentalSecond']);
+
+    return;
+  });
+
+  it('orders recipe groups and settings while keeping unknown keys last', async () => {
+    const projectDirectory: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ProjectDirectory = join(sandboxRoot, 'nested-order');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), '{"name":"nested-order"}\n', 'utf-8');
+
+    const configPath: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, `${JSON.stringify({
+      recipes: {
+        'package-json': {},
+        'tsconfig': {
+          'sync-references': {
+            enabled: true,
+          },
+        },
+        'experimentalGroup': {},
+        'nova-config': {
+          'normalize-order': {
+            enabled: true,
+          },
+        },
+        'github': {},
+      },
+      settings: {
+        versionStrategy: 'semver',
+        experimentalSetting: true,
+        coverage: {
+          minimum: 80,
+        },
+        lockStepVersioning: true,
+      },
+    }, null, 2)}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipeNovaConfigNormalizeOrder.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Output = await readFile(configPath, 'utf-8');
+    const parsedOutput: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ParsedOutput = JSON.parse(output) as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ParsedOutput;
+    const recipes: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Recipes = parsedOutput['recipes'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Recipes;
+    const settings: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Settings = parsedOutput['settings'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Settings;
+
+    deepStrictEqual(Object.keys(recipes), [
+      'github',
+      'nova-config',
+      'tsconfig',
+      'package-json',
+      'experimentalGroup',
+    ]);
+    deepStrictEqual(Object.keys(settings), [
+      'coverage',
+      'lockStepVersioning',
+      'versionStrategy',
+      'experimentalSetting',
+    ]);
+    deepStrictEqual(settings['coverage'], {
+      minimum: 80,
+    });
 
     return;
   });

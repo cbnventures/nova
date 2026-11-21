@@ -907,7 +907,7 @@ describe('Shared_NovaConfig load', async () => {
         rules: [],
       },
     });
-    ok(config.diagnostics().some((diagnostic) => diagnostic['message'].includes('Project short description exceeds Docker Hub\'s 100-character limit.')));
+    ok(config.diagnostics().some((diagnostic) => diagnostic['message'].includes('but Docker Hub allows at most 100. Shorten "project.description.short", or set "dockerHub.description"')));
 
     return;
   });

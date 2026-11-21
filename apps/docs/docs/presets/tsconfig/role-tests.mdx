@@ -36,12 +36,16 @@ Use `role-tests` for Vitest suites, fixtures, and test-only helpers.
   ],
   "compilerOptions": {
     "types": [
-      "@types/node",
-      "vitest/globals"
+      "@types/node"
     ]
-  }
+  },
+  "include": [
+    "./tests/**/*.ts"
+  ]
 }
 ```
+
+Nova's scaffolds turn Vitest `globals` off and import `describe`, `it` and `expect` from `vitest` in every test, so the tests TSConfig does not list `vitest/globals`.
 
 ## What This Preset Configures
 

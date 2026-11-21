@@ -5,11 +5,14 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 import type {
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Comments,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Filename,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Fixer,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_InsertPosition,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_PrivateTag,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_SinceIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_HasPrivateTag,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsJavascriptFile,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateIdentifier,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateKeyword,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_JsdocComment,
@@ -20,6 +23,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_Options,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Node,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_JavascriptExtensions,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-private.d.ts';
 
@@ -32,6 +36,23 @@ import type {
  * @since 0.15.0
  */
 export class Runner {
+  /**
+   * Rules - ESLint - JSDoc - Require JSDoc Private - JavaScript Extensions.
+   *
+   * File extensions where TypeScript's checkJs reads a JSDoc @private tag as an accessibility
+   * modifier, which it rejects on a #name member (TS18010).
+   *
+   * @private
+   *
+   * @since 0.49.0
+   */
+  static readonly #javascriptExtensions: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_JavascriptExtensions = [
+    '.js',
+    '.mjs',
+    '.cjs',
+    '.jsx',
+  ];
+
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Private - Rule.
    *
@@ -50,6 +71,7 @@ export class Runner {
       fixable: 'code',
       messages: {
         requirePrivateTag: 'Private class members must have a @private tag in their JSDoc block.',
+        disallowPrivateTag: 'Remove the @private tag from this #private member. In JavaScript files, TypeScript checkJs reads @private as an accessibility modifier and rejects it on a #name member (TS18010).',
       },
       schema: [{
         type: 'object',
@@ -93,9 +115,9 @@ export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Private - Check Member.
    *
-   * Identifies private members by the private
-   * keyword or PrivateIdentifier key, then checks their JSDoc for
-   * `@private` and auto-inserts it before `@since`.
+   * Identifies private members by the private keyword or PrivateIdentifier key,
+   * then checks their JSDoc for `@private` and auto-inserts it before `@since`. In JavaScript
+   * files, #name members must not carry `@private` because checkJs rejects it.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node}    node    - Node.
@@ -127,7 +149,23 @@ export class Runner {
       return;
     }
 
-    if (jsdocComment.value.includes('@private') === true) {
+    const hasPrivateTag: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_HasPrivateTag = jsdocComment.value.includes('@private');
+    const filename: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Filename = context.filename.toLowerCase();
+    const isJavascriptFile: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsJavascriptFile = Runner.#javascriptExtensions.some((extension) => filename.endsWith(extension) === true);
+
+    // In JavaScript files the "#" key already makes the member private, and checkJs rejects a @private tag on it (TS18010).
+    if (isJavascriptFile === true && isPrivateIdentifier === true) {
+      if (hasPrivateTag === true) {
+        context.report({
+          node: jsdocComment,
+          messageId: 'disallowPrivateTag',
+        });
+      }
+
+      return;
+    }
+
+    if (hasPrivateTag === true) {
       return;
     }
 

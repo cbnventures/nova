@@ -43,7 +43,7 @@
 <!-- nova-region: introduction -->
 ## Introduction
 
-Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility.
+Strict presets, guided generators, and recipes that keep JavaScript and TypeScript monorepos consistent from the first scaffold to the hundredth release. Linting, typing, workflows, and project metadata all flow from one config, so nothing quietly drifts.
 <!-- nova-region-end: introduction -->
 
 <!-- nova-region: documentation -->

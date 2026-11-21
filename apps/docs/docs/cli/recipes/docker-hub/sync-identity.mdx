@@ -26,7 +26,7 @@ Sync a Docker Hub repository's **short description**, **README overview**, and *
 
 The `sync-identity` recipe compares the configured identity with the current Docker Hub repository, reports each value as changed or unchanged, and sends only the differences. All desired values are validated before Nova sends an update.
 
-The recipe uses `project.description.short` for the short description, the repository-root `README.md` for the overview, and `dockerHub.categories` for up to three categories. A missing `README.md` leaves the current overview unchanged and emits `README.md was not found. The Docker Hub overview will not be changed.`
+The recipe uses `dockerHub.description` for the short description, or `project.description.short` when that override is empty, the repository-root `README.md` for the overview, and `dockerHub.categories` for up to three categories. A missing `README.md` leaves the current overview unchanged and emits `README.md was not found. The Docker Hub overview will not be changed.`
 
 ## Why Use This Command?
 
@@ -39,7 +39,7 @@ The recipe uses `project.description.short` for the short description, the repos
 - **Docker login** — Run `docker login` for Docker Hub before the recipe.
 - **Existing repository** — Push the first image so the Docker Hub repository exists.
 - **Repository write access** — The stored Docker Hub login must have write permission.
-- **Docker Hub config** — Set `dockerHub.namespace`, `dockerHub.repository`, and `project.description.short` in `nova.config.json`.
+- **Docker Hub config** — Set `dockerHub.namespace`, `dockerHub.repository`, and either `dockerHub.description` or `project.description.short` in `nova.config.json`.
 - **Enabled recipe** — Set `recipes["docker-hub"]["sync-identity"].enabled` to `true`.
 
 ## Login Lookup
@@ -57,7 +57,7 @@ For a helper named `<helper>`, Nova runs `docker-credential-<helper> get` and se
 
 ## Behavior
 
-- **Description** — Uses `project.description.short` and rejects more than 100 characters.
+- **Description** — Uses `dockerHub.description`, or `project.description.short` when it is empty, and rejects more than 100 characters. See [Description Limits](/docs/quickstart/nova-config#description-limits).
 - **Overview** — Uses the repository-root `README.md` and rejects more than 25,000 characters. A missing file leaves the existing overview unchanged.
 - **Categories** — Maps each configured slug to the live Docker Hub category object. An empty array clears all categories; more than three or any unknown slug stops the recipe before updates.
 - **Unchanged fields** — Reports the current value with `(unchanged)` and sends no request for that field.
@@ -70,6 +70,7 @@ For a helper named `<helper>`, Nova runs `docker-credential-<helper> get` and se
   "dockerHub": {
     "namespace": "example",
     "repository": "example-project",
+    "description": "Example image with a Docker Hub-specific description",
     "categories": ["developer-tools", "security"]
   },
   "recipes": {
@@ -111,15 +112,16 @@ For a helper named `<helper>`, Nova runs `docker-credential-<helper> get` and se
 
 The precheck and identity validation stop without sending changes when they emit one of these messages. `<namespace>` and `<repository>` are replaced with the configured values, and `<count>` or `<slug>` identifies the invalid input.
 
-| Condition                  | Message                                                                                                           |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Login not found            | `No Docker Hub login found. Run "docker login".`                                                                  |
-| Authentication failed      | `Unable to authenticate with Docker Hub using the stored login.`                                                  |
-| Repository missing         | `Docker Hub repository <namespace>/<repository> does not exist. Push the first image, then run the recipe again.` |
-| Write permission missing   | `The Docker Hub login does not have write access to <namespace>/<repository>.`                                    |
-| Short description missing  | `Docker Hub sync-identity requires "project.description.short" in nova.config.json.`                              |
-| Short description too long | `Docker Hub's short description limit is 100 characters; the configured value has <count>.`                       |
-| README too long            | `Docker Hub's overview limit is 25,000 characters; README.md has <count>.`                                        |
-| Too many categories        | `Docker Hub accepts at most 3 repository categories.`                                                             |
-| Category list unavailable  | `Unable to validate Docker Hub categories against the live category list.`                                        |
-| Unknown category           | `Docker Hub category slug "<slug>" was not found in the live category list.`                                      |
+| Condition                  | Message                                                                                                                                                                                                 |
+|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Login not found            | `No Docker Hub login found. Run "docker login".`                                                                                                                                                        |
+| Authentication failed      | `Unable to authenticate with Docker Hub using the stored login.`                                                                                                                                        |
+| Repository missing         | `Docker Hub repository <namespace>/<repository> does not exist. Push the first image, then run the recipe again.`                                                                                       |
+| Write permission missing   | `The Docker Hub login does not have write access to <namespace>/<repository>.`                                                                                                                          |
+| Short description missing  | `Docker Hub sync-identity requires "dockerHub.description" or "project.description.short" in nova.config.json.`                                                                                         |
+| Short description too long | `The "project.description.short" field has <count> characters, but Docker Hub allows at most 100. Shorten "project.description.short", or set "dockerHub.description" to give Docker Hub its own text.` |
+| Override too long          | `The "dockerHub.description" field has <count> characters, but Docker Hub allows at most 100. Shorten "dockerHub.description", or remove it to use "project.description.short" instead.`                |
+| README too long            | `Docker Hub's overview limit is 25,000 characters; README.md has <count>.`                                                                                                                              |
+| Too many categories        | `Docker Hub accepts at most 3 repository categories.`                                                                                                                                                   |
+| Category list unavailable  | `Unable to validate Docker Hub categories against the live category list.`                                                                                                                              |
+| Unknown category           | `Docker Hub category slug "<slug>" was not found in the live category list.`                                                                                                                            |

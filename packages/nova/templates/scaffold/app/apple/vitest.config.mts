@@ -10,7 +10,9 @@ import { defineConfig } from 'vitest/config';
  */
 export default defineConfig({
   test: {
-    include: ['tests/**/*.test.ts'],
+    include: ['scripts/tests/**/*.test.ts'],
     passWithNoTests: true,
+    globals: false,
+    testTimeout: 30000, // 30 seconds.
   },
 });

@@ -1,0 +1,33 @@
+name: discord-stonker-bot
+
+services:
+  app:
+    image: ${IMAGE_NAME:-discord-stonker-bot:local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - path: ./apps/bot/.env
+        required: false
+    environment:
+      BOT_CONTROL_POLL_INTERVAL_MS: "${BOT_CONTROL_POLL_INTERVAL_MS:-1000}"
+      DATABASE_MAX_CONNECTIONS: "${DATABASE_MAX_CONNECTIONS:-10}"
+      JOB_ATTEMPT_LIMIT: "${JOB_ATTEMPT_LIMIT:-5}"
+      MIGRATIONS_DIRECTORY: "/app/apps/bot/migrations"
+      NODE_ENV: "production"
+      PGID: "${PGID:-1000}"
+      POSTGRES_DB: "${POSTGRES_DB:-stonker}"
+      POSTGRES_RUNTIME_DIRECTORY: "/tmp/postgresql"
+      POSTGRES_USER: "${POSTGRES_USER:-stonker}"
+      PUID: "${PUID:-1000}"
+      STARTER_CONFIGURATION: "/app/apps/bot/examples/legacy-config.e2e.json"
+      TZ: "${TZ:-UTC}"
+      WORKER_POLL_INTERVAL_MS: "${WORKER_POLL_INTERVAL_MS:-1000}"
+    network_mode: host
+    restart: always
+    user: "0:0"
+    volumes:
+      - stonker-data:/config
+
+volumes:
+  stonker-data:

@@ -2,19 +2,32 @@ import type { Dirent } from 'node:fs';
 
 import type {
   Shared_CorepackPackageManagerDescriptor,
+  Shared_DockerPackagingFileChange_Status,
+  Shared_DockerPackagingFileChanges,
   Shared_DockerPackagingGenerateOptions,
   Shared_DockerPackagingGenerateResult,
+  Shared_DockerPackagingImagePlan,
   Shared_DockerPackagingManifest,
   Shared_DockerPackagingManifest_LegacyStatePaths,
   Shared_DockerPackagingManifest_NetworkMode,
+  Shared_DockerPackagingPlannedFile,
+  Shared_DockerPackagingRenderInput,
   Shared_DockerPackagingService,
+  Shared_DockerPackagingService_Ports,
   Shared_DockerPackagingServiceInput,
   Shared_DockerPackagingServiceInputs,
   Shared_DockerPackagingServiceKind,
   Shared_DockerPackagingServices,
   Shared_DockerPackagingServicesByName,
+  Shared_DockerPackagingStage,
+  Shared_DockerPackagingStages,
   Shared_DockerPackagingStringMap,
+  Shared_DockerPackagingSyncOptions,
+  Shared_DockerPackagingSyncResult,
+  Shared_DockerPackagingSyncResult_MissingScripts,
+  Shared_DockerPackagingSyncResult_UnownedFiles,
   Shared_DockerPackagingWorkspace,
+  Shared_DockerPackagingWorkspace_SourceGroup,
   Shared_DockerPackagingWorkspacePackage,
   Shared_DockerPackagingWorkspacePackages,
   Shared_DockerPackagingWorkspaces,
@@ -31,32 +44,73 @@ export type Lib_DockerPackaging_DockerConfigWorkspacePath = string;
 export type Lib_DockerPackaging_DockerManifestSchemaVersion = number;
 export type Lib_DockerPackaging_DockerProtectedWritablePaths = string[];
 export type Lib_DockerPackaging_DockerReservedServiceNames = ReadonlySet<string>;
-export type Lib_DockerPackaging_DockerWorkspaceBuildDirectory = string;
+export type Lib_DockerPackaging_DockerGeneratedFilesRecord = string;
 export type Lib_DockerPackaging_DirectoryEntries = Dirent[];
 
 /**
- * Lib - Docker Packaging - Runner - BuildCompose.
+ * Lib - Docker Packaging - Runner - Apply Image Plan.
  *
- * @since 0.34.0
+ * @since 0.49.0
  */
-export type Lib_DockerPackaging_Runner_BuildCompose_Template = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_Manifest = Shared_DockerPackagingManifest;
-export type Lib_DockerPackaging_Runner_BuildCompose_Returns = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles = string[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_ProjectDirectory = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_ImagePlan = Shared_DockerPackagingImagePlan;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_IsDryRun = boolean;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_IsReplaceFile = boolean;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_IsReportFiles = boolean;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_Returns = Promise<Omit<Shared_DockerPackagingSyncResult, 'missingIgnoreFileEntry'>>;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyDirectory = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsDirectory = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_WorkspaceManifestsDirectory = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_YarnConfigPath = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RecordPath = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath = (targetPath: string) => boolean;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RecordContent = string | undefined;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RecordValue = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RecordFiles = unknown[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_PreviousOwnedPaths = Set<string>;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RecordedPath = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_Plan = Shared_DockerPackagingImagePlan;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_OwnedFiles = string[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntries = [string, Shared_DockerPackagingPlannedFile][];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_Discovered = [(string | undefined)[], string[], string[], string | undefined];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContents = (string | undefined)[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsFiles = string[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_Changes = Shared_DockerPackagingFileChanges;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntry = [string, Shared_DockerPackagingPlannedFile] | undefined;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContent = string | undefined;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges_Added = number;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges_Removed = number;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges = {
+  added: Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges_Added;
+  removed: Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges_Removed;
+};
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_Status = Shared_DockerPackagingFileChange_Status;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_StalePaths = string[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContents = (string | undefined)[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContent = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_UnownedFiles = Shared_DockerPackagingSyncResult_UnownedFiles;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackagePath = string;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedAssemblyPackage = Shared_DockerPackagingPlannedFile | undefined;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageContent = string | undefined;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageValue = unknown;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyScriptsValue = unknown;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_MissingScripts = Shared_DockerPackagingSyncResult_MissingScripts;
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedFile = Shared_DockerPackagingPlannedFile;
 
 /**
- * Lib - Docker Packaging - Runner - Build Compose - Ports.
+ * Lib - Docker Packaging - Runner - Apply Image Plan - Is Owned Path.
  *
- * @since 0.45.0
+ * @since 0.49.0
  */
-export type Lib_DockerPackaging_Runner_BuildCompose_Ports = number[];
+export type Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath_Returns = boolean;
 
-export type Lib_DockerPackaging_Runner_BuildCompose_PortLines = string[];
-export type Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_PortBlock = string;
-export type Lib_DockerPackaging_Runner_BuildCompose_Replacements = Shared_DockerPackagingStringMap;
-export type Lib_DockerPackaging_Runner_BuildCompose_Content = string;
+/**
+ * Lib - Docker Packaging - Runner - Build Assembly Package.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_BuildAssemblyPackage_Slug = string;
+export type Lib_DockerPackaging_Runner_BuildAssemblyPackage_Returns = Record<string, unknown>;
 
 /**
  * Lib - Docker Packaging - Runner - BuildContainerPackage.
@@ -71,72 +125,6 @@ export type Lib_DockerPackaging_Runner_BuildContainerPackage_ContainerPackage = 
 export type Lib_DockerPackaging_Runner_BuildContainerPackage_InheritedValue = unknown;
 
 /**
- * Lib - Docker Packaging - Runner - BuildDockerfile.
- *
- * @since 0.39.0
- */
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Template = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Manifest = Shared_DockerPackagingManifest;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder = Shared_DockerPackagingWorkspacePackages;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Returns = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManager = Shared_CorepackPackageManagerDescriptor['name'];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerVersion = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_IsYarnClassic = boolean;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests = boolean;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_BuildCommands = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageName = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_PackageJson = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ScriptsValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_BuildScriptValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_QuotedPackageName = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestCopyLines = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestRestoreLines = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceSourceCopyLines = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyCommands = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeCopyLines = Set<string>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_NeedsNodeRuntime = boolean;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspacePackage = Shared_DockerPackagingWorkspacePackage;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestSourcePath = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePath = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspaceServices = Shared_DockerPackagingServices;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeSitePath = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspacePath = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceServices = Shared_DockerPackagingServices;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePackage = Shared_DockerPackagingWorkspacePackage;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_IsSelectedWorkspace = boolean;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Ports = number[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths = string[];
-export type Lib_DockerPackaging_Runner_BuildDockerfile_WritableDirectories = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssembly = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Project = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue = unknown;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Urls = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor = string;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Replacements = Shared_DockerPackagingStringMap;
-export type Lib_DockerPackaging_Runner_BuildDockerfile_Content = string;
-
-/**
  * Lib - Docker Packaging - Runner - BuildHealthcheck.
  *
  * @since 0.34.0
@@ -145,21 +133,8 @@ export type Lib_DockerPackaging_Runner_BuildHealthcheck_Manifest = Shared_Docker
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_Returns = string;
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_Lines = string[];
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_LongrunServices = Shared_DockerPackagingServices;
-
-/**
- * Lib - Docker Packaging - Runner - Build Healthcheck - Health Service.
- *
- * @since 0.45.0
- */
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_HealthService = Shared_DockerPackagingService | undefined;
-
-/**
- * Lib - Docker Packaging - Runner - Build Healthcheck - Health Port.
- *
- * @since 0.45.0
- */
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_HealthPort = number | undefined;
-
 export type Lib_DockerPackaging_Runner_BuildHealthcheck_ShellVariableMarker = string;
 
 /**
@@ -277,14 +252,6 @@ export type Lib_DockerPackaging_Runner_BuildSyntheticWorkspacePackage_Normalized
 export type Lib_DockerPackaging_Runner_BuildSyntheticWorkspacePackage_InternalVersionValue = unknown;
 
 /**
- * Lib - Docker Packaging - Runner - BuildWorkspacePackage.
- *
- * @since 0.34.0
- */
-export type Lib_DockerPackaging_Runner_BuildWorkspacePackage_Slug = string;
-export type Lib_DockerPackaging_Runner_BuildWorkspacePackage_Returns = Record<string, unknown>;
-
-/**
  * Lib - Docker Packaging - Runner - CollectWorkspacePackages.
  *
  * @since 0.34.0
@@ -300,12 +267,24 @@ export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackageJson = Re
 export type Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackageName = unknown;
 
 /**
- * Lib - Docker Packaging - Runner - Escape Docker Label.
+ * Lib - Docker Packaging - Runner - Count Line Changes.
  *
- * @since 0.39.0
+ * @since 0.49.0
  */
-export type Lib_DockerPackaging_Runner_EscapeDockerLabel_Value = string;
-export type Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns = string;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Before = string;
+export type Lib_DockerPackaging_Runner_CountLineChanges_After = string;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Returns_Added = number;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Returns_Removed = number;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Returns = {
+  added: Lib_DockerPackaging_Runner_CountLineChanges_Returns_Added;
+  removed: Lib_DockerPackaging_Runner_CountLineChanges_Returns_Removed;
+};
+export type Lib_DockerPackaging_Runner_CountLineChanges_BeforeLines = string[];
+export type Lib_DockerPackaging_Runner_CountLineChanges_AfterLines = string[];
+export type Lib_DockerPackaging_Runner_CountLineChanges_Lengths = number[];
+export type Lib_DockerPackaging_Runner_CountLineChanges_Diagonal = number;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Above = number;
+export type Lib_DockerPackaging_Runner_CountLineChanges_Common = number;
 
 /**
  * Lib - Docker Packaging - Runner - GenerateForTarget.
@@ -343,52 +322,21 @@ export type Lib_DockerPackaging_Runner_GenerateForTarget_LegacyStatePaths = Shar
 export type Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode = Shared_DockerPackagingManifest_NetworkMode;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment = string | undefined;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest = Shared_DockerPackagingManifest;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_AvailableServiceNames = Set<string>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_ServicesByName = Shared_DockerPackagingServicesByName;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_VisitedServices = Set<string>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_VisitingServices = Set<string>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_VisitService = (serviceName: string) => void;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackages = Shared_DockerPackagingWorkspacePackages;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_BuildOrder = Shared_DockerPackagingWorkspacePackages;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_PackageManager = Shared_CorepackPackageManagerDescriptor['name'];
-export type Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerVersion = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnClassic = boolean;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnBerry = boolean;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_NeedsSyntheticWorkspaceManifests = boolean;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifests = Map<string, string>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestPath = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspacePackage = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestContent = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_TemplateRoot = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_TemplateContents = string[];
-export type Lib_DockerPackaging_Runner_GenerateForTarget_DockerfileContent = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_ComposeContent = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFilesValue = unknown;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_ConfiguredIgnoreFileEntry = unknown;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry = Shared_NovaConfig_IgnoreFile;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_DockerignoreContent = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_GitAttributesContent = string;
+export type Lib_DockerPackaging_Runner_GenerateForTarget_ImagePlan = Shared_DockerPackagingImagePlan;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackageName = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackage = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_ContainerBuildPackage = Record<string, unknown>;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceLines = string[];
-export type Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceContent = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigContent = string;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedRootPackage = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedNovaConfig = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_Result = Shared_DockerPackagingGenerateResult;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_RootfsDirectory = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceManifestsDirectory = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigPath = string;
-export type Lib_DockerPackaging_Runner_GenerateForTarget_ReportFiles = boolean;
 
 /**
- * Lib - Docker Packaging - Runner - GenerateForTarget - VisitService.
+ * Lib - Docker Packaging - Runner - List Files.
  *
- * @since 0.34.0
+ * @since 0.49.0
  */
-export type Lib_DockerPackaging_Runner_GenerateForTarget_VisitService_Service = Shared_DockerPackagingService | undefined;
+export type Lib_DockerPackaging_Runner_ListFiles_Directory = string;
+export type Lib_DockerPackaging_Runner_ListFiles_Returns = Promise<string[]>;
+export type Lib_DockerPackaging_Runner_ListFiles_Entries = Dirent[];
 
 /**
  * Lib - Docker Packaging - Runner - MergeScripts.
@@ -417,28 +365,19 @@ export type Lib_DockerPackaging_Runner_MergeScripts_InsertDeployScripts_Returns 
  */
 export type Lib_DockerPackaging_Runner_NormalizeManifest_Value = Record<string, unknown> | undefined;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_Returns = Shared_DockerPackagingManifest;
-
-/**
- * Lib - Docker Packaging - Runner - Normalize Manifest - Has Retired Port Keys.
- *
- * @since 0.45.0
- */
 export type Lib_DockerPackaging_Runner_NormalizeManifest_HasRetiredPortKeys = boolean;
-
 export type Lib_DockerPackaging_Runner_NormalizeManifest_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_ServiceNames = Set<string>;
-
-/**
- * Lib - Docker Packaging - Runner - Normalize Manifest - Service Ports.
- *
- * @since 0.45.0
- */
 export type Lib_DockerPackaging_Runner_NormalizeManifest_ServicePorts = Set<number>;
-
 export type Lib_DockerPackaging_Runner_NormalizeManifest_HealthPath = string;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_LegacyStatePaths = Shared_DockerPackagingManifest_LegacyStatePaths;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_NetworkMode = Shared_DockerPackagingManifest_NetworkMode;
 export type Lib_DockerPackaging_Runner_NormalizeManifest_StateEnvironment = string | undefined;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_FirstPort = number | undefined;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_DeclaredPorts = Shared_DockerPackagingService_Ports;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_Settings = Pick<Shared_DockerPackagingManifest, 'build' | 'compose' | 'dockerfile' | 'healthService' | 'images' | 'project' | 'runtime' | 's6Overlay'>;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_Workspaces = Shared_DockerPackagingWorkspaces;
+export type Lib_DockerPackaging_Runner_NormalizeManifest_HealthService = Shared_DockerPackagingService | undefined;
 
 /**
  * Lib - Docker Packaging - Runner - NormalizeRuntimePaths.
@@ -450,6 +389,45 @@ export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_WorkspacePath = str
 export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_Returns = string[];
 export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_RuntimePaths = string[];
 export type Lib_DockerPackaging_Runner_NormalizeRuntimePaths_PathParts = string[];
+
+/**
+ * Lib - Docker Packaging - Runner - Normalize Workspace.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_NormalizeWorkspace_Workspace = Shared_DockerPackagingWorkspace;
+export type Lib_DockerPackaging_Runner_NormalizeWorkspace_Returns = Shared_DockerPackagingWorkspace;
+export type Lib_DockerPackaging_Runner_NormalizeWorkspace_Normalized = Shared_DockerPackagingWorkspace;
+export type Lib_DockerPackaging_Runner_NormalizeWorkspace_SourceFiles = Shared_DockerPackagingWorkspace_SourceGroup;
+
+/**
+ * Lib - Docker Packaging - Runner - Plan Image.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_PlanImage_ProjectDirectory = string;
+export type Lib_DockerPackaging_Runner_PlanImage_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_PlanImage_RootPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_PlanImage_NovaConfig = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_PlanImage_IgnoreFileEntry = Shared_NovaConfig_IgnoreFile;
+export type Lib_DockerPackaging_Runner_PlanImage_ProjectSlug = string;
+export type Lib_DockerPackaging_Runner_PlanImage_IncludeManifest = boolean;
+export type Lib_DockerPackaging_Runner_PlanImage_Returns = Promise<Shared_DockerPackagingImagePlan>;
+export type Lib_DockerPackaging_Runner_PlanImage_AssemblyDirectory = string;
+export type Lib_DockerPackaging_Runner_PlanImage_AssemblyPackagePath = string;
+export type Lib_DockerPackaging_Runner_PlanImage_DockerignorePath = string;
+export type Lib_DockerPackaging_Runner_PlanImage_WorkspacePackages = Shared_DockerPackagingWorkspacePackages;
+export type Lib_DockerPackaging_Runner_PlanImage_BuildOrder = Shared_DockerPackagingWorkspacePackages;
+export type Lib_DockerPackaging_Runner_PlanImage_Inputs = [Map<string, string>, string, string | undefined, string | undefined];
+export type Lib_DockerPackaging_Runner_PlanImage_StageFragments = Map<string, string>;
+export type Lib_DockerPackaging_Runner_PlanImage_DockerignoreHeader = string;
+export type Lib_DockerPackaging_Runner_PlanImage_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
+export type Lib_DockerPackaging_Runner_PlanImage_IsYarnBerry = boolean;
+export type Lib_DockerPackaging_Runner_PlanImage_IsNovaBuildEnabled = boolean;
+export type Lib_DockerPackaging_Runner_PlanImage_GeneratedHeader = string[];
+export type Lib_DockerPackaging_Runner_PlanImage_PnpmWorkspaceLines = string[];
+export type Lib_DockerPackaging_Runner_PlanImage_RenderInput = Shared_DockerPackagingRenderInput;
+export type Lib_DockerPackaging_Runner_PlanImage_Plan = Shared_DockerPackagingImagePlan;
 
 /**
  * Lib - Docker Packaging - Runner - Read Image Workspaces.
@@ -475,6 +453,28 @@ export type Lib_DockerPackaging_Runner_ReadJsonObject_RawContent = string;
 export type Lib_DockerPackaging_Runner_ReadJsonObject_ParsedContent = unknown;
 
 /**
+ * Lib - Docker Packaging - Runner - Read Optional File.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_ReadOptionalFile_TargetPath = string;
+export type Lib_DockerPackaging_Runner_ReadOptionalFile_Returns = Promise<string | undefined>;
+
+/**
+ * Lib - Docker Packaging - Runner - Read Stage Fragments.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_ReadStageFragments_AssemblyDirectory = string;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Returns = Promise<Map<string, string>>;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Stages = Shared_DockerPackagingStages;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Contents = (string | undefined)[];
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Fragments = Map<string, string>;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Stage = Shared_DockerPackagingStage | undefined;
+export type Lib_DockerPackaging_Runner_ReadStageFragments_Content = string | undefined;
+
+/**
  * Lib - Docker Packaging - Runner - Refresh Generated Manifests.
  *
  * @since 0.38.0
@@ -491,10 +491,6 @@ export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackage
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest = Shared_DockerPackagingManifest;
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages = Shared_DockerPackagingWorkspacePackages;
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder = Shared_DockerPackagingWorkspacePackages;
-export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
-export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager = Shared_CorepackPackageManagerDescriptor['name'];
-export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion = string;
-export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic = boolean;
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests = boolean;
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifests = Map<string, string>;
 export type Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifestPath = string;
@@ -519,6 +515,8 @@ export type Lib_DockerPackaging_Runner_RegisterProjectConfig_WorkspacesValue = u
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_Workspaces = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_IgnoreFilesValue = unknown;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_IgnoreFiles = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFilesValue = unknown;
+export type Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFiles = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_RecipesValue = unknown;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_Recipes = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_PackageJsonRecipesValue = unknown;
@@ -527,6 +525,39 @@ export type Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentValue = 
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_Environment = Record<string, unknown>;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentWorkspacesValue = unknown;
 export type Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentWorkspaces = Record<string, unknown>;
+
+/**
+ * Lib - Docker Packaging - Runner - Remove Empty Parents.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_RemoveEmptyParents_Directory = string;
+export type Lib_DockerPackaging_Runner_RemoveEmptyParents_StopDirectory = string;
+export type Lib_DockerPackaging_Runner_RemoveEmptyParents_Returns = Promise<void>;
+
+/**
+ * Lib - Docker Packaging - Runner - Render Rootfs.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_RenderRootfs_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_RenderRootfs_Returns = Map<string, Shared_DockerPackagingPlannedFile>;
+export type Lib_DockerPackaging_Runner_RenderRootfs_Files = Map<string, Shared_DockerPackagingPlannedFile>;
+export type Lib_DockerPackaging_Runner_RenderRootfs_WritablePaths = string[];
+export type Lib_DockerPackaging_Runner_RenderRootfs_ShellVariableMarker = string;
+export type Lib_DockerPackaging_Runner_RenderRootfs_GeneratedHeader = string[];
+export type Lib_DockerPackaging_Runner_RenderRootfs_AddFile = (relativePath: string, content: string, executable: boolean) => void;
+export type Lib_DockerPackaging_Runner_RenderRootfs_ServiceDirectory = string;
+export type Lib_DockerPackaging_Runner_RenderRootfs_CriticalFinishScript = string;
+
+/**
+ * Lib - Docker Packaging - Runner - Render Rootfs - Add File.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Returns = void;
+
+export type Lib_DockerPackaging_Runner_RenderRootfs_AddFile_ScriptLines = string[];
 
 /**
  * Lib - Docker Packaging - Runner - ResolveBuildOrder.
@@ -549,6 +580,16 @@ export type Lib_DockerPackaging_Runner_ResolveBuildOrder_VisitPackage_WorkspaceP
 export type Lib_DockerPackaging_Runner_ResolveBuildOrder_VisitPackage_DependencyGroup = unknown;
 
 /**
+ * Lib - Docker Packaging - Runner - Resolve Ignore File Entry.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_NovaConfig = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_Returns = Shared_NovaConfig_IgnoreFile;
+export type Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_IgnoreFilesValue = unknown;
+export type Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_ConfiguredIgnoreFileEntry = unknown;
+
+/**
  * Lib - Docker Packaging - Runner - ShellQuote.
  *
  * @since 0.34.0
@@ -557,40 +598,50 @@ export type Lib_DockerPackaging_Runner_ShellQuote_Value = string;
 export type Lib_DockerPackaging_Runner_ShellQuote_Returns = string;
 
 /**
+ * Lib - Docker Packaging - Runner - Sync Image.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_SyncImage_Options = Shared_DockerPackagingSyncOptions;
+export type Lib_DockerPackaging_Runner_SyncImage_Returns = Promise<Shared_DockerPackagingSyncResult>;
+export type Lib_DockerPackaging_Runner_SyncImage_ProjectDirectory = string;
+export type Lib_DockerPackaging_Runner_SyncImage_ManifestPath = string;
+export type Lib_DockerPackaging_Runner_SyncImage_NovaConfigPath = string;
+export type Lib_DockerPackaging_Runner_SyncImage_JsonFiles = [Record<string, unknown>, Record<string, unknown>, Record<string, unknown>];
+export type Lib_DockerPackaging_Runner_SyncImage_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_SyncImage_RootPackage = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_SyncImage_NovaConfig = Record<string, unknown>;
+export type Lib_DockerPackaging_Runner_SyncImage_ProjectValue = unknown;
+export type Lib_DockerPackaging_Runner_SyncImage_ProjectNameValue = unknown;
+export type Lib_DockerPackaging_Runner_SyncImage_ProjectSlugValue = unknown;
+export type Lib_DockerPackaging_Runner_SyncImage_ImagePlan = Shared_DockerPackagingImagePlan;
+export type Lib_DockerPackaging_Runner_SyncImage_ApplyResult = Omit<Shared_DockerPackagingSyncResult, 'missingIgnoreFileEntry'>;
+export type Lib_DockerPackaging_Runner_SyncImage_IgnoreFilesValue = unknown;
+
+/**
+ * Lib - Docker Packaging - Runner - Validate Service Graph.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_Manifest = Shared_DockerPackagingManifest;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_Returns = void;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_AvailableServiceNames = Set<string>;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_ServicesByName = Shared_DockerPackagingServicesByName;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitedServices = Set<string>;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitingServices = Set<string>;
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService = (serviceName: string) => void;
+
+/**
+ * Lib - Docker Packaging - Runner - Validate Service Graph - Visit Service.
+ *
+ * @since 0.49.0
+ */
+export type Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService_Service = Shared_DockerPackagingService | undefined;
+
+/**
  * Lib - Docker Packaging - Runner - ValidateServiceName.
  *
  * @since 0.34.0
  */
 export type Lib_DockerPackaging_Runner_ValidateServiceName_Name = string;
 export type Lib_DockerPackaging_Runner_ValidateServiceName_Returns = void;
-
-/**
- * Lib - Docker Packaging - Runner - WriteExecutable.
- *
- * @since 0.34.0
- */
-export type Lib_DockerPackaging_Runner_WriteExecutable_TargetPath = string;
-export type Lib_DockerPackaging_Runner_WriteExecutable_Content = string;
-export type Lib_DockerPackaging_Runner_WriteExecutable_Returns = Promise<void>;
-
-/**
- * Lib - Docker Packaging - Runner - WriteRootfs.
- *
- * @since 0.34.0
- */
-export type Lib_DockerPackaging_Runner_WriteRootfs_RootfsDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_Manifest = Shared_DockerPackagingManifest;
-export type Lib_DockerPackaging_Runner_WriteRootfs_Returns = Promise<void>;
-export type Lib_DockerPackaging_Runner_WriteRootfs_S6DatabaseDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_UserBundleDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_HelperDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_ServiceHelperDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_NovaConfigDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_InitServiceDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_WritablePaths = string[];
-export type Lib_DockerPackaging_Runner_WriteRootfs_ShellVariableMarker = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_ServiceDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_DependenciesDirectory = string;
-export type Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = string;

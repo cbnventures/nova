@@ -7,9 +7,10 @@
   ],
   "compilerOptions": {
     "types": [
-      "node",
-      "vitest/globals"
-    ]
+      "node"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
   },
   "include": [
     "./src/**/*.test.ts",

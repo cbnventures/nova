@@ -1,13 +1,23 @@
+import { formatKeywordLimitMessage, resolveHomebridgePluginDestination } from '../../../lib/keyword-limits.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI } from '../../../lib/regex.js';
 import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
   runScaffold,
   updateScaffoldPackageJson,
 } from '../../../lib/scaffold.js';
+import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Answers,
   Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Returns,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Config,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_ConfigRoot,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Keywords,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsDestination,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsLimitMessage,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Returns,
+  Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_WorkspaceName,
   Cli_Scaffold_Package_Homebridge_Runner_Run_Options,
   Cli_Scaffold_Package_Homebridge_Runner_Run_Returns,
   Cli_Scaffold_Package_Homebridge_TemplateQuestions,
@@ -118,6 +128,7 @@ export class Runner {
           },
         ],
       }),
+      resolveReplacements: Runner['resolveReplacements'],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldPackageHomebridgeTemplateQuestions,
       templateSubpath: 'scaffold/package/homebridge',
@@ -140,5 +151,43 @@ export class Runner {
     });
 
     return;
+  }
+
+  /**
+   * CLI - Scaffold - Package - Homebridge - Resolve Replacements.
+   *
+   * Stops before any file is written when "project.keywords" lacks "homebridge-plugin",
+   * because the package.json sync-identity recipe can publish them as npm keywords.
+   *
+   * @param {Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_WorkspaceName} workspaceName - Workspace name.
+   * @param {Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_ConfigRoot}    configRoot    - Config root.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async resolveReplacements(workspaceName: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_WorkspaceName, configRoot: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_ConfigRoot): Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Returns {
+    const config: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Config = await new LibNovaConfig().load(configRoot);
+    const keywords: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Keywords = (config['project'] !== undefined) ? config['project']['keywords'] : undefined;
+
+    if (keywords !== undefined) {
+      const keywordsDestination: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsDestination = resolveHomebridgePluginDestination(`./packages/${workspaceName}`);
+      const keywordsLimitMessage: Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsLimitMessage = formatKeywordLimitMessage(keywordsDestination, keywords);
+
+      if (keywordsLimitMessage !== undefined) {
+        Logger.customize({
+          name: 'CliScaffoldPackageHomebridge.resolveReplacements',
+          purpose: 'config',
+        }).error(`${keywordsLimitMessage} No scaffold files were written.`);
+
+        process.exitCode = 1;
+
+        return undefined;
+      }
+    }
+
+    return new Map();
   }
 }

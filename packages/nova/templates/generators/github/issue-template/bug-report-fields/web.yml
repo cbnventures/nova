@@ -1,8 +1,16 @@
+  - type: "input"
+    id: "affected-url"
+    attributes:
+      label: "Affected URL or Route"
+      description: "Enter the affected public URL or route. Use only the route when the hostname is private."
+      placeholder: "e.g. /settings"
+    validations:
+      required: false
   - type: "dropdown"
     id: "browser"
     attributes:
       label: "Browser"
-      description: "What browser are you using?"
+      description: "Select the affected browser."
       options:
         - "Google Chrome"
         - "Mozilla Firefox"
@@ -10,12 +18,20 @@
         - "Microsoft Edge"
         - "Other"
     validations:
-      required: true
+      required: false
   - type: "input"
     id: "browser-version"
     attributes:
-      label: "Browser version"
-      description: "What version of the browser are you using?"
+      label: "Browser Version"
+      description: "Enter the complete browser version."
       placeholder: "e.g. 145.0.7632.75"
     validations:
-      required: true
+      required: false
+  - type: "input"
+    id: "viewport-size"
+    attributes:
+      label: "Viewport Size"
+      description: "Enter the viewport width and height when layout affects the problem."
+      placeholder: "e.g. 390 x 844"
+    validations:
+      required: false

@@ -31,6 +31,4 @@ export type Cli_Recipe_Github_SyncLabels_Runner_Run_Labels = Shared_NovaConfig_G
 
 export type Cli_Recipe_Github_SyncLabels_Runner_Run_Commands = string[];
 
-export type Cli_Recipe_Github_SyncLabels_Runner_Run_Description = string;
-
 export type Cli_Recipe_Github_SyncLabels_Runner_Run_DidSucceed = boolean;

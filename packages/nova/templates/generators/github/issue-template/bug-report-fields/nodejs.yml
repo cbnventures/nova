@@ -1,8 +1,23 @@
   - type: "input"
     id: "node-version"
     attributes:
-      label: "Node.js\xAE version"
-      description: "What version of Node.js\xAE are you using? It is recommended that you use versions under \"Long Term Support (LTS)\" as listed on the [Node.js\xAE](https://nodejs.org) homepage."
+      label: "Node.js® Version"
+      description: "Enter the complete Node.js® version shown by `node --version`."
       placeholder: "e.g. 24.13.1"
     validations:
       required: true
+  - type: "input"
+    id: "command"
+    attributes:
+      label: "Installation or Invocation Command"
+      description: "Enter the exact command that installs or invokes the affected package. __Remove all secrets before submitting.__"
+    validations:
+      required: false
+  - type: "textarea"
+    id: "minimal-reproduction"
+    attributes:
+      label: "Minimal Reproduction"
+      description: "Provide the smallest code or command sequence that reproduces the problem. __Remove all secrets and private data before submitting.__"
+      render: "Shell"
+    validations:
+      required: false

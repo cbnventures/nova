@@ -1,0 +1,15 @@
+  - type: "input"
+    id: "node-version"
+    attributes:
+      label: "Node.js® Version"
+      description: "Enter the complete Node.js® version shown by `node --version`."
+      placeholder: "e.g. 24.13.1"
+    validations:
+      required: true
+  - type: "input"
+    id: "command"
+    attributes:
+      label: "Installation or Invocation Command"
+      description: "Enter the exact command that installs or invokes the affected package. __Remove all secrets before submitting.__"
+    validations:
+      required: false

@@ -71,6 +71,17 @@ import type {
   Api_AppStoreConnect_Runner_FindAssetLibrary_AppId,
   Api_AppStoreConnect_Runner_FindAssetLibrary_Response,
   Api_AppStoreConnect_Runner_FindAssetLibrary_Returns,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_AssetLibraryId,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_Category,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_Checksum,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingAttributes,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingImages,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingState,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_File,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_IdempotentReferenceName,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_Query,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_ReferenceName,
+  Api_AppStoreConnect_Runner_FindAssetLibraryImage_Returns,
   Api_AppStoreConnect_Runner_FindVersion_AppId,
   Api_AppStoreConnect_Runner_FindVersion_Attributes,
   Api_AppStoreConnect_Runner_FindVersion_Platform,
@@ -208,6 +219,7 @@ import type {
   Api_AppStoreConnect_Runner_TokenExpiresAt,
   Api_AppStoreConnect_Runner_UpdateLocalization_Attributes,
   Api_AppStoreConnect_Runner_UpdateLocalization_LocalizationId,
+  Api_AppStoreConnect_Runner_UpdateLocalization_Response,
   Api_AppStoreConnect_Runner_UpdateLocalization_Returns,
   Api_AppStoreConnect_Runner_UploadAssetLibraryImage_AbandonedAttributes,
   Api_AppStoreConnect_Runner_UploadAssetLibraryImage_AbandonedImageIds,
@@ -926,8 +938,9 @@ export class Runner {
   /**
    * API - App Store Connect - Find Version.
    *
-   * Resolves one editable store version for the requested platform and version,
-   * preventing Nova from mutating released or otherwise locked metadata.
+   * Resolves one editable store version for the requested platform and version.
+   * Apple's current appVersionState wins over the deprecated appStoreState field,
+   * which keeps Nova from mutating released or otherwise locked metadata.
    *
    * @param {Api_AppStoreConnect_Runner_FindVersion_AppId}    appId    - App id.
    * @param {Api_AppStoreConnect_Runner_FindVersion_Version}  version  - Version.
@@ -941,7 +954,7 @@ export class Runner {
     const query: Api_AppStoreConnect_Runner_FindVersion_Query = new URLSearchParams({
       'filter[platform]': platform,
       'filter[versionString]': version,
-      'fields[appStoreVersions]': 'appStoreState,platform,versionString',
+      'fields[appStoreVersions]': 'appStoreState,appVersionState,platform,versionString',
       'limit': '10',
     });
     const versions: Api_AppStoreConnect_Runner_FindVersion_Versions = await this.list(`/v1/apps/${appId}/appStoreVersions?${query.toString()}`);
@@ -957,7 +970,7 @@ export class Runner {
     }
 
     const attributes: Api_AppStoreConnect_Runner_FindVersion_Attributes = requireObject(resolvedVersion['attributes'], `${platform} version attributes`);
-    const state: Api_AppStoreConnect_Runner_FindVersion_State = requireString(attributes['appStoreState'], `${platform} version state`);
+    const state: Api_AppStoreConnect_Runner_FindVersion_State = requireString(attributes['appVersionState'] ?? attributes['appStoreState'], `${platform} version state`);
 
     if (editableAppStoreStates.has(state) === false) {
       throw new Error(`${platform} App Store version ${version} is not editable in state ${state}.`);
@@ -1074,7 +1087,7 @@ export class Runner {
    * API - App Store Connect - Update Localization.
    *
    * Patches only fields present in the local metadata file, leaving every other
-   * App Store Connect localization field unchanged.
+   * App Store Connect localization field unchanged, and returns Apple's stored resource.
    *
    * @param {Api_AppStoreConnect_Runner_UpdateLocalization_LocalizationId} localizationId - Localization id.
    * @param {Api_AppStoreConnect_Runner_UpdateLocalization_Attributes}     attributes     - Attributes.
@@ -1084,7 +1097,7 @@ export class Runner {
    * @since 0.34.0
    */
   public async updateLocalization(localizationId: Api_AppStoreConnect_Runner_UpdateLocalization_LocalizationId, attributes: Api_AppStoreConnect_Runner_UpdateLocalization_Attributes): Api_AppStoreConnect_Runner_UpdateLocalization_Returns {
-    await this.request(`/v1/appStoreVersionLocalizations/${localizationId}`, {
+    const response: Api_AppStoreConnect_Runner_UpdateLocalization_Response = await this.request(`/v1/appStoreVersionLocalizations/${localizationId}`, {
       body: {
         data: {
           attributes,
@@ -1096,7 +1109,11 @@ export class Runner {
       method: 'PATCH',
     });
 
-    return;
+    if (response === undefined) {
+      throw new Error(`Updating App Store localization ${localizationId} returned no resource.`);
+    }
+
+    return requireObject(response['data'], `Updated localization ${localizationId}`);
   }
 
   /**
@@ -1329,6 +1346,44 @@ export class Runner {
     }
 
     return requireObject(response['data'], `Asset library for ${appId}`);
+  }
+
+  /**
+   * API - App Store Connect - Find Asset Library Image.
+   *
+   * Looks up the ready image that an upload of the same file would reuse,
+   * without reserving, uploading, or deleting anything.
+   *
+   * @param {Api_AppStoreConnect_Runner_FindAssetLibraryImage_AssetLibraryId} assetLibraryId - Asset library id.
+   * @param {Api_AppStoreConnect_Runner_FindAssetLibraryImage_Category}       category       - Category.
+   * @param {Api_AppStoreConnect_Runner_FindAssetLibraryImage_ReferenceName}  referenceName  - Reference name.
+   * @param {Api_AppStoreConnect_Runner_FindAssetLibraryImage_File}           file           - File.
+   *
+   * @returns {Api_AppStoreConnect_Runner_FindAssetLibraryImage_Returns}
+   *
+   * @since 0.49.0
+   */
+  public async findAssetLibraryImage(assetLibraryId: Api_AppStoreConnect_Runner_FindAssetLibraryImage_AssetLibraryId, category: Api_AppStoreConnect_Runner_FindAssetLibraryImage_Category, referenceName: Api_AppStoreConnect_Runner_FindAssetLibraryImage_ReferenceName, file: Api_AppStoreConnect_Runner_FindAssetLibraryImage_File): Api_AppStoreConnect_Runner_FindAssetLibraryImage_Returns {
+    const checksum: Api_AppStoreConnect_Runner_FindAssetLibraryImage_Checksum = createHash('md5').update(file).digest('hex').slice(0, 8);
+    const idempotentReferenceName: Api_AppStoreConnect_Runner_FindAssetLibraryImage_IdempotentReferenceName = `${referenceName} [md5:${checksum}]`;
+    const query: Api_AppStoreConnect_Runner_FindAssetLibraryImage_Query = new URLSearchParams({
+      'fields[appAssetLibraryImages]': 'category,fileName,referenceName,state,stateDetails',
+      'filter[category]': category,
+      'filter[referenceName]': idempotentReferenceName,
+      'limit': '200',
+    });
+    const existingImages: Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingImages = await this.list(`/v1/appAssetLibraries/${assetLibraryId}/images?${query.toString()}`);
+
+    return existingImages.find((existingImage) => {
+      const existingAttributes: Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingAttributes = requireObject(existingImage['attributes'], 'Existing asset attributes');
+      const existingState: Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingState = existingAttributes['state'];
+
+      return (
+        existingAttributes['referenceName'] === idempotentReferenceName
+        && typeof existingState === 'string'
+        && readyAssetStates.has(existingState) === true
+      );
+    });
   }
 
   /**

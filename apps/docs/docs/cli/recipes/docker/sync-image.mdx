@@ -1,0 +1,112 @@
+---
+id: "sync-image"
+title: "Sync Image"
+description: "Re-render the root Dockerfile, compose.yml, and Nova-owned packages/docker files from the image manifest without touching project-owned files."
+keywords:
+  - "nova"
+  - "sync-image"
+  - "docker"
+  - "dockerfile"
+  - "compose"
+  - "s6-overlay"
+tags:
+  - "cli"
+  - "sync-image"
+  - "recipe"
+  - "docker"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Re-render every **Nova-owned Docker file** from `packages/docker/manifest.json` and <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-image` recipe refreshes the files a `--docker-image` scaffold created. The scaffold and the recipe share one renderer, so a scaffolded image and a synced one always produce the same files.
+
+The recipe reads the image manifest but never rewrites it. Edit the manifest, then run the recipe to apply the change.
+
+## Why Use This Command?
+
+1. Keeps the `Dockerfile`, `compose.yml`, and s6 service files in step with the manifest after you add a package, a port, a stage, or a volume.
+2. Picks up new base images and s6-overlay releases from Nova's version catalog, unless the manifest pins a digest.
+3. Leaves project-owned files alone, so custom stages, overlay files, and your own `packages/docker` scripts survive every run.
+
+## Requirements
+
+- **An image manifest** — `packages/docker/manifest.json`, created by a scaffold with `--docker-image`. Manifests at schema version 1 and 2 are both read.
+- **A project slug** — `project.name.slug` in `nova.config.json`, which names the private `<slug>-tool-docker` package.
+- **Stage fragments** — Every file listed under `dockerfile.stages` must exist inside `packages/docker`.
+
+## Behavior
+
+The recipe writes these files and nothing else:
+
+| File                                     | Ownership                                                                   |
+|------------------------------------------|-----------------------------------------------------------------------------|
+| `Dockerfile`                             | Rendered from the manifest and `nova.config.json` labels.                   |
+| `compose.yml`                            | Rendered from the manifest's `compose` section and network settings.        |
+| `packages/docker/build-package.json`     | Rendered from the root `package.json` and the workspace build order.        |
+| `packages/docker/pnpm-workspace.yaml`    | Rendered from the workspace build order when Nova's build stage is enabled. |
+| `packages/docker/workspace-manifests/**` | Rendered when the package manager needs Docker-only workspace manifests.    |
+| `packages/docker/rootfs/**`              | Only the s6 database, helpers, and services Nova generates.                 |
+
+- **Ownership record** — `packages/docker/generated-files.json` lists every rootfs and workspace-manifest file Nova wrote. A later run deletes only listed files that are no longer generated, such as the s6 files of a removed service.
+- **Project files** — Files under `packages/docker/rootfs` that Nova did not write are kept and reported. It is recommended to move them to `packages/docker/project/`, which the image copies after the Nova rootfs.
+- **Assembly package** — The recipe never writes `packages/docker/package.json`. The scaffold creates it once, and after that the `package-json` recipes own it. The recipe warns when its `check` or `build` script is missing.
+- **Docker ignore file** — The recipe never writes `.dockerignore`. The `nova generate must-haves ignore-files` generator owns it through the `./.dockerignore` entry in `ignoreFiles`, and the recipe warns when that entry is missing.
+- **Git attributes** — The recipe never writes `packages/docker/.gitattributes`. The `nova generate must-haves attribute-files` generator owns it through the `./packages/docker/.gitattributes` entry in `attributeFiles`.
+- **Idempotent** — When every file already matches, the recipe reports that the image files are up to date and makes no write.
+
+## Settings
+
+Settings are configured in `nova.config.json` under the `recipes.docker` key. The `sync-image` recipe is controlled by a single `enabled` toggle:
+
+```json
+{
+  "recipes": {
+    "docker": {
+      "sync-image": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+When the recipe is not enabled, it warns and returns without touching any files. The manifest fields it renders are described in [Docker Images](/docs/cli/scaffolding/concepts/docker-images#assembly-manifest).
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe docker sync-image [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe docker sync-image [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+A dry run lists each file it would create, update, or delete with its line counts:
+
+```text
+Would update "Dockerfile" (+3 -1 lines).
+Would delete "packages/docker/rootfs/etc/s6-overlay/s6-rc.d/worker/run" (+0 -14 lines).
+```
+
+## Options
+
+| Flag                 | Description                                          |
+|----------------------|------------------------------------------------------|
+| `-d, --dry-run`      | Run without writing any files.                       |
+| `-r, --replace-file` | Replace the original file without creating a backup. |

@@ -1,0 +1,8 @@
+{
+  "name": "discord-stonker-bot-app-bot",
+  "version": "4.2.0",
+  "private": true,
+  "scripts": {
+    "build": "nova utility run-scripts --sequential --node-env production \"build:*\""
+  }
+}

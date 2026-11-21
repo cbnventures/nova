@@ -236,6 +236,33 @@ export type Api_AppStoreConnect_Runner_FindAssetLibrary_Returns = Promise<Shared
 export type Api_AppStoreConnect_Runner_FindAssetLibrary_Response = Shared_AppStoreConnectResource | undefined;
 
 /**
+ * API - App Store Connect - Find Asset Library Image.
+ *
+ * @since 0.49.0
+ */
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_AssetLibraryId = string;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_Category = string;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_ReferenceName = string;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_File = Buffer;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_Returns = Promise<Shared_AppStoreConnectResource | undefined>;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_Checksum = string;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_IdempotentReferenceName = string;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_Query = URLSearchParams;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingImages = Shared_AppStoreConnectResource[];
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingAttributes = Record<string, unknown>;
+
+export type Api_AppStoreConnect_Runner_FindAssetLibraryImage_ExistingState = unknown;
+
+/**
  * API - App Store Connect - Find Version.
  *
  * @since 0.34.0
@@ -634,7 +661,9 @@ export type Api_AppStoreConnect_Runner_UpdateLocalization_LocalizationId = strin
 
 export type Api_AppStoreConnect_Runner_UpdateLocalization_Attributes = Record<string, string>;
 
-export type Api_AppStoreConnect_Runner_UpdateLocalization_Returns = Promise<void>;
+export type Api_AppStoreConnect_Runner_UpdateLocalization_Returns = Promise<Shared_AppStoreConnectResource>;
+
+export type Api_AppStoreConnect_Runner_UpdateLocalization_Response = Shared_AppStoreConnectResource | undefined;
 
 /**
  * API - App Store Connect - Upload Asset Library Image.

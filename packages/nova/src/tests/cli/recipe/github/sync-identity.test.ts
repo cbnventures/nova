@@ -9,10 +9,7 @@ import {
 
 import { Runner as CliRecipeGithubSyncIdentity } from '../../../../cli/recipe/github/sync-identity.js';
 import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
-import {
-  LIB_REGEX_PATTERN_TOPIC_FLAG,
-  LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT,
-} from '../../../../lib/regex.js';
+import { LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT } from '../../../../lib/regex.js';
 import * as utility from '../../../../lib/utility.js';
 import * as toolkit from '../../../../toolkit/index.js';
 
@@ -103,37 +100,32 @@ import type {
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NeitherTopicsNorKeywordsResultsInNoApiCall_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NeitherTopicsNorKeywordsResultsInNoApiCall_LoadSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NeitherTopicsNorKeywordsResultsInNoApiCall_TopicsCall,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_Calls,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_ExecuteShellSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsCommandExistsSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsProjectRootSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_LoadSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TopicsCall,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TypescriptCount,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_Calls,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_ExecuteShellSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsCommandExistsSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsProjectRootSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_LoadSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_TopicsCall,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_ExecuteShellSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_HasTooLongWarn,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsCommandExistsSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsProjectRootSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoadSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoggerWarnSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_WarnCalls,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Calls,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_ExecuteShellSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_HasTrimWarn,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsCommandExistsSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsProjectRootSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Keywords,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoadSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoggerWarnSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicMatches,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicsCall,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_WarnCalls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TopicsCall,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TypescriptCount,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_TopicsCall,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_TopicsCall,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Keywords,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_TopicsCall,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyDescriptionSetCallsGhRepoEditWithOnlyDescriptionFlag_Calls,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyDescriptionSetCallsGhRepoEditWithOnlyDescriptionFlag_EditCall,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyDescriptionSetCallsGhRepoEditWithOnlyDescriptionFlag_ExecuteShellSpy,
@@ -193,12 +185,12 @@ import type {
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_LoggerCustomizeReturn,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_LoggerCustomizeSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_TopicsCall,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_Calls,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_ExecuteShellSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsCommandExistsSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsProjectRootSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_LoadSpy,
-  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_TopicsCall,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_TopicsCall,
 } from '../../../../types/tests/cli/recipe/github/sync-identity.test.d.ts';
 
 /**
@@ -1053,10 +1045,10 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     return;
   });
 
-  it('topics derived from project.keywords are normalized in api call', async () => {
-    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+  it('topics derived from project.keywords are sent in api call', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1070,15 +1062,15 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       },
       project: {
         keywords: [
-          'TypeScript',
-          'mono repo',
+          'typescript',
+          'mono-repo',
         ],
       },
     });
 
-    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1115,9 +1107,9 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     await CliRecipeGithubSyncIdentity.run({});
 
-    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_Calls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_Calls = executeShellSpy['mock']['calls'];
 
-    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_TopicsCall = calls.find((call) => (
+    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreSentInApiCall_TopicsCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh api -X PUT') === true
     ));
@@ -1126,12 +1118,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     ok(
       typeof topicsCall[0] === 'string' && topicsCall[0].includes('typescript') === true,
-      'Expected normalized typescript topic',
+      'Expected typescript topic',
     );
 
     ok(
       typeof topicsCall[0] === 'string' && topicsCall[0].includes('mono-repo') === true,
-      'Expected normalized mono-repo topic',
+      'Expected mono-repo topic',
     );
 
     isProjectRootSpy.mockRestore();
@@ -1692,10 +1684,10 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     return;
   });
 
-  it('normalizeTopics drops keywords that become empty after stripping', async () => {
-    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+  it('non-topic characters in keywords set exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1710,9 +1702,9 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       project: { keywords: ['@@@'] },
     });
 
-    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1749,14 +1741,16 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     await CliRecipeGithubSyncIdentity.run({});
 
-    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_Calls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_Calls = executeShellSpy['mock']['calls'];
 
-    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_TopicsCall = calls.find((call) => (
+    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicCharactersInKeywordsSetExitCode1_TopicsCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh api -X PUT') === true
     ));
 
-    strictEqual(topicsCall, undefined, 'Expected no topics call since all were stripped to empty');
+    strictEqual(topicsCall, undefined, 'Expected no topics call for a keyword that is not a valid topic');
+
+    strictEqual(process.exitCode, 1);
 
     isProjectRootSpy.mockRestore();
 
@@ -1769,10 +1763,10 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     return;
   });
 
-  it('normalizeTopics drops topics exceeding 50 chars with warn', async () => {
-    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+  it('non-topic length over 50 chars sets exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1787,9 +1781,9 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       project: { keywords: ['a'.repeat(51)] },
     });
 
-    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1824,18 +1818,18 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       });
     });
 
-    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
-
     await CliRecipeGithubSyncIdentity.run({});
 
-    const warnCalls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_WarnCalls = loggerWarnSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
 
-    const hasTooLongWarn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_HasTooLongWarn = warnCalls.some((call) => (
+    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicLengthOver50CharsSetsExitCode1_TopicsCall = calls.find((call) => (
       typeof call[0] === 'string'
-      && call[0].includes('dropped topic exceeding 50 chars') === true
+      && call[0].includes('gh api -X PUT') === true
     ));
 
-    ok(hasTooLongWarn, 'Expected warn about dropped topic exceeding 50 chars');
+    strictEqual(topicsCall, undefined, 'Expected no topics call for a keyword longer than 50 characters');
+
+    strictEqual(process.exitCode, 1);
 
     isProjectRootSpy.mockRestore();
 
@@ -1845,15 +1839,13 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     executeShellSpy.mockRestore();
 
-    loggerWarnSpy.mockRestore();
-
     return;
   });
 
-  it('normalizeTopics deduplicates topics keeping first occurrence', async () => {
-    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+  it('no duplicate topics sent when keywords repeat', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1868,15 +1860,15 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       project: {
         keywords: [
           'typescript',
-          'TypeScript',
+          'typescript',
           'nodejs',
         ],
       },
     });
 
-    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1913,16 +1905,16 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     await CliRecipeGithubSyncIdentity.run({});
 
-    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_Calls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_Calls = executeShellSpy['mock']['calls'];
 
-    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TopicsCall = calls.find((call) => (
+    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TopicsCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh api -X PUT') === true
     ));
 
     ok(topicsCall !== undefined, 'Expected topics call');
 
-    const typescriptCount: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_TypescriptCount = (typeof topicsCall[0] === 'string') ? (topicsCall[0].match(new RegExp(LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT.source, 'g')) ?? []).length : 0;
+    const typescriptCount: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NoDuplicateTopicsSentWhenKeywordsRepeat_TypescriptCount = (typeof topicsCall[0] === 'string') ? (topicsCall[0].match(new RegExp(LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT.source, 'g')) ?? []).length : 0;
 
     strictEqual(typescriptCount, 1, 'Expected typescript topic to appear exactly once after deduplication');
 
@@ -1937,15 +1929,15 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     return;
   });
 
-  it('normalizeTopics trims to 20 topics with warn when more than 20 provided', async () => {
-    const keywords: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Keywords = Array.from(
+  it('non-topic total over 20 keywords sets exitCode=1', async () => {
+    const keywords: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Keywords = Array.from(
       { length: 25 },
       (_ignored, index) => `keyword-${index}`,
     );
 
-    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1960,9 +1952,9 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       project: { keywords },
     });
 
-    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1997,31 +1989,18 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       });
     });
 
-    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
-
     await CliRecipeGithubSyncIdentity.run({});
 
-    const warnCalls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_WarnCalls = loggerWarnSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
 
-    const hasTrimWarn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_HasTrimWarn = warnCalls.some((call) => (
-      typeof call[0] === 'string'
-      && call[0].includes('more than 20 topics') === true
-    ));
-
-    ok(hasTrimWarn, 'Expected warn about topics trimmed to 20');
-
-    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Calls = executeShellSpy['mock']['calls'];
-
-    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicsCall = calls.find((call) => (
+    const topicsCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NonTopicTotalOver20KeywordsSetsExitCode1_TopicsCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh api -X PUT') === true
     ));
 
-    ok(topicsCall !== undefined, 'Expected topics call');
+    strictEqual(topicsCall, undefined, 'Expected no topics call for more than 20 keywords');
 
-    const topicMatches: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_TopicMatches = (typeof topicsCall[0] === 'string') ? topicsCall[0].match(new RegExp(LIB_REGEX_PATTERN_TOPIC_FLAG.source, 'g')) : null;
-
-    strictEqual((topicMatches ?? []).length, 20, 'Expected exactly 20 topics in api call');
+    strictEqual(process.exitCode, 1);
 
     isProjectRootSpy.mockRestore();
 
@@ -2030,8 +2009,6 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     isCommandExistsSpy.mockRestore();
 
     executeShellSpy.mockRestore();
-
-    loggerWarnSpy.mockRestore();
 
     return;
   });

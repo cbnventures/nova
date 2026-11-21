@@ -1,0 +1,21 @@
+  - type: "textarea"
+    id: "problem"
+    attributes:
+      label: "Problem or Use Case"
+      description: "Describe the problem or workflow that the requested change should address."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "requested-outcome"
+    attributes:
+      label: "Requested Outcome"
+      description: "Describe the behavior you want and what a successful result would look like."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "alternatives"
+    attributes:
+      label: "Alternatives Considered"
+      description: "Describe any current workaround or alternative approach you considered."
+    validations:
+      required: false

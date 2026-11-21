@@ -1,6 +1,9 @@
 {
   "references": [
     {
+      "path": "./tsconfig.cli.json"
+    },
+    {
       "path": "./tsconfig.config.json"
     },
     {
@@ -11,9 +14,6 @@
     },
     {
       "path": "./tsconfig.worker.json"
-    },
-    {
-      "path": "./tsconfig.cli.json"
     }
   ],
   "files": []

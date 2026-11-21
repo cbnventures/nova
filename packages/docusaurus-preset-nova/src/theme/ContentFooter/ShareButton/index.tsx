@@ -2,6 +2,8 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 import { useState } from 'react';
 
+import { buildShareHref } from '../../../lib/share-targets.js';
+
 import type {
   Theme_ContentFooter_ShareButton_Index_ShareButton_Copied,
   Theme_ContentFooter_ShareButton_Index_ShareButton_CopiedState,
@@ -89,25 +91,9 @@ function ShareButton(props: Theme_ContentFooter_ShareButton_Index_ShareButton_Pr
     );
   }
 
-  let shareHref: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = '';
+  const shareHref: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = buildShareHref(props['platform'], props['shareUrl']);
 
-  if (props['platform'] === 'x') {
-    shareHref = `https://x.com/intent/tweet?url=${encodeURIComponent(props['shareUrl'])}`;
-  }
-
-  if (props['platform'] === 'facebook') {
-    shareHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(props['shareUrl'])}`;
-  }
-
-  if (props['platform'] === 'linkedin') {
-    shareHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(props['shareUrl'])}`;
-  }
-
-  if (props['platform'] === 'reddit') {
-    shareHref = `https://www.reddit.com/submit?url=${encodeURIComponent(props['shareUrl'])}`;
-  }
-
-  if (shareHref === '') {
+  if (shareHref === undefined) {
     return undefined;
   }
 

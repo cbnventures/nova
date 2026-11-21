@@ -9,6 +9,20 @@ import {
   GITHUB_RUNNER_IMAGES_README_URL,
   Runner as GithubRunnerImages,
 } from '../../api/github-runner-images.js';
+import {
+  getSupportedAttributeFileBundles,
+  isSupportedAttributeFileConfigPath,
+  mergeAttributeLines,
+} from '../../lib/attribute-files.js';
+import {
+  formatDescriptionLimitMessage,
+  resolveDestinationDescription,
+  resolveDockerHubDescriptionDestination,
+  resolveGithubActionDescriptionDestination,
+  resolvePfsenseCommentDestination,
+  resolveShortDescriptionLimit,
+  resolveShortDescriptionLimitMessage,
+} from '../../lib/description-limits.js';
 import { libEnvGithub } from '../../lib/env-github.js';
 import { libEnvManagedSet } from '../../lib/env-managed-set.js';
 import { libEnvNamespace } from '../../lib/env-namespace.js';
@@ -29,6 +43,13 @@ import {
   libItemSyncRoles,
   libItemValidEntityRoles,
 } from '../../lib/item.js';
+import {
+  formatKeywordLimitMessage,
+  resolveDestinationKeywords,
+  resolveGithubTopicsDestination,
+  resolveKeywordCountLimit,
+  resolveProjectKeywordsLimitMessage,
+} from '../../lib/keyword-limits.js';
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
@@ -52,6 +73,7 @@ import {
   libWorkflowStepKinds,
   libWorkflowTemplatesMetadata,
 } from '../../lib/workflow-templates.js';
+import { resolveNonNpmDeployTargets } from '../../lib/workspace-policy.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -88,6 +110,9 @@ import type {
   Cli_Utility_Configure_Runner_IsArtifactRecordInput_Sources,
   Cli_Utility_Configure_Runner_IsArtifactRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_IsArtifactRecordInput_Value,
+  Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Returns,
+  Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Value,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Parsed,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Returns,
   Cli_Utility_Configure_Runner_IsBooleanRecordInput_Trimmed,
@@ -208,6 +233,36 @@ import type {
   Cli_Utility_Configure_Runner_PromptArtifacts_OutputValue,
   Cli_Utility_Configure_Runner_PromptArtifacts_Parsed,
   Cli_Utility_Configure_Runner_PromptArtifacts_Returns,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Action,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_AttributeFiles,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutput,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutputKey,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutputResult,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_BundleSummary,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Choices,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Config,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Conflicts,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Entry,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Existing,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutput,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutputKey,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutputResult,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_NextEntry,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutput,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutputKey,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutputResult,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Paths,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternCount,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Patterns,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutput,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutputKey,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutputResult,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutput,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutputKey,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutputResult,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_SeparatorIndex,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_TargetPath,
   Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutput,
   Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey,
   Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputResult,
@@ -215,8 +270,10 @@ import type {
   Cli_Utility_Configure_Runner_PromptDockerHub_CategoryChoices,
   Cli_Utility_Configure_Runner_PromptDockerHub_CategorySlugs,
   Cli_Utility_Configure_Runner_PromptDockerHub_Config,
+  Cli_Utility_Configure_Runner_PromptDockerHub_DescriptionInput,
   Cli_Utility_Configure_Runner_PromptDockerHub_DockerHub,
   Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubComponentValue,
+  Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubDescriptionValue,
   Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubRecipesInput,
   Cli_Utility_Configure_Runner_PromptDockerHub_Existing,
   Cli_Utility_Configure_Runner_PromptDockerHub_ExistingRecipes,
@@ -241,6 +298,12 @@ import type {
   Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent,
   Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Returns,
   Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubComponent_Trimmed,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Candidate,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Description,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Destination,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Returns,
+  Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Trimmed,
   Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityInitial,
   Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityOrder,
   Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue,
@@ -525,6 +588,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptGithub_GithubRepoInput,
   Cli_Utility_Configure_Runner_PromptGithub_GithubRepoValue,
   Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsInput,
+  Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsValue,
   Cli_Utility_Configure_Runner_PromptGithub_HasAndroidPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasDockerUrl,
   Cli_Utility_Configure_Runner_PromptGithub_HasExplicitBugReportFields,
@@ -588,6 +652,11 @@ import type {
   Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo,
   Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo_Returns,
   Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo_Trimmed,
+  Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics,
+  Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_CandidateTopics,
+  Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Destination,
+  Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Keywords,
+  Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Returns,
   Cli_Utility_Configure_Runner_PromptGithub_VisibilityInitial,
   Cli_Utility_Configure_Runner_PromptGithub_VisibilityOrder,
   Cli_Utility_Configure_Runner_PromptGithub_VisibilityOutput,
@@ -775,7 +844,8 @@ import type {
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectPlatforms,
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectPronouns,
   Cli_Utility_Configure_Runner_PromptProject_ExistingProjectStartingYear,
-  Cli_Utility_Configure_Runner_PromptProject_HasDockerHub,
+  Cli_Utility_Configure_Runner_PromptProject_KeywordsDestination,
+  Cli_Utility_Configure_Runner_PromptProject_KeywordsMessage,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutput,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutputKey,
   Cli_Utility_Configure_Runner_PromptProject_LegalNameOutputResult,
@@ -820,6 +890,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptProject_Returns,
   Cli_Utility_Configure_Runner_PromptProject_RolesToSync,
   Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionCount,
+  Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionDestination,
   Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit,
   Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage,
   Cli_Utility_Configure_Runner_PromptProject_SlugChanged,
@@ -833,7 +904,10 @@ import type {
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong_Returns,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Returns,
+  Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_ShortDescriptionLimitMessage,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords,
+  Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_KeywordsLimitMessage,
+  Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_NormalizedKeywords,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Returns,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug,
   Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug_Returns,
@@ -923,10 +997,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputResult,
   Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue,
   Cli_Utility_Configure_Runner_PromptSettings_Config,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumInitial,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumInput,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutput,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputKey,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputResult,
+  Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputValue,
   Cli_Utility_Configure_Runner_PromptSettings_CurrentDirectory,
   Cli_Utility_Configure_Runner_PromptSettings_CurrentStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingCache,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency,
+  Cli_Utility_Configure_Runner_PromptSettings_ExistingCoverage,
   Cli_Utility_Configure_Runner_PromptSettings_LockedStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningInitial,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput,
@@ -1291,21 +1372,35 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_DependenciesSelectedSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_DependenciesSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_DependenciesSettingsPrompt,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_DeployTargets,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_EnvironmentSelectedSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_EnvironmentSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_EnvironmentSettingsPrompt,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingEntry,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingGithubAction,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingPfsense,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingPolicyIndex,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingRecipes,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingRoleIndex,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingSettings,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionDescription,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionDescriptionValue,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPrompt,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPromptKey,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPromptValue,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_IdentitySelectedSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_IdentitySettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_IdentitySettingsPrompt,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_NonNpmTargets,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_Options,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_OwnershipSelectedSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_OwnershipSettings,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_OwnershipSettingsPrompt,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsenseComment,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsenseCommentValue,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePrompt,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePromptKey,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePromptValue,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_Policy,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_PolicyEntry,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_PolicyPrompt,
@@ -1337,6 +1432,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedPolicy,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedRecipes,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedRole,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Description,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Destination,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Returns,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Trimmed,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Description,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Destination,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Returns,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Trimmed,
+  Cli_Utility_Configure_Runner_PromptWorkspacesForm_Workspace,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Config,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_EnvFileName,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Environment,
@@ -1671,6 +1777,32 @@ export class Runner {
 
     if (libEnvNamespace.isValidPrefix(trimmed) === false) {
       return 'Use one uppercase word containing only letters or digits, starting with a letter, followed by "_" (for example, "CBN_").';
+    }
+
+    return true;
+  }
+
+  /**
+   * CLI - Utility - Configure - Is Attribute File Path Input.
+   *
+   * Validates project-relative ".gitattributes" paths with the same check that
+   * config parsing and the attribute-files generator use.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Returns}
+   *
+   * @since 0.49.0
+   */
+  public static isAttributeFilePathInput(value: Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Value): Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a project-relative .gitattributes path.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsAttributeFilePathInput_Trimmed = value.trim();
+
+    if (isSupportedAttributeFileConfigPath(trimmed) === false) {
+      return 'Use a project-relative path that starts with "./" and ends in .gitattributes.';
     }
 
     return true;
@@ -2216,6 +2348,39 @@ export class Runner {
       return true;
     };
 
+    /**
+     * CLI - Utility - Configure - Prompt Docker Hub - Validate Docker Hub Description.
+     *
+     * Checks the Docker Hub description override, or the short description it
+     * falls back to when left blank, against Docker Hub's length limit.
+     *
+     * @param {Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubDescriptionValue} dockerHubDescriptionValue - Docker hub description value.
+     *
+     * @returns {Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Returns}
+     *
+     * @since 0.49.0
+     */
+    const validateDockerHubDescription: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription = (dockerHubDescriptionValue: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHubDescriptionValue): Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Returns => {
+      const trimmed: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Trimmed = (typeof dockerHubDescriptionValue === 'string') ? dockerHubDescriptionValue.trim() : '';
+      const candidate: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Candidate = {
+        namespace: '',
+        repository: '',
+      };
+
+      if (trimmed !== '') {
+        candidate.description = trimmed;
+      }
+
+      const destination: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Destination = resolveDockerHubDescriptionDestination(candidate);
+      const description: Cli_Utility_Configure_Runner_PromptDockerHub_ValidateDockerHubDescription_Description = resolveDestinationDescription(destination, config);
+
+      if (description === undefined) {
+        return true;
+      }
+
+      return formatDescriptionLimitMessage(destination, description) ?? true;
+    };
+
     const basicsOutput: Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputKey, Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputValue>([
       {
         type: 'text',
@@ -2230,6 +2395,13 @@ export class Runner {
         message: 'Docker Hub repository',
         initial: (existing !== undefined) ? existing['repository'] : '',
         validate: validateDockerHubComponent,
+      },
+      {
+        type: 'text',
+        name: 'dockerHubDescription',
+        message: 'Docker Hub description (blank uses the project short description)',
+        initial: (existing !== undefined) ? existing['description'] ?? '' : '',
+        validate: validateDockerHubDescription,
       },
       {
         type: 'select',
@@ -2287,10 +2459,15 @@ export class Runner {
     const basicsOutputResult: Cli_Utility_Configure_Runner_PromptDockerHub_BasicsOutputResult = basicsOutput['result'];
     const namespaceInput: Cli_Utility_Configure_Runner_PromptDockerHub_NamespaceInput = String(basicsOutputResult.dockerHubNamespace).trim();
     const repositoryInput: Cli_Utility_Configure_Runner_PromptDockerHub_RepositoryInput = String(basicsOutputResult.dockerHubRepository).trim();
+    const descriptionInput: Cli_Utility_Configure_Runner_PromptDockerHub_DescriptionInput = String(basicsOutputResult.dockerHubDescription ?? '').trim();
     const dockerHub: Cli_Utility_Configure_Runner_PromptDockerHub_DockerHub = {
       namespace: namespaceInput,
       repository: repositoryInput,
     };
+
+    if (descriptionInput !== '') {
+      dockerHub.description = descriptionInput;
+    }
     const visibilityValue: Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue = basicsOutputResult.dockerHubVisibility as Cli_Utility_Configure_Runner_PromptDockerHub_VisibilityValue;
     const categorySlugs: Cli_Utility_Configure_Runner_PromptDockerHub_CategorySlugs = (Array.isArray(basicsOutputResult.dockerHubCategories) === true) ? basicsOutputResult.dockerHubCategories : [];
     const immutableValue: Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue = basicsOutputResult.dockerHubImmutableTags as Cli_Utility_Configure_Runner_PromptDockerHub_ImmutableValue;
@@ -2456,6 +2633,11 @@ export class Runner {
         description: 'Manage project-specific physical ignore-file patterns.',
         handler: Runner['promptIgnoreFiles'],
       },
+      attributeFiles: {
+        label: 'Attribute Files',
+        description: 'Manage generated .gitattributes files, their Nova bundles, and project patterns.',
+        handler: Runner['promptAttributeFiles'],
+      },
       agents: {
         label: 'AI Tools',
         description: 'Select the AI tools (Claude Code, Codex) to generate conventions for.',
@@ -2558,10 +2740,12 @@ export class Runner {
     const projectName: Cli_Utility_Configure_Runner_PromptProject_ProjectName = (existingProjectName !== undefined) ? { ...existingProjectName } : {};
     const projectDescription: Cli_Utility_Configure_Runner_PromptProject_ProjectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
     const projectKeywords: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
-    const hasDockerHub: Cli_Utility_Configure_Runner_PromptProject_HasDockerHub = config['dockerHub'] !== undefined;
-    const shortDescriptionLimit: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit = (hasDockerHub === true) ? 100 : Infinity;
+    const shortDescriptionDestination: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionDestination = resolveShortDescriptionLimit(config);
+    const shortDescriptionLimit: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionLimit = (shortDescriptionDestination !== undefined) ? shortDescriptionDestination['limit'] : Infinity;
     const shortDescriptionCount: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionCount = (projectDescription['short'] !== undefined) ? projectDescription['short'].length : 0;
-    const shortDescriptionMessage: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage = (hasDockerHub === true) ? `Short description (${shortDescriptionCount}/100)` : 'Short description';
+    const shortDescriptionMessage: Cli_Utility_Configure_Runner_PromptProject_ShortDescriptionMessage = (shortDescriptionDestination !== undefined) ? `Short description (${shortDescriptionCount}/${shortDescriptionLimit})` : 'Short description';
+    const keywordsDestination: Cli_Utility_Configure_Runner_PromptProject_KeywordsDestination = resolveKeywordCountLimit(config);
+    const keywordsMessage: Cli_Utility_Configure_Runner_PromptProject_KeywordsMessage = (keywordsDestination !== undefined && keywordsDestination['maxCount'] !== undefined) ? `Keywords (comma separated, ${projectKeywords.length}/${keywordsDestination['maxCount']})` : 'Keywords (comma separated)';
 
     /**
      * CLI - Utility - Configure - Prompt Project - Validate Project Name Title.
@@ -2608,15 +2792,16 @@ export class Runner {
      * @since 0.11.0
      */
     const validateProjectDescriptionShort: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort = (projectDescriptionShortValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortValue): Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Returns => {
-      if (
-        hasDockerHub === true
-        && typeof projectDescriptionShortValue === 'string'
-        && projectDescriptionShortValue.trim().length > 100
-      ) {
-        return 'Docker Hub\'s limit is 100 characters.';
+      // Every active destination without its own override publishes the short description.
+      if (typeof projectDescriptionShortValue === 'string') {
+        const shortDescriptionLimitMessage: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_ShortDescriptionLimitMessage = resolveShortDescriptionLimitMessage(config, projectDescriptionShortValue.trim());
+
+        if (shortDescriptionLimitMessage !== undefined) {
+          return shortDescriptionLimitMessage;
+        }
       }
 
-      return Runner.normalizeText(projectDescriptionShortValue, shortDescriptionLimit)['result'];
+      return Runner.normalizeText(projectDescriptionShortValue, Infinity)['result'];
     };
 
     /**
@@ -2648,7 +2833,20 @@ export class Runner {
      * @since 0.11.0
      */
     const validateProjectKeywords: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords = (projectKeywordsValue: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsValue): Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Returns => {
-      return Runner.normalizeTextArray(projectKeywordsValue, 50)['result'];
+      const normalizedKeywords: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_NormalizedKeywords = Runner.normalizeTextArray(projectKeywordsValue, 50);
+
+      if (normalizedKeywords['result'] !== true) {
+        return normalizedKeywords['result'];
+      }
+
+      // Every active destination without its own override publishes these keywords.
+      const keywordsLimitMessage: Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_KeywordsLimitMessage = resolveProjectKeywordsLimitMessage(config, normalizedKeywords['sanitized'] ?? []);
+
+      if (keywordsLimitMessage !== undefined) {
+        return keywordsLimitMessage;
+      }
+
+      return true;
     };
 
     const questionsOutput: Cli_Utility_Configure_Runner_PromptProject_QuestionsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptProject_QuestionsOutputKey, Cli_Utility_Configure_Runner_PromptProject_QuestionsOutputResult>([
@@ -2683,7 +2881,7 @@ export class Runner {
       {
         type: 'text',
         name: 'projectKeywords',
-        message: 'Keywords (comma separated)',
+        message: keywordsMessage,
         initial: (projectKeywords.length > 0) ? projectKeywords.join(', ') : '',
         validate: validateProjectKeywords,
       },
@@ -2697,7 +2895,7 @@ export class Runner {
 
     const projectNameTitleInput: Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleInput = Runner.normalizeText(questionsOutputResultValue.projectNameTitle, Infinity)['sanitized'];
     const projectNameSlugInput: Cli_Utility_Configure_Runner_PromptProject_ProjectNameSlugInput = Runner.normalizeProjectSlug(questionsOutputResultValue.projectNameSlug)['sanitized'];
-    const projectDescriptionShortInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionShort, shortDescriptionLimit)['sanitized'];
+    const projectDescriptionShortInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionShort, Infinity)['sanitized'];
     const projectDescriptionLongInput: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionLongInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionLong, Infinity)['sanitized'];
     const projectKeywordsInput: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsInput = Runner.normalizeTextArray(questionsOutputResultValue.projectKeywords, 50)['sanitized'];
 
@@ -3856,6 +4054,33 @@ export class Runner {
       },
     };
 
+    /**
+     * CLI - Utility - Configure - Prompt GitHub - Validate GitHub Topics.
+     *
+     * Checks the "github.topics" override, or the "project.keywords" it falls back
+     * to when left blank, against GitHub's topic count, length, and character rules.
+     *
+     * @param {Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsValue} githubTopicsValue - Github topics value.
+     *
+     * @returns {Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Returns}
+     *
+     * @since 0.49.0
+     */
+    const validateGithubTopics: Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics = (githubTopicsValue: Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsValue): Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Returns => {
+      const candidateTopics: Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_CandidateTopics = (typeof githubTopicsValue === 'string') ? githubTopicsValue.split(',').map((topic) => topic.trim()).filter((topic) => topic !== '') : [];
+      const destination: Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Destination = {
+        ...resolveGithubTopicsDestination(undefined),
+        override: (candidateTopics.length > 0) ? candidateTopics : undefined,
+      };
+      const keywords: Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubTopics_Keywords = resolveDestinationKeywords(destination, config);
+
+      if (keywords === undefined) {
+        return true;
+      }
+
+      return formatKeywordLimitMessage(destination, keywords) ?? true;
+    };
+
     // Prompt 6: topics.
     const existingTopics: Cli_Utility_Configure_Runner_PromptGithub_ExistingTopics = github['topics'];
     const topicsTextOutput: Cli_Utility_Configure_Runner_PromptGithub_TopicsTextOutput = await Runner.promptWithCancel<'githubTopics', string>({
@@ -3863,6 +4088,7 @@ export class Runner {
       name: 'githubTopics',
       message: 'GitHub topics (comma-separated; blank unsets)',
       initial: (existingTopics !== undefined) ? existingTopics.join(', ') : '',
+      validate: validateGithubTopics,
     });
 
     if (topicsTextOutput['cancelled'] === true) {
@@ -4426,6 +4652,36 @@ export class Runner {
           value: 'screenshots',
           selected: selectedBugReportFields.includes('screenshots'),
         },
+        {
+          title: 'Cloudflare Worker',
+          value: 'cloudflare-worker',
+          selected: selectedBugReportFields.includes('cloudflare-worker'),
+        },
+        {
+          title: 'pfSense Package',
+          value: 'pfsense-package',
+          selected: selectedBugReportFields.includes('pfsense-package'),
+        },
+        {
+          title: 'GitHub Action',
+          value: 'github-action',
+          selected: selectedBugReportFields.includes('github-action'),
+        },
+        {
+          title: 'Native App',
+          value: 'native-app',
+          selected: selectedBugReportFields.includes('native-app'),
+        },
+        {
+          title: 'Documentation Site',
+          value: 'docs-site',
+          selected: selectedBugReportFields.includes('docs-site'),
+        },
+        {
+          title: 'Notifications',
+          value: 'notifications',
+          selected: selectedBugReportFields.includes('notifications'),
+        },
       ],
       hint: '- Space to select. Return to submit',
     });
@@ -4435,7 +4691,12 @@ export class Runner {
     }
 
     const bugReportFields: Cli_Utility_Configure_Runner_PromptGithub_BugReportFields = issueTemplateOutput['result'].bugReportFields ?? [];
-    const issueTemplateInput: Cli_Utility_Configure_Runner_PromptGithub_IssueTemplateInput = { bugReportFields };
+
+    // Custom questions are edited in nova.config.json, so configure carries them through untouched.
+    const issueTemplateInput: Cli_Utility_Configure_Runner_PromptGithub_IssueTemplateInput = {
+      bugReportFields,
+      ...((existingGithubForIssueTemplate !== undefined && existingGithubForIssueTemplate['customQuestions'] !== undefined) ? { customQuestions: existingGithubForIssueTemplate['customQuestions'] } : {}),
+    };
 
     // Build the github config object in schema declaration order.
     const githubConfig: Cli_Utility_Configure_Runner_PromptGithub_GithubConfig = {
@@ -5798,6 +6059,11 @@ export class Runner {
           selected: selectedBadges.includes('github-license'),
         },
         {
+          title: 'Test Coverage (requires settings.coverage.minimum)',
+          value: 'coverage',
+          selected: selectedBadges.includes('coverage'),
+        },
+        {
           title: 'Funding (requires urls.fundSources)',
           value: 'funding',
           selected: selectedBadges.includes('funding'),
@@ -6031,9 +6297,19 @@ export class Runner {
     while (true) {
       const choices: Cli_Utility_Configure_Runner_PromptRecipes_Choices = [
         {
+          title: 'Docker',
+          description: 'Docker image file recipes.',
+          value: 'docker',
+        },
+        {
           title: 'GitHub',
           description: 'Repository synchronization recipes.',
           value: 'github',
+        },
+        {
+          title: 'GitHub Action',
+          description: 'GitHub Action manifest recipes.',
+          value: 'github-action',
         },
         {
           title: 'License',
@@ -6051,9 +6327,19 @@ export class Runner {
           value: 'nova-config',
         },
         {
+          title: 'pfSense',
+          description: 'pfSense package port recipes.',
+          value: 'pfsense',
+        },
+        {
           title: 'README',
           description: 'README generation recipes.',
           value: 'read-me',
+        },
+        {
+          title: 'TSConfig',
+          description: 'TSConfig project-reference recipes.',
+          value: 'tsconfig',
         },
       ];
 
@@ -6117,10 +6403,22 @@ export class Runner {
         continue;
       }
 
-      if (target === 'github') {
+      if (target === 'docker') {
+        entries = recipes['docker'];
+        allowedRecipeNames = libItemRecipesByCategory['docker'];
+        label = 'Docker';
+      } else if (target === 'github') {
         entries = recipes['github'];
         allowedRecipeNames = libItemRecipesByCategory['github'];
         label = 'GitHub';
+      } else if (target === 'github-action') {
+        entries = recipes['github-action'];
+        allowedRecipeNames = libItemRecipesByCategory['github-action'];
+        label = 'GitHub Action';
+      } else if (target === 'pfsense') {
+        entries = recipes['pfsense'];
+        allowedRecipeNames = libItemRecipesByCategory['pfsense'];
+        label = 'pfSense';
       } else if (target === 'license') {
         entries = recipes['license'];
         allowedRecipeNames = libItemRecipesByCategory['license'];
@@ -6129,6 +6427,10 @@ export class Runner {
         entries = recipes['nova-config'];
         allowedRecipeNames = libItemRecipesByCategory['nova-config'];
         label = 'Nova Config';
+      } else if (target === 'tsconfig') {
+        entries = recipes['tsconfig'];
+        allowedRecipeNames = libItemRecipesByCategory['tsconfig'];
+        label = 'TSConfig';
       }
 
       const categoryEntries: Cli_Utility_Configure_Runner_PromptRecipes_CategoryEntries = await Runner.promptRecipeEntries(entries, allowedRecipeNames, label);
@@ -8577,6 +8879,180 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Prompt Attribute Files.
+   *
+   * Manages every ".gitattributes" path, its Nova bundles, and its project patterns
+   * from one category. A pattern that conflicts with a selected bundle is refused.
+   *
+   * @param {Cli_Utility_Configure_Runner_PromptAttributeFiles_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async promptAttributeFiles(config: Cli_Utility_Configure_Runner_PromptAttributeFiles_Config): Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns {
+    const attributeFiles: Cli_Utility_Configure_Runner_PromptAttributeFiles_AttributeFiles = config['attributeFiles'] ?? {};
+
+    while (true) {
+      const paths: Cli_Utility_Configure_Runner_PromptAttributeFiles_Paths = Object.keys(attributeFiles).sort((pathA, pathB) => pathA.localeCompare(pathB));
+      const choices: Cli_Utility_Configure_Runner_PromptAttributeFiles_Choices = [];
+
+      for (const path of paths) {
+        const entry: Cli_Utility_Configure_Runner_PromptAttributeFiles_Entry = attributeFiles[path];
+
+        if (entry === undefined) {
+          continue;
+        }
+
+        const patternCount: Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternCount = (entry['patterns'] !== undefined) ? entry['patterns'].length : 0;
+        const bundleSummary: Cli_Utility_Configure_Runner_PromptAttributeFiles_BundleSummary = (entry['bundles'].length > 0) ? entry['bundles'].join(', ') : 'No Nova bundles';
+
+        choices.push({
+          title: `${chalk.cyan.bold('[EDIT]')} ${path}`,
+          description: `${bundleSummary} · ${patternCount} project pattern(s).`,
+          value: `edit:${path}`,
+        });
+        choices.push({
+          title: `${chalk.red.bold('[REMOVE]')} ${path}`,
+          description: 'Stop generating this attribute file.',
+          value: `remove:${path}`,
+        });
+      }
+
+      choices.push({
+        title: 'Add an attribute file',
+        description: 'Add a project-relative .gitattributes path.',
+        value: 'add',
+      });
+      choices.push({
+        title: 'Back',
+        description: 'Return to the category selection.',
+        value: 'back',
+      });
+
+      const menuOutput: Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutputKey, Cli_Utility_Configure_Runner_PromptAttributeFiles_MenuOutputResult>({
+        type: 'select',
+        name: 'action',
+        message: (paths.length > 0) ? 'Select an attribute file to manage.' : 'No attribute files configured. Choose an option.',
+        choices,
+      });
+
+      if (menuOutput['cancelled'] === true || menuOutput['result'].action === 'back') {
+        if (Object.keys(attributeFiles).length > 0) {
+          Object.assign(config, { attributeFiles });
+        } else {
+          Reflect.deleteProperty(config, 'attributeFiles');
+        }
+
+        return 'back';
+      }
+
+      const action: Cli_Utility_Configure_Runner_PromptAttributeFiles_Action = menuOutput['result'].action;
+      let targetPath: Cli_Utility_Configure_Runner_PromptAttributeFiles_TargetPath = '';
+
+      if (action === 'add') {
+        const pathOutput: Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutputKey, Cli_Utility_Configure_Runner_PromptAttributeFiles_PathOutputResult>({
+          type: 'text',
+          name: 'path',
+          message: 'Project-relative .gitattributes path',
+          initial: './packages/docker/.gitattributes',
+          validate: Runner['isAttributeFilePathInput'],
+        });
+
+        if (pathOutput['cancelled'] === true) {
+          continue;
+        }
+
+        targetPath = pathOutput['result'].path.trim();
+
+        if (attributeFiles[targetPath] !== undefined) {
+          Logger.customize({
+            name: 'Runner.promptAttributeFiles',
+            purpose: 'duplicate',
+            padTop: 1,
+            padBottom: 1,
+          }).error(`Attribute file "${targetPath}" is already configured.`);
+
+          continue;
+        }
+      } else {
+        const separatorIndex: Cli_Utility_Configure_Runner_PromptAttributeFiles_SeparatorIndex = action.indexOf(':');
+
+        targetPath = (separatorIndex >= 0) ? action.slice(separatorIndex + 1) : '';
+
+        if (targetPath === '' || attributeFiles[targetPath] === undefined) {
+          continue;
+        }
+
+        if (action.startsWith('remove:') === true) {
+          const removeOutput: Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutputKey, Cli_Utility_Configure_Runner_PromptAttributeFiles_RemoveOutputResult>({
+            type: 'confirm',
+            name: 'confirm',
+            message: `Remove attribute file "${targetPath}"?`,
+            initial: false,
+          });
+
+          if (removeOutput['cancelled'] === false && removeOutput['result'].confirm === true) {
+            Reflect.deleteProperty(attributeFiles, targetPath);
+          }
+
+          continue;
+        }
+      }
+
+      const existing: Cli_Utility_Configure_Runner_PromptAttributeFiles_Existing = attributeFiles[targetPath];
+      const bundlesOutput: Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutputKey, Cli_Utility_Configure_Runner_PromptAttributeFiles_BundlesOutputResult>({
+        type: 'multiselect',
+        name: 'bundles',
+        message: `Nova bundles for "${targetPath}" (space to select)`,
+        choices: getSupportedAttributeFileBundles().map((bundle) => ({
+          title: bundle,
+          value: bundle,
+          selected: (existing === undefined) ? true : existing['bundles'].includes(bundle),
+        })),
+        hint: '- Space to select. Return to submit',
+      });
+
+      if (bundlesOutput['cancelled'] === true) {
+        continue;
+      }
+
+      const patternsOutput: Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutputKey, Cli_Utility_Configure_Runner_PromptAttributeFiles_PatternsOutputResult>({
+        type: 'text',
+        name: 'patterns',
+        message: 'Project attribute lines (comma separated)',
+        initial: (existing !== undefined && existing['patterns'] !== undefined) ? existing['patterns'].join(', ') : '',
+      });
+
+      if (patternsOutput['cancelled'] === true) {
+        continue;
+      }
+
+      const patterns: Cli_Utility_Configure_Runner_PromptAttributeFiles_Patterns = patternsOutput['result'].patterns.split(',').map((pattern) => pattern.trim()).filter((pattern) => pattern !== '');
+      const nextEntry: Cli_Utility_Configure_Runner_PromptAttributeFiles_NextEntry = {
+        bundles: bundlesOutput['result'].bundles,
+        patterns,
+      };
+      const conflicts: Cli_Utility_Configure_Runner_PromptAttributeFiles_Conflicts = mergeAttributeLines(nextEntry)['conflicts'];
+
+      if (conflicts.length > 0) {
+        Logger.customize({
+          name: 'Runner.promptAttributeFiles',
+          purpose: 'conflict',
+          padTop: 1,
+          padBottom: 1,
+        }).error(conflicts.join(' '));
+
+        continue;
+      }
+
+      Reflect.set(attributeFiles, targetPath, nextEntry);
+    }
+  }
+
+  /**
    * CLI - Utility - Configure - Prompt Agents.
    *
    * Multi-selects the AI tools (Claude Code, Codex) used by the agent-conventions
@@ -9934,12 +10410,53 @@ export class Runner {
       runWorkspaces.root = 'skip';
     }
 
+    const existingCoverage: Cli_Utility_Configure_Runner_PromptSettings_ExistingCoverage = settings['coverage'];
+    const coverageMinimumInitial: Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumInitial = (existingCoverage === undefined || existingCoverage['minimum'] === undefined) ? '' : String(existingCoverage['minimum']);
+    const coverageMinimumOutput: Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputValue>({
+      type: 'text',
+      name: 'coverageMinimum',
+      message: 'Minimum test coverage percentage, from 0 to 100 (blank unsets):',
+      initial: coverageMinimumInitial,
+      validate: (value) => {
+        if (
+          typeof value === 'string'
+          && (
+            value.trim() === ''
+            || (
+              Number.isFinite(Number(value.trim())) === true
+              && Number(value.trim()) >= 0
+              && Number(value.trim()) <= 100
+            )
+          )
+        ) {
+          return true;
+        }
+
+        return 'Enter a number from 0 to 100, or leave it blank.';
+      },
+    });
+
+    if (coverageMinimumOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const coverageMinimumOutputResult: Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumOutputResult = coverageMinimumOutput['result'];
+    const coverageMinimumInput: Cli_Utility_Configure_Runner_PromptSettings_CoverageMinimumInput = coverageMinimumOutputResult.coverageMinimum.trim();
     const updatedSettings: Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings = {
       ...settings,
       lockStepVersioning: lockStepVersioningOutputResult.lockStepVersioning,
       runWorkspaces,
       versionStrategy: strategyInput,
     };
+
+    if (coverageMinimumInput === '') {
+      Reflect.deleteProperty(updatedSettings, 'coverage');
+    } else {
+      updatedSettings.coverage = {
+        ...existingCoverage,
+        minimum: Number(coverageMinimumInput),
+      };
+    }
 
     Object.assign(config, {
       settings: updatedSettings,
@@ -10047,6 +10564,7 @@ export class Runner {
         existingWorkspace: workspaces[workspacePath],
         existingPackageJsonRecipes: packageJsonRecipes[workspacePath],
         projectSlug: (config['project'] !== undefined && config['project']['name'] !== undefined) ? config['project']['name']['slug'] : undefined,
+        config,
       });
 
       if (formResult['action'] === 'back') {
@@ -10203,6 +10721,60 @@ export class Runner {
       return Runner.normalizeWorkspaceName(namePrompt['result'].workspaceName, role, base)['sanitized'];
     };
 
+    /**
+     * CLI - Utility - Configure - Prompt Workspaces Form - Validate GitHub Action Description.
+     *
+     * Checks the GitHub Marketplace description override, or the short description
+     * it falls back to when left blank, against the Marketplace length limit.
+     *
+     * @param {Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionDescriptionValue} githubActionDescriptionValue - Github action description value.
+     *
+     * @returns {Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Returns}
+     *
+     * @since 0.49.0
+     */
+    const validateGithubActionDescription: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription = (githubActionDescriptionValue: Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionDescriptionValue): Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Returns => {
+      const trimmed: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Trimmed = (typeof githubActionDescriptionValue === 'string') ? githubActionDescriptionValue.trim() : '';
+      const destination: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Destination = {
+        ...resolveGithubActionDescriptionDestination(undefined, options['workspacePath']),
+        override: (trimmed !== '') ? trimmed : undefined,
+      };
+      const description: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidateGithubActionDescription_Description = resolveDestinationDescription(destination, options['config']);
+
+      if (description === undefined) {
+        return true;
+      }
+
+      return formatDescriptionLimitMessage(destination, description) ?? true;
+    };
+
+    /**
+     * CLI - Utility - Configure - Prompt Workspaces Form - Validate Pfsense Comment.
+     *
+     * Checks the FreeBSD port COMMENT override, or the short description it falls
+     * back to when left blank, against the 70-character, no-period COMMENT rules.
+     *
+     * @param {Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsenseCommentValue} pfsenseCommentValue - Pfsense comment value.
+     *
+     * @returns {Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Returns}
+     *
+     * @since 0.49.0
+     */
+    const validatePfsenseComment: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment = (pfsenseCommentValue: Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsenseCommentValue): Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Returns => {
+      const trimmed: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Trimmed = (typeof pfsenseCommentValue === 'string') ? pfsenseCommentValue.trim() : '';
+      const destination: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Destination = {
+        ...resolvePfsenseCommentDestination(undefined, options['workspacePath']),
+        override: (trimmed !== '') ? trimmed : undefined,
+      };
+      const description: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ValidatePfsenseComment_Description = resolveDestinationDescription(destination, options['config']);
+
+      if (description === undefined) {
+        return true;
+      }
+
+      return formatDescriptionLimitMessage(destination, description) ?? true;
+    };
+
     // For each workspace, the user must select a role.
     const existingRoleIndex: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingRoleIndex = allowedRoles.findIndex((allowedRole) => options['existingWorkspace'] !== undefined && allowedRole['value'] === options['existingWorkspace']['role']);
 
@@ -10227,7 +10799,10 @@ export class Runner {
     }
 
     const selectedRole: Cli_Utility_Configure_Runner_PromptWorkspacesForm_SelectedRole = rolePrompt['result'].workspaceRole;
-    const allowedPolicies: Cli_Utility_Configure_Runner_PromptWorkspacesForm_AllowedPolicies = libItemAllowedPoliciesByRole[selectedRole];
+    const nonNpmTargets: Cli_Utility_Configure_Runner_PromptWorkspacesForm_NonNpmTargets = resolveNonNpmDeployTargets(options['config'], options['workspacePath']);
+
+    // Only npm packages can be distributable, so a workspace published anywhere else cannot pick it.
+    const allowedPolicies: Cli_Utility_Configure_Runner_PromptWorkspacesForm_AllowedPolicies = libItemAllowedPoliciesByRole[selectedRole].filter((allowedPolicy) => allowedPolicy !== 'distributable' || nonNpmTargets.length === 0);
 
     // Based on the selected role, list out allowed policy choices.
     const existingPolicyIndex: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingPolicyIndex = allowedPolicies.findIndex((allowedPolicy) => options['existingWorkspace'] !== undefined && allowedPolicy === options['existingWorkspace']['policy']);
@@ -10537,13 +11112,72 @@ export class Runner {
       }
     }
 
+    const workspace: Cli_Utility_Configure_Runner_PromptWorkspacesForm_Workspace = {
+      name: resolvedName,
+      role: selectedRole,
+      policy: selectedPolicy,
+    };
+    const existingGithubAction: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingGithubAction = (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['githubAction'] : undefined;
+    const existingPfsense: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ExistingPfsense = (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['pfsense'] : undefined;
+    const deployTargets: Cli_Utility_Configure_Runner_PromptWorkspacesForm_DeployTargets = (options['config']['workflows'] ?? []).flatMap((workflow) => workflow['deploy'] ?? []);
+
+    // A "github-action" deploy target makes this workspace a GitHub Marketplace listing.
+    if (deployTargets.some((deployTarget) => deployTarget['to'] === 'github-action' && deployTarget['path'] === options['workspacePath']) === true) {
+      const githubActionPrompt: Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPrompt = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPromptKey, Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionPromptValue>({
+        type: 'text',
+        name: 'workspaceGithubActionDescription',
+        message: 'GitHub Marketplace description (blank uses the project short description)',
+        initial: (existingGithubAction !== undefined) ? existingGithubAction['description'] ?? '' : '',
+        validate: validateGithubActionDescription,
+      });
+
+      if (githubActionPrompt['cancelled'] === true) {
+        return {
+          action: 'back',
+        };
+      }
+
+      const githubActionDescription: Cli_Utility_Configure_Runner_PromptWorkspacesForm_GithubActionDescription = String(githubActionPrompt['result'].workspaceGithubActionDescription ?? '').trim();
+
+      if (githubActionDescription !== '') {
+        workspace.githubAction = {
+          description: githubActionDescription,
+        };
+      }
+    } else if (existingGithubAction !== undefined) {
+      workspace.githubAction = existingGithubAction;
+    }
+
+    // A "pfsense" deploy target makes this workspace a FreeBSD port with its own COMMENT.
+    if (deployTargets.some((deployTarget) => deployTarget['to'] === 'pfsense' && deployTarget['path'] === options['workspacePath']) === true) {
+      const pfsensePrompt: Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePrompt = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePromptKey, Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsensePromptValue>({
+        type: 'text',
+        name: 'workspacePfsenseComment',
+        message: 'FreeBSD port COMMENT (blank uses the project short description)',
+        initial: (existingPfsense !== undefined) ? existingPfsense['comment'] ?? '' : '',
+        validate: validatePfsenseComment,
+      });
+
+      if (pfsensePrompt['cancelled'] === true) {
+        return {
+          action: 'back',
+        };
+      }
+
+      const pfsenseComment: Cli_Utility_Configure_Runner_PromptWorkspacesForm_PfsenseComment = String(pfsensePrompt['result'].workspacePfsenseComment ?? '').trim();
+
+      if (pfsenseComment !== '') {
+        workspace.pfsense = {
+          comment: pfsenseComment,
+        };
+      }
+    } else if (existingPfsense !== undefined) {
+      workspace.pfsense = existingPfsense;
+    }
+
     return {
       action: 'apply',
-      workspace: {
-        name: resolvedName,
-        role: selectedRole,
-        policy: selectedPolicy,
-      },
+      workspace,
       packageJsonRecipes: recipes,
     };
   }

@@ -74,7 +74,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
     ok(bugReportCall[1].includes('value: "We truly appreciate'), 'Expected a business pronoun at the beginning of a sentence to be capitalized');
 
-    ok(bugReportCall[1].includes('so we can easily recreate'), 'Expected a business pronoun within a sentence to remain lowercase');
+    ok(bugReportCall[1].includes('so we can recreate'), 'Expected a business pronoun within a sentence to remain lowercase');
 
     isProjectRootSpy.mockRestore();
 

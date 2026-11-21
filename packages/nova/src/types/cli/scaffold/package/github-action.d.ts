@@ -1,3 +1,41 @@
+import type { Shared_DescriptionDestination, Shared_NovaConfig } from '../../../shared.d.ts';
+
+/**
+ * CLI - Scaffold - Package - GitHub Action - Finalize Workspace.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_WorkspaceDirectory = string;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_ConfigRoot = string;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_Returns = Promise<void>;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_Config = Shared_NovaConfig;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_ActionFilePath = string;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_FinalizeWorkspace_WorkspacePath = string;
+
+/**
+ * CLI - Scaffold - Package - GitHub Action - Resolve Replacements.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_WorkspaceName = string;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_ConfigRoot = string;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_Returns = Promise<Map<RegExp, string> | undefined>;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_Config = Shared_NovaConfig;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_DescriptionDestination = Shared_DescriptionDestination;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_Description = string | undefined;
+
+export type Cli_Scaffold_Package_GithubAction_Runner_ResolveReplacements_DescriptionLimitMessage = string | undefined;
+
 /**
  * CLI - Scaffold - Package - GitHub Action - Run.
  *

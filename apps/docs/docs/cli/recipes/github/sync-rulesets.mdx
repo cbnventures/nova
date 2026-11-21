@@ -37,7 +37,7 @@ Nova does not edit or delete any other repository or organization ruleset. Revie
 
 - **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
 - **Repository administration access** — The authenticated user must be able to manage rulesets.
-- **A GitHub plan that supports the selected rules** — GitHub may reject unavailable enforcement modes or rule types.
+- **A GitHub plan that supports the selected rules** — GitHub may reject unavailable enforcement modes or rule types. Private repositories on the free plan are skipped with a warning.
 - **`github.owner` and `github.repo`** — Both fields identify the target repository.
 
 ## Behavior
@@ -67,6 +67,14 @@ Nova rejects combinations GitHub cannot interpret:
 - At least one protection rule must be enabled.
 
 Use `enforcement: "disabled"` to create or maintain the policy without enforcing it. Removing the config does not delete the managed ruleset; Nova only mutates it when `github.rulesets.defaultBranch` is present.
+
+### Private Repositories on the Free Plan
+
+GitHub's free plan cannot use rulesets on private repositories. Before it looks up the ruleset, Nova reads whether the repository is private and, when it is, the owner's plan. A private repository on the free plan prints a warning, skips the ruleset, and exits successfully, so `nova utility run-recipes` keeps going.
+
+When the plan is not readable, such as an organization plan that only organization owners can see, Nova continues. If GitHub then answers that the plan needs an upgrade, Nova prints the same warning and exits successfully. Any other GitHub error still fails the recipe.
+
+It is recommended to keep `sync-rulesets` enabled on private repositories too. The recipe starts applying the ruleset as soon as the repository becomes public or moves to GitHub Pro, Team, or Enterprise.
 
 ## Settings
 

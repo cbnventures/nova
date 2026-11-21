@@ -1,6 +1,5 @@
 import { promises as fs } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
 import { Logger } from '../toolkit/index.js';
 import { libItemEnvironmentProfileDotenvFiles } from './item.js';
@@ -8,7 +7,7 @@ import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
 } from './regex.js';
-import { saveGeneratedFile } from './utility.js';
+import { resolveTemplatePath, saveGeneratedFile } from './utility.js';
 
 import type {
   Lib_Dotenv_ClassifyEnvValue_FirstChar,
@@ -61,7 +60,6 @@ import type {
   Lib_Dotenv_WriteDotenvFiles_Content,
   Lib_Dotenv_WriteDotenvFiles_ContentLineKey,
   Lib_Dotenv_WriteDotenvFiles_ContentLines,
-  Lib_Dotenv_WriteDotenvFiles_CurrentDirectory,
   Lib_Dotenv_WriteDotenvFiles_CustomSection,
   Lib_Dotenv_WriteDotenvFiles_CustomSectionSample,
   Lib_Dotenv_WriteDotenvFiles_EnvLines,
@@ -371,8 +369,7 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
   const isPrune: Lib_Dotenv_WriteDotenvFiles_IsPrune = options['prune'] === true;
   const shouldReport: Lib_Dotenv_WriteDotenvFiles_ShouldReport = options['report'] !== false;
   const profilesEnabled: Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled = options['profilesEnabled'] === true;
-  const currentDirectory: Lib_Dotenv_WriteDotenvFiles_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
-  const templateDirectory: Lib_Dotenv_WriteDotenvFiles_TemplateDirectory = resolve(currentDirectory, '../../templates/generators/must-haves/dotenv');
+  const templateDirectory: Lib_Dotenv_WriteDotenvFiles_TemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/dotenv');
   const files: Lib_Dotenv_WriteDotenvFiles_Files = (profilesEnabled === true) ? [...libItemEnvironmentProfileDotenvFiles] : [
     '.env',
     '.env.sample',

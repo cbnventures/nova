@@ -1,0 +1,167 @@
+---
+id: "cross-env"
+title: "Cross Env"
+description: "Set environment variables for one command the same way on macOS, Linux, and Windows by running the cross-env command line that ships with Nova."
+keywords:
+  - "nova"
+  - "nova cross-env"
+  - "cross-env"
+  - "environment variables"
+  - "package.json scripts"
+  - "windows scripts"
+  - "cross-platform"
+tags:
+  - "cli"
+  - "cross-env"
+  - "environment"
+  - "scripts"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Set environment variables for one command the same way on macOS, Linux, and Windows, without adding `cross-env` to every project.
+
+## Summary
+
+The `cross-env` command runs the [cross-env](https://www.npmjs.com/package/cross-env) command line that ships with Nova. Every argument after `cross-env` goes to it unchanged, so `NAME=value` pairs set variables and the rest is the command to run.
+
+Nova adds no options of its own. The command ends with the wrapped command's exit code, and a termination signal sent to Nova (`SIGINT`, `SIGTERM`, `SIGHUP`, or `SIGBREAK` on Windows) is passed on to it.
+
+:::tip One Copy for Every Project
+A project that already depends on Nova can drop its own `cross-env` <Terminology title="A package your code needs in order to run" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependency</Terminology> and use the copy Nova pins.
+:::
+
+## Why Use This Command?
+
+- Write `NAME=value command` in a `package.json` script and have it work in Windows shells too.
+- Keep one pinned `cross-env` version across projects through Nova.
+- Keep the exit code and interrupt behavior of the wrapped command, so `npm run` and <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> see the same result.
+
+## Use Cases
+
+- **Dev server ports** — Set a port variable before starting a dev server, such as `PORTLESS_PORT=3000` for [portless](https://www.npmjs.com/package/portless).
+- **Build modes** — Set a mode variable like `NODE_ENV=production` for one build command.
+- **Shared scripts** — Keep one script line that every contributor can run, whatever their operating system.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="A release line that keeps getting fixes for a long time" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility cross-env NAME=value <command> [arguments...]
+
+    # Shorthand
+    nova util xenv NAME=value <command> [arguments...]
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility cross-env NAME=value <command> [arguments...]
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util xenv NAME=value <command> [arguments...]
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+This command has no options of its own. Flags after the first argument, such as `--host` or `--no-open`, belong to the wrapped command and pass through unchanged. See the [cross-env README](https://www.npmjs.com/package/cross-env) for the variable syntax it accepts.
+
+## How It Works
+
+1. **Find cross-env** — Locate the `cross-env` command line installed with Nova, not one on the `PATH`.
+2. **Run it** — Start it with the current Node.js binary, inherited input and output, and every argument unchanged.
+3. **Pass on signals** — While it runs, relay `SIGINT`, `SIGTERM`, `SIGHUP`, and `SIGBREAK` to it, the same signals `cross-env` passes on to the wrapped command.
+4. **Exit the same way** — End with its exit code, or with the same signal when `cross-env` itself is stopped by one.
+
+## Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Dev server on a fixed port"
+        # Original
+        nova utility cross-env PORTLESS_PORT=3000 portless dev-example-docs docusaurus start --no-open
+
+        # Shorthand
+        nova util xenv PORTLESS_PORT=3000 portless dev-example-docs docusaurus start --no-open
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Production build"
+        # Original
+        nova utility cross-env NODE_ENV=production node ./scripts/build.mjs
+
+        # Shorthand
+        nova util xenv NODE_ENV=production node ./scripts/build.mjs
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Dev server on a fixed port"
+        # Original
+        npx --yes @cbnventures/nova@latest utility cross-env PORTLESS_PORT=3000 portless dev-example-docs docusaurus start --no-open
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util xenv PORTLESS_PORT=3000 portless dev-example-docs docusaurus start --no-open
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Production build"
+        # Original
+        npx --yes @cbnventures/nova@latest utility cross-env NODE_ENV=production node ./scripts/build.mjs
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util xenv NODE_ENV=production node ./scripts/build.mjs
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+In a `package.json` script, the installed form works because npm puts the project's `node_modules/.bin` on the `PATH`:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:start": "nova utility cross-env PORTLESS_PORT=3000 portless dev-example-docs docusaurus start --no-open"
+  }
+}
+```
+
+## Troubleshooting
+
+- **The variable is not set** — Put every `NAME=value` pair before the command. Pairs after the command name are passed to the command as arguments.
+- **Nova prints its own help** — A `--help` or `-h` placed right after `cross-env` is read by Nova. Put it after the command name to reach the wrapped command.
+- **Exit code 1 after an interrupt** — `cross-env` exits with code 1 when the wrapped command stops from a signal other than `SIGINT`, and with code 0 after `SIGINT`.

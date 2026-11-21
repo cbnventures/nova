@@ -10,7 +10,12 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  describe,
+  it,
+  vi,
+} from 'vitest';
 
 import { Runner as CliUtilityTypeCheck } from '../../../cli/utility/type-check.js';
 
@@ -23,6 +28,12 @@ import type {
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigContents,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_Messages,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_TsconfigPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_Messages,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_IndexPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_ProjectDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_TsconfigContents,
@@ -40,6 +51,8 @@ import type {
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_ProjectDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_IndexPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_ProjectDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigContents,
@@ -284,6 +297,152 @@ describe('CliUtilityTypeCheck.run', async () => {
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
+  });
+
+  it('refuses skip lib check from an extended config', async () => {
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_ProjectDirectory = join(sandboxRoot, 'skip-lib-check');
+
+    await mkdir(projectDirectory, { recursive: true });
+    await writeFile(join(projectDirectory, 'tsconfig.base.json'), `${JSON.stringify({
+      compilerOptions: {
+        skipLibCheck: true,
+      },
+    }, null, 2)}\n`, 'utf-8');
+
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+
+    await writeFile(tsconfigPath, `${JSON.stringify({
+      extends: './tsconfig.base.json',
+      compilerOptions: {
+        noEmit: true,
+        strict: true,
+      },
+      include: ['*.ts'],
+    }, null, 2)}\n`, 'utf-8');
+    await writeFile(join(projectDirectory, 'index.ts'), 'export const greeting: string = "hello";\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const messages: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RefusesSkipLibCheckFromAnExtendedConfig_Messages = [];
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation((chunk) => {
+      messages.push(String(chunk));
+
+      return true;
+    });
+
+    vi.spyOn(process['stdout'], 'write').mockImplementation((chunk) => {
+      messages.push(String(chunk));
+
+      return true;
+    });
+
+    process.exitCode = undefined;
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+    });
+
+    vi.restoreAllMocks();
+
+    strictEqual(process.exitCode, 1);
+    strictEqual(messages.some((message) => message.includes('turns on "skipLibCheck"')), true);
+
+    process.exitCode = undefined;
+
+    return;
+  });
+
+  it('passes a project with no inputs only when pass with no inputs is set', async () => {
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_ProjectDirectory = join(sandboxRoot, 'no-inputs');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_TsconfigPath = join(projectDirectory, 'tsconfig.scripts.json');
+
+    await writeFile(tsconfigPath, `${JSON.stringify({
+      compilerOptions: {
+        allowJs: true,
+        noEmit: true,
+      },
+      include: ['./scripts/**/*.mjs'],
+    }, null, 2)}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const messages: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_PassesAProjectWithNoInputsOnlyWhenPassWithNoInputsIsSet_Messages = [];
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation((chunk) => {
+      messages.push(String(chunk));
+
+      return true;
+    });
+
+    vi.spyOn(process['stdout'], 'write').mockImplementation((chunk) => {
+      messages.push(String(chunk));
+
+      return true;
+    });
+
+    process.exitCode = undefined;
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = undefined;
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+      passWithNoInputs: true,
+    });
+
+    vi.restoreAllMocks();
+
+    strictEqual(process.exitCode, undefined);
+    strictEqual(messages.some((message) => message.includes('Passing because "--pass-with-no-inputs" is set.')), true);
+
+    process.exitCode = undefined;
+
+    return;
+  });
+
+  it('still fails a project with no inputs and another config error', async () => {
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_ProjectDirectory = join(sandboxRoot, 'no-inputs-invalid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_StillFailsAProjectWithNoInputsAndAnotherConfigError_TsconfigPath = join(projectDirectory, 'tsconfig.scripts.json');
+
+    await writeFile(tsconfigPath, `${JSON.stringify({
+      compilerOptions: {
+        target: 'not-a-target',
+      },
+      include: ['./scripts/**/*.mjs'],
+    }, null, 2)}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation(() => true);
+
+    vi.spyOn(process['stdout'], 'write').mockImplementation(() => true);
+
+    process.exitCode = undefined;
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+      passWithNoInputs: true,
+    });
+
+    vi.restoreAllMocks();
+
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = undefined;
 
     return;
   });

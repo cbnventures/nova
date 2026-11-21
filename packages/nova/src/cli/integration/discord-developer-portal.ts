@@ -1,11 +1,7 @@
 import { join } from 'node:path';
 
-import {
-  readDotenvValue,
-  requireObject,
-  requireString,
-  resolveWorkspace,
-} from '../../lib/integration.js';
+import { Runner as ApiDiscord } from '../../api/discord.js';
+import { readDotenvValue, resolveWorkspace } from '../../lib/integration.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -17,12 +13,7 @@ import type {
   Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_WorkspaceEnvPath,
   Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_WorkspaceToken,
   Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application,
-  Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationId,
-  Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationName,
-  Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Data,
   Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Options,
-  Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Response,
-  Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ResponseText,
   Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Returns,
   Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Token,
 } from '../../types/cli/integration/discord-developer-portal.d.ts';
@@ -50,25 +41,9 @@ export class Runner {
    */
   public static async validateToken(options: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Options): Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Returns {
     const token: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Token = await Runner.resolveToken(options);
-    const response: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Response = await fetch('https://discord.com/api/v10/oauth2/applications/@me', {
-      headers: {
-        'Authorization': `Bot ${token}`,
-        'Accept': 'application/json',
-      },
-    });
+    const application: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application = await ApiDiscord.fetchCurrentApplication(token);
 
-    if (response.status !== 200) {
-      const responseText: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ResponseText = await response.text();
-
-      throw new Error(`Discord token validation failed (${response.status}): ${responseText}`);
-    }
-
-    const data: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Data = await response.json();
-    const application: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application = requireObject(data, 'Discord application');
-    const applicationId: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationId = requireString(application['id'], 'Discord application ID');
-    const applicationName: Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationName = requireString(application['name'], 'Discord application name');
-
-    Logger.info(`Discord token is valid for ${applicationName} (${applicationId}).`);
+    Logger.info(`Discord token is valid for ${application['name']} (${application['id']}).`);
 
     return;
   }

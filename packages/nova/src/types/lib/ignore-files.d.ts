@@ -63,8 +63,6 @@ export type Lib_IgnoreFiles_RenderIgnoreFile_BaseName = string;
 
 export type Lib_IgnoreFiles_RenderIgnoreFile_FileBundles = Record<string, string> | undefined;
 
-export type Lib_IgnoreFiles_RenderIgnoreFile_CurrentDirectory = string;
-
 export type Lib_IgnoreFiles_RenderIgnoreFile_TemplateRoot = string;
 
 export type Lib_IgnoreFiles_RenderIgnoreFile_BundleContents = string[];

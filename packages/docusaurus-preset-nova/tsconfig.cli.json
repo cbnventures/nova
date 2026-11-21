@@ -9,7 +9,7 @@
     "verbatimModuleSyntax": false,
     "noEmitOnError": false,
     "outDir": "./build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "types": [
       "@docusaurus/types",
       "@types/node",

@@ -8,12 +8,9 @@ import {
   resolve,
   sep,
 } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { minimatch } from 'minimatch';
 import prompts from 'prompts';
-
-import novaPackageJson from '../../package.json' with { type: 'json' };
 
 import { Logger } from '../toolkit/index.js';
 import { Runner as LibCorepack } from './corepack.js';
@@ -23,6 +20,7 @@ import { renderIgnoreFile } from './ignore-files.js';
 import { libItemAllowedRecipes } from './item.js';
 import { normalizeNovaConfigTopLevelOrder } from './nova-config-order.js';
 import { Runner as LibNovaConfig } from './nova-config.js';
+import { readPackageJsonFile } from './package-files.js';
 import {
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
@@ -76,6 +74,7 @@ import type {
   Lib_Scaffold_CreateMonorepoRoot_AppsDirectory,
   Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent,
   Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath,
+  Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson,
   Lib_Scaffold_CreateMonorepoRoot_OutputDirectory,
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent,
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath,
@@ -217,6 +216,7 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug,
   Lib_Scaffold_RegisterWorkspaceInConfig_PublishDeploy,
+  Lib_Scaffold_RegisterWorkspaceInConfig_PublishesToNpm,
   Lib_Scaffold_RegisterWorkspaceInConfig_PublishWorkflow,
   Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
   Lib_Scaffold_RegisterWorkspaceInConfig_Recipes,
@@ -232,7 +232,6 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces,
   Lib_Scaffold_ReportError_Message,
   Lib_Scaffold_ReportError_Returns,
-  Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory,
   Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answer,
   Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Answers,
@@ -272,6 +271,7 @@ import type {
   Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipes,
   Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Returns,
   Lib_Scaffold_ResolveScaffoldPolicy_Category,
+  Lib_Scaffold_ResolveScaffoldPolicy_PublishesToNpm,
   Lib_Scaffold_ResolveScaffoldPolicy_Returns,
   Lib_Scaffold_ResolveScaffoldWorkspaceVersion_Config,
   Lib_Scaffold_ResolveScaffoldWorkspaceVersion_ConfigRoot,
@@ -316,6 +316,9 @@ import type {
   Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug,
   Lib_Scaffold_ResolveWorkspacePackageName_Returns,
   Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName,
+  Lib_Scaffold_ResolveWorkspaceTitle_Returns,
+  Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceName,
+  Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceNameSegments,
   Lib_Scaffold_RunScaffold_AllowScriptProfiles,
   Lib_Scaffold_RunScaffold_AllowScripts,
   Lib_Scaffold_RunScaffold_Config,
@@ -745,6 +748,24 @@ export function resolveWorkspacePackageName(projectSlug: Lib_Scaffold_ResolveWor
   }
 
   return (category === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
+}
+
+/**
+ * Lib - Scaffold - Resolve Workspace Title.
+ *
+ * Turns a workspace directory name into the display title that scaffolds write.
+ * Recipes reuse it so regenerated titles always match the original scaffold.
+ *
+ * @param {Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceName} workspaceName - Workspace name.
+ *
+ * @returns {Lib_Scaffold_ResolveWorkspaceTitle_Returns}
+ *
+ * @since 0.49.0
+ */
+export function resolveWorkspaceTitle(workspaceName: Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceName): Lib_Scaffold_ResolveWorkspaceTitle_Returns {
+  const workspaceNameSegments: Lib_Scaffold_ResolveWorkspaceTitle_WorkspaceNameSegments = workspaceName.split(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN);
+
+  return workspaceNameSegments.map((workspaceNameSegment) => `${workspaceNameSegment.charAt(0).toUpperCase()}${workspaceNameSegment.slice(1)}`).join(' ');
 }
 
 /**
@@ -1512,9 +1533,7 @@ async function collectFiles(directory: Lib_Scaffold_CollectFiles_Directory, pref
  * @since 0.29.0
  */
 function resolveMonorepoRootTemplateDirectory(): Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns {
-  const currentDirectory: Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
-
-  return join(currentDirectory, '..', '..', 'templates', 'scaffold', 'starter', 'base');
+  return resolveTemplatePath(import.meta.url, 'scaffold/starter/base');
 }
 
 /**
@@ -1700,6 +1719,8 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
 
   await fs.mkdir(packagesDirectory, { recursive: true });
 
+  const novaPackageJson: Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson = readPackageJsonFile('package.json') as Lib_Scaffold_CreateMonorepoRoot_NovaPackageJson;
+
   // Create root package.json.
   const packageJsonContent: Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent = {
     name: `${projectSlug}-project`,
@@ -1712,6 +1733,7 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
       'check': 'nova utility run-workspaces check',
       'check:lint': 'eslint ./ --max-warnings=0',
       'check:types-config': 'nova utility type-check --project tsconfig.config.json',
+      'check:types-scripts': 'nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs',
       'check:types-tests': 'nova utility type-check --project tsconfig.tests.json',
       'check:test': 'vitest run',
       'build': 'nova utility run-workspaces --node-env production build',
@@ -1797,6 +1819,11 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
       },
       'nova-config': {
         'normalize-order': {
+          enabled: true,
+        },
+      },
+      'tsconfig': {
+        'sync-references': {
           enabled: true,
         },
       },
@@ -1973,17 +2000,18 @@ export async function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold
  * Lib - Scaffold - Resolve Scaffold Policy.
  *
  * Maps the public scaffold category to the workspace policy registered in
- * nova.config.json and used to select its initial version.
+ * nova.config.json. Only npm packages are distributable; other packages are trackable.
  *
- * @param {Lib_Scaffold_ResolveScaffoldPolicy_Category} category - Category.
+ * @param {Lib_Scaffold_ResolveScaffoldPolicy_Category}       category       - Category.
+ * @param {Lib_Scaffold_ResolveScaffoldPolicy_PublishesToNpm} publishesToNpm - Publishes to npm.
  *
  * @returns {Lib_Scaffold_ResolveScaffoldPolicy_Returns}
  *
  * @since 0.34.0
  */
-function resolveScaffoldPolicy(category: Lib_Scaffold_ResolveScaffoldPolicy_Category): Lib_Scaffold_ResolveScaffoldPolicy_Returns {
+function resolveScaffoldPolicy(category: Lib_Scaffold_ResolveScaffoldPolicy_Category, publishesToNpm: Lib_Scaffold_ResolveScaffoldPolicy_PublishesToNpm): Lib_Scaffold_ResolveScaffoldPolicy_Returns {
   if (category === 'package' || category === 'tool') {
-    return 'distributable';
+    return (publishesToNpm === true) ? 'distributable' : 'trackable';
   }
 
   if (category === 'docs') {
@@ -2109,12 +2137,13 @@ async function resolveScaffoldWorkspaceVersion(existingRoot: Lib_Scaffold_Resolv
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Artifact}             artifact             - Artifact.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget}         deployTarget         - Deploy target.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix}    environmentPrefix    - Environment prefix.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_PublishesToNpm}       publishesToNpm       - Publishes to npm.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.39.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms, artifact: Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = undefined, deployTarget: Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget = undefined, environmentPrefix: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix = undefined): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms, artifact: Lib_Scaffold_RegisterWorkspaceInConfig_Artifact = undefined, deployTarget: Lib_Scaffold_RegisterWorkspaceInConfig_DeployTarget = undefined, environmentPrefix: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentPrefix = undefined, publishesToNpm: Lib_Scaffold_RegisterWorkspaceInConfig_PublishesToNpm = true): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -2170,7 +2199,7 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
 
   // Determine role and config name based on category.
   const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'package') ? 'package' : category;
-  const policy: Lib_Scaffold_RegisterWorkspaceInConfig_Policy = resolveScaffoldPolicy(category);
+  const policy: Lib_Scaffold_RegisterWorkspaceInConfig_Policy = resolveScaffoldPolicy(category, publishesToNpm);
 
   const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = workspacePackageName;
 
@@ -2579,9 +2608,9 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   const normalizedWorkspaceRelPath: Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath = workspaceRelPath.slice(2);
   const workspaceNameSegments: Lib_Scaffold_RunScaffold_WorkspaceNameSegments = config['workspaceName'].split(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN);
-  const workspaceTitle: Lib_Scaffold_RunScaffold_WorkspaceTitle = workspaceNameSegments.map((workspaceNameSegment) => `${workspaceNameSegment.charAt(0).toUpperCase()}${workspaceNameSegment.slice(1)}`).join(' ');
+  const workspaceTitle: Lib_Scaffold_RunScaffold_WorkspaceTitle = resolveWorkspaceTitle(config['workspaceName']);
   const workspaceIdentifier: Lib_Scaffold_RunScaffold_WorkspaceIdentifier = workspaceNameSegments.map((workspaceNameSegment) => `${workspaceNameSegment.charAt(0).toUpperCase()}${workspaceNameSegment.slice(1)}`).join('');
-  const workspacePolicy: Lib_Scaffold_RunScaffold_WorkspacePolicy = resolveScaffoldPolicy(definition['category']);
+  const workspacePolicy: Lib_Scaffold_RunScaffold_WorkspacePolicy = resolveScaffoldPolicy(definition['category'], definition['publishesToNpm'] !== false);
   let workspaceVersion: Lib_Scaffold_RunScaffold_WorkspaceVersion = undefined;
 
   try {
@@ -3079,7 +3108,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   progress.start('Registering workspace', workspacePackageName);
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms, resolvedArtifact, resolvedDeployTarget, environmentPrefix);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms, resolvedArtifact, resolvedDeployTarget, environmentPrefix, definition['publishesToNpm'] !== false);
 
   await progress.complete();
 

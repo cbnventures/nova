@@ -31,8 +31,5 @@ export default defineConfig({
     include: ['src/tests/**/*.test.ts'],
     globals: false,
     testTimeout: 30000, // 30 seconds.
-    sequence: {
-      concurrent: false,
-    },
   },
 });

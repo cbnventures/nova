@@ -1,7 +1,7 @@
 ---
 id: "runtime-node"
 title: "Runtime - Node"
-description: "Lint Node.js code with eslint-plugin-n, ban raw console and process.exit, and relax hashbang checks on CLI entry points."
+description: "Lint Node.js code with eslint-plugin-n, ban raw console and process.exit, and relax hashbang checks on CLI entry points and scripts."
 keywords:
   - "nova"
   - "runtime node"
@@ -19,7 +19,7 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against raw `console` and `process.exit`, and relax hashbang enforcement on source-level CLI entry points.
+Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against raw `console` and `process.exit`, and relax hashbang enforcement on source-level CLI entry points and scripts.
 
 ## Why Use This Preset?
 
@@ -28,6 +28,7 @@ Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against 
 3. Disallows `process.exit()` so error handling stays structured rather than terminating abruptly.
 4. Warns on synchronous APIs so you avoid blocking the event loop.
 5. Turns off hashbang enforcement for source-level <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> entry points, since the `bin` field points to the build output rather than the source file.
+6. Lets files under `scripts/` carry a shebang or leave it out, so scripts you run directly from the shell lint cleanly without a per-repo exception.
 
 ## Usage
 
@@ -51,7 +52,7 @@ export default [
 
 ## What This Preset Configures
 
-The preset registers `eslint-plugin-n` and applies its recommended Node.js ruleset, then adds project-specific rules and one scoped exception. Each group targets every script extension, except the <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> hashbang exception, which applies only to <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> entry points.
+The preset registers `eslint-plugin-n` and applies its recommended Node.js ruleset, then adds project-specific rules and two scoped exceptions. Each group targets every script extension, except the hashbang exceptions, which apply only to <Terminology title="A tool you drive by typing commands in the terminal" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> entry points and to JavaScript files under `scripts/`.
 
 ### Recommended rules
 
@@ -70,6 +71,12 @@ Registers `eslint-plugin-n` and spreads its recommended ruleset for Node.js. Nov
 | Rule         | What it enforces                                                                                                                   |
 |--------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `n/hashbang` | Disabled on `src/bin/index.*` and `src/cli/index.*`, since the `bin` field points to the build output rather than the source file. |
+
+### Script hashbang
+
+| Rule         | What it enforces                                                                                                                                                                                                                                    |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `n/hashbang` | Disabled on `scripts/**/*.js`, `scripts/**/*.cjs` and `scripts/**/*.mjs`, since a script run directly from the shell needs a shebang and a script run another way does not. The rule can only require or forbid one, so turning it off allows both. |
 
 ## Related
 

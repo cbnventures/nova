@@ -1,10 +1,14 @@
 import type {
   Shared_NovaConfigDockerHubRecipeName,
+  Shared_NovaConfigDockerRecipeName,
+  Shared_NovaConfigGithubActionRecipeName,
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
   Shared_NovaConfigMiscellaneousRecipeName,
   Shared_NovaConfigNovaConfigRecipeName,
+  Shared_NovaConfigPfsenseRecipeName,
   Shared_NovaConfigReadMeRecipeName,
+  Shared_NovaConfigTsconfigRecipeName,
   Shared_NovaConfigWorkspaceRecipeName,
 } from '../../shared.d.ts';
 
@@ -14,12 +18,16 @@ import type {
  * @since 0.14.0
  */
 export type Cli_Recipe_Registry = {
+  'docker': Cli_Recipe_RegistryEntry[];
   'docker-hub': Cli_Recipe_RegistryEntry[];
   'github': Cli_Recipe_RegistryEntry[];
+  'github-action': Cli_Recipe_RegistryEntry[];
   'license': Cli_Recipe_RegistryEntry[];
   'miscellaneous': Cli_Recipe_RegistryEntry[];
   'nova-config': Cli_Recipe_RegistryEntry[];
+  'pfsense': Cli_Recipe_RegistryEntry[];
   'read-me': Cli_Recipe_RegistryEntry[];
+  'tsconfig': Cli_Recipe_RegistryEntry[];
   'package-json': Cli_Recipe_RegistryEntry[];
 };
 
@@ -30,7 +38,7 @@ export type Cli_Recipe_RegistryCategory = keyof Cli_Recipe_Registry;
  *
  * @since 0.14.0
  */
-export type Cli_Recipe_RegistryEntry_Name = Shared_NovaConfigDockerHubRecipeName | Shared_NovaConfigGithubRecipeName | Shared_NovaConfigLicenseRecipeName | Shared_NovaConfigMiscellaneousRecipeName | Shared_NovaConfigNovaConfigRecipeName | Shared_NovaConfigReadMeRecipeName | Shared_NovaConfigWorkspaceRecipeName;
+export type Cli_Recipe_RegistryEntry_Name = Shared_NovaConfigDockerHubRecipeName | Shared_NovaConfigDockerRecipeName | Shared_NovaConfigGithubActionRecipeName | Shared_NovaConfigGithubRecipeName | Shared_NovaConfigLicenseRecipeName | Shared_NovaConfigMiscellaneousRecipeName | Shared_NovaConfigNovaConfigRecipeName | Shared_NovaConfigPfsenseRecipeName | Shared_NovaConfigReadMeRecipeName | Shared_NovaConfigTsconfigRecipeName | Shared_NovaConfigWorkspaceRecipeName;
 
 export type Cli_Recipe_RegistryEntryRunOptions_DryRun = true;
 

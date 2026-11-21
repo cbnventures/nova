@@ -47,7 +47,7 @@ Setting `skipLibCheck: false` in a TSConfig preset catches more bugs, but it als
 
 - **<Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>Monorepo</Terminology> maintenance** — Run type checks per <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with each <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s own `tsconfig.json`.
 - **<Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines** — Add a type-check step that exits with code 1 on project errors while ignoring <Terminology title="A package your code needs in order to run" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependency</Terminology> noise.
-- **Strict TSConfig adoption** — Migrate from `skipLibCheck: true` to `false` incrementally by surfacing only your own errors.
+- **Strict TSConfig adoption** — Drop `skipLibCheck: true` and fix only the errors in your own code.
 - **Pre-commit checks** — Confirm type safety before committing without waiting for a full build.
 
 ## Requirements
@@ -91,23 +91,31 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag                   | Description            |
-|------------------------|------------------------|
-| `-p, --project <path>` | Path to tsconfig.json. |
+| Flag                    | Description                                                       |
+|-------------------------|-------------------------------------------------------------------|
+| `-p, --project <path>`  | Path to tsconfig.json.                                            |
+| `--pass-with-no-inputs` | Pass, with an info line, when the project matches no input files. |
 
 When `--project` is omitted, the command searches for `tsconfig.json` starting from the current working directory.
+
+`--pass-with-no-inputs` covers a project that has nothing to check yet, such as the root `tsconfig.scripts.json` of a new scaffold before it has a `scripts` folder. TypeScript reports that case as error TS18003, "No inputs were found in config file". The flag only turns that error into a pass when it is the only config error; any other config error still fails the run.
+
+```bash
+nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs
+```
 
 ## How It Works
 
 1. **Resolve config** — Locate the `tsconfig.json` file from `--project` or by searching from the current directory.
-2. **Validate config** — Read and parse the TypeScript configuration, reporting malformed JSON and invalid compiler options immediately.
-3. **Set up the type-checker** — Prepare the full TypeScript project from the parsed file list and compiler options.
-4. **Collect diagnostics** — Gather all type errors across the project, including those inside `node_modules`.
-5. **Filter source diagnostics** — Keep source-file diagnostics owned by your project, exclude source diagnostics in `node_modules`, and retain every configuration diagnostic.
-6. **Report** — Print each error with file path, line, column, and message, then exit with code 1 if any errors remain.
+2. **Validate config** — Read and parse the TypeScript configuration, reporting malformed JSON and invalid compiler options immediately. With `--pass-with-no-inputs`, a project whose only config error is TS18003 passes here.
+3. **Refuse `skipLibCheck`** — Stop with code 1 when the resolved config, after every `extends`, turns on `skipLibCheck`. The command never passes the option itself.
+4. **Set up the type-checker** — Prepare the full TypeScript project from the parsed file list and compiler options.
+5. **Collect diagnostics** — Gather all type errors across the project, including those inside `node_modules`.
+6. **Filter source diagnostics** — Keep source-file diagnostics owned by your project, exclude source diagnostics in `node_modules`, and retain every configuration diagnostic.
+7. **Report** — Print each error with file path, line, column, and message, then exit with code 1 if any errors remain.
 
 :::danger Non-Zero Exit Code
-The command exits with code **1** when the TSConfig is invalid or project-owned type errors are found. <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on either problem.
+The command exits with code **1** when the TSConfig is invalid, turns on `skipLibCheck`, or project-owned type errors are found. <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on either problem.
 :::
 
 ## Examples
@@ -170,6 +178,7 @@ The command exits with code **1** when the TSConfig is invalid or project-owned 
 ## Troubleshooting
 
 - **No tsconfig.json found** — Confirm a `tsconfig.json` exists in the current directory, or pass the correct path with `--project`.
+- **Type check refused because of `skipLibCheck`** — Remove `skipLibCheck` from the TSConfig and every config it extends, or set it to `false`. The error names the config that was checked.
 - **TypeScript not installed or unsupported** — Install the supported compiler with `npm install --save-dev typescript@6.0.3`.
 - **Invalid TSConfig but no source location** — Compiler-option diagnostics can apply to the whole `tsconfig.json`, so TypeScript may report the message without a source line and column.
 - **Zero errors but build fails** — This command only checks types; build errors from <Terminology title="Packs many source files into a few that load fast" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundlers</Terminology> or other tools are not covered.

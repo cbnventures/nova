@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID } from './regex.js';
+
 /**
  * Lib - Schema - Docker Hub Categories.
  *
@@ -75,6 +77,76 @@ export const libSchemaDockerHubRepository = z.object({
     write: z.boolean(),
   }),
 });
+
+/**
+ * Lib - Schema - GitHub Issue Form Question.
+ *
+ * Validates one custom question in GitHub's issue-form schema. Unknown keys are
+ * rejected, so a typo fails here instead of on GitHub after the form is pushed.
+ *
+ * @since 0.49.0
+ */
+export const libSchemaGithubIssueFormQuestion = z.discriminatedUnion('type', [
+  z.strictObject({
+    type: z.literal('markdown'),
+    attributes: z.strictObject({
+      value: z.string().min(1),
+    }),
+  }),
+  z.strictObject({
+    type: z.literal('input'),
+    id: z.string().regex(LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID),
+    attributes: z.strictObject({
+      label: z.string().min(1),
+      description: z.string().optional(),
+      placeholder: z.string().optional(),
+      value: z.string().optional(),
+    }),
+    validations: z.strictObject({
+      required: z.boolean().optional(),
+    }).optional(),
+  }),
+  z.strictObject({
+    type: z.literal('textarea'),
+    id: z.string().regex(LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID),
+    attributes: z.strictObject({
+      label: z.string().min(1),
+      description: z.string().optional(),
+      placeholder: z.string().optional(),
+      value: z.string().optional(),
+      render: z.string().optional(),
+    }),
+    validations: z.strictObject({
+      required: z.boolean().optional(),
+    }).optional(),
+  }),
+  z.strictObject({
+    type: z.literal('dropdown'),
+    id: z.string().regex(LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID),
+    attributes: z.strictObject({
+      label: z.string().min(1),
+      description: z.string().optional(),
+      multiple: z.boolean().optional(),
+      options: z.array(z.string().min(1)).min(1),
+      default: z.number().int().min(0).optional(),
+    }),
+    validations: z.strictObject({
+      required: z.boolean().optional(),
+    }).optional(),
+  }),
+  z.strictObject({
+    type: z.literal('checkboxes'),
+    id: z.string().regex(LIB_REGEX_PATTERN_GITHUB_ISSUE_FORM_ID),
+    attributes: z.strictObject({
+      label: z.string().min(1),
+      description: z.string().optional(),
+      options: z.array(z.strictObject({
+        label: z.string().min(1),
+        required: z.boolean().optional(),
+      })).min(1),
+    }),
+  }),
+]);
 
 /**
  * Lib - Schema - Node Releases Schedule.

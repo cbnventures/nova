@@ -101,9 +101,26 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 ├── nova.config.json
 ├── package.json
 ├── tsconfig.config.json
+├── tsconfig.json
+├── tsconfig.scripts.json
 ├── tsconfig.tests.json
 └── vitest.config.mts
 ```
+
+- **`tsconfig.json`** — Reference-only: `files` is empty and `references` lists the config, scripts and tests projects, so the editor's TypeScript server finds all three. The [`tsconfig/sync-references`](/docs/cli/recipes/tsconfig/sync-references) recipe, turned on in the new `nova.config.json`, keeps the list in step with the `tsconfig.*.json` files.
+- **`tsconfig.scripts.json`** — Type-checks `scripts/**/*.mjs` through the `role-scripts` preset. `check:types-scripts` runs it with `--pass-with-no-inputs`, so a root without a `scripts` folder still passes.
+- **`tests/project.test.ts`** — Registers the package-scripts suite and the [tooling coverage suite](/docs/rules/vitest/tooling-coverage), which fails when a root script is ESLint-ignored, missing from `tsconfig.scripts.json`, or when a TSConfig turns on `skipLibCheck`.
+- **`vitest.config.mts`** — Runs `scripts/**/*.test.mjs` and `tests/**/*.test.ts` with `globals: false` and a 30-second test timeout, and skips the `apps` and `packages` workspaces, which run their own suites.
+
+The root `package.json` adds these tooling scripts to the workspace dispatchers:
+
+| Script                | Command                                                                         |
+|-----------------------|---------------------------------------------------------------------------------|
+| `check:lint`          | `eslint ./ --max-warnings=0`                                                    |
+| `check:types-config`  | `nova utility type-check --project tsconfig.config.json`                        |
+| `check:types-scripts` | `nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs` |
+| `check:types-tests`   | `nova utility type-check --project tsconfig.tests.json`                         |
+| `check:test`          | `vitest run`                                                                    |
 
 ## How It Works
 

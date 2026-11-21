@@ -113,7 +113,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 - **Purpose**: Edit project display name, slug, short/long descriptions, keywords, legal name, pronouns, supported platforms, starting year, and license in one guided step.
 - **Nice to know**: Slug updates propagate to <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent. Pronouns control first-person wording (we/us/our vs I/me/my), platforms help suggest initial issue fields and badges, and starting year plus license feed the LICENSE generator.
-- **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max); starting year must be an integer &ge; 1970. When a `dockerHub` section exists, the short-description prompt shows its current character count and rejects values longer than Docker Hub's 100-character limit.
+- **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max); starting year must be an integer &ge; 1970. When a `dockerHub` section exists, the short-description prompt shows its current character count and rejects values longer than Docker Hub's 100-character limit. When GitHub `sync-identity` is enabled without `github.topics`, the keywords prompt shows the count out of 20 and rejects keywords that are not valid GitHub topics; a synced Homebridge plugin also requires `homebridge-plugin`. See [Keyword Limits](/docs/quickstart/nova-config#keyword-limits).
 
 ### Entities
 
@@ -137,7 +137,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 - **Purpose**: Select the exact badges and order generated inside Nova's README badges region.
 - **Nice to know**: When `readme.badges` has never been configured, the wizard suggests badges from the project platforms and available npm, Docker, GitHub, and funding sources. Saving the category writes your choices explicitly, so later generators never guess.
-- **Things to watch**: Verified Homebridge status is never inferred. Badges that depend on npm, Docker, GitHub, or funding metadata require the corresponding source field.
+- **Things to watch**: Verified Homebridge status is never inferred. Badges that depend on npm, Docker, GitHub, or funding metadata require the corresponding source field. The Test Coverage badge renders only once `settings.coverage.minimum` is set.
 
 ### Workspaces
 
@@ -171,8 +171,9 @@ The wizard converts `\n` sequences to actual line breaks when saving. Trigger br
 
 - **Purpose**: Configure GitHub repository settings, policies, issue-template fields, and the GitHub recipes stored under the top-level `recipes.github` block.
 - **Nice to know**: The focused submenu covers repository identity and features, GitHub Actions permissions and allow-lists, ordered labels, every repository policy, the complete default-branch ruleset, security toggles, issue-template fields, and GitHub recipe toggles. Optional booleans include an explicit **Unset** state, so absence stays different from `false`.
+- **Topics**: The topics prompt rejects a list GitHub would not accept: more than 20 topics, or a topic over 50 characters or with characters other than lowercase letters, numbers, and hyphens. Left blank, it checks `project.keywords` instead, the list GitHub then receives.
 - **Actions and policies**: Configure action availability, SHA requirements, selected-action patterns, workflow-token permissions, artifact retention, merge methods and message presentation, auto-merge, update-branch behavior, web signoff, security features, and every supported default-branch protection field without hand-editing JSON.
-- **Bug report fields**: A multiselect chooses the exact semantic fields and order the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. When this array has never been configured, the wizard suggests an initial selection from `project.platforms` and configured URLs; saving no choices writes an explicit empty array.
+- **Bug report fields**: A multiselect chooses the exact repo-type question sets and order the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. When this array has never been configured, the wizard suggests an initial selection from `project.platforms` and configured URLs; saving no choices writes an explicit empty array. Custom questions under `github.issueTemplate.customQuestions` are edited in `nova.config.json`, and the wizard keeps them when it saves.
 - **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
 
 ### Docker Hub
@@ -192,6 +193,12 @@ The wizard converts `\n` sequences to actual line breaks when saving. Trigger br
 If your repository already has a hand-maintained `.gitignore`, open the **Ignore Files** category once to import those entries into `nova.config.json` before regenerating. A regenerate emits only what the config holds, so excludes that were never imported are dropped from the output.
 :::
 
+### Attribute Files
+
+- **Purpose**: Manage every `.gitattributes` file generated by the [attribute-files generator](/docs/cli/generators/must-haves/attribute-files), saved under `attributeFiles`.
+- **Nice to know**: Add or remove project-relative paths, pick the Nova bundles for each file, and enter its project attribute lines separated by commas.
+- **Things to watch**: Paths must begin with `./` and end in `.gitattributes`. The wizard refuses a pattern that gives a bundle path different attributes, such as `rootfs/** binary` next to the `docker-scripts` bundle.
+
 ### AI Tools
 
 - **Purpose**: Select which AI tools the [agent-conventions generator](/docs/cli/generators/must-haves/agent-conventions) emits files for, saved under the top-level `agents` field. Claude Code writes `CLAUDE.md` and Codex writes `AGENTS.md`; both share `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
@@ -200,7 +207,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Recipes
 
-- **Purpose**: Configure all Docker Hub, GitHub, license, miscellaneous, Nova config, README, and per-workspace `package.json` recipes from one category.
+- **Purpose**: Configure all Docker Hub, GitHub, license, miscellaneous, Nova config, README, TSConfig, and per-workspace `package.json` recipes from one category.
 - **Nice to know**: Each recipe has an individual `enabled` toggle, including `fix-markdown-tables` and `normalize-order`. Generic recipe settings remain editable through a validated prompt, while closed recipes such as `remove-operating-system-files` present only Nova's reviewed platform and file choices.
 - **Things to watch**: `package-json` recipes are scoped by workspace path. The menu includes registered workspaces plus any existing recipe path, so temporarily unregistered paths are preserved and remain editable. Cleanup recipes do not accept arbitrary paths or patterns.
 
@@ -212,7 +219,8 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Settings
 
-- **Purpose**: Select the project's release strategy, lock-step versioning behavior, per-script workspace concurrency, verified local cache settings, and whether the root runs as part of the workspace tree.
+- **Purpose**: Select the project's release strategy, lock-step versioning behavior, per-script workspace concurrency, verified local cache settings, whether the root runs as part of the workspace tree, and the minimum test coverage percentage.
+- **Coverage minimum**: Enter a number from 0 to 100 to set `settings.coverage.minimum`, or leave the prompt blank to remove it. Scaffolded Vitest configs and the publish workflow's coverage badge read this value.
 - **Nice to know**: With no release history or pending changelog entries, you can revisit this category and change SemVer (`major.minor.patch`) to CalVer (`YYYY.M.MICRO`) or back. On save, Nova migrates every workspace version, exact internal version pin, Android `versionName`, and authoritative Apple `MARKETING_VERSION` together; freezable workspaces remain `0.0.0`. Workspace limits, lock-step versioning, and every cache setting remain editable independently at any time.
 - **Things to watch**: A pending `.changelog/*.md` entry blocks a strategy switch so its release meaning cannot change underneath it. Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes only the version strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops configuration and identifies the affected changelog.
 
@@ -367,6 +375,12 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     "./.gitignore": {
       "bundles": ["nova"],
       "patterns": [".local/", "scratch/"]
+    }
+  },
+  "attributeFiles": {
+    "./packages/docker/.gitattributes": {
+      "bundles": ["docker-scripts"],
+      "patterns": []
     }
   },
   "agents": ["claude-code", "codex"],

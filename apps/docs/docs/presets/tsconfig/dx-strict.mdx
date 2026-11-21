@@ -28,7 +28,6 @@ Layer strict TypeScript checks on top of the essentials baseline so type errors,
 2. Flags unused locals, parameters, unreachable code, and unused labels so dead code never ships.
 3. Enforces `exactOptionalPropertyTypes` and `noUncheckedIndexedAccess` so optional and indexed values are handled explicitly.
 4. Sets `isolatedModules` and `noEmitOnError` so files stay safe to transpile per-file and a failed check never emits output.
-5. Overrides the baseline `skipLibCheck` to `false` so your dependencies' type declarations are checked too.
 
 ## Usage
 
@@ -74,7 +73,6 @@ The preset sets the following `compilerOptions` on top of the essentials baselin
 | `noUncheckedSideEffectImports`       | `true`  | Reports side-effect imports that resolve to nothing.                               |
 | `noUnusedLocals`                     | `true`  | Reports declared local variables that are never read.                              |
 | `noUnusedParameters`                 | `true`  | Reports function parameters that are never read.                                   |
-| `skipLibCheck`                       | `false` | Type-checks declaration files, overriding the essentials baseline.                 |
 | `strict`                             | `true`  | Enables the full strict family of type-checking options.                           |
 | `strictBindCallApply`                | `true`  | Type-checks the arguments to `bind`, `call`, and `apply`.                          |
 | `strictBuiltinIteratorReturn`        | `true`  | Types built-in iterator return values precisely.                                   |
@@ -85,7 +83,7 @@ The preset sets the following `compilerOptions` on top of the essentials baselin
 | `useUnknownInCatchVariables`         | `true`  | Types `catch` clause variables as `unknown` instead of `any`.                      |
 
 :::info
-`allowSyntheticDefaultImports` is kept `true` here on purpose. With `skipLibCheck: false`, TypeScript checks third-party declaration files such as Zod's `.d.cts` types, which use default-import syntax internally, and turning it off would surface errors in dependency types you do not control.
+`allowSyntheticDefaultImports` is kept `true` here on purpose. With `skipLibCheck` left at its default of `false`, TypeScript checks third-party declaration files such as Zod's `.d.cts` types, which use default-import syntax internally, and turning it off would surface errors in dependency types you do not control.
 :::
 
 ## Related

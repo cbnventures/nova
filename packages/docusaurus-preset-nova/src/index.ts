@@ -209,13 +209,13 @@ export class Runner {
 
     // Resolve preset logo to a data URI so it works as an <img src> at runtime.
     const presetLogoSrc: Index_Runner_Default_PresetLogoSrc = resolvedPreset['logo']['src'];
-    const assetsDirectory: Index_Runner_Default_AssetsDirectory = resolve(currentDirectory, '../../assets');
+    const assetsDirectory: Index_Runner_Default_AssetsDirectory = resolve(currentDirectory, '../assets');
     const presetLogoPath: Index_Runner_Default_PresetLogoPath = resolve(assetsDirectory, presetLogoSrc.replace('@nova-assets/', ''));
     const presetLogoContent: Index_Runner_Default_PresetLogoContent = readFileSync(presetLogoPath, 'utf-8');
     const presetLogoDataUri: Index_Runner_Default_PresetLogoDataUri = `data:image/svg+xml;base64,${Buffer.from(presetLogoContent).toString('base64')}`;
 
     const themePath: Index_Runner_Default_ThemePath = `${currentDirectory}/theme`;
-    const typeScriptThemePath: Index_Runner_Default_TypeScriptThemePath = resolve(currentDirectory, '../src/theme');
+    const typeScriptThemePath: Index_Runner_Default_TypeScriptThemePath = resolve(currentDirectory, 'theme');
     const blocksPath: Index_Runner_Default_BlocksPath = `${currentDirectory}/blocks`;
     const libPath: Index_Runner_Default_LibPath = `${currentDirectory}/lib`;
     const pathsToWatch: Index_Runner_Default_PathsToWatch = [
@@ -523,7 +523,7 @@ export class Runner {
        * @since 0.15.0
        */
       async getDefaultCodeTranslationMessages() {
-        const novaTranslationsDirPath: Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath = resolve(currentDirectory, '../../translations/locales');
+        const novaTranslationsDirPath: Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath = resolve(currentDirectory, '../translations/locales');
 
         const themeCommonMessages: Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages = await readDefaultCodeTranslationMessages({
           locale: currentLocale,

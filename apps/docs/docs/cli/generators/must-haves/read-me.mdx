@@ -90,18 +90,21 @@ Create a baseline `README.md` populated with project name, description, dynamic 
 
 Badges render in the same order as `readme.badges`. Unknown identifiers, duplicates, and badges without their required source fail config validation.
 
-| Identifier            | Badge                 | Required Source                        |
-|-----------------------|-----------------------|----------------------------------------|
-| `homebridge`          | Homebridge            | None.                                  |
-| `homebridge-verified` | Verified Homebridge   | None.                                  |
-| `npm-version`         | npm version           | `urls.npm`.                            |
-| `npm-downloads`       | npm downloads         | `urls.npm`.                            |
-| `docker-pulls`        | Docker pulls          | `urls.docker`.                         |
-| `docker-image-size`   | Docker image size     | `urls.docker`.                         |
-| `github-release`      | Latest GitHub release | `github.owner` and `github.repo`.      |
-| `github-top-language` | GitHub top language   | `github.owner` and `github.repo`.      |
-| `github-license`      | GitHub license        | `github.owner` and `github.repo`.      |
-| `funding`             | Funding               | At least one `urls.fundSources` entry. |
+| Identifier            | Badge                 | Required Source                                                                    |
+|-----------------------|-----------------------|------------------------------------------------------------------------------------|
+| `homebridge`          | Homebridge            | None.                                                                              |
+| `homebridge-verified` | Verified Homebridge   | None.                                                                              |
+| `npm-version`         | npm version           | `urls.npm`.                                                                        |
+| `npm-downloads`       | npm downloads         | `urls.npm`.                                                                        |
+| `docker-pulls`        | Docker pulls          | `urls.docker`.                                                                     |
+| `docker-image-size`   | Docker image size     | `urls.docker`.                                                                     |
+| `github-release`      | Latest GitHub release | `github.owner` and `github.repo`.                                                  |
+| `github-top-language` | GitHub top language   | `github.owner` and `github.repo`.                                                  |
+| `github-license`      | GitHub license        | `github.owner` and `github.repo`.                                                  |
+| `coverage`            | Test coverage         | `settings.coverage.minimum`, plus a docs site or `github.owner` and `github.repo`. |
+| `funding`             | Funding               | At least one `urls.fundSources` entry.                                             |
+
+The `coverage` badge renders as `https://img.shields.io/endpoint?url=…`, pointing at the JSON file the [publish workflow](/docs/cli/generators/github/workflows#publishing-the-coverage-badge) writes: `<urls.documentation>/badges/coverage.json` when the project has a `docs` workspace and `urls.documentation`, or the `badges` branch on raw.githubusercontent.com otherwise. When no coverage minimum is set or no URL can be built, the badge is left out.
 
 ## Supported Funding Platforms
 

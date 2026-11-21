@@ -1,4 +1,19 @@
+import type { InspectOptions } from 'node:util';
+
 import type { Shared_LoggerCustomizeReturns, Shared_LogLevel, Shared_LogOptions } from '../shared.d.ts';
+
+/**
+ * Toolkit - Logger - Contains Error.
+ *
+ * @since 0.49.0
+ */
+export type Toolkit_Logger_Runner_ContainsError_Value = unknown;
+
+export type Toolkit_Logger_Runner_ContainsError_Seen = WeakSet<object>;
+
+export type Toolkit_Logger_Runner_ContainsError_Returns = boolean;
+
+export type Toolkit_Logger_Runner_ContainsError_Descriptor = PropertyDescriptor | undefined;
 
 /**
  * Toolkit - Logger - Customize.
@@ -97,6 +112,8 @@ export type Toolkit_Logger_Runner_Emit_Stream = NodeJS.WriteStream;
 
 export type Toolkit_Logger_Runner_Emit_FormattedMessage = string;
 
+export type Toolkit_Logger_Runner_Emit_SingleLineOptions = InspectOptions;
+
 export type Toolkit_Logger_Runner_Emit_Prefix = string;
 
 export type Toolkit_Logger_Runner_Emit_PrefixVisibleLength = number;
@@ -117,6 +134,31 @@ export type Toolkit_Logger_Runner_Emit_Payload = string;
 export type Toolkit_Logger_Runner_Error_Message = unknown[];
 
 export type Toolkit_Logger_Runner_Error_Returns = void;
+
+/**
+ * Toolkit - Logger - Fold Stack Traces.
+ *
+ * @since 0.49.0
+ */
+export type Toolkit_Logger_Runner_FoldStackTraces_Message = unknown[];
+
+export type Toolkit_Logger_Runner_FoldStackTraces_InspectOptions = InspectOptions;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_Returns = Toolkit_Logger_Runner_FoldStackTraces_FoldedMessage;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_FirstArgument = unknown;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_ConsumedCount = number;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_Specifier = string;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_FoldedMessage = unknown[];
+
+export type Toolkit_Logger_Runner_FoldStackTraces_Argument = unknown;
+
+export type Toolkit_Logger_Runner_FoldStackTraces_Lines = string[];
+
+export type Toolkit_Logger_Runner_FoldStackTraces_SingleLine = string;
 
 /**
  * Toolkit - Logger - Info.

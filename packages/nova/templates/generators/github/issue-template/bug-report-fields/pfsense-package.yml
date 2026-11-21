@@ -1,0 +1,19 @@
+  - type: "input"
+    id: "php-version"
+    attributes:
+      label: "PHP Version"
+      description: "Enter the PHP version reported by the pfSense® system."
+      placeholder: "e.g. 8.5.3"
+    validations:
+      required: false
+  - type: "dropdown"
+    id: "installation-method"
+    attributes:
+      label: "Package Installation Method"
+      description: "Select how the affected package was installed or last updated."
+      options:
+        - "Release Package"
+        - "In-App Update"
+        - "Other"
+    validations:
+      required: true

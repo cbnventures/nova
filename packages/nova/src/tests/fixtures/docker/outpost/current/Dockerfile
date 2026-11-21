@@ -3,27 +3,39 @@
 ##################################
 #### Step 1: Build Workspaces ####
 ##################################
-FROM node:[__SCAFFOLD_VERSION_DOCKER_NODE__] AS build
+FROM node:24.22.0-trixie-slim@sha256:a6155384446670e9719bdc4fd0ebe4d4b29fb32a8d6aa523da3547a6cfbcf22c AS build
 WORKDIR /workspace
 COPY packages/docker/build-package.json ./package.json
 COPY packages/docker/pnpm-workspace.yaml ./pnpm-workspace.yaml
-[__DOCKER_PACKAGE_MANAGER_CONFIG_COPIES__]
-[__DOCKER_WORKSPACE_MANIFEST_COPIES__]
-[__DOCKER_INSTALL_COMMAND__]
-COPY nova.config.json ./nova.config.json
-[__DOCKER_WORKSPACE_SOURCE_COPIES__]
-[__DOCKER_WORKSPACE_MANIFEST_RESTORES__]
-[__DOCKER_BUILD_COMMANDS__]
-[__DOCKER_PRUNE_COMMAND__]
-[__DOCKER_RUNTIME_ASSEMBLY__]
+# This package manager does not need generated build configuration.
+COPY ["packages/docker/workspace-manifests/packages/docker-engine/package.json","packages/docker-engine/package.json"]
+COPY ["packages/docker/workspace-manifests/packages/registry/package.json","packages/registry/package.json"]
+COPY ["packages/docker/workspace-manifests/packages/updater/package.json","packages/updater/package.json"]
+COPY ["packages/docker/workspace-manifests/apps/server/package.json","apps/server/package.json"]
+RUN corepack enable npm && npm install
+COPY ["packages/docker-engine","packages/docker-engine"]
+COPY ["packages/docker/workspace-manifests/packages/docker-engine/package.json","packages/docker-engine/package.json"]
+COPY ["packages/registry","packages/registry"]
+COPY ["packages/docker/workspace-manifests/packages/registry/package.json","packages/registry/package.json"]
+COPY ["packages/updater","packages/updater"]
+COPY ["packages/docker/workspace-manifests/packages/updater/package.json","packages/updater/package.json"]
+COPY ["apps/server","apps/server"]
+COPY ["packages/docker/workspace-manifests/apps/server/package.json","apps/server/package.json"]
+RUN npm run build --workspace='outpost-package-docker-engine'
+RUN npm run build --workspace='outpost-package-registry'
+RUN npm run build --workspace='outpost-package-updater'
+RUN npm run build --workspace='outpost-app-server'
+RUN npm prune --omit=dev && npm cache clean --force
+RUN mkdir -p /runtime \
+  && cp -a . /runtime/
 
 ####################################
 #### Step 2: Install s6-overlay ####
 ####################################
-FROM debian:[__SCAFFOLD_VERSION_DOCKER_DEBIAN__] AS s6-overlay
+FROM debian:trixie-20261005-slim@sha256:a29215f6a35e51e22adffa17f89e9d2ef06214e64a2bad10d765c46aea49f11f AS s6-overlay
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG TARGETARCH
-ARG S6_OVERLAY_VERSION="[__SCAFFOLD_VERSION_DOCKER_S6_OVERLAY__]"
+ARG S6_OVERLAY_VERSION="3.2.3.2"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -54,15 +66,15 @@ RUN set -eux; \
 ###############################
 #### Step 3: Runtime Image ####
 ###############################
-FROM [__DOCKER_RUNTIME_BASE__] AS runtime
+FROM node:24.22.0-trixie-slim@sha256:a6155384446670e9719bdc4fd0ebe4d4b29fb32a8d6aa523da3547a6cfbcf22c AS runtime
 ARG DEBIAN_FRONTEND="noninteractive"
-LABEL org.opencontainers.image.title="[__PROJECT_NAME__]" \
-  org.opencontainers.image.description="[__PROJECT_DESCRIPTION__]" \
-  org.opencontainers.image.url="[__PROJECT_HOMEPAGE__]" \
-  org.opencontainers.image.source="[__PROJECT_REPOSITORY__]" \
-  org.opencontainers.image.documentation="[__PROJECT_DOCUMENTATION__]" \
-  org.opencontainers.image.licenses="[__PROJECT_LICENSE__]" \
-  org.opencontainers.image.vendor="[__PROJECT_VENDOR__]"
+LABEL org.opencontainers.image.title="Outpost" \
+  org.opencontainers.image.description="Self-hosted container auto-updater for Docker, a modern Watchtower replacement" \
+  org.opencontainers.image.url="https://outpost.cbnventures.io/" \
+  org.opencontainers.image.source="https://github.com/cbnventures/outpost" \
+  org.opencontainers.image.documentation="https://outpost.cbnventures.io/" \
+  org.opencontainers.image.licenses="MIT" \
+  org.opencontainers.image.vendor="CBN Ventures LLC"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -88,10 +100,9 @@ RUN find /usr/local/libexec/nova-docker -type f -exec sed -i 's/\r$//' {} \; \
   && find /usr/local/libexec/nova-docker -type f -exec chmod 0755 {} \; \
   && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec sed -i 's/\r$//' {} \; \
   && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec chmod 0755 {} \;
-[__DOCKER_RUNTIME_COPIES__]
+COPY --from=build /runtime/ /app/
 RUN mkdir -p /config /data
-[__DOCKER_WRITABLE_DIRECTORIES__]
-[__DOCKER_EXPOSE_DIRECTIVES__]
+EXPOSE 22601
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD ["/usr/local/libexec/nova-docker/healthcheck"]
 STOPSIGNAL SIGTERM

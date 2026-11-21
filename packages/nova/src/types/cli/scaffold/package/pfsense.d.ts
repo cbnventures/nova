@@ -4,21 +4,26 @@
  * @since 0.29.0
  */
 import type {
+  Shared_DescriptionDestination,
   Shared_NovaConfig,
-  Shared_NovaConfig_Entities,
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Urls_FundSources,
-  Shared_NovaConfigEntity,
 } from '../../../shared.d.ts';
 
 /**
- * CLI - Scaffold - Package - Pfsense - Escape PHP Single Quoted.
+ * CLI - Scaffold - Package - Pfsense - Finalize Workspace.
  *
- * @since 0.39.0
+ * @since 0.49.0
  */
-export type Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Value = string;
+export type Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspaceDirectory = string;
 
-export type Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Returns = string;
+export type Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_ConfigRoot = string;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Returns = Promise<void>;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Config = Shared_NovaConfig;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspacePath = string;
 
 /**
  * CLI - Scaffold - Package - Pfsense - Resolve Github Repository.
@@ -54,11 +59,13 @@ export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Returns = Pr
 
 export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Config = Shared_NovaConfig;
 
-export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Entities = Shared_NovaConfig_Entities;
-
-export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Author = Shared_NovaConfigEntity | undefined;
-
 export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_AuthorEmail = string | undefined;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentDestination = Shared_DescriptionDestination;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Comment = string | undefined;
+
+export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentLimitMessage = string | undefined;
 
 export type Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_ProjectDescription = string;
 

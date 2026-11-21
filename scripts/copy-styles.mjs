@@ -29,11 +29,11 @@ const src = resolve('./src/styles');
  * Copy Styles - Dest.
  *
  * Absolute path to the built styles tree that webpack and the demos read from,
- * kept as a sibling of the source tree under `build/src/`.
+ * kept next to the compiled modules under `build/`.
  *
  * @since 0.0.0
  */
-const dest = resolve('./build/src/styles');
+const dest = resolve('./build/styles');
 
 /**
  * Copy Styles - Staging.
@@ -43,7 +43,7 @@ const dest = resolve('./build/src/styles');
  *
  * @since 0.0.0
  */
-const staging = resolve('./build/src/.styles-new');
+const staging = resolve('./build/.styles-new');
 
 /**
  * Copy Styles - Backup.
@@ -53,7 +53,7 @@ const staging = resolve('./build/src/.styles-new');
  *
  * @since 0.0.0
  */
-const backup = resolve('./build/src/.styles-old');
+const backup = resolve('./build/.styles-old');
 
 /**
  * Copy Styles - Watch Mode.
@@ -136,8 +136,8 @@ async function oneShotCopy() {
     force: true,
   });
 
-  // Ensure build/src/ exists so the renames below have a destination.
-  await mkdir(resolve('./build/src'), { recursive: true });
+  // Ensure build/ exists so the renames below have a destination.
+  await mkdir(resolve('./build'), { recursive: true });
 
   // Copy the source tree into staging. Target is untouched during this step.
   await copyDir(src, staging);

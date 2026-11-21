@@ -152,4 +152,6 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilte
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeEntryFilter = Shared_NovaConfig_RecipeEntry | undefined;
 
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_KeywordLimitMessages = string[];
+
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces = Shared_WorkspaceManifest[];

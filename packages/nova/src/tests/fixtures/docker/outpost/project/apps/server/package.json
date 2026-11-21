@@ -1,0 +1,13 @@
+{
+  "name": "outpost-app-server",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "build": "nova utility run-scripts --sequential --node-env production \"build:*\""
+  },
+  "dependencies": {
+    "outpost-package-docker-engine": "1.2.0",
+    "outpost-package-registry": "1.2.0",
+    "outpost-package-updater": "1.2.0"
+  }
+}

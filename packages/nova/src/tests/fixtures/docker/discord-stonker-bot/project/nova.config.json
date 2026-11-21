@@ -1,0 +1,18 @@
+{
+  "project": {
+    "name": {
+      "title": "Stonker Bot for Discord",
+      "slug": "discord-stonker-bot"
+    },
+    "description": {
+      "short": "A self-hosted, all-purpose Discord bot for community safety, moderation, automation, and content"
+    },
+    "legalName": "Jacky Liang",
+    "license": "MIT"
+  },
+  "urls": {
+    "homepage": "https://mrjackyliang.github.io/discord-stonker-bot/",
+    "repository": "https://github.com/mrjackyliang/discord-stonker-bot",
+    "documentation": "https://mrjackyliang.github.io/discord-stonker-bot/"
+  }
+}

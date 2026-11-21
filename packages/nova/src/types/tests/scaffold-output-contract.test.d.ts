@@ -57,8 +57,6 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTransl
  *
  * @since 0.39.0
  */
-export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfilePath = string;
-
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = string;
 
 /**
@@ -288,6 +286,8 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigIndex
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigContent = string;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintBaseline = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_VitestConfigContent = string;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFiles = string[];
 

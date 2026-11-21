@@ -25,13 +25,16 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasScriptsTsconfig,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_KeptWorkspaceDispatchers,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootScripts,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootToolingScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptCommand,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptName,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootScripts,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootToolingScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts,
@@ -55,8 +58,12 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptOrderChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPrefix,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_SingleQuotedPattern,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ToolingScriptMigration,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ToolingScriptName,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypeCheckPrefix,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedCanonicalRootScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootScriptEntry,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootToolingScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedNormalizedPackageScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipes,
@@ -388,6 +395,58 @@ export class Runner {
           name: 'Runner.handle',
           purpose: 'scripts',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding missing Nova root workspace scripts ...`);
+      }
+
+      // Root tooling scripts written by older scaffolds. Only exact generated commands move.
+      const legacyRootToolingScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootToolingScripts = {
+        'check:lint': {
+          from: 'eslint . --max-warnings=0',
+          to: 'eslint ./ --max-warnings=0',
+        },
+        'check:types-scripts': {
+          from: 'nova utility type-check --project tsconfig.scripts.json',
+          to: 'nova utility type-check --project tsconfig.scripts.json --pass-with-no-inputs',
+        },
+      };
+      let migratedRootToolingScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootToolingScripts = false;
+
+      for (const legacyRootToolingScriptEntry of Object.entries(legacyRootToolingScripts)) {
+        const typedLegacyRootToolingScriptEntry: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootToolingScriptEntry = legacyRootToolingScriptEntry;
+        const toolingScriptName: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ToolingScriptName = typedLegacyRootToolingScriptEntry[0];
+        const toolingScriptMigration: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ToolingScriptMigration = typedLegacyRootToolingScriptEntry[1];
+
+        if (normalizedPackageScripts[toolingScriptName] !== toolingScriptMigration['from']) {
+          continue;
+        }
+
+        Reflect.set(normalizedPackageScripts, toolingScriptName, toolingScriptMigration['to']);
+
+        migratedRootToolingScripts = true;
+      }
+
+      if (migratedRootToolingScripts === true) {
+        Reflect.set(fileContents, 'scripts', normalizedPackageScripts);
+
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'scripts',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Updating generated root tooling scripts ...`);
+      }
+
+      const hasScriptsTsconfig: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasScriptsTsconfig = await pathExists(join(dirname(filePath), 'tsconfig.scripts.json'));
+
+      // A root with a scripts project type-checks it, so the canonical script is added when missing.
+      if (hasScriptsTsconfig === true && Object.hasOwn(normalizedPackageScripts, 'check:types-scripts') === false) {
+        const typeCheckPrefix: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypeCheckPrefix = (isNovaBootstrap === true) ? 'node ./scripts/nova-type-check.mjs' : 'nova utility type-check';
+
+        Reflect.set(normalizedPackageScripts, 'check:types-scripts', `${typeCheckPrefix} --project tsconfig.scripts.json --pass-with-no-inputs`);
+
+        Reflect.set(fileContents, 'scripts', normalizedPackageScripts);
+
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'scripts',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "check:types-scripts" for the "tsconfig.scripts.json" project ...`);
       }
     }
 

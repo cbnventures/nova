@@ -1,4 +1,4 @@
-import scaffoldVersionCatalog from '../../scaffold-versions.json' with { type: 'json' };
+import { readPackageJsonFile } from './package-files.js';
 
 import type {
   Lib_ScaffoldVersions_ApplyScaffoldVersionReplacements_Input,
@@ -8,7 +8,18 @@ import type {
   Lib_ScaffoldVersions_GetScaffoldVersion_Entry,
   Lib_ScaffoldVersions_GetScaffoldVersion_Key,
   Lib_ScaffoldVersions_GetScaffoldVersion_Returns,
+  Lib_ScaffoldVersions_ScaffoldVersionCatalog,
 } from '../types/lib/scaffold-versions.d.ts';
+
+/**
+ * Lib - Scaffold Versions - Scaffold Version Catalog.
+ *
+ * Reads the checked-in "scaffold-versions.json" snapshot from the package root, which
+ * npm publishes next to the build output.
+ *
+ * @since 0.49.0
+ */
+const scaffoldVersionCatalog: Lib_ScaffoldVersions_ScaffoldVersionCatalog = readPackageJsonFile('scaffold-versions.json') as Lib_ScaffoldVersions_ScaffoldVersionCatalog;
 
 /**
  * Lib - Scaffold Versions - Entries.

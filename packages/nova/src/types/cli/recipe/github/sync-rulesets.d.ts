@@ -1,10 +1,10 @@
 import type {
+  Shared_GithubRepositoryVisibility,
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Github_Rulesets,
   Shared_NovaConfig_Github_Rulesets_DefaultBranch,
   Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods,
   Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks,
-  Shared_NovaConfigGithubRulesetEnforcement,
   Shared_ShellOutput,
 } from '../../../shared.d.ts';
 import type { Cli_Recipe_Github_GhPrecheck_GhPrecheck_Result } from './gh-precheck.d.ts';
@@ -42,13 +42,17 @@ export type Cli_Recipe_Github_SyncRulesets_Runner_Run_RequiredStatusChecks = Sha
 
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetName = string;
 
-export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Enforcement = Shared_NovaConfigGithubRulesetEnforcement;
-
-export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Flags = string[];
-
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_RuleCount = number;
 
-export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Query = string;
+export type Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityCommand = string;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityResult = Shared_ShellOutput;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Visibility = Shared_GithubRepositoryVisibility;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanCommand = string;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanResult = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand = string;
 
@@ -60,12 +64,19 @@ export type Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetIdNumber = number;
 
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetId = string | undefined;
 
-export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Method = 'POST' | 'PUT';
-
-export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Endpoint = string;
-
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Command = string;
 
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_Commands = string[];
 
 export type Cli_Recipe_Github_SyncRulesets_Runner_Run_DidSucceed = boolean;
+
+/**
+ * CLI - Recipe - GitHub - Sync Rulesets - Warn Unsupported Plan.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Owner = string;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Repo = string;
+
+export type Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Returns = void;

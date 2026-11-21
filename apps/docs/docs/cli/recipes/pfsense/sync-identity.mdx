@@ -1,0 +1,114 @@
+---
+id: "sync-identity"
+title: "Sync Identity"
+description: "Keep the descriptions, COMMENT, WWW, and MAINTAINER of a pfSense package port in step with nova.config.json, editing only those values."
+keywords:
+  - "nova"
+  - "sync-identity"
+  - "pfsense"
+  - "freebsd port"
+  - "pkg-descr"
+tags:
+  - "cli"
+  - "sync-identity"
+  - "recipe"
+  - "pfsense"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync the **descriptions**, **COMMENT**, **WWW**, and **MAINTAINER** of a pfSense package port from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-identity` recipe keeps the identity fields of a pfSense package workspace current. The pfSense scaffold runs the same code on the port it creates, so a generated port and a synced one always carry the same values.
+
+Each value is rewritten in place. Every other line of the port files is left unchanged.
+
+## Why Use This Command?
+
+1. Keeps the pfSense package manager entry, the FreeBSD port, and the About page in step with the project description.
+2. Checks the FreeBSD COMMENT rules before anything is written.
+3. Removes the need to edit the same description in four files by hand.
+
+## Requirements
+
+- **A pfSense port** — A workspace with a `port/Makefile.template` file, as created by `nova scaffold package pfsense`.
+- **Project metadata** — `project.description.short`, `project.description.long`, `urls.homepage`, and an entity with the `author` role and an `email`. A missing value skips only the field that uses it.
+
+## Fields
+
+| File                                                | Field                       | Value                                                                                         |
+|-----------------------------------------------------|-----------------------------|-----------------------------------------------------------------------------------------------|
+| `port/Makefile.template`                            | `COMMENT=`                  | `workspaces["<path>"].pfsense.comment`, or `project.description.short` without a final period |
+| `port/Makefile.template`                            | `WWW=`                      | `urls.homepage`                                                                               |
+| `port/Makefile.template`                            | `MAINTAINER?=`              | `email` of the first entity with the `author` role                                            |
+| `port/pkg-descr`                                    | Whole file                  | `project.description.long`, wrapped at 80 columns                                             |
+| `port/files/usr/local/share/pfSense-pkg-*/info.xml` | `<descr><![CDATA[...]]>`    | `project.description.short`, with a final period added when it has none                       |
+| `port/files/usr/local/www/<name>-about.php`         | `$projectDescription = '…'` | `project.description.short`, escaped for a PHP single-quoted string                           |
+
+The About page's repository, documentation, bugs, license, and funding values, and the update URLs in `UpdateManager.php`, are not changed by this recipe.
+
+## Behavior
+
+- **COMMENT rules** — FreeBSD allows at most 70 characters and no final period. A COMMENT that breaks either rule stops this workspace with an error and nothing is written. See [Description Limits](/docs/quickstart/nova-config#description-limits).
+- **pkg-descr** — Paragraphs separated by a blank line are kept, other line breaks are reflowed, and no `WWW:` line is added. Current FreeBSD ports keep the project homepage in the Makefile's `WWW=` variable instead of `pkg-descr`.
+- **Makefile variables** — The operator (`=` or `?=`) and the separator after it are kept; only the value changes.
+- **Not applicable** — Workspaces without a `port/Makefile.template` file are skipped. A port file or field that is missing is skipped with a warning.
+- **Idempotent** — When every value already matches, the recipe reports that the identity is up to date and makes no write.
+
+## Settings
+
+Settings are configured in `nova.config.json` under the `recipes.pfsense` key. The `sync-identity` recipe is controlled by a single `enabled` toggle:
+
+```json
+{
+  "workspaces": {
+    "./packages/firewall": {
+      "name": "pfsense-pkg-firewall",
+      "role": "package",
+      "policy": "trackable",
+      "pfsense": {
+        "comment": "Block unwanted websites on pfSense networks"
+      }
+    }
+  },
+  "recipes": {
+    "pfsense": {
+      "sync-identity": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+When the recipe is not enabled, it warns and returns without touching any files.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe pfsense sync-identity [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe pfsense sync-identity [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                          |
+|----------------------|------------------------------------------------------|
+| `-d, --dry-run`      | Run without writing any files.                       |
+| `-r, --replace-file` | Replace the original file without creating a backup. |

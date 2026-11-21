@@ -33,9 +33,9 @@ Describes the project identity, display info, and build metadata.
 |---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility configure` wizard; the parser only requires a non-empty trimmed string.                                                                                           |
 | `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                                                                                                     |
-| `description.short` | `string`   | One-line summary used in `package.json` and meta tags. When `dockerHub` exists, Docker Hub limits this value to 100 characters: configure rejects longer input, config parsing warns, and `sync-identity` stops before sending changes.                                                                      |
+| `description.short` | `string`   | One-line summary used in `package.json`, meta tags, and every destination without its own override. It must fit the smallest limit among those destinations; see [Description Limits](#description-limits).                                                                                                  |
 | `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                                                                                                     |
-| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                                                                                                                                                                                                                                    |
+| `keywords`          | `string[]` | Search keywords, up to 50 characters each. They must fit every destination without its own override; see [Keyword Limits](#keyword-limits).                                                                                                                                                                  |
 | `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                                                                                                                                                                                                                                     |
 | `pronouns`          | `string`   | Controls first-person wording in generated files. One of `"business"` (we/our) or `"personal"` (I/my).                                                                                                                                                                                                       |
 | `platforms`         | `string[]` | Supported project platforms. One or more of `"nodejs"`, `"swift"`, `"ios"`, `"visionos"`, `"android"`, `"java"`, `"kotlin"`, `"csharp"`, `"php"`, `"python"`, `"macos"`, `"linux"`, `"windows"`, `"discord"`, `"homebridge"`, `"docker"`, `"pfsense"`, `"synology"`, or `"web"`. Unknown values are dropped. |
@@ -62,6 +62,37 @@ Describes the project identity, display info, and build metadata.
   }
 }
 ```
+
+### Description Limits
+
+Some destinations cap how long a description can be. Each of them takes an optional override. When the override is filled in, that destination uses it and only the override is checked against the destination's limit. When it is empty, the destination falls back to `project.description.short`.
+
+| Destination          | Active when                                       | Limit                          | Override                                        |
+|----------------------|---------------------------------------------------|--------------------------------|-------------------------------------------------|
+| Docker Hub           | `dockerHub` exists                                | 100 characters                 | `dockerHub.description`                         |
+| GitHub Marketplace   | A workflow deploys a workspace to `github-action` | 125 characters                 | `workspaces["<path>"].githubAction.description` |
+| FreeBSD port COMMENT | A workflow deploys a workspace to `pfsense`       | 70 characters, no final period | `workspaces["<path>"].pfsense.comment`          |
+
+`project.description.short` must fit the smallest limit among the active destinations that have no override. Destinations without a limit, such as `package.json` or the GitHub repository About field, add no limit. The pfSense COMMENT drops a trailing period from the short description before it is checked.
+
+For example, a project with a GitHub Action, a pfSense package, and Docker Hub, and no overrides, caps the short description at 70 characters. Filling in the pfSense `comment` raises the cap to 100, and filling in `dockerHub.description` as well raises it to 125.
+
+[`nova utility configure`](/docs/cli/utilities/configure) rejects a value that does not fit, and loading `nova.config.json` reports the same message as a warning. The scaffolds and recipes that write a description stop with an error and write nothing for that destination. The message names the destination, its limit, and the actual length, and suggests either shortening `project.description.short` or filling in that destination's override.
+
+### Keyword Limits
+
+Keywords follow the same rule as the short description. `project.keywords` must fit every active destination that has no override of its own.
+
+| Destination                         | Active when                                                                                                            | Rule                                                                                                                         | Override        |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| GitHub topics                       | [`github sync-identity`](/docs/cli/recipes/github/sync-identity) is enabled                                            | At most 20 keywords, each at most 50 characters of lowercase letters, numbers, and hyphens, starting with a letter or number | `github.topics` |
+| npm keywords of a Homebridge plugin | [`package.json sync-identity`](/docs/cli/recipes/package-json/sync-identity) syncs `keywords` for the plugin workspace | Must include `homebridge-plugin`                                                                                             | None            |
+
+Nova treats a workspace as a Homebridge plugin when `project.platforms` includes `homebridge` and the workspace is a `distributable` package whose name starts with `homebridge-`, optionally scoped. That is how the [Homebridge scaffold](/docs/cli/scaffolding/package/homebridge) records every plugin it creates.
+
+For example, `"keywords": ["example-widget", "home-automation"]` fits GitHub topics, while `"Example Widget"` does not. Either rename the keyword to `example-widget`, or set `github.topics` to give GitHub its own list.
+
+[`nova utility configure`](/docs/cli/utilities/configure) rejects keywords that do not fit, and loading `nova.config.json` reports the same message as a warning. [`github sync-identity`](/docs/cli/recipes/github/sync-identity) and [`package.json sync-identity`](/docs/cli/recipes/package-json/sync-identity) stop with an error before changing anything, and the [Homebridge scaffold](/docs/cli/scaffolding/package/homebridge) writes no files when `project.keywords` is set without `homebridge-plugin`.
 
 ## `entities`
 
@@ -220,9 +251,10 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 
 ### Issue Template Fields
 
-| Field             | Type       | Description                                                                                                                                                                                                                                                                    |
-|-------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `bugReportFields` | `string[]` | Exact ordered field identifiers for generated bug reports: `"nodejs"`, `"apple"`, `"android"`, `"csharp"`, `"php"`, `"python"`, `"homebridge"`, `"pfsense"`, `"synology"`, `"docker"`, `"web"`, or `"screenshots"`. Missing and empty arrays both generate no optional fields. |
+| Field             | Type       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|-------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `bugReportFields` | `string[]` | Exact ordered repo-type question sets: `"nodejs"`, `"apple"`, `"android"`, `"csharp"`, `"php"`, `"python"`, `"homebridge"`, `"pfsense"`, `"synology"`, `"docker"`, `"web"`, `"screenshots"`, `"cloudflare-worker"`, `"pfsense-package"`, `"github-action"`, `"native-app"`, `"docs-site"`, or `"notifications"`. Missing and empty arrays both add no repo-type sets. See [Available Repo-Type Sets](/docs/cli/generators/github/issue-template#available-repo-type-sets). |
+| `customQuestions` | `object`   | Optional `bug`, `feature`, and `support` arrays of questions in GitHub's issue-form schema, added after the built-in questions. See [Custom Questions](/docs/cli/generators/github/issue-template#custom-questions).                                                                                                                                                                                                                                                       |
 
 ```json
 {
@@ -318,14 +350,15 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 
 Identifies the Docker Hub repository used by publish workflows and repository-management recipes. Namespace and repository names use lowercase Docker image components: alphanumeric segments separated by `.`, `_`, or `-`.
 
-| Field                   | Type       | Description                                                                                                                                                     |
-|-------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `namespace`             | `string`   | Required Docker Hub namespace.                                                                                                                                  |
-| `repository`            | `string`   | Required Docker Hub repository name. Publish workflows read the image coordinates from these two fields.                                                        |
-| `visibility`            | `string`   | Optional `public` or `private` value owned by [`sync-policies`](/docs/cli/recipes/docker-hub/sync-policies).                                                    |
-| `categories`            | `string[]` | Optional unique lowercase-dash slugs, up to three. [`sync-identity`](/docs/cli/recipes/docker-hub/sync-identity) validates them against Docker Hub's live list. |
-| `immutableTags.enabled` | `boolean`  | Enables or disables immutable tags through `sync-policies`.                                                                                                     |
-| `immutableTags.rules`   | `string[]` | Ordered regular-expression strings sent with the immutable-tags setting. An empty array clears the rules.                                                       |
+| Field                   | Type       | Description                                                                                                                                                                                                              |
+|-------------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `namespace`             | `string`   | Required Docker Hub namespace.                                                                                                                                                                                           |
+| `repository`            | `string`   | Required Docker Hub repository name. Publish workflows read the image coordinates from these two fields.                                                                                                                 |
+| `description`           | `string`   | Optional Docker Hub short description, up to 100 characters. When empty, [`sync-identity`](/docs/cli/recipes/docker-hub/sync-identity) sends `project.description.short`. See [Description Limits](#description-limits). |
+| `visibility`            | `string`   | Optional `public` or `private` value owned by [`sync-policies`](/docs/cli/recipes/docker-hub/sync-policies).                                                                                                             |
+| `categories`            | `string[]` | Optional unique lowercase-dash slugs, up to three. [`sync-identity`](/docs/cli/recipes/docker-hub/sync-identity) validates them against Docker Hub's live list.                                                          |
+| `immutableTags.enabled` | `boolean`  | Enables or disables immutable tags through `sync-policies`.                                                                                                                                                              |
+| `immutableTags.rules`   | `string[]` | Ordered regular-expression strings sent with the immutable-tags setting. An empty array clears the rules.                                                                                                                |
 
 ```json
 {
@@ -554,18 +587,21 @@ Controls the exact badges generated inside the README badges region.
 |----------|------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | `badges` | `string[]` | Exact ordered badge identifiers. Missing and empty arrays both produce an empty badges region, and duplicate identifiers are invalid. |
 
-| Badge Identifier      | Required Source                        |
-|-----------------------|----------------------------------------|
-| `homebridge`          | None.                                  |
-| `homebridge-verified` | None.                                  |
-| `npm-version`         | `urls.npm`.                            |
-| `npm-downloads`       | `urls.npm`.                            |
-| `docker-pulls`        | `urls.docker`.                         |
-| `docker-image-size`   | `urls.docker`.                         |
-| `github-release`      | `github.owner` and `github.repo`.      |
-| `github-top-language` | `github.owner` and `github.repo`.      |
-| `github-license`      | `github.owner` and `github.repo`.      |
-| `funding`             | At least one `urls.fundSources` entry. |
+| Badge Identifier      | Required Source                                                                                                                  |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `homebridge`          | None.                                                                                                                            |
+| `homebridge-verified` | None.                                                                                                                            |
+| `npm-version`         | `urls.npm`.                                                                                                                      |
+| `npm-downloads`       | `urls.npm`.                                                                                                                      |
+| `docker-pulls`        | `urls.docker`.                                                                                                                   |
+| `docker-image-size`   | `urls.docker`.                                                                                                                   |
+| `github-release`      | `github.owner` and `github.repo`.                                                                                                |
+| `github-top-language` | `github.owner` and `github.repo`.                                                                                                |
+| `github-license`      | `github.owner` and `github.repo`.                                                                                                |
+| `coverage`            | `settings.coverage.minimum`, plus a docs site (a `docs` workspace and `urls.documentation`) or `github.owner` and `github.repo`. |
+| `funding`             | At least one `urls.fundSources` entry.                                                                                           |
+
+The `coverage` badge is a shields.io endpoint badge that reads the JSON file the publish workflow writes. With a docs site, the file is served at `<urls.documentation>/badges/coverage.json`; without one, it lives on the `badges` branch at `https://raw.githubusercontent.com/<owner>/<repo>/badges/coverage.json`. When neither URL can be built, the badge is left out.
 
 ```json
 {
@@ -586,11 +622,13 @@ Controls the exact badges generated inside the README badges region.
 
 A map of relative paths to <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="Many packages living together in one repository" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
 
-| Field    | Type     | Description                                                                                                                                                              |
-|----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`   | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.      |
-| `role`   | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details. |
-| `policy` | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                               |
+| Field                      | Type     | Description                                                                                                                                                                                                                                                                                  |
+|----------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                     | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                                                                          |
+| `role`                     | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                                     |
+| `policy`                   | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                                                                   |
+| `githubAction.description` | `string` | Optional GitHub Marketplace description for a workspace deployed to `github-action`, up to 125 characters. [`github-action sync-identity`](/docs/cli/recipes/github-action/sync-identity) writes it to `action.yml`, or `project.description.short` when empty.                              |
+| `pfsense.comment`          | `string` | Optional FreeBSD port COMMENT for a workspace deployed to `pfsense`, up to 70 characters with no final period. [`pfsense sync-identity`](/docs/cli/recipes/pfsense/sync-identity) writes it to `port/Makefile.template`, or `project.description.short` without its final period when empty. |
 
 ```json
 {
@@ -604,6 +642,14 @@ A map of relative paths to <Terminology title="One folder in the repo with its o
       "name": "@company/example",
       "role": "package",
       "policy": "distributable"
+    },
+    "./packages/firewall": {
+      "name": "pfsense-pkg-firewall",
+      "role": "package",
+      "policy": "trackable",
+      "pfsense": {
+        "comment": "Block unwanted websites on pfSense networks"
+      }
     },
     "./apps/docs": {
       "name": "example-docs",
@@ -682,6 +728,28 @@ Maps exact project-relative paths to Nova-managed physical ignore files. The [`i
 
 Paths must start with `./`, stay inside the project, and end in a supported physical ignore-file basename. `.dockerignore` must be exactly `./.dockerignore`; nested `.gitignore` and `.assetsignore` paths remain supported. The former `gitignore.projectExcludes` shape is not supported; configure every managed file through `ignoreFiles`.
 
+## `attributeFiles`
+
+Maps exact project-relative paths to Nova-managed `.gitattributes` files. The [`attribute-files` generator](/docs/cli/generators/must-haves/attribute-files) writes each file in full from Nova bundles plus project-owned patterns.
+
+| Entry field | Type       | Description                                                                                               |
+|-------------|------------|-----------------------------------------------------------------------------------------------------------|
+| `bundles`   | `string[]` | Ordered built-in bundles. `docker-scripts` keeps `rootfs/`, `project/`, and `stages/` on LF line endings. |
+| `patterns`  | `string[]` | Project attribute lines written after the bundle lines. Repeated lines are dropped.                       |
+
+```json
+{
+  "attributeFiles": {
+    "./packages/docker/.gitattributes": {
+      "bundles": ["docker-scripts"],
+      "patterns": []
+    }
+  }
+}
+```
+
+Paths must start with `./`, stay inside the project, and end in `.gitattributes`. A pattern that gives a bundle path different attributes is an error.
+
 ## `agents`
 
 Selects the AI-tool entry files emitted by [`nova generate must-haves agent-conventions`](/docs/cli/generators/must-haves/agent-conventions).
@@ -701,7 +769,7 @@ The shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md` files are gen
 
 ## `recipes`
 
-Stores every recipe toggle in one top-level block. Repository, license, miscellaneous, Nova config, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
+Stores every recipe toggle in one top-level block. Docker, repository, GitHub Action, license, miscellaneous, Nova config, pfSense, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
 
 ### Recipe Entry Fields
 
@@ -714,12 +782,16 @@ Stores every recipe toggle in one top-level block. Repository, license, miscella
 
 | Category        | Supported recipes                                                                                                                                                                |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `docker`        | `sync-image`                                                                                                                                                                     |
 | `docker-hub`    | `sync-identity`, `sync-policies`                                                                                                                                                 |
 | `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
+| `github-action` | `sync-identity`                                                                                                                                                                  |
 | `license`       | `update-copyright`                                                                                                                                                               |
 | `miscellaneous` | `fix-markdown-tables`, `remove-operating-system-files`                                                                                                                           |
 | `nova-config`   | `normalize-order`                                                                                                                                                                |
+| `pfsense`       | `sync-identity`                                                                                                                                                                  |
 | `read-me`       | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
+| `tsconfig`      | `sync-references`                                                                                                                                                                |
 | `package-json`  | `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, `sync-ownership` |
 
 Package JSON recipes accept these optional settings where applicable:
@@ -744,6 +816,11 @@ Package JSON recipes accept these optional settings where applicable:
       }
     },
     "github": {
+      "sync-identity": {
+        "enabled": true
+      }
+    },
+    "github-action": {
       "sync-identity": {
         "enabled": true
       }
@@ -775,6 +852,11 @@ Package JSON recipes accept these optional settings where applicable:
     },
     "nova-config": {
       "normalize-order": {
+        "enabled": true
+      }
+    },
+    "pfsense": {
+      "sync-identity": {
         "enabled": true
       }
     },
@@ -939,6 +1021,7 @@ Project-wide behavior toggles that affect how Nova commands operate.
 
 | Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `coverage`           | `object`  | Test coverage policy. Its `minimum` is a percentage from 0 to 100. Scaffolded Vitest configs read it through [`VitestCoverage`](/docs/toolkit/testing/vitest-coverage), so `check:coverage` fails when lines, functions, branches or statements fall below it. With a minimum set, the publish workflow also writes the coverage badge file that the `coverage` README badge reads.                                                                                      |
 | `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`.                                       |
 | `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object controls verified local caching. Its `concurrency` object maps workspace script names to positive integer limits; scripts omitted from the map default to `10`, and an explicit CLI option overrides the map. Its `root` setting is `"first"` (default) to build internal root dependencies before root checks and builds, then run root steps before the remaining workspaces. `"skip"` leaves the root out. |
 | `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. Non-freezable workspaces start at `0.0.1` for SemVer or the current UTC `YYYY.M.0` for CalVer; `0.0.0` remains reserved for freezable workspaces. Before history exists, the configure utility migrates manifests, exact internal pins, and native version mirrors when this value changes. Release history locks the setting, and pending changelog entries block a switch.                       |
@@ -946,6 +1029,9 @@ Project-wide behavior toggles that affect how Nova commands operate.
 ```json title="nova.config.json"
 {
   "settings": {
+    "coverage": {
+      "minimum": 80
+    },
     "lockStepVersioning": true,
     "runWorkspaces": {
       "cache": {

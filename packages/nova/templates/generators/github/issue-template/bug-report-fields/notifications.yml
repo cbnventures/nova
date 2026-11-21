@@ -1,0 +1,14 @@
+  - type: "input"
+    id: "notification-service"
+    attributes:
+      label: "Notification Service"
+      description: "Enter the notification service involved. Leave this empty when the submission is unrelated to notifications."
+    validations:
+      required: false
+  - type: "input"
+    id: "notification-event"
+    attributes:
+      label: "Notification Event"
+      description: "Enter the event that should send or did send the notification."
+    validations:
+      required: false

@@ -7,7 +7,7 @@
   ],
   "compilerOptions": {
     "outDir": "./build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "types": [
       "@commander-js/extra-typings",
       "@types/eslint-plugin-jsx-a11y",

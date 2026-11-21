@@ -57,6 +57,11 @@ import type {
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents,
   Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result,
+  Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Config,
+  Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Next,
+  Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_PromptAttributeFiles,
+  Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Responses,
+  Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Result,
   Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Config,
   Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_PromptDockerHub,
   Tests_Cli_Utility_Configure_PromptDockerHub_ConfiguresRepositorySettingsAndRecipes_Result,
@@ -157,6 +162,11 @@ import type {
   Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ShortQuestion,
   Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate,
   Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Config,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_KeywordsQuestion,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_PromptProject,
+  Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Validate,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Config,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Next,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes,
@@ -184,6 +194,14 @@ import type {
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedResult,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedSettings,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_Config,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_CwdSpy,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_PromptSettings,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_SandboxRoot,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredResult,
+  Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredSettings,
   Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Config,
   Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_PromptWorkflowsForm,
   Tests_Cli_Utility_Configure_PromptWorkflows_CancelsWhenTheRunnerListCannotBeRead_Result,
@@ -240,6 +258,15 @@ import type {
   Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PromptWorkspacesForm,
   Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Question,
   Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Responses,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CommentQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_FormResult,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Next,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_PromptWorkspacesForm,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Question,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Responses,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Validate,
+  Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Workspace,
   Tests_Cli_Utility_Configure_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_AppDirectory,
   Tests_Cli_Utility_Configure_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_Config,
   Tests_Cli_Utility_Configure_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_CwdSpy,
@@ -385,11 +412,17 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
     },
     issueTemplate: {
       bugReportFields: { $item: 'promptGithub' },
+      customQuestions: {
+        bug: { $item: {} },
+        feature: { $item: {} },
+        support: { $item: {} },
+      },
     },
   },
   dockerHub: {
     namespace: 'promptDockerHub',
     repository: 'promptDockerHub',
+    description: 'promptDockerHub',
     visibility: 'promptDockerHub',
     categories: { $item: 'promptDockerHub' },
     immutableTags: {
@@ -467,6 +500,12 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       name: 'promptWorkspacesForm',
       role: 'promptWorkspacesForm',
       policy: 'promptWorkspacesForm',
+      githubAction: {
+        description: 'promptWorkspacesForm',
+      },
+      pfsense: {
+        comment: 'promptWorkspacesForm',
+      },
     },
   },
   artifacts: {
@@ -486,8 +525,20 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       patterns: { $item: 'promptGitignore' },
     },
   },
+  attributeFiles: {
+    $entry: {
+      bundles: { $item: 'promptAttributeFiles' },
+      patterns: { $item: 'promptAttributeFiles' },
+    },
+  },
   agents: { $item: 'promptAgents' },
   recipes: {
+    'docker': {
+      'sync-image': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
     'docker-hub': {
       'sync-identity': {
         enabled: 'promptDockerHub',
@@ -528,6 +579,12 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         settings: { $entry: 'promptRecipeEntries' },
       },
     },
+    'github-action': {
+      'sync-identity': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
     'license': {
       'update-copyright': {
         enabled: 'promptRecipeEntries',
@@ -561,6 +618,12 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         settings: { $entry: 'promptRecipeEntries' },
       },
     },
+    'pfsense': {
+      'sync-identity': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
     'read-me': {
       'update-badges': {
         enabled: 'promptRecipeEntries',
@@ -579,6 +642,12 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         settings: { $entry: 'promptRecipeEntries' },
       },
       'update-introduction': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
+    'tsconfig': {
+      'sync-references': {
         enabled: 'promptRecipeEntries',
         settings: { $entry: 'promptRecipeEntries' },
       },
@@ -659,6 +728,9 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
     },
   },
   settings: {
+    coverage: {
+      minimum: 'promptSettings',
+    },
     lockStepVersioning: 'promptSettings',
     runWorkspaces: {
       cache: {
@@ -1529,6 +1601,7 @@ describe('prompt flow', () => {
       'workspaces',
       'artifacts',
       'ignoreFiles',
+      'attributeFiles',
       'agents',
       'recipes',
       'environment',
@@ -1627,7 +1700,51 @@ describe('prompt project', () => {
     const validate: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate = shortQuestion!['validate'] as Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_Validate;
     const validationResult: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult = await validate('x'.repeat(101));
 
-    strictEqual(validationResult, 'Docker Hub\'s limit is 100 characters.');
+    strictEqual(validationResult, 'The "project.description.short" field has 101 characters, but Docker Hub allows at most 100. Shorten "project.description.short", or set "dockerHub.description" to give Docker Hub its own text.');
+
+    return;
+  });
+
+  it('enforces the topic rules on keywords', async () => {
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      capturedQuestions.push(...((Array.isArray(questions) === true) ? questions : [questions]));
+
+      return Promise.resolve({});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Config = {
+      project: {
+        keywords: [
+          'monorepo',
+          'cli',
+        ],
+      },
+      github: {
+        owner: 'example',
+        repo: 'widget',
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
+        },
+      },
+    };
+    const promptProject: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_PromptProject = Reflect.get(CliUtilityConfigure, 'promptProject') as Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_PromptProject;
+
+    await promptProject(config);
+
+    const keywordsQuestion: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_KeywordsQuestion = capturedQuestions.find((question) => question['name'] === 'projectKeywords');
+
+    strictEqual(keywordsQuestion!['message'], 'Keywords (comma separated, 2/20)');
+
+    const validate: Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Validate = keywordsQuestion!['validate'] as Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Validate;
+
+    strictEqual(await validate('monorepo, cli-tool'), true);
+    strictEqual(await validate('Mono Repo'), 'The "project.keywords" field has "Mono Repo", but GitHub topics allow only lowercase letters, numbers, and hyphens, starting with a letter or number. Change "project.keywords", or set "github.topics" to give GitHub topics their own list.');
 
     return;
   });
@@ -2159,6 +2276,56 @@ describe('prompt ignore files', () => {
 });
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Attribute Files.
+ *
+ * @since 0.49.0
+ */
+describe('prompt attribute files', () => {
+  it('adds an entry and refuses a conflicting pattern', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Responses = [
+      { action: 'add' },
+      { path: './packages/docker/.gitattributes' },
+      { bundles: ['docker-scripts'] },
+      { patterns: 'rootfs/** binary' },
+      { action: 'add' },
+      { path: './packages/docker/.gitattributes' },
+      { bundles: ['docker-scripts'] },
+      { patterns: '*.sh text eol=lf, *.conf text eol=lf' },
+      { action: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation(() => true);
+
+    const config: Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Config = {};
+    const promptAttributeFiles: Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_PromptAttributeFiles = Reflect.get(CliUtilityConfigure, 'promptAttributeFiles') as Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_PromptAttributeFiles;
+    const result: Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Result = await promptAttributeFiles(config);
+
+    vi.restoreAllMocks();
+
+    strictEqual(result, 'back');
+    deepStrictEqual(config['attributeFiles'], {
+      './packages/docker/.gitattributes': {
+        bundles: ['docker-scripts'],
+        patterns: [
+          '*.sh text eol=lf',
+          '*.conf text eol=lf',
+        ],
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Recipes.
  *
  * @since 0.32.0
@@ -2336,14 +2503,15 @@ describe('prompt settings', () => {
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
       .mockResolvedValueOnce({ cacheScripts: 'build, check' })
-      .mockResolvedValueOnce({ rootIncluded: true });
+      .mockResolvedValueOnce({ rootIncluded: true })
+      .mockResolvedValueOnce({ coverageMinimum: '' });
 
     const result: Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = await promptSettings(config);
 
     cwdSpy.mockRestore();
 
     strictEqual(result, 'back');
-    strictEqual(vi.mocked(prompts).mock.calls.length, 6);
+    strictEqual(vi.mocked(prompts).mock.calls.length, 7);
     deepStrictEqual(config['settings'], {
       lockStepVersioning: true,
       runWorkspaces: {
@@ -2362,6 +2530,62 @@ describe('prompt settings', () => {
       },
       versionStrategy: 'calver',
     });
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('stores and clears the coverage minimum', async () => {
+    const sandboxRoot: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_SandboxRoot = await mkdtemp(join(tmpdir(), `nova-${'settings-coverage'}-`));
+    const config: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_Config = {
+      settings: {
+        versionStrategy: 'semver',
+      },
+    };
+    const cwdSpy: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_CwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(sandboxRoot);
+    const promptSettings: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_PromptSettings = Reflect.get(CliUtilityConfigure, 'promptSettings') as Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_PromptSettings;
+
+    vi.mocked(prompts)
+      .mockResolvedValueOnce({ versionStrategy: 'semver' })
+      .mockResolvedValueOnce({ lockStepVersioning: false })
+      .mockResolvedValueOnce({ concurrency: '' })
+      .mockResolvedValueOnce({ cacheEnabled: true })
+      .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
+      .mockResolvedValueOnce({ cacheScripts: 'build, check' })
+      .mockResolvedValueOnce({ rootIncluded: true })
+      .mockResolvedValueOnce({ coverageMinimum: ' 85 ' });
+
+    const storedResult: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredResult = await promptSettings(config);
+    const storedSettings: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredSettings = config['settings'];
+
+    strictEqual(storedResult, 'back');
+    ok(storedSettings !== undefined);
+    deepStrictEqual(storedSettings['coverage'], {
+      minimum: 85,
+    });
+
+    vi.mocked(prompts)
+      .mockResolvedValueOnce({ versionStrategy: 'semver' })
+      .mockResolvedValueOnce({ lockStepVersioning: false })
+      .mockResolvedValueOnce({ concurrency: '' })
+      .mockResolvedValueOnce({ cacheEnabled: true })
+      .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
+      .mockResolvedValueOnce({ cacheScripts: 'build, check' })
+      .mockResolvedValueOnce({ rootIncluded: true })
+      .mockResolvedValueOnce({ coverageMinimum: '' });
+
+    const clearedResult: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedResult = await promptSettings(config);
+    const clearedSettings: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedSettings = config['settings'];
+
+    cwdSpy.mockRestore();
+
+    strictEqual(clearedResult, 'back');
+    ok(clearedSettings !== undefined);
+    strictEqual(clearedSettings['coverage'], undefined);
 
     await rm(sandboxRoot, {
       recursive: true,
@@ -2856,6 +3080,7 @@ describe('prompt workspaces form', () => {
       existingWorkspace: undefined,
       existingPackageJsonRecipes: undefined,
       projectSlug: undefined,
+      config: {},
     });
     const workspace: Tests_Cli_Utility_Configure_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Workspace = (formResult['action'] === 'apply') ? formResult['workspace'] : undefined;
     const packageJsonRecipes: Tests_Cli_Utility_Configure_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PackageJsonRecipes = (formResult['action'] === 'apply') ? formResult['packageJsonRecipes'] : undefined;
@@ -2910,6 +3135,7 @@ describe('prompt workspaces form', () => {
       existingWorkspace: undefined,
       existingPackageJsonRecipes,
       projectSlug: undefined,
+      config: {},
     });
     const packageJsonRecipes: Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PackageJsonRecipes = (formResult['action'] === 'apply') ? formResult['packageJsonRecipes'] : undefined;
 
@@ -2926,6 +3152,72 @@ describe('prompt workspaces form', () => {
         },
       },
     }, 'Expected the selected "displayName" setting to be recorded as enabled');
+
+    return;
+  });
+
+  it('validates and stores the pfsense comment override', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Responses = [
+      { workspaceRole: 'package' },
+      { workspacePolicy: 'trackable' },
+      { workspaceName: 'pfsense-pkg-firewall' },
+      { workspaceRecipes: [] },
+      { workspacePfsenseComment: 'Block unwanted websites on pfSense networks' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const promptWorkspacesForm: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_PromptWorkspacesForm = Reflect.get(CliUtilityConfigure, 'promptWorkspacesForm') as Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_PromptWorkspacesForm;
+    const formResult: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_FormResult = await promptWorkspacesForm({
+      workspacePath: './packages/firewall',
+      existingWorkspace: undefined,
+      existingPackageJsonRecipes: undefined,
+      projectSlug: undefined,
+      config: {
+        project: {
+          description: {
+            short: 'x'.repeat(90),
+          },
+        },
+        workflows: [{
+          template: 'publish',
+          name: 'project',
+          triggers: ['release'],
+          deploy: [{
+            to: 'pfsense',
+            path: './packages/firewall',
+          }],
+        }],
+      },
+    });
+    const workspace: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Workspace = (formResult['action'] === 'apply') ? formResult['workspace'] : undefined;
+    const commentQuestion: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CommentQuestion = capturedQuestions.find((entry) => entry['name'] === 'workspacePfsenseComment');
+
+    ok(commentQuestion !== undefined, 'Expected a FreeBSD port COMMENT prompt for a workspace deployed to pfSense');
+
+    const validate: Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Validate = commentQuestion['validate'] as Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Validate;
+
+    strictEqual(typeof validate('x'.repeat(71)), 'string');
+    strictEqual(typeof validate('Ends with a period.'), 'string');
+    strictEqual(typeof validate(''), 'string');
+    strictEqual(validate('Block unwanted websites'), true);
+    deepStrictEqual(workspace, {
+      name: 'pfsense-pkg-firewall',
+      role: 'package',
+      policy: 'trackable',
+      pfsense: {
+        comment: 'Block unwanted websites on pfSense networks',
+      },
+    });
 
     return;
   });

@@ -2,6 +2,13 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - JSDoc - Require JSDoc Private - JavaScript Extensions.
+ *
+ * @since 0.49.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_JavascriptExtensions = string[];
+
+/**
  * Rules - ESLint - JSDoc - Require JSDoc Private - Rule.
  *
  * @since 0.15.0
@@ -26,6 +33,12 @@ export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateI
 export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Comments = TSESTree.Comment[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_JsdocComment = TSESTree.Comment | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_HasPrivateTag = boolean;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Filename = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsJavascriptFile = boolean;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Private - Check Member - Fix.

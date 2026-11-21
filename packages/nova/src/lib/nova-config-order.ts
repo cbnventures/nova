@@ -2,15 +2,9 @@ import { isPlainObject } from './utility.js';
 
 import type {
   Lib_NovaConfigOrder_LibNovaConfigDockerHubKeys,
+  Lib_NovaConfigOrder_LibNovaConfigRecipesKeys,
+  Lib_NovaConfigOrder_LibNovaConfigSettingsKeys,
   Lib_NovaConfigOrder_LibNovaConfigTopLevelKeys,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_Entry,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_EntryKey,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_EntryValue,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_Key,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_OrderedKeys,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_Result,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_Returns,
-  Lib_NovaConfigOrder_NormalizeDockerHubOrder_Value,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Config,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_ConfigKey,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_ConfigValue,
@@ -19,8 +13,18 @@ import type {
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_OrderedKeys,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Result,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Returns,
+  Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_SectionKeys,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_TypedConfigEntry,
   Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Value,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Entry,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_EntryKey,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_EntryValue,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Key,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Keys,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_OrderedKeys,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Result,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Returns,
+  Lib_NovaConfigOrder_NormalizeSectionOrder_Value,
 } from '../types/lib/nova-config-order.d.ts';
 
 /**
@@ -37,6 +41,43 @@ const libNovaConfigDockerHubKeys: Lib_NovaConfigOrder_LibNovaConfigDockerHubKeys
   'visibility',
   'categories',
   'immutableTags',
+];
+
+/**
+ * Lib - Nova Config Order - Lib Nova Config Recipes Keys.
+ *
+ * Defines the canonical recipe-group sequence. Groups are alphabetical, with the
+ * per-workspace "package-json" group last.
+ *
+ * @since 0.49.0
+ */
+const libNovaConfigRecipesKeys: Lib_NovaConfigOrder_LibNovaConfigRecipesKeys = [
+  'docker',
+  'docker-hub',
+  'github',
+  'github-action',
+  'license',
+  'miscellaneous',
+  'nova-config',
+  'pfsense',
+  'read-me',
+  'tsconfig',
+  'package-json',
+];
+
+/**
+ * Lib - Nova Config Order - Lib Nova Config Settings Keys.
+ *
+ * Defines the canonical alphabetical sequence of the project-wide settings.
+ * Unknown settings keep their place after the recognized ones.
+ *
+ * @since 0.49.0
+ */
+const libNovaConfigSettingsKeys: Lib_NovaConfigOrder_LibNovaConfigSettingsKeys = [
+  'coverage',
+  'lockStepVersioning',
+  'runWorkspaces',
+  'versionStrategy',
 ];
 
 /**
@@ -59,6 +100,7 @@ const libNovaConfigTopLevelKeys: Lib_NovaConfigOrder_LibNovaConfigTopLevelKeys =
   'workspaces',
   'artifacts',
   'ignoreFiles',
+  'attributeFiles',
   'agents',
   'recipes',
   'environment',
@@ -66,27 +108,28 @@ const libNovaConfigTopLevelKeys: Lib_NovaConfigOrder_LibNovaConfigTopLevelKeys =
 ];
 
 /**
- * Lib - Nova Config Order - Normalize Docker Hub Order.
+ * Lib - Nova Config Order - Normalize Section Order.
  *
- * Reorders recognized Docker Hub fields and then appends unknown fields in
- * their original relative order.
+ * Reorders the recognized fields of one section and then appends unknown fields
+ * in their original relative order. A value that is not an object is returned as is.
  *
- * @param {Lib_NovaConfigOrder_NormalizeDockerHubOrder_Value} value - Value.
+ * @param {Lib_NovaConfigOrder_NormalizeSectionOrder_Value} value - Value.
+ * @param {Lib_NovaConfigOrder_NormalizeSectionOrder_Keys}  keys  - Keys.
  *
- * @returns {Lib_NovaConfigOrder_NormalizeDockerHubOrder_Returns}
+ * @returns {Lib_NovaConfigOrder_NormalizeSectionOrder_Returns}
  *
- * @since 0.40.0
+ * @since 0.49.0
  */
-function normalizeDockerHubOrder(value: Lib_NovaConfigOrder_NormalizeDockerHubOrder_Value): Lib_NovaConfigOrder_NormalizeDockerHubOrder_Returns {
+function normalizeSectionOrder(value: Lib_NovaConfigOrder_NormalizeSectionOrder_Value, keys: Lib_NovaConfigOrder_NormalizeSectionOrder_Keys): Lib_NovaConfigOrder_NormalizeSectionOrder_Returns {
   if (isPlainObject(value) === false) {
     return value;
   }
 
-  const result: Lib_NovaConfigOrder_NormalizeDockerHubOrder_Result = {};
-  const orderedKeys: Lib_NovaConfigOrder_NormalizeDockerHubOrder_OrderedKeys = new Set(libNovaConfigDockerHubKeys);
+  const result: Lib_NovaConfigOrder_NormalizeSectionOrder_Result = {};
+  const orderedKeys: Lib_NovaConfigOrder_NormalizeSectionOrder_OrderedKeys = new Set(keys);
 
-  for (const orderedKey of libNovaConfigDockerHubKeys) {
-    const key: Lib_NovaConfigOrder_NormalizeDockerHubOrder_Key = orderedKey;
+  for (const orderedKey of keys) {
+    const key: Lib_NovaConfigOrder_NormalizeSectionOrder_Key = orderedKey;
 
     if (Object.prototype.hasOwnProperty.call(value, key) === false) {
       continue;
@@ -96,9 +139,9 @@ function normalizeDockerHubOrder(value: Lib_NovaConfigOrder_NormalizeDockerHubOr
   }
 
   for (const valueEntry of Object.entries(value)) {
-    const entry: Lib_NovaConfigOrder_NormalizeDockerHubOrder_Entry = valueEntry;
-    const entryKey: Lib_NovaConfigOrder_NormalizeDockerHubOrder_EntryKey = entry[0];
-    const entryValue: Lib_NovaConfigOrder_NormalizeDockerHubOrder_EntryValue = entry[1];
+    const entry: Lib_NovaConfigOrder_NormalizeSectionOrder_Entry = valueEntry;
+    const entryKey: Lib_NovaConfigOrder_NormalizeSectionOrder_EntryKey = entry[0];
+    const entryValue: Lib_NovaConfigOrder_NormalizeSectionOrder_EntryValue = entry[1];
 
     if (orderedKeys.has(entryKey) === true) {
       continue;
@@ -113,8 +156,9 @@ function normalizeDockerHubOrder(value: Lib_NovaConfigOrder_NormalizeDockerHubOr
 /**
  * Lib - Nova Config Order - Normalize Nova Config Top Level Order.
  *
- * Reorders recognized top-level sections and then appends unrecognized keys in
- * their original relative order so formatting never discards project data.
+ * Reorders recognized top-level sections and the fields inside "dockerHub",
+ * "recipes" and "settings", then appends unrecognized keys in their original relative
+ * order so formatting never discards project data.
  *
  * @param {Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Config} config - Config.
  *
@@ -134,7 +178,17 @@ export function normalizeNovaConfigTopLevelOrder(config: Lib_NovaConfigOrder_Nor
     }
 
     const value: Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_Value = config[key];
-    const normalizedValue: Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_NormalizedValue = (key === 'dockerHub') ? normalizeDockerHubOrder(value) : value;
+    let sectionKeys: Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_SectionKeys = undefined;
+
+    if (key === 'dockerHub') {
+      sectionKeys = libNovaConfigDockerHubKeys;
+    } else if (key === 'recipes') {
+      sectionKeys = libNovaConfigRecipesKeys;
+    } else if (key === 'settings') {
+      sectionKeys = libNovaConfigSettingsKeys;
+    }
+
+    const normalizedValue: Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_NormalizedValue = (sectionKeys === undefined) ? value : normalizeSectionOrder(value, sectionKeys);
 
     Reflect.set(result, key, normalizedValue);
   }

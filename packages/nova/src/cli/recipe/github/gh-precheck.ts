@@ -1,3 +1,4 @@
+import { Runner as ApiGithub } from '../../../api/github.js';
 import { LIB_GH_MIN_VERSION } from '../../../lib/constants.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { LIB_REGEX_PATTERN_GH_VERSION } from '../../../lib/regex.js';
@@ -30,6 +31,7 @@ import type {
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_Recipes,
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_Repo,
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_Returns,
+  Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewCommand,
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewerPermission,
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewResult,
   Cli_Recipe_Github_GhPrecheck_GhPrecheck_WorkingFile,
@@ -142,7 +144,8 @@ export async function ghPrecheck(recipeName: Cli_Recipe_Github_GhPrecheck_GhPrec
     return undefined;
   }
 
-  const viewResult: Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewResult = await executeShell(`gh repo view ${owner}/${repo} --json viewerPermission`);
+  const viewCommand: Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewCommand = ApiGithub.buildRepositoryPermissionCommand(owner, repo);
+  const viewResult: Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewResult = await executeShell(viewCommand);
 
   if (viewResult['code'] !== 0) {
     Logger.error(`Skipping ${recipeName}. Cannot access ${owner}/${repo}.`);

@@ -1,11 +1,10 @@
-import { shellQuote } from '../../../lib/utility.js';
+import { Runner as ApiGithub } from '../../../api/github.js';
 import { Logger } from '../../../toolkit/index.js';
 import { executeGhCommands } from './gh-commands.js';
 import { ghPrecheck } from './gh-precheck.js';
 
 import type {
   Cli_Recipe_Github_SyncLabels_Runner_Run_Commands,
-  Cli_Recipe_Github_SyncLabels_Runner_Run_Description,
   Cli_Recipe_Github_SyncLabels_Runner_Run_DidSucceed,
   Cli_Recipe_Github_SyncLabels_Runner_Run_Github,
   Cli_Recipe_Github_SyncLabels_Runner_Run_IsDryRun,
@@ -64,9 +63,7 @@ export class Runner {
     const commands: Cli_Recipe_Github_SyncLabels_Runner_Run_Commands = [];
 
     for (const label of labels) {
-      const description: Cli_Recipe_Github_SyncLabels_Runner_Run_Description = label['description'] ?? '';
-
-      commands.push(`gh label create ${shellQuote(label['name'])} --repo ${owner}/${repo} --color ${shellQuote(label['color'])} --description ${shellQuote(description)} --force`);
+      commands.push(ApiGithub.buildLabelCreateCommand(owner, repo, label));
     }
 
     const didSucceed: Cli_Recipe_Github_SyncLabels_Runner_Run_DidSucceed = await executeGhCommands(commands, 'sync-labels', isDryRun);

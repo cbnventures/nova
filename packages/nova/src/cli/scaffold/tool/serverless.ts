@@ -76,7 +76,7 @@ function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_Tool_Serverless_
 /**
  * CLI - Scaffold - Tool - Serverless.
  *
- * Scaffolds a distributable Node.js CLI paired with a user-deployed serverless
+ * Scaffolds a trackable Node.js CLI paired with a user-deployed serverless
  * service on one explicitly selected platform.
  *
  * @since 0.32.0
@@ -107,6 +107,11 @@ export class Runner {
         'nodejs',
         'web',
       ],
+
+      // A serverless tool deploys to its platform, not to npm, so it starts out trackable,
+      // the way a new package.json starts out private. Publishing it to npm is a deliberate
+      // later change to "distributable".
+      publishesToNpm: false,
       resolveAllowScriptProfiles: (answers) => (answers.get('target') === 'cloudflare-workers') ? ['cloudflare'] : [],
       resolveArtifact: (workspaceRelPath, workspacePackageName, answers) => ({
         name: workspacePackageName,

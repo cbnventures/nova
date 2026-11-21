@@ -1,0 +1,10 @@
+{
+  "name": "outpost-project",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "npm@11.18.0"
+}

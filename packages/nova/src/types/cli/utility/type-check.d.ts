@@ -23,8 +23,11 @@ export type Cli_Utility_TypeCheck_Runner_PrintInfo_Returns = void;
  */
 export type Cli_Utility_TypeCheck_Runner_Run_Options_Project = string;
 
+export type Cli_Utility_TypeCheck_Runner_Run_Options_PassWithNoInputs = true;
+
 export type Cli_Utility_TypeCheck_Runner_Run_Options = {
   project?: Cli_Utility_TypeCheck_Runner_Run_Options_Project;
+  passWithNoInputs?: Cli_Utility_TypeCheck_Runner_Run_Options_PassWithNoInputs;
 };
 
 export type Cli_Utility_TypeCheck_Runner_Run_Returns = void;

@@ -6,10 +6,10 @@ import {
   relative,
   sep,
 } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { Logger } from '../toolkit/index.js';
 import { Runner as LibCorepack } from './corepack.js';
+import { Runner as LibDockerRender } from './docker-render.js';
 import { renderIgnoreFile } from './ignore-files.js';
 import { libItemAllowedRecipes } from './item.js';
 import { normalizeNovaConfigTopLevelOrder } from './nova-config-order.js';
@@ -17,13 +17,12 @@ import {
   LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE,
   LIB_REGEX_PATTERN_DOCKER_HEALTH_PATH,
   LIB_REGEX_PATTERN_DOCKER_RUNTIME_PATH,
+  LIB_REGEX_PATTERN_DOCKER_SCRIPT_NAME,
+  LIB_REGEX_PATTERN_DOCKER_SINGLE_LINE,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
 } from './regex.js';
 import {
-  applyScaffoldVersionReplacements,
-  getScaffoldVersion,
-} from './scaffold-versions.js';
-import {
+  buildGeneratedFileHeader,
   isPlainObject,
   pathExists,
   saveGeneratedFile,
@@ -33,87 +32,58 @@ import type {
   Lib_DockerPackaging_DirectoryEntries,
   Lib_DockerPackaging_DockerAssemblyRelativePath,
   Lib_DockerPackaging_DockerConfigWorkspacePath,
+  Lib_DockerPackaging_DockerGeneratedFilesRecord,
   Lib_DockerPackaging_DockerManifestSchemaVersion,
   Lib_DockerPackaging_DockerProtectedWritablePaths,
   Lib_DockerPackaging_DockerReservedServiceNames,
-  Lib_DockerPackaging_DockerWorkspaceBuildDirectory,
-  Lib_DockerPackaging_Runner_BuildCompose_Content,
-  Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock,
-  Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles,
-  Lib_DockerPackaging_Runner_BuildCompose_Manifest,
-  Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock,
-  Lib_DockerPackaging_Runner_BuildCompose_PortBlock,
-  Lib_DockerPackaging_Runner_BuildCompose_PortLines,
-  Lib_DockerPackaging_Runner_BuildCompose_Ports,
-  Lib_DockerPackaging_Runner_BuildCompose_Replacements,
-  Lib_DockerPackaging_Runner_BuildCompose_Returns,
-  Lib_DockerPackaging_Runner_BuildCompose_Template,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyDirectory,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageContent,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackagePath,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageValue,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyScriptsValue,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_Changes,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContent,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContents,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_Discovered,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_ImagePlan,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_IsDryRun,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath_Returns,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_IsReplaceFile,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_IsReportFiles,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_MissingScripts,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_OwnedFiles,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_Plan,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedAssemblyPackage,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntries,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntry,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedFile,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_PreviousOwnedPaths,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_ProjectDirectory,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RecordContent,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RecordedPath,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RecordFiles,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RecordPath,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RecordValue,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_Returns,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsDirectory,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsFiles,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContent,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContents,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_StalePaths,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_Status,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_UnownedFiles,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_WorkspaceManifestsDirectory,
+  Lib_DockerPackaging_Runner_ApplyImagePlan_YarnConfigPath,
+  Lib_DockerPackaging_Runner_BuildAssemblyPackage_Returns,
+  Lib_DockerPackaging_Runner_BuildAssemblyPackage_Slug,
   Lib_DockerPackaging_Runner_BuildContainerPackage_AssemblyPackageName,
   Lib_DockerPackaging_Runner_BuildContainerPackage_BuildOrder,
   Lib_DockerPackaging_Runner_BuildContainerPackage_ContainerPackage,
   Lib_DockerPackaging_Runner_BuildContainerPackage_InheritedValue,
   Lib_DockerPackaging_Runner_BuildContainerPackage_Returns,
   Lib_DockerPackaging_Runner_BuildContainerPackage_RootPackage,
-  Lib_DockerPackaging_Runner_BuildDockerfile_BuildCommands,
-  Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder,
-  Lib_DockerPackaging_Runner_BuildDockerfile_BuildScriptValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Content,
-  Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives,
-  Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand,
-  Lib_DockerPackaging_Runner_BuildDockerfile_IsSelectedWorkspace,
-  Lib_DockerPackaging_Runner_BuildDockerfile_IsYarnClassic,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Manifest,
-  Lib_DockerPackaging_Runner_BuildDockerfile_NeedsNodeRuntime,
-  Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests,
-  Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageJson,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageManager,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerDescriptor,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerVersion,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PackageName,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Ports,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Project,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor,
-  Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand,
-  Lib_DockerPackaging_Runner_BuildDockerfile_QuotedPackageName,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Replacements,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Returns,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssembly,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyCommands,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspacePath,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspaceServices,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeCopyLines,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeSitePath,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePackage,
-  Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePath,
-  Lib_DockerPackaging_Runner_BuildDockerfile_ScriptsValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Template,
-  Lib_DockerPackaging_Runner_BuildDockerfile_Urls,
-  Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestCopyLines,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestRestoreLines,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestSourcePath,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspacePackage,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceServices,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceSourceCopyLines,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WritableDirectories,
-  Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths,
   Lib_DockerPackaging_Runner_BuildHealthcheck_HealthPort,
   Lib_DockerPackaging_Runner_BuildHealthcheck_HealthService,
   Lib_DockerPackaging_Runner_BuildHealthcheck_Lines,
@@ -187,8 +157,6 @@ import type {
   Lib_DockerPackaging_Runner_BuildSyntheticWorkspacePackage_Returns,
   Lib_DockerPackaging_Runner_BuildSyntheticWorkspacePackage_SyntheticPackage,
   Lib_DockerPackaging_Runner_BuildSyntheticWorkspacePackage_WorkspaceRange,
-  Lib_DockerPackaging_Runner_BuildWorkspacePackage_Returns,
-  Lib_DockerPackaging_Runner_BuildWorkspacePackage_Slug,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_GroupDirectory,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_Manifest,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_PackageJson,
@@ -198,79 +166,55 @@ import type {
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_Returns,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_WorkspacePackages,
   Lib_DockerPackaging_Runner_CollectWorkspacePackages_WorkspacePaths,
-  Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns,
-  Lib_DockerPackaging_Runner_EscapeDockerLabel_Value,
+  Lib_DockerPackaging_Runner_CountLineChanges_Above,
+  Lib_DockerPackaging_Runner_CountLineChanges_After,
+  Lib_DockerPackaging_Runner_CountLineChanges_AfterLines,
+  Lib_DockerPackaging_Runner_CountLineChanges_Before,
+  Lib_DockerPackaging_Runner_CountLineChanges_BeforeLines,
+  Lib_DockerPackaging_Runner_CountLineChanges_Common,
+  Lib_DockerPackaging_Runner_CountLineChanges_Diagonal,
+  Lib_DockerPackaging_Runner_CountLineChanges_Lengths,
+  Lib_DockerPackaging_Runner_CountLineChanges_Returns,
   Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyDirectory,
-  Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackage,
   Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackageName,
-  Lib_DockerPackaging_Runner_GenerateForTarget_AvailableServiceNames,
-  Lib_DockerPackaging_Runner_GenerateForTarget_BuildOrder,
-  Lib_DockerPackaging_Runner_GenerateForTarget_ComposeContent,
-  Lib_DockerPackaging_Runner_GenerateForTarget_ConfiguredIgnoreFileEntry,
   Lib_DockerPackaging_Runner_GenerateForTarget_ConflictingService,
-  Lib_DockerPackaging_Runner_GenerateForTarget_ContainerBuildPackage,
-  Lib_DockerPackaging_Runner_GenerateForTarget_DockerfileContent,
-  Lib_DockerPackaging_Runner_GenerateForTarget_DockerignoreContent,
   Lib_DockerPackaging_Runner_GenerateForTarget_ExistingManifestValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_ExistingWorkspace,
-  Lib_DockerPackaging_Runner_GenerateForTarget_GitAttributesContent,
   Lib_DockerPackaging_Runner_GenerateForTarget_HealthPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry,
-  Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFilesValue,
-  Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnBerry,
-  Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnClassic,
+  Lib_DockerPackaging_Runner_GenerateForTarget_ImagePlan,
   Lib_DockerPackaging_Runner_GenerateForTarget_LegacyStatePaths,
   Lib_DockerPackaging_Runner_GenerateForTarget_Manifest,
   Lib_DockerPackaging_Runner_GenerateForTarget_ManifestPath,
-  Lib_DockerPackaging_Runner_GenerateForTarget_NeedsSyntheticWorkspaceManifests,
   Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode,
   Lib_DockerPackaging_Runner_GenerateForTarget_NovaConfig,
   Lib_DockerPackaging_Runner_GenerateForTarget_NovaConfigPath,
   Lib_DockerPackaging_Runner_GenerateForTarget_Options,
-  Lib_DockerPackaging_Runner_GenerateForTarget_PackageManager,
-  Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerDescriptor,
-  Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerVersion,
-  Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceContent,
-  Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceLines,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectDirectory,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectNameValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectSlugValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_ProjectValue,
-  Lib_DockerPackaging_Runner_GenerateForTarget_ReportFiles,
   Lib_DockerPackaging_Runner_GenerateForTarget_RequestedServices,
   Lib_DockerPackaging_Runner_GenerateForTarget_Result,
   Lib_DockerPackaging_Runner_GenerateForTarget_RetainedServices,
   Lib_DockerPackaging_Runner_GenerateForTarget_RetainedWorkspaces,
   Lib_DockerPackaging_Runner_GenerateForTarget_Returns,
-  Lib_DockerPackaging_Runner_GenerateForTarget_RootfsDirectory,
   Lib_DockerPackaging_Runner_GenerateForTarget_RootPackage,
   Lib_DockerPackaging_Runner_GenerateForTarget_RootPackagePath,
   Lib_DockerPackaging_Runner_GenerateForTarget_RuntimePaths,
-  Lib_DockerPackaging_Runner_GenerateForTarget_ServicesByName,
   Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment,
-  Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestContent,
-  Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestPath,
-  Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifests,
-  Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspacePackage,
-  Lib_DockerPackaging_Runner_GenerateForTarget_TemplateContents,
-  Lib_DockerPackaging_Runner_GenerateForTarget_TemplateRoot,
   Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest,
   Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedNovaConfig,
   Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedRootPackage,
-  Lib_DockerPackaging_Runner_GenerateForTarget_VisitedServices,
-  Lib_DockerPackaging_Runner_GenerateForTarget_VisitingServices,
-  Lib_DockerPackaging_Runner_GenerateForTarget_VisitService,
-  Lib_DockerPackaging_Runner_GenerateForTarget_VisitService_Service,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceDefinition,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceDirectory,
-  Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceManifestsDirectory,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackage,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackageNameValue,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackagePath,
-  Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackages,
   Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePathValue,
-  Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigContent,
-  Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigPath,
+  Lib_DockerPackaging_Runner_ListFiles_Directory,
+  Lib_DockerPackaging_Runner_ListFiles_Entries,
+  Lib_DockerPackaging_Runner_ListFiles_Returns,
   Lib_DockerPackaging_Runner_MergeScripts_DeployEntries,
   Lib_DockerPackaging_Runner_MergeScripts_Entries,
   Lib_DockerPackaging_Runner_MergeScripts_InsertDeployScripts,
@@ -279,21 +223,53 @@ import type {
   Lib_DockerPackaging_Runner_MergeScripts_Merged,
   Lib_DockerPackaging_Runner_MergeScripts_Returns,
   Lib_DockerPackaging_Runner_MergeScripts_Scripts,
+  Lib_DockerPackaging_Runner_NormalizeManifest_DeclaredPorts,
+  Lib_DockerPackaging_Runner_NormalizeManifest_FirstPort,
   Lib_DockerPackaging_Runner_NormalizeManifest_HasRetiredPortKeys,
   Lib_DockerPackaging_Runner_NormalizeManifest_HealthPath,
+  Lib_DockerPackaging_Runner_NormalizeManifest_HealthService,
   Lib_DockerPackaging_Runner_NormalizeManifest_LegacyStatePaths,
   Lib_DockerPackaging_Runner_NormalizeManifest_Manifest,
   Lib_DockerPackaging_Runner_NormalizeManifest_NetworkMode,
   Lib_DockerPackaging_Runner_NormalizeManifest_Returns,
   Lib_DockerPackaging_Runner_NormalizeManifest_ServiceNames,
   Lib_DockerPackaging_Runner_NormalizeManifest_ServicePorts,
+  Lib_DockerPackaging_Runner_NormalizeManifest_Settings,
   Lib_DockerPackaging_Runner_NormalizeManifest_StateEnvironment,
   Lib_DockerPackaging_Runner_NormalizeManifest_Value,
+  Lib_DockerPackaging_Runner_NormalizeManifest_Workspaces,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_PathParts,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_Returns,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_RuntimePaths,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_Value,
   Lib_DockerPackaging_Runner_NormalizeRuntimePaths_WorkspacePath,
+  Lib_DockerPackaging_Runner_NormalizeWorkspace_Normalized,
+  Lib_DockerPackaging_Runner_NormalizeWorkspace_Returns,
+  Lib_DockerPackaging_Runner_NormalizeWorkspace_SourceFiles,
+  Lib_DockerPackaging_Runner_NormalizeWorkspace_Workspace,
+  Lib_DockerPackaging_Runner_PlanImage_AssemblyDirectory,
+  Lib_DockerPackaging_Runner_PlanImage_AssemblyPackagePath,
+  Lib_DockerPackaging_Runner_PlanImage_BuildOrder,
+  Lib_DockerPackaging_Runner_PlanImage_DockerignoreHeader,
+  Lib_DockerPackaging_Runner_PlanImage_DockerignorePath,
+  Lib_DockerPackaging_Runner_PlanImage_GeneratedHeader,
+  Lib_DockerPackaging_Runner_PlanImage_IgnoreFileEntry,
+  Lib_DockerPackaging_Runner_PlanImage_IncludeManifest,
+  Lib_DockerPackaging_Runner_PlanImage_Inputs,
+  Lib_DockerPackaging_Runner_PlanImage_IsNovaBuildEnabled,
+  Lib_DockerPackaging_Runner_PlanImage_IsYarnBerry,
+  Lib_DockerPackaging_Runner_PlanImage_Manifest,
+  Lib_DockerPackaging_Runner_PlanImage_NovaConfig,
+  Lib_DockerPackaging_Runner_PlanImage_PackageManagerDescriptor,
+  Lib_DockerPackaging_Runner_PlanImage_Plan,
+  Lib_DockerPackaging_Runner_PlanImage_PnpmWorkspaceLines,
+  Lib_DockerPackaging_Runner_PlanImage_ProjectDirectory,
+  Lib_DockerPackaging_Runner_PlanImage_ProjectSlug,
+  Lib_DockerPackaging_Runner_PlanImage_RenderInput,
+  Lib_DockerPackaging_Runner_PlanImage_Returns,
+  Lib_DockerPackaging_Runner_PlanImage_RootPackage,
+  Lib_DockerPackaging_Runner_PlanImage_StageFragments,
+  Lib_DockerPackaging_Runner_PlanImage_WorkspacePackages,
   Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackage,
   Lib_DockerPackaging_Runner_ReadImageWorkspaces_BuildPackagePath,
   Lib_DockerPackaging_Runner_ReadImageWorkspaces_ProjectDirectory,
@@ -305,19 +281,25 @@ import type {
   Lib_DockerPackaging_Runner_ReadJsonObject_RawContent,
   Lib_DockerPackaging_Runner_ReadJsonObject_Returns,
   Lib_DockerPackaging_Runner_ReadJsonObject_TargetPath,
+  Lib_DockerPackaging_Runner_ReadOptionalFile_Returns,
+  Lib_DockerPackaging_Runner_ReadOptionalFile_TargetPath,
+  Lib_DockerPackaging_Runner_ReadStageFragments_AssemblyDirectory,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Content,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Contents,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Fragments,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Manifest,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Returns,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Stage,
+  Lib_DockerPackaging_Runner_ReadStageFragments_Stages,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyDirectory,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackage,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackageNameValue,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_AssemblyPackagePath,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ContainerBuildPackage,
-  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ManifestPath,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests,
-  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager,
-  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor,
-  Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_ProjectDirectory,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Returns,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_RootPackage,
@@ -329,6 +311,8 @@ import type {
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspaceManifestsDirectory,
   Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_AssemblyPackageName,
+  Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFiles,
+  Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFilesValue,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_Environment,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentValue,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_EnvironmentWorkspaces,
@@ -347,6 +331,20 @@ import type {
   Lib_DockerPackaging_Runner_RegisterProjectConfig_Returns,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_Workspaces,
   Lib_DockerPackaging_Runner_RegisterProjectConfig_WorkspacesValue,
+  Lib_DockerPackaging_Runner_RemoveEmptyParents_Directory,
+  Lib_DockerPackaging_Runner_RemoveEmptyParents_Returns,
+  Lib_DockerPackaging_Runner_RemoveEmptyParents_StopDirectory,
+  Lib_DockerPackaging_Runner_RenderRootfs_AddFile,
+  Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Returns,
+  Lib_DockerPackaging_Runner_RenderRootfs_AddFile_ScriptLines,
+  Lib_DockerPackaging_Runner_RenderRootfs_CriticalFinishScript,
+  Lib_DockerPackaging_Runner_RenderRootfs_Files,
+  Lib_DockerPackaging_Runner_RenderRootfs_GeneratedHeader,
+  Lib_DockerPackaging_Runner_RenderRootfs_Manifest,
+  Lib_DockerPackaging_Runner_RenderRootfs_Returns,
+  Lib_DockerPackaging_Runner_RenderRootfs_ServiceDirectory,
+  Lib_DockerPackaging_Runner_RenderRootfs_ShellVariableMarker,
+  Lib_DockerPackaging_Runner_RenderRootfs_WritablePaths,
   Lib_DockerPackaging_Runner_ResolveBuildOrder_Manifest,
   Lib_DockerPackaging_Runner_ResolveBuildOrder_OrderedPackages,
   Lib_DockerPackaging_Runner_ResolveBuildOrder_Returns,
@@ -355,29 +353,37 @@ import type {
   Lib_DockerPackaging_Runner_ResolveBuildOrder_VisitPackage_DependencyGroup,
   Lib_DockerPackaging_Runner_ResolveBuildOrder_VisitPackage_WorkspacePackage,
   Lib_DockerPackaging_Runner_ResolveBuildOrder_WorkspacePackages,
+  Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_ConfiguredIgnoreFileEntry,
+  Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_IgnoreFilesValue,
+  Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_NovaConfig,
+  Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_Returns,
   Lib_DockerPackaging_Runner_ShellQuote_Returns,
   Lib_DockerPackaging_Runner_ShellQuote_Value,
+  Lib_DockerPackaging_Runner_SyncImage_ApplyResult,
+  Lib_DockerPackaging_Runner_SyncImage_IgnoreFilesValue,
+  Lib_DockerPackaging_Runner_SyncImage_ImagePlan,
+  Lib_DockerPackaging_Runner_SyncImage_JsonFiles,
+  Lib_DockerPackaging_Runner_SyncImage_Manifest,
+  Lib_DockerPackaging_Runner_SyncImage_ManifestPath,
+  Lib_DockerPackaging_Runner_SyncImage_NovaConfig,
+  Lib_DockerPackaging_Runner_SyncImage_NovaConfigPath,
+  Lib_DockerPackaging_Runner_SyncImage_Options,
+  Lib_DockerPackaging_Runner_SyncImage_ProjectDirectory,
+  Lib_DockerPackaging_Runner_SyncImage_ProjectNameValue,
+  Lib_DockerPackaging_Runner_SyncImage_ProjectSlugValue,
+  Lib_DockerPackaging_Runner_SyncImage_ProjectValue,
+  Lib_DockerPackaging_Runner_SyncImage_Returns,
+  Lib_DockerPackaging_Runner_SyncImage_RootPackage,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_AvailableServiceNames,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_Manifest,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_Returns,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_ServicesByName,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitedServices,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitingServices,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService,
+  Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService_Service,
   Lib_DockerPackaging_Runner_ValidateServiceName_Name,
   Lib_DockerPackaging_Runner_ValidateServiceName_Returns,
-  Lib_DockerPackaging_Runner_WriteExecutable_Content,
-  Lib_DockerPackaging_Runner_WriteExecutable_Returns,
-  Lib_DockerPackaging_Runner_WriteExecutable_TargetPath,
-  Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript,
-  Lib_DockerPackaging_Runner_WriteRootfs_DependenciesDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_HelperDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_InitServiceDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths,
-  Lib_DockerPackaging_Runner_WriteRootfs_Manifest,
-  Lib_DockerPackaging_Runner_WriteRootfs_NovaConfigDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_Returns,
-  Lib_DockerPackaging_Runner_WriteRootfs_RootfsDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_S6DatabaseDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_ServiceDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_ServiceHelperDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_ShellVariableMarker,
-  Lib_DockerPackaging_Runner_WriteRootfs_UserBundleDirectory,
-  Lib_DockerPackaging_Runner_WriteRootfs_WritablePaths,
 } from '../types/lib/docker-packaging.d.ts';
 
 /**
@@ -408,7 +414,7 @@ const dockerConfigWorkspacePath: Lib_DockerPackaging_DockerConfigWorkspacePath =
  *
  * @since 0.34.0
  */
-const dockerManifestSchemaVersion: Lib_DockerPackaging_DockerManifestSchemaVersion = 1;
+const dockerManifestSchemaVersion: Lib_DockerPackaging_DockerManifestSchemaVersion = 2;
 
 /**
  * Lib - Docker Packaging - Docker Protected Writable Paths.
@@ -452,14 +458,14 @@ const dockerReservedServiceNames: Lib_DockerPackaging_DockerReservedServiceNames
 ]);
 
 /**
- * Lib - Docker Packaging - Docker Workspace Build Directory.
+ * Lib - Docker Packaging - Docker Generated Files Record.
  *
- * Names the workspace folder every generated Dockerfile copies build output from.
- * Nova builds every workspace into this folder, so no workspace can choose another.
+ * Names the file inside packages/docker that lists every rootfs and workspace
+ * manifest file Nova wrote, so only those are ever deleted as stale.
  *
- * @since 0.37.0
+ * @since 0.49.0
  */
-const dockerWorkspaceBuildDirectory: Lib_DockerPackaging_DockerWorkspaceBuildDirectory = 'build';
+const dockerGeneratedFilesRecord: Lib_DockerPackaging_DockerGeneratedFilesRecord = 'generated-files.json';
 
 /**
  * Lib - Docker Packaging.
@@ -527,6 +533,7 @@ export class Runner {
     }
 
     const workspaceDefinition: Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceDefinition = {
+      ...((existingWorkspace === undefined) ? {} : existingWorkspace),
       packageName: workspacePackageNameValue,
       path: workspacePathValue,
       profile: options['profile'],
@@ -549,6 +556,7 @@ export class Runner {
     const networkMode: Lib_DockerPackaging_Runner_GenerateForTarget_NetworkMode = options['networkMode'] ?? manifest['networkMode'];
     const stateEnvironment: Lib_DockerPackaging_Runner_GenerateForTarget_StateEnvironment = options['stateEnvironment'] ?? manifest['stateEnvironment'];
     const updatedManifest: Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedManifest = Runner.normalizeManifest({
+      ...manifest,
       healthPath,
       legacyStatePaths,
       networkMode,
@@ -563,121 +571,12 @@ export class Runner {
       ].sort((firstWorkspace, secondWorkspace) => firstWorkspace['path'].localeCompare(secondWorkspace['path'])),
       ...((stateEnvironment === undefined) ? {} : { stateEnvironment }),
     });
-    const availableServiceNames: Lib_DockerPackaging_Runner_GenerateForTarget_AvailableServiceNames = new Set(updatedManifest['services'].map((service) => service['name']));
 
-    for (const service of updatedManifest['services']) {
-      for (const dependency of service['dependencies']) {
-        if (availableServiceNames.has(dependency) === false) {
-          throw new Error(`Docker service "${service['name']}" depends on unknown service "${dependency}".`);
-        }
+    Runner.validateServiceGraph(updatedManifest);
 
-        if (dependency === service['name']) {
-          throw new Error(`Docker service "${service['name']}" cannot depend on itself.`);
-        }
-      }
-    }
-
-    const servicesByName: Lib_DockerPackaging_Runner_GenerateForTarget_ServicesByName = new Map(updatedManifest['services'].map((service) => [
-      service['name'],
-      service,
-    ]));
-    const visitedServices: Lib_DockerPackaging_Runner_GenerateForTarget_VisitedServices = new Set();
-    const visitingServices: Lib_DockerPackaging_Runner_GenerateForTarget_VisitingServices = new Set();
-
-    /**
-     * Lib - Docker Packaging - Generate For Target - Visit Service.
-     *
-     * Validates one service dependency branch before generated files are written
-     * and rejects cycles that native s6-rc cannot compile.
-     *
-     * @param {Lib_DockerPackaging_String} serviceName - Service name.
-     *
-     * @returns {void}
-     *
-     * @since 0.34.0
-     */
-    const visitService: Lib_DockerPackaging_Runner_GenerateForTarget_VisitService = (serviceName) => {
-      if (visitedServices.has(serviceName) === true) {
-        return;
-      }
-
-      if (visitingServices.has(serviceName) === true) {
-        throw new Error(`Docker service dependency cycle includes "${serviceName}".`);
-      }
-
-      const service: Lib_DockerPackaging_Runner_GenerateForTarget_VisitService_Service = servicesByName.get(serviceName);
-
-      if (service === undefined) {
-        return;
-      }
-
-      visitingServices.add(serviceName);
-
-      for (const dependency of service['dependencies']) {
-        visitService(dependency);
-      }
-
-      visitingServices.delete(serviceName);
-
-      visitedServices.add(serviceName);
-
-      return;
-    };
-
-    for (const service of updatedManifest['services']) {
-      visitService(service['name']);
-    }
-
-    const workspacePackages: Lib_DockerPackaging_Runner_GenerateForTarget_WorkspacePackages = await Runner.collectWorkspacePackages(projectDirectory, updatedManifest);
-    const buildOrder: Lib_DockerPackaging_Runner_GenerateForTarget_BuildOrder = Runner.resolveBuildOrder(updatedManifest, workspacePackages);
-    const packageManagerDescriptor: Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerDescriptor = LibCorepack.parsePackageManager(rootPackage['packageManager']);
-    const packageManager: Lib_DockerPackaging_Runner_GenerateForTarget_PackageManager = (packageManagerDescriptor === undefined) ? 'npm' : packageManagerDescriptor['name'];
-    const packageManagerVersion: Lib_DockerPackaging_Runner_GenerateForTarget_PackageManagerVersion = (packageManagerDescriptor === undefined) ? '' : packageManagerDescriptor['version'];
-    const isYarnClassic: Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnClassic = packageManager === 'yarn' && packageManagerVersion.startsWith('1.');
-    const isYarnBerry: Lib_DockerPackaging_Runner_GenerateForTarget_IsYarnBerry = packageManager === 'yarn' && isYarnClassic === false;
-    const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_GenerateForTarget_NeedsSyntheticWorkspaceManifests = packageManager === 'npm' || isYarnClassic === true;
-    const syntheticWorkspaceManifests: Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifests = new Map();
-
-    if (needsSyntheticWorkspaceManifests === true) {
-      for (const workspacePackageValue of buildOrder.values()) {
-        const syntheticWorkspaceManifestPath: Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestPath = join(assemblyDirectory, 'workspace-manifests', workspacePackageValue['path'], 'package.json');
-        const syntheticWorkspacePackage: Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspacePackage = Runner.buildSyntheticWorkspacePackage(workspacePackageValue['packageJson'], buildOrder);
-        const syntheticWorkspaceManifestContent: Lib_DockerPackaging_Runner_GenerateForTarget_SyntheticWorkspaceManifestContent = `${JSON.stringify(syntheticWorkspacePackage, null, 2)}\n`;
-
-        syntheticWorkspaceManifests.set(syntheticWorkspaceManifestPath, syntheticWorkspaceManifestContent);
-      }
-    }
-
-    const templateRoot: Lib_DockerPackaging_Runner_GenerateForTarget_TemplateRoot = fileURLToPath(new URL('../../templates/scaffold-options/docker-image/common/', import.meta.url));
-    const templateContents: Lib_DockerPackaging_Runner_GenerateForTarget_TemplateContents = await Promise.all([
-      fs.readFile(join(templateRoot, 'Dockerfile'), 'utf-8'),
-      fs.readFile(join(templateRoot, 'compose.yml'), 'utf-8'),
-    ]);
-    const dockerfileContent: Lib_DockerPackaging_Runner_GenerateForTarget_DockerfileContent = Runner.buildDockerfile(templateContents[0] ?? '', updatedManifest, buildOrder, rootPackage, novaConfig);
-    const composeContent: Lib_DockerPackaging_Runner_GenerateForTarget_ComposeContent = Runner.buildCompose(templateContents[1] ?? '', updatedManifest);
-    const ignoreFilesValue: Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFilesValue = novaConfig['ignoreFiles'];
-    const configuredIgnoreFileEntry: Lib_DockerPackaging_Runner_GenerateForTarget_ConfiguredIgnoreFileEntry = (isPlainObject(ignoreFilesValue) === true) ? ignoreFilesValue['./.dockerignore'] : undefined;
-    const ignoreFileEntry: Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry = options['ignoreFileEntry'] ?? ((isPlainObject(configuredIgnoreFileEntry) === true) ? configuredIgnoreFileEntry as Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry : {
-      bundles: ['nova'],
-      patterns: [],
-    });
-    const dockerignoreContent: Lib_DockerPackaging_Runner_GenerateForTarget_DockerignoreContent = await renderIgnoreFile('./.dockerignore', ignoreFileEntry);
-    const gitAttributesContent: Lib_DockerPackaging_Runner_GenerateForTarget_GitAttributesContent = 'rootfs/** text eol=lf\n';
+    const ignoreFileEntry: Lib_DockerPackaging_Runner_GenerateForTarget_IgnoreFileEntry = options['ignoreFileEntry'] ?? Runner.resolveIgnoreFileEntry(novaConfig);
+    const imagePlan: Lib_DockerPackaging_Runner_GenerateForTarget_ImagePlan = await Runner.planImage(projectDirectory, updatedManifest, rootPackage, novaConfig, ignoreFileEntry, projectSlugValue, true);
     const assemblyPackageName: Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackageName = `${projectSlugValue}-tool-docker`;
-    const assemblyPackage: Lib_DockerPackaging_Runner_GenerateForTarget_AssemblyPackage = Runner.buildWorkspacePackage(projectSlugValue);
-    const containerBuildPackage: Lib_DockerPackaging_Runner_GenerateForTarget_ContainerBuildPackage = Runner.buildContainerPackage(rootPackage, assemblyPackageName, buildOrder);
-    const pnpmWorkspaceLines: Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceLines = [
-      'packages:',
-      ...[...buildOrder.values()].map((workspacePackageValue) => `  - '${workspacePackageValue['path']}'`),
-      '',
-    ];
-    const pnpmWorkspaceContent: Lib_DockerPackaging_Runner_GenerateForTarget_PnpmWorkspaceContent = pnpmWorkspaceLines.join('\n');
-    const yarnConfigContent: Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigContent = [
-      'enableGlobalCache: false',
-      'nodeLinker: pnp',
-      'pnpEnableEsmLoader: true',
-      '',
-    ].join('\n');
     const updatedRootPackage: Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedRootPackage = Runner.buildRootPackage(rootPackage, assemblyPackageName);
     const updatedNovaConfig: Lib_DockerPackaging_Runner_GenerateForTarget_UpdatedNovaConfig = Runner.registerProjectConfig(novaConfig, assemblyPackageName, ignoreFileEntry);
     const result: Lib_DockerPackaging_Runner_GenerateForTarget_Result = {
@@ -695,47 +594,65 @@ export class Runner {
       return result;
     }
 
-    const rootfsDirectory: Lib_DockerPackaging_Runner_GenerateForTarget_RootfsDirectory = join(assemblyDirectory, 'rootfs');
-    const workspaceManifestsDirectory: Lib_DockerPackaging_Runner_GenerateForTarget_WorkspaceManifestsDirectory = join(assemblyDirectory, 'workspace-manifests');
-    const yarnConfigPath: Lib_DockerPackaging_Runner_GenerateForTarget_YarnConfigPath = join(assemblyDirectory, 'yarnrc.yml');
-    const reportFiles: Lib_DockerPackaging_Runner_GenerateForTarget_ReportFiles = options['reportFiles'] !== false;
-
-    await fs.mkdir(assemblyDirectory, { recursive: true });
+    // The scaffold writes through the same plan the sync-image recipe applies, so both produce the same files.
+    await Runner.applyImagePlan(projectDirectory, imagePlan, false, true, options['reportFiles'] !== false);
 
     await Promise.all([
-      fs.rm(rootfsDirectory, {
-        force: true,
-        recursive: true,
-      }),
-      fs.rm(workspaceManifestsDirectory, {
-        force: true,
-        recursive: true,
-      }),
-      fs.rm(yarnConfigPath, { force: true }),
-    ]);
-
-    await Promise.all([
-      saveGeneratedFile(result['dockerfilePath'], dockerfileContent, true, undefined, reportFiles),
-      saveGeneratedFile(result['composePath'], composeContent, true, undefined, reportFiles),
-      saveGeneratedFile(result['dockerignorePath'], dockerignoreContent, true, {
-        command: 'nova generate must-haves ignore-files',
-        docsSlug: 'cli/generators/must-haves/ignore-files',
-        mode: 'strict',
-      }, reportFiles),
-      saveGeneratedFile(join(assemblyDirectory, '.gitattributes'), gitAttributesContent, true, undefined, reportFiles),
-      saveGeneratedFile(join(assemblyDirectory, 'build-package.json'), `${JSON.stringify(containerBuildPackage, null, 2)}\n`, true, undefined, reportFiles),
-      saveGeneratedFile(join(assemblyDirectory, 'package.json'), `${JSON.stringify(assemblyPackage, null, 2)}\n`, true, undefined, reportFiles),
-      saveGeneratedFile(join(assemblyDirectory, 'pnpm-workspace.yaml'), pnpmWorkspaceContent, true, undefined, reportFiles),
-      ...((isYarnBerry === true) ? [saveGeneratedFile(yarnConfigPath, yarnConfigContent, true, undefined, reportFiles)] : []),
-      ...[...syntheticWorkspaceManifests].map((syntheticWorkspaceManifest) => saveGeneratedFile(syntheticWorkspaceManifest[0], syntheticWorkspaceManifest[1], true, undefined, reportFiles)),
-      saveGeneratedFile(manifestPath, `${JSON.stringify(updatedManifest, null, 2)}\n`, true, undefined, reportFiles),
       saveGeneratedFile(rootPackagePath, `${JSON.stringify(updatedRootPackage, null, 2)}\n`, true, undefined, false),
       saveGeneratedFile(novaConfigPath, `${JSON.stringify(updatedNovaConfig, null, 2)}\n`, true, undefined, false),
     ]);
 
-    await Runner.writeRootfs(rootfsDirectory, updatedManifest);
-
     return result;
+  }
+
+  /**
+   * Lib - Docker Packaging - Sync Image.
+   *
+   * Re-renders every Nova-owned Docker file from the existing image manifest and
+   * reports what changed. The sync-image recipe calls it; it never edits the manifest.
+   *
+   * @param {Lib_DockerPackaging_Runner_SyncImage_Options} options - Options.
+   *
+   * @returns {Lib_DockerPackaging_Runner_SyncImage_Returns}
+   *
+   * @since 0.49.0
+   */
+  public static async syncImage(options: Lib_DockerPackaging_Runner_SyncImage_Options): Lib_DockerPackaging_Runner_SyncImage_Returns {
+    const projectDirectory: Lib_DockerPackaging_Runner_SyncImage_ProjectDirectory = options['projectDirectory'];
+    const manifestPath: Lib_DockerPackaging_Runner_SyncImage_ManifestPath = join(projectDirectory, dockerAssemblyRelativePath, 'manifest.json');
+
+    if (await pathExists(manifestPath) === false) {
+      throw new Error(`No Docker image manifest was found at "${manifestPath}". Scaffold a workspace with "--docker-image" first.`);
+    }
+
+    const novaConfigPath: Lib_DockerPackaging_Runner_SyncImage_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const jsonFiles: Lib_DockerPackaging_Runner_SyncImage_JsonFiles = await Promise.all([
+      Runner.readJsonObject(manifestPath),
+      Runner.readJsonObject(join(projectDirectory, 'package.json')),
+      Runner.readJsonObject(novaConfigPath),
+    ]);
+    const manifest: Lib_DockerPackaging_Runner_SyncImage_Manifest = Runner.normalizeManifest(jsonFiles[0]);
+    const rootPackage: Lib_DockerPackaging_Runner_SyncImage_RootPackage = jsonFiles[1];
+    const novaConfig: Lib_DockerPackaging_Runner_SyncImage_NovaConfig = jsonFiles[2];
+    const projectValue: Lib_DockerPackaging_Runner_SyncImage_ProjectValue = novaConfig['project'];
+    const projectNameValue: Lib_DockerPackaging_Runner_SyncImage_ProjectNameValue = (isPlainObject(projectValue) === true) ? projectValue['name'] : undefined;
+    const projectSlugValue: Lib_DockerPackaging_Runner_SyncImage_ProjectSlugValue = (isPlainObject(projectNameValue) === true) ? projectNameValue['slug'] : undefined;
+
+    if (typeof projectSlugValue !== 'string' || LIB_REGEX_PATTERN_SLUG_SIMPLE.test(projectSlugValue) === false) {
+      throw new Error(`The Nova config at "${novaConfigPath}" must define a valid project.name.slug before Docker files can be synced.`);
+    }
+
+    Runner.validateServiceGraph(manifest);
+
+    const imagePlan: Lib_DockerPackaging_Runner_SyncImage_ImagePlan = await Runner.planImage(projectDirectory, manifest, rootPackage, novaConfig, Runner.resolveIgnoreFileEntry(novaConfig), projectSlugValue, false);
+    const applyResult: Lib_DockerPackaging_Runner_SyncImage_ApplyResult = await Runner.applyImagePlan(projectDirectory, imagePlan, options['dryRun'] === true, options['replaceFile'] === true, options['reportFiles'] !== false);
+    const ignoreFilesValue: Lib_DockerPackaging_Runner_SyncImage_IgnoreFilesValue = novaConfig['ignoreFiles'];
+
+    // The ignore-files generator owns ".dockerignore", so the recipe only reports a missing entry for it.
+    return {
+      ...applyResult,
+      missingIgnoreFileEntry: isPlainObject(ignoreFilesValue) === false || isPlainObject(ignoreFilesValue['./.dockerignore']) === false,
+    };
   }
 
   /**
@@ -772,11 +689,7 @@ export class Runner {
     const manifest: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_Manifest = Runner.normalizeManifest(await Runner.readJsonObject(manifestPath));
     const workspacePackages: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_WorkspacePackages = await Runner.collectWorkspacePackages(projectDirectory, manifest);
     const buildOrder: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_BuildOrder = Runner.resolveBuildOrder(manifest, workspacePackages);
-    const packageManagerDescriptor: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerDescriptor = LibCorepack.parsePackageManager(rootPackage['packageManager']);
-    const packageManager: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManager = (packageManagerDescriptor === undefined) ? 'npm' : packageManagerDescriptor['name'];
-    const packageManagerVersion: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_PackageManagerVersion = (packageManagerDescriptor === undefined) ? '' : packageManagerDescriptor['version'];
-    const isYarnClassic: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_IsYarnClassic = packageManager === 'yarn' && packageManagerVersion.startsWith('1.');
-    const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests = packageManager === 'npm' || isYarnClassic === true;
+    const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_NeedsSyntheticWorkspaceManifests = LibDockerRender.usesSyntheticManifests(manifest, rootPackage);
     const syntheticWorkspaceManifests: Lib_DockerPackaging_Runner_RefreshGeneratedManifests_SyntheticWorkspaceManifests = new Map();
 
     if (needsSyntheticWorkspaceManifests === true) {
@@ -888,8 +801,12 @@ export class Runner {
       };
     }
 
+    // Version 1 manifests are version 2 manifests without the optional sections, so they read as is.
     if (
-      value['schemaVersion'] !== dockerManifestSchemaVersion
+      (
+        value['schemaVersion'] !== 1
+        && value['schemaVersion'] !== dockerManifestSchemaVersion
+      )
       || Array.isArray(value['services']) === false
       || Array.isArray(value['workspaces']) === false
     ) {
@@ -931,41 +848,158 @@ export class Runner {
 
       serviceNames.add(service['name']);
 
-      if (service['port'] !== undefined) {
+      // "ports" lists every port of a service; "port" stays as the alias for the first one.
+      if (service['ports'] !== undefined) {
+        if (Array.isArray(service['ports']) === false || service['ports'].length === 0) {
+          throw new Error(`Docker service "${service['name']}" ports must be a non-empty array.`);
+        }
+
+        const firstPort: Lib_DockerPackaging_Runner_NormalizeManifest_FirstPort = service['ports'][0];
+
+        if (service['port'] !== undefined && service['port'] !== firstPort) {
+          throw new Error(`Docker service "${service['name']}" port must match the first entry of its ports.`);
+        }
+
+        if (firstPort !== undefined) {
+          service.port = firstPort;
+        }
+      }
+
+      const declaredPorts: Lib_DockerPackaging_Runner_NormalizeManifest_DeclaredPorts = service['ports'] ?? ((service['port'] === undefined) ? [] : [service['port']]);
+
+      for (const declaredPort of declaredPorts) {
         if (
-          Number.isInteger(service['port']) === false
-          || service['port'] < 1
-          || service['port'] > 65535
+          Number.isInteger(declaredPort) === false
+          || declaredPort < 1
+          || declaredPort > 65535
         ) {
           throw new Error(`Docker service "${service['name']}" port must be an integer between 1 and 65535.`);
         }
 
-        if (servicePorts.has(service['port']) === true) {
-          throw new Error(`Docker service port ${service['port']} is declared more than once in the assembly manifest.`);
+        if (servicePorts.has(declaredPort) === true) {
+          throw new Error(`Docker service port ${declaredPort} is declared more than once in the assembly manifest.`);
         }
 
-        servicePorts.add(service['port']);
+        servicePorts.add(declaredPort);
+      }
 
+      if (declaredPorts.length > 0) {
         Reflect.deleteProperty(service['environment'], 'PORT');
+      }
+
+      if (
+        service['down'] !== undefined
+        && (
+          service['kind'] !== 'oneshot'
+          || typeof service['down'] !== 'string'
+          || LIB_REGEX_PATTERN_DOCKER_SINGLE_LINE.test(service['down']) === false
+        )
+      ) {
+        throw new Error(`Docker service "${service['name']}" down must be a one-line command on a oneshot service.`);
       }
 
       Reflect.deleteProperty(service, 'portEnvironment');
     }
 
+    const settings: Lib_DockerPackaging_Runner_NormalizeManifest_Settings = LibDockerRender.normalizeSettings(value);
+    const workspaces: Lib_DockerPackaging_Runner_NormalizeManifest_Workspaces = manifest['workspaces'].map((workspace) => Runner.normalizeWorkspace(workspace));
+
+    if (settings['healthService'] !== undefined) {
+      const healthService: Lib_DockerPackaging_Runner_NormalizeManifest_HealthService = manifest['services'].find((service) => service['name'] === settings['healthService']);
+
+      if (
+        healthService === undefined
+        || healthService['kind'] !== 'longrun'
+        || healthService['port'] === undefined
+      ) {
+        throw new Error(`Docker health service "${settings['healthService']}" must be a declared longrun service with a port.`);
+      }
+    }
+
+    if (
+      settings['runtime'] !== undefined
+      && settings['runtime']['layout'] === 'outputs'
+      && workspaces.some((workspace) => workspace['runtimePaths'].length > 0) === true
+    ) {
+      throw new Error('Docker runtime paths are not copied in the "outputs" runtime layout; declare them as runtime.copies instead.');
+    }
+
     return {
+      ...((settings['build'] === undefined) ? {} : { build: settings['build'] }),
+      ...((settings['compose'] === undefined) ? {} : { compose: settings['compose'] }),
+      ...((settings['dockerfile'] === undefined) ? {} : { dockerfile: settings['dockerfile'] }),
       healthPath,
+      ...((settings['healthService'] === undefined) ? {} : { healthService: settings['healthService'] }),
+      ...((settings['images'] === undefined) ? {} : { images: settings['images'] }),
       legacyStatePaths,
       networkMode,
+      ...((settings['project'] === undefined) ? {} : { project: settings['project'] }),
+      ...((settings['runtime'] === undefined) ? {} : { runtime: settings['runtime'] }),
+      ...((settings['s6Overlay'] === undefined) ? {} : { s6Overlay: settings['s6Overlay'] }),
       schemaVersion: dockerManifestSchemaVersion,
       services: manifest['services'],
       ...((stateEnvironment === undefined) ? {} : { stateEnvironment }),
-      workspaces: manifest['workspaces'].map((workspace) => ({
-        packageName: workspace['packageName'],
-        path: workspace['path'],
-        profile: workspace['profile'],
-        runtimePaths: Runner.normalizeRuntimePaths(workspace['runtimePaths'] ?? [], workspace['path']),
-      })),
+      workspaces,
     };
+  }
+
+  /**
+   * Lib - Docker Packaging - Normalize Workspace.
+   *
+   * Rebuilds one manifest workspace from its known keys, which drops retired
+   * fields, and validates the optional build script, offline flag, and sources.
+   *
+   * @param {Lib_DockerPackaging_Runner_NormalizeWorkspace_Workspace} workspace - Workspace.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_NormalizeWorkspace_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static normalizeWorkspace(workspace: Lib_DockerPackaging_Runner_NormalizeWorkspace_Workspace): Lib_DockerPackaging_Runner_NormalizeWorkspace_Returns {
+    const normalized: Lib_DockerPackaging_Runner_NormalizeWorkspace_Normalized = {
+      packageName: workspace['packageName'],
+      path: workspace['path'],
+      profile: workspace['profile'],
+      runtimePaths: Runner.normalizeRuntimePaths(workspace['runtimePaths'] ?? [], workspace['path']),
+    };
+
+    if (workspace['buildNetwork'] !== undefined) {
+      if (workspace['buildNetwork'] !== 'default' && workspace['buildNetwork'] !== 'none') {
+        throw new Error(`Docker workspace "${workspace['path']}" buildNetwork must be "default" or "none".`);
+      }
+
+      normalized.buildNetwork = workspace['buildNetwork'];
+    }
+
+    if (workspace['buildScript'] !== undefined) {
+      if (typeof workspace['buildScript'] !== 'string' || LIB_REGEX_PATTERN_DOCKER_SCRIPT_NAME.test(workspace['buildScript']) === false) {
+        throw new Error(`Docker workspace "${workspace['path']}" buildScript must name one package.json script.`);
+      }
+
+      normalized.buildScript = workspace['buildScript'];
+    }
+
+    if (workspace['sources'] !== undefined) {
+      if (Array.isArray(workspace['sources']) === false || workspace['sources'].length === 0) {
+        throw new Error(`Docker workspace "${workspace['path']}" sources must be a non-empty array.`);
+      }
+
+      for (const source of workspace['sources']) {
+        const sourceFiles: Lib_DockerPackaging_Runner_NormalizeWorkspace_SourceFiles = (Array.isArray(source) === true) ? source : [source];
+
+        if (sourceFiles.length === 0) {
+          throw new Error(`Docker workspace "${workspace['path']}" sources cannot contain an empty group.`);
+        }
+
+        Runner.normalizeRuntimePaths(sourceFiles, workspace['path']);
+      }
+
+      normalized.sources = workspace['sources'];
+    }
+
+    return normalized;
   }
 
   /**
@@ -1095,8 +1129,12 @@ export class Runner {
     const occupiedPorts: Lib_DockerPackaging_Runner_BuildService_OccupiedPorts = new Set();
 
     for (const service of existingServices) {
-      if (service['workspace'] !== workspacePath && service['port'] !== undefined) {
-        occupiedPorts.add(service['port']);
+      if (service['workspace'] === workspacePath) {
+        continue;
+      }
+
+      for (const servicePort of service['ports'] ?? ((service['port'] === undefined) ? [] : [service['port']])) {
+        occupiedPorts.add(servicePort);
       }
     }
 
@@ -1198,6 +1236,23 @@ export class Runner {
 
     if (port !== undefined) {
       service.port = port;
+    }
+
+    // Extra ports and a oneshot "down" command are manifest-only settings, so a scaffold rerun keeps them.
+    if (
+      previousService !== undefined
+      && previousService['ports'] !== undefined
+      && previousService['ports'][0] === port
+    ) {
+      service.ports = previousService['ports'];
+    }
+
+    if (
+      previousService !== undefined
+      && previousService['down'] !== undefined
+      && service['kind'] === 'oneshot'
+    ) {
+      service.down = previousService['down'];
     }
 
     return service;
@@ -1419,398 +1474,119 @@ export class Runner {
   }
 
   /**
-   * Lib - Docker Packaging - Build Dockerfile.
+   * Lib - Docker Packaging - Render Rootfs.
    *
-   * Renders a closure-scoped multi-stage build for the repository appliance while
-   * using non-frozen installs because root lockfiles describe excluded workspaces.
+   * Computes every Nova-owned rootfs file: the native s6-rc database, dependency
+   * edges, the user bundle, init, health, and log helpers, and service scripts.
    *
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_Template}    template    - Template.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_Manifest}    manifest    - Manifest.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder}  buildOrder  - Build order.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage} rootPackage - Root package.
-   * @param {Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig}  novaConfig  - Nova config.
+   * @param {Lib_DockerPackaging_Runner_RenderRootfs_Manifest} manifest - Manifest.
    *
    * @private
    *
-   * @returns {Lib_DockerPackaging_Runner_BuildDockerfile_Returns}
+   * @returns {Lib_DockerPackaging_Runner_RenderRootfs_Returns}
    *
-   * @since 0.39.0
+   * @since 0.49.0
    */
-  private static buildDockerfile(template: Lib_DockerPackaging_Runner_BuildDockerfile_Template, manifest: Lib_DockerPackaging_Runner_BuildDockerfile_Manifest, buildOrder: Lib_DockerPackaging_Runner_BuildDockerfile_BuildOrder, rootPackage: Lib_DockerPackaging_Runner_BuildDockerfile_RootPackage, novaConfig: Lib_DockerPackaging_Runner_BuildDockerfile_NovaConfig): Lib_DockerPackaging_Runner_BuildDockerfile_Returns {
-    const packageManagerValue: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerValue = rootPackage['packageManager'];
-    const packageManagerDescriptor: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerDescriptor = LibCorepack.parsePackageManager(packageManagerValue);
-    const packageManager: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManager = (packageManagerDescriptor === undefined) ? 'npm' : packageManagerDescriptor['name'];
-    const packageManagerVersion: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerVersion = (packageManagerDescriptor === undefined) ? '' : packageManagerDescriptor['version'];
-    const isYarnClassic: Lib_DockerPackaging_Runner_BuildDockerfile_IsYarnClassic = packageManager === 'yarn' && packageManagerVersion.startsWith('1.');
-    const needsSyntheticWorkspaceManifests: Lib_DockerPackaging_Runner_BuildDockerfile_NeedsSyntheticWorkspaceManifests = packageManager === 'npm' || isYarnClassic === true;
-    const packageManagerConfigCopies: Lib_DockerPackaging_Runner_BuildDockerfile_PackageManagerConfigCopies = (packageManager === 'yarn' && isYarnClassic === false) ? 'COPY packages/docker/yarnrc.yml ./.yarnrc.yml' : '# This package manager does not need generated build configuration.';
-    const corepackVersion: Lib_DockerPackaging_Runner_BuildDockerfile_CorepackVersion = getScaffoldVersion('corepack');
-    let installCommand: Lib_DockerPackaging_Runner_BuildDockerfile_InstallCommand = 'RUN npm install';
-    let pruneCommand: Lib_DockerPackaging_Runner_BuildDockerfile_PruneCommand = 'RUN npm prune --omit=dev && npm cache clean --force';
-    const buildCommands: Lib_DockerPackaging_Runner_BuildDockerfile_BuildCommands = [];
+  private static renderRootfs(manifest: Lib_DockerPackaging_Runner_RenderRootfs_Manifest): Lib_DockerPackaging_Runner_RenderRootfs_Returns {
+    const files: Lib_DockerPackaging_Runner_RenderRootfs_Files = new Map();
+    const writablePaths: Lib_DockerPackaging_Runner_RenderRootfs_WritablePaths = [...new Set(manifest['services'].flatMap((service) => service['writablePaths']))].sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
+    const shellVariableMarker: Lib_DockerPackaging_Runner_RenderRootfs_ShellVariableMarker = '$';
+    const generatedHeader: Lib_DockerPackaging_Runner_RenderRootfs_GeneratedHeader = LibDockerRender.generatedHeader([]);
 
-    if (packageManager === 'pnpm') {
-      installCommand = `RUN npm install --global corepack@${corepackVersion} && corepack enable pnpm && pnpm install`;
-      pruneCommand = 'RUN pnpm install --prod';
-    } else if (packageManager === 'yarn') {
-      installCommand = `RUN npm install --global corepack@${corepackVersion} && corepack enable yarn && yarn install`;
-      pruneCommand = (isYarnClassic === true) ? 'RUN yarn install --production && yarn cache clean' : 'RUN yarn workspaces focus --all --production';
-    }
+    /**
+     * Lib - Docker Packaging - Render Rootfs - Add File.
+     *
+     * Records one rootfs file by its path below "packages/docker/rootfs" and
+     * whether the image needs it to be executable.
+     *
+     * @param {Lib_DockerPackaging_Runner_RenderRootfs_AddFile_RelativePath} relativePath - Relative path.
+     * @param {Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Content}      content      - Content.
+     * @param {Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Executable}   executable   - Executable.
+     *
+     * @returns {Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Returns}
+     *
+     * @since 0.49.0
+     */
+    const addFile: Lib_DockerPackaging_Runner_RenderRootfs_AddFile = (relativePath, content, executable): Lib_DockerPackaging_Runner_RenderRootfs_AddFile_Returns => {
+      const scriptLines: Lib_DockerPackaging_Runner_RenderRootfs_AddFile_ScriptLines = content.split('\n');
 
-    for (const workspacePackageEntry of buildOrder) {
-      const packageName: Lib_DockerPackaging_Runner_BuildDockerfile_PackageName = workspacePackageEntry[0];
-      const packageJson: Lib_DockerPackaging_Runner_BuildDockerfile_PackageJson = workspacePackageEntry[1]['packageJson'];
-      const scriptsValue: Lib_DockerPackaging_Runner_BuildDockerfile_ScriptsValue = packageJson['scripts'];
-      const buildScriptValue: Lib_DockerPackaging_Runner_BuildDockerfile_BuildScriptValue = (isPlainObject(scriptsValue) === true) ? scriptsValue['build'] : undefined;
+      // Scripts carry the generated-file header right after the shebang; s6 data files stay bare.
+      files.set(relativePath, {
+        content: (executable === true) ? [
+          scriptLines[0] ?? '',
+          ...generatedHeader,
+          ...scriptLines.slice(1),
+        ].join('\n') : content,
+        executable,
+        report: false,
+      });
 
-      if (typeof buildScriptValue !== 'string') {
-        continue;
-      }
-
-      const quotedPackageName: Lib_DockerPackaging_Runner_BuildDockerfile_QuotedPackageName = Runner.shellQuote(packageName);
-
-      if (packageManager === 'pnpm') {
-        buildCommands.push(`RUN pnpm --filter ${quotedPackageName} run build`);
-      } else if (packageManager === 'yarn') {
-        buildCommands.push(`RUN yarn workspace ${quotedPackageName} build`);
-      } else {
-        buildCommands.push(`RUN npm run build --workspace=${quotedPackageName}`);
-      }
-    }
-
-    const workspaceManifestCopyLines: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestCopyLines = [];
-    const workspaceManifestRestoreLines: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestRestoreLines = [];
-    const workspaceSourceCopyLines: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceSourceCopyLines = [];
-    const runtimeAssemblyCommands: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyCommands = [];
-    const runtimeCopyLines: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeCopyLines = new Set();
-    const needsNodeRuntime: Lib_DockerPackaging_Runner_BuildDockerfile_NeedsNodeRuntime = manifest['workspaces'].some((workspace) => [
-      'astro-node',
-      'background-service',
-      'http-service',
-      'nextjs-standalone',
-    ].includes(workspace['profile']));
-
-    for (const workspacePackageEntry of buildOrder) {
-      const workspacePackage: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspacePackage = workspacePackageEntry[1];
-      const workspaceManifestSourcePath: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceManifestSourcePath = (needsSyntheticWorkspaceManifests === true) ? `packages/docker/workspace-manifests/${workspacePackage['path']}/package.json` : `${workspacePackage['path']}/package.json`;
-
-      workspaceManifestCopyLines.push(`COPY ${JSON.stringify([
-        workspaceManifestSourcePath,
-        `${workspacePackage['path']}/package.json`,
-      ])}`);
-
-      if (needsSyntheticWorkspaceManifests === true) {
-        workspaceManifestRestoreLines.push(`COPY ${JSON.stringify([
-          workspaceManifestSourcePath,
-          `${workspacePackage['path']}/package.json`,
-        ])}`);
-      }
-
-      workspaceSourceCopyLines.push(`COPY ${JSON.stringify([
-        workspacePackage['path'],
-        workspacePackage['path'],
-      ])}`);
-    }
-
-    if (needsNodeRuntime === true) {
-      runtimeAssemblyCommands.push(
-        'mkdir -p /runtime',
-        'cp -a . /runtime/',
-      );
-
-      runtimeCopyLines.add('COPY --from=build /runtime/ /app/');
-    }
-
-    for (const workspace of manifest['workspaces']) {
-      const runtimeWorkspacePath: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePath = `/app/${workspace['path']}`;
-
-      if (needsNodeRuntime === true && workspace['profile'] === 'static-site') {
-        const runtimeAssemblyWorkspaceServices: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspaceServices = manifest['services'].filter((manifestService) => manifestService['workspace'] === workspace['path']);
-
-        for (const service of runtimeAssemblyWorkspaceServices) {
-          const runtimeSitePath: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeSitePath = `/runtime/sites/${service['name']}`;
-
-          runtimeAssemblyCommands.push(
-            `mkdir -p ${Runner.shellQuote(runtimeSitePath)}`,
-            `cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/.`)} ${Runner.shellQuote(`${runtimeSitePath}/`)}`,
-          );
-        }
-      } else if (needsNodeRuntime === true && workspace['profile'] === 'nextjs-standalone') {
-        const runtimeAssemblyWorkspacePath: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssemblyWorkspacePath = `/runtime/${workspace['path']}`;
-
-        runtimeAssemblyCommands.push(`cp -a ${Runner.shellQuote(`/workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/standalone/.`)} ${Runner.shellQuote(`${runtimeAssemblyWorkspacePath}/`)}`);
-      } else if (needsNodeRuntime === true) {
-        continue;
-      } else if (workspace['profile'] === 'static-site') {
-        const workspaceServices: Lib_DockerPackaging_Runner_BuildDockerfile_WorkspaceServices = manifest['services'].filter((manifestService) => manifestService['workspace'] === workspace['path']);
-
-        for (const service of workspaceServices) {
-          runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory} /app/sites/${service['name']}`);
-        }
-      } else if (workspace['profile'] === 'container-native') {
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']} ${runtimeWorkspacePath}`);
-      } else if (workspace['profile'] === 'nextjs-standalone') {
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/standalone ${runtimeWorkspacePath}`);
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/public ${runtimeWorkspacePath}/public`);
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory}/static ${runtimeWorkspacePath}/${dockerWorkspaceBuildDirectory}/static`);
-      } else {
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/package.json ${runtimeWorkspacePath}/package.json`);
-        runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${dockerWorkspaceBuildDirectory} ${runtimeWorkspacePath}/${dockerWorkspaceBuildDirectory}`);
-      }
-
-      if (workspace['profile'] !== 'container-native') {
-        for (const runtimePath of workspace['runtimePaths']) {
-          runtimeCopyLines.add(`COPY --from=build /workspace/${workspace['path']}/${runtimePath} ${runtimeWorkspacePath}/${runtimePath}`);
-        }
-      }
-    }
-
-    if (needsNodeRuntime === false) {
-      for (const workspacePackageEntry of buildOrder) {
-        const runtimeWorkspacePackage: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeWorkspacePackage = workspacePackageEntry[1];
-        const isSelectedWorkspace: Lib_DockerPackaging_Runner_BuildDockerfile_IsSelectedWorkspace = manifest['workspaces'].some((workspace) => workspace['path'] === runtimeWorkspacePackage['path']);
-
-        if (isSelectedWorkspace === false) {
-          runtimeCopyLines.add(`COPY --from=build /workspace/${runtimeWorkspacePackage['path']} /app/${runtimeWorkspacePackage['path']}`);
-        }
-      }
-    }
-
-    const ports: Lib_DockerPackaging_Runner_BuildDockerfile_Ports = [...new Set(manifest['services'].flatMap((service) => (service['port'] === undefined) ? [] : [service['port']]))].sort((firstPort, secondPort) => firstPort - secondPort);
-    const exposeDirectives: Lib_DockerPackaging_Runner_BuildDockerfile_ExposeDirectives = ports.map((port) => `EXPOSE ${port}`).join('\n');
-    const runtimeBase: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeBase = (needsNodeRuntime === true) ? 'node:[__SCAFFOLD_VERSION_DOCKER_NODE__]' : 'debian:[__SCAFFOLD_VERSION_DOCKER_DEBIAN__]';
-    const writablePaths: Lib_DockerPackaging_Runner_BuildDockerfile_WritablePaths = [...new Set(manifest['services'].flatMap((service) => service['writablePaths']))].sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
-    const writableDirectories: Lib_DockerPackaging_Runner_BuildDockerfile_WritableDirectories = (writablePaths.length === 0) ? '# No project writable paths are declared.' : `RUN mkdir -p ${writablePaths.map((writablePath) => Runner.shellQuote(writablePath)).join(' ')}`;
-    const runtimeAssembly: Lib_DockerPackaging_Runner_BuildDockerfile_RuntimeAssembly = (runtimeAssemblyCommands.length === 0) ? '# This appliance does not need a Node.js runtime assembly.' : `RUN ${runtimeAssemblyCommands.join([
-      ' \\',
-      '  && ',
-    ].join('\n'))}`;
-    const projectValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectValue = novaConfig['project'];
-    const project: Lib_DockerPackaging_Runner_BuildDockerfile_Project = (isPlainObject(projectValue) === true) ? projectValue : {};
-    const projectNameValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectNameValue = project['name'];
-    const projectName: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectName = (isPlainObject(projectNameValue) === true) ? projectNameValue : {};
-    const projectDescriptionValue: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescriptionValue = project['description'];
-    const projectDescription: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDescription = (isPlainObject(projectDescriptionValue) === true) ? projectDescriptionValue : {};
-    const urlsValue: Lib_DockerPackaging_Runner_BuildDockerfile_UrlsValue = novaConfig['urls'];
-    const urls: Lib_DockerPackaging_Runner_BuildDockerfile_Urls = (isPlainObject(urlsValue) === true) ? urlsValue : {};
-    let projectTitle: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectTitle = '';
-
-    if (typeof projectName['title'] === 'string') {
-      projectTitle = projectName['title'];
-    } else if (typeof projectName['slug'] === 'string') {
-      projectTitle = projectName['slug'];
-    }
-    const projectShortDescription: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectShortDescription = (typeof projectDescription['short'] === 'string') ? projectDescription['short'] : '';
-    const projectHomepage: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectHomepage = (typeof urls['homepage'] === 'string') ? urls['homepage'] : '';
-    const projectRepository: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectRepository = (typeof urls['repository'] === 'string') ? urls['repository'] : '';
-    const projectDocumentation: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectDocumentation = (typeof urls['documentation'] === 'string') ? urls['documentation'] : '';
-    const projectLicense: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectLicense = (typeof project['license'] === 'string') ? project['license'] : '';
-    const projectVendor: Lib_DockerPackaging_Runner_BuildDockerfile_ProjectVendor = (typeof project['legalName'] === 'string') ? project['legalName'] : '';
-    const replacements: Lib_DockerPackaging_Runner_BuildDockerfile_Replacements = {
-      '[__DOCKER_BUILD_COMMANDS__]': (buildCommands.length === 0) ? '# No selected workspace declares a build script.' : buildCommands.join('\n'),
-      '[__DOCKER_EXPOSE_DIRECTIVES__]': (exposeDirectives === '') ? '# This appliance does not expose a network port.' : exposeDirectives,
-      '[__DOCKER_INSTALL_COMMAND__]': installCommand,
-      '[__DOCKER_PACKAGE_MANAGER_CONFIG_COPIES__]': packageManagerConfigCopies,
-      '[__DOCKER_PRUNE_COMMAND__]': pruneCommand,
-      '[__DOCKER_RUNTIME_ASSEMBLY__]': runtimeAssembly,
-      '[__DOCKER_RUNTIME_BASE__]': runtimeBase,
-      '[__DOCKER_RUNTIME_COPIES__]': [...runtimeCopyLines].join('\n'),
-      '[__DOCKER_WORKSPACE_MANIFEST_COPIES__]': workspaceManifestCopyLines.join('\n'),
-      '[__DOCKER_WORKSPACE_MANIFEST_RESTORES__]': (workspaceManifestRestoreLines.length === 0) ? '# Workspace manifests already use this package manager\'s native protocol.' : workspaceManifestRestoreLines.join('\n'),
-      '[__DOCKER_WORKSPACE_SOURCE_COPIES__]': workspaceSourceCopyLines.join('\n'),
-      '[__DOCKER_WRITABLE_DIRECTORIES__]': writableDirectories,
-      '[__PROJECT_DESCRIPTION__]': Runner.escapeDockerLabel(projectShortDescription),
-      '[__PROJECT_DOCUMENTATION__]': Runner.escapeDockerLabel(projectDocumentation),
-      '[__PROJECT_HOMEPAGE__]': Runner.escapeDockerLabel(projectHomepage),
-      '[__PROJECT_LICENSE__]': Runner.escapeDockerLabel(projectLicense),
-      '[__PROJECT_NAME__]': Runner.escapeDockerLabel(projectTitle),
-      '[__PROJECT_REPOSITORY__]': Runner.escapeDockerLabel(projectRepository),
-      '[__PROJECT_VENDOR__]': Runner.escapeDockerLabel(projectVendor),
+      return;
     };
-    let content: Lib_DockerPackaging_Runner_BuildDockerfile_Content = applyScaffoldVersionReplacements(template);
 
-    for (const replacementEntry of Object.entries(replacements)) {
-      content = content.split(replacementEntry[0]).join(replacementEntry[1]);
-    }
-
-    return applyScaffoldVersionReplacements(content);
-  }
-
-  /**
-   * Lib - Docker Packaging - Escape Docker Label.
-   *
-   * Escapes project-controlled metadata for a double-quoted Dockerfile LABEL
-   * value without permitting environment expansion or line injection.
-   *
-   * @param {Lib_DockerPackaging_Runner_EscapeDockerLabel_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns}
-   *
-   * @since 0.39.0
-   */
-  private static escapeDockerLabel(value: Lib_DockerPackaging_Runner_EscapeDockerLabel_Value): Lib_DockerPackaging_Runner_EscapeDockerLabel_Returns {
-    return value
-      .replaceAll('\\', '\\\\')
-      .replaceAll('"', '\\"')
-      .replaceAll('$', '\\$')
-      .replaceAll('\r', '\\r')
-      .replaceAll('\n', '\\n')
-      .replaceAll('\t', '\\t');
-  }
-
-  /**
-   * Lib - Docker Packaging - Build Compose.
-   *
-   * Renders the single root Compose service with the appliance's root-start,
-   * state-mount, restart, network, and declared port contract.
-   *
-   * @param {Lib_DockerPackaging_String}                       template - Template.
-   * @param {Lib_DockerPackaging_Runner_BuildCompose_Manifest} manifest - Manifest.
-   *
-   * @private
-   *
-   * @returns {Lib_DockerPackaging_Runner_BuildCompose_Returns}
-   *
-   * @since 0.34.0
-   */
-
-  private static buildCompose(template: Lib_DockerPackaging_Runner_BuildCompose_Template, manifest: Lib_DockerPackaging_Runner_BuildCompose_Manifest): Lib_DockerPackaging_Runner_BuildCompose_Returns {
-    const environmentFiles: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFiles = manifest['workspaces']
-      .filter((workspace) => workspace['profile'] === 'background-service')
-      .map((workspace) => `      - ./${workspace['path']}/.env`);
-    const ports: Lib_DockerPackaging_Runner_BuildCompose_Ports = [...new Set(manifest['services'].flatMap((service) => (service['port'] === undefined) ? [] : [service['port']]))].sort((firstPort, secondPort) => firstPort - secondPort);
-    const portLines: Lib_DockerPackaging_Runner_BuildCompose_PortLines = (manifest['networkMode'] === 'bridge') ? ports.map((port) => `      - "${port}:${port}"`) : [];
-    const environmentFileBlock: Lib_DockerPackaging_Runner_BuildCompose_EnvironmentFileBlock = (environmentFiles.length === 0) ? '' : [
-      '    env_file:',
-      ...environmentFiles,
-    ].join('\n');
-    const networkBlock: Lib_DockerPackaging_Runner_BuildCompose_NetworkBlock = `    network_mode: ${manifest['networkMode']}`;
-    const portBlock: Lib_DockerPackaging_Runner_BuildCompose_PortBlock = (portLines.length === 0) ? '' : [
-      '    ports:',
-      ...portLines,
-    ].join('\n');
-    const replacements: Lib_DockerPackaging_Runner_BuildCompose_Replacements = {
-      '[__DOCKER_COMPOSE_ENV_FILES__]': environmentFileBlock,
-      '[__DOCKER_COMPOSE_NETWORK__]': networkBlock,
-      '[__DOCKER_COMPOSE_PORTS__]': portBlock,
-    };
-    let content: Lib_DockerPackaging_Runner_BuildCompose_Content = template;
-
-    for (const replacementEntry of Object.entries(replacements)) {
-      content = content.split(replacementEntry[0]).join(replacementEntry[1]);
-    }
-
-    return content;
-  }
-
-  /**
-   * Lib - Docker Packaging - Write Rootfs.
-   *
-   * Writes the native s6-rc database and executable helpers, including dependency
-   * edges, the user bundle, init validation, and service supervision scripts.
-   *
-   * @param {Lib_DockerPackaging_String}          rootfsDirectory - Rootfs directory.
-   * @param {Lib_DockerPackaging_Runner_Manifest} manifest        - Manifest.
-   *
-   * @private
-   *
-   * @returns {Lib_DockerPackaging_Runner_WriteRootfs_Returns}
-   *
-   * @since 0.34.0
-   */
-
-  private static async writeRootfs(rootfsDirectory: Lib_DockerPackaging_Runner_WriteRootfs_RootfsDirectory, manifest: Lib_DockerPackaging_Runner_WriteRootfs_Manifest): Lib_DockerPackaging_Runner_WriteRootfs_Returns {
-    const s6DatabaseDirectory: Lib_DockerPackaging_Runner_WriteRootfs_S6DatabaseDirectory = join(rootfsDirectory, 'etc', 's6-overlay', 's6-rc.d');
-    const userBundleDirectory: Lib_DockerPackaging_Runner_WriteRootfs_UserBundleDirectory = join(rootfsDirectory, 'etc', 's6-overlay', 'user-bundles.d', 'user', 'contents.d');
-    const helperDirectory: Lib_DockerPackaging_Runner_WriteRootfs_HelperDirectory = join(rootfsDirectory, 'usr', 'local', 'libexec', 'nova-docker');
-    const serviceHelperDirectory: Lib_DockerPackaging_Runner_WriteRootfs_ServiceHelperDirectory = join(helperDirectory, 'services');
-    const novaConfigDirectory: Lib_DockerPackaging_Runner_WriteRootfs_NovaConfigDirectory = join(rootfsDirectory, 'etc', 'nova-docker');
-    const initServiceDirectory: Lib_DockerPackaging_Runner_WriteRootfs_InitServiceDirectory = join(s6DatabaseDirectory, 'nova-container-init');
-    const initDependenciesDirectory: Lib_DockerPackaging_Runner_WriteRootfs_InitDependenciesDirectory = join(initServiceDirectory, 'dependencies.d');
-    const writablePaths: Lib_DockerPackaging_Runner_WriteRootfs_WritablePaths = [...new Set(manifest['services'].flatMap((service) => service['writablePaths']))].sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
-    const shellVariableMarker: Lib_DockerPackaging_Runner_WriteRootfs_ShellVariableMarker = '$';
-    const legacyStatePaths: Lib_DockerPackaging_Runner_WriteRootfs_LegacyStatePaths = (manifest['legacyStatePaths'].length === 0) ? '' : `${manifest['legacyStatePaths'].join('\n')}\n`;
-
-    await Promise.all([
-      fs.mkdir(userBundleDirectory, { recursive: true }),
-      fs.mkdir(serviceHelperDirectory, { recursive: true }),
-      fs.mkdir(novaConfigDirectory, { recursive: true }),
-      fs.mkdir(initDependenciesDirectory, { recursive: true }),
-    ]);
-
-    await Promise.all([
-      fs.writeFile(join(initServiceDirectory, 'type'), 'oneshot\n', 'utf-8'),
-      fs.writeFile(join(initServiceDirectory, 'up'), '/usr/local/libexec/nova-docker/init-user\n', 'utf-8'),
-      fs.writeFile(join(initDependenciesDirectory, 'base'), '', 'utf-8'),
-      fs.writeFile(join(userBundleDirectory, 'nova-container-init'), '', 'utf-8'),
-      Runner.writeExecutable(join(helperDirectory, 'init-user'), Runner.buildInitUser(manifest)),
-      Runner.writeExecutable(join(helperDirectory, 'healthcheck'), Runner.buildHealthcheck(manifest)),
-      Runner.writeExecutable(join(helperDirectory, 'log'), Runner.buildLogHelper()),
-      fs.writeFile(join(novaConfigDirectory, 'legacy-state-paths'), legacyStatePaths, 'utf-8'),
-      fs.writeFile(join(novaConfigDirectory, 'writable-paths'), (writablePaths.length === 0) ? '' : `${writablePaths.join('\n')}\n`, 'utf-8'),
-    ]);
+    addFile('etc/s6-overlay/s6-rc.d/nova-container-init/type', 'oneshot\n', false);
+    addFile('etc/s6-overlay/s6-rc.d/nova-container-init/up', '/usr/local/libexec/nova-docker/init-user\n', false);
+    addFile('etc/s6-overlay/s6-rc.d/nova-container-init/dependencies.d/base', '', false);
+    addFile('etc/s6-overlay/user-bundles.d/user/contents.d/nova-container-init', '', false);
+    addFile('usr/local/libexec/nova-docker/init-user', Runner.buildInitUser(manifest), true);
+    addFile('usr/local/libexec/nova-docker/healthcheck', Runner.buildHealthcheck(manifest), true);
+    addFile('usr/local/libexec/nova-docker/log', Runner.buildLogHelper(), true);
+    addFile('etc/nova-docker/legacy-state-paths', (manifest['legacyStatePaths'].length === 0) ? '' : `${manifest['legacyStatePaths'].join('\n')}\n`, false);
+    addFile('etc/nova-docker/writable-paths', (writablePaths.length === 0) ? '' : `${writablePaths.join('\n')}\n`, false);
 
     for (const service of manifest['services']) {
-      const serviceDirectory: Lib_DockerPackaging_Runner_WriteRootfs_ServiceDirectory = join(s6DatabaseDirectory, service['name']);
-      const dependenciesDirectory: Lib_DockerPackaging_Runner_WriteRootfs_DependenciesDirectory = join(serviceDirectory, 'dependencies.d');
+      const serviceDirectory: Lib_DockerPackaging_Runner_RenderRootfs_ServiceDirectory = `etc/s6-overlay/s6-rc.d/${service['name']}`;
 
-      await fs.mkdir(dependenciesDirectory, { recursive: true });
-
-      await Promise.all([
-        fs.writeFile(join(serviceDirectory, 'type'), `${service['kind']}\n`, 'utf-8'),
-        fs.writeFile(join(dependenciesDirectory, 'nova-container-init'), '', 'utf-8'),
-        fs.writeFile(join(userBundleDirectory, service['name']), '', 'utf-8'),
-      ]);
+      addFile(`${serviceDirectory}/type`, `${service['kind']}\n`, false);
+      addFile(`${serviceDirectory}/dependencies.d/nova-container-init`, '', false);
+      addFile(`etc/s6-overlay/user-bundles.d/user/contents.d/${service['name']}`, '', false);
 
       for (const dependency of service['dependencies']) {
-        await fs.writeFile(join(dependenciesDirectory, dependency), '', 'utf-8');
+        addFile(`${serviceDirectory}/dependencies.d/${dependency}`, '', false);
       }
 
       if (service['kind'] === 'oneshot') {
-        await Promise.all([
-          Runner.writeExecutable(join(serviceHelperDirectory, service['name']), Runner.buildRunScript(service)),
-          fs.writeFile(join(serviceDirectory, 'up'), `/usr/local/libexec/nova-docker/services/${service['name']}\n`, 'utf-8'),
-        ]);
-      } else {
-        await Promise.all([
-          Runner.writeExecutable(join(serviceDirectory, 'run'), Runner.buildRunScript(service)),
-          fs.writeFile(join(serviceDirectory, 'timeout-down'), '6000\n', 'utf-8'),
-          fs.writeFile(join(serviceDirectory, 'timeout-finish'), '1000\n', 'utf-8'),
-          fs.writeFile(join(serviceDirectory, 'timeout-kill'), '6000\n', 'utf-8'),
-        ]);
+        addFile(`usr/local/libexec/nova-docker/services/${service['name']}`, Runner.buildRunScript(service), true);
+        addFile(`${serviceDirectory}/up`, `/usr/local/libexec/nova-docker/services/${service['name']}\n`, false);
 
-        if (service['critical'] === true || service['finishCommand'] !== undefined) {
-          // The app's own finish command runs first, so its cleanup happens before a critical halt.
-          const criticalFinishScript: Lib_DockerPackaging_Runner_WriteRootfs_CriticalFinishScript = [
-            '#!/command/with-contenv sh',
-            'set -eu',
-            '. /usr/local/libexec/nova-docker/log',
-            ...((service['finishCommand'] === undefined) ? [] : [
-              `if ! ${service['finishCommand']} "${shellVariableMarker}@"; then`,
-              `  nova_log WARN ${Runner.shellQuote(service['name'])} 'The service finish command failed.'`,
-              'fi',
-            ]),
-            ...((service['critical'] === true) ? [
-              `if [ "${shellVariableMarker}{1:-0}" -ne 0 ]; then`,
-              `  nova_log ERROR ${Runner.shellQuote(service['name'])} "Critical service exited abnormally with code ${shellVariableMarker}{1:-0} and signal ${shellVariableMarker}{2:-0}; halting the container."`,
-              '  exec /run/s6/basedir/bin/halt',
-              'fi',
-            ] : []),
-            'exit 0',
-            '',
-          ].join('\n');
-
-          await Runner.writeExecutable(join(serviceDirectory, 'finish'), criticalFinishScript);
-        } else {
-          // A service with neither a halt nor a finish command must not keep an older finish script.
-          await fs.rm(join(serviceDirectory, 'finish'), { force: true });
+        if (service['down'] !== undefined) {
+          addFile(`${serviceDirectory}/down`, `${service['down']}\n`, false);
         }
+
+        continue;
+      }
+
+      addFile(`${serviceDirectory}/run`, Runner.buildRunScript(service), true);
+      addFile(`${serviceDirectory}/timeout-down`, '6000\n', false);
+      addFile(`${serviceDirectory}/timeout-finish`, '1000\n', false);
+      addFile(`${serviceDirectory}/timeout-kill`, '6000\n', false);
+
+      // The app's own finish command runs first, so its cleanup happens before a critical halt.
+      if (service['critical'] === true || service['finishCommand'] !== undefined) {
+        const criticalFinishScript: Lib_DockerPackaging_Runner_RenderRootfs_CriticalFinishScript = [
+          '#!/command/with-contenv sh',
+          'set -eu',
+          '. /usr/local/libexec/nova-docker/log',
+          ...((service['finishCommand'] === undefined) ? [] : [
+            `if ! ${service['finishCommand']} "${shellVariableMarker}@"; then`,
+            `  nova_log WARN ${Runner.shellQuote(service['name'])} 'The service finish command failed.'`,
+            'fi',
+          ]),
+          ...((service['critical'] === true) ? [
+            `if [ "${shellVariableMarker}{1:-0}" -ne 0 ]; then`,
+            `  nova_log ERROR ${Runner.shellQuote(service['name'])} "Critical service exited abnormally with code ${shellVariableMarker}{1:-0} and signal ${shellVariableMarker}{2:-0}; halting the container."`,
+            '  exec /run/s6/basedir/bin/halt',
+            'fi',
+          ] : []),
+          'exit 0',
+          '',
+        ].join('\n');
+
+        addFile(`${serviceDirectory}/finish`, criticalFinishScript, true);
       }
     }
 
-    return;
+    return files;
   }
 
   /**
@@ -2123,7 +1899,7 @@ export class Runner {
       'fi',
     ];
     const longrunServices: Lib_DockerPackaging_Runner_BuildHealthcheck_LongrunServices = manifest['services'].filter((service) => service['kind'] === 'longrun');
-    const healthService: Lib_DockerPackaging_Runner_BuildHealthcheck_HealthService = longrunServices.find((service) => service['port'] !== undefined);
+    const healthService: Lib_DockerPackaging_Runner_BuildHealthcheck_HealthService = longrunServices.find((service) => ((manifest['healthService'] === undefined) ? service['port'] !== undefined : service['name'] === manifest['healthService']));
     const healthPort: Lib_DockerPackaging_Runner_BuildHealthcheck_HealthPort = (healthService === undefined) ? undefined : healthService['port'];
     const shellVariableMarker: Lib_DockerPackaging_Runner_BuildHealthcheck_ShellVariableMarker = '$';
 
@@ -2159,47 +1935,630 @@ export class Runner {
   }
 
   /**
-   * Lib - Docker Packaging - Write Executable.
+   * Lib - Docker Packaging - Plan Image.
    *
-   * Writes one executable rootfs helper and applies deterministic permissions only
-   * after the file content is durable.
+   * Computes the content of every Nova-owned Docker file without writing it. The
+   * scaffold and the sync-image recipe both apply this plan, so they cannot disagree.
    *
-   * @param {Lib_DockerPackaging_String} targetPath - Target path.
-   * @param {Lib_DockerPackaging_String} content    - Content.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_ProjectDirectory} projectDirectory - Project directory.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_Manifest}         manifest         - Manifest.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_RootPackage}      rootPackage      - Root package.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_NovaConfig}       novaConfig       - Nova config.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_IgnoreFileEntry}  ignoreFileEntry  - Ignore file entry.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_ProjectSlug}      projectSlug      - Project slug.
+   * @param {Lib_DockerPackaging_Runner_PlanImage_IncludeManifest}  includeManifest  - Include manifest.
    *
    * @private
    *
-   * @returns {Lib_DockerPackaging_Runner_WriteExecutable_Returns}
+   * @returns {Lib_DockerPackaging_Runner_PlanImage_Returns}
    *
-   * @since 0.34.0
+   * @since 0.49.0
    */
+  private static async planImage(projectDirectory: Lib_DockerPackaging_Runner_PlanImage_ProjectDirectory, manifest: Lib_DockerPackaging_Runner_PlanImage_Manifest, rootPackage: Lib_DockerPackaging_Runner_PlanImage_RootPackage, novaConfig: Lib_DockerPackaging_Runner_PlanImage_NovaConfig, ignoreFileEntry: Lib_DockerPackaging_Runner_PlanImage_IgnoreFileEntry, projectSlug: Lib_DockerPackaging_Runner_PlanImage_ProjectSlug, includeManifest: Lib_DockerPackaging_Runner_PlanImage_IncludeManifest): Lib_DockerPackaging_Runner_PlanImage_Returns {
+    const assemblyDirectory: Lib_DockerPackaging_Runner_PlanImage_AssemblyDirectory = join(projectDirectory, dockerAssemblyRelativePath);
+    const assemblyPackagePath: Lib_DockerPackaging_Runner_PlanImage_AssemblyPackagePath = join(assemblyDirectory, 'package.json');
+    const dockerignorePath: Lib_DockerPackaging_Runner_PlanImage_DockerignorePath = join(projectDirectory, '.dockerignore');
+    const workspacePackages: Lib_DockerPackaging_Runner_PlanImage_WorkspacePackages = await Runner.collectWorkspacePackages(projectDirectory, manifest);
+    const buildOrder: Lib_DockerPackaging_Runner_PlanImage_BuildOrder = Runner.resolveBuildOrder(manifest, workspacePackages);
+    const inputs: Lib_DockerPackaging_Runner_PlanImage_Inputs = await Promise.all([
+      Runner.readStageFragments(assemblyDirectory, manifest),
+      renderIgnoreFile('./.dockerignore', ignoreFileEntry),
+      Runner.readOptionalFile(assemblyPackagePath),
+      Runner.readOptionalFile(dockerignorePath),
+    ]);
+    const stageFragments: Lib_DockerPackaging_Runner_PlanImage_StageFragments = inputs[0];
+    const dockerignoreHeader: Lib_DockerPackaging_Runner_PlanImage_DockerignoreHeader = buildGeneratedFileHeader({
+      command: 'nova generate must-haves ignore-files',
+      docsSlug: 'cli/generators/must-haves/ignore-files',
+      mode: 'strict',
+      targetPath: dockerignorePath,
+    });
+    const packageManagerDescriptor: Lib_DockerPackaging_Runner_PlanImage_PackageManagerDescriptor = LibCorepack.parsePackageManager(rootPackage['packageManager']);
+    const isYarnBerry: Lib_DockerPackaging_Runner_PlanImage_IsYarnBerry = (
+      packageManagerDescriptor !== undefined
+      && packageManagerDescriptor['name'] === 'yarn'
+      && packageManagerDescriptor['version'].startsWith('1.') === false
+    );
+    const isNovaBuildEnabled: Lib_DockerPackaging_Runner_PlanImage_IsNovaBuildEnabled = manifest['build'] === undefined || manifest['build']['enabled'] !== false;
+    const generatedHeader: Lib_DockerPackaging_Runner_PlanImage_GeneratedHeader = LibDockerRender.generatedHeader([]);
+    const pnpmWorkspaceLines: Lib_DockerPackaging_Runner_PlanImage_PnpmWorkspaceLines = [
+      ...generatedHeader,
+      '',
+      'packages:',
+      ...[...buildOrder.values()].map((workspacePackage) => `  - '${workspacePackage['path']}'`),
+      '',
+    ];
+    const renderInput: Lib_DockerPackaging_Runner_PlanImage_RenderInput = {
+      buildOrder,
+      manifest,
+      novaConfig,
+      rootPackage,
+      stageFragments,
+    };
+    const plan: Lib_DockerPackaging_Runner_PlanImage_Plan = new Map();
 
-  private static async writeExecutable(targetPath: Lib_DockerPackaging_Runner_WriteExecutable_TargetPath, content: Lib_DockerPackaging_Runner_WriteExecutable_Content): Lib_DockerPackaging_Runner_WriteExecutable_Returns {
-    await fs.mkdir(dirname(targetPath), { recursive: true });
+    plan.set(join(projectDirectory, 'Dockerfile'), {
+      content: LibDockerRender.renderDockerfile(renderInput),
+      executable: false,
+      report: true,
+    });
+    plan.set(join(projectDirectory, 'compose.yml'), {
+      content: LibDockerRender.renderCompose(manifest),
+      executable: false,
+      report: true,
+    });
 
-    await fs.writeFile(targetPath, content, 'utf-8');
+    // The ignore-files generator owns ".dockerignore", so only the scaffold seeds it, once, with the same output.
+    if (includeManifest === true && inputs[3] === undefined) {
+      plan.set(dockerignorePath, {
+        content: `${dockerignoreHeader}${inputs[1]}`,
+        executable: false,
+        report: true,
+      });
+    }
 
-    await fs.chmod(targetPath, parseInt('755', 8));
+    plan.set(join(assemblyDirectory, 'build-package.json'), {
+      content: `${JSON.stringify(Runner.buildContainerPackage(rootPackage, `${projectSlug}-tool-docker`, buildOrder), null, 2)}\n`,
+      executable: false,
+      report: true,
+    });
+
+    // Only the scaffold creates the assembly package, and only once. After that the package-json recipes own it.
+    if (includeManifest === true && inputs[2] === undefined) {
+      plan.set(assemblyPackagePath, {
+        content: `${JSON.stringify(Runner.buildAssemblyPackage(projectSlug), null, 2)}\n`,
+        executable: false,
+        report: true,
+      });
+    }
+
+    // Only Nova's own build stage reads these package-manager files, so an image without it gets neither.
+    if (isNovaBuildEnabled === true) {
+      plan.set(join(assemblyDirectory, 'pnpm-workspace.yaml'), {
+        content: pnpmWorkspaceLines.join('\n'),
+        executable: false,
+        report: true,
+      });
+    }
+
+    if (
+      isNovaBuildEnabled === true
+      && isYarnBerry === true
+    ) {
+      plan.set(join(assemblyDirectory, 'yarnrc.yml'), {
+        content: [
+          ...generatedHeader,
+          '',
+          'enableGlobalCache: false',
+          'nodeLinker: pnp',
+          'pnpEnableEsmLoader: true',
+          '',
+        ].join('\n'),
+        executable: false,
+        report: true,
+      });
+    }
+
+    if (LibDockerRender.usesSyntheticManifests(manifest, rootPackage) === true) {
+      for (const workspacePackage of buildOrder.values()) {
+        plan.set(join(assemblyDirectory, 'workspace-manifests', workspacePackage['path'], 'package.json'), {
+          content: `${JSON.stringify(Runner.buildSyntheticWorkspacePackage(workspacePackage['packageJson'], buildOrder), null, 2)}\n`,
+          executable: false,
+          report: true,
+        });
+      }
+    }
+
+    if (includeManifest === true) {
+      plan.set(join(assemblyDirectory, 'manifest.json'), {
+        content: `${JSON.stringify(manifest, null, 2)}\n`,
+        executable: false,
+        report: true,
+      });
+    }
+
+    for (const rootfsEntry of Runner.renderRootfs(manifest)) {
+      plan.set(join(assemblyDirectory, 'rootfs', ...rootfsEntry[0].split('/')), rootfsEntry[1]);
+    }
+
+    return plan;
+  }
+
+  /**
+   * Lib - Docker Packaging - Apply Image Plan.
+   *
+   * Compares the plan with the files on disk, then writes changed files and
+   * deletes only stale files Nova generated before, tracked in "generated-files.json".
+   *
+   * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_ProjectDirectory} projectDirectory - Project directory.
+   * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_ImagePlan}        imagePlan        - Image plan.
+   * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_IsDryRun}         isDryRun         - Is dry run.
+   * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_IsReplaceFile}    isReplaceFile    - Is replace file.
+   * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_IsReportFiles}    isReportFiles    - Is report files.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ApplyImagePlan_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async applyImagePlan(projectDirectory: Lib_DockerPackaging_Runner_ApplyImagePlan_ProjectDirectory, imagePlan: Lib_DockerPackaging_Runner_ApplyImagePlan_ImagePlan, isDryRun: Lib_DockerPackaging_Runner_ApplyImagePlan_IsDryRun, isReplaceFile: Lib_DockerPackaging_Runner_ApplyImagePlan_IsReplaceFile, isReportFiles: Lib_DockerPackaging_Runner_ApplyImagePlan_IsReportFiles): Lib_DockerPackaging_Runner_ApplyImagePlan_Returns {
+    const assemblyDirectory: Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyDirectory = join(projectDirectory, dockerAssemblyRelativePath);
+    const rootfsDirectory: Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsDirectory = join(assemblyDirectory, 'rootfs');
+    const workspaceManifestsDirectory: Lib_DockerPackaging_Runner_ApplyImagePlan_WorkspaceManifestsDirectory = join(assemblyDirectory, 'workspace-manifests');
+    const yarnConfigPath: Lib_DockerPackaging_Runner_ApplyImagePlan_YarnConfigPath = join(assemblyDirectory, 'yarnrc.yml');
+    const recordPath: Lib_DockerPackaging_Runner_ApplyImagePlan_RecordPath = join(assemblyDirectory, dockerGeneratedFilesRecord);
+
+    /**
+     * Lib - Docker Packaging - Apply Image Plan - Is Owned Path.
+     *
+     * Reports whether a path sits in a tree Nova regenerates, so a stale copy
+     * of it can be deleted. Every other path belongs to the project.
+     *
+     * @param {Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath_TargetPath} targetPath - Target path.
+     *
+     * @returns {Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath_Returns}
+     *
+     * @since 0.49.0
+     */
+    const isOwnedPath: Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath = (targetPath): Lib_DockerPackaging_Runner_ApplyImagePlan_IsOwnedPath_Returns => (
+      targetPath === yarnConfigPath
+      || targetPath.startsWith(`${rootfsDirectory}${sep}`) === true
+      || targetPath.startsWith(`${workspaceManifestsDirectory}${sep}`) === true
+    );
+    const recordContent: Lib_DockerPackaging_Runner_ApplyImagePlan_RecordContent = await Runner.readOptionalFile(recordPath);
+    const recordValue: Lib_DockerPackaging_Runner_ApplyImagePlan_RecordValue = (recordContent === undefined) ? {} : await Runner.readJsonObject(recordPath);
+    const recordFiles: Lib_DockerPackaging_Runner_ApplyImagePlan_RecordFiles = (Array.isArray(recordValue['files']) === true) ? recordValue['files'] : [];
+    const previousOwnedPaths: Lib_DockerPackaging_Runner_ApplyImagePlan_PreviousOwnedPaths = new Set();
+
+    for (const recordFile of recordFiles) {
+      if (typeof recordFile !== 'string' || recordFile.split('/').includes('..') === true) {
+        continue;
+      }
+
+      const recordedPath: Lib_DockerPackaging_Runner_ApplyImagePlan_RecordedPath = join(assemblyDirectory, ...recordFile.split('/'));
+
+      if (isOwnedPath(recordedPath) === true) {
+        previousOwnedPaths.add(recordedPath);
+      }
+    }
+
+    const plan: Lib_DockerPackaging_Runner_ApplyImagePlan_Plan = new Map(imagePlan);
+    const ownedFiles: Lib_DockerPackaging_Runner_ApplyImagePlan_OwnedFiles = [...plan.keys()]
+      .filter((plannedPath) => isOwnedPath(plannedPath) === true)
+      .map((plannedPath) => relative(assemblyDirectory, plannedPath).split(sep).join('/'))
+      .sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
+
+    plan.set(recordPath, {
+      content: `${JSON.stringify({ files: ownedFiles }, null, 2)}\n`,
+      executable: false,
+      report: false,
+    });
+
+    const plannedEntries: Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntries = [...plan.entries()];
+    const discovered: Lib_DockerPackaging_Runner_ApplyImagePlan_Discovered = await Promise.all([
+      Promise.all(plannedEntries.map((plannedEntry) => Runner.readOptionalFile(plannedEntry[0]))),
+      Runner.listFiles(rootfsDirectory),
+      Runner.listFiles(workspaceManifestsDirectory),
+      Runner.readOptionalFile(yarnConfigPath),
+    ]);
+    const currentContents: Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContents = discovered[0];
+    const rootfsFiles: Lib_DockerPackaging_Runner_ApplyImagePlan_RootfsFiles = discovered[1];
+    const changes: Lib_DockerPackaging_Runner_ApplyImagePlan_Changes = [];
+
+    for (let i = 0; i < plannedEntries.length; i += 1) {
+      const plannedEntry: Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedEntry = plannedEntries[i];
+      const currentContent: Lib_DockerPackaging_Runner_ApplyImagePlan_CurrentContent = currentContents[i];
+
+      if (plannedEntry === undefined) {
+        continue;
+      }
+
+      const lineChanges: Lib_DockerPackaging_Runner_ApplyImagePlan_LineChanges = Runner.countLineChanges(currentContent ?? '', plannedEntry[1]['content']);
+      let status: Lib_DockerPackaging_Runner_ApplyImagePlan_Status = 'update';
+
+      if (currentContent === undefined) {
+        status = 'create';
+      } else if (currentContent === plannedEntry[1]['content']) {
+        status = 'unchanged';
+      }
+
+      changes.push({
+        added: (currentContent === undefined) ? plannedEntry[1]['content'].split('\n').length : lineChanges['added'],
+        path: relative(projectDirectory, plannedEntry[0]).split(sep).join('/'),
+        removed: lineChanges['removed'],
+        status,
+      });
+    }
+
+    // Workspace manifests and the Berry config are wholly Nova's; in rootfs only recorded files are.
+    const stalePaths: Lib_DockerPackaging_Runner_ApplyImagePlan_StalePaths = [...new Set([
+      ...rootfsFiles.filter((rootfsFile) => previousOwnedPaths.has(rootfsFile) === true),
+      ...discovered[2],
+      ...((discovered[3] === undefined) ? [] : [yarnConfigPath]),
+    ])].filter((stalePath) => plan.has(stalePath) === false);
+    const staleContents: Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContents = await Promise.all(stalePaths.map((stalePath) => Runner.readOptionalFile(stalePath)));
+
+    for (let i = 0; i < stalePaths.length; i += 1) {
+      const staleContent: Lib_DockerPackaging_Runner_ApplyImagePlan_StaleContent = staleContents[i] ?? '';
+
+      changes.push({
+        added: 0,
+        path: relative(projectDirectory, stalePaths[i] ?? '').split(sep).join('/'),
+        removed: staleContent.split('\n').length,
+        status: 'delete',
+      });
+    }
+
+    changes.sort((firstChange, secondChange) => firstChange['path'].localeCompare(secondChange['path']));
+
+    const unownedFiles: Lib_DockerPackaging_Runner_ApplyImagePlan_UnownedFiles = rootfsFiles
+      .filter((rootfsFile) => plan.has(rootfsFile) === false && previousOwnedPaths.has(rootfsFile) === false)
+      .map((rootfsFile) => relative(projectDirectory, rootfsFile).split(sep).join('/'));
+    const assemblyPackagePath: Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackagePath = join(assemblyDirectory, 'package.json');
+    const plannedAssemblyPackage: Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedAssemblyPackage = plan.get(assemblyPackagePath);
+    const assemblyPackageContent: Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageContent = (plannedAssemblyPackage === undefined) ? await Runner.readOptionalFile(assemblyPackagePath) : plannedAssemblyPackage['content'];
+    const assemblyPackageValue: Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyPackageValue = (assemblyPackageContent === undefined) ? undefined : JSON.parse(assemblyPackageContent);
+    const assemblyScriptsValue: Lib_DockerPackaging_Runner_ApplyImagePlan_AssemblyScriptsValue = (isPlainObject(assemblyPackageValue) === true) ? assemblyPackageValue['scripts'] : undefined;
+
+    // The package-json recipes own "packages/docker/package.json", so missing image scripts are only reported.
+    const missingScripts: Lib_DockerPackaging_Runner_ApplyImagePlan_MissingScripts = [
+      'check',
+      'build',
+    ].filter((scriptName) => (
+      (isPlainObject(assemblyScriptsValue) === true) ? Reflect.has(assemblyScriptsValue, scriptName) === false : true
+    ));
+
+    if (isDryRun === true) {
+      return {
+        changes,
+        missingScripts,
+        unownedFiles,
+      };
+    }
+
+    await Promise.all(plannedEntries.map(async (plannedEntry, plannedIndex) => {
+      const plannedFile: Lib_DockerPackaging_Runner_ApplyImagePlan_PlannedFile = plannedEntry[1];
+
+      if (currentContents[plannedIndex] !== plannedFile['content']) {
+        if (plannedFile['report'] === true) {
+          await saveGeneratedFile(plannedEntry[0], plannedFile['content'], isReplaceFile, undefined, isReportFiles);
+        } else {
+          await fs.mkdir(dirname(plannedEntry[0]), { recursive: true });
+
+          await fs.writeFile(plannedEntry[0], plannedFile['content'], 'utf-8');
+        }
+      }
+
+      if (plannedFile['executable'] === true) {
+        await fs.chmod(plannedEntry[0], parseInt('755', 8));
+      }
+
+      return;
+    }));
+
+    await Promise.all(stalePaths.map(async (stalePath) => {
+      await fs.rm(stalePath, { force: true });
+
+      await Runner.removeEmptyParents(dirname(stalePath), assemblyDirectory);
+
+      return;
+    }));
+
+    return {
+      changes,
+      missingScripts,
+      unownedFiles,
+    };
+  }
+
+  /**
+   * Lib - Docker Packaging - Read Stage Fragments.
+   *
+   * Loads the Dockerfile fragment of every declared project stage from its file
+   * inside packages/docker and fails when one is missing.
+   *
+   * @param {Lib_DockerPackaging_Runner_ReadStageFragments_AssemblyDirectory} assemblyDirectory - Assembly directory.
+   * @param {Lib_DockerPackaging_Runner_ReadStageFragments_Manifest}          manifest          - Manifest.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ReadStageFragments_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async readStageFragments(assemblyDirectory: Lib_DockerPackaging_Runner_ReadStageFragments_AssemblyDirectory, manifest: Lib_DockerPackaging_Runner_ReadStageFragments_Manifest): Lib_DockerPackaging_Runner_ReadStageFragments_Returns {
+    const stages: Lib_DockerPackaging_Runner_ReadStageFragments_Stages = (manifest['dockerfile'] === undefined) ? [] : manifest['dockerfile']['stages'] ?? [];
+    const contents: Lib_DockerPackaging_Runner_ReadStageFragments_Contents = await Promise.all(stages.map((stage) => Runner.readOptionalFile(join(assemblyDirectory, ...stage['file'].split('/')))));
+    const fragments: Lib_DockerPackaging_Runner_ReadStageFragments_Fragments = new Map();
+
+    for (let i = 0; i < stages.length; i += 1) {
+      const stage: Lib_DockerPackaging_Runner_ReadStageFragments_Stage = stages[i];
+      const content: Lib_DockerPackaging_Runner_ReadStageFragments_Content = contents[i];
+
+      if (stage === undefined) {
+        continue;
+      }
+
+      if (content === undefined) {
+        throw new Error(`Docker stage "${stage['name']}" fragment "packages/docker/${stage['file']}" was not found.`);
+      }
+
+      fragments.set(stage['name'], content);
+    }
+
+    return fragments;
+  }
+
+  /**
+   * Lib - Docker Packaging - List Files.
+   *
+   * Lists every file below one directory, or nothing when the directory does
+   * not exist, so stale and unowned rootfs files can be found.
+   *
+   * @param {Lib_DockerPackaging_Runner_ListFiles_Directory} directory - Directory.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ListFiles_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async listFiles(directory: Lib_DockerPackaging_Runner_ListFiles_Directory): Lib_DockerPackaging_Runner_ListFiles_Returns {
+    if (await pathExists(directory) === false) {
+      return [];
+    }
+
+    const entries: Lib_DockerPackaging_Runner_ListFiles_Entries = await fs.readdir(directory, {
+      recursive: true,
+      withFileTypes: true,
+    });
+
+    return entries
+      .filter((entry) => entry.isFile() === true)
+      .map((entry) => join(entry.parentPath, entry.name))
+      .sort((firstPath, secondPath) => firstPath.localeCompare(secondPath));
+  }
+
+  /**
+   * Lib - Docker Packaging - Read Optional File.
+   *
+   * Reads one file as text, or returns undefined when it does not exist, so
+   * the plan can tell a new file from a changed one.
+   *
+   * @param {Lib_DockerPackaging_Runner_ReadOptionalFile_TargetPath} targetPath - Target path.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ReadOptionalFile_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async readOptionalFile(targetPath: Lib_DockerPackaging_Runner_ReadOptionalFile_TargetPath): Lib_DockerPackaging_Runner_ReadOptionalFile_Returns {
+    try {
+      return await fs.readFile(targetPath, 'utf-8');
+    } catch {
+      return undefined;
+    }
+  }
+
+  /**
+   * Lib - Docker Packaging - Remove Empty Parents.
+   *
+   * Removes a folder left empty by a stale file and walks up until it reaches a
+   * folder that still has content or the assembly workspace itself.
+   *
+   * @param {Lib_DockerPackaging_Runner_RemoveEmptyParents_Directory}     directory     - Directory.
+   * @param {Lib_DockerPackaging_Runner_RemoveEmptyParents_StopDirectory} stopDirectory - Stop directory.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_RemoveEmptyParents_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async removeEmptyParents(directory: Lib_DockerPackaging_Runner_RemoveEmptyParents_Directory, stopDirectory: Lib_DockerPackaging_Runner_RemoveEmptyParents_StopDirectory): Lib_DockerPackaging_Runner_RemoveEmptyParents_Returns {
+    if (directory === stopDirectory || directory.startsWith(`${stopDirectory}${sep}`) === false) {
+      return;
+    }
+
+    try {
+      await fs.rmdir(directory);
+    } catch {
+      return;
+    }
+
+    await Runner.removeEmptyParents(dirname(directory), stopDirectory);
 
     return;
   }
 
   /**
-   * Lib - Docker Packaging - Build Workspace Package.
+   * Lib - Docker Packaging - Count Line Changes.
    *
-   * Creates the private, non-publishable Docker assembly package manifest with
-   * validation and image-build scripts, but without publish or deployment scripts.
+   * Counts the lines added and removed between two file versions with a longest
+   * common subsequence, for the sync-image dry-run summary.
    *
-   * @param {Lib_DockerPackaging_Runner_BuildWorkspacePackage_Slug} slug - Slug.
+   * @param {Lib_DockerPackaging_Runner_CountLineChanges_Before} before - Before.
+   * @param {Lib_DockerPackaging_Runner_CountLineChanges_After}  after  - After.
    *
    * @private
    *
-   * @returns {Lib_DockerPackaging_Runner_BuildWorkspacePackage_Returns}
+   * @returns {Lib_DockerPackaging_Runner_CountLineChanges_Returns}
    *
-   * @since 0.34.0
+   * @since 0.49.0
    */
+  private static countLineChanges(before: Lib_DockerPackaging_Runner_CountLineChanges_Before, after: Lib_DockerPackaging_Runner_CountLineChanges_After): Lib_DockerPackaging_Runner_CountLineChanges_Returns {
+    const beforeLines: Lib_DockerPackaging_Runner_CountLineChanges_BeforeLines = before.split('\n');
+    const afterLines: Lib_DockerPackaging_Runner_CountLineChanges_AfterLines = after.split('\n');
+    const lengths: Lib_DockerPackaging_Runner_CountLineChanges_Lengths = new Array(afterLines.length + 1).fill(0);
 
-  private static buildWorkspacePackage(slug: Lib_DockerPackaging_Runner_BuildWorkspacePackage_Slug): Lib_DockerPackaging_Runner_BuildWorkspacePackage_Returns {
+    for (const beforeLine of beforeLines) {
+      let diagonal: Lib_DockerPackaging_Runner_CountLineChanges_Diagonal = 0;
+
+      for (let j = 0; j < afterLines.length; j += 1) {
+        const above: Lib_DockerPackaging_Runner_CountLineChanges_Above = lengths[j + 1] ?? 0;
+
+        Reflect.set(lengths, j + 1, (beforeLine === afterLines[j]) ? diagonal + 1 : Math.max(above, lengths[j] ?? 0));
+
+        diagonal = above;
+      }
+    }
+
+    const common: Lib_DockerPackaging_Runner_CountLineChanges_Common = lengths[afterLines.length] ?? 0;
+
+    return {
+      added: afterLines.length - common,
+      removed: beforeLines.length - common,
+    };
+  }
+
+  /**
+   * Lib - Docker Packaging - Resolve Ignore File Entry.
+   *
+   * Returns the configured ".dockerignore" bundles and patterns, or Nova's
+   * default bundle when the project has not configured the file.
+   *
+   * @param {Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_NovaConfig} novaConfig - Nova config.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static resolveIgnoreFileEntry(novaConfig: Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_NovaConfig): Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_Returns {
+    const ignoreFilesValue: Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_IgnoreFilesValue = novaConfig['ignoreFiles'];
+    const configuredIgnoreFileEntry: Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_ConfiguredIgnoreFileEntry = (isPlainObject(ignoreFilesValue) === true) ? ignoreFilesValue['./.dockerignore'] : undefined;
+
+    if (isPlainObject(configuredIgnoreFileEntry) === true) {
+      return configuredIgnoreFileEntry as Lib_DockerPackaging_Runner_ResolveIgnoreFileEntry_Returns;
+    }
+
+    return {
+      bundles: ['nova'],
+      patterns: [],
+    };
+  }
+
+  /**
+   * Lib - Docker Packaging - Validate Service Graph.
+   *
+   * Rejects unknown, self, and cyclic service dependencies before any file is
+   * written, because native s6-rc cannot compile such a database.
+   *
+   * @param {Lib_DockerPackaging_Runner_ValidateServiceGraph_Manifest} manifest - Manifest.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_ValidateServiceGraph_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static validateServiceGraph(manifest: Lib_DockerPackaging_Runner_ValidateServiceGraph_Manifest): Lib_DockerPackaging_Runner_ValidateServiceGraph_Returns {
+    const availableServiceNames: Lib_DockerPackaging_Runner_ValidateServiceGraph_AvailableServiceNames = new Set(manifest['services'].map((service) => service['name']));
+
+    for (const service of manifest['services']) {
+      for (const dependency of service['dependencies']) {
+        if (availableServiceNames.has(dependency) === false) {
+          throw new Error(`Docker service "${service['name']}" depends on unknown service "${dependency}".`);
+        }
+
+        if (dependency === service['name']) {
+          throw new Error(`Docker service "${service['name']}" cannot depend on itself.`);
+        }
+      }
+    }
+
+    const servicesByName: Lib_DockerPackaging_Runner_ValidateServiceGraph_ServicesByName = new Map(manifest['services'].map((service) => [
+      service['name'],
+      service,
+    ]));
+    const visitedServices: Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitedServices = new Set();
+    const visitingServices: Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitingServices = new Set();
+
+    /**
+     * Lib - Docker Packaging - Validate Service Graph - Visit Service.
+     *
+     * Validates one service dependency branch before generated files are written
+     * and rejects cycles that native s6-rc cannot compile.
+     *
+     * @param {Lib_DockerPackaging_String} serviceName - Service name.
+     *
+     * @returns {void}
+     *
+     * @since 0.34.0
+     */
+    const visitService: Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService = (serviceName) => {
+      if (visitedServices.has(serviceName) === true) {
+        return;
+      }
+
+      if (visitingServices.has(serviceName) === true) {
+        throw new Error(`Docker service dependency cycle includes "${serviceName}".`);
+      }
+
+      const service: Lib_DockerPackaging_Runner_ValidateServiceGraph_VisitService_Service = servicesByName.get(serviceName);
+
+      if (service === undefined) {
+        return;
+      }
+
+      visitingServices.add(serviceName);
+
+      for (const dependency of service['dependencies']) {
+        visitService(dependency);
+      }
+
+      visitingServices.delete(serviceName);
+
+      visitedServices.add(serviceName);
+
+      return;
+    };
+
+    for (const service of manifest['services']) {
+      visitService(service['name']);
+    }
+
+    return;
+  }
+
+  /**
+   * Lib - Docker Packaging - Build Assembly Package.
+   *
+   * Builds the private Docker assembly package the scaffold creates once. After
+   * that the package-json recipes own the file, so it is never rewritten here.
+   *
+   * @param {Lib_DockerPackaging_Runner_BuildAssemblyPackage_Slug} slug - Slug.
+   *
+   * @private
+   *
+   * @returns {Lib_DockerPackaging_Runner_BuildAssemblyPackage_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static buildAssemblyPackage(slug: Lib_DockerPackaging_Runner_BuildAssemblyPackage_Slug): Lib_DockerPackaging_Runner_BuildAssemblyPackage_Returns {
     return {
       name: `${slug}-tool-docker`,
       private: true,
@@ -2399,6 +2758,24 @@ export class Runner {
 
     Reflect.set(ignoreFiles, './.dockerignore', ignoreFileEntry);
     Reflect.set(novaConfig, 'ignoreFiles', ignoreFiles);
+
+    const attributeFilesValue: Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFilesValue = novaConfig['attributeFiles'];
+
+    if (attributeFilesValue !== undefined && isPlainObject(attributeFilesValue) === false) {
+      throw new Error('The root nova.config.json attributeFiles field must contain an object.');
+    }
+
+    const attributeFiles: Lib_DockerPackaging_Runner_RegisterProjectConfig_AttributeFiles = (isPlainObject(attributeFilesValue) === true) ? attributeFilesValue : {};
+
+    // The attribute-files generator writes the file; the scaffold only records the bundle, and keeps an existing entry.
+    if (attributeFiles[`${dockerConfigWorkspacePath}/.gitattributes`] === undefined) {
+      Reflect.set(attributeFiles, `${dockerConfigWorkspacePath}/.gitattributes`, {
+        bundles: ['docker-scripts'],
+        patterns: [],
+      });
+    }
+
+    Reflect.set(novaConfig, 'attributeFiles', attributeFiles);
 
     const recipesValue: Lib_DockerPackaging_Runner_RegisterProjectConfig_RecipesValue = novaConfig['recipes'];
 

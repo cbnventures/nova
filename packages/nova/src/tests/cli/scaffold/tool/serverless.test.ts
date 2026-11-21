@@ -23,11 +23,11 @@ import { Runner as CliScaffoldToolServerless } from '../../../../cli/scaffold/to
 import { getScaffoldVersion } from '../../../../lib/scaffold-versions.js';
 
 import type {
-  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_Config,
-  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_ConfigPath,
-  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_OutputPath,
-  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_WorkspaceConfig,
-  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_WranglerToml,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_Config,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_ConfigPath,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_OutputPath,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_WorkspaceConfig,
+  Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_WranglerToml,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_ApiSource,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_OutputPath,
   Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_PackageJson,
@@ -91,8 +91,8 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
     return;
   });
 
-  it('creates the default Cloudflare Workers target as a distributable tool', async () => {
-    const outputPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_OutputPath = join(sandboxRoot, 'cloudflare-target');
+  it('creates the default Cloudflare Workers target as a trackable tool', async () => {
+    const outputPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_OutputPath = join(sandboxRoot, 'cloudflare-target');
 
     process.chdir(sandboxRoot);
 
@@ -104,10 +104,10 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
       workspaceName: 'gateway',
     });
 
-    const wranglerToml: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_WranglerToml = await readFile(join(outputPath, 'packages', 'gateway', 'wrangler.toml'), 'utf-8');
-    const configPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_ConfigPath = join(outputPath, 'nova.config.json');
-    const config: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_Config = JSON.parse(await readFile(configPath, 'utf-8')) as Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_Config;
-    const workspaceConfig: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_WorkspaceConfig = config['workspaces']['./packages/gateway'];
+    const wranglerToml: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_WranglerToml = await readFile(join(outputPath, 'packages', 'gateway', 'wrangler.toml'), 'utf-8');
+    const configPath: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_ConfigPath = join(outputPath, 'nova.config.json');
+    const config: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_Config = JSON.parse(await readFile(configPath, 'utf-8')) as Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_Config;
+    const workspaceConfig: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsATrackableTool_WorkspaceConfig = config['workspaces']['./packages/gateway'];
 
     if (workspaceConfig === undefined) {
       throw new Error('The generated serverless tool should be registered in nova.config.json.');
@@ -116,7 +116,7 @@ describe.sequential('CliScaffoldToolServerless.run', async () => {
     strictEqual(wranglerToml.includes('name = "cloudflare-target-tool-gateway"'), true);
     strictEqual(workspaceConfig['name'], 'cloudflare-target-tool-gateway');
     strictEqual(workspaceConfig['role'], 'tool');
-    strictEqual(workspaceConfig['policy'], 'distributable');
+    strictEqual(workspaceConfig['policy'], 'trackable');
 
     return;
   });

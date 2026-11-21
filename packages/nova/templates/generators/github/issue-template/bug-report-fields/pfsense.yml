@@ -1,8 +1,19 @@
+  - type: "dropdown"
+    id: "pfsense-edition"
+    attributes:
+      label: "pfSense® Edition"
+      description: "Select the installed pfSense® edition."
+      options:
+        - "Community Edition"
+        - "pfSense Plus"
+        - "Not Sure"
+    validations:
+      required: true
   - type: "input"
     id: "pfsense-version"
     attributes:
-      label: "pfSense\xAE version"
-      description: "What version of pfSense\xAE are you using? Please note that only versions officially supported by Netgate\xAE, as listed on the [Releases](https://docs.netgate.com/pfsense/en/latest/releases/versions.html) page, will be considered."
-      placeholder: "e.g. CE 2.8.1, Plus 25.11.1"
+      label: "pfSense® Version"
+      description: "Enter the complete pfSense® version."
+      placeholder: "e.g. 2.8.1, 25.11.1"
     validations:
       required: true

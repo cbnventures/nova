@@ -59,6 +59,15 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsSkipImageChecks_Fake = Shared_AppStoreConnectTestFakeState;
 
 /**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Accepts The Documented Search Results Range For The Selected Creative Target.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_CreativeRoot = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_Fake = Shared_AppStoreConnectTestFakeState;
+
+/**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Ambiguous Create Does Not Duplicate A Reservation.
  *
  * @since 0.39.0
@@ -141,6 +150,13 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_KeepsPollingWhenAnUploadJoinsAScreenshotSetLate_SecondUpload = Promise<Shared_AppStoreConnectResource>;
 
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_KeepsPollingWhenAnUploadJoinsAScreenshotSetLate_Results = Shared_AppStoreConnectResource[];
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Limits Screenshots To The Selected Targets.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_LimitsScreenshotsToTheSelectedTargets_Fake = Shared_AppStoreConnectTestFakeState;
 
 /**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Models Failed Archived And Indefinitely Processing Asset Images.
@@ -292,6 +308,52 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlacementListsRequireIncludeForRelationshipData_WithIncludeData = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Plan Mode Reports Creative Asset Replacements Without Write Requests.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_Fake = Shared_AppStoreConnectTestFakeState;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutChunks = string[];
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutText = string;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Plan Mode Reports Metadata Field Differences Without Write Requests.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_MetadataDirectory = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_Fake = Shared_AppStoreConnectTestFakeState;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutChunks = string[];
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutText = string;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Plan Mode Reports Screenshot Deletes Uploads Keeps And Order Without Write Requests.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Images = Buffer[];
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Fake = Shared_AppStoreConnectTestFakeState;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutChunks = string[];
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutText = string;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Prefers App Version State Over The Deprecated App Store State.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_MetadataDirectory = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_Fake = Shared_AppStoreConnectTestFakeState;
+
+/**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Reconciles One 502 After Localization Screenshot Set And Asset Image Creates.
  *
  * @since 0.39.0
@@ -322,6 +384,19 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReconcilesTransportFailuresAfterLocalizationScreenshotSetAndAssetImageCreates_Image = Shared_AppStoreConnectResource;
 
 /**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Rejects Creative Assets Outside Apple Specifications Before Any Request.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_CreativeRoot = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_Fake = Shared_AppStoreConnectTestFakeState;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure = (error: unknown) => boolean;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure_ReceivedError = string;
+
+/**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Rejects Invalid Images Before Any Request.
  *
  * @since 0.39.0
@@ -346,6 +421,26 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsJPEGDataWithoutACompleteEndOfImageMarkerBeforeAnyRequest_Fake = Shared_AppStoreConnectTestFakeState;
 
 /**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Rejects Metadata Outside Apple Field Limits Before Any Request.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_MetadataDirectory = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_Fake = Shared_AppStoreConnectTestFakeState;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure = (error: unknown) => boolean;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure_ReceivedError = string;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Rejects Plan Mode Combined With Dry Run.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsPlanModeCombinedWithDryRun_Fake = Shared_AppStoreConnectTestFakeState;
+
+/**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Rejects Truncated PNG Data Before Any Request.
  *
  * @since 0.39.0
@@ -364,6 +459,15 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsFreshPlacementCountsAfterAnOrderingFailure_Validate = (error: unknown) => boolean;
 
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsFreshPlacementCountsAfterAnOrderingFailure_Validate_ReceivedError = unknown;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Reports Metadata Values That App Store Connect Stored Differently.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_MetadataDirectory = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_Fake = Shared_AppStoreConnectTestFakeState;
 
 /**
  * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Resumes By Checksum In Exact Order.
@@ -391,6 +495,15 @@ export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RollsTenNewScreenshotsThroughAFullSet_Images = Buffer[];
 
 export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RollsTenNewScreenshotsThroughAFullSet_Fake = Shared_AppStoreConnectTestFakeState;
+
+/**
+ * Tests - CLI - Integration - App Store Connect - CLI App Store Connect Screenshots - Updates Only Changed Metadata Fields And Verifies Stored Values.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_MetadataDirectory = string;
+
+export type Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_Fake = Shared_AppStoreConnectTestFakeState;
 
 /**
  * Tests - CLI - Integration - App Store Connect - Create JPEG.
@@ -507,6 +620,10 @@ export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Opt
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TransportFailureAfterScreenshotSetCreate = boolean;
 
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TrimLocalizationValues = boolean;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_VersionAttributes = Record<string, unknown>;
+
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options = {
   ambiguousPlacementCreate?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_AmbiguousPlacementCreate;
   ambiguousScreenshotCreate?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_AmbiguousScreenshotCreate;
@@ -532,6 +649,8 @@ export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Opt
   transportFailureAfterPlacementCreate?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TransportFailureAfterPlacementCreate;
   transportFailureAfterScreenshotCreate?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TransportFailureAfterScreenshotCreate;
   transportFailureAfterScreenshotSetCreate?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TransportFailureAfterScreenshotSetCreate;
+  trimLocalizationValues?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_TrimLocalizationValues;
+  versionAttributes?: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Options_VersionAttributes;
 };
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Returns = Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_State;
@@ -608,6 +727,10 @@ export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Ord
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_PlacementAppearsBeforeFinalListing = boolean;
 
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TrimLocalizationValues = boolean;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_VersionAttributes = Record<string, unknown>;
+
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Url = URL;
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Method = string;
@@ -627,6 +750,20 @@ export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Loc
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationLocale = string;
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_CreatedLocalization = Shared_AppStoreConnectResource;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalizationId = string | undefined;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalization = Shared_AppStoreConnectResource | undefined;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateData = Record<string, unknown>;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateAttributes = Record<string, unknown>;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredAttributes = Record<string, unknown>;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedValue = unknown;
+
+export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredValue = unknown;
 
 export type Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_ScreenshotSetCreateData = Record<string, unknown>;
 

@@ -47,6 +47,7 @@ import type {
   Shared_BlueprintWorkflow_StepTimeoutMinutes,
   Shared_CorepackPackageManager,
   Shared_CorepackPackageManagerDescriptor,
+  Shared_CoverageBadge,
   Shared_GeneratorRunResult,
   Shared_GithubRunnerImages,
   Shared_NovaConfig,
@@ -54,6 +55,7 @@ import type {
   Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigArtifact,
+  Shared_NovaConfigArtifactSource,
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
@@ -399,6 +401,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PostAttestationSteps = Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config_PostAttestationSteps;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagPushPrereleaseExpression = string | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun = string;
@@ -408,6 +412,15 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistry
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagRun = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Coverage Badge Step.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_BadgePath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCoverageBadgeStep_Returns = Shared_BlueprintStep;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -493,6 +506,14 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarge
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_DeployDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ConfigureGitIdentityRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagPushPrereleaseExpression = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_TagNameExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_PrereleaseExpression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_MissingTagDescription = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_VerifyReleaseContextRun = string;
 
@@ -641,6 +662,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_App
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_TagPushPrereleaseExpression = string | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ValidateAndStageRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Dollar = string;
@@ -702,6 +725,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DockerHub
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkspaceGraph = Shared_WorkspaceGraph;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadge = Shared_CoverageBadge | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = Shared_NovaConfigEnvironment;
 
@@ -838,6 +863,12 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environme
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues = Shared_BlueprintDeliveryValues;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WriteEnvStep = Shared_BlueprintStep;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeDocsPath = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CoverageBadgeSitePath = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PushesCoverageBadgeBranch = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ArtifactPreflightPaths = string[];
 
@@ -1065,6 +1096,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_WorkspaceGrap
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_ImageWorkspaces = string[];
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_CoverageBadge = Shared_CoverageBadge | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = Shared_BlueprintConfigWorkflow[];
@@ -1221,6 +1254,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_DockerHub = S
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Environment = Shared_NovaConfigEnvironment;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_CoverageBadge = Shared_CoverageBadge | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ConfigPath = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawConfig = Record<string, unknown>;
@@ -1367,6 +1402,13 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Dollar =
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_PushContainerArtifactRun_Returns = string;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Push Coverage Badge Run.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_PushCoverageBadgeRun_Returns = string;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -1410,7 +1452,34 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCheckNames_Work
  *
  * @since 0.26.0
  */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_PromotesPushedTags = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Resolve Coverage Badge Site Path.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Targets = Shared_BlueprintConfigDeployTarget[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifacts = Shared_NovaConfig_Artifacts;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Returns = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsDirectory = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsTarget = Shared_BlueprintConfigDeployTarget | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_ArtifactName = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_Artifact = Shared_NovaConfigArtifact | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DocsSource = Shared_NovaConfigArtifactSource | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveCoverageBadgeSitePath_DestinationSegments = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Resolve Delivery Value Expr.

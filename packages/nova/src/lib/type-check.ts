@@ -56,6 +56,7 @@ import type {
   Lib_TypeCheck_RunTypeCheck_ConfigResult,
   Lib_TypeCheck_RunTypeCheck_CurrentDirectory,
   Lib_TypeCheck_RunTypeCheck_FilteredDiagnostics,
+  Lib_TypeCheck_RunTypeCheck_HasOnlyNoInputsError,
   Lib_TypeCheck_RunTypeCheck_Options,
   Lib_TypeCheck_RunTypeCheck_Parsed,
   Lib_TypeCheck_RunTypeCheck_Program,
@@ -280,8 +281,27 @@ export function runTypeCheck(options: Lib_TypeCheck_RunTypeCheck_Options): Lib_T
   const config: Lib_TypeCheck_RunTypeCheck_Config = configResult['config'];
   const parsed: Lib_TypeCheck_RunTypeCheck_Parsed = parseJsonConfigFileContent(config, sys, dirname(configPath), undefined, configPath);
 
+  // TS18003 ("No inputs were found in config file") is the only error a project with
+  // nothing to check yet reports. "--pass-with-no-inputs" turns exactly that case into a pass.
+  const hasOnlyNoInputsError: Lib_TypeCheck_RunTypeCheck_HasOnlyNoInputsError = parsed.errors.length > 0
+    && parsed.errors.every((error) => error.code === 18003);
+
+  if (options['passWithNoInputs'] === true && hasOnlyNoInputsError === true) {
+    options.printInfo(`No input files were found for "${configPath}". Passing because "--pass-with-no-inputs" is set.`);
+
+    return 0;
+  }
+
   if (parsed.errors.length > 0) {
     printDiagnostics(parsed.errors, options['printError'], options['printInfo']);
+
+    return 1;
+  }
+
+  // "skipLibCheck" hides declaration errors that reach project code, so a config that turns
+  // it on, directly or through "extends", fails before the program is built.
+  if (parsed.options.skipLibCheck === true) {
+    options.printError(`Type check refused. "${configPath}" turns on "skipLibCheck", directly or through a config it extends. Remove "skipLibCheck" from that chain, or set it to false.`);
 
     return 1;
   }

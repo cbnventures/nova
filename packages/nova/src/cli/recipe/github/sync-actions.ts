@@ -1,4 +1,4 @@
-import { shellQuote } from '../../../lib/utility.js';
+import { Runner as ApiGithub } from '../../../api/github.js';
 import { Logger } from '../../../toolkit/index.js';
 import { executeGhCommands } from './gh-commands.js';
 import { ghPrecheck } from './gh-precheck.js';
@@ -11,13 +11,13 @@ import type {
   Cli_Recipe_Github_SyncActions_Runner_Run_IsDryRun,
   Cli_Recipe_Github_SyncActions_Runner_Run_Options,
   Cli_Recipe_Github_SyncActions_Runner_Run_Owner,
-  Cli_Recipe_Github_SyncActions_Runner_Run_PermissionFlags,
+  Cli_Recipe_Github_SyncActions_Runner_Run_PermissionsCommand,
   Cli_Recipe_Github_SyncActions_Runner_Run_Precheck,
   Cli_Recipe_Github_SyncActions_Runner_Run_Repo,
   Cli_Recipe_Github_SyncActions_Runner_Run_Returns,
-  Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionFlags,
   Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActions,
-  Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowFlags,
+  Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionsCommand,
+  Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowCommand,
 } from '../../../types/cli/recipe/github/sync-actions.d.ts';
 
 /**
@@ -88,74 +88,28 @@ export class Runner {
     }
 
     const commands: Cli_Recipe_Github_SyncActions_Runner_Run_Commands = [];
-    const permissionFlags: Cli_Recipe_Github_SyncActions_Runner_Run_PermissionFlags = [];
+    const permissionsCommand: Cli_Recipe_Github_SyncActions_Runner_Run_PermissionsCommand = ApiGithub.buildActionsPermissionsCommand(owner, repo, actions);
 
-    if (actions['enabled'] !== undefined) {
-      permissionFlags.push(`-F enabled=${actions['enabled']}`);
-    }
-
-    if (actions['allowedActions'] === 'all') {
-      permissionFlags.push('-f allowed_actions=all');
-    }
-
-    if (actions['allowedActions'] === 'local-only') {
-      permissionFlags.push('-f allowed_actions=local_only');
-    }
-
-    if (actions['allowedActions'] === 'selected') {
-      permissionFlags.push('-f allowed_actions=selected');
-    }
-
-    if (actions['shaPinningRequired'] !== undefined) {
-      permissionFlags.push(`-F sha_pinning_required=${actions['shaPinningRequired']}`);
-    }
-
-    if (permissionFlags.length > 0) {
-      commands.push(`gh api --method PUT repos/${owner}/${repo}/actions/permissions ${permissionFlags.join(' ')} --silent`);
+    if (permissionsCommand !== undefined) {
+      commands.push(permissionsCommand);
     }
 
     if (selectedActions !== undefined) {
-      const selectedActionFlags: Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionFlags = [];
+      const selectedActionsCommand: Cli_Recipe_Github_SyncActions_Runner_Run_SelectedActionsCommand = ApiGithub.buildSelectedActionsCommand(owner, repo, selectedActions);
 
-      if (selectedActions['githubOwned'] !== undefined) {
-        selectedActionFlags.push(`-F github_owned_allowed=${selectedActions['githubOwned']}`);
-      }
-
-      if (selectedActions['verified'] !== undefined) {
-        selectedActionFlags.push(`-F verified_allowed=${selectedActions['verified']}`);
-      }
-
-      if (selectedActions['patterns'] !== undefined) {
-        if (selectedActions['patterns'].length === 0) {
-          selectedActionFlags.push(`-F ${shellQuote('patterns_allowed[]')}`);
-        }
-
-        for (const pattern of selectedActions['patterns']) {
-          selectedActionFlags.push(`-f ${shellQuote(`patterns_allowed[]=${pattern}`)}`);
-        }
-      }
-
-      if (selectedActionFlags.length > 0) {
-        commands.push(`gh api --method PUT repos/${owner}/${repo}/actions/permissions/selected-actions ${selectedActionFlags.join(' ')} --silent`);
+      if (selectedActionsCommand !== undefined) {
+        commands.push(selectedActionsCommand);
       }
     }
 
-    const workflowFlags: Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowFlags = [];
+    const workflowCommand: Cli_Recipe_Github_SyncActions_Runner_Run_WorkflowCommand = ApiGithub.buildWorkflowPermissionsCommand(owner, repo, actions);
 
-    if (actions['defaultWorkflowPermissions'] !== undefined) {
-      workflowFlags.push(`-f default_workflow_permissions=${actions['defaultWorkflowPermissions']}`);
-    }
-
-    if (actions['canApprovePullRequestReviews'] !== undefined) {
-      workflowFlags.push(`-F can_approve_pull_request_reviews=${actions['canApprovePullRequestReviews']}`);
-    }
-
-    if (workflowFlags.length > 0) {
-      commands.push(`gh api --method PUT repos/${owner}/${repo}/actions/permissions/workflow ${workflowFlags.join(' ')} --silent`);
+    if (workflowCommand !== undefined) {
+      commands.push(workflowCommand);
     }
 
     if (actions['artifactRetentionDays'] !== undefined) {
-      commands.push(`gh api --method PUT repos/${owner}/${repo}/actions/permissions/artifact-and-log-retention -F days=${actions['artifactRetentionDays']} --silent`);
+      commands.push(ApiGithub.buildArtifactRetentionCommand(owner, repo, actions['artifactRetentionDays']));
     }
 
     if (commands.length === 0) {

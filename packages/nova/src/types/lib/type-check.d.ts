@@ -117,10 +117,13 @@ export type Lib_TypeCheck_RunTypeCheck_Options_PrintError = (message: string) =>
 
 export type Lib_TypeCheck_RunTypeCheck_Options_PrintInfo = (message: string) => void;
 
+export type Lib_TypeCheck_RunTypeCheck_Options_PassWithNoInputs = boolean;
+
 export type Lib_TypeCheck_RunTypeCheck_Options = {
   project: Lib_TypeCheck_RunTypeCheck_Options_Project;
   printError: Lib_TypeCheck_RunTypeCheck_Options_PrintError;
   printInfo: Lib_TypeCheck_RunTypeCheck_Options_PrintInfo;
+  passWithNoInputs?: Lib_TypeCheck_RunTypeCheck_Options_PassWithNoInputs;
 };
 
 export type Lib_TypeCheck_RunTypeCheck_Returns = 0 | 1;
@@ -141,6 +144,8 @@ export type Lib_TypeCheck_RunTypeCheck_ConfigResult = {
 export type Lib_TypeCheck_RunTypeCheck_Config = unknown;
 
 export type Lib_TypeCheck_RunTypeCheck_Parsed = ParsedCommandLine;
+
+export type Lib_TypeCheck_RunTypeCheck_HasOnlyNoInputsError = boolean;
 
 export type Lib_TypeCheck_RunTypeCheck_Program = Program;
 

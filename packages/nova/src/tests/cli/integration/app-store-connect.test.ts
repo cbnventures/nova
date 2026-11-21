@@ -16,6 +16,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setImmediate as setImmediatePromise } from 'node:timers/promises';
+import { stripVTControlCharacters } from 'node:util';
 
 import {
   afterAll,
@@ -41,6 +42,8 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsOnly416x496ForTheAppleWatchSeries10Target_InvalidWatchImage,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsSkipImageChecks_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsSkipImageChecks_InvalidImage,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_CreativeRoot,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AmbiguousCreateDoesNotDuplicateAReservation_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AmbiguousCreateDoesNotDuplicateAReservation_Image,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AmbiguousCreateDoesNotDuplicateAReservation_Screenshot,
@@ -63,6 +66,7 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_KeepsPollingWhenAnUploadJoinsAScreenshotSetLate_FirstUpload,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_KeepsPollingWhenAnUploadJoinsAScreenshotSetLate_Results,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_KeepsPollingWhenAnUploadJoinsAScreenshotSetLate_SecondUpload,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_LimitsScreenshotsToTheSelectedTargets_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ModelsFailedArchivedAndIndefinitelyProcessingAssetImages_Client,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ModelsFailedArchivedAndIndefinitelyProcessingAssetImages_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_Options,
@@ -112,6 +116,19 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlacementListsRequireIncludeForRelationshipData_WithoutInclude,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlacementListsRequireIncludeForRelationshipData_WithoutIncludePlacement,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlacementListsRequireIncludeForRelationshipData_WithoutIncludeRelationships,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutChunks,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutText,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_MetadataDirectory,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutChunks,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutText,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Images,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutChunks,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutText,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_MetadataDirectory,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrivateKey,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ProjectRoot,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReconcilesOne502AfterLocalizationScreenshotSetAndAssetImageCreates_Client,
@@ -124,6 +141,10 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReconcilesTransportFailuresAfterLocalizationScreenshotSetAndAssetImageCreates_Image,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReconcilesTransportFailuresAfterLocalizationScreenshotSetAndAssetImageCreates_Localization,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReconcilesTransportFailuresAfterLocalizationScreenshotSetAndAssetImageCreates_Set,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_CreativeRoot,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure_ReceivedError,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsInvalidImagesBeforeAnyRequest_AlphaImage,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsInvalidImagesBeforeAnyRequest_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsInvalidImagesBeforeAnyRequest_ValidateFailure,
@@ -131,11 +152,18 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsInvalidImagesBeforeAnyRequest_WrongSizeImage,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsJPEGDataWithoutACompleteEndOfImageMarkerBeforeAnyRequest_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsJPEGDataWithoutACompleteEndOfImageMarkerBeforeAnyRequest_TruncatedJpeg,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_MetadataDirectory,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure_ReceivedError,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsPlanModeCombinedWithDryRun_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsTruncatedPNGDataBeforeAnyRequest_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsTruncatedPNGDataBeforeAnyRequest_TruncatedPngs,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsFreshPlacementCountsAfterAnOrderingFailure_Images,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsFreshPlacementCountsAfterAnOrderingFailure_Validate,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsFreshPlacementCountsAfterAnOrderingFailure_Validate_ReceivedError,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_MetadataDirectory,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ResumesByChecksumInExactOrder_Fake,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ResumesByChecksumInExactOrder_Images,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RetriesTheIdempotentPlacementOrderingRequestAfterOne502_Fake,
@@ -145,6 +173,8 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_SandboxRoot,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ScreenshotsRoot,
   Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_TemporaryBase,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_Fake,
+  Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_MetadataDirectory,
   Tests_Cli_Integration_AppStoreConnect_CreateJpeg_Frame,
   Tests_Cli_Integration_AppStoreConnect_CreateJpeg_Height,
   Tests_Cli_Integration_AppStoreConnect_CreateJpeg_Returns,
@@ -221,6 +251,8 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationCreateData,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationIndex,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationLocale,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateAttributes,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateData,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_MalformedScreenshotListing,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_MatchingPlacements,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_MaximumPlacementCount,
@@ -284,16 +316,23 @@ import type {
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_ServerFailureAfterLocalizationCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_ServerFailureAfterScreenshotSetCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_State,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredAttributes,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredPlacementAttributes,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredValue,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TransportFailureAfterAssetImageCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TransportFailureAfterLocalizationCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TransportFailureAfterPlacementCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TransportFailureAfterScreenshotCreate,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TransportFailureAfterScreenshotSetCreate,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TrimLocalizationValues,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalization,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalizationId,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedValue,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UploadBody,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UploadedBytes,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UploadId,
   Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Url,
+  Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_VersionAttributes,
   Tests_Cli_Integration_AppStoreConnect_JsonResponse_Data,
   Tests_Cli_Integration_AppStoreConnect_JsonResponse_Returns,
   Tests_Cli_Integration_AppStoreConnect_JsonResponse_Status,
@@ -597,6 +636,8 @@ function installAppStoreConnectFake(options: Tests_Cli_Integration_AppStoreConne
     images: [...initialImages],
     localizationCreateCount: 0,
     localizations: [...initialLocalizations],
+    localizationUpdateCount: 0,
+    localizationUpdateFields: [],
     maximumPlacementCount: initialPlacements.length,
     maximumScreenshotCount: initialScreenshots.length,
     minimumPlacementCount: initialPlacements.length,
@@ -639,6 +680,12 @@ function installAppStoreConnectFake(options: Tests_Cli_Integration_AppStoreConne
   let orderingFailureOnce: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_OrderingFailureOnce = options['orderingFailureOnce'] === true;
   const orderingPermanentFailure: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_OrderingPermanentFailure = options['orderingPermanentFailure'] === true;
   let placementAppearsBeforeFinalListing: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_PlacementAppearsBeforeFinalListing = options['placementAppearsBeforeFinalListing'] === true;
+  const trimLocalizationValues: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_TrimLocalizationValues = options['trimLocalizationValues'] === true;
+  const versionAttributes: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_VersionAttributes = options['versionAttributes'] ?? {
+    appStoreState: 'PREPARE_FOR_SUBMISSION',
+    platform: 'IOS',
+    versionString: '1.2.3',
+  };
 
   vi.spyOn(global, 'fetch').mockImplementation(async (input, requestOptions = {}) => {
     const url: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_Url = new URL(String(input));
@@ -698,11 +745,7 @@ function installAppStoreConnectFake(options: Tests_Cli_Integration_AppStoreConne
     if (method === 'GET' && path === '/v1/apps/app-1/appStoreVersions') {
       return jsonResponse({
         data: [{
-          attributes: {
-            appStoreState: 'PREPARE_FOR_SUBMISSION',
-            platform: 'IOS',
-            versionString: '1.2.3',
-          },
+          attributes: versionAttributes,
           id: 'version-1',
         }],
         links: {},
@@ -746,6 +789,50 @@ function installAppStoreConnectFake(options: Tests_Cli_Integration_AppStoreConne
       }
 
       return jsonResponse({ data: createdLocalization }, 201);
+    }
+
+    if (method === 'PATCH' && path.startsWith('/v1/appStoreVersionLocalizations/') === true) {
+      const updatedLocalizationId: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalizationId = path.split('/').at(-1);
+      const updatedLocalization: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedLocalization = state['localizations'].find((localization) => localization['id'] === updatedLocalizationId);
+
+      if (updatedLocalization === undefined) {
+        return new Response('Localization not found.', { status: 404 });
+      }
+
+      const localizationUpdateData: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateData = requestData(requestOptions);
+      const localizationUpdateAttributes: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_LocalizationUpdateAttributes = requireObject(localizationUpdateData['attributes'], 'Localization update attributes');
+      const storedAttributes: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredAttributes = { ...requireObject(updatedLocalization['attributes'], 'Stored localization attributes') };
+
+      for (const field of Object.keys(localizationUpdateAttributes)) {
+        const updatedValue: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_UpdatedValue = localizationUpdateAttributes[field];
+
+        if (
+          (
+            field === 'keywords'
+            && typeof updatedValue === 'string'
+            && Buffer.byteLength(updatedValue, 'utf-8') > 100
+          )
+          || (
+            field === 'promotionalText'
+            && typeof updatedValue === 'string'
+            && [...updatedValue].length > 170
+          )
+        ) {
+          return new Response(`ENTITY_ERROR.ATTRIBUTE.INVALID.TOO_LONG: ${field}`, { status: 409 });
+        }
+
+        const storedValue: Tests_Cli_Integration_AppStoreConnect_InstallAppStoreConnectFake_StoredValue = (trimLocalizationValues === true && typeof updatedValue === 'string') ? updatedValue.trim() : updatedValue;
+
+        Reflect.set(storedAttributes, field, storedValue);
+      }
+
+      Reflect.set(updatedLocalization, 'attributes', storedAttributes);
+
+      Reflect.set(state, 'localizationUpdateCount', state['localizationUpdateCount'] + 1);
+
+      state['localizationUpdateFields'].push(Object.keys(localizationUpdateAttributes).sort());
+
+      return jsonResponse({ data: updatedLocalization });
     }
 
     if (method === 'GET' && path === '/v1/appStoreVersionLocalizations/localization-1/appScreenshotSets') {
@@ -1660,7 +1747,7 @@ describe.sequential('CliAppStoreConnect.screenshots', async () => {
   });
 
   it('creative assets use one placement slot', async () => {
-    const image: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_CreativeAssetsUseOnePlacementSlot_Image = createPng(1200, 600, 1);
+    const image: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_CreativeAssetsUseOnePlacementSlot_Image = createPng(3840, 1646, 1);
 
     await prepareScreenshotFiles(join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios', 'en-US', 'product-page-header'), [image]);
 
@@ -1819,7 +1906,7 @@ describe.sequential('CliAppStoreConnect.screenshots', async () => {
   });
 
   it('P4 reconciles a transport reset after a creative placement is created', async () => {
-    await prepareScreenshotFiles(join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios', 'en-US', 'product-page-header'), [createPng(1200, 600, 1)]);
+    await prepareScreenshotFiles(join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios', 'en-US', 'product-page-header'), [createPng(3840, 1646, 1)]);
 
     const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_P4ReconcilesATransportResetAfterACreativePlacementIsCreated_Fake = installAppStoreConnectFake({
       initialPlacements: [{
@@ -2322,6 +2409,324 @@ describe.sequential('CliAppStoreConnect.screenshots', async () => {
     await rejects(runWithTimers(client.uploadAssetLibraryImage('library-1', 'CREATIVE_ASSETS', 'Processing image', 'processing.png', Buffer.from('processing'))), (error) => String(error).includes('did not finish'));
 
     strictEqual(fake['assetImageCreateCount'], 3);
+
+    return;
+  });
+
+  it('updates only changed metadata fields and verifies stored values', async () => {
+    const metadataDirectory: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_MetadataDirectory = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios');
+
+    await mkdir(metadataDirectory, { recursive: true });
+
+    await writeFile(join(metadataDirectory, 'en-US.json'), `${JSON.stringify({
+      description: 'New description',
+      keywords: 'vpn,wireguard',
+      promotionalText: null,
+    }, null, 2)}\n`, 'utf-8');
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_UpdatesOnlyChangedMetadataFieldsAndVerifiesStoredValues_Fake = installAppStoreConnectFake({
+      initialLocalizations: [{
+        attributes: {
+          description: 'Old description',
+          keywords: 'vpn,wireguard',
+          locale: 'en-US',
+        },
+        id: 'localization-1',
+        type: 'appStoreVersionLocalizations',
+      }],
+    });
+
+    await CliAppStoreConnect.metadata(options);
+
+    deepStrictEqual(fake['localizationUpdateFields'], [['description']]);
+
+    await CliAppStoreConnect.metadata(options);
+
+    strictEqual(fake['localizationUpdateCount'], 1);
+
+    return;
+  });
+
+  it('rejects metadata outside Apple field limits before any request', async () => {
+    const metadataDirectory: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_MetadataDirectory = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios');
+
+    await mkdir(metadataDirectory, { recursive: true });
+
+    await writeFile(join(metadataDirectory, 'en-US.json'), `${JSON.stringify({
+      keywords: `${'é'.repeat(50)},vpn,,VPN`,
+      promotionalText: 'x'.repeat(171),
+      supportUrl: 'support.example.com',
+    }, null, 2)}\n`, 'utf-8');
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_Fake = installAppStoreConnectFake();
+    const validateFailure: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure = (error) => {
+      const receivedError: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsMetadataOutsideAppleFieldLimitsBeforeAnyRequest_ValidateFailure_ReceivedError = String(error);
+
+      strictEqual(receivedError.includes('keywords use 109 bytes; Apple allows 100.'), true);
+      strictEqual(receivedError.includes('keywords contain an empty entry.'), true);
+      strictEqual(receivedError.includes('keywords repeat "VPN".'), true);
+      strictEqual(receivedError.includes('promotionalText has 171 characters; Apple allows 170.'), true);
+      strictEqual(receivedError.includes('supportUrl must be a full http or https URL.'), true);
+
+      return true;
+    };
+
+    await rejects(CliAppStoreConnect.metadata(options), validateFailure);
+
+    strictEqual(fake['requestCount'], 0);
+
+    return;
+  });
+
+  it('reports metadata values that App Store Connect stored differently', async () => {
+    const metadataDirectory: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_MetadataDirectory = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios');
+
+    await mkdir(metadataDirectory, { recursive: true });
+
+    await writeFile(join(metadataDirectory, 'en-US.json'), `${JSON.stringify({ description: 'Trailing space ' }, null, 2)}\n`, 'utf-8');
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_ReportsMetadataValuesThatAppStoreConnectStoredDifferently_Fake = installAppStoreConnectFake({ trimLocalizationValues: true });
+
+    await rejects(CliAppStoreConnect.metadata(options), (error) => error instanceof AggregateError && String(error.errors[0]).includes('returned different description values after updating ios/en-US'));
+
+    strictEqual(fake['localizationUpdateCount'], 1);
+
+    return;
+  });
+
+  it('prefers appVersionState over the deprecated appStoreState', async () => {
+    const metadataDirectory: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_MetadataDirectory = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios');
+
+    await mkdir(metadataDirectory, { recursive: true });
+
+    await writeFile(join(metadataDirectory, 'en-US.json'), `${JSON.stringify({ description: 'Locked description' }, null, 2)}\n`, 'utf-8');
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PrefersAppVersionStateOverTheDeprecatedAppStoreState_Fake = installAppStoreConnectFake({
+      versionAttributes: {
+        appStoreState: 'PREPARE_FOR_SUBMISSION',
+        appVersionState: 'READY_FOR_DISTRIBUTION',
+        platform: 'IOS',
+        versionString: '1.2.3',
+      },
+    });
+
+    await rejects(CliAppStoreConnect.metadata(options), (error) => error instanceof AggregateError && String(error.errors[0]).includes('not editable in state READY_FOR_DISTRIBUTION'));
+
+    strictEqual(fake['localizationUpdateCount'], 0);
+
+    return;
+  });
+
+  it('limits screenshots to the selected targets', async () => {
+    await prepareScreenshotFiles(join(screenshotsRoot, 'ios', 'en-US', 'iphone'), [createPng(1260, 2736, 1)]);
+
+    await prepareScreenshotFiles(join(screenshotsRoot, 'ios', 'en-US', 'ipad'), [createPng(100, 200, 2)]);
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_LimitsScreenshotsToTheSelectedTargets_Fake = installAppStoreConnectFake();
+
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+
+    await runWithTimers(CliAppStoreConnect.screenshots({
+      ...options,
+      targets: 'iphone',
+    }));
+
+    strictEqual(fake['screenshots'].length, 1);
+    strictEqual(fake['screenshotSetCreateCount'], 0);
+
+    return;
+  });
+
+  it('rejects creative assets outside Apple specifications before any request', async () => {
+    const creativeRoot: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_CreativeRoot = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios');
+
+    await prepareScreenshotFiles(join(creativeRoot, 'en-US', 'product-page-header'), [createPng(3840, 2560, 1)]);
+
+    await prepareScreenshotFiles(join(creativeRoot, 'en-US', 'search-results'), [createPng(1920, 1300, 2)]);
+
+    await prepareScreenshotFiles(join(creativeRoot, 'fr-FR', 'search-results'), [createPng(3840, 2560, 3, 6)]);
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_Fake = installAppStoreConnectFake();
+    const validateFailure: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure = (error) => {
+      const receivedError: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsCreativeAssetsOutsideAppleSpecificationsBeforeAnyRequest_ValidateFailure_ReceivedError = String(error);
+
+      strictEqual(receivedError.includes('ios/en-US/product-page-header/01-screenshot.png: actual 3840x2560 PNG; accepted opaque PNG at 3840x1646.'), true);
+      strictEqual(receivedError.includes('ios/en-US/search-results/01-screenshot.png: actual 1920x1300 PNG'), true);
+      strictEqual(receivedError.includes('ios/fr-FR/search-results/01-screenshot.png: actual 3840x2560 PNG with alpha'), true);
+
+      return true;
+    };
+
+    await rejects(CliAppStoreConnect.creativeAssets(options), validateFailure);
+
+    strictEqual(fake['requestCount'], 0);
+
+    return;
+  });
+
+  it('accepts the documented search-results range for the selected creative target', async () => {
+    const creativeRoot: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_CreativeRoot = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios', 'en-US');
+
+    await prepareScreenshotFiles(join(creativeRoot, 'product-page-header'), [createJpeg(3840, 1646)]);
+
+    await prepareScreenshotFiles(join(creativeRoot, 'search-results'), [createJpeg(1920, 1280)]);
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_AcceptsTheDocumentedSearchResultsRangeForTheSelectedCreativeTarget_Fake = installAppStoreConnectFake();
+
+    await rejects(CliAppStoreConnect.creativeAssets({
+      ...options,
+      dryRun: true,
+    }), (error) => String(error).includes('actual 3840x1646 JPEG; accepted opaque PNG at 3840x1646.'));
+
+    await CliAppStoreConnect.creativeAssets({
+      ...options,
+      dryRun: true,
+      targets: 'search-results',
+    });
+
+    strictEqual(fake['requestCount'], 0);
+
+    return;
+  });
+
+  it('plan mode reports metadata field differences without write requests', async () => {
+    const metadataDirectory: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_MetadataDirectory = join(projectRoot, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios');
+
+    await mkdir(metadataDirectory, { recursive: true });
+
+    await writeFile(join(metadataDirectory, 'en-US.json'), `${JSON.stringify({
+      description: 'New description',
+      keywords: 'vpn,wireguard',
+    }, null, 2)}\n`, 'utf-8');
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_Fake = installAppStoreConnectFake({
+      initialLocalizations: [{
+        attributes: {
+          description: 'Old description',
+          keywords: 'vpn,wireguard',
+          locale: 'en-US',
+        },
+        id: 'localization-1',
+        type: 'appStoreVersionLocalizations',
+      }],
+    });
+    const stdoutChunks: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutChunks = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      stdoutChunks.push(String(chunk));
+
+      return true;
+    });
+
+    await CliAppStoreConnect.metadata({
+      ...options,
+      plan: true,
+    });
+
+    const stdoutText: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsMetadataFieldDifferencesWithoutWriteRequests_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
+
+    deepStrictEqual(fake['events'].filter((event) => event.startsWith('GET:') === false), []);
+    strictEqual(fake['localizationUpdateCount'], 0);
+    strictEqual(stdoutText.includes('ios/en-US description: "Old description" -> "New description"'), true);
+    strictEqual(stdoutText.includes('ios/en-US keywords:'), false);
+    strictEqual(stdoutText.includes('1 of 1 target(s) would change; nothing was changed'), true);
+
+    return;
+  });
+
+  it('plan mode reports screenshot deletes, uploads, keeps, and order without write requests', async () => {
+    const images: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Images = [...new Array(3).keys()].map((index) => createPng(1260, 2736, index + 1));
+
+    await prepareScreenshotFiles(join(screenshotsRoot, 'ios', 'en-US', 'iphone'), images);
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_Fake = installAppStoreConnectFake({
+      initialScreenshots: [
+        createScreenshotResource('old-1', 'old-1.png', createPng(1260, 2736, 100)),
+        createScreenshotResource('old-2', 'old-2.png', images[0] ?? Buffer.alloc(0)),
+        createScreenshotResource('old-3', 'old-3.png', createPng(1260, 2736, 101), 'UPLOAD_COMPLETE'),
+      ],
+    });
+    const stdoutChunks: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutChunks = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      stdoutChunks.push(String(chunk));
+
+      return true;
+    });
+
+    await CliAppStoreConnect.screenshots({
+      ...options,
+      plan: true,
+    });
+
+    const stdoutText: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsScreenshotDeletesUploadsKeepsAndOrderWithoutWriteRequests_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
+
+    deepStrictEqual(fake['events'].filter((event) => event.startsWith('GET:') === false), []);
+    strictEqual(fake['screenshotCreateCount'], 0);
+    strictEqual(fake['screenshots'].length, 3);
+    strictEqual(stdoutText.includes('delete 2, upload 2, keep 1; order: 01-screenshot.png (keep), 02-screenshot.png (upload), 03-screenshot.png (upload)'), true);
+
+    return;
+  });
+
+  it('plan mode reports creative asset replacements without write requests', async () => {
+    await prepareScreenshotFiles(join(projectRoot, 'assets', 'app-store-connect', 'apple', 'creative-assets', 'ios', 'en-US', 'product-page-header'), [createPng(3840, 1646, 1)]);
+
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_Fake = installAppStoreConnectFake({
+      initialPlacements: [{
+        ...createPlacementResource('old-placement', 'old-image'),
+        attributes: {
+          placementGroup: 'DEFAULT_PROFILE',
+          placementType: 'PRODUCT_PAGE_HEADER_ASSET',
+        },
+      }],
+    });
+    const stdoutChunks: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutChunks = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      stdoutChunks.push(String(chunk));
+
+      return true;
+    });
+
+    await CliAppStoreConnect.creativeAssets({
+      ...options,
+      plan: true,
+    });
+
+    const stdoutText: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_PlanModeReportsCreativeAssetReplacementsWithoutWriteRequests_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
+
+    deepStrictEqual(fake['events'].filter((event) => event.startsWith('GET:') === false), []);
+    strictEqual(fake['assetImageCreateCount'], 0);
+    strictEqual(fake['placementCreateCount'], 0);
+    strictEqual(fake['placements'].length, 1);
+    strictEqual(stdoutText.includes('delete 1, upload 1, keep 0; order: 01-screenshot.png (upload)'), true);
+
+    return;
+  });
+
+  it('rejects plan mode combined with dry run', async () => {
+    const fake: Tests_Cli_Integration_AppStoreConnect_CliAppStoreConnectScreenshots_RejectsPlanModeCombinedWithDryRun_Fake = installAppStoreConnectFake();
+
+    await rejects(CliAppStoreConnect.metadata({
+      ...options,
+      dryRun: true,
+      plan: true,
+    }), (error) => String(error).includes('--plan cannot be combined with --dry-run.'));
+
+    await rejects(CliAppStoreConnect.screenshots({
+      ...options,
+      dryRun: true,
+      plan: true,
+    }), (error) => String(error).includes('--plan cannot be combined with --dry-run.'));
+
+    await rejects(CliAppStoreConnect.creativeAssets({
+      ...options,
+      dryRun: true,
+      plan: true,
+    }), (error) => String(error).includes('--plan cannot be combined with --dry-run.'));
+
+    strictEqual(fake['requestCount'], 0);
 
     return;
   });

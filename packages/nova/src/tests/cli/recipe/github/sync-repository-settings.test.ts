@@ -289,6 +289,196 @@ describe('sync repository settings', () => {
     return;
   });
 
+  it('skips a private repository on a free organization plan without failing', async () => {
+    vi.spyOn(utility, 'executeShell').mockImplementation(async (command) => ({
+      textOut: (command.startsWith('gh api repos/acme/widget --jq') === true) ? [
+        'true',
+        'Organization',
+      ].join('\n') : 'free',
+      textError: '',
+      code: 0,
+    }));
+
+    vi.mocked(ghPrecheck).mockResolvedValue({
+      workingFile: {},
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+        rulesets: {
+          defaultBranch: {
+            blockDeletions: true,
+          },
+        },
+      },
+      owner: 'acme',
+      repo: 'widget',
+      isDryRun: false,
+    });
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation(() => true);
+
+    await CliRecipeGithubSyncRulesets.run({});
+
+    expect(utility['executeShell']).toHaveBeenNthCalledWith(1, 'gh api repos/acme/widget --jq ".private, .owner.type"');
+
+    expect(utility['executeShell']).toHaveBeenNthCalledWith(2, 'gh api orgs/acme --jq ".plan.name // \\"\\""');
+
+    expect(utility['executeShell']).toHaveBeenCalledTimes(2);
+
+    expect(executeGhCommands).not.toHaveBeenCalled();
+
+    expect(process['stderr']['write']).toHaveBeenCalledWith(expect.stringContaining('acme/widget is private, and its GitHub plan cannot use rulesets'));
+
+    expect(process.exitCode).toBeUndefined();
+
+    return;
+  });
+
+  it('skips a private repository when GitHub rejects the ruleset lookup for its plan', async () => {
+    vi.spyOn(utility, 'executeShell').mockImplementation(async (command) => {
+      if (command.startsWith('gh api repos/acme/widget --jq') === true) {
+        return {
+          textOut: [
+            'true',
+            'User',
+          ].join('\n'),
+          textError: '',
+          code: 0,
+        };
+      }
+
+      if (command.startsWith('gh api user') === true) {
+        return {
+          textOut: '',
+          textError: '',
+          code: 0,
+        };
+      }
+
+      return {
+        textOut: '',
+        textError: 'gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)',
+        code: 1,
+      };
+    });
+
+    vi.mocked(ghPrecheck).mockResolvedValue({
+      workingFile: {},
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+        rulesets: {
+          defaultBranch: {
+            blockDeletions: true,
+          },
+        },
+      },
+      owner: 'acme',
+      repo: 'widget',
+      isDryRun: true,
+    });
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation(() => true);
+
+    await CliRecipeGithubSyncRulesets.run({ dryRun: true });
+
+    expect(utility['executeShell']).toHaveBeenNthCalledWith(2, 'gh api user --jq "if .login == \\"acme\\" then .plan.name // \\"\\" else \\"\\" end"');
+
+    expect(utility['executeShell']).toHaveBeenNthCalledWith(3, expect.stringContaining('gh api repos/acme/widget/rulesets --paginate'));
+
+    expect(executeGhCommands).not.toHaveBeenCalled();
+
+    expect(process.exitCode).toBeUndefined();
+
+    return;
+  });
+
+  it('syncs a private repository whose plan supports rulesets', async () => {
+    vi.spyOn(utility, 'executeShell').mockImplementation(async (command) => {
+      if (command.startsWith('gh api repos/acme/widget --jq') === true) {
+        return {
+          textOut: [
+            'true',
+            'Organization',
+          ].join('\n'),
+          textError: '',
+          code: 0,
+        };
+      }
+
+      return {
+        textOut: (command.startsWith('gh api orgs/acme') === true) ? 'team' : '',
+        textError: '',
+        code: 0,
+      };
+    });
+
+    vi.mocked(ghPrecheck).mockResolvedValue({
+      workingFile: {},
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+        rulesets: {
+          defaultBranch: {
+            blockDeletions: true,
+          },
+        },
+      },
+      owner: 'acme',
+      repo: 'widget',
+      isDryRun: false,
+    });
+
+    await CliRecipeGithubSyncRulesets.run({});
+
+    expect(executeGhCommands).toHaveBeenCalledWith(['gh api --method POST repos/acme/widget/rulesets -f "name=Nova default branch" -f target=branch -f enforcement=active -f "conditions[ref_name][include][]=~DEFAULT_BRANCH" -F "conditions[ref_name][exclude][]" -f "rules[][type]=deletion" --silent'], 'sync-rulesets', false);
+
+    expect(process.exitCode).toBeUndefined();
+
+    return;
+  });
+
+  it('skips the plan lookup for a public repository and still fails on other lookup errors', async () => {
+    vi.spyOn(utility, 'executeShell').mockImplementation(async (command) => ({
+      textOut: (command.startsWith('gh api repos/acme/widget --jq') === true) ? [
+        'false',
+        'Organization',
+      ].join('\n') : '',
+      textError: (command.includes('/rulesets') === true) ? 'gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)' : '',
+      code: (command.includes('/rulesets') === true) ? 1 : 0,
+    }));
+
+    vi.mocked(ghPrecheck).mockResolvedValue({
+      workingFile: {},
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+        rulesets: {
+          defaultBranch: {
+            blockDeletions: true,
+          },
+        },
+      },
+      owner: 'acme',
+      repo: 'widget',
+      isDryRun: false,
+    });
+
+    vi.spyOn(process['stderr'], 'write').mockImplementation(() => true);
+
+    await CliRecipeGithubSyncRulesets.run({});
+
+    expect(utility['executeShell']).toHaveBeenCalledTimes(2);
+
+    expect(utility['executeShell']).not.toHaveBeenCalledWith(expect.stringContaining('orgs/acme'));
+
+    expect(executeGhCommands).not.toHaveBeenCalled();
+
+    expect(process.exitCode).toBe(1);
+
+    return;
+  });
+
   it('rejects dependent settings that cannot be valid on GitHub', async () => {
     vi.mocked(ghPrecheck)
       .mockResolvedValueOnce({

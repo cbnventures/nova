@@ -2,6 +2,7 @@ import {
   dxCodeStyle,
   dxIgnore,
   langJavascript,
+  langTypescript,
   novaRules,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
@@ -10,7 +11,8 @@ import {
  * ESLint Configuration.
  *
  * Composes nova preset configs with project-local rule options and applies
- * the full nova custom rule set across the repo's bootstrap scripts.
+ * the full nova custom rule set across the repo's bootstrap scripts and the
+ * TypeScript root config and test files.
  *
  * @since 0.15.0
  */
@@ -18,6 +20,7 @@ export default [
   ...dxIgnore,
   ...dxCodeStyle,
   ...langJavascript,
+  ...langTypescript,
   ...runtimeNode,
   {
     name: 'custom-ignores',
@@ -28,11 +31,16 @@ export default [
   },
   {
     name: 'custom-tsconfig',
+    files: [
+      '**/*.cts',
+      '**/*.mts',
+      '**/*.ts',
+      '**/*.tsx',
+    ],
     languageOptions: {
       parserOptions: {
         project: [
           './tsconfig.config.json',
-          './tsconfig.scripts.json',
           './tsconfig.tests.json',
         ],
       },

@@ -1,0 +1,106 @@
+---
+id: "sync-identity"
+title: "Sync Identity"
+description: "Keep the name, description, and author of a GitHub Action action.yml in step with nova.config.json, editing only those three values in place."
+keywords:
+  - "nova"
+  - "sync-identity"
+  - "github action"
+  - "action.yml"
+  - "marketplace"
+tags:
+  - "cli"
+  - "sync-identity"
+  - "recipe"
+  - "github-action"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync the **name**, **description**, and **author** of a GitHub Action `action.yml` from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-identity` recipe keeps the three identity fields of an action manifest current. The GitHub Action scaffold runs the same code on the manifest it creates, so a generated `action.yml` and a synced one always carry the same values.
+
+Only the three top-level values are rewritten. Their quote style is kept, and every other byte of the file, including comments, key order, `branding`, `inputs`, `outputs`, and `runs`, is left unchanged.
+
+## Why Use This Command?
+
+1. Keeps the GitHub Marketplace listing in step with the project title, description, and author.
+2. Checks the description against the Marketplace limit before anything is written.
+3. Edits values in place, so hand-written inputs, outputs, and comments are never reformatted.
+
+## Requirements
+
+- **An action manifest** — An `action.yml` or `action.yaml` file at the root of a configured workspace, usually the project root `./`.
+- **An owning workspace** — The manifest's `runs.main` entry point must point inside a configured workspace, such as `./packages/my-action/build/index.js`. That workspace supplies the title and the description override.
+- **Project metadata** — `project.description.short` or the workspace's `githubAction.description`, and an entity with the `author` role and a `name`.
+
+## Behavior
+
+The recipe visits every configured workspace and handles each manifest on its own.
+
+- **Name** — Set to the owning workspace's title, built from its folder name the same way the scaffold builds `[__WORKSPACE_TITLE__]`. For example, `./packages/lock-inactive-threads` becomes `Lock Inactive Threads`.
+- **Description** — Set to `workspaces["<path>"].githubAction.description`, or `project.description.short` when that override is empty. The GitHub Marketplace allows at most 125 characters; a longer value stops this manifest with an error and nothing is written. See [Description Limits](/docs/quickstart/nova-config#description-limits).
+- **Author** — Set to the `name` of the first entity with the `author` role, the same source [`package-json sync-ownership`](/docs/cli/recipes/package-json/sync-ownership) uses.
+- **Missing keys** — A missing `name` is added at the top, a missing `description` after `name`, and a missing `author` after `description`, each on its own line.
+- **Values it cannot edit safely** — A block scalar (`|` or `>`) or a non-scalar value is skipped with a warning rather than rewritten.
+- **Not applicable** — Workspaces without an action manifest are skipped. A manifest whose `runs.main` points outside every configured workspace is skipped with a warning.
+- **Idempotent** — When every value already matches, the recipe reports that the identity is up to date and makes no write.
+
+## Settings
+
+Settings are configured in `nova.config.json` under the `recipes.github-action` key. The `sync-identity` recipe is controlled by a single `enabled` toggle:
+
+```json
+{
+  "workspaces": {
+    "./packages/my-action": {
+      "name": "my-action",
+      "role": "package",
+      "policy": "trackable",
+      "githubAction": {
+        "description": "Greets people from a workflow"
+      }
+    }
+  },
+  "recipes": {
+    "github-action": {
+      "sync-identity": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+When the recipe is not enabled, it warns and returns without touching any files.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github-action sync-identity [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github-action sync-identity [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                          |
+|----------------------|------------------------------------------------------|
+| `-d, --dry-run`      | Run without writing any files.                       |
+| `-r, --replace-file` | Replace the original file without creating a backup. |

@@ -1,0 +1,9 @@
+{
+  "name": "transmission-vpn-app-transmission",
+  "version": "2.4.0",
+  "private": true,
+  "scripts": {
+    "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
+    "build:web": "vite build"
+  }
+}

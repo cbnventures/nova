@@ -1,0 +1,69 @@
+import type { Shared_ActiveVitest_Factory } from '../../../shared.d.ts';
+
+/**
+ * Tests - Rules - Vitest - Tooling Coverage Failures - Tooling Coverage Failures - Fails Every Rule On Incomplete Tooling.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Describes = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Its = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Sentinel_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Sentinel_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Sentinel = {
+  describe: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Sentinel_Describe;
+  it: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_Sentinel_It;
+};
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_FixtureRoot = string;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_LintedFactory = Shared_ActiveVitest_Factory | undefined;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_TypeCheckedFactory = Shared_ActiveVitest_Factory | undefined;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsEveryRuleOnIncompleteTooling_SkipLibCheckFactory = Shared_ActiveVitest_Factory | undefined;
+
+/**
+ * Tests - Rules - Vitest - Tooling Coverage Failures - Tooling Coverage Failures - Fails When The Scripts TSConfig Is Missing.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Describes = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Its = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Sentinel_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Sentinel_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Sentinel = {
+  describe: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Sentinel_Describe;
+  it: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_Sentinel_It;
+};
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_FixtureRoot = string;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_FailsWhenTheScriptsTSConfigIsMissing_TypeCheckedFactory = Shared_ActiveVitest_Factory | undefined;
+
+/**
+ * Tests - Rules - Vitest - Tooling Coverage Failures - Tooling Coverage Failures - Passes A Workspace Without Scripts.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Describes = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Its = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Sentinel_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Sentinel_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Sentinel = {
+  describe: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Sentinel_Describe;
+  it: Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_Sentinel_It;
+};
+
+export type Tests_Rules_Vitest_ToolingCoverageFailures_ToolingCoverageFailures_PassesAWorkspaceWithoutScripts_FixtureRoot = string;

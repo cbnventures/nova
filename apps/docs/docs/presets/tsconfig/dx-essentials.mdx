@@ -61,13 +61,12 @@ The preset sets the following `compilerOptions`. Path, layout, and `include` and
 | `preserveWatchOutput`          | `true`     | Keeps prior watch output on screen instead of clearing the console.    |
 | `removeComments`               | `true`     | Strips comments from emitted JavaScript.                               |
 | `resolveJsonModule`            | `true`     | Lets you `import` a `.json` file and read its typed contents.          |
-| `skipLibCheck`                 | `true`     | Skips type checking of declaration files for faster baseline builds.   |
 | `sourceMap`                    | `true`     | Emits a source map for each compiled file.                             |
 | `target`                       | `ESNext`   | Emits the latest JavaScript syntax without downleveling.               |
 | `verbatimModuleSyntax`         | `true`     | Emits import and export statements exactly as written.                 |
 
 :::info
-`skipLibCheck` is `true` here for a fast baseline. The [DX - Strict](/docs/presets/tsconfig/dx-strict) layer flips it to `false` when you chain it on top.
+No Nova preset sets `skipLibCheck`, so TypeScript keeps its default of `false` and checks declaration files. [`nova utility type-check`](/docs/cli/utilities/type-check) refuses any config that turns it on.
 :::
 
 ## Related

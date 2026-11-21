@@ -1,3 +1,4 @@
+import { Runner as ApiGithub } from '../../../api/github.js';
 import { Logger } from '../../../toolkit/index.js';
 import { executeGhCommands } from './gh-commands.js';
 import { ghPrecheck } from './gh-precheck.js';
@@ -79,32 +80,25 @@ export class Runner {
 
     const commands: Cli_Recipe_Github_SyncSecurity_Runner_Run_Commands = [];
 
-    if (security['vulnerabilityAlerts'] === true) {
-      commands.push(`gh api --method PUT repos/${owner}/${repo}/vulnerability-alerts --silent`);
+    if (security['vulnerabilityAlerts'] !== undefined) {
+      commands.push(ApiGithub.buildVulnerabilityAlertsCommand(owner, repo, security['vulnerabilityAlerts']));
     }
 
-    if (security['vulnerabilityAlerts'] === false) {
-      commands.push(`gh api --method DELETE repos/${owner}/${repo}/vulnerability-alerts --silent`);
+    if (security['dependabotSecurityUpdates'] !== undefined) {
+      commands.push(ApiGithub.buildAutomatedSecurityFixesCommand(owner, repo, security['dependabotSecurityUpdates']));
     }
 
-    if (security['dependabotSecurityUpdates'] === true) {
-      commands.push(`gh api --method PUT repos/${owner}/${repo}/automated-security-fixes --silent`);
-    }
-
-    if (security['dependabotSecurityUpdates'] === false) {
-      commands.push(`gh api --method DELETE repos/${owner}/${repo}/automated-security-fixes --silent`);
-    }
-
+    // Push protection depends on secret scanning, so it turns off first and on last.
     if (security['pushProtection'] === false) {
-      commands.push(`gh repo edit ${owner}/${repo} --enable-secret-scanning-push-protection=false`);
+      commands.push(ApiGithub.buildPushProtectionCommand(owner, repo, false));
     }
 
     if (security['secretScanning'] !== undefined) {
-      commands.push(`gh repo edit ${owner}/${repo} --enable-secret-scanning=${security['secretScanning']}`);
+      commands.push(ApiGithub.buildSecretScanningCommand(owner, repo, security['secretScanning']));
     }
 
     if (security['pushProtection'] === true) {
-      commands.push(`gh repo edit ${owner}/${repo} --enable-secret-scanning-push-protection=true`);
+      commands.push(ApiGithub.buildPushProtectionCommand(owner, repo, true));
     }
 
     if (commands.length === 0) {

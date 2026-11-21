@@ -59,7 +59,7 @@ const packageJsonText: Tests_TsconfigPresets_PackageJsonText = readFileSync(pack
 const packageJson: Tests_TsconfigPresets_PackageJson = JSON.parse(packageJsonText);
 const packageExports: Tests_TsconfigPresets_PackageExports = packageJson['exports'] ?? {};
 const presetExportPrefix: Tests_TsconfigPresets_PresetExportPrefix = './presets/tsconfig/';
-const presetBuildPrefix: Tests_TsconfigPresets_PresetBuildPrefix = './build/src/presets/tsconfig/';
+const presetBuildPrefix: Tests_TsconfigPresets_PresetBuildPrefix = './build/presets/tsconfig/';
 const sourcePresetDirectoryEntries: Tests_TsconfigPresets_SourcePresetDirectoryEntries = readdirSync(sourcePresetDirectory, { withFileTypes: true });
 const sourcePresetFilenames: Tests_TsconfigPresets_SourcePresetFilenames = sourcePresetDirectoryEntries
   .filter((entry) => entry.isFile() === true && entry.name.endsWith('.json') === true)

@@ -16,7 +16,7 @@ import { PATTERN_SHIKI_CJS_REQUIRE } from './lib/regex.mjs';
  *
  * @since 0.0.0
  */
-const file = resolve('build/src/lib/rehype-shiki.js');
+const file = resolve('build/lib/rehype-shiki.js');
 
 /**
  * Fix Shiki Import - Is Watch.

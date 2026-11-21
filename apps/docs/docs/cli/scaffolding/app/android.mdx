@@ -81,20 +81,20 @@ The generated `package.json` and Gradle `versionName` share the strategy-aware i
 
 ## Output Files
 
-| Path                                      | Description                                                                                               |
-|-------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| `app/`                                    | Native Android source, Nova launcher and social assets, manifest, lint configuration, and tests.          |
-| `app/src/main/res/values/strings.xml`     | Default English application, launchpad, and accessibility strings.                                        |
-| `gradle/`                                 | Nova-managed version catalog and pinned Gradle wrapper.                                                   |
-| `build.gradle.kts`                        | Root Android build configuration.                                                                         |
-| `settings.gradle.kts`                     | Generated Gradle project and repository configuration.                                                    |
-| `gradlew`, `gradlew.bat`                  | Cross-platform Gradle wrapper scripts.                                                                    |
-| `package.json`                            | Nova-managed development, check, build, and clean script groups.                                          |
-| `scripts/`                                | Cross-platform adapters that discover the Android SDK, run Gradle, and build, deploy, and launch the app. |
-| `tests/project.test.ts`                   | Vitest smoke suite for Nova-managed Node.js helper tooling.                                               |
-| `tsconfig.*.json`                         | Separate strict TypeScript contracts for helper scripts and tests.                                        |
-| `vitest.config.mts`                       | Test discovery scoped to Nova-managed helper tests.                                                       |
-| `assets/google-play-console/{workspace}/` | Root-owned Google Play metadata, screenshots, and graphic assets.                                         |
+| Path                                      | Description                                                                                                                                             |
+|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `app/`                                    | Native Android source, Nova launcher and social assets, manifest, lint configuration, and tests.                                                        |
+| `app/src/main/res/values/strings.xml`     | Default English application, launchpad, and accessibility strings.                                                                                      |
+| `gradle/`                                 | Nova-managed version catalog and pinned Gradle wrapper.                                                                                                 |
+| `build.gradle.kts`                        | Root Android build configuration.                                                                                                                       |
+| `settings.gradle.kts`                     | Generated Gradle project and repository configuration.                                                                                                  |
+| `gradlew`, `gradlew.bat`                  | Cross-platform Gradle wrapper scripts.                                                                                                                  |
+| `package.json`                            | Nova-managed development, check, build, and clean script groups.                                                                                        |
+| `scripts/`                                | Cross-platform adapters that discover the Android SDK, run Gradle, and build, deploy, and launch the app.                                               |
+| `tests/tooling.test.ts`                   | [Tooling coverage suite](/docs/rules/vitest/tooling-coverage): every helper script is linted and type-checked, and no TSConfig turns on `skipLibCheck`. |
+| `tsconfig.*.json`                         | Separate strict TypeScript contracts for helper scripts and tests.                                                                                      |
+| `vitest.config.mts`                       | Test discovery scoped to Nova-managed helper tests.                                                                                                     |
+| `assets/google-play-console/{workspace}/` | Root-owned Google Play metadata, screenshots, and graphic assets.                                                                                       |
 
 ## Localization
 

@@ -1,0 +1,105 @@
+---
+id: "tooling-coverage"
+title: "Tooling Coverage Suite"
+description: "Require every workspace script to be linted and type-checked, and keep skipLibCheck out of every TSConfig, with the registerToolingCoverageSuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "tooling"
+  - "eslint"
+  - "tsconfig"
+  - "conformance"
+tags:
+  - "rules"
+  - "vitest"
+  - "tooling"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Require every script in a <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> to be linted and type-checked with `registerToolingCoverageSuite`.
+
+## Summary
+
+- Lists every `scripts/**/*.mjs` file and fails when ESLint ignores any of them.
+- Fails when a script is missing from the file list of `tsconfig.scripts.json`, so `check:types-scripts` never skips one.
+- Fails when any `tsconfig*.json` in the folder turns on `skipLibCheck`, directly or through a config it extends.
+
+## Why Use This Suite?
+
+1. Catches a script that slipped out of linting or type-checking through an ignore pattern or a narrow `include`.
+2. Keeps `skipLibCheck` out of every TSConfig, matching what `nova utility type-check` already refuses.
+3. Runs with the rest of the test suite, so the gap shows up on the next `check` instead of in review.
+
+## Examples
+
+<Tabs groupId="tooling-coverage-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```json title="tsconfig.scripts.json"
+    {
+      "include": [
+        "./scripts/**/*.mjs"
+      ]
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```json title="tsconfig.scripts.json"
+    {
+      "compilerOptions": {
+        "skipLibCheck": true
+      },
+      "include": [
+        "./scripts/build.mjs"
+      ]
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+The incorrect config leaves every other script out of the type check and turns on `skipLibCheck`.
+
+## Usage
+
+```ts title="tests/tooling.test.ts"
+import { registerToolingCoverageSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
+
+registerToolingCoverageSuite({
+  vitest,
+  enable: 'all',
+});
+```
+
+The base starter calls the suite from `tests/project.test.ts`. The Android and pfSense scaffolds call it from `tests/tooling.test.ts`, and the Apple scaffold from `scripts/tests/tooling.test.ts`, because Xcode already owns its `Tests` folder.
+
+A workspace without a `scripts` folder passes the script checks without loading ESLint.
+
+## Configuration
+
+| Field                 | Type                      | Default                   | Description                                               |
+|-----------------------|---------------------------|---------------------------|-----------------------------------------------------------|
+| `vitest`              | `typeof import('vitest')` | required                  | Vitest module namespace used to register the suite.       |
+| `rootDir`             | `string`                  | `process.cwd()`           | Folder that holds `scripts` and the TSConfig files.       |
+| `scriptsTsconfigPath` | `string`                  | `'tsconfig.scripts.json'` | TSConfig whose file list must contain every script.       |
+| `enable`              | `'all' \| ToggleKey[]`    | required                  | Which checks run. Use `'all'` for every check, or a list. |
+
+## Toggle Keys
+
+| Toggle Key             | Description                                                                           |
+|------------------------|---------------------------------------------------------------------------------------|
+| `scripts-linted`       | Fails when ESLint ignores any `scripts/**/*.mjs` file.                                |
+| `scripts-type-checked` | Fails when a script is missing from the scripts TSConfig's file list.                 |
+| `no-skip-lib-check`    | Fails when a `tsconfig*.json` turns on `skipLibCheck`, directly or through `extends`. |
+
+## Troubleshooting
+
+- **A script is reported as ignored** — Remove the ESLint ignore that matches it, and add a `scripts-overrides` block if the script needs `process.exit`.
+- **The scripts TSConfig is reported missing** — Add a `tsconfig.scripts.json` that extends `role-scripts`, or point `scriptsTsconfigPath` at the TSConfig that covers the scripts.

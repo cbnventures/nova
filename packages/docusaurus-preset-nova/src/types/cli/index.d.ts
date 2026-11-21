@@ -1,6 +1,17 @@
 import type { Command } from 'commander';
 
 /**
+ * CLI - Package JSON.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Index_PackageJson_Version = string;
+
+export type Cli_Index_PackageJson = {
+  version: Cli_Index_PackageJson_Version;
+};
+
+/**
  * CLI.
  *
  * @since 0.21.0

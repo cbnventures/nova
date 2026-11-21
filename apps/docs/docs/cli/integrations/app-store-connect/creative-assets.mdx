@@ -22,7 +22,16 @@ ios/<locale>/product-page-header/header.png
 ios/<locale>/search-results/search.png
 ```
 
-Each target accepts exactly one PNG or JPEG. Nova uses Apple's placement names directly, leaves absent targets untouched, and rejects existing empty or multi-file targets before authentication.
+Each target accepts exactly one image. Nova uses Apple's placement names directly, leaves absent targets untouched, and rejects existing empty or multi-file targets before authentication.
+
+## Image preflight
+
+Before authentication or any App Store Connect request, Nova reads every selected file and reports all failures together. Files must have a real PNG or JPEG signature, and images with alpha are rejected. Nova accepts these sizes from Apple's [creative assets specifications](https://developer.apple.com/help/app-store-connect/reference/app-information/creative-assets-specifications/), checked on November 20, 2026:
+
+- `product-page-header`: PNG at exactly `3840x1646`.
+- `search-results`: PNG or JPEG at a 3:2 ratio, from `1920x1280` through `3840x2560`.
+
+Use `--skip-image-checks` if Apple changes these specifications before Nova is updated. The override skips format, alpha, and size inspection; the one-image-per-target rule still applies.
 
 ## Replacement safety
 
@@ -54,4 +63,6 @@ All App Store Connect requests and upload chunks run through a small bounded que
   </TabItem>
 </Tabs>
 
-The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/). The complete replacement plan is shown before authentication or remote changes.
+The command uses the same workspace, version, platform, locale, credential, dry-run, plan, and confirmation options as [`metadata`](../metadata/), plus `--skip-image-checks` and `--targets`. Pass `--targets product-page-header` or `--targets search-results` to replace only one placement type. The complete replacement plan is shown before authentication or remote changes. Its heading totals the selected files, targets, locales, and bytes.
+
+`--plan` signs in and compares each target's current placement with the local asset, then prints how many assets would be deleted, uploaded, or kept and the final order, without changing anything.

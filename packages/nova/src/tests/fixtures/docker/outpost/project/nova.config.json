@@ -1,0 +1,18 @@
+{
+  "project": {
+    "name": {
+      "title": "Outpost",
+      "slug": "outpost"
+    },
+    "description": {
+      "short": "Self-hosted container auto-updater for Docker, a modern Watchtower replacement"
+    },
+    "legalName": "CBN Ventures LLC",
+    "license": "MIT"
+  },
+  "urls": {
+    "homepage": "https://outpost.cbnventures.io/",
+    "repository": "https://github.com/cbnventures/outpost",
+    "documentation": "https://outpost.cbnventures.io/"
+  }
+}

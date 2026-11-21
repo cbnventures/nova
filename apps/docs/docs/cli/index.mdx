@@ -132,6 +132,7 @@ _Category: `must-haves` · Alias: `must`_
 | Subcommand                                                               | Shorthand | What It Does                                                   |
 |--------------------------------------------------------------------------|-----------|----------------------------------------------------------------|
 | [`agent-conventions`](/docs/cli/generators/must-haves/agent-conventions) | `agent`   | Create agent convention files for coding assistants.           |
+| [`attribute-files`](/docs/cli/generators/must-haves/attribute-files)     | —         | Create every configured `.gitattributes` file.                 |
 | [`dotenv`](/docs/cli/generators/must-haves/dotenv)                       | `env`     | Create `.env` and `.env.sample` files for environment secrets. |
 | [`editorconfig`](/docs/cli/generators/must-haves/editorconfig)           | —         | Create a `.editorconfig` file for consistent coding styles.    |
 | [`ignore-files`](/docs/cli/generators/must-haves/ignore-files)           | —         | Create every configured physical ignore file.                  |
@@ -183,6 +184,13 @@ All commands in "Recipes" are shaped as `nova recipe <category> <subcommand>` or
 Recipe categories are navigation menus, not batch commands. Use [`nova utility run-recipes`](/docs/cli/utilities/run-recipes) when you want Nova to run every enabled recipe.
 :::
 
+#### Docker
+_Category: `docker` · Alias: `dk`_
+
+| Subcommand                                          | Shorthand  | What It Does                                                                                    |
+|-----------------------------------------------------|------------|-------------------------------------------------------------------------------------------------|
+| [`sync-image`](/docs/cli/recipes/docker/sync-image) | `sync-img` | Re-render the `Dockerfile`, `compose.yml`, and `packages/docker` files from the image manifest. |
+
 #### GitHub
 _Category: `github` · Alias: `gh`_
 
@@ -195,6 +203,15 @@ _Category: `github` · Alias: `gh`_
 | [`sync-policies`](/docs/cli/recipes/github/sync-policies) | `sync-pol`  | Sync repository policies (visibility, merge methods, branch settings) to [GitHub](https://github.com/). |
 | [`sync-rulesets`](/docs/cli/recipes/github/sync-rulesets) | `sync-rule` | Create or update Nova's managed default-branch ruleset.                                                 |
 | [`sync-security`](/docs/cli/recipes/github/sync-security) | `sync-sec`  | Sync vulnerability, Dependabot, secret scanning, and push protection settings.                          |
+
+Every GitHub recipe sends its changes through the authenticated `gh` CLI. Nova keeps GitHub's endpoint paths, methods, and request fields in one adapter, so `-d, --dry-run` prints the same `gh` commands a real run sends.
+
+#### GitHub Action
+_Category: `github-action` · Alias: `gha`_
+
+| Subcommand                                                       | Shorthand | What It Does                                                                 |
+|------------------------------------------------------------------|-----------|------------------------------------------------------------------------------|
+| [`sync-identity`](/docs/cli/recipes/github-action/sync-identity) | `sync-id` | Sync the `action.yml` name, description, and author from `nova.config.json`. |
 
 #### License
 _Category: `license` · Alias: `lic`_
@@ -233,6 +250,13 @@ _Category: `package-json` · Alias: `pkg`_
 | [`sync-identity`](/docs/cli/recipes/package-json/sync-identity)                   | `sync-id`   | Sync name, version, description, keywords, displayName, and license to workspace `package.json` files. |
 | [`sync-ownership`](/docs/cli/recipes/package-json/sync-ownership)                 | `sync-own`  | Sync homepage, bugs, author, contributors, funding, and repository to workspace `package.json` files.  |
 
+#### pfSense
+_Category: `pfsense` · Alias: `pfs`_
+
+| Subcommand                                                 | Shorthand | What It Does                                                                              |
+|------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------|
+| [`sync-identity`](/docs/cli/recipes/pfsense/sync-identity) | `sync-id` | Sync the pfSense port descriptions, COMMENT, WWW, and MAINTAINER from `nova.config.json`. |
+
 #### README
 _Category: `read-me` · Alias: `read`_
 
@@ -243,6 +267,13 @@ _Category: `read-me` · Alias: `read`_
 | [`update-documentation`](/docs/cli/recipes/read-me/update-documentation) | `update-doc`    | Refresh the generated README documentation region. |
 | [`update-header`](/docs/cli/recipes/read-me/update-header)               | `update-head`   | Refresh the generated README header region.        |
 | [`update-introduction`](/docs/cli/recipes/read-me/update-introduction)   | `update-intro`  | Refresh the generated README introduction region.  |
+
+#### TSConfig
+_Category: `tsconfig` · Alias: `tsc`_
+
+| Subcommand                                                      | Shorthand  | What It Does                                                                      |
+|-----------------------------------------------------------------|------------|-----------------------------------------------------------------------------------|
+| [`sync-references`](/docs/cli/recipes/tsconfig/sync-references) | `sync-ref` | Point each reference-only `tsconfig.json` at its sibling `tsconfig.*.json` files. |
 
 ### Scaffolding
 
@@ -307,6 +338,7 @@ All commands in "Utilities" are shaped as `nova utility <subcommand>` or `nova u
 |--------------------------------------------------------|------------|---------------------------------------------------------------------------------------------------------|
 | [`changelog`](/docs/cli/utilities/changelog)           | `log`      | Record changes and release versioned changelogs.                                                        |
 | [`configure`](/docs/cli/utilities/configure)           | `config`   | Create or edit this project's `nova.config.json` configuration file.                                    |
+| [`cross-env`](/docs/cli/utilities/cross-env)           | `xenv`     | Set environment variables for one command the same way on macOS, Linux, and Windows.                    |
 | [`run-recipes`](/docs/cli/utilities/run-recipes)       | `run-rcp`  | Run all enabled recipes and finalize workspace `package.json` files.                                    |
 | [`run-scripts`](/docs/cli/utilities/run-scripts)       | `run-scr`  | Run package.json scripts by pattern with sequential, parallel, and explicit child-environment controls. |
 | [`run-workspaces`](/docs/cli/utilities/run-workspaces) | `run-ws`   | Run dependency-aware package scripts across configured Nova workspaces.                                 |

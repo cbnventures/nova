@@ -103,6 +103,7 @@ export const libItemAllowedRecipes: Lib_Item_AllowedRecipes = [
  * @since 0.21.0
  */
 export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
+  'docker': ['sync-image'],
   'docker-hub': [
     'sync-identity',
     'sync-policies',
@@ -116,12 +117,14 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
     'sync-rulesets',
     'sync-security',
   ],
+  'github-action': ['sync-identity'],
   'license': ['update-copyright'],
   'miscellaneous': [
     'fix-markdown-tables',
     'remove-operating-system-files',
   ],
   'nova-config': ['normalize-order'],
+  'pfsense': ['sync-identity'],
   'read-me': [
     'update-badges',
     'update-credits',
@@ -129,6 +132,7 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
     'update-header',
     'update-introduction',
   ],
+  'tsconfig': ['sync-references'],
   'package-json': [
     'cleanup',
     'normalize-artifacts',

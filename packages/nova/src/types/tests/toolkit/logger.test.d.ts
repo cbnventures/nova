@@ -120,6 +120,38 @@ export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStrin
 export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsNewlinesInsideStringMessages_Lines = string[];
 
 /**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Keeps String Newlines Next To An Error Without A Tty.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsStringNewlinesNextToAnErrorWithoutATty_Lines = string[];
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Keeps The Error Output Unchanged With A Tty.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Error = Error;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Expected = string;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_ExpectedLines = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Lines = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_Indent = string;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_KeepsTheErrorOutputUnchangedWithATty_AlignedLines = string[];
+
+/**
  * Tests - Toolkit - Logger - Logger Output Formatting - Prints A Long Object On One Line Without A Tty.
  *
  * @since 0.48.1
@@ -129,6 +161,36 @@ export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLi
 export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Captured = string[];
 
 export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsALongObjectOnOneLineWithoutATty_Lines = string[];
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Prints An Error Nested In An Object On One Line Without A Tty.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Error = Error;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Frames = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorNestedInAnObjectOnOneLineWithoutATty_Lines = string[];
+
+/**
+ * Tests - Toolkit - Logger - Logger Output Formatting - Prints An Error On One Line Without A Tty.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Error = Error;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Frames = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_OriginalIsTty = unknown;
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerOutputFormatting_PrintsAnErrorOnOneLineWithoutATty_Lines = string[];
 
 /**
  * Tests - Toolkit - Logger - Logger Output Formatting - Wraps A Long Object Across Lines With A Tty.

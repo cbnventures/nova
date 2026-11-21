@@ -1,0 +1,133 @@
+# syntax=docker/dockerfile:1
+
+##################################
+#### Step 1: Build Workspaces ####
+##################################
+FROM node:24.22.0-trixie-slim@sha256:a6155384446670e9719bdc4fd0ebe4d4b29fb32a8d6aa523da3547a6cfbcf22c AS build
+
+WORKDIR /workspace
+
+COPY packages/docker/build-package.json ./package.json
+COPY packages/docker/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ["packages/docker/workspace-manifests/apps/bot/package.json","apps/bot/package.json"]
+
+RUN npm install
+
+COPY apps/bot/tsconfig.config.json ./apps/bot/tsconfig.config.json
+COPY apps/bot/tsconfig.source.json ./apps/bot/tsconfig.source.json
+COPY apps/bot/tsconfig.web.json ./apps/bot/tsconfig.web.json
+COPY apps/bot/vite.config.mts apps/bot/mock-api.mts apps/bot/index.html apps/bot/invite.html ./apps/bot/
+COPY apps/bot/examples ./apps/bot/examples
+COPY apps/bot/src ./apps/bot/src
+
+RUN --network=none npm run build --workspace='discord-stonker-bot-app-bot'
+
+RUN npm prune --omit=dev && npm cache clean --force
+
+####################################
+#### Step 2: Install s6-overlay ####
+####################################
+FROM debian:trixie-20261005-slim@sha256:a29215f6a35e51e22adffa17f89e9d2ef06214e64a2bad10d765c46aea49f11f AS s6-overlay
+
+ARG DEBIAN_FRONTEND="noninteractive"
+ARG TARGETARCH
+ARG S6_OVERLAY_VERSION="3.2.3.2"
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    xz-utils \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+  case "${TARGETARCH}" in \
+    "amd64") s6_architecture="x86_64" ;; \
+    "arm64") s6_architecture="aarch64" ;; \
+    *) echo "Unsupported target architecture: ${TARGETARCH}" >&2; exit 1 ;; \
+  esac; \
+  mkdir -p /s6-rootfs; \
+  for archive_name in "s6-overlay-noarch.tar.xz" "s6-overlay-${s6_architecture}.tar.xz"; do \
+    release_url="https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}"; \
+    curl --fail --location --silent --show-error \
+      --output "/tmp/${archive_name}" \
+      "${release_url}/${archive_name}"; \
+    curl --fail --location --silent --show-error \
+      --output "/tmp/${archive_name}.sha256" \
+      "${release_url}/${archive_name}.sha256"; \
+    cd /tmp; \
+    sha256sum -c "${archive_name}.sha256"; \
+    tar -C /s6-rootfs -Jxpf "/tmp/${archive_name}"; \
+    rm -f "/tmp/${archive_name}" "/tmp/${archive_name}.sha256"; \
+  done
+
+###############################
+#### Step 3: Runtime Image ####
+###############################
+FROM node:24.22.0-trixie-slim@sha256:a6155384446670e9719bdc4fd0ebe4d4b29fb32a8d6aa523da3547a6cfbcf22c AS runtime
+
+ARG DEBIAN_FRONTEND="noninteractive"
+ARG POSTGRESQL_VERSION=17.11-0+deb13u1
+
+LABEL org.opencontainers.image.title="Stonker Bot for Discord" \
+  org.opencontainers.image.description="A self-hosted, all-purpose Discord bot for community safety, moderation, automation, and content" \
+  org.opencontainers.image.url="https://mrjackyliang.github.io/discord-stonker-bot/" \
+  org.opencontainers.image.source="https://github.com/mrjackyliang/discord-stonker-bot" \
+  org.opencontainers.image.documentation="https://mrjackyliang.github.io/discord-stonker-bot/" \
+  org.opencontainers.image.licenses="MIT" \
+  org.opencontainers.image.vendor="Jacky Liang"
+
+ENV MIGRATIONS_DIRECTORY=/app/apps/bot/migrations \
+  NODE_ENV=production \
+  PATH=/command:/usr/lib/postgresql/17/bin:${PATH} \
+  PGID=1000 \
+  POSTGRES_RUNTIME_DIRECTORY=/tmp/postgresql \
+  PUID=1000 \
+  S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+  S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+  S6_KILL_FINISH_MAXTIME=1000 \
+  S6_KILL_GRACETIME=1000 \
+  S6_SERVICES_GRACETIME=6000 \
+  STARTER_CONFIGURATION=/app/apps/bot/examples/legacy-config.e2e.json \
+  TZ=UTC
+
+WORKDIR /app
+
+RUN apt-get update \
+  && apt-get install --yes --no-install-recommends \
+    ca-certificates \
+    curl \
+    diffutils \
+    "postgresql-17=${POSTGRESQL_VERSION}" \
+    "postgresql-client-17=${POSTGRESQL_VERSION}" \
+    tzdata \
+    util-linux \
+  && if [ -d /etc/postgresql/17/main ]; then pg_dropcluster --stop 17 main; fi \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY --from=s6-overlay /s6-rootfs/ /
+COPY packages/docker/rootfs/ /
+RUN find /usr/local/libexec/nova-docker -type f -exec sed -i 's/\r$//' {} \; \
+  && find /usr/local/libexec/nova-docker -type f -exec chmod 0755 {} \; \
+  && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec sed -i 's/\r$//' {} \; \
+  && find /etc/s6-overlay/s6-rc.d -type f \( -name run -o -name finish \) -exec chmod 0755 {} \;
+COPY packages/docker/project/ /
+COPY --from=build /workspace/apps/bot/build ./apps/bot/build
+COPY --from=build /workspace/apps/bot/package.json ./apps/bot/package.json
+COPY --from=build /workspace/node_modules ./node_modules
+COPY apps/bot/examples ./apps/bot/examples
+COPY apps/bot/migrations ./apps/bot/migrations
+
+RUN find /usr/local/libexec/discord-stonker-bot -type f -exec sed -i 's/\r$//' {} \; \
+  && find /usr/local/libexec/discord-stonker-bot -type f -exec chmod 0755 {} \;
+
+RUN mkdir -p /config /data
+
+EXPOSE 22604
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD ["/usr/local/libexec/nova-docker/healthcheck"]
+
+STOPSIGNAL SIGTERM
+
+ENTRYPOINT ["/init"]

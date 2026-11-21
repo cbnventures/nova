@@ -1030,7 +1030,7 @@ async function verifyContainerArtifactHandoff(temporaryDirectory) {
  * @since 0.0.0
  */
 async function verifyGeneratedDockerRuntime(novaCliPath, temporaryDirectory) {
-  const dockerPackagingModulePath = join(novaCliPath, '..', '..', 'build', 'src', 'lib', 'docker-packaging.js');
+  const dockerPackagingModulePath = join(novaCliPath, '..', '..', 'build', 'lib', 'docker-packaging.js');
   const dockerPackagingModule = await import(pathToFileURL(dockerPackagingModulePath).href);
   const dockerPackaging = dockerPackagingModule.Runner;
 
@@ -2065,6 +2065,13 @@ async function checkScaffolds() {
       email: 'author@example.com',
       roles: ['author'],
     }]);
+    Reflect.set(pfSenseConfig, 'project', {
+      ...pfSenseConfig['project'],
+      description: {
+        short: 'A generated pfSense package',
+        long: 'A generated pfSense package used by the scaffold smoke check.',
+      },
+    });
     Reflect.set(pfSenseConfig, 'urls', {
       homepage: 'https://example.com',
       documentation: 'https://example.com/docs',
@@ -2163,17 +2170,17 @@ async function checkScaffolds() {
       },
       './packages/cloudflare-tool': {
         name: 'scaffold-smoke-tool-cloudflare-tool',
-        policy: 'distributable',
+        policy: 'trackable',
         role: 'tool',
       },
       './packages/vercel-tool': {
         name: 'scaffold-smoke-tool-vercel-tool',
-        policy: 'distributable',
+        policy: 'trackable',
         role: 'tool',
       },
       './tools/scaffold-action': {
         name: 'scaffold-action',
-        policy: 'distributable',
+        policy: 'trackable',
         role: 'package',
       },
       './packages/scaffold': {
@@ -2183,7 +2190,7 @@ async function checkScaffolds() {
       },
       './packages/my-package': {
         name: 'pfsense-pkg-my-package',
-        policy: 'distributable',
+        policy: 'trackable',
         role: 'package',
       },
     });
@@ -2414,7 +2421,9 @@ async function checkScaffolds() {
       || pfSensePackageCheck.includes('\'port/files/usr/local/share/pfSense-pkg-MyPackage/release-signing.pub\'') === false
       || pfSensePackageCheck.includes('\'tests/updates.php\'') === false
       || pfSensePackageCheck.includes('releaseSigningKeyPattern.test(releaseSigningKeyLine)') === false
-      || pfSensePackageCheck.includes('WWW=\\thttps://example.com') === false
+      || pfSensePackageCheck.includes('makefileTemplateLine.startsWith(\'WWW=\')') === false
+      || pfSensePackageMakefile.includes('COMMENT=\tA generated pfSense package') === false
+      || pfSensePackageInfo.includes('<descr><![CDATA[A generated pfSense package.]]></descr>') === false
       || pfSensePackageUpdateTests.includes('UpdateManager::stableCronSchedule([], $randomInteger)') === false
       || pfSensePackageUpdateTests.includes('->verifyReleaseSignature(') === false
       || [

@@ -1,7 +1,7 @@
 ---
 id: "serverless"
 title: "Serverless Tool"
-description: "Scaffold a distributable Node.js CLI with a user-deployed Cloudflare Workers or Vercel Functions service."
+description: "Scaffold a Node.js CLI with a user-deployed Cloudflare Workers or Vercel Functions service."
 keywords:
   - "nova"
   - "nova scaffold"
@@ -18,7 +18,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Scaffold a distributable **serverless tool** with one npm-installed command line interface and one service that each consumer deploys to their own account.
+Scaffold a **serverless tool** with one command line interface and one service that each consumer deploys to their own account.
 
 ## Why Use This Command?
 
@@ -74,6 +74,19 @@ Scaffold a distributable **serverless tool** with one npm-installed command line
 
 Both targets include the same `bin/cli.mjs`, `src/program.ts`, starter `status` command, Nova-style CLI header, and CLI tests. Provider-specific source, TypeScript projects, dependencies, and scripts come only from the selected target layer.
 
+## TypeScript and Tests
+
+Each target ships a reference-only `tsconfig.json` that lists its projects, so the editor's TypeScript server finds them all:
+
+| Target               | Projects listed in `tsconfig.json`                                                            |
+|----------------------|-----------------------------------------------------------------------------------------------|
+| `cloudflare-workers` | `tsconfig.cli.json`, `tsconfig.config.json`, `tsconfig.tests.json`, `tsconfig.worker.json`    |
+| `vercel-functions`   | `tsconfig.cli.json`, `tsconfig.config.json`, `tsconfig.functions.json`, `tsconfig.tests.json` |
+
+The Cloudflare Workers target types the Worker from `wrangler types` instead of `@cloudflare/workers-types`. `tsconfig.worker.json` sets `types` to an empty list and includes the generated `worker-configuration.d.ts`, which holds the runtime types for the `compatibility_date` and the `Env` bindings in `wrangler.toml`. `check:generate-types` runs first in `check:*` and `build:generate-types` runs before the Worker is transpiled, so the committed file always matches `wrangler.toml`. The tests project keeps `@cloudflare/workers-types` and `node`.
+
+Both targets register `vitest.setup.ts` through `setupFiles`. It calls [`VitestSetup.register`](/docs/toolkit/testing/vitest-setup), which mutes Logger output and resets `process.exitCode` before each test. The Vitest config runs with `globals: false` and a 30-second test timeout, and reads its coverage options from [`VitestCoverage`](/docs/toolkit/testing/vitest-coverage). `check:coverage` runs `vitest run --coverage` with the pinned `@vitest/coverage-v8`, writes `coverage/coverage-summary.json`, and fails below `settings.coverage.minimum` when that is set.
+
 ## Default Homepage
 
 Both targets serve the same self-contained service card for `GET /`, with a violet project-initial logo, the generated project name, a `Running` badge, and a primary link to the Nova documentation. When `urls.repository` is set in `nova.config.json`, the page also shows a ghost-style GitHub button that opens the escaped repository URL in a new tab. The GitHub button is omitted when no repository URL is configured. `HEAD /` returns the same status and headers without a response body.
@@ -107,6 +120,6 @@ Omitting `--target` in non-interactive mode preserves the Cloudflare Workers def
 
 ## Registration
 
-Nova registers the workspace with the `tool` role and `distributable` policy. The generated npm package uses `{project-name}-tool-{workspace-name}` while its executable keeps the shorter workspace name.
+Nova registers the workspace with the `tool` role and `trackable` policy. A serverless tool deploys to its platform rather than to npm, so it starts out trackable, the way a new `package.json` starts out with `"private": true`. To publish the CLI to npm, change the workspace policy to `distributable` and add an npm target to the publish workflow. The generated package uses `{project-name}-tool-{workspace-name}` while its executable keeps the shorter workspace name.
 
 Nova also registers a same-named file artifact with the selected provider's runtime files, CLI, package metadata, and compiled output. Cloudflare Workers and Vercel keep distinct layouts while sharing the same assembly contract.

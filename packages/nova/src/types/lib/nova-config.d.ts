@@ -1,7 +1,13 @@
+import type { libSchemaGithubIssueFormQuestion } from '../../lib/schema.js';
 import type {
+  Shared_GithubIssueFormQuestion,
+  Shared_GithubIssueFormQuestions,
   Shared_NovaConfig,
   Shared_NovaConfig_Agents,
   Shared_NovaConfig_Artifacts,
+  Shared_NovaConfig_AttributeFile,
+  Shared_NovaConfig_AttributeFile_Bundles,
+  Shared_NovaConfig_AttributeFiles,
   Shared_NovaConfig_DockerHub,
   Shared_NovaConfig_DockerHub_ImmutableTags,
   Shared_NovaConfig_Emails,
@@ -14,6 +20,7 @@ import type {
   Shared_NovaConfig_Github_Features,
   Shared_NovaConfig_Github_IssueTemplate,
   Shared_NovaConfig_Github_IssueTemplate_BugReportFields,
+  Shared_NovaConfig_Github_IssueTemplate_CustomQuestions,
   Shared_NovaConfig_Github_Label,
   Shared_NovaConfig_Github_Labels,
   Shared_NovaConfig_Github_Policies,
@@ -40,13 +47,17 @@ import type {
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_Docker,
   Shared_NovaConfig_Recipes_DockerHub,
   Shared_NovaConfig_Recipes_Github,
+  Shared_NovaConfig_Recipes_GithubAction,
   Shared_NovaConfig_Recipes_License,
   Shared_NovaConfig_Recipes_Miscellaneous,
   Shared_NovaConfig_Recipes_NovaConfig,
   Shared_NovaConfig_Recipes_PackageJson,
+  Shared_NovaConfig_Recipes_Pfsense,
   Shared_NovaConfig_Recipes_ReadMe,
+  Shared_NovaConfig_Recipes_Tsconfig,
   Shared_NovaConfig_Settings,
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Workflows,
@@ -68,6 +79,7 @@ import type {
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigGithubActionsAllowedActions,
   Shared_NovaConfigGithubActionsDefaultWorkflowPermissions,
+  Shared_NovaConfigGithubIssueTemplateForm,
   Shared_NovaConfigGithubPoliciesMergeCommitMessage,
   Shared_NovaConfigGithubPoliciesMergeCommitTitle,
   Shared_NovaConfigGithubPoliciesSquashMergeMessage,
@@ -80,6 +92,7 @@ import type {
   Shared_NovaConfigOperatingSystemFileSettings,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigReadMeBadge,
+  Shared_NovaConfigSettings_Coverage,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigSettings_RunWorkspacesConcurrency,
@@ -306,19 +319,64 @@ export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns = Shared_NovaCo
 
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
 
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_CustomQuestions = Shared_NovaConfig_Github_IssueTemplate_CustomQuestions;
+
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {
   bugReportFields?: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_BugReportFields;
+  customQuestions?: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_CustomQuestions;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields = unknown;
 
-export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields = Set<string>;
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_CustomQuestions = Shared_NovaConfig_Github_IssueTemplate_CustomQuestions | undefined;
 
-export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields = Set<string>;
+/**
+ * Lib - Nova Config - Get GitHub Issue Template Bug Report Fields.
+ *
+ * @since 0.49.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_RawBugReportFields = unknown[];
 
-export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_Returns = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
 
-export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField = Shared_NovaConfig_Github_IssueTemplate_BugReportFields[number];
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_AllowedBugReportFields = Set<string>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_SeenBugReportFields = Set<string>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateBugReportFields_BugReportField = Shared_NovaConfig_Github_IssueTemplate_BugReportFields[number];
+
+/**
+ * Lib - Nova Config - Get GitHub Issue Template Custom Questions.
+ *
+ * @since 0.49.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Returns = Shared_NovaConfig_Github_IssueTemplate_CustomQuestions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_AllowedForms = Shared_NovaConfigGithubIssueTemplateForm[];
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Result = Shared_NovaConfig_Github_IssueTemplate_CustomQuestions;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_FormName = string;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_RawQuestions = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Form = Shared_NovaConfigGithubIssueTemplateForm | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_SeenIds = Set<string>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Questions = Shared_GithubIssueFormQuestions;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_ParsedQuestion = ReturnType<typeof libSchemaGithubIssueFormQuestion['safeParse']>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssueText = string;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_IssuePath = string;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplateCustomQuestions_Question = Shared_GithubIssueFormQuestion;
 
 /**
  * Lib - Nova Config - Get GitHub Labels.
@@ -749,6 +807,8 @@ export type Lib_NovaConfig_Runner_Parse_Result_Artifacts = Shared_NovaConfig_Art
 
 export type Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
 
+export type Lib_NovaConfig_Runner_Parse_Result_AttributeFiles = Shared_NovaConfig_AttributeFiles;
+
 export type Lib_NovaConfig_Runner_Parse_Result_Agents = Shared_NovaConfig_Agents;
 
 export type Lib_NovaConfig_Runner_Parse_Result_Recipes = Shared_NovaConfig_Recipes;
@@ -769,6 +829,7 @@ export type Lib_NovaConfig_Runner_Parse_Result = {
   workspaces?: Lib_NovaConfig_Runner_Parse_Result_Workspaces;
   artifacts?: Lib_NovaConfig_Runner_Parse_Result_Artifacts;
   ignoreFiles?: Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles;
+  attributeFiles?: Lib_NovaConfig_Runner_Parse_Result_AttributeFiles;
   agents?: Lib_NovaConfig_Runner_Parse_Result_Agents;
   recipes?: Lib_NovaConfig_Runner_Parse_Result_Recipes;
   environment?: Lib_NovaConfig_Runner_Parse_Result_Environment;
@@ -796,6 +857,8 @@ export type Lib_NovaConfig_Runner_Parse_Artifacts = Shared_NovaConfig_Artifacts 
 export type Lib_NovaConfig_Runner_Parse_Workflows = Shared_NovaConfig_Workflows | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_IgnoreFiles = Shared_NovaConfig_IgnoreFiles | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_AttributeFiles = Shared_NovaConfig_AttributeFiles | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Agents = Shared_NovaConfig_Agents | undefined;
 
@@ -864,6 +927,33 @@ export type Lib_NovaConfig_Runner_ParseArtifacts_Artifact = Shared_NovaConfigArt
 export type Lib_NovaConfig_Runner_ParseArtifacts_SortedResult = Shared_NovaConfig_Artifacts;
 
 /**
+ * Lib - Nova Config - Parse Attribute Files.
+ *
+ * @since 0.49.0
+ */
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Returns = Shared_NovaConfig_AttributeFiles | undefined;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Result = Shared_NovaConfig_AttributeFiles;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_SupportedBundles = string[];
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_ConfigPath = string;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_RawEntry = unknown;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Bundles = Shared_NovaConfig_AttributeFile_Bundles;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_UnsupportedBundle = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_RawPatterns = unknown;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Entry = Shared_NovaConfig_AttributeFile;
+
+export type Lib_NovaConfig_Runner_ParseAttributeFiles_Conflicts = string[];
+
+/**
  * Lib - Nova Config - Parse Docker Hub.
  *
  * @since 0.40.0
@@ -910,9 +1000,15 @@ export type Lib_NovaConfig_Runner_ParseDockerHub_TypedRawImmutableTagRule = unkn
 
 export type Lib_NovaConfig_Runner_ParseDockerHub_ImmutableTagRule = string | undefined;
 
+export type Lib_NovaConfig_Runner_ParseDockerHub_DescriptionValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Description = string | undefined;
+
 export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Namespace = string;
 
 export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Repository = string;
+
+export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Description = string;
 
 export type Lib_NovaConfig_Runner_ParseDockerHub_Result_Visibility = Shared_NovaConfigDockerHubVisibility;
 
@@ -923,6 +1019,7 @@ export type Lib_NovaConfig_Runner_ParseDockerHub_Result_ImmutableTags = Shared_N
 export type Lib_NovaConfig_Runner_ParseDockerHub_Result = {
   namespace: Lib_NovaConfig_Runner_ParseDockerHub_Result_Namespace;
   repository: Lib_NovaConfig_Runner_ParseDockerHub_Result_Repository;
+  description?: Lib_NovaConfig_Runner_ParseDockerHub_Result_Description;
   visibility?: Lib_NovaConfig_Runner_ParseDockerHub_Result_Visibility;
   categories?: Lib_NovaConfig_Runner_ParseDockerHub_Result_Categories;
   immutableTags?: Lib_NovaConfig_Runner_ParseDockerHub_Result_ImmutableTags;
@@ -1343,9 +1440,13 @@ export type Lib_NovaConfig_Runner_ParseRecipes_Returns = Shared_NovaConfig_Recip
 
 export type Lib_NovaConfig_Runner_ParseRecipes_Result = Shared_NovaConfig_Recipes;
 
+export type Lib_NovaConfig_Runner_ParseRecipes_Docker = Shared_NovaConfig_Recipes_Docker | undefined;
+
 export type Lib_NovaConfig_Runner_ParseRecipes_DockerHub = Shared_NovaConfig_Recipes_DockerHub | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_Github = Shared_NovaConfig_Recipes_Github | undefined;
+
+export type Lib_NovaConfig_Runner_ParseRecipes_GithubAction = Shared_NovaConfig_Recipes_GithubAction | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_License = Shared_NovaConfig_Recipes_License | undefined;
 
@@ -1353,7 +1454,11 @@ export type Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous = Shared_NovaConfig
 
 export type Lib_NovaConfig_Runner_ParseRecipes_NovaConfig = Shared_NovaConfig_Recipes_NovaConfig | undefined;
 
+export type Lib_NovaConfig_Runner_ParseRecipes_Pfsense = Shared_NovaConfig_Recipes_Pfsense | undefined;
+
 export type Lib_NovaConfig_Runner_ParseRecipes_ReadMe = Shared_NovaConfig_Recipes_ReadMe | undefined;
+
+export type Lib_NovaConfig_Runner_ParseRecipes_Tsconfig = Shared_NovaConfig_Recipes_Tsconfig | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_PackageJson = Shared_NovaConfig_Recipes_PackageJson | undefined;
 
@@ -1366,6 +1471,8 @@ export type Lib_NovaConfig_Runner_ParseSettings_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Returns = Shared_NovaConfig_Settings | undefined;
 
+export type Lib_NovaConfig_Runner_ParseSettings_Result_Coverage = Shared_NovaConfigSettings_Coverage;
+
 export type Lib_NovaConfig_Runner_ParseSettings_Result_LockStepVersioning = boolean;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
@@ -1373,10 +1480,17 @@ export type Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces = Shared_No
 export type Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Result = {
+  coverage?: Lib_NovaConfig_Runner_ParseSettings_Result_Coverage;
   lockStepVersioning?: Lib_NovaConfig_Runner_ParseSettings_Result_LockStepVersioning;
   runWorkspaces?: Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces;
   versionStrategy?: Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy;
 };
+
+export type Lib_NovaConfig_Runner_ParseSettings_CoverageValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Coverage = Shared_NovaConfigSettings_Coverage | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_MinimumValue = unknown;
 
 export type Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = boolean | undefined;
 
@@ -1677,6 +1791,16 @@ export type Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRole = Shared_NovaConfi
 export type Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies = ('freezable' | 'trackable' | 'distributable')[];
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_Policy = Shared_NovaConfigWorkspace_Policy | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_Workspace = Shared_NovaConfigWorkspace;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_GithubActionDescription = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_PfsenseComment = string | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_WorkspaceKeys = string[];
 

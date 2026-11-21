@@ -1,4 +1,9 @@
-import { format, formatWithOptions } from 'node:util';
+import {
+  format,
+  formatWithOptions,
+  inspect,
+  types,
+} from 'node:util';
 
 import chalk from 'chalk';
 
@@ -6,6 +11,10 @@ import { LIB_REGEX_LINEBREAK_CRLF_OR_LF, LIB_REGEX_PATTERN_ANSI } from '../lib/r
 import { currentTimestamp } from '../lib/utility.js';
 
 import type {
+  Toolkit_Logger_Runner_ContainsError_Descriptor,
+  Toolkit_Logger_Runner_ContainsError_Returns,
+  Toolkit_Logger_Runner_ContainsError_Seen,
+  Toolkit_Logger_Runner_ContainsError_Value,
   Toolkit_Logger_Runner_Customize_Debug_Message,
   Toolkit_Logger_Runner_Customize_Debug_Returns,
   Toolkit_Logger_Runner_Customize_Dev_Message,
@@ -37,9 +46,20 @@ import type {
   Toolkit_Logger_Runner_Emit_Prefix,
   Toolkit_Logger_Runner_Emit_PrefixVisibleLength,
   Toolkit_Logger_Runner_Emit_Returns,
+  Toolkit_Logger_Runner_Emit_SingleLineOptions,
   Toolkit_Logger_Runner_Emit_Stream,
   Toolkit_Logger_Runner_Error_Message,
   Toolkit_Logger_Runner_Error_Returns,
+  Toolkit_Logger_Runner_FoldStackTraces_Argument,
+  Toolkit_Logger_Runner_FoldStackTraces_ConsumedCount,
+  Toolkit_Logger_Runner_FoldStackTraces_FirstArgument,
+  Toolkit_Logger_Runner_FoldStackTraces_FoldedMessage,
+  Toolkit_Logger_Runner_FoldStackTraces_InspectOptions,
+  Toolkit_Logger_Runner_FoldStackTraces_Lines,
+  Toolkit_Logger_Runner_FoldStackTraces_Message,
+  Toolkit_Logger_Runner_FoldStackTraces_Returns,
+  Toolkit_Logger_Runner_FoldStackTraces_SingleLine,
+  Toolkit_Logger_Runner_FoldStackTraces_Specifier,
   Toolkit_Logger_Runner_Info_Message,
   Toolkit_Logger_Runner_Info_Returns,
   Toolkit_Logger_Runner_Prefix_ColoredLevelLabel,
@@ -242,15 +262,17 @@ class Runner {
     const stream: Toolkit_Logger_Runner_Emit_Stream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
     let formattedMessage: Toolkit_Logger_Runner_Emit_FormattedMessage = '';
 
-    // Non-interactive output (Workers logs, CI, pipes) stores each line as its own entry, so inspected objects stay on one line.
+    // Non-interactive output (Workers logs, CI, pipes) stores each line as its own entry, so inspected objects and stack traces stay on one line.
     if (
       message.length > 0
       && stream.isTTY !== true
     ) {
-      formattedMessage = formatWithOptions({
+      const singleLineOptions: Toolkit_Logger_Runner_Emit_SingleLineOptions = {
         breakLength: Infinity,
         compact: true,
-      }, ...message);
+      };
+
+      formattedMessage = formatWithOptions(singleLineOptions, ...Runner.foldStackTraces(message, singleLineOptions));
     } else if (message.length > 0) {
       formattedMessage = format(...message);
     }
@@ -274,6 +296,146 @@ class Runner {
     }
 
     return;
+  }
+
+  /**
+   * Toolkit - Logger - Fold Stack Traces.
+   *
+   * Replaces each argument that is or holds an Error with one inspected line.
+   * Non-interactive streams store every line as its own entry, so stack frames are joined
+   * with a visible separator while caller-written string newlines stay intact.
+   *
+   * @param {Toolkit_Logger_Runner_FoldStackTraces_Message}        message        - Message.
+   * @param {Toolkit_Logger_Runner_FoldStackTraces_InspectOptions} inspectOptions - Inspect options.
+   *
+   * @private
+   *
+   * @returns {Toolkit_Logger_Runner_FoldStackTraces_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static foldStackTraces(message: Toolkit_Logger_Runner_FoldStackTraces_Message, inspectOptions: Toolkit_Logger_Runner_FoldStackTraces_InspectOptions): Toolkit_Logger_Runner_FoldStackTraces_Returns {
+    const firstArgument: Toolkit_Logger_Runner_FoldStackTraces_FirstArgument = message[0];
+    let consumedCount: Toolkit_Logger_Runner_FoldStackTraces_ConsumedCount = 0;
+
+    // Arguments consumed by a format specifier ("%s", "%o", ...) keep the conversion Node applies to them.
+    if (
+      typeof firstArgument === 'string'
+      && message.length > 1
+    ) {
+      for (let i = 0; i < firstArgument.length - 1; i += 1) {
+        if (firstArgument.charAt(i) === '%') {
+          const specifier: Toolkit_Logger_Runner_FoldStackTraces_Specifier = firstArgument.charAt(i + 1);
+
+          if (specifier === '%') {
+            i += 1;
+          } else if ('sdifjoOc'.includes(specifier) === true) {
+            consumedCount += 1;
+            i += 1;
+          }
+        }
+      }
+    }
+
+    const foldedMessage: Toolkit_Logger_Runner_FoldStackTraces_FoldedMessage = [];
+
+    for (let i = 0; i < message.length; i += 1) {
+      const argument: Toolkit_Logger_Runner_FoldStackTraces_Argument = message[i];
+
+      if (
+        (
+          i === 0
+          || i > consumedCount
+        )
+        && Runner.containsError(argument, new WeakSet()) === true
+      ) {
+        const lines: Toolkit_Logger_Runner_FoldStackTraces_Lines = inspect(argument, inspectOptions).split(LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+        const singleLine: Toolkit_Logger_Runner_FoldStackTraces_SingleLine = lines.map((line) => line.trimStart()).join(' ↵ ');
+
+        // A string in the first position becomes the format string, so a literal "%" must not turn into a specifier.
+        foldedMessage.push((i === 0 && message.length > 1) ? singleLine.split('%').join('%%') : singleLine);
+      } else {
+        foldedMessage.push(argument);
+      }
+    }
+
+    return foldedMessage;
+  }
+
+  /**
+   * Toolkit - Logger - Contains Error.
+   *
+   * Walks own data properties and Map or Set entries looking for an Error.
+   * Used by fold stack traces so only arguments whose inspected text holds a stack trace
+   * are rewritten, leaving the rest to the normal formatter.
+   *
+   * @param {Toolkit_Logger_Runner_ContainsError_Value} value - Value.
+   * @param {Toolkit_Logger_Runner_ContainsError_Seen}  seen  - Seen.
+   *
+   * @private
+   *
+   * @returns {Toolkit_Logger_Runner_ContainsError_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static containsError(value: Toolkit_Logger_Runner_ContainsError_Value, seen: Toolkit_Logger_Runner_ContainsError_Seen): Toolkit_Logger_Runner_ContainsError_Returns {
+    if (
+      typeof value !== 'object'
+      || value === null
+    ) {
+      return false;
+    }
+
+    if (
+      types.isNativeError(value) === true
+      || value instanceof Error
+    ) {
+      return true;
+    }
+
+    if (seen.has(value) === true) {
+      return false;
+    }
+
+    seen.add(value);
+
+    if (value instanceof Map) {
+      for (const entry of value) {
+        if (
+          Runner.containsError(entry[0], seen) === true
+          || Runner.containsError(entry[1], seen) === true
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (value instanceof Set) {
+      for (const entry of value) {
+        if (Runner.containsError(entry, seen) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // Only data properties are read, so getters are never invoked (inspect shows them as "[Getter]").
+    for (const key of Reflect.ownKeys(value)) {
+      const descriptor: Toolkit_Logger_Runner_ContainsError_Descriptor = Reflect.getOwnPropertyDescriptor(value, key);
+
+      if (
+        descriptor !== undefined
+        && 'value' in descriptor
+        && Runner.containsError(descriptor['value'], seen) === true
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

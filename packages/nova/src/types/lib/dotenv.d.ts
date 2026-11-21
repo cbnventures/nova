@@ -173,8 +173,6 @@ export type Lib_Dotenv_WriteDotenvFiles_ShouldReport = boolean;
 
 export type Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled = boolean;
 
-export type Lib_Dotenv_WriteDotenvFiles_CurrentDirectory = string;
-
 export type Lib_Dotenv_WriteDotenvFiles_TemplateDirectory = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_Files = string[];

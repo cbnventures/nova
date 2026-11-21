@@ -20,6 +20,23 @@ Update localized App Store version metadata from `assets/app-store-connect/{work
 
 Nova accepts `description`, `keywords`, `marketingUrl`, `promotionalText`, `supportUrl`, and `whatsNew`. A string updates that field. `null` is a local placeholder and is never sent to Apple. Files without any populated editable fields fail before authentication.
 
+## Field preflight
+
+Before authentication or any App Store Connect request, Nova checks every selected file against Apple's [platform version information](https://developer.apple.com/help/app-store-connect/reference/app-information/platform-version-information/) and reports all failures together:
+
+- `description` and `whatsNew` can be up to 4000 characters.
+- `promotionalText` can be up to 170 characters.
+- `keywords` can be up to 100 bytes. Apple counts bytes, so accented and CJK keywords reach the limit sooner. Each comma-separated keyword must be non-empty and appear only once, ignoring case.
+- `marketingUrl` and `supportUrl` must be full `http` or `https` URLs.
+
+The plan heading shows how many targets, platforms, and locales the run covers.
+
+## Updates
+
+Nova compares each field with the value App Store Connect already holds and sends only the fields that differ. A target whose fields all match is skipped without a request. After each update, Nova checks the values Apple returns and fails if any field was stored differently. The final line reports how many targets were updated and how many already matched.
+
+Nova reads the version state from Apple's `appVersionState` field and falls back to the older `appStoreState` field when `appVersionState` is absent.
+
 App Store Connect requests run through a small bounded queue instead of updating every target at once. Nova creates the request token, headers, and timeout only after a queue slot is available, and refreshes a token when less than 60 seconds remain. It honors `Retry-After` and pauses the whole client when a `429` or Apple's `X-Rate-Limit` header shows that the hourly budget is nearly exhausted. Without `Retry-After`, rate-limit retries back off for up to about 10 minutes in total before failing. A rate-limit exhaustion error says that the run is safe to resume after Apple's budget resets. When one bounded batch fails, its already in-flight operations finish, every failure from that batch is reported together, and later batches do not start.
 
 ## Credentials
@@ -55,17 +72,20 @@ Pass `--key-id` when more than one key exists and `--issuer-id` when the selecte
 
 ## Options
 
-| Flag                      | Description                                                         |
-|---------------------------|---------------------------------------------------------------------|
-| `--bundle-id <id>`        | Override the bundle identifier derived from the Apple workspace.    |
-| `-d, --dry-run`           | Validate and print the complete plan without authenticating.        |
-| `--issuer-id <id>`        | App Store Connect API issuer ID when required by the selected key.  |
-| `--key-id <id>`           | Select one discovered App Store Connect API key.                    |
-| `--locales <locales>`     | Comma-separated locales to include.                                 |
-| `-n, --non-interactive`   | Disable prompts; mutations also require `-y, --yes`.                |
-| `--platforms <platforms>` | Comma-separated `ios`, `macos`, or `visionos` platforms to include. |
-| `--version <version>`     | Override the marketing version derived from `project.yml`.          |
-| `--workspace <workspace>` | Select a configured Apple workspace by name or path.                |
-| `-y, --yes`               | Confirm the complete mutation plan.                                 |
+| Flag                      | Description                                                                                          |
+|---------------------------|------------------------------------------------------------------------------------------------------|
+| `--bundle-id <id>`        | Override the bundle identifier derived from the Apple workspace.                                     |
+| `-d, --dry-run`           | Validate and print the complete plan without authenticating.                                         |
+| `--issuer-id <id>`        | App Store Connect API issuer ID when required by the selected key.                                   |
+| `--key-id <id>`           | Select one discovered App Store Connect API key.                                                     |
+| `--locales <locales>`     | Comma-separated locales to include.                                                                  |
+| `-n, --non-interactive`   | Disable prompts; mutations also require `-y, --yes`.                                                 |
+| `--plan`                  | Sign in, compare with App Store Connect, and print each field that would change without changing it. |
+| `--platforms <platforms>` | Comma-separated `ios`, `macos`, or `visionos` platforms to include.                                  |
+| `--version <version>`     | Override the marketing version derived from `project.yml`.                                           |
+| `--workspace <workspace>` | Select a configured Apple workspace by name or path.                                                 |
+| `-y, --yes`               | Confirm the complete mutation plan.                                                                  |
 
 Only local files and fields in the printed plan are changed. Missing platforms, locales, and fields remain untouched.
+
+`--plan` reads the live listing and prints each differing field as its current value and its new value, then exits without sending a single write request. Unlike `--dry-run`, it signs in, so the two flags can't be combined.

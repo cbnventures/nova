@@ -1,8 +1,19 @@
+import { relative, sep } from 'node:path';
+
+import { Runner as ApiGithub } from '../../../api/github.js';
+import { Runner as CliRecipePfsenseSyncIdentity } from '../../../cli/recipe/pfsense/sync-identity.js';
+import {
+  formatDescriptionLimitMessage,
+  resolveDestinationDescription,
+  resolvePfsenseCommentDestination,
+} from '../../../lib/description-limits.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
+import { escapePhpSingleQuoted, resolvePfsenseMaintainer } from '../../../lib/pfsense-identity.js';
 import {
   LIB_REGEX_PATTERN_GITHUB_OWNER,
   LIB_REGEX_PATTERN_GITHUB_REPO,
   LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DEFAULT_FREQUENCY,
   LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_DOWNLOAD_PREFIX,
@@ -23,8 +34,11 @@ import {
 } from '../../../toolkit/index.js';
 
 import type {
-  Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Returns,
-  Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Value,
+  Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Config,
+  Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_ConfigRoot,
+  Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Returns,
+  Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspaceDirectory,
+  Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspacePath,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_NormalizedRepositoryUrl,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_Owner,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_ParsedRepositoryUrl,
@@ -32,11 +46,12 @@ import type {
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_Repo,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_RepositoryUrl,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveGithubRepository_Returns,
-  Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Author,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_AuthorEmail,
+  Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Comment,
+  Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentDestination,
+  Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentLimitMessage,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Config,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_ConfigRoot,
-  Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Entities,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_FundSources,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_FundSourcesLiteral,
   Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_GithubRepository,
@@ -87,6 +102,7 @@ export class Runner {
         'pfsense',
       ],
       primaryScript: 'build',
+      publishesToNpm: false,
       resolveArtifact: (workspaceRelPath, workspacePackageName) => ({
         name: workspacePackageName,
         build: [workspaceRelPath],
@@ -102,8 +118,37 @@ export class Runner {
       resolveReplacements: Runner['resolveReplacements'],
       templateSubpath: 'scaffold/package/pfsense',
       typeName: 'pfsense',
+      workspaceFinalizer: async (workspaceDirectory, _workspaceName, configRoot) => {
+        await Runner.finalizeWorkspace(workspaceDirectory, configRoot);
+
+        return;
+      },
       workspacePackageNamePrefix: 'pfsense-pkg-',
     });
+
+    return;
+  }
+
+  /**
+   * CLI - Scaffold - Package - Pfsense - Finalize Workspace.
+   *
+   * Runs the pfSense sync-identity recipe on the files just written, so the
+   * scaffold and the recipe write the descriptions, WWW, and MAINTAINER alike.
+   *
+   * @param {Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspaceDirectory} workspaceDirectory - Workspace directory.
+   * @param {Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_ConfigRoot}         configRoot         - Config root.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static async finalizeWorkspace(workspaceDirectory: Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspaceDirectory, configRoot: Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_ConfigRoot): Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Returns {
+    const config: Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_Config = await new LibNovaConfig().load(configRoot);
+    const workspacePath: Cli_Scaffold_Package_Pfsense_Runner_FinalizeWorkspace_WorkspacePath = `./${relative(configRoot, workspaceDirectory).split(sep).join('/')}`;
+
+    await CliRecipePfsenseSyncIdentity.syncWorkspace(workspaceDirectory, workspacePath, config, false, true, true);
 
     return;
   }
@@ -125,25 +170,42 @@ export class Runner {
    */
   private static async resolveReplacements(workspaceName: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_WorkspaceName, configRoot: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_ConfigRoot): Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Returns {
     const config: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Config = await new LibNovaConfig().load(configRoot);
-    const entities: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Entities = config['entities'] ?? [];
-    const author: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Author = entities.find((entity) => {
-      return (
-        entity['roles'] !== undefined
-        && entity['roles'].includes('author') === true
-        && typeof entity['email'] === 'string'
-        && entity['email'].trim() !== ''
-      );
-    });
-    const authorEmail: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_AuthorEmail = (
-      author !== undefined
-      && typeof author['email'] === 'string'
-    ) ? author['email'].trim() : undefined;
+    const authorEmail: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_AuthorEmail = resolvePfsenseMaintainer(config['entities']);
 
-    if (authorEmail === undefined || authorEmail === '') {
+    if (authorEmail === undefined) {
       Logger.customize({
         name: 'CliScaffoldPackagePfsense.resolveReplacements',
         purpose: 'config',
       }).error('pfSense scaffolding requires an email on the project author entity. Add an entity with the "author" role and a valid "email" in nova.config.json, then run the scaffold again. No scaffold files were written.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    // The new workspace has no "pfsense.comment" override yet, so COMMENT comes from the
+    // short description through the same helper the sync-identity recipe uses.
+    const commentDestination: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentDestination = resolvePfsenseCommentDestination(undefined, `./packages/${workspaceName}`);
+    const comment: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_Comment = resolveDestinationDescription(commentDestination, config);
+
+    if (comment === undefined) {
+      Logger.customize({
+        name: 'CliScaffoldPackagePfsense.resolveReplacements',
+        purpose: 'config',
+      }).error('pfSense scaffolding requires "project.description.short" in nova.config.json, which becomes the FreeBSD port COMMENT. Add it, then run the scaffold again. No scaffold files were written.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    const commentLimitMessage: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_CommentLimitMessage = formatDescriptionLimitMessage(commentDestination, comment);
+
+    if (commentLimitMessage !== undefined) {
+      Logger.customize({
+        name: 'CliScaffoldPackagePfsense.resolveReplacements',
+        purpose: 'config',
+      }).error(`${commentLimitMessage} No scaffold files were written.`);
 
       process.exitCode = 1;
 
@@ -158,7 +220,7 @@ export class Runner {
     const fundSources: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_FundSources = urls['fundSources'] ?? [];
     const fundSourcesLiteral: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_FundSourcesLiteral = (fundSources.length === 0) ? '[]' : [
       '[',
-      ...fundSources.map((fundSource) => `    '${Runner.escapePhpSingleQuoted(fundSource)}',`),
+      ...fundSources.map((fundSource) => `    '${escapePhpSingleQuoted(fundSource)}',`),
       ']',
     ].join('\n');
     const repositoryUrl: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_RepositoryUrl = urls['repository'] ?? '';
@@ -172,8 +234,8 @@ export class Runner {
       const githubRepositoryOwner: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_GithubRepositoryOwner = githubRepository['owner'];
       const githubRepositoryRepo: Cli_Scaffold_Package_Pfsense_Runner_ResolveReplacements_GithubRepositoryRepo = githubRepository['repo'];
 
-      updateApiUrl = `https://api.github.com/repos/${githubRepositoryOwner}/${githubRepositoryRepo}/releases/latest`;
-      updateDownloadPrefix = `https://github.com/${githubRepositoryOwner}/${githubRepositoryRepo}/releases/download/`;
+      updateApiUrl = ApiGithub.buildLatestReleaseApiUrl(githubRepositoryOwner, githubRepositoryRepo);
+      updateDownloadPrefix = ApiGithub.buildReleaseDownloadPrefix(githubRepositoryOwner, githubRepositoryRepo);
       updateDefaultFrequency = 'weekly';
       updateSettingsDescription = 'Choose how often pfSense checks GitHub for a new package release. The check runs at a stable randomized time.';
     }
@@ -182,6 +244,10 @@ export class Runner {
       [
         LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
         workspaceName.replaceAll('-', '').replaceAll('_', ''),
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT,
+        comment,
       ],
       [
         LIB_REGEX_PLACEHOLDER_PFSENSE_UPDATE_API_URL,
@@ -205,15 +271,15 @@ export class Runner {
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_BUGS,
-        Runner.escapePhpSingleQuoted(urls['bugs'] ?? ''),
+        escapePhpSingleQuoted(urls['bugs'] ?? ''),
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
-        Runner.escapePhpSingleQuoted(projectDescription),
+        escapePhpSingleQuoted(projectDescription),
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION,
-        Runner.escapePhpSingleQuoted(urls['documentation'] ?? ''),
+        escapePhpSingleQuoted(urls['documentation'] ?? ''),
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_FUND_SOURCES,
@@ -221,35 +287,17 @@ export class Runner {
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_HOMEPAGE,
-        Runner.escapePhpSingleQuoted(urls['homepage'] ?? ''),
+        escapePhpSingleQuoted(urls['homepage'] ?? ''),
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_LICENSE,
-        Runner.escapePhpSingleQuoted(urls['license'] ?? ''),
+        escapePhpSingleQuoted(urls['license'] ?? ''),
       ],
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
-        Runner.escapePhpSingleQuoted(urls['repository'] ?? ''),
+        escapePhpSingleQuoted(urls['repository'] ?? ''),
       ],
     ]);
-  }
-
-  /**
-   * CLI - Scaffold - Package - Pfsense - Escape Php Single Quoted.
-   *
-   * Escapes project-controlled values for PHP single-quoted string literals.
-   * Runtime HTML output is escaped separately by the generated page.
-   *
-   * @param {Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Returns}
-   *
-   * @since 0.39.0
-   */
-  private static escapePhpSingleQuoted(value: Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Value): Cli_Scaffold_Package_Pfsense_Runner_EscapePhpSingleQuoted_Returns {
-    return value.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
   }
 
   /**

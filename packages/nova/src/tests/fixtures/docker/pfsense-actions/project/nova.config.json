@@ -1,0 +1,18 @@
+{
+  "project": {
+    "name": {
+      "title": "pfSense Actions",
+      "slug": "pfsense-actions"
+    },
+    "description": {
+      "short": "A small authenticated controller for running focused remote actions on a pfSense firewall"
+    },
+    "legalName": "Jacky Liang",
+    "license": "MIT"
+  },
+  "urls": {
+    "homepage": "https://mrjackyliang.github.io/pfsense-actions/",
+    "repository": "git+https://github.com/mrjackyliang/pfsense-actions.git",
+    "documentation": "https://mrjackyliang.github.io/pfsense-actions/"
+  }
+}

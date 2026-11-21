@@ -101,6 +101,16 @@
         "strategy": "same-major"
       }
     },
+    "vitestCoverageV8": {
+      "value": "4.1.12",
+      "placeholder": "[__SCAFFOLD_VERSION_VITEST_COVERAGE_V8__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "@vitest/coverage-v8",
+        "strategy": "same-major"
+      }
+    },
     "tsx": {
       "value": "4.23.15",
       "placeholder": "[__SCAFFOLD_VERSION_TSX__]",

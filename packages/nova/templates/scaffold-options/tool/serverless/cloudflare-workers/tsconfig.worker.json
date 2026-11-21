@@ -7,13 +7,12 @@
   ],
   "compilerOptions": {
     "rootDir": "./src",
-    "types": [
-      "@cloudflare/workers-types"
-    ],
+    "types": [],
     "noEmitOnError": false,
     "outDir": "./build"
   },
   "include": [
+    "./worker-configuration.d.ts",
     "./src/worker/**/*.ts",
     "./src/types/worker/**/*.d.ts"
   ],

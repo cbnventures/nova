@@ -371,6 +371,29 @@ Regenerate the workflows after changing a workspace's dependencies or the image'
 
 See [Docker Images](/docs/cli/scaffolding/concepts/docker-images) for the generated image and runtime contract.
 
+### Publishing the Coverage Badge
+
+When `settings.coverage.minimum` is set, each publish workflow turns the coverage it checked into a [shields.io endpoint](https://shields.io/badges/endpoint-badge) file. Without a minimum, the workflows have no coverage steps.
+
+The **Write coverage badge** step runs after **Build project**. It finds every `coverage/coverage-summary.json` that `check:coverage` wrote, adds up their line totals, and writes one JSON file:
+
+```json title="badges/coverage.json"
+{"schemaVersion":1,"label":"coverage","message":"84.2%","color":"green"}
+```
+
+The color steps down from `brightgreen` at 90% through `green`, `yellowgreen`, `yellow` and `orange` to `red` below 50%. With no summaries, the step writes nothing.
+
+Where the file goes depends on the project:
+
+| Project                                     | Where the badge is written                                                                                                               | Served at                                                               |
+|---------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| A `docs` workspace and `urls.documentation` | Into the docs site's build output, before it is uploaded, in the workflow that deploys the docs to `cloudflare-pages` or `github-pages`. | `<urls.documentation>/badges/coverage.json`                             |
+| No docs site                                | Uploaded as the `coverage-badge` artifact, then committed by the **publish-coverage-badge** job to an orphan `badges` branch.            | `https://raw.githubusercontent.com/<owner>/<repo>/badges/coverage.json` |
+
+The **publish-coverage-badge** job has `contents: write` permission, creates the `badges` branch on its first run, skips the commit when the badge is unchanged, and only pushes on a real publish, not a dry run. A docs target that deploys an assembled artifact gets the badge where the artifact's sources place the docs build.
+
+The README's [`coverage` badge](/docs/cli/generators/must-haves/read-me) reads the same URL.
+
 ### Publishing pfSense Packages
 
 Use `pfsense` for a workspace created by `nova scaffold package pfsense`:
@@ -494,6 +517,14 @@ The `publish` template accepts three release-style triggers, each with its own c
 - **`push`** — Branch continuous deployment that publishes for real on a push to a listed branch. Configure it only in object form with a required `branches` filter, for example `{ "name": "push", "branches": ["main"], "paths": ["packages/**"] }`.
 
 Publishing on a version tag keeps `GITHUB_REF` pointing at the tag, so npm `--provenance` signing stays valid. A `release`-triggered run can instead bind to the default branch and fail provenance, which is why `tag-push` is preferred for signed npm publishes.
+
+The `github-action`, `pfsense`, `docker-hub`, and `ghcr` targets read the release payload when a workflow uses only `release`. Adding `tag-push` to the triggers is the opt-in that lets a pushed tag publish them too:
+
+- **`github-action`** — Reads the tag name from the pushed tag when no release is attached, and treats a tag with a pre-release part after the version, such as `v1.2.0-beta.1`, as a pre-release, so the floating major tag moves only for stable tags.
+- **`pfsense`** — Creates the GitHub Release for the pushed tag when it does not exist yet, with an empty description you can fill in later, then uploads the signed packages to it. A pre-release tag creates a pre-release, which update checks skip.
+- **`docker-hub`** and **`ghcr`** — Push the exact tag as before, and also move `latest` when the pushed tag is not a pre-release, the same as a stable release does.
+
+A workflow without `tag-push` generates the same files it did before. For example, a pfSense package that publishes on `"triggers": ["tag-push"]` runs as soon as `git push origin v1.4.0` lands, with no release to create first.
 
 The bare string `"push"` is a validation error, since a branchless push trigger would fire on every branch. The `branches`, `paths`, and `tags` filters must each be a non-empty array of strings when present.
 

@@ -1,0 +1,118 @@
+---
+id: "vitest-coverage"
+title: "Vitest Coverage"
+description: "Build Vitest coverage options whose thresholds come from settings.coverage.minimum in nova.config.json, so one setting drives every workspace."
+keywords:
+  - "nova"
+  - "vitest coverage"
+  - "testing"
+  - "coverage thresholds"
+  - "v8 coverage"
+tags:
+  - "toolkit"
+  - "testing"
+  - "vitest"
+  - "battery"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Build Vitest coverage options whose thresholds come from `nova.config.json`.
+
+## Summary
+
+- Returns the `v8` provider with the `text-summary` and `json-summary` reporters, so a coverage run writes `coverage/coverage-summary.json`.
+- Reads `settings.coverage.minimum` from the nearest `nova.config.json` above the workspace.
+- With a minimum set, uses it for the `lines`, `functions`, `branches` and `statements` thresholds, so the run fails below it. Without one, the run reports coverage and never fails on it.
+
+## Why Use This Battery?
+
+1. Keeps one minimum for the whole project instead of a number copied into every Vitest config.
+2. Writes the summary file the [publish workflow](/docs/cli/generators/github/workflows) turns into the README coverage badge.
+3. Changing the minimum in `nova.config.json` takes effect on the next run without editing any Vitest config.
+
+## Usage
+
+```ts title="vitest.config.mts"
+import { VitestCoverage } from '@cbnventures/nova/toolkit';
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    include: ['src/**/*.test.ts'],
+    globals: false,
+    testTimeout: 30000, // 30 seconds.
+    coverage: VitestCoverage.options(),
+  },
+});
+```
+
+```json title="package.json"
+{
+  "scripts": {
+    "check:test": "vitest run",
+    "check:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.12"
+  }
+}
+```
+
+Coverage only runs with `--coverage`, so `check:test` stays fast and `check:coverage` writes the summary. Keep `@vitest/coverage-v8` on the same version as `vitest`.
+
+```json title="nova.config.json"
+{
+  "settings": {
+    "coverage": {
+      "minimum": 80
+    }
+  }
+}
+```
+
+## Settings
+
+| Setting          | Type     | Default         | Description                                                       |
+|------------------|----------|-----------------|-------------------------------------------------------------------|
+| `startDirectory` | `string` | `process.cwd()` | Folder the search for the nearest `nova.config.json` starts from. |
+
+A minimum that is not a number from 0 to 100 throws an error that names the config file.
+
+## Output Examples
+
+<Tabs groupId="vitest-coverage-output">
+  <TabItem value="with-minimum" label="With a minimum" default>
+
+    ```ts
+    // settings.coverage.minimum is 80.
+    VitestCoverage.options();
+    // {
+    //   provider: 'v8',
+    //   reporter: ['text-summary', 'json-summary'],
+    //   reportsDirectory: './coverage',
+    //   thresholds: {
+    //     branches: 80,
+    //     functions: 80,
+    //     lines: 80,
+    //     statements: 80,
+    //   },
+    // }
+    ```
+
+  </TabItem>
+  <TabItem value="without-minimum" label="Without a minimum">
+
+    ```ts
+    // settings.coverage is not set.
+    VitestCoverage.options();
+    // {
+    //   provider: 'v8',
+    //   reporter: ['text-summary', 'json-summary'],
+    //   reportsDirectory: './coverage',
+    // }
+    ```
+
+  </TabItem>
+</Tabs>

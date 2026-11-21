@@ -30,11 +30,9 @@ export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsDryRun = boolean;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Features = Shared_NovaConfig_Github_Features | undefined;
 
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Flags = string[];
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditCommand = string | undefined;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Sponsorships = boolean | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditCommand = string | undefined;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsCommand = string | undefined;
 
@@ -43,8 +41,6 @@ export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdCommand = stri
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdResult = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryId = string;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsMutation = string;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditResult = Shared_ShellOutput;
 

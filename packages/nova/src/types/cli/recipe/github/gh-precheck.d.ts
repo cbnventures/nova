@@ -73,6 +73,8 @@ export type Cli_Recipe_Github_GhPrecheck_GhPrecheck_GhVersion = string;
 
 export type Cli_Recipe_Github_GhPrecheck_GhPrecheck_AuthStatus = Shared_ShellOutput;
 
+export type Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewCommand = string;
+
 export type Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewResult = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_GhPrecheck_GhPrecheck_ViewerPermission = string | undefined;

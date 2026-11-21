@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Create issue form templates under `.github/ISSUE_TEMPLATE/` including `config.yml`, `BUG-REPORT.yml`, `FEATURE-REQUEST.yml`, and `SUPPORT-REQUEST.yml`.
 
-The bug report includes only the exact ordered fields selected in `nova.config.json`.
+Every form asks a built-in set of global questions, then the repo-type sets and custom questions selected in `nova.config.json`.
 
 ## Why Use This Command?
 
@@ -72,13 +72,17 @@ The bug report includes only the exact ordered fields selected in `nova.config.j
 
 ## Config Fields
 
-| Field                                  | Description                                                            |
-|----------------------------------------|------------------------------------------------------------------------|
-| `project.pronouns`                     | Pronoun style (`personal` or `business`) for template language.        |
-| `github.issueTemplate.bugReportFields` | Exact ordered semantic field identifiers to include in the bug report. |
-| `urls.fundSources`                     | Fund source URLs used to derive the GitHub sponsor username.           |
-| `urls.privacyPolicy`                   | Privacy policy URL included in issue template footers.                 |
-| `urls.termsOfUse`                      | Terms of use URL included in issue template footers.                   |
+| Field                                  | Description                                                                                      |
+|----------------------------------------|--------------------------------------------------------------------------------------------------|
+| `project.pronouns`                     | Pronoun style (`personal` or `business`) for template language.                                  |
+| `github.owner` and `github.repo`       | Link the documentation check to the repository README when `urls.documentation` is not set.      |
+| `github.issueTemplate.bugReportFields` | Exact ordered repo-type question sets. An empty array is valid and adds none.                    |
+| `github.issueTemplate.customQuestions` | Custom questions per form, under `bug`, `feature`, and `support`, in GitHub's issue-form schema. |
+| `urls.documentation`                   | Page the documentation check links to.                                                           |
+| `urls.fundSources`                     | Fund source URLs used to derive the GitHub sponsor username.                                     |
+| `urls.privacyPolicy`                   | Privacy policy URL included in issue template footers.                                           |
+| `urls.termsOfUse`                      | Terms of use URL included in issue template footers.                                             |
+| `workflows`                            | A `check-sponsor-gated-issues` workflow marks support as sponsor-gated.                          |
 
 ## Output Files
 
@@ -91,33 +95,105 @@ The bug report includes only the exact ordered fields selected in `nova.config.j
 
 ## How It Works
 
+### Question Tiers
+
+Each form collects its questions from three tiers, in this order, at one fixed place in the form:
+
+1. **Global questions** — Built in and included in every repository. See [Global Questions](#global-questions).
+2. **Repo-type question sets** — Each identifier in `github.issueTemplate.bugReportFields` adds its set, in the configured order. A set covers the bug report and the support request, and some sets also cover the feature request. See [Available Repo-Type Sets](#available-repo-type-sets).
+3. **Custom questions** — The repository's own questions from `github.issueTemplate.customQuestions`.
+
+The bug report and the support request place them before the logs field, and the feature request places them before the additional context field.
+
+### Global Questions
+
+Each form opens with a confirmation checklist. The bug report and the feature request then ask for a contact email address, which is required.
+
+| Form            | Questions                                                                                   |
+|-----------------|---------------------------------------------------------------------------------------------|
+| Bug report      | Steps to Reproduce, Expected Behavior, Actual Behavior, Affected Version or Date, Frequency |
+| Feature request | Problem or Use Case, Requested Outcome, Alternatives Considered                             |
+| Support request | Help Needed, Troubleshooting Tried, Desired Outcome, Affected Version or Date               |
+
+After the repo-type sets and custom questions, the bug report and the support request ask for optional Relevant Logs, which remind reporters to remove secrets and personal data. Every form ends with optional Additional Context and, when legal URLs are set, the legal agreement.
+
 ### Field Selection
 
 The command is non-interactive. It reads the exact field identifiers from `github.issueTemplate.bugReportFields` in `nova.config.json` and preserves their order.
 
-Missing and empty arrays both produce a bug report without optional fields. The configuration wizard can suggest a first selection from `project.platforms` and configured URLs, but the generator never infers fields.
+Missing and empty arrays both produce forms without repo-type questions. Two sets that ask the same question, such as `php` and `pfsense-package`, repeat a question id, so the generator refuses to write the form. The configuration wizard can suggest a first selection from `project.platforms` and configured URLs, but the generator never infers fields.
 
 To change which fields are included, edit them through [`nova utility configure`](/docs/cli/utilities/configure#github) under the **GitHub** category.
 
-### Available Bug Report Fields
+### Custom Questions
 
-| Identifier    | Internal Template File | Collects                                                |
-|---------------|------------------------|---------------------------------------------------------|
-| `nodejs`      | `nodejs.yml`           | Node.js version.                                        |
-| `apple`       | `apple.yml`            | Device type and OS version.                             |
-| `android`     | `android.yml`          | Device model and Android version.                       |
-| `csharp`      | `csharp.yml`           | .NET version and operating system.                      |
-| `php`         | `php.yml`              | PHP version.                                            |
-| `python`      | `python.yml`           | Python version.                                         |
-| `homebridge`  | `homebridge.yml`       | Plugin and Homebridge version.                          |
-| `pfsense`     | `pfsense.yml`          | pfSense version.                                        |
-| `synology`    | `synology.yml`         | Synology DSM version.                                   |
-| `docker`      | `docker.yml`           | Docker version, host OS, architecture, and run command. |
-| `web`         | `web.yml`              | Browser name and version.                               |
-| `screenshots` | `screenshots.yml`      | Screenshot upload field.                                |
+Custom questions use GitHub's issue-form schema. Each question has a `type` of `input`, `textarea`, `dropdown`, `checkboxes`, or `markdown`, an `id` (except `markdown`), `attributes`, and optional `validations`.
+
+```json
+{
+  "github": {
+    "issueTemplate": {
+      "bugReportFields": ["docker", "web"],
+      "customQuestions": {
+        "bug": [
+          {
+            "type": "dropdown",
+            "id": "install-method",
+            "attributes": {
+              "label": "Install method",
+              "options": ["Docker Compose", "docker run"]
+            },
+            "validations": { "required": true }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Loading `nova.config.json` checks every custom question. A question with an unknown key, a missing label, an empty option list, or an `id` other than letters, numbers, hyphens, and underscores is dropped with an error, and so is a second question with the same `id` in one form. The generator also refuses to write a form when a custom `id` repeats one of the form's own questions, such as `logs`, and sets the exit code to 1.
+
+### Documentation Check
+
+The bug report asks reporters to confirm they read the documentation, and links it. The link is `urls.documentation`, or the repository README on GitHub (`https://github.com/<owner>/<repo>#readme`) when only `github.owner` and `github.repo` are set. With neither, the check is left out.
+
+### Sponsor-Gated Support
+
+Support is sponsor-gated when both of these are true:
+
+- `workflows` includes a `check-sponsor-gated-issues` workflow.
+- `urls.fundSources` lists a GitHub Sponsors page, such as `https://github.com/sponsors/example`.
+
+A sponsor-gated support form opens with the notice that support is for sponsors and heavy contributors, links the Sponsors page and the documentation, and asks reporters to confirm they qualify. Otherwise both the notice and that confirmation are left out.
+
+### Available Repo-Type Sets
+
+| Identifier          | Forms                 | Collects                                                                                                         |
+|---------------------|-----------------------|------------------------------------------------------------------------------------------------------------------|
+| `nodejs`            | Bug, Support          | Node.js version and the install or invocation command. The bug report also asks for a minimal reproduction.      |
+| `cloudflare-worker` | Bug, Feature, Support | The affected stage, from configuration through the Worker runtime and custom domain.                             |
+| `docker`            | Bug, Support          | Docker and Docker Compose versions, host OS and architecture, image reference, and the deployment configuration. |
+| `pfsense`           | Bug, Support          | pfSense edition and version.                                                                                     |
+| `pfsense-package`   | Bug, Support          | PHP version and how the package was installed or updated.                                                        |
+| `homebridge`        | Bug, Support          | Homebridge version, configuration method, and the plugin configuration.                                          |
+| `github-action`     | Bug, Support          | The workflow event and the workflow step.                                                                        |
+| `native-app`        | Bug, Support          | Device model, OS version, physical device or simulator, and installation source.                                 |
+| `web`               | Bug, Support          | Affected URL or route, browser, browser version, and viewport size.                                              |
+| `screenshots`       | Bug, Support          | A screenshot upload field.                                                                                       |
+| `docs-site`         | Bug, Feature, Support | The kind of site content involved.                                                                               |
+| `notifications`     | Bug, Feature, Support | The notification service and event.                                                                              |
+| `apple`             | Bug, Support          | Apple device type and OS version.                                                                                |
+| `android`           | Bug, Support          | Device model and Android version.                                                                                |
+| `csharp`            | Bug, Support          | .NET version and operating system.                                                                               |
+| `php`               | Bug, Support          | PHP version. Do not combine it with `pfsense-package`.                                                           |
+| `python`            | Bug, Support          | Python version.                                                                                                  |
+| `synology`          | Bug, Support          | Synology DSM version.                                                                                            |
+
+Questions that ask for configuration, commands, or workflow steps remind reporters to remove secrets first. No built-in question asks for passwords, tokens, or keys.
 
 ### File Generation
 
-Each output file is built from a built-in template with placeholders replaced by values from the Nova config (pronouns, GitHub repo, legal links, and the selected bug report fields). Pronouns are capitalized when their placeholder begins a sentence and remain lowercase within a sentence.
+Each output file is built from a built-in template with placeholders replaced by values from the Nova config (pronouns, GitHub repo, documentation and legal links, and the questions of each tier). Pronouns are capitalized when their placeholder begins a sentence and remain lowercase within a sentence.
 
 If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.

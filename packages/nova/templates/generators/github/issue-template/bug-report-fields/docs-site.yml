@@ -1,0 +1,14 @@
+  - type: "dropdown"
+    id: "content-type"
+    attributes:
+      label: "Affected Content Type"
+      description: "Select the kind of site content involved."
+      options:
+        - "Documentation"
+        - "Blog"
+        - "Search"
+        - "Navigation"
+        - "Theme or Layout"
+        - "Other"
+    validations:
+      required: false

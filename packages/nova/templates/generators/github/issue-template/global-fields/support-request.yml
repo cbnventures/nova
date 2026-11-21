@@ -1,0 +1,29 @@
+  - type: "textarea"
+    id: "help-needed"
+    attributes:
+      label: "Help Needed"
+      description: "Explain the specific task or question you need help with."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "troubleshooting"
+    attributes:
+      label: "Troubleshooting Tried"
+      description: "Describe what you already tried and what happened."
+    validations:
+      required: true
+  - type: "textarea"
+    id: "desired-outcome"
+    attributes:
+      label: "Desired Outcome"
+      description: "Describe the result you are trying to reach."
+    validations:
+      required: true
+  - type: "input"
+    id: "affected-version"
+    attributes:
+      label: "Affected Version or Date"
+      description: "Enter the affected version. If no version is visible, enter the date the problem was observed."
+      placeholder: "e.g. 1.0.0"
+    validations:
+      required: true

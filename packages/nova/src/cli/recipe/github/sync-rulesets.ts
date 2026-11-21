@@ -1,7 +1,5 @@
-import {
-  executeShell,
-  shellQuote,
-} from '../../../lib/utility.js';
+import { Runner as ApiGithub } from '../../../api/github.js';
+import { executeShell } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 import { executeGhCommands } from './gh-commands.js';
 import { ghPrecheck } from './gh-precheck.js';
@@ -13,18 +11,15 @@ import type {
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Commands,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_DefaultBranch,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_DidSucceed,
-  Cli_Recipe_Github_SyncRulesets_Runner_Run_Endpoint,
-  Cli_Recipe_Github_SyncRulesets_Runner_Run_Enforcement,
-  Cli_Recipe_Github_SyncRulesets_Runner_Run_Flags,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Github,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_IsDryRun,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupResult,
-  Cli_Recipe_Github_SyncRulesets_Runner_Run_Method,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Options,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Owner,
+  Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanCommand,
+  Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanResult,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Precheck,
-  Cli_Recipe_Github_SyncRulesets_Runner_Run_Query,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Repo,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_RequiredStatusChecks,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Returns,
@@ -34,6 +29,12 @@ import type {
   Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetIdNumber,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetName,
   Cli_Recipe_Github_SyncRulesets_Runner_Run_Rulesets,
+  Cli_Recipe_Github_SyncRulesets_Runner_Run_Visibility,
+  Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityCommand,
+  Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityResult,
+  Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Owner,
+  Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Repo,
+  Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Returns,
 } from '../../../types/cli/recipe/github/sync-rulesets.d.ts';
 
 /**
@@ -128,33 +129,21 @@ export class Runner {
     }
 
     const rulesetName: Cli_Recipe_Github_SyncRulesets_Runner_Run_RulesetName = 'Nova default branch';
-    const enforcement: Cli_Recipe_Github_SyncRulesets_Runner_Run_Enforcement = defaultBranch['enforcement'] ?? 'active';
-    const flags: Cli_Recipe_Github_SyncRulesets_Runner_Run_Flags = [
-      `-f ${shellQuote(`name=${rulesetName}`)}`,
-      '-f target=branch',
-      `-f enforcement=${enforcement}`,
-      `-f ${shellQuote('conditions[ref_name][include][]=~DEFAULT_BRANCH')}`,
-      `-F ${shellQuote('conditions[ref_name][exclude][]')}`,
-    ];
     let ruleCount: Cli_Recipe_Github_SyncRulesets_Runner_Run_RuleCount = 0;
 
     if (defaultBranch['blockDeletions'] === true) {
-      flags.push(`-f ${shellQuote('rules[][type]=deletion')}`);
       ruleCount += 1;
     }
 
     if (defaultBranch['blockForcePushes'] === true) {
-      flags.push(`-f ${shellQuote('rules[][type]=non_fast_forward')}`);
       ruleCount += 1;
     }
 
     if (defaultBranch['requireLinearHistory'] === true) {
-      flags.push(`-f ${shellQuote('rules[][type]=required_linear_history')}`);
       ruleCount += 1;
     }
 
     if (defaultBranch['requireSignedCommits'] === true) {
-      flags.push(`-f ${shellQuote('rules[][type]=required_signatures')}`);
       ruleCount += 1;
     }
 
@@ -162,31 +151,10 @@ export class Runner {
       defaultBranch['requirePullRequest'] === true
       && allowedMergeMethods !== undefined
     ) {
-      flags.push(`-f ${shellQuote('rules[][type]=pull_request')}`);
-
-      for (const allowedMergeMethod of allowedMergeMethods) {
-        flags.push(`-f ${shellQuote(`rules[][parameters][allowed_merge_methods][]=${allowedMergeMethod}`)}`);
-      }
-
-      flags.push(`-F ${shellQuote(`rules[][parameters][dismiss_stale_reviews_on_push]=${defaultBranch['dismissStaleReviews'] ?? false}`)}`);
-      flags.push(`-F ${shellQuote(`rules[][parameters][require_code_owner_review]=${defaultBranch['requireCodeOwnerReview'] ?? false}`)}`);
-      flags.push(`-F ${shellQuote(`rules[][parameters][require_last_push_approval]=${defaultBranch['requireLastPushApproval'] ?? false}`)}`);
-      flags.push(`-F ${shellQuote(`rules[][parameters][required_approving_review_count]=${defaultBranch['requiredApprovals'] ?? 0}`)}`);
-      flags.push(`-F ${shellQuote(`rules[][parameters][required_review_thread_resolution]=${defaultBranch['requireConversationResolution'] ?? false}`)}`);
-
       ruleCount += 1;
     }
 
     if (requiredStatusChecks !== undefined && requiredStatusChecks.length > 0) {
-      flags.push(`-f ${shellQuote('rules[][type]=required_status_checks')}`);
-
-      for (const requiredStatusCheck of requiredStatusChecks) {
-        flags.push(`-f ${shellQuote(`rules[][parameters][required_status_checks][][context]=${requiredStatusCheck}`)}`);
-      }
-
-      flags.push(`-F ${shellQuote('rules[][parameters][do_not_enforce_on_create]=false')}`);
-      flags.push(`-F ${shellQuote(`rules[][parameters][strict_required_status_checks_policy]=${defaultBranch['requireBranchesToBeUpToDate'] ?? false}`)}`);
-
       ruleCount += 1;
     }
 
@@ -198,11 +166,45 @@ export class Runner {
       return;
     }
 
-    const query: Cli_Recipe_Github_SyncRulesets_Runner_Run_Query = `.[] | select(.name == "${rulesetName}" and .source_type == "Repository") | .id`;
-    const lookupCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand = `gh api repos/${owner}/${repo}/rulesets --paginate --jq ${shellQuote(query)}`;
+    const visibilityCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityCommand = ApiGithub.buildRepositoryVisibilityCommand(owner, repo);
+    const visibilityResult: Cli_Recipe_Github_SyncRulesets_Runner_Run_VisibilityResult = await executeShell(visibilityCommand);
+
+    if (visibilityResult['code'] !== 0) {
+      handleGhFailure(visibilityResult, 'sync-rulesets');
+
+      return;
+    }
+
+    const visibility: Cli_Recipe_Github_SyncRulesets_Runner_Run_Visibility = ApiGithub.parseRepositoryVisibility(visibilityResult['textOut']);
+
+    if (visibility['isPrivate'] === true) {
+      const planCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanCommand = ApiGithub.buildOwnerPlanCommand(owner, visibility['ownerType']);
+      const planResult: Cli_Recipe_Github_SyncRulesets_Runner_Run_PlanResult = await executeShell(planCommand);
+
+      // An unreadable plan is not proof of a free plan, so only a readable "free" skips here.
+      if (
+        planResult['code'] === 0
+        && ApiGithub.isRulesetPlanUnsupported(planResult['textOut']) === true
+      ) {
+        Runner.warnUnsupportedPlan(owner, repo);
+
+        return;
+      }
+    }
+
+    const lookupCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand = ApiGithub.buildRulesetLookupCommand(owner, repo, rulesetName);
     const lookupResult: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupResult = await executeShell(lookupCommand);
 
     if (lookupResult['code'] !== 0) {
+      if (
+        visibility['isPrivate'] === true
+        && ApiGithub.isRulesetPlanError(lookupResult['textError']) === true
+      ) {
+        Runner.warnUnsupportedPlan(owner, repo);
+
+        return;
+      }
+
       handleGhFailure(lookupResult, 'sync-rulesets');
 
       return;
@@ -227,9 +229,7 @@ export class Runner {
       rulesetId = String(rulesetIdNumber);
     }
 
-    const method: Cli_Recipe_Github_SyncRulesets_Runner_Run_Method = (rulesetId === undefined) ? 'POST' : 'PUT';
-    const endpoint: Cli_Recipe_Github_SyncRulesets_Runner_Run_Endpoint = (rulesetId === undefined) ? `repos/${owner}/${repo}/rulesets` : `repos/${owner}/${repo}/rulesets/${rulesetId}`;
-    const command: Cli_Recipe_Github_SyncRulesets_Runner_Run_Command = `gh api --method ${method} ${endpoint} ${flags.join(' ')} --silent`;
+    const command: Cli_Recipe_Github_SyncRulesets_Runner_Run_Command = ApiGithub.buildRulesetSaveCommand(owner, repo, rulesetId, rulesetName, defaultBranch);
     const commands: Cli_Recipe_Github_SyncRulesets_Runner_Run_Commands = [command];
     const didSucceed: Cli_Recipe_Github_SyncRulesets_Runner_Run_DidSucceed = await executeGhCommands(commands, 'sync-rulesets', isDryRun);
 
@@ -244,6 +244,30 @@ export class Runner {
       name: 'Runner.run',
       purpose: 'summary',
     }).info(`Updated ${rulesetName} on ${owner}/${repo}.`);
+
+    return;
+  }
+
+  /**
+   * CLI - Recipe - GitHub - Sync Rulesets - Warn Unsupported Plan.
+   *
+   * Explains why a private repository on GitHub's free plan is skipped. The skip
+   * is not a failure, so the exit code stays unchanged.
+   *
+   * @param {Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Owner} owner - Owner.
+   * @param {Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Repo}  repo  - Repo.
+   *
+   * @private
+   *
+   * @returns {Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Returns}
+   *
+   * @since 0.49.0
+   */
+  private static warnUnsupportedPlan(owner: Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Owner, repo: Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Repo): Cli_Recipe_Github_SyncRulesets_Runner_WarnUnsupportedPlan_Returns {
+    Logger.customize({
+      name: 'Runner.warnUnsupportedPlan',
+      purpose: 'plan',
+    }).warn(`Skipping sync-rulesets. ${owner}/${repo} is private, and its GitHub plan cannot use rulesets on private repositories. Make the repository public, or move it to GitHub Pro, Team, or Enterprise.`);
 
     return;
   }

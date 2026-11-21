@@ -2,11 +2,11 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import packageJson from '../../package.json' with { type: 'json' };
 import {
   LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY,
   libConstantsSecretOptionFlags,
 } from '../lib/constants.js';
+import { readPackageJsonFile } from '../lib/package-files.js';
 import {
   LIB_REGEX_PATTERN_ANSI,
   LIB_REGEX_PATTERN_ERROR_PREFIX,
@@ -18,6 +18,7 @@ import { Runner as CliGenerateGithubFunding } from './generate/github/funding.js
 import { Runner as CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
 import { Runner as CliGenerateGithubWorkflowsBlueprint } from './generate/github/workflows-blueprint.js';
 import { Runner as CliGenerateMustHavesAgentConventions } from './generate/must-haves/agent-conventions.js';
+import { Runner as CliGenerateMustHavesAttributeFiles } from './generate/must-haves/attribute-files.js';
 import { Runner as CliGenerateMustHavesDotenv } from './generate/must-haves/dotenv.js';
 import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorconfig.js';
 import { Runner as CliGenerateMustHavesIgnoreFiles } from './generate/must-haves/ignore-files.js';
@@ -29,6 +30,8 @@ import { Runner as CliIntegrationGooglePlayConsole } from './integration/google-
 import { Runner as CliIntegration } from './integration/index.js';
 import { Runner as CliRecipeDockerHubSyncIdentity } from './recipe/docker-hub/sync-identity.js';
 import { Runner as CliRecipeDockerHubSyncPolicies } from './recipe/docker-hub/sync-policies.js';
+import { Runner as CliRecipeDockerSyncImage } from './recipe/docker/sync-image.js';
+import { Runner as CliRecipeGithubActionSyncIdentity } from './recipe/github-action/sync-identity.js';
 import { Runner as CliRecipeGithubSyncActions } from './recipe/github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
@@ -49,11 +52,13 @@ import { Runner as CliRecipePackageJsonNormalizeTooling } from './recipe/package
 import { Runner as CliRecipePackageJsonSyncEnvironment } from './recipe/package-json/sync-environment.js';
 import { Runner as CliRecipePackageJsonSyncIdentity } from './recipe/package-json/sync-identity.js';
 import { Runner as CliRecipePackageJsonSyncOwnership } from './recipe/package-json/sync-ownership.js';
+import { Runner as CliRecipePfsenseSyncIdentity } from './recipe/pfsense/sync-identity.js';
 import { Runner as CliRecipeReadMeUpdateBadges } from './recipe/read-me/update-badges.js';
 import { Runner as CliRecipeReadMeUpdateCredits } from './recipe/read-me/update-credits.js';
 import { Runner as CliRecipeReadMeUpdateDocumentation } from './recipe/read-me/update-documentation.js';
 import { Runner as CliRecipeReadMeUpdateHeader } from './recipe/read-me/update-header.js';
 import { Runner as CliRecipeReadMeUpdateIntroduction } from './recipe/read-me/update-introduction.js';
+import { Runner as CliRecipeTsconfigSyncReferences } from './recipe/tsconfig/sync-references.js';
 import { Runner as CliScaffoldAppAndroid } from './scaffold/app/android.js';
 import { Runner as CliScaffoldAppApple } from './scaffold/app/apple.js';
 import { Runner as CliScaffoldAppAstro } from './scaffold/app/astro.js';
@@ -69,6 +74,7 @@ import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
 import { Runner as CliScaffoldToolServerless } from './scaffold/tool/serverless.js';
 import { Runner as CliUtilityChangelog } from './utility/changelog.js';
 import { Runner as CliUtilityConfigure } from './utility/configure.js';
+import { Runner as CliUtilityCrossEnv } from './utility/cross-env.js';
 import { Runner as CliUtilityRunRecipes } from './utility/run-recipes.js';
 import { Runner as CliUtilityRunScripts } from './utility/run-scripts.js';
 import { Runner as CliUtilityRunWorkspaces } from './utility/run-workspaces.js';
@@ -115,6 +121,7 @@ import type {
   Cli_Index_CLI_HandleCliError_Returns,
   Cli_Index_CLI_HandleCliError_Text,
   Cli_Index_CLI_Program,
+  Cli_Index_CLI_RegisterCommands_CrossEnvOptions,
   Cli_Index_CLI_RegisterCommands_Generate,
   Cli_Index_CLI_RegisterCommands_GenerateGitHub,
   Cli_Index_CLI_RegisterCommands_GenerateMustHaves,
@@ -123,13 +130,17 @@ import type {
   Cli_Index_CLI_RegisterCommands_IntegrationDiscordDeveloperPortal,
   Cli_Index_CLI_RegisterCommands_IntegrationGooglePlayConsole,
   Cli_Index_CLI_RegisterCommands_Recipe,
+  Cli_Index_CLI_RegisterCommands_RecipeDocker,
   Cli_Index_CLI_RegisterCommands_RecipeDockerHub,
   Cli_Index_CLI_RegisterCommands_RecipeGithub,
+  Cli_Index_CLI_RegisterCommands_RecipeGithubAction,
   Cli_Index_CLI_RegisterCommands_RecipeLicense,
   Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous,
   Cli_Index_CLI_RegisterCommands_RecipeNovaConfig,
   Cli_Index_CLI_RegisterCommands_RecipePackageJson,
+  Cli_Index_CLI_RegisterCommands_RecipePfsense,
   Cli_Index_CLI_RegisterCommands_RecipeReadMe,
+  Cli_Index_CLI_RegisterCommands_RecipeTsconfig,
   Cli_Index_CLI_RegisterCommands_Returns,
   Cli_Index_CLI_RegisterCommands_RunScriptsOptions,
   Cli_Index_CLI_RegisterCommands_RunWorkspacesOptions,
@@ -151,7 +162,18 @@ import type {
   Cli_Index_EnvDir,
   Cli_Index_EnvProfileFileName,
   Cli_Index_EnvSearchOrder,
+  Cli_Index_PackageJson,
 } from '../types/cli/index.d.ts';
+
+/**
+ * CLI - package.json.
+ *
+ * Reads Nova's own package.json at the package root so the CLI header shows the
+ * installed version from the same file npm publishes.
+ *
+ * @since 0.49.0
+ */
+const packageJson: Cli_Index_PackageJson = readPackageJsonFile('package.json') as Cli_Index_PackageJson;
 
 /**
  * CLI - Env Search Order.
@@ -246,6 +268,7 @@ class CLI {
         .helpCommand(false)
         .helpOption('-h, --help', 'Display the help menu')
         .allowExcessArguments(false)
+        .enablePositionalOptions()
         .showHelpAfterError();
 
       // Register commands into Commander.
@@ -351,6 +374,18 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesAgentConventions['run']);
+
+        return;
+      });
+
+    generateMustHaves
+      .command('attribute-files')
+      .usage('[options]')
+      .description('Create configured .gitattributes files from Nova bundles')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original files without creating backups')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliGenerateMustHavesAttributeFiles['run']);
 
         return;
       });
@@ -463,7 +498,10 @@ class CLI {
       .option('--key-id <id>', 'Select one discovered App Store Connect API key')
       .option('--locales <locales>', 'Comma-separated locale selection')
       .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--plan', 'Sign in, compare with App Store Connect, and display the changes without making them')
       .option('--platforms <platforms>', 'Comma-separated platform selection')
+      .option('--skip-image-checks', 'Skip local creative asset format, transparency, and size checks')
+      .option('--targets <targets>', 'Comma-separated creative asset target selection')
       .option('--version <version>', 'App Store marketing version')
       .option('--workspace <workspace>', 'Configured Apple workspace name or path')
       .option('-y, --yes', 'Confirm the complete mutation plan')
@@ -483,6 +521,7 @@ class CLI {
       .option('--key-id <id>', 'Select one discovered App Store Connect API key')
       .option('--locales <locales>', 'Comma-separated locale selection')
       .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--plan', 'Sign in, compare with App Store Connect, and display the changes without making them')
       .option('--platforms <platforms>', 'Comma-separated platform selection')
       .option('--version <version>', 'App Store marketing version')
       .option('--workspace <workspace>', 'Configured Apple workspace name or path')
@@ -503,8 +542,10 @@ class CLI {
       .option('--key-id <id>', 'Select one discovered App Store Connect API key')
       .option('--locales <locales>', 'Comma-separated locale selection')
       .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--plan', 'Sign in, compare with App Store Connect, and display the changes without making them')
       .option('--platforms <platforms>', 'Comma-separated platform selection')
       .option('--skip-image-checks', 'Skip local screenshot format, transparency, and size checks')
+      .option('--targets <targets>', 'Comma-separated screenshot target selection')
       .option('--version <version>', 'App Store marketing version')
       .option('--workspace <workspace>', 'Configured Apple workspace name or path')
       .option('-y, --yes', 'Confirm the complete mutation plan')
@@ -762,6 +803,48 @@ class CLI {
         return;
       });
 
+    const recipePfsense: Cli_Index_CLI_RegisterCommands_RecipePfsense = recipe
+      .command('pfsense')
+      .alias('pfs')
+      .usage('<subcommand> [options]')
+      .description('Recipes for pfSense package port synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipePfsense
+      .command('sync-identity')
+      .alias('sync-id')
+      .usage('[options]')
+      .description('Sync the pfSense port descriptions, COMMENT, WWW, and MAINTAINER from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipePfsenseSyncIdentity['run']);
+
+        return;
+      });
+
+    const recipeDocker: Cli_Index_CLI_RegisterCommands_RecipeDocker = recipe
+      .command('docker')
+      .alias('dk')
+      .usage('<subcommand> [options]')
+      .description('Recipes for Docker image file synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipeDocker
+      .command('sync-image')
+      .alias('sync-img')
+      .usage('[options]')
+      .description('Re-render the Dockerfile, compose.yml, and packages/docker files from the image manifest')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeDockerSyncImage['run']);
+
+        return;
+      });
+
     const recipeDockerHub: Cli_Index_CLI_RegisterCommands_RecipeDockerHub = recipe
       .command('docker-hub')
       .alias('dh')
@@ -882,6 +965,27 @@ class CLI {
       .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
       .action(async (options, command) => {
         await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncSecurity['run']);
+
+        return;
+      });
+
+    const recipeGithubAction: Cli_Index_CLI_RegisterCommands_RecipeGithubAction = recipe
+      .command('github-action')
+      .alias('gha')
+      .usage('<subcommand> [options]')
+      .description('Recipes for GitHub Action manifest synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipeGithubAction
+      .command('sync-identity')
+      .alias('sync-id')
+      .usage('[options]')
+      .description('Sync the action.yml name, description, and author from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubActionSyncIdentity['run']);
 
         return;
       });
@@ -1017,6 +1121,35 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options, command) => {
         await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateIntroduction['run']);
+
+        return;
+      });
+
+    /**
+     * CLI - Register Commands - Recipe Tsconfig.
+     *
+     * Parent command for the TSConfig recipes. Each subcommand keeps one part of the
+     * workspace TSConfig files in sync.
+     *
+     * @since 0.49.0
+     */
+    const recipeTsconfig: Cli_Index_CLI_RegisterCommands_RecipeTsconfig = recipe
+      .command('tsconfig')
+      .alias('tsc')
+      .usage('<subcommand> [options]')
+      .description('Recipes for TSConfig file synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipeTsconfig
+      .command('sync-references')
+      .alias('sync-ref')
+      .usage('[options]')
+      .description('Point each reference-only tsconfig.json at its sibling tsconfig.*.json files')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeTsconfigSyncReferences['run']);
 
         return;
       });
@@ -1327,6 +1460,7 @@ class CLI {
       .usage('<subcommand> [options]')
       .description('Tools for diagnostics, quick checks, and dev helpers')
       .commandsGroup('Subcommands:')
+      .enablePositionalOptions()
       .helpCommand(false);
 
     utility
@@ -1367,6 +1501,22 @@ class CLI {
       .option('-s, --status', 'Show the read-only GitHub environment status and exit')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityConfigure['run']);
+
+        return;
+      });
+
+    utility
+      .command('cross-env')
+      .alias('xenv')
+      .usage('<NAME=value...> <command> [arguments...]')
+      .description('Set environment variables for one command on any platform')
+      .argument('<commandArguments...>', 'Variables, command, and arguments passed to cross-env')
+      .allowUnknownOption()
+      .passThroughOptions()
+      .action(async (commandArguments) => {
+        await this.executeCommand<Cli_Index_CLI_RegisterCommands_CrossEnvOptions>({
+          commandArguments,
+        }, CliUtilityCrossEnv['run']);
 
         return;
       });
@@ -1448,6 +1598,7 @@ class CLI {
       .usage('[options]')
       .description('Run type checks scoped to project-owned files')
       .option('-p, --project <path>', 'Path to tsconfig.json')
+      .option('--pass-with-no-inputs', 'Pass when the project matches no input files')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityTypeCheck['run']);
 

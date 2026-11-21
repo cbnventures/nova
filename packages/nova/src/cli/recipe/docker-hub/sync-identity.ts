@@ -2,6 +2,11 @@ import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 
 import { Runner as DockerHub } from '../../../api/docker-hub.js';
+import {
+  formatDescriptionLimitMessage,
+  resolveDestinationDescription,
+  resolveDockerHubDescriptionDestination,
+} from '../../../lib/description-limits.js';
 import { pathExists } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 import { dockerHubPrecheck } from './docker-hub-precheck.js';
@@ -16,6 +21,8 @@ import type {
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_CurrentCategorySlugs,
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Description,
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionChanged,
+  Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionDestination,
+  Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionLimitMessage,
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionStatus,
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DesiredCategorySlugs,
   Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DockerHub,
@@ -75,21 +82,21 @@ export class Runner {
     const token: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Token = precheck['token'];
     const repository: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Repository = precheck['repository'];
     const isDryRun: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_IsDryRun = precheck['isDryRun'];
-    const description: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Description = (
-      workingFile['project'] !== undefined
-      && workingFile['project']['description'] !== undefined
-    ) ? workingFile['project']['description']['short'] : undefined;
+    const descriptionDestination: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionDestination = resolveDockerHubDescriptionDestination(dockerHub);
+    const description: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_Description = resolveDestinationDescription(descriptionDestination, workingFile);
 
     if (description === undefined) {
-      Logger.error('Docker Hub sync-identity requires "project.description.short" in nova.config.json.');
+      Logger.error('Docker Hub sync-identity requires "dockerHub.description" or "project.description.short" in nova.config.json.');
 
       process.exitCode = 1;
 
       return;
     }
 
-    if (description.length > 100) {
-      Logger.error(`Docker Hub's short description limit is 100 characters; the configured value has ${description.length}.`);
+    const descriptionLimitMessage: Cli_Recipe_DockerHub_SyncIdentity_Runner_Run_DescriptionLimitMessage = formatDescriptionLimitMessage(descriptionDestination, description);
+
+    if (descriptionLimitMessage !== undefined) {
+      Logger.error(descriptionLimitMessage);
 
       process.exitCode = 1;
 

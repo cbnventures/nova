@@ -5,8 +5,8 @@
       "slug": "nova"
     },
     "description": {
-      "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
-      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
+      "short": "Strict presets, guided tooling, and project scaffolds for JavaScript and TypeScript developers",
+      "long": "Strict presets, guided generators, and recipes that keep JavaScript and TypeScript monorepos consistent from the first scaffold to the hundredth release. Linting, typing, workflows, and project metadata all flow from one config, so nothing quietly drifts."
     },
     "keywords": [
       "eslint",
@@ -172,8 +172,136 @@
     ],
     "issueTemplate": {
       "bugReportFields": [
-        "nodejs"
-      ]
+        "nodejs",
+        "docs-site",
+        "web",
+        "screenshots"
+      ],
+      "customQuestions": {
+        "bug": [
+          {
+            "type": "dropdown",
+            "id": "nova-area",
+            "attributes": {
+              "label": "Nova Area",
+              "description": "Select the Nova area involved.",
+              "options": [
+                "CLI Generator",
+                "CLI Recipe",
+                "CLI Utility",
+                "CLI Integration",
+                "Scaffold",
+                "ESLint Preset or Rule",
+                "Vitest Rule",
+                "TSConfig Preset",
+                "Toolkit Battery",
+                "Docusaurus Preset",
+                "Documentation",
+                "Other"
+              ]
+            },
+            "validations": {
+              "required": true
+            }
+          },
+          {
+            "type": "dropdown",
+            "id": "workspace-role",
+            "attributes": {
+              "label": "Workspace Role",
+              "description": "Select the affected workspace role when applicable.",
+              "options": [
+                "Project",
+                "Docs",
+                "Config",
+                "App",
+                "Package",
+                "Tool",
+                "Template",
+                "Not Applicable"
+              ]
+            },
+            "validations": {
+              "required": false
+            }
+          }
+        ],
+        "feature": [
+          {
+            "type": "dropdown",
+            "id": "nova-area",
+            "attributes": {
+              "label": "Nova Area",
+              "description": "Select the Nova area involved.",
+              "options": [
+                "CLI Generator",
+                "CLI Recipe",
+                "CLI Utility",
+                "CLI Integration",
+                "Scaffold",
+                "ESLint Preset or Rule",
+                "Vitest Rule",
+                "TSConfig Preset",
+                "Toolkit Battery",
+                "Docusaurus Preset",
+                "Documentation",
+                "Other"
+              ]
+            },
+            "validations": {
+              "required": true
+            }
+          },
+          {
+            "type": "dropdown",
+            "id": "workspace-role",
+            "attributes": {
+              "label": "Workspace Role",
+              "description": "Select the affected workspace role when applicable.",
+              "options": [
+                "Project",
+                "Docs",
+                "Config",
+                "App",
+                "Package",
+                "Tool",
+                "Template",
+                "Not Applicable"
+              ]
+            },
+            "validations": {
+              "required": false
+            }
+          }
+        ],
+        "support": [
+          {
+            "type": "dropdown",
+            "id": "nova-area",
+            "attributes": {
+              "label": "Nova Area",
+              "description": "Select the Nova area involved.",
+              "options": [
+                "CLI Generator",
+                "CLI Recipe",
+                "CLI Utility",
+                "CLI Integration",
+                "Scaffold",
+                "ESLint Preset or Rule",
+                "Vitest Rule",
+                "TSConfig Preset",
+                "Toolkit Battery",
+                "Docusaurus Preset",
+                "Documentation",
+                "Other"
+              ]
+            },
+            "validations": {
+              "required": true
+            }
+          }
+        ]
+      }
     }
   },
   "workflows": [
@@ -371,6 +499,11 @@
         "enabled": true
       },
       "update-introduction": {
+        "enabled": true
+      }
+    },
+    "tsconfig": {
+      "sync-references": {
         "enabled": true
       }
     },

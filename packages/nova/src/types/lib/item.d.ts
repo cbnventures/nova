@@ -4,15 +4,19 @@ import type {
   Shared_ItemPrettyNames,
   Shared_NovaConfigAgent,
   Shared_NovaConfigDockerHubRecipeName,
+  Shared_NovaConfigDockerRecipeName,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigEnvironmentProfile,
+  Shared_NovaConfigGithubActionRecipeName,
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
   Shared_NovaConfigMiscellaneousRecipeName,
   Shared_NovaConfigNovaConfigRecipeName,
   Shared_NovaConfigOperatingSystemFileName,
   Shared_NovaConfigOperatingSystemFilePlatform,
+  Shared_NovaConfigPfsenseRecipeName,
   Shared_NovaConfigReadMeRecipeName,
+  Shared_NovaConfigTsconfigRecipeName,
   Shared_NovaConfigWorkspace_Policy,
   Shared_NovaConfigWorkspace_Role,
   Shared_NovaConfigWorkspaceRecipeName,
@@ -61,6 +65,10 @@ export type Lib_Item_AllowedRecipes = readonly Shared_NovaConfigWorkspaceRecipeN
  */
 export type Lib_Item_RecipesByCategory_Github = readonly Shared_NovaConfigGithubRecipeName[];
 
+export type Lib_Item_RecipesByCategory_GithubAction = readonly Shared_NovaConfigGithubActionRecipeName[];
+
+export type Lib_Item_RecipesByCategory_Docker = readonly Shared_NovaConfigDockerRecipeName[];
+
 export type Lib_Item_RecipesByCategory_DockerHub = readonly Shared_NovaConfigDockerHubRecipeName[];
 
 export type Lib_Item_RecipesByCategory_License = readonly Shared_NovaConfigLicenseRecipeName[];
@@ -69,17 +77,25 @@ export type Lib_Item_RecipesByCategory_Miscellaneous = readonly Shared_NovaConfi
 
 export type Lib_Item_RecipesByCategory_NovaConfig = readonly Shared_NovaConfigNovaConfigRecipeName[];
 
+export type Lib_Item_RecipesByCategory_Pfsense = readonly Shared_NovaConfigPfsenseRecipeName[];
+
 export type Lib_Item_RecipesByCategory_ReadMe = readonly Shared_NovaConfigReadMeRecipeName[];
+
+export type Lib_Item_RecipesByCategory_Tsconfig = readonly Shared_NovaConfigTsconfigRecipeName[];
 
 export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigWorkspaceRecipeName[];
 
 export type Lib_Item_RecipesByCategory = {
+  'docker': Lib_Item_RecipesByCategory_Docker;
   'docker-hub': Lib_Item_RecipesByCategory_DockerHub;
   'github': Lib_Item_RecipesByCategory_Github;
+  'github-action': Lib_Item_RecipesByCategory_GithubAction;
   'license': Lib_Item_RecipesByCategory_License;
   'miscellaneous': Lib_Item_RecipesByCategory_Miscellaneous;
   'nova-config': Lib_Item_RecipesByCategory_NovaConfig;
+  'pfsense': Lib_Item_RecipesByCategory_Pfsense;
   'read-me': Lib_Item_RecipesByCategory_ReadMe;
+  'tsconfig': Lib_Item_RecipesByCategory_Tsconfig;
   'package-json': Lib_Item_RecipesByCategory_PackageJson;
 };
 

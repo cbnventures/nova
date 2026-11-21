@@ -12,6 +12,7 @@
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types": "nova utility type-check --project tsconfig.json",
     "check:test": "vitest run",
+    "check:coverage": "vitest run --coverage",
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:types": "nova utility type-check --project tsconfig.json",
     "build:app": "vite build",
@@ -22,10 +23,11 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.48.1"
+    "@cbnventures/nova": "0.49.0"
   },
   "devDependencies": {
     "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_22__]",
+    "@vitest/coverage-v8": "[__SCAFFOLD_VERSION_VITEST_COVERAGE_V8__]",
     "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
     "shx": "[__SCAFFOLD_VERSION_SHX__]",
     "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",

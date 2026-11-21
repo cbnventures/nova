@@ -4,6 +4,7 @@ export { registerLinkSuite } from './link/register.js';
 export { registerMarkdownTableSuite } from './markdown-table/register.js';
 export { registerPackageScriptsSuite } from './package-scripts/register.js';
 export { registerTerminologySuite } from './terminology/register.js';
+export { registerToolingCoverageSuite } from './tooling-coverage/register.js';
 export { registerTypeDeclarationSuite } from './type-declarations/register.js';
 
 export type {
@@ -21,6 +22,8 @@ export type {
   Rules_Vitest_Index_SuiteEnable,
   Rules_Vitest_Index_TerminologySuiteConfig,
   Rules_Vitest_Index_TerminologyToggleKey,
+  Rules_Vitest_Index_ToolingCoverageSuiteConfig,
+  Rules_Vitest_Index_ToolingCoverageToggleKey,
   Rules_Vitest_Index_TypeDeclarationSuiteConfig,
   Rules_Vitest_Index_TypeDeclarationToggleKey,
 } from '../../types/rules/vitest/index.d.ts';

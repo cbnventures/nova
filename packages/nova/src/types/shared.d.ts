@@ -231,6 +231,95 @@ export type Shared_CorepackSpawnInvocation = {
 };
 
 /**
+ * Shared - Coverage Badge.
+ *
+ * @since 0.49.0
+ */
+export type Shared_CoverageBadge_Minimum = number;
+
+export type Shared_CoverageBadge_DocsPath = string;
+
+export type Shared_CoverageBadge = {
+  minimum: Shared_CoverageBadge_Minimum;
+  docsPath?: Shared_CoverageBadge_DocsPath;
+};
+
+/**
+ * Shared - Cross Env Result.
+ *
+ * @since 0.49.0
+ */
+export type Shared_CrossEnvResult_Code = number | null;
+
+export type Shared_CrossEnvResult_Signal = NodeJS.Signals | null;
+
+export type Shared_CrossEnvResult = {
+  code: Shared_CrossEnvResult_Code;
+  signal: Shared_CrossEnvResult_Signal;
+};
+
+/**
+ * Shared - Description Destination.
+ *
+ * @since 0.49.0
+ */
+export type Shared_DescriptionDestination_Kind = 'docker-hub' | 'github-action' | 'pfsense';
+
+export type Shared_DescriptionDestination_Label = string;
+
+export type Shared_DescriptionDestination_Limit = number;
+
+export type Shared_DescriptionDestination_OverrideField = string;
+
+export type Shared_DescriptionDestination_Override = string | undefined;
+
+export type Shared_DescriptionDestination = {
+  kind: Shared_DescriptionDestination_Kind;
+  label: Shared_DescriptionDestination_Label;
+  limit: Shared_DescriptionDestination_Limit;
+  overrideField: Shared_DescriptionDestination_OverrideField;
+  override: Shared_DescriptionDestination_Override;
+};
+
+export type Shared_DescriptionDestinations = Shared_DescriptionDestination[];
+
+/**
+ * Shared - Keyword Destination.
+ *
+ * @since 0.49.0
+ */
+export type Shared_KeywordDestination_Kind = 'github-topics' | 'homebridge-plugin';
+
+export type Shared_KeywordDestination_Label = string;
+
+export type Shared_KeywordDestination_MaxCount = number | undefined;
+
+export type Shared_KeywordDestination_MaxLength = number | undefined;
+
+export type Shared_KeywordDestination_TopicFormat = boolean;
+
+export type Shared_KeywordDestination_RequiredKeyword = string | undefined;
+
+export type Shared_KeywordDestination_OverrideField = string | undefined;
+
+export type Shared_KeywordDestination_OverrideKeyword = string;
+
+export type Shared_KeywordDestination_Override = Shared_KeywordDestination_OverrideKeyword[] | undefined;
+
+export type Shared_KeywordDestination = {
+  kind: Shared_KeywordDestination_Kind;
+  label: Shared_KeywordDestination_Label;
+  maxCount: Shared_KeywordDestination_MaxCount;
+  maxLength: Shared_KeywordDestination_MaxLength;
+  topicFormat: Shared_KeywordDestination_TopicFormat;
+  requiredKeyword: Shared_KeywordDestination_RequiredKeyword;
+  overrideField: Shared_KeywordDestination_OverrideField;
+  override: Shared_KeywordDestination_Override;
+};
+
+export type Shared_KeywordDestinations = Shared_KeywordDestination[];
+
+/**
  * Shared - Dialog Action.
  *
  * @since 0.11.0
@@ -261,6 +350,8 @@ export type Shared_DockerPackagingService_Dependency = string;
 
 export type Shared_DockerPackagingService_Dependencies = Shared_DockerPackagingService_Dependency[];
 
+export type Shared_DockerPackagingService_Down = string;
+
 export type Shared_DockerPackagingService_Environment = Shared_DockerPackagingStringMap;
 
 export type Shared_DockerPackagingService_FinishCommand = string;
@@ -272,6 +363,8 @@ export type Shared_DockerPackagingService_Kind = Shared_DockerPackagingServiceKi
 export type Shared_DockerPackagingService_Name = string;
 
 export type Shared_DockerPackagingService_Port = number;
+
+export type Shared_DockerPackagingService_Ports = Shared_DockerPackagingService_Port[];
 
 export type Shared_DockerPackagingService_RequiredForHealth = boolean;
 
@@ -287,12 +380,14 @@ export type Shared_DockerPackagingService = {
   command: Shared_DockerPackagingService_Command;
   critical: Shared_DockerPackagingService_Critical;
   dependencies: Shared_DockerPackagingService_Dependencies;
+  down?: Shared_DockerPackagingService_Down;
   environment: Shared_DockerPackagingService_Environment;
   finishCommand?: Shared_DockerPackagingService_FinishCommand;
   healthCommand?: Shared_DockerPackagingService_HealthCommand;
   kind: Shared_DockerPackagingService_Kind;
   name: Shared_DockerPackagingService_Name;
   port?: Shared_DockerPackagingService_Port;
+  ports?: Shared_DockerPackagingService_Ports;
   requiredForHealth: Shared_DockerPackagingService_RequiredForHealth;
   runAsRoot: Shared_DockerPackagingService_RunAsRoot;
   workspace: Shared_DockerPackagingService_Workspace;
@@ -348,6 +443,10 @@ export type Shared_DockerPackagingServiceInput = {
 
 export type Shared_DockerPackagingServiceInputs = Shared_DockerPackagingServiceInput[];
 
+export type Shared_DockerPackagingWorkspace_BuildNetwork = 'default' | 'none';
+
+export type Shared_DockerPackagingWorkspace_BuildScript = string;
+
 export type Shared_DockerPackagingWorkspace_PackageName = string;
 
 export type Shared_DockerPackagingWorkspace_Path = string;
@@ -358,22 +457,272 @@ export type Shared_DockerPackagingWorkspace_RuntimePath = string;
 
 export type Shared_DockerPackagingWorkspace_RuntimePaths = Shared_DockerPackagingWorkspace_RuntimePath[];
 
+export type Shared_DockerPackagingWorkspace_SourceFile = string;
+
+export type Shared_DockerPackagingWorkspace_SourceGroup = Shared_DockerPackagingWorkspace_SourceFile[];
+
+export type Shared_DockerPackagingWorkspace_Source = Shared_DockerPackagingWorkspace_SourceFile | Shared_DockerPackagingWorkspace_SourceGroup;
+
+export type Shared_DockerPackagingWorkspace_Sources = Shared_DockerPackagingWorkspace_Source[];
+
 export type Shared_DockerPackagingWorkspace = {
+  buildNetwork?: Shared_DockerPackagingWorkspace_BuildNetwork;
+  buildScript?: Shared_DockerPackagingWorkspace_BuildScript;
   packageName: Shared_DockerPackagingWorkspace_PackageName;
   path: Shared_DockerPackagingWorkspace_Path;
   profile: Shared_DockerPackagingWorkspace_Profile;
   runtimePaths: Shared_DockerPackagingWorkspace_RuntimePaths;
+  sources?: Shared_DockerPackagingWorkspace_Sources;
 };
 
 export type Shared_DockerPackagingWorkspaces = Shared_DockerPackagingWorkspace[];
 
+/**
+ * Shared - Docker Packaging - Manifest Version 2.
+ *
+ * @since 0.49.0
+ */
+export type Shared_DockerPackagingArgument_Name = string;
+
+export type Shared_DockerPackagingArgument_Quoted = boolean;
+
+export type Shared_DockerPackagingArgument_Value = string;
+
+export type Shared_DockerPackagingArgument = {
+  name: Shared_DockerPackagingArgument_Name;
+  quoted?: Shared_DockerPackagingArgument_Quoted;
+  value?: Shared_DockerPackagingArgument_Value;
+};
+
+export type Shared_DockerPackagingArguments = Shared_DockerPackagingArgument[];
+
+export type Shared_DockerPackagingComment = string[];
+
+export type Shared_DockerPackagingComposeEnvironmentFile_Path = string;
+
+export type Shared_DockerPackagingComposeEnvironmentFile_Required = boolean;
+
+export type Shared_DockerPackagingComposeEnvironmentFile = {
+  path: Shared_DockerPackagingComposeEnvironmentFile_Path;
+  required?: Shared_DockerPackagingComposeEnvironmentFile_Required;
+};
+
+export type Shared_DockerPackagingComposeEnvironmentFileEntry = string | Shared_DockerPackagingComposeEnvironmentFile;
+
+export type Shared_DockerPackagingComposeNetworkValue = boolean | number | string;
+
+export type Shared_DockerPackagingComposeNetwork = Record<string, Shared_DockerPackagingComposeNetworkValue>;
+
+export type Shared_DockerPackagingComposeVolume_Comment = Shared_DockerPackagingComment;
+
+export type Shared_DockerPackagingComposeVolume_ReadOnly = boolean;
+
+export type Shared_DockerPackagingComposeVolume_Source = string;
+
+export type Shared_DockerPackagingComposeVolume_Target = string;
+
+export type Shared_DockerPackagingComposeVolume = {
+  comment?: Shared_DockerPackagingComposeVolume_Comment;
+  readOnly?: Shared_DockerPackagingComposeVolume_ReadOnly;
+  source: Shared_DockerPackagingComposeVolume_Source;
+  target: Shared_DockerPackagingComposeVolume_Target;
+};
+
+export type Shared_DockerPackagingExecutable_Name = string;
+
+export type Shared_DockerPackagingExecutable_Path = string;
+
+export type Shared_DockerPackagingExecutable = {
+  name?: Shared_DockerPackagingExecutable_Name;
+  path: Shared_DockerPackagingExecutable_Path;
+};
+
+export type Shared_DockerPackagingImage_Reference = string;
+
+export type Shared_DockerPackagingImage = {
+  reference: Shared_DockerPackagingImage_Reference;
+};
+
+export type Shared_DockerPackagingImageAlias = 'debian' | 'node';
+
+export type Shared_DockerPackagingRuntimeCopy_BeforeRootfs = boolean;
+
+export type Shared_DockerPackagingRuntimeCopy_Chmod = string;
+
+export type Shared_DockerPackagingRuntimeCopy_Chown = string;
+
+export type Shared_DockerPackagingRuntimeCopy_Destination = string;
+
+export type Shared_DockerPackagingRuntimeCopy_From = string;
+
+export type Shared_DockerPackagingRuntimeCopy_Source = string;
+
+export type Shared_DockerPackagingRuntimeCopy = {
+  beforeRootfs?: Shared_DockerPackagingRuntimeCopy_BeforeRootfs;
+  chmod?: Shared_DockerPackagingRuntimeCopy_Chmod;
+  chown?: Shared_DockerPackagingRuntimeCopy_Chown;
+  destination: Shared_DockerPackagingRuntimeCopy_Destination;
+  from?: Shared_DockerPackagingRuntimeCopy_From;
+  source: Shared_DockerPackagingRuntimeCopy_Source;
+};
+
+export type Shared_DockerPackagingRuntimePackage_Name = string;
+
+export type Shared_DockerPackagingRuntimePackage_Version = string;
+
+export type Shared_DockerPackagingRuntimePackage = {
+  name: Shared_DockerPackagingRuntimePackage_Name;
+  version?: Shared_DockerPackagingRuntimePackage_Version;
+};
+
+export type Shared_DockerPackagingRuntimePackageEntry = string | Shared_DockerPackagingRuntimePackage;
+
+export type Shared_DockerPackagingStage_Before = 'build' | 'runtime' | 's6-overlay';
+
+export type Shared_DockerPackagingStage_File = string;
+
+export type Shared_DockerPackagingStage_Name = string;
+
+export type Shared_DockerPackagingStage = {
+  before?: Shared_DockerPackagingStage_Before;
+  file: Shared_DockerPackagingStage_File;
+  name: Shared_DockerPackagingStage_Name;
+};
+
+export type Shared_DockerPackagingStages = Shared_DockerPackagingStage[];
+
+export type Shared_DockerPackagingManifest_Build_CopyNovaConfig = boolean;
+
+export type Shared_DockerPackagingManifest_Build_Corepack = boolean;
+
+export type Shared_DockerPackagingManifest_Build_Enabled = boolean;
+
+export type Shared_DockerPackagingManifest_Build_SyntheticManifests = boolean;
+
+export type Shared_DockerPackagingManifest_Build = {
+  copyNovaConfig?: Shared_DockerPackagingManifest_Build_CopyNovaConfig;
+  corepack?: Shared_DockerPackagingManifest_Build_Corepack;
+  enabled?: Shared_DockerPackagingManifest_Build_Enabled;
+  syntheticManifests?: Shared_DockerPackagingManifest_Build_SyntheticManifests;
+};
+
+export type Shared_DockerPackagingManifest_Compose_CapAdd = string[];
+
+export type Shared_DockerPackagingManifest_Compose_Comment = Shared_DockerPackagingComment;
+
+export type Shared_DockerPackagingManifest_Compose_Devices = string[];
+
+export type Shared_DockerPackagingManifest_Compose_Environment = Shared_DockerPackagingStringMap;
+
+export type Shared_DockerPackagingManifest_Compose_EnvironmentFiles = Shared_DockerPackagingComposeEnvironmentFileEntry[];
+
+export type Shared_DockerPackagingManifest_Compose_Image = string;
+
+export type Shared_DockerPackagingManifest_Compose_Name = string;
+
+export type Shared_DockerPackagingManifest_Compose_Networks = Record<string, Shared_DockerPackagingComposeNetwork>;
+
+export type Shared_DockerPackagingManifest_Compose_Ports = string[];
+
+export type Shared_DockerPackagingManifest_Compose_Restart = 'always' | 'no' | 'on-failure' | 'unless-stopped';
+
+export type Shared_DockerPackagingManifest_Compose_Service = string;
+
+export type Shared_DockerPackagingManifest_Compose_User = string;
+
+export type Shared_DockerPackagingManifest_Compose_Volumes = Shared_DockerPackagingComposeVolume[];
+
+export type Shared_DockerPackagingManifest_Compose = {
+  capAdd?: Shared_DockerPackagingManifest_Compose_CapAdd;
+  comment?: Shared_DockerPackagingManifest_Compose_Comment;
+  devices?: Shared_DockerPackagingManifest_Compose_Devices;
+  environment?: Shared_DockerPackagingManifest_Compose_Environment;
+  environmentFiles?: Shared_DockerPackagingManifest_Compose_EnvironmentFiles;
+  image?: Shared_DockerPackagingManifest_Compose_Image;
+  name?: Shared_DockerPackagingManifest_Compose_Name;
+  networks?: Shared_DockerPackagingManifest_Compose_Networks;
+  ports?: Shared_DockerPackagingManifest_Compose_Ports;
+  restart?: Shared_DockerPackagingManifest_Compose_Restart;
+  service?: Shared_DockerPackagingManifest_Compose_Service;
+  user?: Shared_DockerPackagingManifest_Compose_User;
+  volumes?: Shared_DockerPackagingManifest_Compose_Volumes;
+};
+
+export type Shared_DockerPackagingManifest_Dockerfile_Arguments = Shared_DockerPackagingArguments;
+
+export type Shared_DockerPackagingManifest_Dockerfile_Layout = 'compact' | 'spaced';
+
+export type Shared_DockerPackagingManifest_Dockerfile_Stages = Shared_DockerPackagingStages;
+
+export type Shared_DockerPackagingManifest_Dockerfile = {
+  arguments?: Shared_DockerPackagingManifest_Dockerfile_Arguments;
+  layout?: Shared_DockerPackagingManifest_Dockerfile_Layout;
+  stages?: Shared_DockerPackagingManifest_Dockerfile_Stages;
+};
+
 export type Shared_DockerPackagingManifest_HealthPath = string;
+
+export type Shared_DockerPackagingManifest_HealthService = string;
+
+export type Shared_DockerPackagingManifest_Images_Debian = Shared_DockerPackagingImage;
+
+export type Shared_DockerPackagingManifest_Images_Node = Shared_DockerPackagingImage;
+
+export type Shared_DockerPackagingManifest_Images = {
+  debian?: Shared_DockerPackagingManifest_Images_Debian;
+  node?: Shared_DockerPackagingManifest_Images_Node;
+};
 
 export type Shared_DockerPackagingManifest_LegacyStatePath = string;
 
 export type Shared_DockerPackagingManifest_LegacyStatePaths = Shared_DockerPackagingManifest_LegacyStatePath[];
 
 export type Shared_DockerPackagingManifest_NetworkMode = 'bridge' | 'host';
+
+export type Shared_DockerPackagingManifest_Project_Executables = Shared_DockerPackagingExecutable[];
+
+export type Shared_DockerPackagingManifest_Project = {
+  executables?: Shared_DockerPackagingManifest_Project_Executables;
+};
+
+export type Shared_DockerPackagingManifest_Runtime_Arguments = Shared_DockerPackagingArguments;
+
+export type Shared_DockerPackagingManifest_Runtime_Copies = Shared_DockerPackagingRuntimeCopy[];
+
+export type Shared_DockerPackagingManifest_Runtime_Directories = string[];
+
+export type Shared_DockerPackagingManifest_Runtime_Environment = Shared_DockerPackagingStringMap;
+
+export type Shared_DockerPackagingManifest_Runtime_Expose = number[];
+
+export type Shared_DockerPackagingManifest_Runtime_From = string;
+
+export type Shared_DockerPackagingManifest_Runtime_Labels = Shared_DockerPackagingStringMap;
+
+export type Shared_DockerPackagingManifest_Runtime_Layout = 'assembly' | 'outputs';
+
+export type Shared_DockerPackagingManifest_Runtime_PackageCommands = string[];
+
+export type Shared_DockerPackagingManifest_Runtime_Packages = Shared_DockerPackagingRuntimePackageEntry[];
+
+export type Shared_DockerPackagingManifest_Runtime = {
+  arguments?: Shared_DockerPackagingManifest_Runtime_Arguments;
+  copies?: Shared_DockerPackagingManifest_Runtime_Copies;
+  directories?: Shared_DockerPackagingManifest_Runtime_Directories;
+  environment?: Shared_DockerPackagingManifest_Runtime_Environment;
+  expose?: Shared_DockerPackagingManifest_Runtime_Expose;
+  from?: Shared_DockerPackagingManifest_Runtime_From;
+  labels?: Shared_DockerPackagingManifest_Runtime_Labels;
+  layout?: Shared_DockerPackagingManifest_Runtime_Layout;
+  packageCommands?: Shared_DockerPackagingManifest_Runtime_PackageCommands;
+  packages?: Shared_DockerPackagingManifest_Runtime_Packages;
+};
+
+export type Shared_DockerPackagingManifest_S6Overlay_From = string;
+
+export type Shared_DockerPackagingManifest_S6Overlay = {
+  from?: Shared_DockerPackagingManifest_S6Overlay_From;
+};
 
 export type Shared_DockerPackagingManifest_SchemaVersion = number;
 
@@ -384,13 +733,87 @@ export type Shared_DockerPackagingManifest_StateEnvironment = string;
 export type Shared_DockerPackagingManifest_Workspaces = Shared_DockerPackagingWorkspaces;
 
 export type Shared_DockerPackagingManifest = {
+  build?: Shared_DockerPackagingManifest_Build;
+  compose?: Shared_DockerPackagingManifest_Compose;
+  dockerfile?: Shared_DockerPackagingManifest_Dockerfile;
   healthPath: Shared_DockerPackagingManifest_HealthPath;
+  healthService?: Shared_DockerPackagingManifest_HealthService;
+  images?: Shared_DockerPackagingManifest_Images;
   legacyStatePaths: Shared_DockerPackagingManifest_LegacyStatePaths;
   networkMode: Shared_DockerPackagingManifest_NetworkMode;
+  project?: Shared_DockerPackagingManifest_Project;
+  runtime?: Shared_DockerPackagingManifest_Runtime;
+  s6Overlay?: Shared_DockerPackagingManifest_S6Overlay;
   schemaVersion: Shared_DockerPackagingManifest_SchemaVersion;
   services: Shared_DockerPackagingManifest_Services;
   stateEnvironment?: Shared_DockerPackagingManifest_StateEnvironment;
   workspaces: Shared_DockerPackagingManifest_Workspaces;
+};
+
+/**
+ * Shared - Docker Packaging - Image Sync.
+ *
+ * @since 0.49.0
+ */
+export type Shared_DockerPackagingPlannedFile_Content = string;
+
+export type Shared_DockerPackagingPlannedFile_Executable = boolean;
+
+export type Shared_DockerPackagingPlannedFile_Report = boolean;
+
+export type Shared_DockerPackagingPlannedFile = {
+  content: Shared_DockerPackagingPlannedFile_Content;
+  executable: Shared_DockerPackagingPlannedFile_Executable;
+  report: Shared_DockerPackagingPlannedFile_Report;
+};
+
+export type Shared_DockerPackagingImagePlan = Map<string, Shared_DockerPackagingPlannedFile>;
+
+export type Shared_DockerPackagingFileChange_Added = number;
+
+export type Shared_DockerPackagingFileChange_Path = string;
+
+export type Shared_DockerPackagingFileChange_Removed = number;
+
+export type Shared_DockerPackagingFileChange_Status = 'create' | 'delete' | 'unchanged' | 'update';
+
+export type Shared_DockerPackagingFileChange = {
+  added: Shared_DockerPackagingFileChange_Added;
+  path: Shared_DockerPackagingFileChange_Path;
+  removed: Shared_DockerPackagingFileChange_Removed;
+  status: Shared_DockerPackagingFileChange_Status;
+};
+
+export type Shared_DockerPackagingFileChanges = Shared_DockerPackagingFileChange[];
+
+export type Shared_DockerPackagingSyncOptions_DryRun = boolean;
+
+export type Shared_DockerPackagingSyncOptions_ProjectDirectory = string;
+
+export type Shared_DockerPackagingSyncOptions_ReplaceFile = boolean;
+
+export type Shared_DockerPackagingSyncOptions_ReportFiles = boolean;
+
+export type Shared_DockerPackagingSyncOptions = {
+  dryRun?: Shared_DockerPackagingSyncOptions_DryRun;
+  projectDirectory: Shared_DockerPackagingSyncOptions_ProjectDirectory;
+  replaceFile?: Shared_DockerPackagingSyncOptions_ReplaceFile;
+  reportFiles?: Shared_DockerPackagingSyncOptions_ReportFiles;
+};
+
+export type Shared_DockerPackagingSyncResult_Changes = Shared_DockerPackagingFileChanges;
+
+export type Shared_DockerPackagingSyncResult_MissingIgnoreFileEntry = boolean;
+
+export type Shared_DockerPackagingSyncResult_MissingScripts = string[];
+
+export type Shared_DockerPackagingSyncResult_UnownedFiles = string[];
+
+export type Shared_DockerPackagingSyncResult = {
+  changes: Shared_DockerPackagingSyncResult_Changes;
+  missingIgnoreFileEntry: Shared_DockerPackagingSyncResult_MissingIgnoreFileEntry;
+  missingScripts: Shared_DockerPackagingSyncResult_MissingScripts;
+  unownedFiles: Shared_DockerPackagingSyncResult_UnownedFiles;
 };
 
 export type Shared_DockerPackagingGenerateOptions_DryRun = boolean;
@@ -479,6 +902,29 @@ export type Shared_DockerPackagingWorkspacePackage = {
 };
 
 export type Shared_DockerPackagingWorkspacePackages = Map<string, Shared_DockerPackagingWorkspacePackage>;
+
+/**
+ * Shared - Docker Packaging - Image Render Input.
+ *
+ * @since 0.49.0
+ */
+export type Shared_DockerPackagingRenderInput_BuildOrder = Shared_DockerPackagingWorkspacePackages;
+
+export type Shared_DockerPackagingRenderInput_Manifest = Shared_DockerPackagingManifest;
+
+export type Shared_DockerPackagingRenderInput_NovaConfig = Record<string, unknown>;
+
+export type Shared_DockerPackagingRenderInput_RootPackage = Record<string, unknown>;
+
+export type Shared_DockerPackagingRenderInput_StageFragments = Map<string, string>;
+
+export type Shared_DockerPackagingRenderInput = {
+  buildOrder: Shared_DockerPackagingRenderInput_BuildOrder;
+  manifest: Shared_DockerPackagingRenderInput_Manifest;
+  novaConfig: Shared_DockerPackagingRenderInput_NovaConfig;
+  rootPackage: Shared_DockerPackagingRenderInput_RootPackage;
+  stageFragments: Shared_DockerPackagingRenderInput_StageFragments;
+};
 
 /**
  * Shared - Entity Menu Action.
@@ -1565,12 +2011,179 @@ export type Shared_NovaConfig_Github_IssueTemplate_BugReportField =
   | 'synology'
   | 'docker'
   | 'web'
-  | 'screenshots';
+  | 'screenshots'
+  | 'cloudflare-worker'
+  | 'pfsense-package'
+  | 'github-action'
+  | 'native-app'
+  | 'docs-site'
+  | 'notifications';
 
 export type Shared_NovaConfig_Github_IssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportField[];
 
+export type Shared_GithubIssueFormValidations_Required = boolean;
+
+export type Shared_GithubIssueFormValidations = {
+  required?: Shared_GithubIssueFormValidations_Required;
+};
+
+export type Shared_GithubIssueFormMarkdown_Type = 'markdown';
+
+export type Shared_GithubIssueFormMarkdown_Attributes_Value = string;
+
+export type Shared_GithubIssueFormMarkdown_Attributes = {
+  value: Shared_GithubIssueFormMarkdown_Attributes_Value;
+};
+
+export type Shared_GithubIssueFormMarkdown = {
+  type: Shared_GithubIssueFormMarkdown_Type;
+  attributes: Shared_GithubIssueFormMarkdown_Attributes;
+};
+
+export type Shared_GithubIssueFormInput_Type = 'input';
+
+export type Shared_GithubIssueFormInput_Id = string;
+
+export type Shared_GithubIssueFormInput_Attributes_Label = string;
+
+export type Shared_GithubIssueFormInput_Attributes_Description = string;
+
+export type Shared_GithubIssueFormInput_Attributes_Placeholder = string;
+
+export type Shared_GithubIssueFormInput_Attributes_Value = string;
+
+export type Shared_GithubIssueFormInput_Attributes = {
+  label: Shared_GithubIssueFormInput_Attributes_Label;
+  description?: Shared_GithubIssueFormInput_Attributes_Description;
+  placeholder?: Shared_GithubIssueFormInput_Attributes_Placeholder;
+  value?: Shared_GithubIssueFormInput_Attributes_Value;
+};
+
+export type Shared_GithubIssueFormInput_Validations = Shared_GithubIssueFormValidations;
+
+export type Shared_GithubIssueFormInput = {
+  type: Shared_GithubIssueFormInput_Type;
+  id: Shared_GithubIssueFormInput_Id;
+  attributes: Shared_GithubIssueFormInput_Attributes;
+  validations?: Shared_GithubIssueFormInput_Validations;
+};
+
+export type Shared_GithubIssueFormTextarea_Type = 'textarea';
+
+export type Shared_GithubIssueFormTextarea_Id = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes_Label = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes_Description = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes_Placeholder = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes_Value = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes_Render = string;
+
+export type Shared_GithubIssueFormTextarea_Attributes = {
+  label: Shared_GithubIssueFormTextarea_Attributes_Label;
+  description?: Shared_GithubIssueFormTextarea_Attributes_Description;
+  placeholder?: Shared_GithubIssueFormTextarea_Attributes_Placeholder;
+  value?: Shared_GithubIssueFormTextarea_Attributes_Value;
+  render?: Shared_GithubIssueFormTextarea_Attributes_Render;
+};
+
+export type Shared_GithubIssueFormTextarea_Validations = Shared_GithubIssueFormValidations;
+
+export type Shared_GithubIssueFormTextarea = {
+  type: Shared_GithubIssueFormTextarea_Type;
+  id: Shared_GithubIssueFormTextarea_Id;
+  attributes: Shared_GithubIssueFormTextarea_Attributes;
+  validations?: Shared_GithubIssueFormTextarea_Validations;
+};
+
+export type Shared_GithubIssueFormDropdown_Type = 'dropdown';
+
+export type Shared_GithubIssueFormDropdown_Id = string;
+
+export type Shared_GithubIssueFormDropdown_Attributes_Label = string;
+
+export type Shared_GithubIssueFormDropdown_Attributes_Description = string;
+
+export type Shared_GithubIssueFormDropdown_Attributes_Multiple = boolean;
+
+export type Shared_GithubIssueFormDropdown_Attributes_Option = string;
+
+export type Shared_GithubIssueFormDropdown_Attributes_Options = Shared_GithubIssueFormDropdown_Attributes_Option[];
+
+export type Shared_GithubIssueFormDropdown_Attributes_Default = number;
+
+export type Shared_GithubIssueFormDropdown_Attributes = {
+  label: Shared_GithubIssueFormDropdown_Attributes_Label;
+  description?: Shared_GithubIssueFormDropdown_Attributes_Description;
+  multiple?: Shared_GithubIssueFormDropdown_Attributes_Multiple;
+  options: Shared_GithubIssueFormDropdown_Attributes_Options;
+  default?: Shared_GithubIssueFormDropdown_Attributes_Default;
+};
+
+export type Shared_GithubIssueFormDropdown_Validations = Shared_GithubIssueFormValidations;
+
+export type Shared_GithubIssueFormDropdown = {
+  type: Shared_GithubIssueFormDropdown_Type;
+  id: Shared_GithubIssueFormDropdown_Id;
+  attributes: Shared_GithubIssueFormDropdown_Attributes;
+  validations?: Shared_GithubIssueFormDropdown_Validations;
+};
+
+export type Shared_GithubIssueFormCheckboxes_Type = 'checkboxes';
+
+export type Shared_GithubIssueFormCheckboxes_Id = string;
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Label = string;
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Description = string;
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Option_Label = string;
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Option_Required = boolean;
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Option = {
+  label: Shared_GithubIssueFormCheckboxes_Attributes_Option_Label;
+  required?: Shared_GithubIssueFormCheckboxes_Attributes_Option_Required;
+};
+
+export type Shared_GithubIssueFormCheckboxes_Attributes_Options = Shared_GithubIssueFormCheckboxes_Attributes_Option[];
+
+export type Shared_GithubIssueFormCheckboxes_Attributes = {
+  label: Shared_GithubIssueFormCheckboxes_Attributes_Label;
+  description?: Shared_GithubIssueFormCheckboxes_Attributes_Description;
+  options: Shared_GithubIssueFormCheckboxes_Attributes_Options;
+};
+
+export type Shared_GithubIssueFormCheckboxes = {
+  type: Shared_GithubIssueFormCheckboxes_Type;
+  id: Shared_GithubIssueFormCheckboxes_Id;
+  attributes: Shared_GithubIssueFormCheckboxes_Attributes;
+};
+
+export type Shared_GithubIssueFormQuestion = Shared_GithubIssueFormMarkdown | Shared_GithubIssueFormInput | Shared_GithubIssueFormTextarea | Shared_GithubIssueFormDropdown | Shared_GithubIssueFormCheckboxes;
+
+export type Shared_GithubIssueFormQuestions = Shared_GithubIssueFormQuestion[];
+
+export type Shared_NovaConfigGithubIssueTemplateForm = 'bug' | 'feature' | 'support';
+
+export type Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Bug = Shared_GithubIssueFormQuestions;
+
+export type Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Feature = Shared_GithubIssueFormQuestions;
+
+export type Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Support = Shared_GithubIssueFormQuestions;
+
+export type Shared_NovaConfig_Github_IssueTemplate_CustomQuestions = {
+  bug?: Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Bug;
+  feature?: Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Feature;
+  support?: Shared_NovaConfig_Github_IssueTemplate_CustomQuestions_Support;
+};
+
 export type Shared_NovaConfig_Github_IssueTemplate = {
   bugReportFields?: Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+  customQuestions?: Shared_NovaConfig_Github_IssueTemplate_CustomQuestions;
 };
 
 export type Shared_NovaConfig_Github = {
@@ -1589,6 +2202,8 @@ export type Shared_NovaConfig_Github = {
 export type Shared_NovaConfig_DockerHub_Namespace = string;
 
 export type Shared_NovaConfig_DockerHub_Repository = string;
+
+export type Shared_NovaConfig_DockerHub_Description = string;
 
 export type Shared_NovaConfigDockerHubVisibility = 'public' | 'private';
 
@@ -1610,6 +2225,7 @@ export type Shared_NovaConfig_DockerHub_ImmutableTags = {
 export type Shared_NovaConfig_DockerHub = {
   namespace: Shared_NovaConfig_DockerHub_Namespace;
   repository: Shared_NovaConfig_DockerHub_Repository;
+  description?: Shared_NovaConfig_DockerHub_Description;
   visibility?: Shared_NovaConfig_DockerHub_Visibility;
   categories?: Shared_NovaConfig_DockerHub_Categories;
   immutableTags?: Shared_NovaConfig_DockerHub_ImmutableTags;
@@ -1809,6 +2425,7 @@ export type Shared_NovaConfigReadMeBadge =
   | 'github-release'
   | 'github-top-language'
   | 'github-license'
+  | 'coverage'
   | 'funding';
 
 export type Shared_NovaConfig_ReadMe_Badges = Shared_NovaConfigReadMeBadge[];
@@ -1836,10 +2453,24 @@ export type Shared_NovaConfigWorkspaceRecipeName =
 
 export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
 
+export type Shared_NovaConfigWorkspace_GithubAction_Description = string;
+
+export type Shared_NovaConfigWorkspace_GithubAction = {
+  description?: Shared_NovaConfigWorkspace_GithubAction_Description;
+};
+
+export type Shared_NovaConfigWorkspace_Pfsense_Comment = string;
+
+export type Shared_NovaConfigWorkspace_Pfsense = {
+  comment?: Shared_NovaConfigWorkspace_Pfsense_Comment;
+};
+
 export type Shared_NovaConfigWorkspace = {
   name: Shared_NovaConfigWorkspace_Name;
   role: Shared_NovaConfigWorkspace_Role;
   policy: Shared_NovaConfigWorkspace_Policy;
+  githubAction?: Shared_NovaConfigWorkspace_GithubAction;
+  pfsense?: Shared_NovaConfigWorkspace_Pfsense;
 };
 
 export type Shared_NovaConfig_Workspaces = {
@@ -1997,6 +2628,8 @@ export type Shared_BlueprintPublishTargetContext_TimeoutMinutes = number;
 
 export type Shared_BlueprintPublishTargetContext_DockerHub = Shared_NovaConfig_DockerHub;
 
+export type Shared_BlueprintPublishTargetContext_TagPushPrereleaseExpression = string;
+
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
   artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
@@ -2010,6 +2643,7 @@ export type Shared_BlueprintPublishTargetContext = {
   environmentSelection?: Shared_BlueprintPublishTargetContext_EnvironmentSelection;
   timeoutMinutes: Shared_BlueprintPublishTargetContext_TimeoutMinutes;
   dockerHub?: Shared_BlueprintPublishTargetContext_DockerHub;
+  tagPushPrereleaseExpression?: Shared_BlueprintPublishTargetContext_TagPushPrereleaseExpression;
 };
 
 /**
@@ -2033,6 +2667,41 @@ export type Shared_NovaConfig_IgnoreFile = {
 export type Shared_NovaConfigIgnoreFiles_Path = string;
 
 export type Shared_NovaConfig_IgnoreFiles = Record<Shared_NovaConfigIgnoreFiles_Path, Shared_NovaConfig_IgnoreFile>;
+
+/**
+ * Shared - Nova Config Attribute File.
+ *
+ * @since 0.49.0
+ */
+export type Shared_NovaConfigAttributeFile_Bundle = string;
+
+export type Shared_NovaConfig_AttributeFile_Bundles = Shared_NovaConfigAttributeFile_Bundle[];
+
+export type Shared_NovaConfigAttributeFile_Pattern = string;
+
+export type Shared_NovaConfig_AttributeFile_Patterns = Shared_NovaConfigAttributeFile_Pattern[];
+
+export type Shared_NovaConfig_AttributeFile = {
+  bundles: Shared_NovaConfig_AttributeFile_Bundles;
+  patterns?: Shared_NovaConfig_AttributeFile_Patterns;
+};
+
+export type Shared_NovaConfigAttributeFiles_Path = string;
+
+export type Shared_NovaConfig_AttributeFiles = Record<Shared_NovaConfigAttributeFiles_Path, Shared_NovaConfig_AttributeFile>;
+
+export type Shared_AttributeFileMerge_Line = string;
+
+export type Shared_AttributeFileMerge_Lines = Shared_AttributeFileMerge_Line[];
+
+export type Shared_AttributeFileMerge_Conflict = string;
+
+export type Shared_AttributeFileMerge_Conflicts = Shared_AttributeFileMerge_Conflict[];
+
+export type Shared_AttributeFileMerge = {
+  lines: Shared_AttributeFileMerge_Lines;
+  conflicts: Shared_AttributeFileMerge_Conflicts;
+};
 
 export type Shared_BlueprintPublicDotenvVariable_Key = string;
 
@@ -2340,6 +3009,18 @@ export type Shared_NovaConfig_Recipes_Github = {
   [K in Shared_NovaConfigGithubRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
+export type Shared_NovaConfigGithubActionRecipeName = 'sync-identity';
+
+export type Shared_NovaConfig_Recipes_GithubAction = {
+  [K in Shared_NovaConfigGithubActionRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfigDockerRecipeName = 'sync-image';
+
+export type Shared_NovaConfig_Recipes_Docker = {
+  [K in Shared_NovaConfigDockerRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
 export type Shared_NovaConfigDockerHubRecipeName = 'sync-identity' | 'sync-policies';
 
 export type Shared_NovaConfig_Recipes_DockerHub = {
@@ -2365,6 +3046,12 @@ export type Shared_NovaConfig_Recipes_NovaConfig = {
   [K in Shared_NovaConfigNovaConfigRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
+export type Shared_NovaConfigPfsenseRecipeName = 'sync-identity';
+
+export type Shared_NovaConfig_Recipes_Pfsense = {
+  [K in Shared_NovaConfigPfsenseRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
 export type Shared_NovaConfigReadMeRecipeName =
   'update-badges'
   | 'update-credits'
@@ -2376,6 +3063,12 @@ export type Shared_NovaConfig_Recipes_ReadMe = {
   [K in Shared_NovaConfigReadMeRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
+export type Shared_NovaConfigTsconfigRecipeName = 'sync-references';
+
+export type Shared_NovaConfig_Recipes_Tsconfig = {
+  [K in Shared_NovaConfigTsconfigRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
 export type Shared_NovaConfig_Recipes_PackageJsonWorkspace = {
   [K in Shared_NovaConfigWorkspaceRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
@@ -2385,16 +3078,31 @@ export type Shared_NovaConfig_Recipes_PackageJson = {
 };
 
 export type Shared_NovaConfig_Recipes = {
+  'docker'?: Shared_NovaConfig_Recipes_Docker;
   'docker-hub'?: Shared_NovaConfig_Recipes_DockerHub;
   'github'?: Shared_NovaConfig_Recipes_Github;
+  'github-action'?: Shared_NovaConfig_Recipes_GithubAction;
   'license'?: Shared_NovaConfig_Recipes_License;
   'miscellaneous'?: Shared_NovaConfig_Recipes_Miscellaneous;
   'nova-config'?: Shared_NovaConfig_Recipes_NovaConfig;
+  'pfsense'?: Shared_NovaConfig_Recipes_Pfsense;
   'read-me'?: Shared_NovaConfig_Recipes_ReadMe;
+  'tsconfig'?: Shared_NovaConfig_Recipes_Tsconfig;
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };
 
 export type Shared_NovaConfig_Environment = Shared_NovaConfigEnvironment;
+
+/**
+ * Shared - Nova Config Settings - Coverage.
+ *
+ * @since 0.49.0
+ */
+export type Shared_NovaConfigSettings_Coverage_Minimum = number;
+
+export type Shared_NovaConfigSettings_Coverage = {
+  minimum?: Shared_NovaConfigSettings_Coverage_Minimum;
+};
 
 /**
  * Shared - Nova Config Settings - Version Strategy.
@@ -2431,6 +3139,8 @@ export type Shared_NovaConfigSettings_RunWorkspaces = {
   root?: Shared_NovaConfigSettings_RunWorkspaces_Root;
 };
 
+export type Shared_NovaConfig_Settings_Coverage = Shared_NovaConfigSettings_Coverage;
+
 export type Shared_NovaConfig_Settings_LockStepVersioning = boolean;
 
 export type Shared_NovaConfig_Settings_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
@@ -2438,6 +3148,7 @@ export type Shared_NovaConfig_Settings_RunWorkspaces = Shared_NovaConfigSettings
 export type Shared_NovaConfig_Settings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Shared_NovaConfig_Settings = {
+  coverage?: Shared_NovaConfig_Settings_Coverage;
   lockStepVersioning?: Shared_NovaConfig_Settings_LockStepVersioning;
   runWorkspaces?: Shared_NovaConfig_Settings_RunWorkspaces;
   versionStrategy?: Shared_NovaConfig_Settings_VersionStrategy;
@@ -2455,6 +3166,7 @@ export type Shared_NovaConfig = {
   workspaces?: Shared_NovaConfig_Workspaces;
   artifacts?: Shared_NovaConfig_Artifacts;
   ignoreFiles?: Shared_NovaConfig_IgnoreFiles;
+  attributeFiles?: Shared_NovaConfig_AttributeFiles;
   agents?: Shared_NovaConfig_Agents;
   recipes?: Shared_NovaConfig_Recipes;
   environment?: Shared_NovaConfig_Environment;
@@ -2468,7 +3180,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'dockerHub' | 'urls' | 'readme' | 'workspaces' | 'artifacts' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'dockerHub' | 'urls' | 'readme' | 'workspaces' | 'artifacts' | 'workflows' | 'ignoreFiles' | 'attributeFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.
@@ -3329,6 +4041,10 @@ export type Shared_AppStoreConnectTestFakeState_LocalizationCreateCount = number
 
 export type Shared_AppStoreConnectTestFakeState_Localizations = Shared_AppStoreConnectResource[];
 
+export type Shared_AppStoreConnectTestFakeState_LocalizationUpdateCount = number;
+
+export type Shared_AppStoreConnectTestFakeState_LocalizationUpdateFields = string[][];
+
 export type Shared_AppStoreConnectTestFakeState_MaximumPlacementCount = number;
 
 export type Shared_AppStoreConnectTestFakeState_MaximumScreenshotCount = number;
@@ -3357,6 +4073,8 @@ export type Shared_AppStoreConnectTestFakeState = {
   images: Shared_AppStoreConnectTestFakeState_Images;
   localizationCreateCount: Shared_AppStoreConnectTestFakeState_LocalizationCreateCount;
   localizations: Shared_AppStoreConnectTestFakeState_Localizations;
+  localizationUpdateCount: Shared_AppStoreConnectTestFakeState_LocalizationUpdateCount;
+  localizationUpdateFields: Shared_AppStoreConnectTestFakeState_LocalizationUpdateFields;
   maximumPlacementCount: Shared_AppStoreConnectTestFakeState_MaximumPlacementCount;
   maximumScreenshotCount: Shared_AppStoreConnectTestFakeState_MaximumScreenshotCount;
   minimumPlacementCount: Shared_AppStoreConnectTestFakeState_MinimumPlacementCount;
@@ -3409,9 +4127,13 @@ export type Shared_AppStoreConnectIntegrationOptions_Locales = string;
 
 export type Shared_AppStoreConnectIntegrationOptions_NonInteractive = true;
 
+export type Shared_AppStoreConnectIntegrationOptions_Plan = true;
+
 export type Shared_AppStoreConnectIntegrationOptions_Platforms = string;
 
 export type Shared_AppStoreConnectIntegrationOptions_SkipImageChecks = true;
+
+export type Shared_AppStoreConnectIntegrationOptions_Targets = string;
 
 export type Shared_AppStoreConnectIntegrationOptions_Version = string;
 
@@ -3426,8 +4148,10 @@ export type Shared_AppStoreConnectIntegrationOptions = {
   keyId?: Shared_AppStoreConnectIntegrationOptions_KeyId;
   locales?: Shared_AppStoreConnectIntegrationOptions_Locales;
   nonInteractive?: Shared_AppStoreConnectIntegrationOptions_NonInteractive;
+  plan?: Shared_AppStoreConnectIntegrationOptions_Plan;
   platforms?: Shared_AppStoreConnectIntegrationOptions_Platforms;
   skipImageChecks?: Shared_AppStoreConnectIntegrationOptions_SkipImageChecks;
+  targets?: Shared_AppStoreConnectIntegrationOptions_Targets;
   version?: Shared_AppStoreConnectIntegrationOptions_Version;
   workspace?: Shared_AppStoreConnectIntegrationOptions_Workspace;
   yes?: Shared_AppStoreConnectIntegrationOptions_Yes;
@@ -3452,6 +4176,24 @@ export type Shared_AppStoreConnectRemoteContext_Version = Shared_AppStoreConnect
 export type Shared_AppStoreConnectRemoteContext = {
   localization: Shared_AppStoreConnectRemoteContext_Localization;
   version: Shared_AppStoreConnectRemoteContext_Version;
+};
+
+export type Shared_AppStoreConnectPlanContext_Localization = Shared_AppStoreConnectResource | undefined;
+
+export type Shared_AppStoreConnectPlanContext_Version = Shared_AppStoreConnectResource;
+
+export type Shared_AppStoreConnectPlanContext = {
+  localization: Shared_AppStoreConnectPlanContext_Localization;
+  version: Shared_AppStoreConnectPlanContext_Version;
+};
+
+export type Shared_AppStoreConnectPlanOrderEntry_Action = 'keep' | 'upload';
+
+export type Shared_AppStoreConnectPlanOrderEntry_FileName = string;
+
+export type Shared_AppStoreConnectPlanOrderEntry = {
+  action: Shared_AppStoreConnectPlanOrderEntry_Action;
+  fileName: Shared_AppStoreConnectPlanOrderEntry_FileName;
 };
 
 export type Shared_AppStoreConnectContextCache = Map<string, Promise<Shared_AppStoreConnectRemoteContext>>;
@@ -3516,4 +4258,24 @@ export type Shared_DiscordDeveloperPortalOptions_Workspace = string;
 export type Shared_DiscordDeveloperPortalOptions = {
   token?: Shared_DiscordDeveloperPortalOptions_Token;
   workspace?: Shared_DiscordDeveloperPortalOptions_Workspace;
+};
+
+export type Shared_GithubOwnerType = 'Organization' | 'User';
+
+export type Shared_GithubRepositoryVisibility_IsPrivate = boolean;
+
+export type Shared_GithubRepositoryVisibility_OwnerType = Shared_GithubOwnerType;
+
+export type Shared_GithubRepositoryVisibility = {
+  isPrivate: Shared_GithubRepositoryVisibility_IsPrivate;
+  ownerType: Shared_GithubRepositoryVisibility_OwnerType;
+};
+
+export type Shared_DiscordApplication_Id = string;
+
+export type Shared_DiscordApplication_Name = string;
+
+export type Shared_DiscordApplication = {
+  id: Shared_DiscordApplication_Id;
+  name: Shared_DiscordApplication_Name;
 };

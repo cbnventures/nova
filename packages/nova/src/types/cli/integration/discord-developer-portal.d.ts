@@ -1,4 +1,5 @@
 import type {
+  Shared_DiscordApplication,
   Shared_DiscordDeveloperPortalOptions,
   Shared_IntegrationWorkspace,
 } from '../../shared.d.ts';
@@ -23,14 +24,4 @@ export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Returns 
 
 export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Token = string;
 
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Response = Response;
-
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ResponseText = string;
-
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Data = unknown;
-
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application = Record<string, unknown>;
-
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationId = string;
-
-export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationName = string;
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application = Shared_DiscordApplication;

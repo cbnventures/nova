@@ -7,7 +7,8 @@ import type { Presets_Eslint_RuntimeNode_Config } from '../../types/presets/esli
  * Presets - ESLint - Runtime Node - Config.
  *
  * Enables eslint-plugin-n for Node.js projects, adds rules against bad
- * habits like raw console and process.exit, and turns off hashbang enforcement.
+ * habits like raw console and process.exit, and turns off hashbang enforcement
+ * on CLI entry points and scripts.
  *
  * @since 0.11.0
  */
@@ -84,6 +85,21 @@ const config: Presets_Eslint_RuntimeNode_Config = [
     },
     rules: {
       // Turn off shebang enforcement for source-level CLI entry points because the "bin" field points to the build output, not the source file.
+      'n/hashbang': ['off'],
+    },
+  },
+  {
+    name: 'nova/runtime-node/script-hashbang',
+    files: [
+      '**/scripts/**/*.js',
+      '**/scripts/**/*.cjs',
+      '**/scripts/**/*.mjs',
+    ],
+    plugins: {
+      n: nPlugin,
+    },
+    rules: {
+      // Turn off shebang enforcement for scripts because some run directly from the shell and need one while others do not. The rule can only require or forbid a shebang, so turning it off allows both.
       'n/hashbang': ['off'],
     },
   },

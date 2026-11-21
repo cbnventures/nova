@@ -37,7 +37,7 @@ export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopyLink = st
 
 export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopiedText = string;
 
-export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = string | undefined;
 
 export type Theme_ContentFooter_ShareButton_Index_ShareButton_PlatformLabel = string;
 

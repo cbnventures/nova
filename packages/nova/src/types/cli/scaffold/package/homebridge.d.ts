@@ -1,4 +1,7 @@
 import type {
+  Shared_KeywordDestination,
+  Shared_NovaConfig,
+  Shared_NovaConfig_Project_Keywords,
   Shared_ScaffoldTemplateQuestions,
   Shared_ScaffoldTemplateResolution_Answers,
 } from '../../../shared.d.ts';
@@ -17,6 +20,25 @@ export type Cli_Scaffold_Package_Homebridge_TemplateQuestions = Shared_ScaffoldT
  */
 export type Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Answers = Shared_ScaffoldTemplateResolution_Answers;
 export type Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Returns = string[];
+
+/**
+ * CLI - Scaffold - Package - Homebridge - Resolve Replacements.
+ *
+ * @since 0.49.0
+ */
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_WorkspaceName = string;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_ConfigRoot = string;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Returns = Promise<Map<RegExp, string> | undefined>;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Config = Shared_NovaConfig;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_Keywords = Shared_NovaConfig_Project_Keywords | undefined;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsDestination = Shared_KeywordDestination;
+
+export type Cli_Scaffold_Package_Homebridge_Runner_ResolveReplacements_KeywordsLimitMessage = string | undefined;
 
 /**
  * CLI - Scaffold - Package - Homebridge - Run.

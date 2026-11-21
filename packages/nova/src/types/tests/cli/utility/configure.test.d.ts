@@ -9,6 +9,8 @@ import type {
   Cli_Utility_Configure_Runner_FindPlainSampleLeftovers_Returns,
   Cli_Utility_Configure_Runner_PromptAgents_Config,
   Cli_Utility_Configure_Runner_PromptAgents_Returns,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Config,
+  Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns,
   Cli_Utility_Configure_Runner_PromptDockerHub_Config,
   Cli_Utility_Configure_Runner_PromptDockerHub_Returns,
   Cli_Utility_Configure_Runner_PromptEnvironment_Config,
@@ -60,6 +62,7 @@ import type {
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
+  Shared_NovaConfig_Settings,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentWorkspace,
@@ -89,6 +92,7 @@ export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Value<Value, Key ext
 export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
   'promptAgents'
   | 'promptArtifacts'
+  | 'promptAttributeFiles'
   | 'promptDockerHub'
   | 'promptEmails'
   | 'promptEntities'
@@ -243,6 +247,21 @@ export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhen
 export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents = (config: Cli_Utility_Configure_Runner_PromptAgents_Config) => Cli_Utility_Configure_Runner_PromptAgents_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result = Awaited<Cli_Utility_Configure_Runner_PromptAgents_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Attribute Files - Adds An Entry And Refuses A Conflicting Pattern.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_PromptAttributeFiles = (config: Cli_Utility_Configure_Runner_PromptAttributeFiles_Config) => Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptAttributeFiles_AddsAnEntryAndRefusesAConflictingPattern_Result = Awaited<Cli_Utility_Configure_Runner_PromptAttributeFiles_Returns>;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Docker Hub - Configures Repository Settings And Recipes.
@@ -536,6 +555,21 @@ export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortD
 export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheDockerHubShortDescriptionLimit_ValidationResult = unknown;
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Project - Enforces The Topic Rules On Keywords.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_PromptProject = (config: Cli_Utility_Configure_Runner_PromptProject_Config) => Cli_Utility_Configure_Runner_PromptProject_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_KeywordsQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptProject_EnforcesTheTopicRulesOnKeywords_Validate = (value: unknown) => unknown | Promise<unknown>;
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Closed Operating System Cleanup Settings.
  *
  * @since 0.32.0
@@ -619,6 +653,22 @@ export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromW
 export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings = (config: Cli_Utility_Configure_Runner_PromptSettings_Config) => Cli_Utility_Configure_Runner_PromptSettings_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = Awaited<Cli_Utility_Configure_Runner_PromptSettings_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_SandboxRoot = string;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_CwdSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_PromptSettings = (config: Cli_Utility_Configure_Runner_PromptSettings_Config) => Cli_Utility_Configure_Runner_PromptSettings_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredResult = Awaited<Cli_Utility_Configure_Runner_PromptSettings_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_StoredSettings = Shared_NovaConfig_Settings | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedResult = Awaited<Cli_Utility_Configure_Runner_PromptSettings_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_ClearedSettings = Shared_NovaConfig_Settings | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Workflows - Cancels When The Runner List Cannot Be Read.
@@ -776,6 +826,29 @@ export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesD
 export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PackageJsonRecipes = Cli_Utility_Configure_Runner_PromptWorkspacesForm_ReturnsApply_PackageJsonRecipes | undefined;
 
 export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_IdentityQuestion = PromptObject | undefined;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Workspaces Form - Validates And Stores The Pfsense Comment Override.
+ *
+ * @since 0.49.0
+ */
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Question = PromptObject;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_PromptWorkspacesForm = (options: Cli_Utility_Configure_Runner_PromptWorkspacesForm_Options) => Cli_Utility_Configure_Runner_PromptWorkspacesForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_FormResult = Cli_Utility_Configure_Runner_PromptWorkspacesForm_ReturnsApply | Cli_Utility_Configure_Runner_PromptWorkspacesForm_ReturnsBack;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Workspace = Cli_Utility_Configure_Runner_PromptWorkspacesForm_ReturnsApply_Workspace | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_CommentQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkspacesForm_ValidatesAndStoresThePfsenseCommentOverride_Validate = (value: unknown) => true | string;
 
 /**
  * Tests - CLI - Utility - Configure - Read Local Filled Keys - Returns Only Genuinely Filled Keys.

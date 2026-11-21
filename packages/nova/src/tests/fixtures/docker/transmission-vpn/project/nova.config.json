@@ -1,0 +1,18 @@
+{
+  "project": {
+    "name": {
+      "title": "Transmission VPN",
+      "slug": "transmission-vpn"
+    },
+    "description": {
+      "short": "Fail-closed Transmission appliance with OpenVPN and WireGuard"
+    },
+    "legalName": "Jacky Liang",
+    "license": "MIT"
+  },
+  "urls": {
+    "homepage": "https://mrjackyliang.github.io/transmission-vpn/",
+    "repository": "https://github.com/mrjackyliang/transmission-vpn",
+    "documentation": "https://mrjackyliang.github.io/transmission-vpn/"
+  }
+}

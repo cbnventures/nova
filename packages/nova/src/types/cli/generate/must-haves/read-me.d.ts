@@ -31,11 +31,15 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage = strin
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources = string[];
 
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageEndpointUrl = string | undefined;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Lines = string[];
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_BadgeId = Shared_NovaConfigReadMeBadge;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_CoverageHref = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform = Shared_FundPlatform;
 
@@ -71,6 +75,8 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Docker
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_CoverageEndpointUrl = string | undefined;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges = string;
 

@@ -1,5 +1,12 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.49.0 - 2026-11-21
+
+### UPDATED
+- The package's internal file layout changed: compiled files and styles now sit directly under `build/` instead of `build/src/`. The preset, `./theme`, `./blocks`, `./icons` and type entry points, and the `theme-nova` command stay the same, so site configs need no changes.
+- README introduction, which now uses the project's new long description.
+- Content footer share buttons, which now build their X, Facebook, LinkedIn, and Reddit links from one share-targets module.
+
 ## 0.48.1 - 2026-11-19
 
 No changes.

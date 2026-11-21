@@ -1,0 +1,32 @@
+name: transmission-vpn
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      PGID: "${PGID:-1000}"
+      PUID: "${PUID:-1000}"
+      TZ: "${TZ:-UTC}"
+    ports:
+      - "22602:22602"
+      - "22605:22605"
+      - "9091:9091"
+    restart: unless-stopped
+    user: "0:0"
+    volumes:
+      - config:/config
+      - data:/data
+
+networks:
+  default:
+    enable_ipv6: true
+
+volumes:
+  config:
+  data:

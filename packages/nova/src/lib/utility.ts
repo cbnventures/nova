@@ -1,5 +1,5 @@
 import { exec, spawn } from 'node:child_process';
-import { promises as fs } from 'node:fs';
+import { existsSync, promises as fs } from 'node:fs';
 import { platform } from 'node:os';
 import {
   basename,
@@ -238,6 +238,7 @@ import type {
   Lib_Utility_ResolveTemplatePath_CurrentDirectory,
   Lib_Utility_ResolveTemplatePath_FilePath,
   Lib_Utility_ResolveTemplatePath_ImportMetaUrl,
+  Lib_Utility_ResolveTemplatePath_ParentDirectory,
   Lib_Utility_ResolveTemplatePath_Returns,
   Lib_Utility_ResolveTemplatePath_Subpath,
   Lib_Utility_SaveGeneratedFile_Contents,
@@ -1427,8 +1428,9 @@ export async function renameFileWithDate(oldPath: Lib_Utility_RenameFileWithDate
 /**
  * Lib - Utility - Resolve Template Path.
  *
- * Converts an import.meta.url into an absolute path under the
- * templates directory, called by every generator and scaffold command to locate assets.
+ * Converts an import.meta.url into an absolute path under the nearest templates folder,
+ * called by every generator and scaffold command to locate assets. Walking up finds the
+ * package's "templates" from source files and "build/templates" from the build output.
  *
  * @param {Lib_Utility_ResolveTemplatePath_ImportMetaUrl} importMetaUrl - Import meta url.
  * @param {Lib_Utility_ResolveTemplatePath_Subpath}       subpath       - Subpath.
@@ -1439,9 +1441,21 @@ export async function renameFileWithDate(oldPath: Lib_Utility_RenameFileWithDate
  */
 export function resolveTemplatePath(importMetaUrl: Lib_Utility_ResolveTemplatePath_ImportMetaUrl, subpath: Lib_Utility_ResolveTemplatePath_Subpath): Lib_Utility_ResolveTemplatePath_Returns {
   const filePath: Lib_Utility_ResolveTemplatePath_FilePath = fileURLToPath(importMetaUrl);
-  const currentDirectory: Lib_Utility_ResolveTemplatePath_CurrentDirectory = dirname(filePath);
+  let currentDirectory: Lib_Utility_ResolveTemplatePath_CurrentDirectory = dirname(filePath);
 
-  return join(currentDirectory, '..', '..', '..', '..', 'templates', subpath);
+  // Source files and build output sit at different depths below their templates folder,
+  // so the nearest folder holding "templates/scaffold" is the one that belongs to this copy.
+  while (existsSync(join(currentDirectory, 'templates', 'scaffold')) === false) {
+    const parentDirectory: Lib_Utility_ResolveTemplatePath_ParentDirectory = dirname(currentDirectory);
+
+    if (parentDirectory === currentDirectory) {
+      throw new Error(`Nova's templates folder was not found above "${filePath}".`);
+    }
+
+    currentDirectory = parentDirectory;
+  }
+
+  return join(currentDirectory, 'templates', subpath);
 }
 
 /**
@@ -1468,6 +1482,7 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
     || baseName === '.assetsignore'
     || baseName === '.dockerignore'
     || baseName === '.editorconfig'
+    || baseName === '.gitattributes'
     || baseName === '.gitignore'
     || baseName === '.env'
     || baseName.startsWith('.env.')

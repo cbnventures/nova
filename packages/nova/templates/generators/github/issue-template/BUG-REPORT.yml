@@ -5,10 +5,12 @@
 # Conditional content is injected automatically by the generator:
 #
 #   - Pronouns ([__WE__], [__US__], [__OUR__]) based on project.pronouns.
-#   - Platform-specific fields from bug-report-fields/ based on project.platforms.
+#   - The documentation check from conditional-fields/ when urls.documentation
+#     or github.owner and github.repo are set.
+#   - Questions ([__QUESTION_FIELDS__]): global-fields/bug-report.yml, then each
+#     github.issueTemplate.bugReportFields set from bug-report-fields/, then
+#     github.issueTemplate.customQuestions.bug.
 #   - Legal agreements from legal-agreements/ when urls.termsOfUse or urls.privacyPolicy is set.
-#   - Screenshots field from bug-report-fields/screenshots.yml when
-#     "screenshots" is listed in project.platforms.
 #
 # ============================================================================
 name: "Bug Report"
@@ -21,25 +23,22 @@ body:
       value: "[__WE__] truly appreciate you taking the time to share this bug report with [__US__]."
   - type: "markdown"
     attributes:
-      value: "Please __fill out the form with as much detail as possible__ so [__WE__] can easily recreate the bug and work swiftly to assist you in resolving it. Thank you for your cooperation!"
+      value: "Please __fill out the form with as much detail as possible__ so [__WE__] can recreate the problem."
   - type: "markdown"
     attributes:
       value: "---"
   - type: "checkboxes"
     id: "pre-check"
     attributes:
-      label: "Pre-check confirmation"
-      description: "Before proceeding further, please confirm the following by checking each box. This confirmation is crucial for [__US__] to effectively identify and address the bug. __All boxes MUST be checked; failure to comply will result in the immediate closure of this bug report.__"
+      label: "Bug Report Confirmation"
+      description: "Confirm that this submission belongs in the bug report form."
       options:
-        - label: "I have provided a descriptive title for the bug I am currently having"
+        - label: "I have provided a descriptive title and kept the original title prefix, __\"[Bug]: \"__"
           required: true
-        - label: "I have kept the original title prefix, __\"[Bug]: \"__"
+        - label: "I searched open and closed issues and did not find the same problem"
           required: true
-        - label: "I have read the `README.md` file, and this is __NOT__ a duplicate bug report"
-          required: true
-        - label: "I am __NOT__ requesting a new feature"
-          required: true
-        - label: "I am __NOT__ requesting help related to a support request"
+[__DOCUMENTATION_CHECK__]
+        - label: "I am reporting behavior that is not working as documented or intended"
           required: true
   - type: "input"
     id: "email"
@@ -49,38 +48,20 @@ body:
       placeholder: "e.g. user@example.com"
     validations:
       required: true
-  - type: "textarea"
-    id: "what-happened"
-    attributes:
-      label: "Tell [__US__] exactly what happened"
-      description: "Provide a comprehensive description of __the steps or circumstances__ that led to the occurrence of this bug."
-      placeholder: "e.g. When I was doing ..., I expected ... to happen, but I got ... instead."
-    validations:
-      required: true
-  - type: "input"
-    id: "program-version"
-    attributes:
-      label: "Program version"
-      description: "What version of the program are you using?"
-      placeholder: "e.g. 1.0.0"
-    validations:
-      required: true
-[__PLATFORM_FIELDS__]
+[__QUESTION_FIELDS__]
   - type: "textarea"
     id: "logs"
     attributes:
-      label: "Captured logs relevant to this report"
-      description: "Copy and paste all logs related to this bug. __Do not include logs unrelated to this project.__ This block will be automatically formatted into code, so __there is no need for backticks__ or special markup."
-      placeholder: "Please include logs relevant to this bug report. If this field is filled with irrelevant content (e.g., \"no logs\" or \"cannot find logs\"), this bug report will be closed immediately."
+      label: "Relevant Logs"
+      description: "Paste the relevant failure output when available. __Remove all secrets and personal data before submitting.__ This block is formatted as code, so there is no need for backticks."
       render: "Shell"
     validations:
-      required: true
-  - type: "checkboxes"
-    id: "post-check"
+      required: false
+  - type: "textarea"
+    id: "additional-context"
     attributes:
-      label: "Post-check confirmation"
-      description: "Before proceeding further, please confirm the following by checking each box. This confirmation is crucial for the consideration of this bug report. __All boxes MUST be checked; failure to comply will result in this bug report being closed.__"
-      options:
-        - label: "I have filled in the form __exactly as requested__ and did not attempt to circumvent form validation"
-          required: true
+      label: "Additional Context"
+      description: "Add any other information that could help explain the submission."
+    validations:
+      required: false
 [__LEGAL_AGREEMENTS__]

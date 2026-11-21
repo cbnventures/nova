@@ -1,0 +1,15 @@
+  - type: "dropdown"
+    id: "affected-stage"
+    attributes:
+      label: "Affected Stage"
+      description: "Select the stage most closely related to the submission."
+      options:
+        - "Configuration"
+        - "Validation"
+        - "File Generation"
+        - "Deployment"
+        - "Worker Runtime"
+        - "Custom Domain"
+        - "Other"
+    validations:
+      required: true

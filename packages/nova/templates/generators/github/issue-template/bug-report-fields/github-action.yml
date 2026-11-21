@@ -1,0 +1,16 @@
+  - type: "input"
+    id: "workflow-event"
+    attributes:
+      label: "Workflow Event"
+      description: "Enter the GitHub event that started the affected workflow."
+      placeholder: "e.g. schedule, issues, issue_comment"
+    validations:
+      required: true
+  - type: "textarea"
+    id: "workflow-step"
+    attributes:
+      label: "Workflow Step"
+      description: "Paste the relevant job or step from the workflow. __Remove all secrets before submitting.__"
+      render: "YAML"
+    validations:
+      required: true

@@ -33,9 +33,12 @@ async function novaTypeCheck() {
   const runTypeCheck = typeCheckModule['runTypeCheck'];
   const parsedArgs = parseArgs({
     options: {
-      project: {
+      'project': {
         type: 'string',
         short: 'p',
+      },
+      'pass-with-no-inputs': {
+        type: 'boolean',
       },
     },
     strict: false,
@@ -43,8 +46,10 @@ async function novaTypeCheck() {
   const values = parsedArgs.values;
   const projectValue = values['project'];
   const project = (typeof projectValue === 'string') ? projectValue : undefined;
+  const passWithNoInputs = values['pass-with-no-inputs'] === true;
   const exitCode = runTypeCheck({
     project,
+    passWithNoInputs,
     printError,
     printInfo,
   });

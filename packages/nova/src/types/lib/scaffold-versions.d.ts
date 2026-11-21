@@ -1,10 +1,12 @@
-import type { Shared_ScaffoldVersionCatalog_Entry } from '../shared.d.ts';
+import type { Shared_ScaffoldVersionCatalog, Shared_ScaffoldVersionCatalog_Entry } from '../shared.d.ts';
 
 /**
  * Lib - Scaffold Versions.
  *
  * @since 0.32.0
  */
+export type Lib_ScaffoldVersions_ScaffoldVersionCatalog = Shared_ScaffoldVersionCatalog;
+
 export type Lib_ScaffoldVersions_Entries = Record<string, Shared_ScaffoldVersionCatalog_Entry>;
 
 /**

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
+import { readFileSync } from 'node:fs';
+
 import { CLIHeader, Logger } from '@cbnventures/nova/toolkit';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import packageJson from '../../package.json' with { type: 'json' };
 import { Runner as CliI18nCheck } from './i18n/check.js';
 import { Runner as CliI18nCoverage } from './i18n/coverage.js';
 import { Runner as CliI18nSync } from './i18n/sync.js';
@@ -21,7 +22,18 @@ import type {
   Cli_Index_CLI_Program,
   Cli_Index_CLI_RegisterCommands_I18n,
   Cli_Index_CLI_RegisterCommands_Returns,
+  Cli_Index_PackageJson,
 } from '../types/cli/index.d.ts';
+
+/**
+ * CLI - package.json.
+ *
+ * Reads the preset's own package.json at the package root, one folder above both the
+ * source and the build output, so the CLI header shows the installed version.
+ *
+ * @since 0.49.0
+ */
+const packageJson: Cli_Index_PackageJson = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf-8')) as Cli_Index_PackageJson;
 
 /**
  * CLI.

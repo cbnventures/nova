@@ -83,4 +83,6 @@ All App Store Connect requests and upload chunks run through a small bounded que
   </TabItem>
 </Tabs>
 
-The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/), plus `--skip-image-checks`. The complete replacement plan is shown before authentication or remote changes.
+The command uses the same workspace, version, platform, locale, credential, dry-run, plan, and confirmation options as [`metadata`](../metadata/), plus `--skip-image-checks` and `--targets`. Pass `--targets` a comma-separated list of target folder names, such as `iphone,iphone-duo`, to replace only those targets. The complete replacement plan is shown before authentication or remote changes. Its heading totals the selected files, targets, locales, and bytes.
+
+`--plan` signs in and compares each target with App Store Connect by checksum, then prints how many screenshots would be deleted, uploaded, or kept and the final order, without changing anything.

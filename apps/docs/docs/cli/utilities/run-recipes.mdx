@@ -1,7 +1,7 @@
 ---
 id: "run-recipes"
 title: "Run Recipes"
-description: "Run every enabled recipe in sequence across the Docker Hub, GitHub, license, miscellaneous, Nova config, read-me, and package-json categories."
+description: "Run every enabled recipe in sequence across the Docker Hub, GitHub, GitHub Action, license, miscellaneous, Nova config, pfSense, read-me, and package-json categories."
 keywords:
   - "nova"
   - "nova run-recipes"
@@ -25,7 +25,7 @@ Run every enabled <Terminology title="A script that tidies your files to match n
 
 The `run-recipes` command traverses the complete recipe registry in sequence. Each recipe reads its own `nova.config.json` entry and performs work only when its individual `enabled` toggle is `true`. This is the single command that replaces chaining individual <Terminology title="A script that tidies your files to match nova.config.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
 
-There is no category flag, so every invocation visits the `docker-hub`, `github`, `license`, `miscellaneous`, `nova-config`, `read-me`, and `package-json` categories. Disabled recipes perform no work.
+There is no category flag, so every invocation visits the `docker`, `docker-hub`, `github`, `github-action`, `license`, `miscellaneous`, `nova-config`, `pfsense`, `read-me`, `tsconfig`, and `package-json` categories. Disabled recipes perform no work.
 
 Recipes reconcile settings or existing content and are safe to run again. They do not invoke <Terminology title="Writes a config file for you from a built-in template" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology>; generated files remain an explicit `nova generate ...` action.
 
@@ -33,12 +33,16 @@ Recipes reconcile settings or existing content and are safe to run again. They d
 
 | Category        | Recipes                                                                                                                                                                          |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `docker`        | `sync-image`                                                                                                                                                                     |
 | `docker-hub`    | `sync-identity`, `sync-policies`                                                                                                                                                 |
 | `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
+| `github-action` | `sync-identity`                                                                                                                                                                  |
 | `license`       | `update-copyright`                                                                                                                                                               |
 | `miscellaneous` | `fix-markdown-tables`, `remove-operating-system-files`                                                                                                                           |
 | `nova-config`   | `normalize-order`                                                                                                                                                                |
+| `pfsense`       | `sync-identity`                                                                                                                                                                  |
 | `read-me`       | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
+| `tsconfig`      | `sync-references`                                                                                                                                                                |
 | `package-json`  | `sync-identity`, `sync-ownership`, `normalize-modules`, `normalize-artifacts`, `sync-environment`, `normalize-dependencies`, `normalize-bundler`, `normalize-tooling`, `cleanup` |
 
 ## Why Use This Command?
