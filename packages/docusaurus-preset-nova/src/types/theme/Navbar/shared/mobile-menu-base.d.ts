@@ -105,6 +105,8 @@ export type Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ItemStyle = React.
 
 export type Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ItemIcon = string | undefined;
 
+export type Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_DropdownDefaultIcon = string;
+
 export type Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ChildItem = Record<string, unknown>;
 
 export type Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_LinkProps = Record<string, string>;

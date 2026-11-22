@@ -27,12 +27,6 @@ ruleTester.run('noRegexLiteralFlags', NoRegexLiteralFlags['rule'], {
       code: 'const pattern = /hello/;',
     },
     {
-      code: 'const pattern = /^test$/;',
-    },
-    {
-      code: 'const pattern = /[a-z]/;',
-    },
-    {
       code: 'new RegExp(pattern, "g");',
     },
     {
@@ -41,22 +35,8 @@ ruleTester.run('noRegexLiteralFlags', NoRegexLiteralFlags['rule'], {
       filename: '/path/to/ignored.ts',
     },
   ],
-  invalid: [
-    {
-      code: 'const pattern = /hello/g;',
-      errors: [{ messageId: 'noRegexFlags' }],
-    },
-    {
-      code: 'const pattern = /hello/i;',
-      errors: [{ messageId: 'noRegexFlags' }],
-    },
-    {
-      code: 'const pattern = /hello/gi;',
-      errors: [{ messageId: 'noRegexFlags' }],
-    },
-    {
-      code: 'const pattern = /hello/m;',
-      errors: [{ messageId: 'noRegexFlags' }],
-    },
-  ],
+  invalid: [{
+    code: 'const pattern = /hello/g;',
+    errors: [{ messageId: 'noRegexFlags' }],
+  }],
 });

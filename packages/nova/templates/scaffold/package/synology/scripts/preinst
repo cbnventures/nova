@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eu
+
+# DSM runs preinst before it links "/var/packages/<package>/var", so this hook cannot write "lifecycle.log". To block an install, write the reason to SYNOPKG_TEMP_LOGFILE and exit non-zero; Package Center shows that text.
+exit 0

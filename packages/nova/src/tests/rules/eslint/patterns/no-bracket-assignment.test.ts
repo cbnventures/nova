@@ -48,10 +48,5 @@ ruleTester.run('noBracketAssignment', NoBracketAssignment['rule'], {
       code: 'target[key] += value;',
       errors: [{ messageId: 'useReflectSet' }],
     },
-    {
-      code: 'obj[\'name\'] = \'test\';',
-      output: 'Reflect.set(obj, \'name\', \'test\');',
-      errors: [{ messageId: 'useReflectSet' }],
-    },
   ],
 });

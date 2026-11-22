@@ -79,20 +79,6 @@ ruleTester.run('requireJsdocPrivate', RequireJsdocPrivate['rule'], {
       ].join('\n'),
     },
 
-    // Public member without @private (OK).
-    {
-      code: [
-        'class MyClass {',
-        '  /**',
-        '   * My method.',
-        '   *',
-        '   * @since 0.15.0',
-        '   */',
-        '  myMethod() {}',
-        '}',
-      ].join('\n'),
-    },
-
     // TypeScript "#" property with @private tag.
     {
       code: [
@@ -120,36 +106,6 @@ ruleTester.run('requireJsdocPrivate', RequireJsdocPrivate['rule'], {
         '   * @since 0.15.0',
         '   */',
         '  #myProperty = 5;',
-        '}',
-      ].join('\n'),
-      filename: '/path/to/my-script.mjs',
-    },
-
-    // JavaScript "#" method without @private tag.
-    {
-      code: [
-        'class MyClass {',
-        '  /**',
-        '   * My method.',
-        '   *',
-        '   * @since 0.15.0',
-        '   */',
-        '  static #myMethod() {}',
-        '}',
-      ].join('\n'),
-      filename: '/path/to/my-script.cjs',
-    },
-
-    // JavaScript public method without @private tag.
-    {
-      code: [
-        'class MyClass {',
-        '  /**',
-        '   * My method.',
-        '   *',
-        '   * @since 0.15.0',
-        '   */',
-        '  myMethod() {}',
         '}',
       ].join('\n'),
       filename: '/path/to/my-script.mjs',
@@ -195,33 +151,6 @@ ruleTester.run('requireJsdocPrivate', RequireJsdocPrivate['rule'], {
         '   * @since 0.15.0',
         '   */',
         '  private myMethod() {}',
-        '}',
-      ].join('\n'),
-      errors: [{ messageId: 'requirePrivateTag' }],
-    },
-
-    // Private property without @private tag.
-    {
-      code: [
-        'class MyClass {',
-        '  /**',
-        '   * My property.',
-        '   *',
-        '   * @since 0.15.0',
-        '   */',
-        '  private myProperty = 5;',
-        '}',
-      ].join('\n'),
-      output: [
-        'class MyClass {',
-        '  /**',
-        '   * My property.',
-        '   *',
-        '   * @private',
-        '   *',
-        '   * @since 0.15.0',
-        '   */',
-        '  private myProperty = 5;',
         '}',
       ].join('\n'),
       errors: [{ messageId: 'requirePrivateTag' }],

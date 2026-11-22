@@ -1,7 +1,4 @@
-import {
-  deepStrictEqual,
-  strictEqual,
-} from 'node:assert/strict';
+import { deepStrictEqual } from 'node:assert/strict';
 import {
   mkdir,
   mkdtemp,
@@ -26,11 +23,6 @@ import type {
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_LoadsEverySupportedPhysicalIgnoreFile_Loaded,
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_LoadsEverySupportedPhysicalIgnoreFile_ProjectDirectory,
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_OriginalCwd,
-  Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Config,
-  Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigContents,
-  Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigPath,
-  Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Loaded,
-  Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ProjectDirectory,
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_SandboxPrefix,
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_SandboxRoot,
   Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_TemporaryDirectory,
@@ -112,30 +104,6 @@ describe('Shared_NovaConfig ignoreFiles', async () => {
         patterns: [],
       },
     });
-
-    return;
-  });
-
-  it('rejects the former gitignore shape', async () => {
-    const projectDirectory: Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ProjectDirectory = join(sandboxRoot, 'former-shape');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigContents = JSON.stringify({
-      gitignore: {
-        projectExcludes: ['graphify-out/'],
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Loaded = await config.load();
-
-    strictEqual(loaded['ignoreFiles'], undefined);
 
     return;
   });

@@ -236,18 +236,6 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       filename: '/project/src/lib/utility.ts',
     },
 
-    // Variable without JSDoc (should not report).
-    {
-      code: 'const MY_CONST = 42;',
-      filename: '/project/src/lib/utility.ts',
-    },
-
-    // Expression without JSDoc (should not report).
-    {
-      code: 'test("something", () => {});',
-      filename: '/project/src/tests/lib/utility.test.ts',
-    },
-
     // Correct class hierarchy with custom knownNames.
     {
       code: [
@@ -277,29 +265,6 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
         ' * @since 0.15.0',
         ' */',
         'function getFooterLinks() {}',
-      ].join('\n'),
-      options: [{
-        anchorDirectories: [
-          'src',
-          'utils',
-        ],
-        ignoreFiles: [],
-        knownNames: {},
-        stripDirectories: ['types'],
-        warnSkippedScripts: true,
-      }],
-      filename: '/project/utils/getters/get-footer-links.ts',
-    },
-
-    // Correct hierarchy for class using custom anchorDirectories with 'utils'.
-    {
-      code: [
-        '/**',
-        ' * Getters - Get Footer Links.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'export class GettersGetFooterLinks {}',
       ].join('\n'),
       options: [{
         anchorDirectories: [

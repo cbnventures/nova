@@ -56,34 +56,6 @@ export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInE
 export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJson = Record<string, unknown>;
 
 /**
- * Tests - CLI - Scaffold - App - Vite - Run - Exits With Error For Standalone Project.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = string;
-
-/**
- * Tests - CLI - Scaffold - App - Vite - Run - Exits With Error When Inside Child Workspace.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
-
-/**
  * Tests - CLI - Scaffold - App - Vite - Run - Exits Without Writes When Root Config Is Missing.
  *
  * @since 0.26.0

@@ -4,7 +4,6 @@ import {
   getInput,
   setOutput,
   startGroup,
-  summary,
 } from '@actions/core';
 import {
   beforeEach,
@@ -25,18 +24,11 @@ vi.mock('@actions/core', () => ({
   info: vi.fn(),
   setOutput: vi.fn(),
   startGroup: vi.fn(),
-  summary: {
-    addHeading: vi.fn().mockReturnThis(),
-    addTable: vi.fn().mockReturnThis(),
-    write: vi.fn().mockResolvedValue(undefined),
-  },
 }));
 
 describe('createMessage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-
-    vi.stubEnv('GITHUB_STEP_SUMMARY', '/tmp/github-step-summary');
 
     return;
   });
@@ -47,7 +39,7 @@ describe('createMessage', () => {
     return;
   });
 
-  it('groups its logs and writes a step summary', async () => {
+  it('groups its logs and publishes the action output', async () => {
     vi.mocked(getInput).mockReturnValue('Nova');
 
     await run();
@@ -57,10 +49,6 @@ describe('createMessage', () => {
     expect(startGroup).toHaveBeenNthCalledWith(2, 'Result');
 
     expect(setOutput).toHaveBeenCalledWith('message', 'Hello, Nova!');
-
-    expect(summary.addHeading).toHaveBeenCalledWith('[__WORKSPACE_TITLE__]');
-
-    expect(summary.write).toHaveBeenCalledOnce();
 
     return;
   });

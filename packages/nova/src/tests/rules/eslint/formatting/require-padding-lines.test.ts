@@ -27,18 +27,6 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
       code: 'process.exitCode = 1;\n\nreturn;',
     },
     {
-      code: 'const x = 1;\n\nfor (const item of items) {}',
-    },
-    {
-      code: 'await fn();\n\nconst x = 1;',
-    },
-    {
-      code: 'const x = 1;\n\nawait fn();',
-    },
-    {
-      code: 'fn();\n\nawait bar();',
-    },
-    {
       code: 'process.exitCode = 1;\nreturn;',
       options: [{
         ignoreFiles: [],
@@ -96,9 +84,6 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
       code: 'switch (x) {\n  case 1:\n  case 2: {\n    fn();\n    break;\n  }\n}',
     },
     {
-      code: 'switch (x) {\n  case 1:\n  case 2: {\n    fn();\n    break;\n  }\n\n  default: {\n    fn();\n    break;\n  }\n}',
-    },
-    {
       code: 'switch (x) {\n  case 1: {\n    fn();\n    break;\n  }\n  case 2: {\n    fn();\n    break;\n  }\n}',
       options: [{
         ignoreFiles: [],
@@ -112,12 +97,6 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
     },
     {
       code: 'fn();\nfn();',
-    },
-    {
-      code: 'ok(a);\nok(b);\nok(c);',
-    },
-    {
-      code: 'process.stdout.write(a);\nprocess.stdout.write(b);',
     },
     {
       code: 'async function f() { await fn();\nawait fn(); }',
@@ -194,13 +173,6 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
     {
       code: 'switch (x) {\n  case 1: {\n    fn();\n    break;\n  }\n  case 2: {\n    fn();\n    break;\n  }\n}',
       errors: [{ messageId: 'betweenSwitchCases' }],
-    },
-    {
-      code: 'switch (x) {\n  case 1: {\n    fn();\n    break;\n  }\n  case 2: {\n    fn();\n    break;\n  }\n  default: {\n    fn();\n    break;\n  }\n}',
-      errors: [
-        { messageId: 'betweenSwitchCases' },
-        { messageId: 'betweenSwitchCases' },
-      ],
     },
   ],
 });

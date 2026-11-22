@@ -12,7 +12,6 @@ import type {
   Tests_Presets_Eslint_RuntimeNode_HashbangMessages_Messages,
   Tests_Presets_Eslint_RuntimeNode_HashbangMessages_Results,
   Tests_Presets_Eslint_RuntimeNode_HashbangMessages_Returns,
-  Tests_Presets_Eslint_RuntimeNode_RuntimeNode_AllowsAScriptWithoutAShebang_Messages,
   Tests_Presets_Eslint_RuntimeNode_RuntimeNode_AllowsAShebangInAScript_Messages,
   Tests_Presets_Eslint_RuntimeNode_RuntimeNode_RejectsAShebangInALibraryFile_Messages,
 } from '../../../types/tests/presets/eslint/runtime-node.test.d.ts';
@@ -61,17 +60,6 @@ describe('runtimeNode', () => {
   it('allows a shebang in a script', async () => {
     const messages: Tests_Presets_Eslint_RuntimeNode_RuntimeNode_AllowsAShebangInAScript_Messages = await hashbangMessages([
       '#!/usr/bin/env node',
-      'export const value = 1;',
-      '',
-    ].join('\n'), 'scripts/x.mjs');
-
-    deepStrictEqual(messages, []);
-
-    return;
-  });
-
-  it('allows a script without a shebang', async () => {
-    const messages: Tests_Presets_Eslint_RuntimeNode_RuntimeNode_AllowsAScriptWithoutAShebang_Messages = await hashbangMessages([
       'export const value = 1;',
       '',
     ].join('\n'), 'scripts/x.mjs');

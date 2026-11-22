@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -eu
+
+package_name=${SYNOPKG_PKGNAME:-[__WORKSPACE_PACKAGE_NAME__]}
+package_var=${SYNOPKG_PKGVAR:-/var/packages/${package_name}/var}
+settings_file=${package_var}/settings.conf
+
+mkdir -p "${package_var}"
+printf '%s\n' 'postinst' >> "${package_var}/lifecycle.log"
+
+# The install wizard exports "wizard_greeting"; upgrades run without it, so the saved greeting stays.
+if [ -n "${wizard_greeting:-}" ]; then
+  greeting=$(printf '%s' "${wizard_greeting}" | tr -d '\r\n')
+  printf 'greeting=%s\n' "${greeting}" > "${settings_file}"
+elif [ ! -f "${settings_file}" ]; then
+  printf '%s\n' 'greeting=Hello from [__WORKSPACE_TITLE__]' > "${settings_file}"
+fi
+
+exit 0

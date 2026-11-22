@@ -60,34 +60,6 @@ export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorep
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_PageTsxPath = string;
 
 /**
- * Tests - CLI - Scaffold - App - Next.js - Run - Exits With Error For Standalone Project.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorForStandaloneProject_PackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = string;
-
-/**
- * Tests - CLI - Scaffold - App - Next.js - Run - Exits With Error When Inside Child Workspace.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = string;
-
-export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
-
-/**
  * Tests - CLI - Scaffold - App - Next.js - Run - Rejects Current Directory Output.
  *
  * @since 0.31.0

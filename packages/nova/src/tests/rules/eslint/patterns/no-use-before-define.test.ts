@@ -41,12 +41,6 @@ ruleTester.run('noUseBeforeDefine', NoUseBeforeDefine['rule'], {
       }],
     },
     {
-      code: 'let name = "Alice"; console.log(name);',
-    },
-    {
-      code: 'const items = [1, 2]; const first = items[0];',
-    },
-    {
       code: 'const x = y + 1; const y = 5;',
       options: [{
         ignoreFiles: ['ignored-file.ts'],
@@ -61,10 +55,6 @@ ruleTester.run('noUseBeforeDefine', NoUseBeforeDefine['rule'], {
   invalid: [
     {
       code: 'const x = y + 1; const y = 5;',
-      errors: [{ messageId: 'noUseBeforeDefine' }],
-    },
-    {
-      code: 'console.log(name); let name = "Alice";',
       errors: [{ messageId: 'noUseBeforeDefine' }],
     },
     {

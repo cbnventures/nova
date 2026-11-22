@@ -1,5 +1,22 @@
 # @cbnventures/nova
 
+## 0.50.0 - 2026-11-22
+
+### UPDATED
+- Tests now report coverage through a `check:coverage` script, which fails when line, function, branch or statement coverage drops below the project minimum, and the README badges now include that coverage.
+- Apple scaffold now starts with separate iOS, macOS, macOS 12, tvOS, and visionOS source folders, each with sample UI built on a shared feature, and builds for tvOS.
+
+### FIXED
+- The Vercel Functions tool's landing page now says "Your function is running. Edit api/index.ts to make it yours." instead of pointing at the Cloudflare Worker's `src/worker/index.ts`.
+- `frontmatter-closed` Vitest check now requires the closing `---` at the start of a line, so a stray `---` inside a value or the page body no longer counts as closed frontmatter.
+- Scaffolds that have a `check:coverage` script (Express, Discord bot, Vite, Next.js, Astro, Homebridge, GitHub Action, and both serverless tools) no longer also ship `check:test`, so `npm run check` runs their Vitest suite once instead of twice. A failing test still fails `check:coverage`.
+
+### ADDED
+- Generated workflows suppress third-party run summaries and write one combined Nova summary for each run, while scaffolded Vitest keeps inline annotations without writing its own summary.
+- The new `nova utility changelog --notes` mode prints a pipe-safe GitHub release body for one version from every workspace changelog, preserves multi-line bullets, and supports `settings.changelog.workspaceOrder`.
+- GitHub profile README support through `readme.profile`, with a custom heading, paragraph-array introduction, ordered shields badge groups with Simple Icons or custom SVG logos, link groups rendered as tables or lists, a customizable support section, and region-safe recipe updates. Workspace copies keep the project README.
+- Synology DSM 7 package scaffolding builds and validates noarch SPK archives and publishes them to GitHub Releases.
+
 ## 0.49.0 - 2026-11-21
 
 ### UPDATED

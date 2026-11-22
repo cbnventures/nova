@@ -80,3 +80,9 @@
   font-weight: 600;
   text-align: center;
 }
+
+/* Keeps the view clear of the text above it. Content with its own larger top
+   margin, such as a Browser Frame, keeps it because the margins collapse. */
+.nova-showcase-content {
+  margin-top: 1.5rem;
+}

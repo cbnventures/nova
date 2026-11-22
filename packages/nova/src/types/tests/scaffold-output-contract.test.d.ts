@@ -53,13 +53,6 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTransl
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent = string;
 
 /**
- * Tests - Scaffold Output Contract - Scaffold Output Contract - Keeps The Docker Image OCI Label Contract.
- *
- * @since 0.39.0
- */
-export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = string;
-
-/**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Lints The PfSense Staging Script Against The Shared Node Engine Range.
  *
  * @since 0.40.0
@@ -346,8 +339,6 @@ export type Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson = Reco
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = Record<string, unknown>;
 
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = string[];
-
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = readonly ('dev' | 'prod' | 'check' | 'build' | 'deploy' | 'clean' | 'i18n')[];
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup = Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder[number];
@@ -358,21 +349,11 @@ export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnv
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations = string[];
 
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = number;
-
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = string[];
-
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent = boolean;
-
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = number;
-
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand = string;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_RootParentCommand = string;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = string;
-
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = string[];
 
 /**
  * Tests - Scaffold Output Contract - Verify Starter Contract.

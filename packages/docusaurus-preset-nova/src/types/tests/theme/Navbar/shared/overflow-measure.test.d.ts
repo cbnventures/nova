@@ -1,0 +1,108 @@
+/**
+ * Tests - Theme - Navbar - Shared - Overflow Measure - Collect Rules.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Css = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule_Selector = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule_Declarations = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule = {
+  selector: Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule_Selector;
+  declarations: Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule_Declarations;
+};
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Returns = Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_CommentPattern = RegExp;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_StrippedCss = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rules = Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Rule[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Chunk = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_OpenIndex = number;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_BeforeOpen = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_CollectRules_Selector = string;
+
+/**
+ * Tests - Theme - Navbar - Shared - Overflow Measure - Get Package Root.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_GetPackageRoot_Returns = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_GetPackageRoot_CurrentFilePath = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_GetPackageRoot_CurrentFileDirectory = string;
+
+/**
+ * Tests - Theme - Navbar - Shared - Overflow Measure - Overflow Measure Across Presets And Variants.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PackageRoot = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_VariantNames = readonly string[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_SizingPrefixes = readonly string[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PresetName = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_VariantName = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_ItemsClass = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_VariantSourcePath = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_BaseCssPath = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PresetCssPath = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Sources = [string, string, string];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_VariantSource = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_BaseCss = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PresetCss = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule_Selector = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule_Declarations = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule = {
+  selector: Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule_Selector;
+  declarations: Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule_Declarations;
+};
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules = Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rule = Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Rules_Rule;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Declarations = string[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Selector = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_SelectorTokens = string[];
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_ItemsTokenIndex = number;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_ItemsToken = string | undefined;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PreviousToken = string | undefined;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_Declaration = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_ColonIndex = number;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PropertyName = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_PropertyValue = string;
+
+export type Tests_Theme_Navbar_Shared_OverflowMeasure_OverflowMeasureAcrossPresetsAndVariants_ValueTokens = string[];

@@ -4,7 +4,6 @@ import {
   info,
   setOutput,
   startGroup,
-  summary,
 } from '@actions/core';
 
 import type {
@@ -41,7 +40,7 @@ export function createMessage(name: Run_CreateMessage_Name): Run_CreateMessage_R
  *
  * @since 0.0.0
  */
-export async function run(): Run_Run_Returns {
+export function run(): Run_Run_Returns {
   startGroup('Configuration');
 
   const name: Run_Run_Name = getInput('name', { required: true });
@@ -57,33 +56,5 @@ export async function run(): Run_Run_Returns {
   info('Published the "message" output.');
   endGroup();
 
-  if (process.env['GITHUB_STEP_SUMMARY'] === undefined) {
-    info('Step summaries are unavailable in this local runtime.');
-  } else {
-    await summary
-      .addHeading('[__WORKSPACE_TITLE__]')
-      .addTable([
-        [
-          {
-            data: 'Item',
-            header: true,
-          },
-          {
-            data: 'Result',
-            header: true,
-          },
-        ],
-        [
-          'Status',
-          'Completed',
-        ],
-        [
-          'Output',
-          'message',
-        ],
-      ])
-      .write();
-  }
-
-  return;
+  return Promise.resolve();
 }

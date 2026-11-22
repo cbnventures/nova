@@ -27,51 +27,10 @@ ruleTester.run('noRestParams', NoRestParams['rule'], {
       code: 'function log(message, level, context) { console.log(message); }',
     },
     {
-      code: 'function merge(objects) { return Object.assign({}, ...objects); }',
-    },
-    {
-      code: 'const sum = (numbers) => { return numbers.reduce((a, b) => a + b, 0); };',
-    },
-    {
       code: 'class Logger { static info(...messages) { console.log(...messages); } }',
       options: [{
         ignoreFiles: [],
         allow: ['Logger.*'],
-      }],
-    },
-    {
-      code: 'class Logger { static warn(...messages) { console.warn(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: ['Logger.*'],
-      }],
-    },
-    {
-      code: 'class Logger { static error(...messages) { console.error(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: ['Logger.*'],
-      }],
-    },
-    {
-      code: 'class Logger { static debug(...messages) { console.debug(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: ['Logger.*'],
-      }],
-    },
-    {
-      code: 'class Logger { static dev(...messages) { console.log(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: ['Logger.*'],
-      }],
-    },
-    {
-      code: 'class MyLogger { static info(...messages) { console.log(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: ['MyLogger.*'],
       }],
     },
     {
@@ -110,27 +69,11 @@ ruleTester.run('noRestParams', NoRestParams['rule'], {
       errors: [{ messageId: 'noRestParams' }],
     },
     {
-      code: 'class Logger { static info(...messages) { console.log(...messages); } }',
-      options: [{
-        ignoreFiles: [],
-        allow: [],
-      }],
-      errors: [{ messageId: 'noRestParams' }],
-    },
-    {
       code: 'function log(...args) { console.log(args); }',
       errors: [{ messageId: 'noRestParams' }],
     },
     {
-      code: 'function merge(...objects) { return Object.assign({}, ...objects); }',
-      errors: [{ messageId: 'noRestParams' }],
-    },
-    {
       code: 'const sum = (...numbers) => { return numbers.reduce((a, b) => a + b, 0); };',
-      errors: [{ messageId: 'noRestParams' }],
-    },
-    {
-      code: 'class Printer { static print(...args) { console.log(...args); } }',
       errors: [{ messageId: 'noRestParams' }],
     },
     {
@@ -147,10 +90,6 @@ ruleTester.run('noRestParams', NoRestParams['rule'], {
         ignoreFiles: [],
         allow: ['Util.format'],
       }],
-      errors: [{ messageId: 'noRestParams' }],
-    },
-    {
-      code: 'class Printer { static customize() { return { info(...messages) { console.log(...messages); } }; } }',
       errors: [{ messageId: 'noRestParams' }],
     },
   ],

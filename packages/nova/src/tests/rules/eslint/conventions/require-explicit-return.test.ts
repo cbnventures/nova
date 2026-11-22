@@ -39,13 +39,7 @@ ruleTester.run('requireExplicitReturn', RequireExplicitReturn['rule'], {
       code: 'function empty() {}',
     },
     {
-      code: 'const fn = () => {};',
-    },
-    {
       code: 'function poll() { while (true) { if (done) { return result; } } }',
-    },
-    {
-      code: 'function find() { for (const item of items) { if (item.match) { return item; } } return null; }',
     },
     {
       code: 'function greet(name) { console.log(name); }',

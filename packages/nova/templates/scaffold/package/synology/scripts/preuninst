@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -eu
+
+package_name=${SYNOPKG_PKGNAME:-[__WORKSPACE_PACKAGE_NAME__]}
+package_var=${SYNOPKG_PKGVAR:-/var/packages/${package_name}/var}
+
+if mkdir -p "${package_var}" 2> /dev/null; then
+  printf '%s\n' 'preuninst' >> "${package_var}/lifecycle.log"
+fi
+
+exit 0

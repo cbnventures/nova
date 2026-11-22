@@ -18,7 +18,6 @@ import type {
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_IsDryRun,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_IsReplaceFile,
-  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NewInnerContent,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NotFoundCount,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Options,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_ReadMeRecipes,
@@ -26,12 +25,16 @@ import type {
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Result,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Returns,
+  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_RootInnerContent,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_RootPath,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_SkippedCount,
-  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_TargetPaths,
+  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Targets,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_UpdateBadges,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_UpdatedCount,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkingFile,
+  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspaceConfig,
+  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspaceInnerContent,
+  Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspacePaths,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_UpdateReadMeFile_CurrentContent,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_UpdateReadMeFile_FilePath,
   Cli_Recipe_ReadMe_UpdateBadges_Runner_UpdateReadMeFile_IsDryRun,
@@ -108,18 +111,28 @@ export class Runner {
       return;
     }
 
-    // Regenerate the inner badges content once from config using the same builder the generator
-    // uses. The content is identical for the root copy and every consumer copy.
-    const newInnerContent: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NewInnerContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent(workingFile);
+    // Regenerate the inner badges content from config using the same builder the generator uses.
+    // Profile mode applies only to the root, so consumer copies use the project-mode view.
+    const rootInnerContent: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_RootInnerContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent(workingFile);
+    const workspaceConfig: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspaceConfig = CliGenerateMustHavesReadMe.buildProjectReadMeConfig(workingFile);
+    const workspaceInnerContent: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspaceInnerContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent(workspaceConfig);
 
-    // The generator fans a single README out to the root plus every consumer-facing workspace
+    // The generator writes the root README plus a copy in every consumer-facing workspace
     // (app, package, tool, config). Refresh every copy the generator writes so no consumer copy
     // drifts. Each copy is gated independently below.
     const rootPath: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_RootPath = join(currentDirectory, 'README.md');
-    const targetPaths: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_TargetPaths = [
-      rootPath,
-      ...collectConsumerWorkspacePaths(currentDirectory, workingFile['workspaces'], 'README.md'),
-    ];
+    const workspacePaths: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_WorkspacePaths = collectConsumerWorkspacePaths(currentDirectory, workingFile['workspaces'], 'README.md');
+    const targets: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Targets = [{
+      path: rootPath,
+      content: rootInnerContent,
+    }];
+
+    for (const workspacePath of workspacePaths) {
+      targets.push({
+        path: workspacePath,
+        content: workspaceInnerContent,
+      });
+    }
 
     let updatedCount: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_UpdatedCount = 0;
     let skippedCount: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_SkippedCount = 0;
@@ -130,8 +143,8 @@ export class Runner {
     // markers is skipped and left byte-identical while a pristine root copy is still refreshed,
     // and vice-versa. The anti-mangle splice runs against each file's own current content, never
     // once against the root and blindly across the rest.
-    for (const targetPath of targetPaths) {
-      const result: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Result = await Runner.updateReadMeFile(targetPath, newInnerContent, isDryRun, isReplaceFile);
+    for (const target of targets) {
+      const result: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_Result = await Runner.updateReadMeFile(target['path'], target['content'], isDryRun, isReplaceFile);
 
       if (result === 'updated') {
         updatedCount += 1;
@@ -146,7 +159,7 @@ export class Runner {
 
     // When not a single target README exists on disk, there is nothing to refresh anywhere.
     // Warn and return, matching the pre-fan-out behavior for a missing root README.
-    if (notFoundCount === targetPaths.length) {
+    if (notFoundCount === targets.length) {
       Logger.warn('Skipping update-badges. No README.md file was found in the project root.');
 
       return;

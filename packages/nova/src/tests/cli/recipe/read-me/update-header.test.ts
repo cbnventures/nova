@@ -52,12 +52,6 @@ import type {
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DisabledFlagSkipsAndDoesNotWrite_Output,
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DisabledFlagSkipsAndDoesNotWrite_ProjectDirectory,
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DisabledFlagSkipsAndDoesNotWrite_ReadmePath,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_IsProjectRootSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_LoadSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_OnDiskContent,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_Output,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_ProjectDirectory,
-  Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_ReadmePath,
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput,
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath,
   Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy,
@@ -469,60 +463,6 @@ describe('CliRecipeReadMeUpdateHeader.run', async () => {
 
     strictEqual(output, onDiskContent);
     strictEqual(process.exitCode, undefined);
-
-    isProjectRootSpy.mockRestore();
-
-    loadSpy.mockRestore();
-
-    return;
-  });
-
-  it('dry run does not write', async () => {
-    const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'dry-run-'));
-    const readmePath: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_ReadmePath = join(projectDirectory, 'README.md');
-
-    // Stale but nova-generated, so the recipe would rewrite it if not for dry run.
-    const onDiskContent: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_OnDiskContent = [
-      '<div align="center">',
-      '',
-      wrapReadMeRegion('header', 'STALE HEADER'),
-      '',
-      '</div>',
-      '',
-    ].join('\n');
-
-    await writeFile(readmePath, onDiskContent, 'utf-8');
-
-    const isProjectRootSpy: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-
-    const loadSpy: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      project: {
-        name: {
-          title: 'Nova',
-        },
-      },
-      urls: {
-        homepage: 'https://example.com',
-      },
-      recipes: {
-        'read-me': {
-          'update-header': {
-            enabled: true,
-          },
-        },
-      },
-    });
-
-    process.chdir(projectDirectory);
-
-    await CliRecipeReadMeUpdateHeader.run({
-      dryRun: true,
-    });
-
-    const output: Tests_Cli_Recipe_ReadMe_UpdateHeader_CliRecipeReadMeUpdateHeaderRun_DryRunDoesNotWrite_Output = await readFile(readmePath, 'utf-8');
-
-    // The file is unchanged because dry run never writes.
-    strictEqual(output, onDiskContent);
 
     isProjectRootSpy.mockRestore();
 

@@ -1,3 +1,5 @@
+import type { Shared_ActiveVitest_Factory } from '../../../shared.d.ts';
+
 /**
  * Tests - Rules - Vitest - Link.
  *
@@ -71,4 +73,17 @@ export type Tests_Rules_Vitest_Link_BadIndex = {
   fileHeadings: Tests_Rules_Vitest_Link_BadIndex_FileHeadings;
 };
 
-export type Tests_Rules_Vitest_Link_BadLinks = string[];
+export type Tests_Rules_Vitest_Link_BadIts = Map<string, Shared_ActiveVitest_Factory>;
+
+export type Tests_Rules_Vitest_Link_BadSentinel_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_Link_BadSentinel_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_Link_BadSentinel = {
+  describe: Tests_Rules_Vitest_Link_BadSentinel_Describe;
+  it: Tests_Rules_Vitest_Link_BadSentinel_It;
+};
+
+export type Tests_Rules_Vitest_Link_OverviewFactory = Shared_ActiveVitest_Factory | undefined;
+
+export type Tests_Rules_Vitest_Link_BrokenFactory = Shared_ActiveVitest_Factory | undefined;

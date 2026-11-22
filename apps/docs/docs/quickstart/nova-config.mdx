@@ -462,14 +462,14 @@ See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#co
 
 Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
-| Field            | Type       | Description                                                                                                                                                                        |
-|------------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `to`             | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"pfsense"`, `"vercel-nextjs"`. |
-| `path`           | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                                   |
-| `artifact`       | `string`   | Optional named entry from `artifacts`. File-based deploy targets download that assembled product instead of a workspace's default build paths.                                     |
-| `timeoutMinutes` | `number`   | Optional target job timeout from `1` through `360`. Overrides the workflow-wide timeout for this destination.                                                                      |
-| `after`          | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                |
-| `with`           | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                    |
+| Field            | Type       | Description                                                                                                                                                                                      |
+|------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `to`             | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages"`, `"cloudflare-workers"`, `"github-pages"`, `"pfsense"`, `"synology"`, `"vercel-nextjs"`. |
+| `path`           | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                                                 |
+| `artifact`       | `string`   | Optional named entry from `artifacts`. File-based deploy targets download that assembled product instead of a workspace's default build paths.                                                   |
+| `timeoutMinutes` | `number`   | Optional target job timeout from `1` through `360`. Overrides the workflow-wide timeout for this destination.                                                                                    |
+| `after`          | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                              |
+| `with`           | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                                  |
 
 Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
 
@@ -484,6 +484,8 @@ Both targets use `path: "./"`. Container inputs do not belong in `build`; the ro
 Container targets use the workflow's OCI handoff and cannot reference a named file artifact.
 
 The `pfsense` target accepts a scaffolded pfSense package workspace path, such as `{"to":"pfsense","path":"./packages/firewall"}`. Its workspace must have the `package` role and a name beginning with `pfsense-pkg-`. Nova builds it on FreeBSD and attaches the resulting package files to the selected GitHub release.
+
+The `synology` target accepts a workspace created by [`nova scaffold package synology`](/docs/cli/scaffolding/package/synology), such as `{"to":"synology","path":"./packages/media-indexer"}`. Its workspace must have the `package` role and a name beginning with `synology-pkg-`. Nova builds and checks its `.spk` on Ubuntu, uploads a workflow artifact, and attaches the package to the selected GitHub release.
 
 If the workspace provides `scripts/check-freebsd.sh`, the target runs it with FreeBSD's `/bin/sh` from the workspace directory before `make package`; a failure stops the package build. Checks placed in this hook should emit a clear skip message during `npm run check` on non-FreeBSD hosts instead of running with the wrong shell or userland.
 
@@ -581,11 +583,12 @@ Canonical links with validation and normalization.
 
 ## `readme`
 
-Controls the exact badges generated inside the README badges region.
+Controls project README badges and optionally switches the generator to GitHub profile README mode.
 
-| Field    | Type       | Description                                                                                                                           |
-|----------|------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| `badges` | `string[]` | Exact ordered badge identifiers. Missing and empty arrays both produce an empty badges region, and duplicate identifiers are invalid. |
+| Field     | Type       | Description                                                                                                                        |
+|-----------|------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `badges`  | `string[]` | Exact ordered project badge identifiers. Missing and empty arrays both produce an empty badges region, and duplicates are invalid. |
+| `profile` | `object`   | Its presence declares a GitHub profile repository and selects profile README output.                                               |
 
 | Badge Identifier      | Required Source                                                                                                                  |
 |-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
@@ -617,6 +620,85 @@ The `coverage` badge is a shields.io endpoint badge that reads the JSON file the
   }
 }
 ```
+
+### Profile README Fields
+
+The `profile` object is the mode switch. When it is present, Nova uses `heading` as the Markdown heading, or `project.name.title` when `heading` is not set, and does not render project-style sections. Its fields are optional, and ordered arrays retain their declared order.
+
+| Field          | Type       | Description                                                                                                         |
+|----------------|------------|---------------------------------------------------------------------------------------------------------------------|
+| `heading`      | `string`   | Top-level Markdown heading. Defaults to `project.name.title`.                                                       |
+| `introduction` | `string[]` | Markdown paragraphs, one per item, joined by a blank line.                                                          |
+| `badgeGroups`  | `object[]` | Ordered badge groups. Each group requires `title` and a non-empty `badges` array; `emoji` is optional.              |
+| `linkGroups`   | `object[]` | Ordered link groups. Each group requires `title` and a non-empty `links` array; `emoji` and `columns` are optional. |
+| `support`      | `object`   | Adds a support section. `title`, `emoji`, `message`, and `badges` are optional.                                     |
+
+Each badge requires `label`, a `logo`, a six-character hexadecimal `color` without `#`, and an absolute HTTP `link`. The `logo` is a Simple Icons slug, or a `data:image/svg+xml;base64,` URI for a brand Simple Icons doesn't have. Nova lowercases slugs and colors during normalization and keeps data URIs as written. Badge labels are escaped for shields.io, including spaces, hyphens, and underscores.
+
+Each link requires `label` and an absolute HTTP `url`, with an optional `description`. A link group renders as a padded table when every link has a `description`, using `columns` as the two header labels (default `["Link", "Description"]`). Otherwise it renders as a bullet list.
+
+| Support Field | Type       | Description                                                                                                            |
+|---------------|------------|------------------------------------------------------------------------------------------------------------------------|
+| `title`       | `string`   | Section heading. Defaults to `Support My Work`.                                                                        |
+| `emoji`       | `string`   | Emoji after the title. Defaults to `🎗️`.                                                                              |
+| `message`     | `string[]` | Markdown paragraphs above the badges. Defaults to a short thank-you paragraph.                                         |
+| `badges`      | `object[]` | Badges with the same fields as badge group badges. Defaults to badges from `urls.fundSources`, which must then be set. |
+
+```json
+{
+  "project": {
+    "name": {
+      "title": "Hello, I'm Example 👋"
+    }
+  },
+  "urls": {
+    "fundSources": ["https://github.com/sponsors/example"]
+  },
+  "readme": {
+    "profile": {
+      "heading": "Hi there 👋",
+      "introduction": [
+        "Welcome to my GitHub profile!",
+        "I build useful open-source software."
+      ],
+      "badgeGroups": [
+        {
+          "title": "Language Palette",
+          "emoji": "👨‍💻",
+          "badges": [
+            {
+              "label": "TypeScript",
+              "logo": "typescript",
+              "color": "3178c6",
+              "link": "https://www.typescriptlang.org"
+            }
+          ]
+        }
+      ],
+      "linkGroups": [
+        {
+          "title": "Projects",
+          "emoji": "📦",
+          "columns": ["Project", "Summary"],
+          "links": [
+            {
+              "label": "Example Widget",
+              "url": "https://example.com/widget",
+              "description": "A small widget"
+            }
+          ]
+        }
+      ],
+      "support": {
+        "title": "Support My Work",
+        "message": ["If my projects help you, please consider supporting them."]
+      }
+    }
+  }
+}
+```
+
+Profile READMEs keep Nova's `header`, `introduction`, `badges`, `documentation`, and `credits` region markers. Place custom sections between those regions so README recipes leave them byte-identical.
 
 ## `workspaces`
 
@@ -1021,6 +1103,7 @@ Project-wide behavior toggles that affect how Nova commands operate.
 
 | Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `changelog`          | `object`  | Configures changelog output. Its optional `workspaceOrder` array lists workspace `name` values that `nova utility changelog --notes` prints first, in the given order. Workspaces not listed follow alphabetically, and workspaces without a `CHANGELOG.md` are skipped. An unknown name is a configuration error.                                                                                                                                                       |
 | `coverage`           | `object`  | Test coverage policy. Its `minimum` is a percentage from 0 to 100. Scaffolded Vitest configs read it through [`VitestCoverage`](/docs/toolkit/testing/vitest-coverage), so `check:coverage` fails when lines, functions, branches or statements fall below it. With a minimum set, the publish workflow also writes the coverage badge file that the `coverage` README badge reads.                                                                                      |
 | `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`.                                       |
 | `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object controls verified local caching. Its `concurrency` object maps workspace script names to positive integer limits; scripts omitted from the map default to `10`, and an explicit CLI option overrides the map. Its `root` setting is `"first"` (default) to build internal root dependencies before root checks and builds, then run root steps before the remaining workspaces. `"skip"` leaves the root out. |
@@ -1029,6 +1112,9 @@ Project-wide behavior toggles that affect how Nova commands operate.
 ```json title="nova.config.json"
 {
   "settings": {
+    "changelog": {
+      "workspaceOrder": ["@example/api", "@example/web"]
+    },
     "coverage": {
       "minimum": 80
     },

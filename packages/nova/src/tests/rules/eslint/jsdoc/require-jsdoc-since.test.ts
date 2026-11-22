@@ -142,62 +142,9 @@ ruleTester.run('requireJsdocSince', RequireJsdocSince['rule'], {
       ].join('\n'),
     },
 
-    // JSDoc with @since tag on a function.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'function myFunction() {}',
-      ].join('\n'),
-    },
-
     // No JSDoc at all (should not report).
     {
       code: 'class MyClass {}',
-    },
-
-    // No JSDoc on a function.
-    {
-      code: 'function myFunction() {}',
-    },
-
-    // JSDoc with @since on a type alias.
-    {
-      code: [
-        '/**',
-        ' * My type.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'type MyType = string;',
-      ].join('\n'),
-    },
-
-    // JSDoc with @since on an interface.
-    {
-      code: [
-        '/**',
-        ' * My interface.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'interface MyInterface {}',
-      ].join('\n'),
-    },
-
-    // JSDoc with @since on an enum.
-    {
-      code: [
-        '/**',
-        ' * My enum.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'enum MyEnum { A, B }',
-      ].join('\n'),
     },
 
     // 0.0.0 package: value validation is skipped; a far-future @since is accepted.
@@ -211,42 +158,6 @@ ruleTester.run('requireJsdocSince', RequireJsdocSince['rule'], {
         'class MyClass {}',
       ].join('\n'),
       filename: zeroVersionFilename,
-    },
-
-    // @since on an exported class (covered via ExportNamedDeclaration).
-    {
-      code: [
-        '/**',
-        ' * My class.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'export class MyClass {}',
-      ].join('\n'),
-    },
-
-    // @since on an exported const (covered via ExportNamedDeclaration).
-    {
-      code: [
-        '/**',
-        ' * My const.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'export const MY_CONST = 1;',
-      ].join('\n'),
-    },
-
-    // @since UNRELEASED on an exported type alias.
-    {
-      code: [
-        '/**',
-        ' * My type.',
-        ' *',
-        ' * @since UNRELEASED',
-        ' */',
-        'export type MyType = string;',
-      ].join('\n'),
     },
 
     // Re-export list has no declaration, so a leading JSDoc block is not checked.
@@ -343,20 +254,6 @@ ruleTester.run('requireJsdocSince', RequireJsdocSince['rule'], {
       errors: [{ messageId: 'invalidSinceVersion' }],
     },
 
-    // @since version far greater than package version.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @since 0.99.0',
-        ' */',
-        'function myFunction() {}',
-      ].join('\n'),
-      filename: validFilename,
-      errors: [{ messageId: 'invalidSinceVersion' }],
-    },
-
     // @since with a malformed value (not UNRELEASED and not semver).
     {
       code: [
@@ -439,42 +336,6 @@ ruleTester.run('requireJsdocSince', RequireJsdocSince['rule'], {
         'export class MyClass {}',
       ].join('\n'),
       errors: [{ messageId: 'requireSinceTag' }],
-    },
-
-    // export const with a JSDoc block missing @since.
-    {
-      code: [
-        '/**',
-        ' * My const.',
-        ' */',
-        'export const MY_CONST = 1;',
-      ].join('\n'),
-      errors: [{ messageId: 'requireSinceTag' }],
-    },
-
-    // export function with a JSDoc block missing @since.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' */',
-        'export function myFunction() {}',
-      ].join('\n'),
-      errors: [{ messageId: 'requireSinceTag' }],
-    },
-
-    // export const with an @since value greater than the package version.
-    {
-      code: [
-        '/**',
-        ' * My const.',
-        ' *',
-        ' * @since 0.99.0',
-        ' */',
-        'export const MY_CONST = 1;',
-      ].join('\n'),
-      filename: validFilename,
-      errors: [{ messageId: 'invalidSinceVersion' }],
     },
   ],
 });

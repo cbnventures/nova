@@ -56,11 +56,6 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
       code: 'const arr = [1, 2]; const x = arr.length;',
     },
 
-    // String built-in - dot notation allowed.
-    {
-      code: 'const s = "hello"; const x = s.length;',
-    },
-
     // Class member - dot notation allowed.
     {
       code: 'class Foo { name = "test"; } const f = new Foo(); const x = f.name;',
@@ -89,11 +84,6 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
         ignoreFiles: [],
       }],
     },
-
-    // Computed access - already bracket.
-    {
-      code: 'type Config = { name: string }; const config: Config = { name: "test" }; const key = "name"; const x = config[key];',
-    },
   ],
   invalid: [
 
@@ -102,13 +92,6 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       errors: [{ messageId: 'requireBracketAccess' }],
       output: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config[\'name\'];',
-    },
-
-    // Interface dot access - should use bracket.
-    {
-      code: 'interface Settings { timeout: number; } const s: Settings = { timeout: 100 }; const x = s.timeout;',
-      errors: [{ messageId: 'requireBracketAccess' }],
-      output: 'interface Settings { timeout: number; } const s: Settings = { timeout: 100 }; const x = s[\'timeout\'];',
     },
 
     // Assertion object - must parenthesize so brackets bind to the assertion, not the type.

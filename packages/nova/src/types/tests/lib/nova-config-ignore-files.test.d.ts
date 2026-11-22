@@ -29,18 +29,3 @@ export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_LoadsEve
 export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_LoadsEverySupportedPhysicalIgnoreFile_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_LoadsEverySupportedPhysicalIgnoreFile_Loaded = Pick<Shared_NovaConfigConfig, 'ignoreFiles'>;
-
-/**
- * Tests - Lib - Nova Config Ignore Files - Shared Nova Config Ignore Files - Rejects The Former Gitignore Shape.
- *
- * @since 0.32.0
- */
-export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigPath = string;
-
-export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_ConfigContents = string;
-
-export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfigIgnoreFiles_SharedNovaConfigIgnoreFiles_RejectsTheFormerGitignoreShape_Loaded = Pick<Shared_NovaConfigConfig, 'ignoreFiles'>;

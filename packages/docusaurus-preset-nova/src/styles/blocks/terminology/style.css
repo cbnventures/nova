@@ -4,6 +4,107 @@
  * ============================
  */
 
+/* Plain terms are focusable inline spans with a button role, so they wrap and
+   align with the sentence like text; preset overlays style them from here. */
 .nova-terminology {
   cursor: help;
+}
+
+.nova-terminology > abbr {
+  text-decoration: none;
+
+  cursor: inherit;
+}
+
+/**
+ * ============================
+ * Terminology - Tooltip
+ *
+ * Rendered in a portal on the page body and placed from script in viewport
+ * pixels, so scrolled and zoomed containers never clip or misplace it.
+ * Preset overlays can restyle it through .nova-terminology-tooltip.
+ * ============================
+ */
+
+.nova-terminology-tooltip {
+  --nova-terminology-tooltip-bg: var(--nova-color-background);
+  --nova-terminology-tooltip-border: var(--nova-color-border);
+
+  position: fixed;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  max-width: min(18rem, calc(100vw - 1rem));
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--nova-color-text);
+  text-align: left;
+
+  background-color: var(--nova-terminology-tooltip-bg);
+  border: 1px solid var(--nova-terminology-tooltip-border);
+  border-radius: var(--nova-shape-radius, 0.5rem);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.08);
+
+  animation: nova-terminology-tooltip-in 120ms ease-out;
+
+  pointer-events: auto;
+}
+
+[data-theme="dark"] .nova-terminology-tooltip {
+  --nova-terminology-tooltip-bg: var(--nova-color-surface-raised);
+
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.3);
+}
+
+/* The arrow: a rotated square sharing the tooltip's background and border. */
+.nova-terminology-tooltip::before {
+  content: "";
+
+  position: absolute;
+  left: var(--nova-terminology-arrow-left, 50%);
+
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-left: -0.3125rem;
+
+  background-color: var(--nova-terminology-tooltip-bg);
+  border: 1px solid var(--nova-terminology-tooltip-border);
+
+  transform: rotate(45deg);
+}
+
+.nova-terminology-tooltip[data-placement="top"]::before {
+  bottom: -0.375rem;
+
+  border-top: 0;
+  border-left: 0;
+}
+
+.nova-terminology-tooltip[data-placement="bottom"]::before {
+  top: -0.375rem;
+
+  border-right: 0;
+  border-bottom: 0;
+}
+
+@keyframes nova-terminology-tooltip-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-terminology-tooltip {
+    animation: none;
+  }
 }

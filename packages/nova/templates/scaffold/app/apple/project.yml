@@ -4,6 +4,8 @@ options:
   deploymentTarget:
     iOS: "[__SCAFFOLD_VERSION_APPLE_IOS_DEPLOYMENT_TARGET__]"
     macOS: "[__SCAFFOLD_VERSION_APPLE_MACOS_DEPLOYMENT_TARGET__]"
+    tvOS: "[__SCAFFOLD_VERSION_APPLE_TVOS_DEPLOYMENT_TARGET__]"
+    visionOS: "[__SCAFFOLD_VERSION_APPLE_VISIONOS_DEPLOYMENT_TARGET__]"
   developmentLanguage: en
 settings:
   base:
@@ -14,9 +16,30 @@ settings:
 targets:
   [__WORKSPACE_IDENTIFIER__]:
     type: application
-    supportedDestinations: [iOS, macOS]
+    supportedDestinations: [iOS, macOS, tvOS, visionOS]
     sources:
-      - Sources
+      - path: Sources
+        excludes:
+          - "iOS/**"
+          - "MacOS/**"
+          - "MacOS_12/**"
+          - "tvOS/**"
+          - "VisionOS/**"
+      - path: Sources/iOS
+        group: Sources
+        destinationFilters: [iOS]
+      - path: Sources/MacOS
+        group: Sources
+        destinationFilters: [macOS]
+      - path: Sources/MacOS_12
+        group: Sources
+        destinationFilters: [macOS]
+      - path: Sources/tvOS
+        group: Sources
+        destinationFilters: [tvOS]
+      - path: Sources/VisionOS
+        group: Sources
+        destinationFilters: [visionOS]
     settings:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -26,7 +49,7 @@ targets:
         ENABLE_PREVIEWS: YES
   [__WORKSPACE_IDENTIFIER__]Tests:
     type: bundle.unit-test
-    supportedDestinations: [iOS, macOS]
+    supportedDestinations: [iOS, macOS, tvOS, visionOS]
     sources:
       - Tests
     settings:

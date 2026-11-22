@@ -75,6 +75,7 @@ import type {
   Shared_NovaConfig_Project_StartingYear,
   Shared_NovaConfig_ReadMe,
   Shared_NovaConfig_ReadMe_Badges,
+  Shared_NovaConfig_ReadMe_Profile,
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
@@ -106,6 +107,8 @@ import type {
   Shared_NovaConfigOperatingSystemFileRecipeEntry,
   Shared_NovaConfigOperatingSystemFileSettings,
   Shared_NovaConfigProjectPlatform,
+  Shared_NovaConfigSettings_Changelog,
+  Shared_NovaConfigSettings_Changelog_WorkspaceOrder,
   Shared_NovaConfigSettings_Coverage,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
@@ -325,6 +328,23 @@ export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_TypedEntry
 export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryKey = string;
 
 export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryValue = unknown;
+
+/**
+ * CLI - Utility - Configure - Is Read Me Profile Input.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parsed = Shared_NovaConfig_ReadMe_Profile;
+
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parser = LibNovaConfig;
+
+export type Cli_Utility_Configure_Runner_IsReadMeProfileInput_Diagnostics = ReturnType<LibNovaConfig['diagnostics']>;
 
 /**
  * CLI - Utility - Configure - Is String Array Input.
@@ -547,6 +567,17 @@ export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value =
 export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
 
 export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed = string;
+
+/**
+ * CLI - Utility - Configure - Parse Read Me Profile Input.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Returns = Shared_NovaConfig_ReadMe_Profile;
+
+export type Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Trimmed = string;
 
 /**
  * CLI - Utility - Configure - Parse String Array Input.
@@ -2595,6 +2626,8 @@ export type Cli_Utility_Configure_Runner_PromptReadMe_ExistingReadMe = Shared_No
 
 export type Cli_Utility_Configure_Runner_PromptReadMe_ExistingBadges = Shared_NovaConfig_ReadMe_Badges;
 
+export type Cli_Utility_Configure_Runner_PromptReadMe_ExistingProfile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptReadMe_HasExplicitBadges = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptReadMe_SuggestedBadges = Shared_NovaConfig_ReadMe_Badges;
@@ -2618,6 +2651,26 @@ export type Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutputResult = Share
 export type Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutputKey, Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutputResult> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptReadMe_Badges = Shared_NovaConfig_ReadMe_Badges;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputKey = 'readMeMode';
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputResult = 'project' | 'profile';
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ModeOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputKey, Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_Mode = Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputResult;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ReadMe = Shared_NovaConfig_ReadMe;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputKey = 'readMeProfile';
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputKey, Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_ProfileInput = string;
+
+export type Cli_Utility_Configure_Runner_PromptReadMe_Profile = Shared_NovaConfig_ReadMe_Profile;
 
 /**
  * CLI - Utility - Configure - Prompt Recipe Entries.
@@ -2773,6 +2826,30 @@ export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput
 export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey, Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey, Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceNames = string[];
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ExistingChangelog = Shared_NovaConfigSettings_Changelog | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInitial = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputKey = 'workspaceOrder';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputKey, Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderValidationValue = string[];
+
+export type Cli_Utility_Configure_Runner_PromptSettings_UnknownWorkspaceName = string | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_HasDuplicateWorkspaceName = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputKey, Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInput = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrder = Shared_NovaConfigSettings_Changelog_WorkspaceOrder;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings = Shared_NovaConfigSettings_RunWorkspaces | undefined;
 

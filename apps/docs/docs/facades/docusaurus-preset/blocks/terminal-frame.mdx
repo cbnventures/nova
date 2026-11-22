@@ -19,11 +19,7 @@ tags:
   - "cli"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import terminalFramePreviewLight from './_assets_/terminal-frame-preview-light.png';
-import terminalFramePreviewDark from './_assets_/terminal-frame-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Terminal window around command-line output. The window looks like macOS Terminal: a white title bar with traffic lights, the folder icon, and a left-aligned title, then a black body in SF Mono.
 
@@ -37,11 +33,22 @@ The Terminal Frame block renders a `<figure class="nova-terminal-frame">` with t
 - **Real proportions** — the title bar, lights, and font size match an 80x24 Terminal window.
 - **Your own colors** — pass one element per line and give each line its own class to color it the way your CLI does.
 
-## Preview
+## Try It
 
-<Frame caption="Terminal Frame block — light and dark mode preview">
-  <ThemedImage sources={{ light: terminalFramePreviewLight, dark: terminalFramePreviewDark }} alt="Terminal Frame block preview" width={1148} height={254} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<TerminalFrame title="project — mytool — 80×24" label="mytool's main menu">
+  {[
+    '? What would you like to do? › - Use arrow-keys. Return to submit.',
+    '❯   Add',
+    '    Edit',
+    '    Exit',
+  ].join('\\n')}
+</TerminalFrame>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

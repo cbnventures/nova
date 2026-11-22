@@ -10,6 +10,21 @@ export type Lib_UseDetailsDismiss_DetailsRef = MutableRefObject<HTMLDetailsEleme
 export type Lib_UseDetailsDismiss_Returns = undefined;
 
 /**
+ * Lib - Use Details Dismiss - Close On Escape.
+ *
+ * @since 0.50.0
+ */
+export type Lib_UseDetailsDismiss_CloseOnEscape_Details = HTMLDetailsElement;
+
+export type Lib_UseDetailsDismiss_CloseOnEscape_ActiveElement = Element | null;
+
+export type Lib_UseDetailsDismiss_CloseOnEscape_Returns = undefined;
+
+export type Lib_UseDetailsDismiss_CloseOnEscape_HadFocus = boolean;
+
+export type Lib_UseDetailsDismiss_CloseOnEscape_Summary = HTMLElement | null;
+
+/**
  * Lib - Use Details Dismiss - Use Details Dismiss.
  *
  * @since 0.18.0

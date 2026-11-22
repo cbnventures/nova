@@ -55,6 +55,11 @@
   transition: color var(--nova-lantern-transition);
 }
 
+/* The italic display face paints past its last glyph, so leave room before the clipped edge. */
+.nova-navbar-monolith-brand a > span {
+  padding-inline-end: 0.25em;
+}
+
 .nova-navbar-monolith-brand a:hover,
 .nova-navbar-monolith-brand a:focus-visible {
   color: var(--nova-color-primary-700);

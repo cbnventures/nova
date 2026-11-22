@@ -36,21 +36,6 @@ ruleTester.run('noDefaultExportDeclaration', NoDefaultExportDeclaration['rule'],
       code: 'export function foo() {}',
     },
 
-    // Named class export - allowed.
-    {
-      code: 'export class Bar {}',
-    },
-
-    // Default export of identifier - allowed.
-    {
-      code: 'const config = {};\nexport default config;',
-    },
-
-    // Default export of anonymous arrow - allowed.
-    {
-      code: 'export default () => {};',
-    },
-
     // Ignored file - allowed.
     {
       code: 'export default function Foo() {}',

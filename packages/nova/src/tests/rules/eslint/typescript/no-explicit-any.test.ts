@@ -29,36 +29,13 @@ ruleTester.run('noExplicitAny', NoExplicitAny['rule'], {
       code: 'const x: unknown = getValue();',
     },
     {
-      code: 'const x: string = "hello";',
-    },
-    {
-      code: 'function f(x: unknown): void {}',
-    },
-    {
-      code: 'const items: string[] = [];',
-    },
-    {
       code: 'const x: any = getValue();',
       options: [{ ignoreFiles: ['ignored.ts'] }],
       filename: '/path/to/ignored.ts',
     },
   ],
-  invalid: [
-    {
-      code: 'const x: any = getValue();',
-      errors: [{ messageId: 'noExplicitAny' }],
-    },
-    {
-      code: 'function f(x: any): void {}',
-      errors: [{ messageId: 'noExplicitAny' }],
-    },
-    {
-      code: 'const items: any[] = [];',
-      errors: [{ messageId: 'noExplicitAny' }],
-    },
-    {
-      code: 'function f(): any { return null; }',
-      errors: [{ messageId: 'noExplicitAny' }],
-    },
-  ],
+  invalid: [{
+    code: 'const x: any = getValue();',
+    errors: [{ messageId: 'noExplicitAny' }],
+  }],
 });

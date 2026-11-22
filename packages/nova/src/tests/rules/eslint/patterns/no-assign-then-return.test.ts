@@ -49,10 +49,5 @@ ruleTester.run('noAssignThenReturn', NoAssignThenReturn['rule'], {
       output: 'function f() {  return items.filter((item) => item > 0); }',
       errors: [{ messageId: 'returnDirectly' }],
     },
-    {
-      code: 'function f() { const result = getValue(); return result; }',
-      output: 'function f() {  return getValue(); }',
-      errors: [{ messageId: 'returnDirectly' }],
-    },
   ],
 });

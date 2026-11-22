@@ -18,6 +18,8 @@ tags:
   - "landing page"
 ---
 
+import BlockPlayground from '@theme/BlockPlayground';
+
 Freeform container block that accepts arbitrary JSX children.
 
 Use it to build fully custom homepage sections — hero replacements, bespoke landing areas, or any layout that the structured blocks do not cover.
@@ -32,6 +34,93 @@ The Canvas block renders a `<section>` with your children inside. Unlike Hero or
 - **Preset-aware** — your content inherits the active preset's design tokens (colors, fonts, spacing, motion).
 - **Container control** — choose between contained (max-width) or full-bleed edge-to-edge layout.
 - **Surface toggle** — switch between the default and alternate surface backgrounds.
+
+## Try It
+
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Canvas container="contained">
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))',
+      alignItems: 'center',
+      gap: '3rem',
+      padding: '4rem 0',
+    }}
+  >
+    <div>
+      <p
+        style={{
+          margin: 0,
+          fontSize: '0.8125rem',
+          fontWeight: 600,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--nova-color-accent-600)',
+        }}
+      >
+        New in Acme Planner 2.0
+      </p>
+      <h2 style={{ margin: '0.5rem 0 1rem', fontFamily: 'var(--nova-font-display)', fontSize: '2.5rem', lineHeight: 1.15 }}>
+        Plan the whole week in one calm view
+      </h2>
+      <p style={{ margin: '0 0 1.75rem', fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--nova-color-text-muted)' }}>
+        Drag tasks between days, see what is due at a glance, and share the plan with your team.
+      </p>
+      <a
+        href="/docs/"
+        style={{
+          display: 'inline-block',
+          padding: '0.75rem 1.5rem',
+          fontWeight: 600,
+          color: 'var(--nova-color-text-inverse)',
+          textDecoration: 'none',
+          background: 'var(--nova-color-primary-600)',
+          borderRadius: 'var(--nova-shape-radius)',
+        }}
+      >
+        Start planning
+      </a>
+    </div>
+    <div
+      style={{
+        padding: '1.5rem',
+        background: 'var(--nova-color-background)',
+        border: '1px solid var(--nova-color-border)',
+        borderRadius: 'var(--nova-shape-radius)',
+        boxShadow: 'var(--nova-depth-card-shadow)',
+      }}
+    >
+      <p style={{ margin: '0 0 1rem', fontWeight: 600 }}>This week</p>
+      {[
+        { day: 'Mon', task: 'Draft the launch post', color: 'var(--nova-color-primary-500)' },
+        { day: 'Tue', task: 'Review the pricing page', color: 'var(--nova-color-accent-500)' },
+        { day: 'Wed', task: 'Record the product demo', color: 'var(--nova-color-primary-300)' },
+        { day: 'Thu', task: 'Send the beta invites', color: 'var(--nova-color-accent-300)' },
+      ].map((item) => (
+        <div
+          key={item.day}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.75rem 0',
+            borderTop: '1px solid var(--nova-color-border)',
+          }}
+        >
+          <span style={{ width: '0.625rem', height: '0.625rem', borderRadius: '9999px', background: item.color }} />
+          <span style={{ width: '2.5rem', fontWeight: 600, color: 'var(--nova-color-text-muted)' }}>{item.day}</span>
+          <span>{item.task}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</Canvas>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

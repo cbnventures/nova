@@ -1,0 +1,24 @@
+{
+  "app.js": {
+    "SYNO.SDS.[__WORKSPACE_IDENTIFIER__].Instance": {
+      "type": "app",
+      "title": "app:displayname",
+      "appWindow": "SYNO.SDS.[__WORKSPACE_IDENTIFIER__].MainWindow",
+      "allowMultiInstance": false,
+      "allUsers": false,
+      "hidden": false,
+      "icon": "images/icon_{0}.png",
+      "texts": "texts",
+      "depend": [
+        "SYNO.SDS.[__WORKSPACE_IDENTIFIER__].MainWindow"
+      ]
+    },
+    "SYNO.SDS.[__WORKSPACE_IDENTIFIER__].MainWindow": {
+      "type": "lib",
+      "title": "app:displayname",
+      "icon": "images/icon_{0}.png",
+      "texts": "texts",
+      "depend": []
+    }
+  }
+}

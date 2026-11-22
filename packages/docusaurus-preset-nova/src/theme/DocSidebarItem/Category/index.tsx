@@ -2,9 +2,14 @@ import Link from '@docusaurus/Link';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 import DocSidebarItems from '@theme/DocSidebarItems';
-import { useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { LIB_REGEX_TRAILING_SLASH } from '../../../lib/regex.js';
+import { getCategoryLabelMode, sidebarMobilePanelContext } from '../../DocSidebarMobile/panel-context.js';
 
 import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ActiveDescendant,
@@ -35,11 +40,14 @@ import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Href,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InitialOpenValue,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InMobilePanel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsActive,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpenValue,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Label,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_LabelMode,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_NextLevel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OpenState,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OverviewLabel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SetIsOpenValue,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig,
@@ -219,6 +227,13 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
     { label },
   );
   const summaryAriaLabel: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryAriaLabel = (isOpenValue === true) ? collapseCategoryAriaLabel : expandCategoryAriaLabel;
+  const inMobilePanel: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InMobilePanel = useContext(sidebarMobilePanelContext);
+  const labelMode: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_LabelMode = getCategoryLabelMode(inMobilePanel, href !== undefined, props['item']['items'].length > 0);
+  const overviewLabel: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OverviewLabel = translate({
+    id: 'theme.DocSidebarItem.categoryOverview',
+    message: 'Overview',
+    description: 'The label of the entry that opens a doc sidebar category\'s own page in the mobile navigation panel',
+  });
 
   /**
    * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Handle Toggle.
@@ -296,7 +311,7 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
             return undefined;
           }}
         >
-          {(href !== undefined) ? (
+          {(labelMode === 'link' && href !== undefined) ? (
             <Link className="nova-sidebar-link" to={href} aria-current={categoryAriaCurrent}>
               {label}
             </Link>
@@ -305,6 +320,13 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
           )}
         </summary>
         <ul className="nova-sidebar-list">
+          {(labelMode === 'toggle-with-overview' && href !== undefined) ? (
+            <li className="nova-sidebar-item">
+              <Link className="nova-sidebar-link" to={href} aria-current={categoryAriaCurrent}>
+                {overviewLabel}
+              </Link>
+            </li>
+          ) : null}
           <DocSidebarItems
             items={props['item']['items']}
             activePath={props['activePath']}

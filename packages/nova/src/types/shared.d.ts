@@ -142,6 +142,20 @@ export type Shared_ChangelogDocument = {
 };
 
 /**
+ * Shared - Changelog Notes Workspace.
+ *
+ * @since 0.50.0
+ */
+export type Shared_ChangelogNotesWorkspace_Name = string;
+
+export type Shared_ChangelogNotesWorkspace_Content = string;
+
+export type Shared_ChangelogNotesWorkspace = {
+  name: Shared_ChangelogNotesWorkspace_Name;
+  content: Shared_ChangelogNotesWorkspace_Content;
+};
+
+/**
  * Shared - Changelog Options.
  *
  * @since 0.13.0
@@ -151,6 +165,8 @@ export type Shared_ChangelogOptions_Record = true;
 export type Shared_ChangelogOptions_Release = true;
 
 export type Shared_ChangelogOptions_Fold = true;
+
+export type Shared_ChangelogOptions_Notes = true;
 
 export type Shared_ChangelogOptions_Add = true;
 
@@ -184,6 +200,7 @@ export type Shared_ChangelogOptions = {
   record?: Shared_ChangelogOptions_Record;
   release?: Shared_ChangelogOptions_Release;
   fold?: Shared_ChangelogOptions_Fold;
+  notes?: Shared_ChangelogOptions_Notes;
   add?: Shared_ChangelogOptions_Add;
   edit?: Shared_ChangelogOptions_Edit;
   remove?: Shared_ChangelogOptions_Remove;
@@ -1374,7 +1391,12 @@ export type Shared_BlueprintTriggers = Shared_BlueprintTrigger[];
  */
 export type Shared_BlueprintStep_Name = string;
 
-export type Shared_WorkflowStepKind = 'checkout' | 'setup' | 'install' | 'build' | 'check' | 'artifact' | 'registry' | 'deploy' | 'attest';
+/**
+ * Shared - Workflow Step Kind.
+ *
+ * @since 0.50.0
+ */
+export type Shared_WorkflowStepKind = 'checkout' | 'setup' | 'install' | 'build' | 'check' | 'artifact' | 'registry' | 'deploy' | 'attest' | 'summary';
 
 export type Shared_BlueprintStep_Kind = Shared_WorkflowStepKind;
 
@@ -1419,6 +1441,47 @@ export type Shared_BlueprintStep = {
 export type Shared_BlueprintSteps = Shared_BlueprintStep[];
 
 /**
+ * Shared - Blueprint Summary Row.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlueprintSummaryRow_Work = string;
+
+export type Shared_BlueprintSummaryRow_Workspace = string;
+
+export type Shared_BlueprintSummaryRow_Destination = string;
+
+export type Shared_BlueprintSummaryRow_Detail = string;
+
+export type Shared_BlueprintSummaryRow_Publish = boolean;
+
+export type Shared_BlueprintSummaryRow = {
+  work: Shared_BlueprintSummaryRow_Work;
+  workspace: Shared_BlueprintSummaryRow_Workspace;
+  destination: Shared_BlueprintSummaryRow_Destination;
+  detail: Shared_BlueprintSummaryRow_Detail;
+  publish: Shared_BlueprintSummaryRow_Publish;
+};
+
+export type Shared_BlueprintSummaryRows = Shared_BlueprintSummaryRow[];
+
+/**
+ * Shared - Blueprint Job Output.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlueprintJobOutput_Key = string;
+
+export type Shared_BlueprintJobOutput_Value = string;
+
+export type Shared_BlueprintJobOutput = {
+  key: Shared_BlueprintJobOutput_Key;
+  value: Shared_BlueprintJobOutput_Value;
+};
+
+export type Shared_BlueprintJobOutputs = Shared_BlueprintJobOutput[];
+
+/**
  * Shared - Blueprint Job.
  *
  * @since 0.21.0
@@ -1439,7 +1502,11 @@ export type Shared_BlueprintJob_Permissions = Shared_BlueprintPermissions;
 
 export type Shared_BlueprintJob_If = string;
 
+export type Shared_BlueprintJob_Outputs = Shared_BlueprintJobOutputs;
+
 export type Shared_BlueprintJob_Steps = Shared_BlueprintSteps;
+
+export type Shared_BlueprintJob_SummaryRows = Shared_BlueprintSummaryRows;
 
 export type Shared_BlueprintJob = {
   id: Shared_BlueprintJob_Id;
@@ -1449,7 +1516,9 @@ export type Shared_BlueprintJob = {
   timeoutMinutes: Shared_BlueprintJob_TimeoutMinutes;
   permissions?: Shared_BlueprintJob_Permissions;
   if?: Shared_BlueprintJob_If;
+  outputs?: Shared_BlueprintJob_Outputs;
   steps: Shared_BlueprintJob_Steps;
+  summaryRows?: Shared_BlueprintJob_SummaryRows;
 };
 
 export type Shared_BlueprintJobs = Shared_BlueprintJob[];
@@ -2430,8 +2499,105 @@ export type Shared_NovaConfigReadMeBadge =
 
 export type Shared_NovaConfig_ReadMe_Badges = Shared_NovaConfigReadMeBadge[];
 
+/**
+ * Shared - Nova Config - Read Me Profile.
+ *
+ * @since 0.50.0
+ */
+export type Shared_NovaConfigReadMeProfileBadge_Label = string;
+
+export type Shared_NovaConfigReadMeProfileBadge_Logo = string;
+
+export type Shared_NovaConfigReadMeProfileBadge_Color = string;
+
+export type Shared_NovaConfigReadMeProfileBadge_Link = string;
+
+export type Shared_NovaConfigReadMeProfileBadge = {
+  label: Shared_NovaConfigReadMeProfileBadge_Label;
+  logo: Shared_NovaConfigReadMeProfileBadge_Logo;
+  color: Shared_NovaConfigReadMeProfileBadge_Color;
+  link: Shared_NovaConfigReadMeProfileBadge_Link;
+};
+
+export type Shared_NovaConfigReadMeProfileBadgeGroup_Title = string;
+
+export type Shared_NovaConfigReadMeProfileBadgeGroup_Emoji = string;
+
+export type Shared_NovaConfigReadMeProfileBadgeGroup_Badges = Shared_NovaConfigReadMeProfileBadge[];
+
+export type Shared_NovaConfigReadMeProfileBadgeGroup = {
+  title: Shared_NovaConfigReadMeProfileBadgeGroup_Title;
+  emoji?: Shared_NovaConfigReadMeProfileBadgeGroup_Emoji;
+  badges: Shared_NovaConfigReadMeProfileBadgeGroup_Badges;
+};
+
+export type Shared_NovaConfigReadMeProfileLink_Label = string;
+
+export type Shared_NovaConfigReadMeProfileLink_Url = string;
+
+export type Shared_NovaConfigReadMeProfileLink_Description = string;
+
+export type Shared_NovaConfigReadMeProfileLink = {
+  label: Shared_NovaConfigReadMeProfileLink_Label;
+  url: Shared_NovaConfigReadMeProfileLink_Url;
+  description?: Shared_NovaConfigReadMeProfileLink_Description;
+};
+
+export type Shared_NovaConfigReadMeProfileLinkGroup_Title = string;
+
+export type Shared_NovaConfigReadMeProfileLinkGroup_Emoji = string;
+
+export type Shared_NovaConfigReadMeProfileLinkGroup_Column = string;
+
+export type Shared_NovaConfigReadMeProfileLinkGroup_Columns = [Shared_NovaConfigReadMeProfileLinkGroup_Column, Shared_NovaConfigReadMeProfileLinkGroup_Column];
+
+export type Shared_NovaConfigReadMeProfileLinkGroup_Links = Shared_NovaConfigReadMeProfileLink[];
+
+export type Shared_NovaConfigReadMeProfileLinkGroup = {
+  title: Shared_NovaConfigReadMeProfileLinkGroup_Title;
+  emoji?: Shared_NovaConfigReadMeProfileLinkGroup_Emoji;
+  columns?: Shared_NovaConfigReadMeProfileLinkGroup_Columns;
+  links: Shared_NovaConfigReadMeProfileLinkGroup_Links;
+};
+
+export type Shared_NovaConfig_ReadMe_Profile_Heading = string;
+
+export type Shared_NovaConfig_ReadMe_Profile_Paragraph = string;
+
+export type Shared_NovaConfig_ReadMe_Profile_Introduction = Shared_NovaConfig_ReadMe_Profile_Paragraph[];
+
+export type Shared_NovaConfig_ReadMe_Profile_BadgeGroups = Shared_NovaConfigReadMeProfileBadgeGroup[];
+
+export type Shared_NovaConfig_ReadMe_Profile_LinkGroups = Shared_NovaConfigReadMeProfileLinkGroup[];
+
+export type Shared_NovaConfigReadMeProfileSupport_Title = string;
+
+export type Shared_NovaConfigReadMeProfileSupport_Emoji = string;
+
+export type Shared_NovaConfigReadMeProfileSupport_Message = Shared_NovaConfig_ReadMe_Profile_Paragraph[];
+
+export type Shared_NovaConfigReadMeProfileSupport_Badges = Shared_NovaConfigReadMeProfileBadge[];
+
+export type Shared_NovaConfigReadMeProfileSupport = {
+  title?: Shared_NovaConfigReadMeProfileSupport_Title;
+  emoji?: Shared_NovaConfigReadMeProfileSupport_Emoji;
+  message?: Shared_NovaConfigReadMeProfileSupport_Message;
+  badges?: Shared_NovaConfigReadMeProfileSupport_Badges;
+};
+
+export type Shared_NovaConfig_ReadMe_Profile_Support = Shared_NovaConfigReadMeProfileSupport;
+
+export type Shared_NovaConfig_ReadMe_Profile = {
+  heading?: Shared_NovaConfig_ReadMe_Profile_Heading;
+  introduction?: Shared_NovaConfig_ReadMe_Profile_Introduction;
+  badgeGroups?: Shared_NovaConfig_ReadMe_Profile_BadgeGroups;
+  linkGroups?: Shared_NovaConfig_ReadMe_Profile_LinkGroups;
+  support?: Shared_NovaConfig_ReadMe_Profile_Support;
+};
+
 export type Shared_NovaConfig_ReadMe = {
   badges?: Shared_NovaConfig_ReadMe_Badges;
+  profile?: Shared_NovaConfig_ReadMe_Profile;
 };
 
 export type Shared_NovaConfigWorkspace_Name = string;
@@ -3094,6 +3260,19 @@ export type Shared_NovaConfig_Recipes = {
 export type Shared_NovaConfig_Environment = Shared_NovaConfigEnvironment;
 
 /**
+ * Shared - Nova Config Settings - Changelog.
+ *
+ * @since 0.50.0
+ */
+export type Shared_NovaConfigSettings_Changelog_WorkspaceOrder_Item = string;
+
+export type Shared_NovaConfigSettings_Changelog_WorkspaceOrder = Shared_NovaConfigSettings_Changelog_WorkspaceOrder_Item[];
+
+export type Shared_NovaConfigSettings_Changelog = {
+  workspaceOrder?: Shared_NovaConfigSettings_Changelog_WorkspaceOrder;
+};
+
+/**
  * Shared - Nova Config Settings - Coverage.
  *
  * @since 0.49.0
@@ -3139,6 +3318,8 @@ export type Shared_NovaConfigSettings_RunWorkspaces = {
   root?: Shared_NovaConfigSettings_RunWorkspaces_Root;
 };
 
+export type Shared_NovaConfig_Settings_Changelog = Shared_NovaConfigSettings_Changelog;
+
 export type Shared_NovaConfig_Settings_Coverage = Shared_NovaConfigSettings_Coverage;
 
 export type Shared_NovaConfig_Settings_LockStepVersioning = boolean;
@@ -3148,6 +3329,7 @@ export type Shared_NovaConfig_Settings_RunWorkspaces = Shared_NovaConfigSettings
 export type Shared_NovaConfig_Settings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Shared_NovaConfig_Settings = {
+  changelog?: Shared_NovaConfig_Settings_Changelog;
   coverage?: Shared_NovaConfig_Settings_Coverage;
   lockStepVersioning?: Shared_NovaConfig_Settings_LockStepVersioning;
   runWorkspaces?: Shared_NovaConfig_Settings_RunWorkspaces;

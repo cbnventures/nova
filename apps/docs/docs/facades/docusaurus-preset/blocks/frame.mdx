@@ -19,10 +19,7 @@ tags:
   - "figure"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-
-import framePreviewLight from './_assets_/frame-preview-light.png';
-import framePreviewDark from './_assets_/frame-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Figure wrapper with an optional caption. Wraps any media child (themed image, image, video, embed) with preset-specific framing identity — radius, border, shadow, and caption typography.
 
@@ -37,9 +34,24 @@ The Frame block renders a `<figure>` element with two parts: a `<div class="nova
 - **Pass-through styling** — `className` and `style` props merge with the base `nova-frame` class for one-off overrides.
 - **Semantic HTML** — uses `<figure>` + `<figcaption>` so screen readers announce the caption as related to the media.
 
-## Preview
+## Try It
 
-<ThemedImage sources={{ light: framePreviewLight, dark: framePreviewDark }} alt="Frame block preview" width={1148} height={781} style={{ height: 'auto' }} />
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Frame caption="System overview — request flow from client to worker.">
+  <div
+    role="img"
+    aria-label="System overview diagram"
+    style={{
+      aspectRatio: '16 / 9',
+      background: 'linear-gradient(135deg, var(--nova-color-accent-100), var(--nova-color-primary-200))',
+    }}
+  />
+</Frame>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

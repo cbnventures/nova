@@ -19,11 +19,7 @@ tags:
   - "screenshot"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import browserFramePreviewLight from './_assets_/browser-frame-preview-light.png';
-import browserFramePreviewDark from './_assets_/browser-frame-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Browser window around a web app screenshot. The window looks like Chrome on macOS without Chrome's branding: traffic lights, tab search, one tab, the new-tab button, then back, forward, reload, the address bar, and the menu.
 
@@ -38,11 +34,24 @@ The Browser Frame block renders a `<figure class="nova-browser-frame">` that hol
 - **Light and dark** — the chrome follows the site's color mode.
 - **Same window everywhere** — it does not change between presets, because it represents a real browser.
 
-## Preview
+## Try It
 
-<Frame caption="Browser Frame block — light and dark mode preview">
-  <ThemedImage sources={{ light: browserFramePreviewLight, dark: browserFramePreviewDark }} alt="Browser Frame block preview" width={1148} height={820} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<BrowserFrame title="Acme Dashboard" url="localhost:3000" favicon="/favicon.svg">
+  <div
+    role="img"
+    aria-label="Acme Dashboard overview page"
+    style={{
+      aspectRatio: '1280 / 800',
+      background: 'linear-gradient(135deg, var(--nova-color-primary-100), var(--nova-color-primary-300))',
+    }}
+  />
+</BrowserFrame>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

@@ -22,6 +22,8 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import BlockPlayground from '@theme/BlockPlayground';
+
 Animated text typing effect that cycles through a list of words. Characters are typed one at a time, paused, then deleted before the next word begins.
 
 Supports a static prefix and configurable speed.
@@ -35,6 +37,28 @@ The Typewriter block is a compound component with three parts: the main `Typewri
 - **Engaging hero text** — add dynamic text cycling to landing page headings.
 - **Configurable timing** — control type speed, delete speed, pause duration, and loop behavior.
 - **Compound API** — static prefix and animated words are declared as JSX children for clean composition.
+
+## Try It
+
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<div style={{ padding: '2rem 0', textAlign: 'center' }}>
+  <h2 style={{ margin: 0, fontSize: '2.5rem', lineHeight: 1.2 }}>
+    <Typewriter typeSpeed={70} deleteSpeed={35} pauseDuration={1600}>
+      <Typewriter.Prefix>Docs that feel </Typewriter.Prefix>
+      <Typewriter.Word>fast</Typewriter.Word>
+      <Typewriter.Word>friendly</Typewriter.Word>
+      <Typewriter.Word>effortless</Typewriter.Word>
+    </Typewriter>
+  </h2>
+  <p style={{ margin: '0.75rem 0 0', color: 'var(--nova-color-text-muted)' }}>
+    One preset, every page, no custom CSS.
+  </p>
+</div>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

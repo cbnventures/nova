@@ -356,12 +356,12 @@
 }
 
 .nova-navbar-canopy-menu-item svg,
-.nova-navbar-canopy-menu-dropdown-summary svg {
+.nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-accent-700);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item svg,
-[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary svg {
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-accent-500);
 }
 

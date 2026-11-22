@@ -85,23 +85,6 @@ export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_
 export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_Output = string;
 
 /**
- * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Dry Run Does Not Write.
- *
- * @since 0.21.0
- */
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ProjectDirectory = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ReadmePath = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_OnDiskContent = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_Output = string;
-
-/**
  * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Dry Run Writes Nothing Anywhere In A Fan Out Tree.
  *
  * @since 0.21.0
@@ -231,6 +214,31 @@ export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_
 export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_Output = string;
 
 export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_WarnCalls = unknown[][];
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Preserves Custom Profile Sections.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_NewBadges = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Prefix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Suffix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Output = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ExpectedContent = string;
 
 /**
  * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Refreshes The Badges Region And Keeps Everything Outside Byte Identical.

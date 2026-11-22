@@ -21,6 +21,12 @@ export type Pages_Index_Home_SiteConfig = PagesSiteConfig;
 
 export type Pages_Index_Home_FeatureItems = PagesFeatureItems;
 
+export type Pages_Index_Home_CustomFields = PagesSiteConfig['customFields'];
+
+export type Pages_Index_Home_CliHeader = unknown;
+
+export type Pages_Index_Home_CliHeaderLines = string[];
+
 /**
  * Pages - Home - Config Snippets.
  *

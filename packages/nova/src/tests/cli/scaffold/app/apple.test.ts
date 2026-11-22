@@ -46,6 +46,11 @@ import type {
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_MacosMetadata,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_OutputPath,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_ProjectYml,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_AppSwift,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_OutputPath,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolders,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_ProjectYml,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_WorkspacePath,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_SandboxRoot,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_TemporaryBase,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_TemporaryDirectory,
@@ -263,6 +268,68 @@ describe.sequential('CliScaffoldAppApple.run', async () => {
     strictEqual(gitignore.includes('/assets/'), false);
     strictEqual(iosMetadata.includes('"description": null'), true);
     strictEqual(macosMetadata.includes('"description": null'), true);
+
+    return;
+  });
+
+  it('renders platform source folders', async () => {
+    const outputPath: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_OutputPath = join(sandboxRoot, 'platform-folders');
+    const workspacePath: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_WorkspacePath = join(outputPath, 'apps', 'apple');
+    const platformFolders: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolders = [
+      {
+        folder: 'iOS',
+        destination: 'iOS',
+        rootView: 'iOS_RootView',
+      },
+      {
+        folder: 'MacOS',
+        destination: 'macOS',
+        rootView: 'MacOS_RootView',
+      },
+      {
+        folder: 'MacOS_12',
+        destination: 'macOS',
+        rootView: 'MacOS_12_RootView',
+      },
+      {
+        folder: 'tvOS',
+        destination: 'tvOS',
+        rootView: 'tvOS_RootView',
+      },
+      {
+        folder: 'VisionOS',
+        destination: 'visionOS',
+        rootView: 'VisionOS_RootView',
+      },
+    ];
+
+    process.chdir(sandboxRoot);
+
+    await CliScaffoldAppApple.run({
+      install: false,
+      name: 'platform-folders',
+      nonInteractive: true,
+      output: outputPath,
+      workspaceName: 'apple',
+    });
+
+    const projectYml: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_ProjectYml = await readFile(join(workspacePath, 'project.yml'), 'utf-8');
+    const appSwift: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_AppSwift = await readFile(join(workspacePath, 'Sources', 'App', 'App.swift'), 'utf-8');
+
+    strictEqual(projectYml.includes('supportedDestinations: [iOS, macOS, tvOS, visionOS]'), true);
+    strictEqual(appSwift.includes('if #available(macOS 13.0, *)'), true);
+
+    for (const platformFolder of platformFolders) {
+      await access(join(workspacePath, 'Sources', platformFolder['folder'], `${platformFolder['rootView']}.swift`));
+
+      strictEqual(projectYml.includes(`- "${platformFolder['folder']}/**"`), true);
+      strictEqual(projectYml.includes([
+        `- path: Sources/${platformFolder['folder']}`,
+        '        group: Sources',
+        `        destinationFilters: [${platformFolder['destination']}]`,
+      ].join('\n')), true);
+      strictEqual(appSwift.includes(`${platformFolder['rootView']}()`), true);
+    }
 
     return;
   });

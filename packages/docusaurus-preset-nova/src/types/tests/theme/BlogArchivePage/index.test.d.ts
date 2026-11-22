@@ -47,6 +47,14 @@ export type Tests_Theme_BlogArchivePage_Index_DocusaurusThemeCommonInternal_Mock
  */
 export type Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_Translate = ReturnType<typeof vi['fn']>;
 
+export type Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateDescriptor_Id = string;
+
+export type Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateDescriptor = Readonly<{
+  id: Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateDescriptor_Id;
+}>;
+
+export type Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateImplementation = (descriptor: Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateDescriptor) => string;
+
 export type Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule = Readonly<{
   translate: Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_Translate;
 }>;

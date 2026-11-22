@@ -161,9 +161,8 @@ function getPackageRoot(): Tests_PresetList_GetPackageRoot_Returns {
 /**
  * Tests - Preset List - List Preset Directories.
  *
- * Lists the immediate child directories of a preset root,
- * dropping non-directory entries so the comparison set
- * matches what a contributor would consider a preset.
+ * Lists the immediate child directories of a preset root, dropping files
+ * and hidden folders (such as tool caches) so the set matches real presets.
  *
  * @returns {Tests_PresetList_ListPresetDirectories_Returns}
  *
@@ -174,7 +173,7 @@ async function listPresetDirectories(root: Tests_PresetList_ListPresetDirectorie
   const names: Tests_PresetList_ListPresetDirectories_Names = [];
 
   for (const entry of entries) {
-    if (entry.isDirectory() === true) {
+    if (entry.isDirectory() === true && entry.name.startsWith('.') === false) {
       names.push(entry.name);
     }
   }

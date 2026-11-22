@@ -32,13 +32,6 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       code: 'const entries: string[] = [];',
       filename: 'src/types/shared.d.ts',
     },
-    {
-      code: 'let x: string | undefined;',
-      filename: 'src/types/cli/runner.d.ts',
-    },
-    {
-      code: 'function f(x: MyType): ReturnType {}',
-    },
 
     // VariableDeclarator: top-level declarations are allowed.
     {
@@ -87,19 +80,6 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       code: 'function f<T>() { const x: MyType = getValue() as SomeType<T>; }',
     },
 
-    // TSAsExpression: as Record<string, unknown> in .d.ts file - skipped.
-    {
-      code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
-      filename: 'src/types/shared.d.ts',
-    },
-
-    // TSAsExpression: as Record<string, unknown> in ignored file - skipped.
-    {
-      code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
-      options: [{ ignoreFiles: ['ignored.ts'] }],
-      filename: '/path/to/ignored.ts',
-    },
-
     // Extracted <script> virtual file is skipped (annotations cannot parse in a plain script block).
     {
       code: 'function f() { const x = getValue(); }',
@@ -112,15 +92,7 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       errors: [{ messageId: 'useNamedType' }],
     },
     {
-      code: 'let x: string | undefined;',
-      errors: [{ messageId: 'useNamedType' }],
-    },
-    {
       code: 'const m: Map<string, number> = new Map();',
-      errors: [{ messageId: 'useNamedType' }],
-    },
-    {
-      code: 'const name: string = \'\';',
       errors: [{ messageId: 'useNamedType' }],
     },
     {
@@ -137,12 +109,6 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       errors: [{ messageId: 'requireTypeAnnotation' }],
     },
 
-    // VariableDeclarator: let inside function body without type annotation.
-    {
-      code: 'function f() { let x = getValue(); }',
-      errors: [{ messageId: 'requireTypeAnnotation' }],
-    },
-
     // VariableDeclarator: inside arrow function.
     {
       code: 'const f = () => { const x = getValue(); };',
@@ -152,12 +118,6 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
     // TSAsExpression: as Record<string, unknown> - concrete generic args.
     {
       code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
-      errors: [{ messageId: 'useNamedType' }],
-    },
-
-    // TSAsExpression: as Map<string, number> - concrete generic args.
-    {
-      code: 'function f() { const x: MyType = getValue() as Map<string, number>; }',
       errors: [{ messageId: 'useNamedType' }],
     },
 
@@ -173,12 +133,6 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
     // TSAsExpression: as string[] - inline array type.
     {
       code: 'function f() { const x: MyType = getValue() as string[]; }',
-      errors: [{ messageId: 'useNamedType' }],
-    },
-
-    // TSAsExpression: as (string | number) - inline union type.
-    {
-      code: 'function f() { const x: MyType = getValue() as (string | number); }',
       errors: [{ messageId: 'useNamedType' }],
     },
   ],

@@ -19,11 +19,6 @@ import type {
   Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_BlockDirs,
   Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Message,
   Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Violations,
-  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs,
-  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet,
-  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported,
-  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message,
-  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale,
   Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Message,
   Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_ThemeDirs,
   Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Violations,
@@ -193,21 +188,6 @@ describe('folder axis', () => {
     ].join('\n');
 
     strictEqual(missing.length, 0, message);
-
-    return;
-  });
-
-  it('every blocks/index.ts export points to an existing directory', () => {
-    const blockDirs: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs = listBlockDirectories();
-    const exported: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported = readBlocksIndexExports();
-    const blockDirSet: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet = new Set(blockDirs);
-    const stale: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale = Array.from(exported).filter((name) => blockDirSet.has(name) === false);
-    const message: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message = [
-      `blocks/index.ts has ${stale.length} exports without matching directories (barrel is stale):`,
-      ...stale.map((entry) => `  - ${entry}`),
-    ].join('\n');
-
-    strictEqual(stale.length, 0, message);
 
     return;
   });

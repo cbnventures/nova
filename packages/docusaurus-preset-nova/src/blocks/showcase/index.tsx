@@ -75,7 +75,9 @@ function BlocksShowcase(props: Blocks_Showcase_Index_BlocksShowcase_Props): Bloc
               <Link to={current['link']['to']}>{current['link']['label']}</Link>
             </p>
           )}
-          {current['content']}
+          <div className="nova-showcase-content">
+            {current['content']}
+          </div>
         </div>
       )}
     </div>

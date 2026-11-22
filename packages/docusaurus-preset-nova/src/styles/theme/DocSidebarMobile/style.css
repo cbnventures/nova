@@ -54,6 +54,25 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  min-width: 0;
+}
+
+/* Parent sections give up room first, so the current page keeps the most. */
+.nova-sidebar-mobile-trigger-segment:not(:last-child) {
+  flex-shrink: 4;
+}
+
+/* Long paths shrink the labels, never the separator arrows. */
+.nova-sidebar-mobile-trigger-segment svg {
+  flex-shrink: 0;
+}
+
+.nova-sidebar-mobile-trigger-label {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ============================

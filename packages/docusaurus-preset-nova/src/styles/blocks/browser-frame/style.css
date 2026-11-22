@@ -5,13 +5,16 @@
  *
  * Chrome on macOS without Chrome's branding. Every size below was measured
  * from a real 1280px-wide Chrome window and is written in --nova-browser-u,
- * one CSS pixel of that window, so the chrome shrinks and grows with the
- * screenshot inside it. Set --nova-browser-frame-viewport on the block when
- * the screenshot was captured at a viewport other than 1280.
+ * one CSS pixel of that window, so the chrome follows the frame's width.
+ * The unit is clamped: it never grows past real size on wide pages, and it
+ * stops shrinking at 0.85 so the tab and address bar stay readable on
+ * phones, where the tab title and URL truncate instead. Set
+ * --nova-browser-frame-viewport on the block when the screenshot was
+ * captured at a viewport other than 1280.
  */
 
 .nova-browser-frame {
-  --nova-browser-u: calc(100cqw / var(--nova-browser-frame-viewport, 1280));
+  --nova-browser-u: clamp(0.85px, 100cqw / var(--nova-browser-frame-viewport, 1280), 1px);
   --nova-browser-frame-chrome: #dfe3e8;
   --nova-browser-frame-surface: #ffffff;
   --nova-browser-frame-omnibox: #eef1f5;

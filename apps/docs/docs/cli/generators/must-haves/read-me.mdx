@@ -1,7 +1,7 @@
 ---
 id: "read-me"
 title: "README (README.md)"
-description: "Generate a baseline README.md file populated with project metadata from nova.config.json including badges, credits, and documentation links."
+description: "Generate a project or GitHub profile README.md from nova.config.json, including ordered badges, link groups, and support options."
 keywords:
   - "nova"
   - "nova generate"
@@ -19,12 +19,13 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Create a baseline `README.md` populated with project name, description, dynamic badges, documentation links, and a credits section from the Nova config.
+Create a baseline project `README.md`, or generate a GitHub profile README when `readme.profile` is present.
 
 ## Why Use This Command?
 
 - Produces a consistent README with shields badges, documentation links, and correct pronoun usage without manual editing.
 - Generates only the badges selected in `readme.badges`, preserving their configured order.
+- Generates an introduction, ordered badge groups, link groups as tables or lists, and an optional support section for a GitHub profile repository.
 - Draws every value from <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, so regenerating after a config change keeps the file in sync.
 - Automatically copies the generated file into each consumer-facing workspace with the `app`, `package`, `tool`, or `config` role.
 
@@ -70,21 +71,27 @@ Create a baseline `README.md` populated with project name, description, dynamic 
 
 ## Config Fields
 
-| Field                      | Description                                                                                          |
-|----------------------------|------------------------------------------------------------------------------------------------------|
-| `project.name.title`       | Display name used in the heading.                                                                    |
-| `project.description.long` | Long project description shown below the heading.                                                    |
-| `project.pronouns`         | `"personal"` or `"business"` — controls me/us, my/our usage.                                         |
-| `urls.homepage`            | Project homepage URL linked from the logo.                                                           |
-| `urls.logo`                | Absolute URL to the project logo image.                                                              |
-| `urls.documentation`       | Documentation site URL used in the links section.                                                    |
-| `readme.badges`            | Exact ordered badge identifiers to include. Missing and empty arrays produce no badges.              |
-| `urls.npm`                 | npm package URL used by the selected npm badges.                                                     |
-| `urls.docker`              | Docker Hub URL used by the selected Docker badges.                                                   |
-| `github.owner`             | GitHub owner — combined with `github.repo` into the repo slug.                                       |
-| `github.repo`              | GitHub repo name — joined with `github.owner` for selected GitHub badges.                            |
-| `urls.fundSources`         | Array of funding URLs used by the selected funding badge and credits section.                        |
-| `entities`                 | Entities with a `contributor` or `supporter` role are listed by name and URL in the credits section. |
+| Field                         | Description                                                                                          |
+|-------------------------------|------------------------------------------------------------------------------------------------------|
+| `project.name.title`          | Display name used in the heading.                                                                    |
+| `project.description.long`    | Long project description shown below the heading.                                                    |
+| `project.pronouns`            | `"personal"` or `"business"` — controls me/us, my/our usage.                                         |
+| `urls.homepage`               | Project homepage URL linked from the logo.                                                           |
+| `urls.logo`                   | Absolute URL to the project logo image.                                                              |
+| `urls.documentation`          | Documentation site URL used in the links section.                                                    |
+| `readme.badges`               | Exact ordered badge identifiers to include. Missing and empty arrays produce no badges.              |
+| `readme.profile`              | Presence of this object switches generation to a GitHub profile README.                              |
+| `readme.profile.heading`      | Top-level Markdown heading. Defaults to `project.name.title`.                                        |
+| `readme.profile.introduction` | Array of Markdown paragraphs, joined by a blank line.                                                |
+| `readme.profile.badgeGroups`  | Ordered titled groups of static shields.io badges.                                                   |
+| `readme.profile.linkGroups`   | Ordered titled groups of links, rendered as a table or a bullet list.                                |
+| `readme.profile.support`      | Support section object. Its presence adds the section; badges default to `urls.fundSources`.         |
+| `urls.npm`                    | npm package URL used by the selected npm badges.                                                     |
+| `urls.docker`                 | Docker Hub URL used by the selected Docker badges.                                                   |
+| `github.owner`                | GitHub owner — combined with `github.repo` into the repo slug.                                       |
+| `github.repo`                 | GitHub repo name — joined with `github.owner` for selected GitHub badges.                            |
+| `urls.fundSources`            | Array of funding URLs used by the selected funding badge and credits section.                        |
+| `entities`                    | Entities with a `contributor` or `supporter` role are listed by name and URL in the credits section. |
 
 ## Supported Badges
 
@@ -106,6 +113,114 @@ Badges render in the same order as `readme.badges`. Unknown identifiers, duplica
 
 The `coverage` badge renders as `https://img.shields.io/endpoint?url=…`, pointing at the JSON file the [publish workflow](/docs/cli/generators/github/workflows#publishing-the-coverage-badge) writes: `<urls.documentation>/badges/coverage.json` when the project has a `docs` workspace and `urls.documentation`, or the `badges` branch on raw.githubusercontent.com otherwise. When no coverage minimum is set or no URL can be built, the badge is left out.
 
+## GitHub Profile README Mode
+
+GitHub displays the root `README.md` from a repository named after its owner on that owner's profile. Add `readme.profile` to make Nova generate that profile-oriented document. The object can be empty; its presence is the mode switch.
+
+Profile mode applies only to the root `README.md`. Consumer-facing workspace copies keep the regular project README, built from the same config with `readme.profile` ignored, so `readme.badges` and the rest of the config still apply to them.
+
+Profile mode uses `heading` as the top-level Markdown heading, or `project.name.title` when `heading` is not set. It then renders `introduction`, each `badgeGroups` entry, each `linkGroups` entry, and the optional support section. Project-oriented logo, documentation, contributor, installation, and usage content is not rendered.
+
+`introduction` and `support.message` are arrays with one Markdown paragraph per item, so the config never needs `\n` line breaks. Empty items are skipped with a diagnostic, and an array with no valid paragraphs is rejected.
+
+Each badge group requires a `title` and a non-empty `badges` array. `emoji` is optional and follows the title in the heading. Every badge requires these fields:
+
+| Field   | Description                                                                                                      |
+|---------|------------------------------------------------------------------------------------------------------------------|
+| `label` | Text shown on the badge. Nova escapes spaces, hyphens, and underscores.                                          |
+| `logo`  | [Simple Icons](https://simpleicons.org/) slug, or a `data:image/svg+xml;base64,` URI for brands it doesn't have. |
+| `color` | Six hexadecimal characters without `#`.                                                                          |
+| `link`  | Absolute `http://` or `https://` destination for the linked badge.                                               |
+
+Slugs are lowercased. A data URI is kept as written and percent-encoded in the shields.io `logo` parameter.
+
+Each link group renders as a `## title emoji` section. When every link in the group has a `description`, the group renders as a padded Markdown table; otherwise it renders as a bullet list and descriptions are ignored. Pipes in table cells are escaped.
+
+| Field     | Description                                                                                   |
+|-----------|-----------------------------------------------------------------------------------------------|
+| `title`   | Required section heading.                                                                     |
+| `emoji`   | Optional emoji placed after the title.                                                        |
+| `columns` | Optional two table header labels. Defaults to `["Link", "Description"]`.                      |
+| `links`   | Required non-empty array of links with `label`, an HTTP `url`, and an optional `description`. |
+
+The `support` object adds a support section. Every field is optional:
+
+| Field     | Description                                                                                                                                     |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `title`   | Section heading. Defaults to `Support My Work`.                                                                                                 |
+| `emoji`   | Emoji placed after the title. Defaults to `🎗️`.                                                                                                |
+| `message` | Array of Markdown paragraphs shown above the badges. Defaults to a short thank-you paragraph.                                                   |
+| `badges`  | Badges with the same fields as badge group badges, rendered in order. Defaults to badges built from `urls.fundSources`, which must then be set. |
+
+```json
+{
+  "project": {
+    "name": {
+      "title": "Hello, I'm Example 👋"
+    }
+  },
+  "urls": {
+    "fundSources": ["https://github.com/sponsors/example"]
+  },
+  "readme": {
+    "profile": {
+      "introduction": [
+        "I build useful open-source software.",
+        "Most of it runs on small home servers."
+      ],
+      "badgeGroups": [
+        {
+          "title": "Language Palette",
+          "emoji": "👨‍💻",
+          "badges": [
+            {
+              "label": "TypeScript",
+              "logo": "typescript",
+              "color": "3178c6",
+              "link": "https://www.typescriptlang.org"
+            },
+            {
+              "label": "Example Tool",
+              "logo": "data:image/svg+xml;base64,PHN2Zy8+",
+              "color": "000000",
+              "link": "https://example.com/tool"
+            }
+          ]
+        }
+      ],
+      "linkGroups": [
+        {
+          "title": "Projects",
+          "emoji": "📦",
+          "columns": ["Project", "Summary"],
+          "links": [
+            {
+              "label": "Example Widget",
+              "url": "https://example.com/widget",
+              "description": "A small widget"
+            }
+          ]
+        },
+        {
+          "title": "Links",
+          "links": [
+            {
+              "label": "Website",
+              "url": "https://example.com"
+            }
+          ]
+        }
+      ],
+      "support": {
+        "message": ["If my projects help you, please consider supporting them."]
+      }
+    }
+  }
+}
+```
+
+Nova keeps the same named region markers in both modes. Put custom content, such as a scripts table, between regions so the README recipes can refresh their owned regions without changing that content.
+
 ## Supported Funding Platforms
 
 | Platform        | Detected By                   |
@@ -120,7 +235,7 @@ The `coverage` badge renders as `https://img.shields.io/endpoint?url=…`, point
 
 ## Output Files
 
-| File                    | Description                                                                                                                                      |
-|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `README.md`             | Project README with badges, links, and description.                                                                                              |
-| `<workspace>/README.md` | A copy of the same README placed in each consumer-facing workspace (roles `app`, `package`, `tool`, and `config`), excluding the root workspace. |
+| File                    | Description                                                                                                                                                                     |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `README.md`             | Project README, or a profile README when `readme.profile` is present.                                                                                                           |
+| `<workspace>/README.md` | The project README placed in each consumer-facing workspace (roles `app`, `package`, `tool`, and `config`), excluding the root workspace, even when the root uses profile mode. |

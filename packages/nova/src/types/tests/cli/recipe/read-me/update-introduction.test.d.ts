@@ -85,23 +85,6 @@ export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntr
 export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DisabledFlagSkipsAndDoesNotWrite_Output = string;
 
 /**
- * Tests - CLI - Recipe - Read Me - Update Introduction - CLI Recipe Read Me Update Introduction Run - Dry Run Does Not Write.
- *
- * @since 0.21.0
- */
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ProjectDirectory = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ReadmePath = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_OnDiskContent = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_Output = string;
-
-/**
  * Tests - CLI - Recipe - Read Me - Update Introduction - CLI Recipe Read Me Update Introduction Run - Dry Run Writes Nothing Anywhere In A Fan Out Tree.
  *
  * @since 0.21.0
@@ -256,3 +239,24 @@ export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntr
 export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_RefreshesTheIntroductionRegionAndKeepsEverythingOutsideByteIdentical_Output = string;
 
 export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_RefreshesTheIntroductionRegionAndKeepsEverythingOutsideByteIdentical_ExpectedContent = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Introduction - CLI Recipe Read Me Update Introduction Run - Uses The Project Introduction For Consumer Workspaces In Profile Mode.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_StaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppOutput = string;

@@ -1,5 +1,28 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.50.0 - 2026-11-22
+
+### UPDATED
+- Terminology block, which now explains a term in its own tooltip that opens on hover, keyboard focus, or tap, stays inside the screen, follows the preset's colors in light and dark, and, for linked terms, opens the page on a second tap.
+- Tests now report coverage through a `check:coverage` script, which fails when line, function, branch or statement coverage drops below the project minimum, and the README badges now include that coverage.
+- Typewriter block, whose cycling words now take the preset's primary color and are followed by a blinking caret, which stays still when the reader prefers reduced motion.
+- BrowserFrame and TerminalFrame blocks, which now size their window chrome and terminal text to the frame's width within readable limits instead of scaling it like an image, so the tab, address bar and title stay legible on phones and stop growing on wide pages, and narrow terminal frames wrap long lines.
+
+### FIXED
+- Showcase block, whose view now keeps a gap below the heading, description, and link instead of sitting flush against them when the content has no top margin of its own.
+- Navbar items in the marshal preset's Compass bar move into the More menu when the bar runs out of room, instead of pushing search and the color toggle off the screen.
+- The mobile docs navigation button keeps the arrows between path sections when the path is long, and shortens each section name with an ellipsis instead of squeezing the arrows away.
+- Envoy's navbar links, dropdowns, and mobile menu rows show envoy's own keyboard focus ring instead of the browser's default outline.
+- Lantern navbar titles keep room after the last letter, so the italic display face no longer has its final glyph cut off, as with the closing "f" in "Shelf".
+- Compass navbar actions stay on the right edge on narrow screens, where Lantern hides the nav links and the menu and color mode buttons used to sit right next to the logo.
+- Mobile docs navigation panel, which now expands and collapses a section when its name is tapped instead of opening the section's page and closing the panel, with the section's own page moved to an Overview entry at the top of the expanded section.
+- Each preset's own More menu styles now load, so the overflow menu shows the preset's spacing, separators, and focus ring instead of only the shared base look.
+- Navbar dropdowns that overflow into the More menu now list their links as a group set off by a single line instead of a clipped nested menu, Escape returns focus to the menu trigger, which shows the preset's own focus ring, and the menu lines up with the trigger's inline-end edge at the same offset as other navbar dropdowns.
+
+### ADDED
+- BlockPlayground theme component, imported from `@theme/BlockPlayground`, shows an editable live example of the preset's blocks. The code runs inside the docs page with every block and React in scope, so examples need no imports and keep links, translations, and base URLs. The preview lays blocks out at desktop width and zooms them out to fit the docs column, an "Open preview" button shows the current code at full size in a dialog, and the error shows under the editor while the preview keeps the last good render.
+- Expandable dropdown rows in the mobile menu show an arrow at the end of the row, on the left in right-to-left languages.
+
 ## 0.49.0 - 2026-11-21
 
 ### UPDATED

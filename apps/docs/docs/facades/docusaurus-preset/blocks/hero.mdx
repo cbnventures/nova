@@ -22,11 +22,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import heroPreviewLight from './_assets_/hero-preview-light.png';
-import heroPreviewDark from './_assets_/hero-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Full-width hero section with a heading, tagline, primary call-to-action link, and optional secondary link. Supports an eyebrow label and alternate surface styling.
 
@@ -40,11 +36,23 @@ The Hero block renders a `<header>` element containing a heading, tagline paragr
 - **Preset-aware** — colors, typography, and spacing adapt to the active preset.
 - **Flexible** — optional eyebrow, secondary CTA, and surface variant cover common hero patterns.
 
-## Preview
+## Try It
 
-<Frame caption="Hero block — light and dark mode preview">
-  <ThemedImage sources={{ light: heroPreviewLight, dark: heroPreviewDark }} alt="Hero block preview" width={680} height={349} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Hero
+  eyebrow="Introducing Acme"
+  heading="Build with confidence"
+  tagline="Strict presets and guided tooling for predictable builds."
+  ctaLabel="Get Started"
+  ctaLink="/docs/quickstart/"
+  secondaryCtaLabel="Read the Guide"
+  secondaryCtaLink="/docs/"
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

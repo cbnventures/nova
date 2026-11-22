@@ -52,15 +52,19 @@
   transform: rotate(180deg);
 }
 
+/* Same block offset as `.nova-dropdown-menu` (`NavbarItem/style.css`) so
+   both navbar popovers open the same distance below their trigger. The
+   menu opens towards the inline start, so its inline-end edge lines up
+   with the trigger's (the right edge, or the left edge in RTL). */
 .nova-navbar-more-menu {
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: calc(100% + 0.5rem);
+  inset-inline-end: 0;
 
   min-width: 8rem;
   max-height: 70vh;
   padding: 0.25rem 0;
-  margin: 0.5rem 0 0 0;
+  margin: 0;
 
   list-style: none;
 
@@ -98,4 +102,62 @@
   color: var(--nova-color-text);
   background-color: var(--nova-color-surface-raised);
   text-decoration: none;
+}
+
+/**
+ * ============================
+ * Navbar - More - Dropdown Groups
+ *
+ * A dropdown item that overflows into More is listed inline instead of
+ * as a nested popover (which the menu's scroll cap would clip). The
+ * dropdown's label becomes a small group heading - same type treatment
+ * as `.nova-content-footer-section-label` - and its children render as
+ * ordinary `.nova-navbar-more-item` rows, so every preset's row, hover,
+ * and active styles apply unchanged. A hairline separates a group from
+ * neighbouring rows so the heading reads as the start of a section.
+ * ============================
+ */
+
+.nova-navbar-more-group {
+  padding: 0;
+  margin: 0;
+}
+
+.nova-navbar-more-group:not(:first-child),
+.nova-navbar-more-group + .nova-navbar-more-item {
+  padding-top: 0.25rem;
+  margin-top: 0.25rem;
+
+  border-top: 1px solid var(--nova-color-border);
+}
+
+.nova-navbar-more-group-label {
+  display: block;
+  padding: 0.5rem 0.75rem 0.25rem 0.75rem;
+
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--nova-color-text-muted);
+
+  cursor: default;
+  user-select: none;
+}
+
+.nova-navbar-more-group--active > .nova-navbar-more-group-label {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-navbar-more-group--active > .nova-navbar-more-group-label {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-navbar-more-group-items {
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
 }

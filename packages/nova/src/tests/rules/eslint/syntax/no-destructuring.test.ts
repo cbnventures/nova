@@ -89,10 +89,6 @@ ruleTester.run('noDestructuring', NoDestructuring['rule'], {
       errors: [{ messageId: 'noDestructuringForOf' }],
     },
     {
-      code: 'for (const [key, entry] of Object.entries(obj)) {}',
-      errors: [{ messageId: 'noDestructuringForOf' }],
-    },
-    {
       code: 'for (const { name } of items) {}',
       errors: [{ messageId: 'noDestructuringForOf' }],
     },

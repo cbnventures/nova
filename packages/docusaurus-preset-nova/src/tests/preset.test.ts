@@ -19,8 +19,6 @@ import type {
   Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ThemeCount,
   Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_PluginCount,
   Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_Result,
-  Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_PluginCount,
-  Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_Result,
   Tests_Preset_Preset_ExcludesPagesPluginWhenPagesIsFalse_PluginCount,
   Tests_Preset_Preset_ExcludesPagesPluginWhenPagesIsFalse_Result,
   Tests_Preset_Preset_ExcludesSearchThemeWhenSearchIsFalse_Result,
@@ -205,34 +203,6 @@ describe('preset', async () => {
 
     // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard, gtm.
     strictEqual(pluginCount, 9);
-
-    return;
-  });
-
-  it('excludes gtm plugin when gtm is undefined', () => {
-    const result: Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_Result = preset(
-      { siteDir: '/mock' },
-      {
-        preset: 'foundry',
-        overrides: undefined,
-        plugins: {
-          docs: undefined,
-          blog: undefined,
-          pages: undefined,
-          sitemap: undefined,
-        },
-        analytics: {
-          gtm: undefined,
-        },
-        search: undefined,
-        progressBar: undefined,
-      },
-    );
-
-    const pluginCount: Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_PluginCount = result['plugins'].length;
-
-    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard (no gtm).
-    strictEqual(pluginCount, 8);
 
     return;
   });

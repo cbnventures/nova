@@ -22,11 +22,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import statsPreviewLight from './_assets_/stats-preview-light.png';
-import statsPreviewDark from './_assets_/stats-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Responsive grid of metric items with labeled values. Each item can be tinted with a primary or accent color.
 
@@ -42,11 +38,39 @@ The Stats block renders a `<section>` containing a grid of value–label pairs. 
 - **Color-coded values** using the active preset's primary or accent palette.
 - **Preset-aware** — typography and spacing adapt to the active preset.
 
-## Preview
+## Try It
 
-<Frame caption="Stats block — light and dark mode preview">
-  <ThemedImage sources={{ light: statsPreviewLight, dark: statsPreviewDark }} alt="Stats block preview" width={763} height={148} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Stats
+  heading="By the Numbers"
+  description="Nova ships with everything you need."
+  items={[
+    {
+      value: '50+',
+      label: 'ESLint Rules',
+      color: 'primary',
+    },
+    {
+      value: '4',
+      label: 'Presets',
+      color: 'accent',
+    },
+    {
+      value: '9',
+      label: 'Components',
+      color: 'primary',
+    },
+    {
+      value: '0',
+      label: 'Swizzles Needed',
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

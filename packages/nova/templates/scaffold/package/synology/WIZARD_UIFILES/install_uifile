@@ -1,0 +1,30 @@
+[
+  {
+    "step_title": "Welcome to [__WORKSPACE_TITLE__]",
+    "items": [
+      {
+        "desc": "[__WORKSPACE_TITLE__] runs a small example service as its own package user. Open its window from the DSM main menu while the package is running."
+      }
+    ]
+  },
+  {
+    "step_title": "Settings",
+    "items": [
+      {
+        "type": "textfield",
+        "desc": "The app window's Service page shows this greeting. Keep it on one line.",
+        "subitems": [
+          {
+            "key": "wizard_greeting",
+            "desc": "Greeting",
+            "defaultValue": "Hello from [__WORKSPACE_TITLE__]",
+            "validator": {
+              "allowBlank": false,
+              "maxLength": 80
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

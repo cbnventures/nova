@@ -19,6 +19,7 @@ import {
 import { Runner as CliScaffoldPackageGithubAction } from '../../cli/scaffold/package/github-action.js';
 import { Runner as CliScaffoldPackageHomebridge } from '../../cli/scaffold/package/homebridge.js';
 import { Runner as CliScaffoldPackagePfsense } from '../../cli/scaffold/package/pfsense.js';
+import { Runner as CliScaffoldPackageSynology } from '../../cli/scaffold/package/synology.js';
 import * as scaffold from '../../lib/scaffold.js';
 import { resolveDistributablePolicyMessages, resolveNonNpmDeployTargets } from '../../lib/workspace-policy.js';
 
@@ -154,13 +155,17 @@ describe('workspace policy', () => {
 
     await CliScaffoldPackagePfsense.run({});
 
+    await CliScaffoldPackageSynology.run({});
+
     await CliScaffoldPackageHomebridge.run({});
 
     expect(runScaffoldSpy).toHaveBeenNthCalledWith(1, {}, expect.objectContaining({ publishesToNpm: false }));
 
     expect(runScaffoldSpy).toHaveBeenNthCalledWith(2, {}, expect.objectContaining({ publishesToNpm: false }));
 
-    expect(runScaffoldSpy).toHaveBeenNthCalledWith(3, {}, expect.not.objectContaining({ publishesToNpm: false }));
+    expect(runScaffoldSpy).toHaveBeenNthCalledWith(3, {}, expect.objectContaining({ publishesToNpm: false }));
+
+    expect(runScaffoldSpy).toHaveBeenNthCalledWith(4, {}, expect.not.objectContaining({ publishesToNpm: false }));
 
     return;
   });

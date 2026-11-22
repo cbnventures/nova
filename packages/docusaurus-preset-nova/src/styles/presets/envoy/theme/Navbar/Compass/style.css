@@ -454,3 +454,40 @@
   gap: 0.125rem;
   padding-inline-start: 1.75rem;
 }
+
+/* ============================
+ * 15. Focus Ring
+ *
+ * Envoy's keyboard ring in place of the browser outline (see the preset
+ * `Navbar/style.css` Focus Ring section). Bar controls take the outer
+ * ring; mobile menu rows take the edge inset so the scrolling panel
+ * cannot clip it; the bordered close button keeps its halo.
+ * ============================ */
+
+.nova-navbar-compass-brand a:focus-visible,
+.nova-navbar-compass-items a:focus-visible,
+.nova-navbar-compass-menu-brand a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--nova-color-primary-300), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-brand a:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items a:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-menu-brand a:focus-visible {
+  box-shadow: 0 0 0 1px var(--nova-color-primary-600), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-navbar-compass-menu-item:focus-visible,
+.nova-navbar-compass-menu-dropdown-summary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--nova-color-primary-600);
+}
+
+.nova-navbar-compass-menu-close:focus-visible {
+  outline: none;
+}

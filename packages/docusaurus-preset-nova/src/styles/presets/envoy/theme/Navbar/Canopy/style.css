@@ -396,12 +396,12 @@
 }
 
 .nova-navbar-canopy-menu-item svg,
-.nova-navbar-canopy-menu-dropdown-summary svg {
+.nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-primary-600);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item svg,
-[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary svg {
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-primary-400);
 }
 
@@ -435,4 +435,41 @@
 
 .nova-navbar-canopy-menu-dropdown-children {
   gap: 0.5rem;
+}
+
+/* ============================
+ * 14. Focus Ring
+ *
+ * Envoy's keyboard ring in place of the browser outline (see the preset
+ * `Navbar/style.css` Focus Ring section). Bar controls take the outer
+ * ring; the bordered mobile menu tiles take the chip halo; the bordered
+ * close button keeps its halo.
+ * ============================ */
+
+.nova-navbar-canopy-brand a:focus-visible,
+.nova-navbar-canopy-items a:focus-visible,
+.nova-navbar-canopy-menu-brand a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--nova-color-primary-300), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-canopy-brand a:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-items a:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-menu-brand a:focus-visible {
+  box-shadow: 0 0 0 1px var(--nova-color-primary-600), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-navbar-canopy-menu-item:focus-visible,
+.nova-navbar-canopy-menu-dropdown-summary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-canopy-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-navbar-canopy-menu-close:focus-visible {
+  outline: none;
 }

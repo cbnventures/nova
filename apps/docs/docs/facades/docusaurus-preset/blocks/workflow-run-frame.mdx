@@ -18,11 +18,7 @@ tags:
   - "github-actions"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import workflowRunFramePreviewLight from './_assets_/workflow-run-frame-preview-light.png';
-import workflowRunFramePreviewDark from './_assets_/workflow-run-frame-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Show a GitHub Actions run the way its job page looks, with the steps and an open step's log as text.
 
@@ -36,11 +32,45 @@ The Workflow Run Frame block renders a `<figure class="nova-workflow-run-frame">
 - **Real GitHub look** — GitHub's octicons and Primer colors, in GitHub's light theme or dark theme to match the site.
 - **Readable on phones** — the sidebar hides below 640px so the steps keep the room, and long log lines wrap.
 
-## Preview
+## Try It
 
-<Frame caption="Workflow Run Frame block — light and dark mode preview">
-  <ThemedImage sources={{ light: workflowRunFramePreviewLight, dark: workflowRunFramePreviewDark }} alt="Workflow Run Frame block preview" width={1148} height={619} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<WorkflowRunFrame
+  workflow="Lock Inactive Issues (lock-inactive)"
+  title="Locking inactive issues (lock-inactive)"
+  runNumber={42}
+  jobs={[
+    {
+      name: 'lock-inactive-issues',
+      summary: 'succeeded yesterday in 8s',
+      steps: [
+        { name: 'Set up job', duration: '1s' },
+        {
+          name: 'Lock inactive threads',
+          duration: '6s',
+          log: [
+            { title: 'Run example-org/lock-threads@v1', hiddenLines: 13 },
+            { title: 'Configuration', hiddenLines: 12 },
+            {
+              title: 'Running',
+              lines: [
+                'Found 1 inactive issue(s) and 0 inactive pull request(s)',
+                'Locking issue #118: Export drops the last row',
+                'Locked 1 of 1 thread(s)',
+              ],
+            },
+          ],
+        },
+        { name: 'Complete job', duration: '0s' },
+      ],
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

@@ -102,6 +102,12 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ExpandCat
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryAriaLabel = string;
 
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InMobilePanel = boolean;
+
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_LabelMode = 'link' | 'toggle' | 'toggle-with-overview';
+
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OverviewLabel = string;
+
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickEvent = React.MouseEvent<HTMLElement>;
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickTarget = Element;

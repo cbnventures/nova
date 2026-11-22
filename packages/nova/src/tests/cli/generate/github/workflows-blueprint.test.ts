@@ -1,4 +1,8 @@
 import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 import { describe, it } from 'vitest';
 
@@ -58,6 +62,9 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BuildsAndUploadsOneNamedArtifactForMultipleDeployTargets_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummaryRun,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummaryScript,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummarySection,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyResult,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ImageProjectWorkspaces,
@@ -67,6 +74,12 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PlainResult,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PnpmResult,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_Returns,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryDirectory,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryOutput,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryPath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryResults,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryRowIndex,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_WorkspaceGraph,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DefaultsEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_DeliversABuildAndRuntimeValueBothWaysOnCloudflareWorkers_BothEntry,
@@ -537,6 +550,7 @@ describe('WorkflowsBlueprint.serialize', () => {
       'registry',
       'deploy',
       'attest',
+      'summary',
     ];
     const jobTimeoutMinutes: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_UsesJobTimeoutsForLongKindsAndClampsQuickDefaultsToShorterJobs_JobTimeoutMinutes = [
       4,
@@ -569,6 +583,7 @@ describe('WorkflowsBlueprint.serialize', () => {
         registry: 4,
         deploy: 4,
         attest: 4,
+        summary: 4,
       },
       15: {
         checkout: 5,
@@ -580,6 +595,7 @@ describe('WorkflowsBlueprint.serialize', () => {
         registry: 5,
         deploy: 15,
         attest: 10,
+        summary: 5,
       },
       45: {
         checkout: 5,
@@ -591,6 +607,7 @@ describe('WorkflowsBlueprint.serialize', () => {
         registry: 5,
         deploy: 45,
         attest: 10,
+        summary: 5,
       },
       90: {
         checkout: 5,
@@ -602,6 +619,7 @@ describe('WorkflowsBlueprint.serialize', () => {
         registry: 5,
         deploy: 90,
         attest: 10,
+        summary: 5,
       },
     };
 
@@ -709,9 +727,10 @@ describe('WorkflowsBlueprint.dispatch', () => {
     };
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result = WorkflowsBlueprint.dispatch(entry, workspaces);
 
-    strictEqual(result.split('runs-on: "ubuntu-24.04"').length, 3, 'both generated jobs use the configured runner');
+    strictEqual(result.split('runs-on: "ubuntu-24.04"').length, 4, 'every generated job uses the configured runner');
 
     strictEqual(result.split('\n    timeout-minutes: 42\n').length, 3, 'both generated jobs use the configured timeout');
+    strictEqual(result.split('\n    timeout-minutes: 5\n').length, 2, 'the final summary job keeps a short timeout');
 
     return;
   });
@@ -1121,7 +1140,10 @@ describe('WorkflowsBlueprint.buildPublish', () => {
         },
       }],
     };
-    const containerResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(containerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
+    const containerResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerResult = WorkflowsBlueprint.dispatch(containerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces);
+    const containerSummarySection: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummarySection = containerResult.slice(containerResult.indexOf('\n  summary:\n'));
+    const containerSummaryRun: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummaryRun = containerSummarySection.slice(containerSummarySection.indexOf('        run: |'));
+    const containerSummaryScript: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_ContainerSummaryScript = containerSummaryRun.slice(containerSummaryRun.indexOf('\n') + 1).slice(10).replaceAll('\n          ', '\n');
     const pnpmResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_PnpmResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces, {}, [], 'pnpm', {}, undefined, workspaceGraph, imageWorkspaces));
     const docsOnlyResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_DocsOnlyResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(docsOnlyEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
     const nestedResult: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_NestedResult = WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(nestedContainerEntry, imageProjectWorkspaces, {}, [], 'npm', {}, undefined, workspaceGraph, imageWorkspaces));
@@ -1158,6 +1180,95 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{{ secrets.GITHUB_TOKEN }}',
     ].join('')).length - 1, 'every per-platform container build receives the GitHub token secret');
+    ok(containerResult.includes('DOCKER_BUILD_RECORD_UPLOAD: "false"'), 'the Docker build record upload is disabled');
+    ok(containerResult.includes('DOCKER_BUILD_SUMMARY: "false"'), 'the Docker build summary is disabled');
+    ok(containerResult.includes('show-summary: false'), 'the attestation summary is disabled');
+    strictEqual(containerResult.includes('Write Nova job summary'), false, 'per-job Nova summary steps are absent');
+    strictEqual(containerResult.split('      - name: "Expose Nova summary rows"').length - 1, 6, 'every work job exposes its row data once');
+    ok(containerResult.includes([
+      '      summary_work_0: "',
+      '$',
+      '{{ steps.nova-summary.outputs.summary_work_0 }}"',
+    ].join('')), 'work jobs expose summary values through job outputs');
+    ok(containerSummarySection.includes('    needs: ["build", "build-container-linux-amd64", "build-container-linux-arm64", "build-container", "publish-ghcr-root", "publish-github-pages-apps-docs"]'), 'the summary job needs every work job in job order');
+    ok(containerSummarySection.includes([
+      '    if: "',
+      '$',
+      '{{ always() }}"',
+    ].join('')), 'the summary job runs after every work-job result');
+    ok(containerSummarySection.includes('NOVA_SUMMARY_ROW_0_WORK: "Check project"'), 'static work data remains available when outputs are empty');
+    ok(containerSummarySection.includes([
+      'NOVA_SUMMARY_ROW_0_WORK_OUTPUT: "',
+      '$',
+      '{{ needs[\'build\'].outputs.summary_work_0 || \'\' }}"',
+    ].join('')), 'dynamic work data reaches the summary through env');
+    ok(containerSummarySection.includes([
+      'NOVA_SUMMARY_ROW_5_RESULT: "',
+      '$',
+      '{{ needs[\'publish-ghcr-root\'].result }}"',
+    ].join('')), 'publish rows use their work job result');
+    ok(containerSummaryRun.includes('if [[ -z "$NOVA_SUMMARY_WORK" ]]; then'), 'empty job outputs fall back to the embedded static row');
+    ok(containerSummaryRun.includes('NOVA_SUMMARY_RESULT="dry run ($NOVA_SUMMARY_RESULT)"'), 'non-publishing rows render the job result as a dry run');
+    strictEqual(containerSummarySection.includes('secrets.'), false, 'the final summary job never references secrets');
+    strictEqual(containerSummaryRun.includes([
+      '$',
+      '{{',
+    ].join('')), false, 'the summary script reads dynamic values only from env');
+
+    const summaryDirectory: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryDirectory = mkdtempSync(join(tmpdir(), 'nova-summary-'));
+    const summaryPath: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryPath = join(summaryDirectory, 'summary.md');
+    const summaryEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryEnvironment = {
+      ...process.env,
+      GITHUB_STEP_SUMMARY: summaryPath,
+      NOVA_SUMMARY_PROJECT: 'owner/repository',
+      NOVA_SUMMARY_PUBLISH: 'false',
+      NOVA_SUMMARY_VERSION: 'refs/tags/v1.2.3',
+    };
+    const summaryResults: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryResults = [
+      'success',
+      'failure',
+      'skipped',
+      'success',
+      'success',
+      'success',
+      'success',
+    ];
+
+    for (let summaryRowIndex: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryRowIndex = 0; summaryRowIndex < summaryResults.length; summaryRowIndex += 1) {
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_WORK`, (summaryRowIndex === 4) ? [
+        'Static | work',
+        '4',
+      ].join('\n') : `Static work ${summaryRowIndex}`);
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_WORK_OUTPUT`, '');
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_WORKSPACE`, `Static workspace ${summaryRowIndex}`);
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_WORKSPACE_OUTPUT`, '');
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_DESTINATION`, `Static destination ${summaryRowIndex}`);
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_DESTINATION_OUTPUT`, '');
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_DETAIL_OUTPUT`, '');
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_RESULT`, summaryResults[summaryRowIndex]);
+      Reflect.set(summaryEnvironment, `NOVA_SUMMARY_ROW_${summaryRowIndex}_PUBLISH`, (summaryRowIndex === 3) ? 'true' : 'false');
+    }
+
+    execFileSync('bash', [
+      '-c',
+      containerSummaryScript,
+    ], {
+      env: summaryEnvironment,
+    });
+
+    const summaryOutput: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_ChecksOnlyTheWorkspacesAPublishWorkflowShips_SummaryOutput = readFileSync(summaryPath, 'utf8');
+
+    rmSync(summaryDirectory, {
+      recursive: true,
+      force: true,
+    });
+
+    ok(summaryOutput.includes('## Nova · owner/repository · v1.2.3'), 'the combined summary renders the project and normalized version');
+    ok(summaryOutput.includes('| Static work 0 | Static workspace 0 | Static destination 0 | success |'), 'the combined summary renders a successful static fallback row');
+    ok(summaryOutput.includes('| Static work 1 | Static workspace 1 | Static destination 1 | failure |'), 'the combined summary renders a failed static fallback row');
+    ok(summaryOutput.includes('| Static work 2 | Static workspace 2 | Static destination 2 | skipped |'), 'the combined summary renders a skipped static fallback row');
+    ok(summaryOutput.includes('| Static work 3 | Static workspace 3 | Static destination 3 | dry run (success) |'), 'the combined summary renders a dry-run result');
+    ok(summaryOutput.includes('| Static \\| work 4 | Static workspace 4 | Static destination 4 | success |'), 'the combined summary keeps multi-line and pipe values inside one table row');
     ok(docsOnlyResult.includes('npm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'a workflow without a root image checks its shipped workspaces and dependencies but not the root');
     ok(pnpmResult.includes('pnpm run check -- --workspace image-docs --workspace image-package-ui --workspace image-app-apple --exclude-workspace ./\n'), 'the check uses the configured package manager');
     ok(nestedResult.includes('npm run check -- --workspace image-docs --workspace image-app-bot --workspace image-package-ui --workspace image-package-shared --workspace image-app-apple --exclude-workspace ./\n'), 'a container target outside the root is checked like any deployed workspace');

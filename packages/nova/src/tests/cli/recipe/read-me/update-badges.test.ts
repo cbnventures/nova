@@ -52,12 +52,6 @@ import type {
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_Output,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_ProjectDirectory,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_ReadmePath,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_IsProjectRootSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_LoadSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_OnDiskContent,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_Output,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ProjectDirectory,
-  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ReadmePath,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy,
@@ -104,6 +98,16 @@ import type {
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_ReadmePath,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_WarnCalls,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_OriginalCwd,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ExpectedContent,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_IsProjectRootSpy,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_LoadSpy,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_NewBadges,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_OnDiskContent,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Output,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Prefix,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ProjectDirectory,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ReadmePath,
+  Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Suffix,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_ExpectedContent,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_IsProjectRootSpy,
   Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_LoadSpy,
@@ -484,61 +488,6 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
 
     strictEqual(output, onDiskContent);
     strictEqual(process.exitCode, undefined);
-
-    isProjectRootSpy.mockRestore();
-
-    loadSpy.mockRestore();
-
-    return;
-  });
-
-  it('dry run does not write', async () => {
-    const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'dry-run-'));
-    const readmePath: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ReadmePath = join(projectDirectory, 'README.md');
-
-    // Stale but nova-generated, so the recipe would rewrite it if not for dry run.
-    const onDiskContent: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_OnDiskContent = [
-      '# Project',
-      '',
-      wrapReadMeRegion('badges', 'STALE BADGES'),
-      '',
-    ].join('\n');
-
-    await writeFile(readmePath, onDiskContent, 'utf-8');
-
-    const isProjectRootSpy: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-
-    const loadSpy: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      github: {
-        owner: 'cbnventures',
-        repo: 'nova',
-      },
-      readme: {
-        badges: [
-          'github-release',
-          'github-top-language',
-          'github-license',
-        ],
-      },
-      recipes: {
-        'read-me': {
-          'update-badges': {
-            enabled: true,
-          },
-        },
-      },
-    });
-
-    process.chdir(projectDirectory);
-
-    await CliRecipeReadMeUpdateBadges.run({
-      dryRun: true,
-    });
-
-    const output: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_Output = await readFile(readmePath, 'utf-8');
-
-    // The file is unchanged because dry run never writes.
-    strictEqual(output, onDiskContent);
 
     isProjectRootSpy.mockRestore();
 
@@ -952,6 +901,90 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
     loadSpy.mockRestore();
 
     saveGeneratedFileSpy.mockRestore();
+
+    return;
+  });
+
+  it('preserves custom profile sections', async () => {
+    const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'profile-'));
+    const readmePath: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ReadmePath = join(projectDirectory, 'README.md');
+    const newBadges: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_NewBadges = CliGenerateMustHavesReadMe.buildBadgesRegionContent({
+      readme: {
+        profile: {
+          badgeGroups: [{
+            title: 'Language Palette',
+            emoji: '👨🏻‍💻',
+            badges: [{
+              label: 'TypeScript',
+              logo: 'typescript',
+              color: '3178c6',
+              link: 'https://www.typescriptlang.org',
+            }],
+          }],
+        },
+      },
+    });
+    const prefix: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Prefix = [
+      wrapReadMeRegion('header', '# Hello, I\'m Jacky 👋🏼'),
+      '',
+      wrapReadMeRegion('introduction', 'Handwritten profile introduction.'),
+      '',
+    ].join('\n');
+    const suffix: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Suffix = [
+      '',
+      '## A Sea of Hidden Scripts',
+      '',
+      '| Script | Purpose |',
+      '| --- | --- |',
+      '| `hello-world` | Says hello. |',
+      '',
+      wrapReadMeRegion('credits', '## Support My Work 🎗️'),
+      '',
+    ].join('\n');
+    const onDiskContent: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_OnDiskContent = `${prefix}${wrapReadMeRegion('badges', 'STALE PROFILE BADGES')}${suffix}`;
+
+    await writeFile(readmePath, onDiskContent, 'utf-8');
+
+    const isProjectRootSpy: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      readme: {
+        profile: {
+          badgeGroups: [{
+            title: 'Language Palette',
+            emoji: '👨🏻‍💻',
+            badges: [{
+              label: 'TypeScript',
+              logo: 'typescript',
+              color: '3178c6',
+              link: 'https://www.typescriptlang.org',
+            }],
+          }],
+        },
+      },
+      recipes: {
+        'read-me': {
+          'update-badges': {
+            enabled: true,
+          },
+        },
+      },
+    });
+
+    process.chdir(projectDirectory);
+
+    await CliRecipeReadMeUpdateBadges.run({ replaceFile: true });
+
+    const output: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_Output = await readFile(readmePath, 'utf-8');
+    const expectedContent: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_PreservesCustomProfileSections_ExpectedContent = `${prefix}${wrapReadMeRegion('badges', newBadges)}${suffix}`;
+
+    strictEqual(output, expectedContent);
+    ok(output.includes('## A Sea of Hidden Scripts'));
+    ok(output.includes('| `hello-world` | Says hello. |'));
+    ok(output.includes('STALE PROFILE BADGES') === false);
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
 
     return;
   });

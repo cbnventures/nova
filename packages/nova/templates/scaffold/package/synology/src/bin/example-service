@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -eu
+
+sleep_pid=''
+
+# The shell runs a trap only between commands, so sleep in the background and wait; a stop then ends the service at once.
+trap 'kill "${sleep_pid}" 2> /dev/null || true; exit 0' INT TERM
+
+printf '%s\n' '[__WORKSPACE_PACKAGE_NAME__] example service started.'
+
+while :; do
+  sleep 60 &
+  sleep_pid=$!
+  wait "${sleep_pid}" || true
+done

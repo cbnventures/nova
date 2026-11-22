@@ -1,0 +1,213 @@
+---
+id: "synology"
+title: "Synology Package"
+description: "Scaffold a noarch Synology DSM 7 package with lower-privilege lifecycle scripts, portable SPK tooling, and GitHub Release publishing."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "synology"
+  - "dsm"
+  - "spk"
+tags:
+  - "cli"
+  - "scaffold"
+  - "package"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Synology DSM 7 package starter** that runs a tiny example service as the package user and builds a portable `.spk` without native packaging dependencies.
+
+## Why Use This Command?
+
+1. Generates the required DSM 7 `INFO`, privilege declaration, package icons, payload, and all seven lifecycle scripts together.
+2. Demonstrates a lower-privilege service controlled through `start-stop-status`, with lifecycle logging in the package's variable-data directory.
+3. Includes a sample install wizard with one setting the scripts read, an uninstall wizard that can keep or delete the package data, and a native DSM app window opened from the main menu.
+4. Builds and validates `package.tgz` and the final `.spk` with Node.js on macOS, Linux, or Windows.
+5. Registers a `synology` target in Nova's generated publish workflow so GitHub Actions can upload the `.spk` as both a workflow artifact and a GitHub Release asset.
+
+## Requirements
+
+- **Node.js runtime** — Use Node.js 22 or 24 to check and build the package.
+- **DSM version** — The starter targets DSM 7.0 build 40000 or newer through `os_min_ver="7.0-40000"`.
+- **Configured <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Add the package from the root of an existing Nova project so project identity and URLs can populate `INFO`.
+
+:::warning Third-party package warning
+DSM 7 does not provide third-party package signing. Package Center warns administrators before installing an unsigned `.spk`. Test the package and its uninstall or upgrade behavior on a disposable or backed-up NAS before production use.
+:::
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold package synology
+
+    # Shorthand
+    nova scaf pkg synology
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold package synology
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf pkg synology
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                                                 |
+|---------------------------|---------------------------------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                                              |
+| `--install`               | Install dependencies after scaffolding; this is the default.                                |
+| `--no-install`            | Skip dependency installation.                                                               |
+| `--name <name>`           | Project slug when creating a generic new monorepo.                                          |
+| `--non-interactive`       | Require the workspace name and output as flags and do not open prompts.                     |
+| `--workspace-name <name>` | Workspace directory name; Nova adds `synology-pkg-` to the workspace package when needed.   |
+| `--output <dir>`          | Output directory.                                                                           |
+| `--usr-local-link`        | Add `conf/resource` so DSM links the example service into `/usr/local/bin` while installed. |
+
+Without `--usr-local-link`, the package remains self-contained under `/var/packages/<package>/target`.
+
+## Output Files
+
+| File or Directory                                                                                                                                                                                       | Description                                                                                                                                                                                   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `INFO`                                                                                                                                                                                                  | DSM package metadata populated from the workspace and project identity.                                                                                                                       |
+| `PACKAGE_ICON.PNG` and `PACKAGE_ICON_256.PNG`                                                                                                                                                           | Valid 64×64 and 256×256 placeholder icons for Package Center.                                                                                                                                 |
+| `src/bin/example-service`                                                                                                                                                                               | Replaceable POSIX shell service copied into `package.tgz`.                                                                                                                                    |
+| `src/ui/`                                                                                                                                                                                               | The DSM app: `config`, the ExtJS window in `app.js`, its `style.css`, the `status.cgi` backend, `texts/enu/strings`, and icons at every DSM size.                                             |
+| `WIZARD_UIFILES/install_uifile` and `WIZARD_UIFILES/uninstall_uifile`                                                                                                                                   | Sample install and uninstall wizards whose answers reach the lifecycle scripts as environment variables.                                                                                      |
+| `scripts/{preinst,postinst,preuninst,postuninst,preupgrade,postupgrade}`                                                                                                                                | Required lifecycle scripts; all but `preinst` log to the package variable-data directory, and all exit successfully.                                                                          |
+| `scripts/start-stop-status`                                                                                                                                                                             | Starts, stops, and reports the example service without root privileges.                                                                                                                       |
+| `conf/privilege`                                                                                                                                                                                        | Required DSM 7 declaration with `{"defaults":{"run-as":"package"}}`.                                                                                                                          |
+| `conf/resource`                                                                                                                                                                                         | Optional `/usr/local/bin` linker declaration generated by `--usr-local-link`.                                                                                                                 |
+| `scripts/build-package.mjs`                                                                                                                                                                             | Stages exact modes, writes `package.tgz`, and creates `<package>-<version>-noarch.spk`.                                                                                                       |
+| `scripts/check-package.mjs`                                                                                                                                                                             | Validates required metadata, DSM minimum, scripts and modes, privilege JSON, wizard files, the `ui/config` app entries and the files they load, CGI modes, icon dimensions, and SPK contents. |
+| `scripts/archive.mjs` and `scripts/png.mjs`                                                                                                                                                             | Dependency-free tar and PNG helpers used by the package tooling and tests.                                                                                                                    |
+| `tests/*.test.ts`                                                                                                                                                                                       | Regression coverage for the archive, image, build, and validation helpers.                                                                                                                    |
+| `tsconfig.*.json` and `vitest.config.mts`                                                                                                                                                               | Strict helper and test contracts, separate from the POSIX package payload.                                                                                                                    |
+| `nova.config.json` at the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>project root</Terminology> | Registers `{"to":"synology","path":"./packages/<name>"}` in `publish-project`.                                                                                                                |
+| `package.json`                                                                                                                                                                                          | Private, trackable workspace metadata and Nova lifecycle commands.                                                                                                                            |
+
+## Package Layout
+
+The generated `.spk` is a tar archive with this DSM 7 layout:
+
+```text
+INFO
+PACKAGE_ICON.PNG
+PACKAGE_ICON_256.PNG
+package.tgz             # bin/example-service and ui/
+WIZARD_UIFILES/
+  install_uifile
+  uninstall_uifile
+conf/
+  privilege
+  resource              # Only with --usr-local-link
+scripts/
+  preinst
+  postinst
+  preuninst
+  postuninst
+  preupgrade
+  postupgrade
+  start-stop-status
+```
+
+DSM extracts `package.tgz` into `/var/packages/<package>/target`. Runtime state, `lifecycle.log`, and `example-service.log` belong under the directory DSM provides through `SYNOPKG_PKGVAR`, normally `/var/packages/<package>/var`. DSM runs `preinst` before that directory is linked, so `preinst` cannot log there; to block an install, it writes the reason to `SYNOPKG_TEMP_LOGFILE` and exits non-zero, and Package Center shows that text. DSM keeps the package's `var` data and its package user after uninstall, so a reinstall finds the earlier state unless the uninstall wizard deletes it. Replace the example service while keeping writable state out of the package target.
+
+## Install Wizard and App Window
+
+### Wizards
+
+DSM shows `WIZARD_UIFILES/install_uifile` before installing and `WIZARD_UIFILES/uninstall_uifile` before uninstalling. Both use the JSON step format (`step_title`, `items`, and fields with a `key`), which needs no build step. DSM exports each field's `key` as an environment variable to the lifecycle scripts:
+
+- **`wizard_greeting`** — The install wizard's text field. `postinst` saves it to `settings.conf` in the package data folder. Upgrades run without the install wizard, so `postinst` keeps the saved greeting; a reinstall writes the wizard's value again.
+- **`wizard_keep_data` and `wizard_delete_data`** — The uninstall wizard's choice, as `true` or `false`. `postuninst` empties the package data folder only when `SYNOPKG_PKG_STATUS` is `UNINSTALL` and `wizard_delete_data` is `true`, because upgrades also run `postuninst`. Uninstalling with `synopkg` shows no wizard, so the data is kept.
+
+The checker validates every `install_uifile`, `upgrade_uifile`, and `uninstall_uifile` (with optional language suffixes such as `_cht`), and the build copies the whole `WIZARD_UIFILES` folder into the `.spk`. Synology's guide also documents a newer Vue-based wizard format (`WIZARD_UIFILES_v2`), which needs a webpack build.
+
+### App Window
+
+The starter opens a native DSM window, built with the same ExtJS framework as DSM's own apps, not a browser page. `INFO` sets `dsmuidir="ui"` and `dsmappname="SYNO.SDS.<Identifier>.Instance"`, where `<Identifier>` is the PascalCase workspace name. DSM links the package's `ui/` folder to `/webman/3rdparty/<package>/` and reads `ui/config` when the package starts:
+
+- **`ui/config`** — Names `app.js`, the icon at every DSM size, and two classes: `SYNO.SDS.<Identifier>.Instance` (`"type": "app"`, the main-menu entry, with its title, icon, and `appWindow`) and `SYNO.SDS.<Identifier>.MainWindow` (`"type": "lib"`). DSM needs the window class listed too, or the app fails to launch.
+- **`ui/app.js`** — Defines every class inside one function, so nothing leaks into the global scope DSM shares between packages. The file is plain JavaScript and needs no bundler; the package's ESLint config declares DSM's `Ext`, `SYNO`, and `_TT` globals for it.
+- **`ui/status.cgi`** — The window's backend. DSM's web server runs `*.cgi` files under `/webman/3rdparty/` as the package user. The script asks `/usr/syno/synoman/webman/modules/authenticate.cgi` for the signed-in DSM user and answers `401` without one, so the state is not public. It returns the `status.json` that `start-stop-status` writes in the package data folder, and reports **Stopped** when the recorded process is no longer alive.
+- **`ui/style.css`** — The page-list icons, written the way Synology's own packages write them: 22×44 sprites at 1× and 2×, with rules scoped to the window's `syno-app-<package>` class. The sprites are Synology's own, served by DSM from its built-in modules, so the package ships no icon images: **Service** uses Resource Monitor's monitor icon, **Settings** its settings icon, and **Records** Log Center's list icon. **Overview** uses DSM's `icon-overview`. DSM loads `style.css` with the app.
+- **`ui/texts/enu/strings`** — Every label in the window, read with `_TT()`. Add a folder per DSM language code (for example `cht`) to translate them.
+
+### Showcase Pages
+
+`app.js` follows the layout of Synology's own Log Center and Package Center: the window extends `SYNO.SDS.PageListAppWindow`, lists its pages on the left through `listItems`, and DSM creates each page class the first time it is selected. Each page shows one pattern to copy:
+
+| Page     | Class                      | What it shows                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|----------|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Overview | `SYNO.ux.FormPanel`        | What the package includes and where each piece lives, in `syno_fieldset` groups of `syno_displayfield` rows.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Service  | `SYNO.ux.FormPanel`        | The live service state from `status.cgi`, with a **Refresh** button in the page toolbar. It polls only between DSM's `onPageActivate` and `onPageDeactivate` calls.                                                                                                                                                                                                                                                                                                                                                                                              |
+| Settings | `SYNO.SDS.Utils.FormPanel` | A settings form with DSM's **Reset** and **Apply** bar (`useDefaultBtn`). It holds a text, password, number, combo box, date, checkbox, radio, slider, and tag picker field; as in Control Panel, the password strength meter stays hidden until DSM rates a typed password, and the slider shows calibration marks. A checkbox enables the schedule fields through `SYNO.ux.Utils.EnableCheckGroup`. Apply rejects an unchanged or invalid form in the status bar, and DSM asks before leaving with unsaved changes. The values are examples and are not saved. |
+| Records  | `SYNO.ux.GridPanel`        | A grid of sample rows with a toolbar. **Add** opens a `SYNO.SDS.ModalWindow` with **General** and **Advanced** tabs. **Delete** asks with DSM's confirm box. **Export** shows DSM's busy mask, then a `SYNO.SDS.ToastBox` toast. DSM's `SYNO.ux.TextFilter` searches the rows. Nothing leaves the window.                                                                                                                                                                                                                                                        |
+
+To make the Settings page save, replace its `applyHandler` with a request to a new CGI next to `status.cgi`, and load the values in `onPageActivate`. Synology's own pages call registered `SYNO.*` web APIs through `sendWebAPI`; a third-party package has no documented way to register one, so the starter uses a CGI that checks the DSM sign-in. Every size, width, and message follows Synology's own apps: the window matches Log Center (1070×580), fields use DSM's common 200px labels and widths, the Service status uses DSM's `green-status` and `red-status` classes, and the status bar uses DSM's own default messages. Page-list icons need 22px sprites; DSM's shared 24px Control Panel icons are cut off in a page list. DSM 7.2 has no switch or toggle field; Synology's apps use checkboxes.
+
+The main-menu entry appears only while the package is running, and DSM closes the window when the package stops. From the main menu, users can add the app to the desktop. Restart the package after changing `ui/config`. Synology's guide documents the same `app.config` attributes for a Vue app built with webpack; the starter writes the generated `config` shape directly.
+
+## Check and Build
+
+```bash
+npm run check
+npm run build
+```
+
+The build writes `build/release/<package>-<version>-noarch.spk`. `npm run check` validates both the source package and a built archive when one is present. The builder writes deterministic tar headers and explicit executable modes; it does not invoke a system `tar` command or require native Node.js dependencies.
+
+## Install on DSM 7
+
+1. Sign in to DSM as an administrator.
+2. Open **Package Center**.
+3. Choose **Manual Install**.
+4. Select the `.spk` from `build/release` or a GitHub Release.
+5. Review DSM's unsigned third-party package warning, then continue only if you trust the package source.
+
+Package Center then shows the install wizard, installs the package, and calls `start-stop-status` as the package user. Open the package from the DSM main menu to see its window. Inspect `/var/packages/<package>/var/lifecycle.log` when testing lifecycle behavior; DSM's own record of each lifecycle step is in `/var/log/synopkg.log`.
+
+## DSM 7 Limits and Architecture
+
+- **No third-party signing** — The generated workflow does not sign the `.spk`, because DSM 7 has no supported signing path for third-party publishers. The installation warning is expected.
+- **No root execution** — `conf/privilege` selects `run-as: package`. Keep the payload compatible with that dedicated account and request DSM resources explicitly instead of escalating privileges.
+- **Noarch starter** — `arch="noarch"` is correct for the generated shell-only payload. The checker intentionally enforces that value.
+- **Native binaries require separate builds** — If the payload gains compiled code, determine each supported Synology architecture, replace `arch="noarch"` in `INFO` for that build, name and publish a separate artifact per architecture, and adapt the checker and workflow matrix accordingly. Do not relabel one native binary as `noarch`.
+- **NAS validation still matters** — Desktop checks cannot reproduce Package Center, DSM's package user, resource linking, upgrades, reboots, or model-specific CPU behavior.
+
+Synology documents the package configuration and resource declarations in its [DSM developer guide](https://help.synology.com/developer-guide/synology_package/conf.html).
+
+## GitHub Releases
+
+Run `nova generate github workflows` to update `.github/workflows/nova-publish-project.yml`. The Synology target runs on `ubuntu-latest`, installs the project dependencies, runs the workspace build and package checker, uploads every `.spk` under `build/release` as a workflow artifact, and attaches the same files to the selected GitHub release. A tag-push trigger can create the release before uploading; a release-only workflow can also be dispatched manually with an existing release tag.
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold package synology --non-interactive --workspace-name media-indexer --output ./packages/media-indexer
+
+# Include conf/resource and the /usr/local/bin link.
+nova scaffold package synology --non-interactive --workspace-name media-indexer --output ./packages/media-indexer --usr-local-link
+```
+
+## Naming and Registration
+
+Nova prefixes the workspace package name with `synology-pkg-` when needed, so workspace `media-indexer` becomes `synology-pkg-media-indexer`. That unambiguous prefix parallels the pfSense scaffold's `pfsense-pkg-` convention and lets workflow validation recognize a Synology package workspace.
+
+The workspace is registered with the `package` role and `trackable` policy so Nova can track its changelog and semantic version without treating it as an npm package. The scaffold adds its `synology` deploy entry to `publish-project`, ensures the workflow has a `release` trigger, and registers a same-named file artifact sourced from the workspace's `build/release` directory.

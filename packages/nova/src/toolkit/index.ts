@@ -4,4 +4,5 @@ export { default as Logger } from './logger.js';
 export { default as MarkdownTable } from './markdown-table.js';
 export { default as NovaIdentity } from './nova-identity.js';
 export { default as VitestCoverage } from './vitest-coverage.js';
+export { default as VitestReporters } from './vitest-reporters.js';
 export { default as VitestSetup } from './vitest-setup.js';

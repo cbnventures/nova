@@ -99,13 +99,6 @@ import type {
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DollarMetacharacterHolderIsWrittenVerbatim_ProjectDirectory,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DollarMetacharacterHolderIsWrittenVerbatim_Template,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DollarMetacharacterHolderIsWrittenVerbatim_YearRange,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_IsProjectRootSpy,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_LicensePath,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_LoadSpy,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_OnDiskContent,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_Output,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_ProjectDirectory,
-  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_Template,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy,
@@ -1035,52 +1028,6 @@ describe('CliRecipeLicenseUpdateCopyright.run', async () => {
     loadSpy.mockRestore();
 
     loggerCustomizeSpy.mockRestore();
-
-    return;
-  });
-
-  it('dry run does not write', async () => {
-    const projectDirectory: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'dry-run-'));
-
-    const template: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_Template = await readTemplate('MIT');
-    const licensePath: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_LicensePath = join(projectDirectory, 'LICENSE');
-
-    // Nova-generated but stale, so the recipe would rewrite it if not for dry run.
-    const onDiskContent: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_OnDiskContent = substitute(template, '2019-2024', 'Old Holder Inc.');
-
-    await writeFile(licensePath, onDiskContent, 'utf-8');
-
-    const isProjectRootSpy: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-
-    const loadSpy: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      project: {
-        legalName: 'New Holder LLC',
-        startingYear: 2019,
-        license: 'MIT',
-      },
-      recipes: {
-        license: {
-          'update-copyright': {
-            enabled: true,
-          },
-        },
-      },
-    });
-
-    process.chdir(projectDirectory);
-
-    await CliRecipeLicenseUpdateCopyright.run({
-      dryRun: true,
-    });
-
-    const output: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_DryRunDoesNotWrite_Output = await readFile(licensePath, 'utf-8');
-
-    // The file is unchanged because dry run never writes.
-    strictEqual(output, onDiskContent);
-
-    isProjectRootSpy.mockRestore();
-
-    loadSpy.mockRestore();
 
     return;
   });

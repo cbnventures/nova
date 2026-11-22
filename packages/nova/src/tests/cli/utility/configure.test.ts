@@ -456,6 +456,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         registry: 'promptWorkflowsForm',
         deploy: 'promptWorkflowsForm',
         attest: 'promptWorkflowsForm',
+        summary: 'promptWorkflowsForm',
       },
       environmentSelection: {
         versionTags: {
@@ -494,6 +495,51 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
   },
   readme: {
     badges: { $item: 'promptReadMe' },
+    profile: {
+      heading: 'promptReadMe',
+      introduction: { $item: 'promptReadMe' },
+      badgeGroups: {
+        $item: {
+          title: 'promptReadMe',
+          emoji: 'promptReadMe',
+          badges: {
+            $item: {
+              label: 'promptReadMe',
+              logo: 'promptReadMe',
+              color: 'promptReadMe',
+              link: 'promptReadMe',
+            },
+          },
+        },
+      },
+      linkGroups: {
+        $item: {
+          title: 'promptReadMe',
+          emoji: 'promptReadMe',
+          columns: { $item: 'promptReadMe' },
+          links: {
+            $item: {
+              label: 'promptReadMe',
+              url: 'promptReadMe',
+              description: 'promptReadMe',
+            },
+          },
+        },
+      },
+      support: {
+        title: 'promptReadMe',
+        emoji: 'promptReadMe',
+        message: { $item: 'promptReadMe' },
+        badges: {
+          $item: {
+            label: 'promptReadMe',
+            logo: 'promptReadMe',
+            color: 'promptReadMe',
+            link: 'promptReadMe',
+          },
+        },
+      },
+    },
   },
   workspaces: {
     $entry: {
@@ -728,6 +774,9 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
     },
   },
   settings: {
+    changelog: {
+      workspaceOrder: { $item: 'promptSettings' },
+    },
     coverage: {
       minimum: 'promptSettings',
     },
@@ -1021,7 +1070,7 @@ describe('CliUtilityConfigure.isWorkflowStepTimeoutInput', () => {
     ];
 
     deepStrictEqual(result, [
-      'Unknown step kind "mystery". Allowed kinds: checkout, setup, install, build, check, artifact, registry, deploy, attest.',
+      'Unknown step kind "mystery". Allowed kinds: checkout, setup, install, build, check, artifact, registry, deploy, attest, summary.',
       'Enter a whole number from 1 through 360 for "install".',
       'Enter a whole number from 1 through 360 for "deploy".',
     ]);
@@ -2499,6 +2548,7 @@ describe('prompt settings', () => {
 
     vi.mocked(prompts)
       .mockResolvedValueOnce({ lockStepVersioning: true })
+      .mockResolvedValueOnce({ workspaceOrder: '' })
       .mockResolvedValueOnce({ concurrency: '{"build":2,"check":3}' })
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
@@ -2511,7 +2561,7 @@ describe('prompt settings', () => {
     cwdSpy.mockRestore();
 
     strictEqual(result, 'back');
-    strictEqual(vi.mocked(prompts).mock.calls.length, 7);
+    strictEqual(vi.mocked(prompts).mock.calls.length, 8);
     deepStrictEqual(config['settings'], {
       lockStepVersioning: true,
       runWorkspaces: {
@@ -2542,6 +2592,18 @@ describe('prompt settings', () => {
   it('stores and clears the coverage minimum', async () => {
     const sandboxRoot: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_SandboxRoot = await mkdtemp(join(tmpdir(), `nova-${'settings-coverage'}-`));
     const config: Tests_Cli_Utility_Configure_PromptSettings_StoresAndClearsTheCoverageMinimum_Config = {
+      workspaces: {
+        './packages/alpha': {
+          name: 'alpha',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './packages/zeta': {
+          name: 'zeta',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
       settings: {
         versionStrategy: 'semver',
       },
@@ -2552,6 +2614,7 @@ describe('prompt settings', () => {
     vi.mocked(prompts)
       .mockResolvedValueOnce({ versionStrategy: 'semver' })
       .mockResolvedValueOnce({ lockStepVersioning: false })
+      .mockResolvedValueOnce({ workspaceOrder: 'zeta, alpha' })
       .mockResolvedValueOnce({ concurrency: '' })
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
@@ -2564,6 +2627,12 @@ describe('prompt settings', () => {
 
     strictEqual(storedResult, 'back');
     ok(storedSettings !== undefined);
+    deepStrictEqual(storedSettings['changelog'], {
+      workspaceOrder: [
+        'zeta',
+        'alpha',
+      ],
+    });
     deepStrictEqual(storedSettings['coverage'], {
       minimum: 85,
     });
@@ -2571,6 +2640,7 @@ describe('prompt settings', () => {
     vi.mocked(prompts)
       .mockResolvedValueOnce({ versionStrategy: 'semver' })
       .mockResolvedValueOnce({ lockStepVersioning: false })
+      .mockResolvedValueOnce({ workspaceOrder: '' })
       .mockResolvedValueOnce({ concurrency: '' })
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
@@ -2585,6 +2655,7 @@ describe('prompt settings', () => {
 
     strictEqual(clearedResult, 'back');
     ok(clearedSettings !== undefined);
+    strictEqual(clearedSettings['changelog'], undefined);
     strictEqual(clearedSettings['coverage'], undefined);
 
     await rm(sandboxRoot, {

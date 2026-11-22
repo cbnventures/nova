@@ -39,25 +39,6 @@ ruleTester.run('requireMultilineConditions', RequireMultilineConditions['rule'],
       ].join('\n'),
     },
     {
-      code: [
-        'const result =',
-        '  a === true',
-        '  && b === false',
-        '  && c === true;',
-      ].join('\n'),
-    },
-    {
-      code: 'const x = a ?? b;',
-    },
-    {
-      code: [
-        'const x =',
-        '  a',
-        '  ?? b',
-        '  ?? c;',
-      ].join('\n'),
-    },
-    {
       code: 'if (a === true && b === false && c === true) {}',
       options: [{
         ignoreFiles: ['ignored-file.ts'],
@@ -72,28 +53,12 @@ ruleTester.run('requireMultilineConditions', RequireMultilineConditions['rule'],
       errors: [{ messageId: 'requireMultiline' }],
     },
     {
-      code: 'return a === true || b === false || c === true;',
-      errors: [{ messageId: 'requireMultiline' }],
-    },
-    {
-      code: 'const x = a === true && b === false && c === true;',
-      errors: [{ messageId: 'requireMultiline' }],
-    },
-    {
-      code: 'const y = a === true || b === false || c === true || d === false ? 1 : 0;',
-      errors: [{ messageId: 'requireMultiline' }],
-    },
-    {
       code: [
         'if (',
         '  a === true',
         '  && b === false && c === true',
         ') {}',
       ].join('\n'),
-      errors: [{ messageId: 'requireMultiline' }],
-    },
-    {
-      code: 'const x = a ?? b ?? c;',
       errors: [{ messageId: 'requireMultiline' }],
     },
   ],

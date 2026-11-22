@@ -1,6 +1,7 @@
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { VitestReporters } from '@cbnventures/nova/toolkit';
 import { defineConfig } from 'vitest/config';
 
 /**
@@ -30,6 +31,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['src/tests/**/*.test.ts'],
     globals: false,
+    reporters: VitestReporters.options(),
     testTimeout: 30000, // 30 seconds.
   },
 });

@@ -154,8 +154,27 @@ Every generated step has a timeout, grouped into these stable kinds:
 | `registry` | 5           | Package or container registry authentication.              |
 | `deploy`   | job timeout | Publishing, deployment, release, tagging, and sync work.   |
 | `attest`   | 10          | Build-provenance attestations.                             |
+| `summary`  | 5           | The final combined Nova workflow summary.                  |
 
 `stepTimeoutMinutes` overrides one or more kinds for the workflow. Nova clamps both defaults and overrides to the containing job's timeout. Validation warns when an override exceeds the workflow's shortest job timeout.
+
+### Workflow Summary
+
+Every generated workflow ends with one **summary** job that depends on every work job and runs with `if: always()`. It writes one table in work-job order, including jobs that failed, were cancelled, or were skipped. When a job stops before it can expose dynamic details, the table keeps the generated work, workspace, and destination instead of dropping the row. Publish rows report `dry run (<result>)` when the workflow is not publishing; container destinations include their image tags and digest, and site destinations show the known deployment URL or provider.
+
+```md title="Example combined workflow summary"
+## Nova · cbnventures/nova · v0.50.0
+
+| Work | Workspace | Destination | Result |
+| --- | --- | --- | --- |
+| Check project | @cbnventures/nova | Nova checks | success |
+| Publish package | @cbnventures/nova | https://www.npmjs.com/package/@cbnventures/nova · v0.50.0 | dry run (success) |
+| Deploy site | nova-docs | Cloudflare Pages | skipped |
+```
+
+Work jobs expose only non-secret row metadata as job outputs. The final job passes all job results, outputs, and generated fallback values through environment variables before its shell renders the table; it never interpolates those values directly into the script.
+
+Nova disables the summaries produced by `docker/build-push-action` and `actions/attest`, including Docker's build-record artifact, so they do not compete with the Nova table. Scaffolded Vitest configurations use `VitestReporters.options()` to keep the default terminal reporter and inline GitHub failure annotations while disabling Vitest's per-run job summary. Scaffolded GitHub Actions likewise leave run-page summaries to the generated workflow. Summary steps receive only non-secret status and destination metadata; tokens and secret values are never forwarded to them.
 
 ### Deploy Fields
 
@@ -469,18 +488,19 @@ The remaining values are `var`-format, not `literal` - they resolve to `${{ vars
 
 The `publish` template supports the following `to` values for each entry in `deploy`. Each type declares its own secrets and variables.
 
-| `to` value           | Description                                               | Secrets / Variables                                                                                                                                                                                                                            |
-|----------------------|-----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `npm`                | Publish a package to npm                                  | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                |
-| `github-action`      | Publish a JavaScript GitHub Action via orphan tags        | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)).              |
-| `github-packages`    | Publish a package to GitHub Packages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
-| `docker-hub`         | Publish the repository image to Docker Hub                | Top-level `dockerHub.namespace` and `dockerHub.repository` name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate publishing.                                                                              |
-| `ghcr`               | Publish the repository image to GitHub Container Registry | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                                      |
-| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                        |
-| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers  | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                                         |
-| `github-pages`       | Deploy a static site to GitHub Pages                      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
-| `pfsense`            | Build a pfSense package and attach it to a GitHub release | `PFSENSE_FREEBSD_VERSION` (optional repository variable) selects the FreeBSD major and defaults to `15`. `RELEASE_SIGNING_KEY` (`secret`, optional) signs release packages. The target requires a scaffolded `pfsense-pkg-` package workspace. |
-| `vercel-nextjs`      | Deploy a Next.js app to Vercel                            | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                    |
+| `to` value           | Description                                                | Secrets / Variables                                                                                                                                                                                                                            |
+|----------------------|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                | Publish a package to npm                                   | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                |
+| `github-action`      | Publish a JavaScript GitHub Action via orphan tags         | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)).              |
+| `github-packages`    | Publish a package to GitHub Packages                       | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
+| `docker-hub`         | Publish the repository image to Docker Hub                 | Top-level `dockerHub.namespace` and `dockerHub.repository` name the image. `DOCKERHUB_USERNAME` (`var`) and `DOCKERHUB_TOKEN` (`secret`) authenticate publishing.                                                                              |
+| `ghcr`               | Publish the repository image to GitHub Container Registry  | `IMAGE_REPOSITORY` (`literal`) names the image under `github.repository_owner`. `GITHUB_TOKEN` is supplied automatically.                                                                                                                      |
+| `cloudflare-pages`   | Deploy a static site to Cloudflare Pages                   | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                        |
+| `cloudflare-workers` | Deploy a Worker with static assets to Cloudflare Workers   | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                                         |
+| `github-pages`       | Deploy a static site to GitHub Pages                       | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                           |
+| `pfsense`            | Build a pfSense package and attach it to a GitHub release  | `PFSENSE_FREEBSD_VERSION` (optional repository variable) selects the FreeBSD major and defaults to `15`. `RELEASE_SIGNING_KEY` (`secret`, optional) signs release packages. The target requires a scaffolded `pfsense-pkg-` package workspace. |
+| `synology`           | Build a Synology package and attach it to a GitHub release | No secrets or variables. The target requires a scaffolded `synology-pkg-` package workspace and publishes its `.spk` as a workflow artifact and release asset.                                                                                 |
+| `vercel-nextjs`      | Deploy a Next.js app to Vercel                             | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                    |
 
 ### Available Triggers
 
@@ -518,10 +538,11 @@ The `publish` template accepts three release-style triggers, each with its own c
 
 Publishing on a version tag keeps `GITHUB_REF` pointing at the tag, so npm `--provenance` signing stays valid. A `release`-triggered run can instead bind to the default branch and fail provenance, which is why `tag-push` is preferred for signed npm publishes.
 
-The `github-action`, `pfsense`, `docker-hub`, and `ghcr` targets read the release payload when a workflow uses only `release`. Adding `tag-push` to the triggers is the opt-in that lets a pushed tag publish them too:
+The `github-action`, `pfsense`, `synology`, `docker-hub`, and `ghcr` targets read the release payload when a workflow uses only `release`. Adding `tag-push` to the triggers is the opt-in that lets a pushed tag publish them too:
 
 - **`github-action`** — Reads the tag name from the pushed tag when no release is attached, and treats a tag with a pre-release part after the version, such as `v1.2.0-beta.1`, as a pre-release, so the floating major tag moves only for stable tags.
 - **`pfsense`** — Creates the GitHub Release for the pushed tag when it does not exist yet, with an empty description you can fill in later, then uploads the signed packages to it. A pre-release tag creates a pre-release, which update checks skip.
+- **`synology`** — Creates the GitHub Release for the pushed tag when it does not exist yet, then uploads the `.spk`. A pre-release tag creates a pre-release.
 - **`docker-hub`** and **`ghcr`** — Push the exact tag as before, and also move `latest` when the pushed tag is not a pre-release, the same as a stable release does.
 
 A workflow without `tag-push` generates the same files it did before. For example, a pfSense package that publishes on `"triggers": ["tag-push"]` runs as soon as `git push origin v1.4.0` lands, with no release to create first.

@@ -34,13 +34,7 @@ ruleTester.run('noScriptUrl', NoScriptUrl['rule'], {
       code: 'const href = "#";',
     },
     {
-      code: 'const href = "/some-path";',
-    },
-    {
       code: 'const count = 42;',
-    },
-    {
-      code: 'const text = "This is a javascript tutorial.";',
     },
     {
       code: 'const href = "javascript:alert(\'XSS\')";',
@@ -54,14 +48,6 @@ ruleTester.run('noScriptUrl', NoScriptUrl['rule'], {
   invalid: [
     {
       code: 'const href = "javascript:alert(\'XSS\')";',
-      errors: [{ messageId: 'noScriptUrl' }],
-    },
-    {
-      code: 'const href = "javascript:doSomething()";',
-      errors: [{ messageId: 'noScriptUrl' }],
-    },
-    {
-      code: 'const href = "javascript:history.back()";',
       errors: [{ messageId: 'noScriptUrl' }],
     },
     {

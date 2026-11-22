@@ -389,6 +389,7 @@
       "github-release",
       "github-top-language",
       "github-license",
+      "coverage",
       "funding"
     ]
   },
@@ -719,6 +720,15 @@
     }
   },
   "settings": {
+    "changelog": {
+      "workspaceOrder": [
+        "@cbnventures/nova",
+        "@cbnventures/docusaurus-preset-nova"
+      ]
+    },
+    "coverage": {
+      "minimum": 70
+    },
     "lockStepVersioning": true,
     "runWorkspaces": {
       "cache": {

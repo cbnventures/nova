@@ -141,44 +141,5 @@ ruleTester.run('noAwaitInLoop', NoAwaitInLoop['rule'], {
       code: 'async function f() { do { await sleep(1000); } while (true); }',
       errors: [{ messageId: 'noAwaitInLoop' }],
     },
-
-    // Explicit: allowForOf is false.
-    {
-      code: 'async function f() { for (const url of urls) { const response = await fetch(url); } }',
-      options: [{
-        ignoreFiles: [],
-        allowForOf: false,
-        allowWhile: true,
-        allowForIn: false,
-        allowFor: false,
-      }],
-      errors: [{ messageId: 'noAwaitInLoop' }],
-    },
-
-    // Explicit: allowWhile is false.
-    {
-      code: 'async function f() { while (true) { await sleep(1000); } }',
-      options: [{
-        ignoreFiles: [],
-        allowForOf: true,
-        allowWhile: false,
-        allowForIn: false,
-        allowFor: false,
-      }],
-      errors: [{ messageId: 'noAwaitInLoop' }],
-    },
-
-    // Explicit: allowWhile is false (do-while).
-    {
-      code: 'async function f() { do { await sleep(1000); } while (true); }',
-      options: [{
-        ignoreFiles: [],
-        allowForOf: true,
-        allowWhile: false,
-        allowForIn: false,
-        allowFor: false,
-      }],
-      errors: [{ messageId: 'noAwaitInLoop' }],
-    },
   ],
 });

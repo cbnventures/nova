@@ -69,6 +69,11 @@
   transition: color var(--nova-lantern-transition);
 }
 
+/* The italic display face paints past its last glyph, so leave room before the clipped edge. */
+.nova-navbar-compass-brand a > span {
+  padding-inline-end: 0.25em;
+}
+
 .nova-navbar-compass-brand img {
   height: 1.75rem;
   width: auto;
@@ -295,6 +300,10 @@
   color: var(--nova-lantern-ink);
 }
 
+.nova-navbar-compass-menu-brand a > span {
+  padding-inline-end: 0.25em;
+}
+
 /* ============================
  * 12. Mobile menu close - cream-tinted button
  * ============================ */
@@ -396,12 +405,12 @@
 
 /* Inline icon glyph - amber tint */
 .nova-navbar-compass-menu-item svg,
-.nova-navbar-compass-menu-dropdown-summary svg {
+.nova-navbar-compass-menu-dropdown-summary .nova-navbar-compass-menu-dropdown-icon {
   color: var(--nova-color-primary-600);
 }
 
 [data-theme="dark"] .nova-navbar-compass-menu-item svg,
-[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary svg {
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary .nova-navbar-compass-menu-dropdown-icon {
   color: var(--nova-color-primary-400);
 }
 

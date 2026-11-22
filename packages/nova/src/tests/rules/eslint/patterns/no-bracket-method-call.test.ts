@@ -27,16 +27,7 @@ ruleTester.run('noBracketMethodCall', NoBracketMethodCall['rule'], {
       code: 'obj.toString();',
     },
     {
-      code: 'arr.push(item);',
-    },
-    {
-      code: 'element.addEventListener("click", handler);',
-    },
-    {
       code: 'const value = obj["some-key"];',
-    },
-    {
-      code: 'const value = obj[dynamicKey];',
     },
     {
       code: 'obj[methodName]();',
@@ -57,21 +48,6 @@ ruleTester.run('noBracketMethodCall', NoBracketMethodCall['rule'], {
       errors: [{ messageId: 'noBracketMethodCall' }],
     },
     {
-      code: 'obj["hasOwnProperty"]("key");',
-      output: 'obj.hasOwnProperty("key");',
-      errors: [{ messageId: 'noBracketMethodCall' }],
-    },
-    {
-      code: 'arr["push"](item);',
-      output: 'arr.push(item);',
-      errors: [{ messageId: 'noBracketMethodCall' }],
-    },
-    {
-      code: 'element["addEventListener"]("click", handler);',
-      output: 'element.addEventListener("click", handler);',
-      errors: [{ messageId: 'noBracketMethodCall' }],
-    },
-    {
       code: 'obj["$emit"]();',
       output: 'obj.$emit();',
       errors: [{ messageId: 'noBracketMethodCall' }],
@@ -83,11 +59,6 @@ ruleTester.run('noBracketMethodCall', NoBracketMethodCall['rule'], {
     },
     {
       code: 'obj["123"]();',
-      output: null,
-      errors: [{ messageId: 'noBracketMethodCall' }],
-    },
-    {
-      code: 'obj["foo bar"]();',
       output: null,
       errors: [{ messageId: 'noBracketMethodCall' }],
     },

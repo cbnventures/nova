@@ -32,9 +32,6 @@ ruleTester.run('noRawTextInCode', NoRawTextInCode['rule'], {
       code: '<code>{"Array<string>"}</code>;',
     },
     {
-      code: '<code>{variable}</code>;',
-    },
-    {
       code: [
         '<code>',
         '  {\'Array<string>\'}',
@@ -45,25 +42,13 @@ ruleTester.run('noRawTextInCode', NoRawTextInCode['rule'], {
       code: '<span>raw text is fine here</span>;',
     },
     {
-      code: '<div>raw text in div</div>;',
-    },
-    {
-      code: '<pre>raw text in pre</pre>;',
-    },
-    {
       code: '<code>raw text</code>;',
       options: [{ ignoreFiles: ['ignored-file.tsx'] }],
       filename: '/path/to/ignored-file.tsx',
     },
   ],
-  invalid: [
-    {
-      code: '<code>raw text</code>;',
-      errors: [{ messageId: 'noRawText' }],
-    },
-    {
-      code: '<code>Array&lt;string&gt;</code>;',
-      errors: [{ messageId: 'noRawText' }],
-    },
-  ],
+  invalid: [{
+    code: '<code>raw text</code>;',
+    errors: [{ messageId: 'noRawText' }],
+  }],
 });

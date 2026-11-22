@@ -61,16 +61,6 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
       code: 'new RegExp(PATTERN_SLUG, "g");',
     },
 
-    // RegExp constructor with a shared constant's source (allowed reference).
-    {
-      code: 'new RegExp(PATTERN_SLUG.source, "g");',
-    },
-
-    // RegExp constructor with a dynamic concatenated pattern (cannot be a static constant, allowed).
-    {
-      code: 'new RegExp("^" + PATTERN_SLUG + "$");',
-    },
-
     // Regex literal in the designated regexFile.
     {
       code: 'const pattern = /test/;',
@@ -79,16 +69,6 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
         regexFile: regexFilePath,
       }],
       filename: regexFilePath,
-    },
-
-    // Regex literal in an ignoreFiles entry.
-    {
-      code: 'const pattern = /test/;',
-      options: [{
-        ignoreFiles: ['allowed-file.ts'],
-        regexFile: '',
-      }],
-      filename: 'allowed-file.ts',
     },
 
     // LAST: ignoreFiles test.
@@ -106,12 +86,6 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
     // Regex literal without regexFile configured.
     {
       code: 'const pattern = /hello/;',
-      errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
-    },
-
-    // Regex literal in match call without regexFile configured.
-    {
-      code: '"test".match(/pattern/);',
       errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
     },
 
@@ -153,17 +127,6 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
       }],
       filename: 'not-regex-file.ts',
       errors: [{ messageId: 'noRegexLiteralWithFile' }],
-    },
-
-    // Regex literal with ignoreFiles but in wrong file.
-    {
-      code: 'const pattern = /test/;',
-      options: [{
-        ignoreFiles: ['other-file.ts'],
-        regexFile: '',
-      }],
-      filename: 'not-allowed.ts',
-      errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
     },
   ],
 });

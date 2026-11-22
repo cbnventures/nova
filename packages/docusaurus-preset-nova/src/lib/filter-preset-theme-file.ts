@@ -13,8 +13,8 @@ import type {
 /**
  * Lib - Filter Preset Theme File - Filter Preset Theme File.
  *
- * Keeps the Navbar and Footer wrapper files, keeps variant files only for
- * the active variant, and drops anything that is not a style.css file.
+ * Keeps the Navbar, Navbar More, and Footer shared files, keeps variant files
+ * only for the active variant, and drops anything that is not a style.css file.
  * Windows backslash paths match the same forward slash prefixes.
  *
  * @param {Lib_FilterPresetThemeFile_FilterPresetThemeFile_FileName}           fileName            - File name.
@@ -35,7 +35,11 @@ export function filterPresetThemeFile(fileName: Lib_FilterPresetThemeFile_Filter
   }
 
   if (posixFileName.startsWith('Navbar/') === true) {
-    return posixFileName === 'Navbar/style.css' || posixFileName.startsWith(posixNavbarPrefix);
+    return (
+      posixFileName === 'Navbar/style.css'
+      || posixFileName === 'Navbar/More/style.css'
+      || posixFileName.startsWith(posixNavbarPrefix)
+    );
   }
 
   if (posixFileName.startsWith('Footer/') === true) {

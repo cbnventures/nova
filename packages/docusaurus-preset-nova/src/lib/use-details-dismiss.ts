@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
 import type {
+  Lib_UseDetailsDismiss_CloseOnEscape_ActiveElement,
+  Lib_UseDetailsDismiss_CloseOnEscape_Details,
+  Lib_UseDetailsDismiss_CloseOnEscape_HadFocus,
+  Lib_UseDetailsDismiss_CloseOnEscape_Returns,
+  Lib_UseDetailsDismiss_CloseOnEscape_Summary,
   Lib_UseDetailsDismiss_DetailsRef,
   Lib_UseDetailsDismiss_Returns,
   Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown,
@@ -9,6 +14,46 @@ import type {
   Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent,
   Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent,
 } from '../types/lib/use-details-dismiss.d.ts';
+
+/**
+ * Lib - Use Details Dismiss - Close On Escape.
+ *
+ * Closes an open `<details>` element and, when keyboard focus was inside it,
+ * hands focus back to its own `<summary>` so the user stays on the trigger
+ * instead of dropping to the top of the page with the hidden content.
+ *
+ * @param {Lib_UseDetailsDismiss_CloseOnEscape_Details}       details       - Details.
+ * @param {Lib_UseDetailsDismiss_CloseOnEscape_ActiveElement} activeElement - Active element.
+ *
+ * @returns {Lib_UseDetailsDismiss_CloseOnEscape_Returns}
+ *
+ * @since 0.50.0
+ */
+export function closeOnEscape(details: Lib_UseDetailsDismiss_CloseOnEscape_Details, activeElement: Lib_UseDetailsDismiss_CloseOnEscape_ActiveElement): Lib_UseDetailsDismiss_CloseOnEscape_Returns {
+  if (details.open !== true) {
+    return undefined;
+  }
+
+  const hadFocus: Lib_UseDetailsDismiss_CloseOnEscape_HadFocus = (activeElement !== null && details.contains(activeElement) === true);
+
+  details.removeAttribute('open');
+
+  if (hadFocus === false) {
+    return undefined;
+  }
+
+  // The element's own summary is its first child, so it is the first match.
+  const summary: Lib_UseDetailsDismiss_CloseOnEscape_Summary = details.querySelector('summary');
+
+  // Escape is a key press, so the returned focus shows the keyboard ring.
+  if (summary !== null) {
+    summary.focus({
+      focusVisible: true,
+    });
+  }
+
+  return undefined;
+}
 
 /**
  * Lib - Use Details Dismiss - Use Details Dismiss.
@@ -57,7 +102,8 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
      * Lib - Use Details Dismiss - Use Details Dismiss - Handle Key Down.
      *
      * Closes the details element when the Escape key is pressed while
-     * the element is currently open.
+     * the element is currently open, returning focus to its summary when
+     * focus was inside it.
      *
      * @param {Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent} keyboardEvent - Keyboard event.
      *
@@ -71,9 +117,8 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
       if (
         keyboardEvent.key === 'Escape'
         && detailsRef.current !== null
-        && detailsRef.current.open === true
       ) {
-        detailsRef.current.removeAttribute('open');
+        closeOnEscape(detailsRef.current, document.activeElement);
       }
 
       return undefined;

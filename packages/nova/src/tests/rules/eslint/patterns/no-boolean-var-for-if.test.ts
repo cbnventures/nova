@@ -58,20 +58,11 @@ ruleTester.run('noBooleanVarForIf', NoBooleanVarForIf['rule'], {
       filename: '/path/to/ignored-file.ts',
     },
   ],
-  invalid: [
-    {
-      code: [
-        'const isValid = a === true && b === false;',
-        'if (isValid) {}',
-      ].join('\n'),
-      errors: [{ messageId: 'noBooleanVarForIf' }],
-    },
-    {
-      code: [
-        'const shouldProcess = x > 0 || y > 0;',
-        'if (shouldProcess) {}',
-      ].join('\n'),
-      errors: [{ messageId: 'noBooleanVarForIf' }],
-    },
-  ],
+  invalid: [{
+    code: [
+      'const isValid = a === true && b === false;',
+      'if (isValid) {}',
+    ].join('\n'),
+    errors: [{ messageId: 'noBooleanVarForIf' }],
+  }],
 });

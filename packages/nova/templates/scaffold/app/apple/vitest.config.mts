@@ -1,3 +1,4 @@
+import { VitestReporters } from '@cbnventures/nova/toolkit';
 import { defineConfig } from 'vitest/config';
 
 /**
@@ -13,6 +14,7 @@ export default defineConfig({
     include: ['scripts/tests/**/*.test.ts'],
     passWithNoTests: true,
     globals: false,
+    reporters: VitestReporters.options(),
     testTimeout: 30000, // 30 seconds.
   },
 });

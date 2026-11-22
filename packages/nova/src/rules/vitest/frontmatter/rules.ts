@@ -309,7 +309,9 @@ export async function frontmatterClosed(config: Rules_Vitest_Frontmatter_Rules_F
         return;
       }
 
-      const endIndex: Rules_Vitest_Frontmatter_Rules_FrontmatterClosed_EndIndex = content.indexOf('---', 3);
+      // Match the closing fence the way "splitFrontmatter" does, as a "---" at the start
+      // of a line, so a "---" inside a value or the body does not count as the close.
+      const endIndex: Rules_Vitest_Frontmatter_Rules_FrontmatterClosed_EndIndex = content.indexOf('\n---', 3);
 
       strictEqual(endIndex !== -1, true, `${file}: unclosed frontmatter`);
 

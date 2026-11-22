@@ -1,7 +1,7 @@
 ---
 id: "terminology"
 title: "Terminology"
-description: "Expand abbreviations on hover with an inline glossary block that optionally links to a glossary page using per-preset tooltip styling."
+description: "Expand abbreviations in a tooltip on hover, focus, or tap with an inline glossary block that optionally links to a glossary page using per-preset styling."
 sidebar_position: 9
 keywords:
   - "nova"
@@ -21,19 +21,15 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+import BlockPlayground from '@theme/BlockPlayground';
 
-import terminologyPreviewLight from './_assets_/terminology-preview-light.png';
-import terminologyPreviewDark from './_assets_/terminology-preview-dark.png';
-
-Inline glossary block that expands abbreviations on hover. Wrap any text to add a tooltip with the expanded form.
+Inline glossary block that expands abbreviations in a tooltip on hover, keyboard focus, or tap. Wrap any text to add a tooltip with the expanded form.
 
 Optionally links to a glossary page and supports a color accent.
 
 ## Summary
 
-The Terminology block renders an `<abbr>` with a `title` attribute set to the expanded abbreviation (or a `<Link>` with both `title` and `aria-label` when `to` is provided). On hover, browsers display the tooltip natively.
+The Terminology block renders the term as a focusable inline `<abbr>` wrapper with a button role, or as a `<Link>` when `to` is provided, and shows the expanded form in its own tooltip. The tooltip opens on hover and keyboard focus on desktop and on tap on touch screens, and closes on mouse leave, blur, Escape, or a tap elsewhere. For a linked term, mouse and keyboard users open the page by clicking or pressing Enter on the term itself. On touch screens, the first tap opens the tooltip and a second tap opens the page.
 
 The optional `color` prop adds a visual accent to distinguish glossary terms from regular text.
 
@@ -41,14 +37,26 @@ The optional `color` prop adds a visual accent to distinguish glossary terms fro
 
 - **Abbreviation expansion** without leaving the page or breaking reading flow.
 - **Linked glossary** — optionally navigate to a terminology page on click.
-- **Accessible** — uses the native `title` attribute for screen readers, plus `aria-label` on the linked variant.
+- **Works on every device** — the tooltip opens on hover, keyboard focus, and tap, and stays inside the screen.
+- **Accessible** — the tooltip uses `role="tooltip"`, and the expanded form stays linked to the term through `aria-describedby` even while the tooltip is closed.
 - **Preset-aware** — the color accent uses the active preset's primary color.
 
-## Preview
+## Try It
 
-<Frame caption="Terminology block — light and dark mode preview">
-  <ThemedImage sources={{ light: terminologyPreviewLight, dark: terminologyPreviewDark }} alt="Terminology block preview" width={516} height={105} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<div style={{ maxWidth: '36rem' }}>
+  <h3 style={{ margin: '0 0 0.75rem' }}>How the build works</h3>
+  <p style={{ margin: 0, fontSize: '1.0625rem', lineHeight: 1.7 }}>
+    Every <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color>CLI</Terminology> command
+    runs through the toolkit, which loads a strict <Terminology title="pre-built configuration layer" to="/docs/quickstart/terminology#nova-concepts">preset</Terminology> and
+    emits <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color>ESM</Terminology> that any modern bundler can read.
+  </p>
+</div>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 
@@ -96,14 +104,14 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 | Prop        | Type                         | Default     | Description                                                           |
 |-------------|------------------------------|-------------|-----------------------------------------------------------------------|
 | `children`  | `ReactNode`                  | —           | The text to wrap with a tooltip. Required.                            |
-| `title`     | `string`                     | —           | Expanded abbreviation shown on hover. Required.                       |
-| `to`        | `string \| undefined`        | `undefined` | Link target. When set, renders as a `<Link>` instead of `<abbr>`.     |
+| `title`     | `string`                     | —           | Expanded abbreviation shown in the tooltip. Required.                 |
+| `to`        | `string \| undefined`        | `undefined` | Link target. When set, renders as a `<Link>` that opens this path.    |
 | `color`     | `boolean \| undefined`       | `undefined` | Set to `true` to add a color accent to the text.                      |
 | `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-terminology` class. |
 | `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the root element.                   |
 
 ## Troubleshooting
 
-- **Tooltip not showing** — The tooltip uses the native HTML `title` attribute. It appears after a brief hover delay, which varies by browser.
+- **Tooltip not showing** — On desktop the tooltip opens after a short hover or focus delay. On touch screens, tap the term once.
 - **Color accent** — The `color` prop adds the `nova-terminology-colored` CSS class. This is styled by the active preset.
-- **Link not navigating** — Ensure the `to` prop points to a valid docs path. Without `to`, the block renders as a non-interactive `<abbr>`.
+- **Link not navigating** — Ensure the `to` prop points to a valid docs path. On touch screens the first tap opens the tooltip; tap the term again to open the page. Without `to`, the term only opens its tooltip.

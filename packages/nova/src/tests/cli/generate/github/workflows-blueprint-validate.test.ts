@@ -1166,7 +1166,7 @@ describe('Validator.validate', () => {
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_Result = Validator.validate(rawWorkflows, workspaces);
 
     strictEqual(result['workflows'].length, 0);
-    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('must reference a pfSense package workspace')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('whose name starts with "pfsense-pkg-"')), true);
 
     const validWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PfSenseTargetRequiresAPfSensePackageWorkspace_ValidWorkspaces = {
       './packages/firewall': {

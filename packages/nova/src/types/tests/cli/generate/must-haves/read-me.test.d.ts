@@ -3,6 +3,15 @@ import type { vi } from 'vitest';
 import type { Lib_Utility_SaveGeneratedFile_Header } from '../../../../lib/utility.d.ts';
 
 /**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Badges Region Content - Percent Encodes Data URI Profile Badge Logos.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_PercentEncodesDataURIProfileBadgeLogos_DataUri = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_PercentEncodesDataURIProfileBadgeLogos_Content = string;
+
+/**
  * Tests - CLI - Generate - Must Haves - Read Me - Build Badges Region Content - Returns No Badges When The Explicit List Is Missing Or Empty.
  *
  * @since 0.29.0
@@ -17,6 +26,55 @@ export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildB
  * @since 0.29.0
  */
 export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_UsesOnlyExplicitBadgesInConfiguredOrder_Content = string;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Credits Region Content - Falls Back To The Default Profile Support Section.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildCreditsRegionContent_FallsBackToTheDefaultProfileSupportSection_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Credits Region Content - Omits The Profile Support Section When Support Is Absent.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildCreditsRegionContent_OmitsTheProfileSupportSectionWhenSupportIsAbsent_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Credits Region Content - Renders Custom Profile Support Badges With A Custom Title Emoji And Message.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildCreditsRegionContent_RendersCustomProfileSupportBadgesWithACustomTitleEmojiAndMessage_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Documentation Region Content - Escapes Pipes In Profile Link Table Cells.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildDocumentationRegionContent_EscapesPipesInProfileLinkTableCells_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Documentation Region Content - Renders A Profile Link Group List When A Description Is Missing.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildDocumentationRegionContent_RendersAProfileLinkGroupListWhenADescriptionIsMissing_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Documentation Region Content - Renders A Profile Link Group Table With Custom Columns.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildDocumentationRegionContent_RendersAProfileLinkGroupTableWithCustomColumns_Content = string | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Documentation Region Content - Renders A Profile Link Group Table With Default Columns.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildDocumentationRegionContent_RendersAProfileLinkGroupTableWithDefaultColumns_Content = string | undefined;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run.
@@ -125,6 +183,63 @@ export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Fa
 export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_DocsExists = boolean;
 
 export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_TemplateExists = boolean;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Run - Generates Profile Read Me From Fixture.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_FixtureUrl = URL;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_ExpectedContent = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_FirstCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_GeneratesProfileREADMEFromFixture_GeneratedContent = string;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Run - Keeps Project Read Me Output Unchanged Without Profile Config.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_FirstCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_GeneratedContent = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsProjectREADMEOutputUnchangedWithoutProfileConfig_ExpectedContent = string;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Run - Keeps The Project Read Me In Consumer Workspaces In Profile Mode.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_RootCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_KeepsTheProjectREADMEInConsumerWorkspacesInProfileMode_WorkspaceCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run - Omits The Documentation Section When Urls Documentation Is Missing.

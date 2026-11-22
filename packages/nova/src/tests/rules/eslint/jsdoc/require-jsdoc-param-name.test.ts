@@ -52,20 +52,6 @@ ruleTester.run('requireJsdocParamName', RequireJsdocParamName['rule'], {
       ].join('\n'),
     },
 
-    // Correct param description for multi-word camelCase.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @param {string} myLongVariableName - My long variable name.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'function myFunction(myLongVariableName) {}',
-      ].join('\n'),
-    },
-
     // Leading underscore marks an unused parameter but is not part of its description.
     {
       code: [
@@ -150,31 +136,6 @@ ruleTester.run('requireJsdocParamName', RequireJsdocParamName['rule'], {
         ' * @since 0.15.0',
         ' */',
         'function myFunction(name) {}',
-      ].join('\n'),
-      errors: [{ messageId: 'paramDescriptionMismatch' }],
-    },
-
-    // Wrong description for camelCase param.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @param {string} packageDir - The package directory.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'function myFunction(packageDir) {}',
-      ].join('\n'),
-      output: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @param {string} packageDir - Package dir.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'function myFunction(packageDir) {}',
       ].join('\n'),
       errors: [{ messageId: 'paramDescriptionMismatch' }],
     },

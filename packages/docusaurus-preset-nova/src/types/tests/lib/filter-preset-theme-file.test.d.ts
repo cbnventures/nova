@@ -69,6 +69,20 @@ export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheActive
 export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheFooterWrapperFileRegardlessOfActiveVariant_Result = boolean;
 
 /**
+ * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Keeps The Navbar More File Regardless Of Active Variant.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileRegardlessOfActiveVariant_Result = boolean;
+
+/**
+ * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Keeps The Navbar More File When Given A Windows Path.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileWhenGivenAWindowsPath_Result = boolean;
+
+/**
  * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File - Keeps The Navbar Wrapper File Regardless Of Active Variant.
  *
  * @since 0.15.0

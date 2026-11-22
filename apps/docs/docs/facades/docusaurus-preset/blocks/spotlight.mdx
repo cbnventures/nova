@@ -18,6 +18,8 @@ tags:
   - "landing page"
 ---
 
+import BlockPlayground from '@theme/BlockPlayground';
+
 Section wrapper with a heading and freeform children content.
 
 Use it to spotlight a key feature, code sample, or visual on a landing page.
@@ -31,6 +33,36 @@ The Spotlight block renders a `<section>` with a heading and any children you pa
 - **Freeform content** — pass any JSX as children (code blocks, images, custom layouts).
 - **Consistent section wrapper** — heading style and spacing match other preset blocks.
 - **Preset-aware** — typography and surface styling adapt to the active preset.
+
+## Try It
+
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Spotlight heading="Quick Setup">
+  <div style={{ maxWidth: '36rem', margin: '0 auto', textAlign: 'center' }}>
+    <p style={{ margin: '0 0 1.5rem', fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--nova-color-text-muted)' }}>
+      Create a project, pick a preset, and publish your first page in a few minutes.
+    </p>
+    <a
+      href="/docs/"
+      style={{
+        display: 'inline-block',
+        padding: '0.75rem 1.5rem',
+        fontWeight: 600,
+        color: 'var(--nova-color-text-inverse)',
+        textDecoration: 'none',
+        background: 'var(--nova-color-primary-600)',
+        borderRadius: 'var(--nova-shape-radius)',
+      }}
+    >
+      Read the setup guide
+    </a>
+  </div>
+</Spotlight>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

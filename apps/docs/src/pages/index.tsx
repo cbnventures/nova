@@ -18,6 +18,9 @@ import styles from './index.module.css';
 
 import type {
   Pages_Index_FrameMarkers,
+  Pages_Index_Home_CliHeader,
+  Pages_Index_Home_CliHeaderLines,
+  Pages_Index_Home_CustomFields,
   Pages_Index_PromptMarkers,
   Pages_Index_TerminalLineTone_FirstCharacter,
   Pages_Index_TerminalLineTone_Line,
@@ -106,6 +109,18 @@ function terminalLineTone(line: Pages_Index_TerminalLineTone_Line): Pages_Index_
 function Home() {
   const context: PagesContext = useDocusaurusContext();
   const siteConfig: PagesSiteConfig = context.siteConfig;
+  const customFields: Pages_Index_Home_CustomFields = siteConfig['customFields'];
+  const cliHeader: Pages_Index_Home_CliHeader = (customFields !== undefined) ? customFields['novaCliHeader'] : undefined;
+
+  /**
+   * Pages - Home - CLI Header Lines.
+   *
+   * The boxed Nova banner built in the Docusaurus config, split into lines
+   * so each terminal view starts the way the real CLI does.
+   *
+   * @since 0.0.0
+   */
+  const cliHeaderLines: Pages_Index_Home_CliHeaderLines = (typeof cliHeader === 'string') ? cliHeader.split('\n') : [];
 
   /**
    * Pages - Home - Feature Items.
@@ -172,11 +187,7 @@ function Home() {
       alt: 'Scaffolding a base monorepo with the Nova CLI',
       terminalTitle: 'projects — nova scaffold starter base — 80×24',
       output: [
-        '╭────────────────────────────────────────────────╮',
-        '│                      Nova                      │',
-        '│          CLI for the Common Developer          │',
-        '╰────────────────────────────────────────────────╯',
-        '',
+        ...cliHeaderLines,
         'CURRENTLY RUNNING: nova scaffold starter base',
         '',
         '✔ Project name (slug): … my-project',
@@ -212,11 +223,7 @@ function Home() {
       alt: 'Recording a changelog entry with the Nova CLI',
       terminalTitle: 'my-project — nova utility changelog — 80×24',
       output: [
-        '╭────────────────────────────────────────────────╮',
-        '│                      Nova                      │',
-        '│          CLI for the Common Developer          │',
-        '╰────────────────────────────────────────────────╯',
-        '',
+        ...cliHeaderLines,
         'CURRENTLY RUNNING: nova utility changelog --record',
         '',
         '✔ Select a package. › my-project',
@@ -248,8 +255,7 @@ function Home() {
       alt: 'The Nova must-haves generator help menu',
       terminalTitle: 'my-project — nova generate must-haves --help — 80×24',
       output: [
-        'Nova',
-        'CLI for the Common Developer',
+        ...cliHeaderLines,
         'Usage: nova generate must-haves <subcommand> [options]',
         '       nova gen must <subcommand> [options]',
         '',

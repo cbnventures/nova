@@ -19,6 +19,7 @@ import {
 } from './lib/module-loader.js';
 import { toPosixPath } from './lib/posix-path.js';
 import { generateProgressBarClientModule } from './lib/progress-bar.js';
+import { createProseShieldPlugin } from './lib/prose-shield.js';
 import { buildSearchIndex } from './lib/search/indexer.js';
 import { Runner as LibTranslations } from './lib/translations.js';
 import { configureWebpackCache } from './lib/webpack-cache.js';
@@ -72,7 +73,9 @@ import type {
   Index_Runner_Default_AssetsDirectory,
   Index_Runner_Default_BlocksPath,
   Index_Runner_Default_ConfigurePostCss_PostCssOptions,
+  Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin,
   Index_Runner_Default_ConfigurePostCss_RtlPlugin,
+  Index_Runner_Default_ConfigurePostCss_StylesDirectory,
   Index_Runner_Default_ConfigureWebpack_Config,
   Index_Runner_Default_ContentLoaded_Actions,
   Index_Runner_Default_ContentLoaded_Args,
@@ -453,8 +456,9 @@ export class Runner {
       /**
        * Index - Docusaurus Theme Nova - Default - Configure Post Css.
        *
-       * Appends an RTL CSS transformation plugin to the PostCSS pipeline
-       * when the current locale direction is right-to-left.
+       * Appends the prose shield, which keeps doc prose styles out of block
+       * playground previews, and an RTL CSS transformation plugin when the
+       * current locale direction is right-to-left.
        *
        * @param {Index_Runner_Default_ConfigurePostCss_PostCssOptions} postCssOptions - Post css options.
        *
@@ -463,6 +467,11 @@ export class Runner {
        * @since 0.15.0
        */
       configurePostCss(postCssOptions: Index_Runner_Default_ConfigurePostCss_PostCssOptions) {
+        const stylesDirectory: Index_Runner_Default_ConfigurePostCss_StylesDirectory = resolve(currentDirectory, 'styles');
+        const proseShieldPlugin: Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin = createProseShieldPlugin(stylesDirectory);
+
+        postCssOptions['plugins'].push(proseShieldPlugin);
+
         if (isRtl === true) {
           const rtlPlugin: Index_Runner_Default_ConfigurePostCss_RtlPlugin = loadCommonJsModule('rtlcss') as Index_Runner_Default_ConfigurePostCss_RtlPlugin;
 

@@ -13,15 +13,66 @@ import type {
   Shared_ChangelogEntry_Message,
   Shared_ChangelogEntry_Package,
   Shared_ChangelogFoldAction,
+  Shared_ChangelogNotesWorkspace,
   Shared_ChangelogOptions,
   Shared_ChangelogSection,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigSettings_Changelog,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkspace,
   Shared_PromptWithCancelReject,
   Shared_PromptWithCancelResolved,
 } from '../../shared.d.ts';
+
+/**
+ * CLI - Utility - Changelog - Compare Notes Versions.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_Left = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_Right = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_Returns = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftBuildIndex = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightBuildIndex = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftWithoutBuild = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightWithoutBuild = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrereleaseIndex = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrereleaseIndex = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftCore = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightCore = string;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_CoreComparison = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrerelease = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrerelease = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifiers = string[];
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifiers = string[];
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_IdentifierCount = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_I = number;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifier = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifier = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftNumeric = boolean;
+
+export type Cli_Utility_Changelog_Runner_CompareNotesVersions_RightNumeric = boolean;
 
 /**
  * CLI - Utility - Changelog - Fail Fold.
@@ -31,6 +82,15 @@ import type {
 export type Cli_Utility_Changelog_Runner_FailFold_Message = string;
 
 export type Cli_Utility_Changelog_Runner_FailFold_Returns = void;
+
+/**
+ * CLI - Utility - Changelog - Fail Notes.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_FailNotes_Message = string;
+
+export type Cli_Utility_Changelog_Runner_FailNotes_Returns = void;
 
 /**
  * CLI - Utility - Changelog - Fold.
@@ -283,6 +343,68 @@ export type Cli_Utility_Changelog_Runner_FormatChangelogSection_CategoryOrder = 
 export type Cli_Utility_Changelog_Runner_FormatChangelogSection_Messages = Shared_ChangelogEntry_Message[] | undefined;
 
 /**
+ * CLI - Utility - Changelog - Format Notes Block.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_Heading = string;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_Lines = string[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_Returns = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_FirstBulletIndex = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_LastContentIndex = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesBlock_BulletLines = string[];
+
+/**
+ * CLI - Utility - Changelog - Format Notes Section.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_Content = string;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_Version = string;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_Returns = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_Lines = string[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_TargetVersion = string;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_TargetBuild = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_BuildSeparatorIndex = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_BuildValue = string;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_ParsedBuild = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_MatchingIndexes = number[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_I = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_LineSection = Shared_ChangelogSection | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_StartIndex = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_EndIndex = number;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_SectionLines = string[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_Blocks = string[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentHeading = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentLines = string[];
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_PreviousBlock = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_FormatNotesSection_FinalBlock = string | undefined;
+
+/**
  * CLI - Utility - Changelog - Generate File Name.
  *
  * @since 0.13.0
@@ -294,6 +416,82 @@ export type Cli_Utility_Changelog_Runner_GenerateFileName_Adjective = string | u
 export type Cli_Utility_Changelog_Runner_GenerateFileName_Noun = string | undefined;
 
 export type Cli_Utility_Changelog_Runner_GenerateFileName_Verb = string | undefined;
+
+/**
+ * CLI - Utility - Changelog - Get Notes Versions.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_GetNotesVersions_Content = string;
+
+export type Cli_Utility_Changelog_Runner_GetNotesVersions_Returns = string[];
+
+export type Cli_Utility_Changelog_Runner_GetNotesVersions_Lines = string[];
+
+export type Cli_Utility_Changelog_Runner_GetNotesVersions_Versions = string[];
+
+export type Cli_Utility_Changelog_Runner_GetNotesVersions_Section = Shared_ChangelogSection | undefined;
+
+/**
+ * CLI - Utility - Changelog - Notes.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_Notes_Workspace = Shared_ChangelogNotesWorkspace;
+
+export type Cli_Utility_Changelog_Runner_Notes_Options = Shared_ChangelogOptions;
+
+export type Cli_Utility_Changelog_Runner_Notes_Returns = Promise<void>;
+
+export type Cli_Utility_Changelog_Runner_Notes_ConfigLoader = LibNovaConfig;
+
+export type Cli_Utility_Changelog_Runner_Notes_Config = Shared_NovaConfigConfig;
+
+export type Cli_Utility_Changelog_Runner_Notes_HasConfigErrors = boolean;
+
+export type Cli_Utility_Changelog_Runner_Notes_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Utility_Changelog_Runner_Notes_CurrentDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceEntries = [string, Shared_NovaConfigWorkspace][];
+
+export type Cli_Utility_Changelog_Runner_Notes_ReadWorkspaces = (Cli_Utility_Changelog_Runner_Notes_Workspace | undefined)[];
+
+export type Cli_Utility_Changelog_Runner_Notes_ChangelogWorkspaces = Cli_Utility_Changelog_Runner_Notes_Workspace[];
+
+export type Cli_Utility_Changelog_Runner_Notes_FilterWorkspaceTypeGuard = Cli_Utility_Changelog_Runner_Notes_Workspace;
+
+export type Cli_Utility_Changelog_Runner_Notes_Settings = Shared_NovaConfigConfig['settings'];
+
+export type Cli_Utility_Changelog_Runner_Notes_ChangelogSettings = Shared_NovaConfigSettings_Changelog | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceOrder = string[];
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndexes = Map<string, number>;
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndex = number;
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceName = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_TypedLeftWorkspace = Cli_Utility_Changelog_Runner_Notes_Workspace;
+
+export type Cli_Utility_Changelog_Runner_Notes_TypedRightWorkspace = Cli_Utility_Changelog_Runner_Notes_Workspace;
+
+export type Cli_Utility_Changelog_Runner_Notes_LeftIndex = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_RightIndex = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_TargetVersion = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_Versions = string[];
+
+export type Cli_Utility_Changelog_Runner_Notes_OutputBlocks = string[];
+
+export type Cli_Utility_Changelog_Runner_Notes_WorkspaceSection = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Notes_Output = string;
+
+export type Cli_Utility_Changelog_Runner_Notes_ErrorMessage = string;
 
 /**
  * CLI - Utility - Changelog - Parse Changelog.
@@ -314,21 +512,7 @@ export type Cli_Utility_Changelog_Runner_ParseChangelog_CurrentSection = Shared_
 
 export type Cli_Utility_Changelog_Runner_ParseChangelog_CurrentCategory = Shared_ChangelogEntry_Category | undefined;
 
-export type Cli_Utility_Changelog_Runner_ParseChangelog_HeaderBody = string;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_VersionSeparatorIndex = number;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_Version = string;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_Section = Shared_ChangelogSection;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_BuildPrefix = string;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_BuildEndIndex = number;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_BuildValue = string;
-
-export type Cli_Utility_Changelog_Runner_ParseChangelog_ParsedBuild = number;
+export type Cli_Utility_Changelog_Runner_ParseChangelog_ParsedSection = Shared_ChangelogSection | undefined;
 
 export type Cli_Utility_Changelog_Runner_ParseChangelog_CategoryValue = string;
 
@@ -337,6 +521,31 @@ export type Cli_Utility_Changelog_Runner_ParseChangelog_Category = Shared_Change
 export type Cli_Utility_Changelog_Runner_ParseChangelog_Message = Shared_ChangelogEntry_Message;
 
 export type Cli_Utility_Changelog_Runner_ParseChangelog_Messages = Shared_ChangelogEntry_Message[];
+
+/**
+ * CLI - Utility - Changelog - Parse Changelog Heading.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_Line = string;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_Returns = Shared_ChangelogSection | undefined;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_HeaderBody = string;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_VersionSeparatorIndex = number;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_Version = string;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_Section = Shared_ChangelogSection;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildPrefix = string;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildEndIndex = number;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildValue = string;
+
+export type Cli_Utility_Changelog_Runner_ParseChangelogHeading_ParsedBuild = number;
 
 /**
  * CLI - Utility - Changelog - Parse Entries.
@@ -393,6 +602,27 @@ export type Cli_Utility_Changelog_Runner_PromptWithCancel_Returns<Keys extends s
 export type Cli_Utility_Changelog_Runner_PromptWithCancel_Cancelled = boolean;
 
 export type Cli_Utility_Changelog_Runner_PromptWithCancel_Result<Keys extends string, Result> = Record<Keys, Result>;
+
+/**
+ * CLI - Utility - Changelog - Read Notes Workspace.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_CurrentDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceEntry = [string, Shared_NovaConfigWorkspace];
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Returns = Promise<Shared_ChangelogNotesWorkspace | undefined>;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceConfig = Shared_NovaConfigWorkspace;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_ChangelogPath = string;
+
+export type Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Content = string;
 
 /**
  * CLI - Utility - Changelog - Record.
@@ -778,6 +1008,10 @@ export type Cli_Utility_Changelog_Runner_Run_Options = Shared_ChangelogOptions;
 export type Cli_Utility_Changelog_Runner_Run_Returns = Promise<void>;
 
 export type Cli_Utility_Changelog_Runner_Run_IsDryRun = boolean;
+
+export type Cli_Utility_Changelog_Runner_Run_SelectedModes = number[];
+
+export type Cli_Utility_Changelog_Runner_Run_SelectedModeCount = number;
 
 export type Cli_Utility_Changelog_Runner_Run_ModeOutputKey = 'action';
 

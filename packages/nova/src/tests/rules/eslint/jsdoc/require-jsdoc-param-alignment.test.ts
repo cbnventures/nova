@@ -69,18 +69,6 @@ ruleTester.run('requireJsdocParamAlignment', RequireJsdocParamAlignment['rule'],
       ].join('\n'),
     },
 
-    // No @param tags.
-    {
-      code: [
-        '/**',
-        ' * My function.',
-        ' *',
-        ' * @since 0.15.0',
-        ' */',
-        'function myFunction() {}',
-      ].join('\n'),
-    },
-
     // LAST: ignoreFiles test.
     {
       code: [

@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual } from 'node:assert/strict';
 import {
   mkdtemp,
   rm,
@@ -6,15 +6,33 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  afterEach,
+  describe,
+  it,
+  vi,
+} from 'vitest';
 
 import { Runner as CliUtilityVersion } from '../../../cli/utility/version.js';
 
 import type {
   Tests_Cli_Utility_Version_CliUtilityVersionRun_OriginalCwd,
-  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithAllFlagWithoutError_Options,
-  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithEmptyOptionsWithoutError_Options,
-  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithNodeFlagWithoutError_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintedList,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintSpy,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintTarget,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_Runner,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintedList,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintSpy,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintTarget,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_Runner,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintedList,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintSpy,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintTarget,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_Runner,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_SandboxRoot,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryDirectory,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryPrefix,
@@ -31,6 +49,12 @@ describe('CliUtilityVersion.run', async () => {
   const temporaryPrefix: Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
   const sandboxRoot: Tests_Cli_Utility_Version_CliUtilityVersionRun_SandboxRoot = await mkdtemp(temporaryPrefix);
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+
+    return;
+  });
+
   afterAll(async () => {
     process.chdir(originalCwd);
 
@@ -42,36 +66,60 @@ describe('CliUtilityVersion.run', async () => {
     return;
   });
 
-  it('runs with --node flag without error', async () => {
-    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithNodeFlagWithoutError_Options = {
+  it('prints only the node category for the node flag', async () => {
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_Options = {
       node: true,
     };
+    const runner: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_Runner = CliUtilityVersion;
+    const printSpy: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintSpy = vi.spyOn(runner as Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintTarget, 'print').mockReturnValue(undefined);
 
     await CliUtilityVersion.run(options);
 
-    strictEqual(process.exitCode, undefined);
+    const printedList: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsOnlyTheNodeCategoryForTheNodeFlag_PrintedList = (printSpy['mock']['calls'][0] ?? [])[0] ?? {};
+
+    deepStrictEqual(Object.keys(printedList), ['node']);
 
     return;
   });
 
-  it('runs with --all flag without error', async () => {
-    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithAllFlagWithoutError_Options = {
+  it('prints every category for the all flag', async () => {
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_Options = {
       all: true,
     };
+    const runner: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_Runner = CliUtilityVersion;
+    const printSpy: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintSpy = vi.spyOn(runner as Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintTarget, 'print').mockReturnValue(undefined);
 
     await CliUtilityVersion.run(options);
 
-    strictEqual(process.exitCode, undefined);
+    const printedList: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryForTheAllFlag_PrintedList = (printSpy['mock']['calls'][0] ?? [])[0] ?? {};
+
+    deepStrictEqual(Object.keys(printedList), [
+      'node',
+      'env',
+      'os',
+      'browsers',
+      'interpreters',
+    ]);
 
     return;
   });
 
-  it('runs with empty options without error', async () => {
-    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithEmptyOptionsWithoutError_Options = {};
+  it('prints every category when no flag is set', async () => {
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_Options = {};
+    const runner: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_Runner = CliUtilityVersion;
+    const printSpy: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintSpy = vi.spyOn(runner as Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintTarget, 'print').mockReturnValue(undefined);
 
     await CliUtilityVersion.run(options);
 
-    strictEqual(process.exitCode, undefined);
+    const printedList: Tests_Cli_Utility_Version_CliUtilityVersionRun_PrintsEveryCategoryWhenNoFlagIsSet_PrintedList = (printSpy['mock']['calls'][0] ?? [])[0] ?? {};
+
+    deepStrictEqual(Object.keys(printedList), [
+      'node',
+      'env',
+      'os',
+      'browsers',
+      'interpreters',
+    ]);
 
     return;
   });

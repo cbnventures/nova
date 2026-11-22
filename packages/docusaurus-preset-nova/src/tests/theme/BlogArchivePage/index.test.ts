@@ -4,7 +4,10 @@ import { describe, it, vi } from 'vitest';
 
 import BlogArchivePage from '../../../theme/BlogArchivePage/index.js';
 
-import type { Tests_Theme_BlogArchivePage_Index_BlogArchivePage_UsesADescriptiveArchiveSummary_Element } from '../../../types/tests/theme/BlogArchivePage/index.test.d.ts';
+import type {
+  Tests_Theme_BlogArchivePage_Index_BlogArchivePage_UsesADescriptiveArchiveSummary_Element,
+  Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateImplementation,
+} from '../../../types/tests/theme/BlogArchivePage/index.test.d.ts';
 
 vi.mock('@docusaurus/Link', () => ({
   default: 'a',
@@ -20,10 +23,9 @@ vi.mock('@docusaurus/theme-common/internal', () => ({
   })),
 }));
 
+// Returning the translation id shows which string each prop reads, whatever the call order.
 vi.mock('@docusaurus/Translate', () => ({
-  translate: vi.fn()
-    .mockReturnValueOnce('Archive')
-    .mockReturnValue('Every post on this blog, newest first.'),
+  translate: vi.fn<Tests_Theme_BlogArchivePage_Index_DocusaurusTranslate_MockModule_TranslateImplementation>((descriptor) => descriptor['id']),
 }));
 
 vi.mock('@theme/BlogLayout', () => ({
@@ -47,7 +49,7 @@ describe('BlogArchivePage', async () => {
       },
     });
 
-    strictEqual(element['props']['children'][0]['props']['description'], 'Every post on this blog, newest first.');
+    strictEqual(element['props']['children'][0]['props']['description'], 'theme.blog.archive.description');
 
     return;
   });

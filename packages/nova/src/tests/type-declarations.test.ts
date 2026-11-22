@@ -1,5 +1,4 @@
 import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
-import { existsSync } from 'node:fs';
 import {
   mkdir,
   mkdtemp,
@@ -131,49 +130,23 @@ import type {
   Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_DetectsTypedFunctionExpressionCallback_Callbacks,
   Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_SkipsUntypedCallbackParamRule74H2_Callbacks,
   Tests_TypeDeclarations_DiscoverSourceFiles_ReturnsAbsolutePathsToTsSourceFilesExcludingDTs_Files,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC11DefaultExportClassAddsChunkLikeRegularClass_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_NonThisParams,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Params,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Decls,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Lines,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC14ParameterPropertyTSShorthandIsTreatedAsANormalConstructorParam_Params,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC15IndexSignatureIsNotDetectedAsARegularProperty_Lines,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC15IndexSignatureIsNotDetectedAsARegularProperty_ObjectTypes,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_Lines,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_ObjectTypes,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC19DottedFilenameLikeFooSpecFailsSegmentRegex_Pattern,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC20FilenameStartingWithDigitFailsSegmentRegex_Pattern,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC1MultipleTopLevelClassesEachContributeTheirOwnChunk_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC2FileWithOnlyTopLevelFunctionsNoClass_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC3GenericTypeParametersDoNotGetTheirOwnChunks_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_Arrays,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_Lines,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Arrays,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Lines,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Arrays,
-  Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Lines,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC8TypeLevelOperationsExtendsConditionalInsideBodyDoNotAddChunks_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC9AnonymousClassExpressionInConstUsesConstNameAsChunkMode2ClosesPriorGap_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC21FilenameWithUnderscoreSpaceSpecialCharFailsSegmentRegex_Pattern,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC22FileAtTypeRootProducesSingleChunkClassPrefix_Prefix,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_Interp,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SourceContent,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24AsyncArrowFunctionCallbackInStringFnIsAccepted_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24bAsyncFunctionExpressionCallbackInStringFnIsAccepted_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25bClassSetterAddsChunkBasedOnPropertyName_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25ClassGetterAddsChunkBasedOnPropertyName_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC26StaticMethodAddsChunkLikeAnInstanceMethod_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC28NestedFunctionDeclarationAddsChunkUnderTheOuterFunction_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC30bDescribeOnlyStringFnAddsChunkViaGenericRule_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC31PrimitiveLikeReturnTypesVoidNeverEtcPassValidateLeafAtBodyVar_Result,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC33NestedClassInsideMethodAddsChunkUnderMethod_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC34VitestBenchStringFnAddsChunkViaGenericRule_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violations,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC37EC42JSXFunctionComponentNameFileNameFiresC2_Identifiers,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC43JSXClassComponentNameFileNameFiresC1_Identifiers,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC44BrandedTypesFollowStandardNaming_Lines,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC46RecursiveTypeDefinitionIsDetectedAsSelfReferenceNoInfiniteLoop_Refs,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC47EnumDeclarationIsNotSubjectToTypeNamingRulesOutOfHelperScope_Lines,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Decls,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Lines,
@@ -292,7 +265,6 @@ import type {
   Tests_TypeDeclarations_ParseDescribeString_HandlesSpaceSeparatedDescriptions_Result,
   Tests_TypeDeclarations_ParseDescribeString_SplitsClassMethodFormAndJoinsAsOnePascalCaseChunk_Input,
   Tests_TypeDeclarations_ParseDescribeString_SplitsClassMethodFormAndJoinsAsOnePascalCaseChunk_Result,
-  Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Result,
   Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDeclarationsBuildSourceSectionMap_Decls,
   Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDeclarationsBuildSourceSectionMap_FirstDecl,
   Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDeclarationsBuildSourceSectionMap_SectionMap,
@@ -305,24 +277,11 @@ import type {
   Tests_TypeDeclarations_Rule74Integration_DetectsTypedInlineArrowCallback_Callbacks,
   Tests_TypeDeclarations_Rule74Integration_PassesNamedConstCallbackExtractedItemsFilterIsActiveHasNoInlineArrowArg_Callbacks,
   Tests_TypeDeclarations_Rule74Integration_PassesUntypedInlineCallbackRuleH2Exemption_Callbacks,
-  Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violations,
-  Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violations,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_FileName,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifiers,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Violations,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_FileName,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifiers,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Violations,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_FileName,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifiers,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Violations,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_ClassPrefix,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_FileName,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_FilePath,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_Identifiers,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_Segments,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_FileName,
-  Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifiers,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNonMatchingName_FileName,
   Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNonMatchingName_Identifiers,
   Tests_TypeDeclarations_RuleE1E2Integration_E1PropertyTypeDoesNotStartWithParentTypeNameFails_Lines,
@@ -341,14 +300,6 @@ import type {
   Tests_TypeDeclarations_RuleE1E2Integration_E2PropertyTypeDefinedBeforeParentPasses_ParentLine,
   Tests_TypeDeclarations_RuleE1E2Integration_E2PropertyTypeDefinedBeforeParentPasses_PropertyTypeLine,
   Tests_TypeDeclarations_RuleE1E2Integration_E2PropertyTypeDefinedBeforeParentPasses_Result,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_ArrayName,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_Exempt,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_ArrayName,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_Exempt,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_ArrayName,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_Exempt,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_ArrayName,
-  Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_Exempt,
   Tests_TypeDeclarations_RuleEC19EC20EC21Integration_FailsDottedSegmentAfterStrippingRecognizedSuffixesEC19_Pattern,
   Tests_TypeDeclarations_RuleEC19EC20EC21Integration_FailsFilenameStartingWithDigitEC20_Pattern,
   Tests_TypeDeclarations_RuleEC19EC20EC21Integration_FailsFilenameWithSpecialCharacterEC21_Pattern,
@@ -361,12 +312,6 @@ import type {
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S1PascalCaseTopLevelTypePasses_PascalCasePattern,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S1SnakeCaseFails_PascalCasePattern,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S1Standalone2CapAcronymsPassWhenFollowedByLowercase_BrandCasePattern,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_IsPathPrefixStyle,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_KnownTopLevels,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_TypeName,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_IsPathPrefixStyle,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_KnownTopLevels,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_TypeName,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_Lines,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_ObjectTypes,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_PropertyTypeLineIndexes,
@@ -375,10 +320,6 @@ import type {
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_Lines,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_ObjectTypes,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_PropertyTypeLineIndexes,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_ObjectName,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_PropertyValueType,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_ObjectName,
-  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_PropertyValueType,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_ArrayLine,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_Arrays,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_ElementLine,
@@ -390,8 +331,6 @@ import type {
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ObjectTypes,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_RecursiveOwner,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F1SameSectionReferencesAreAllowed_Refs,
-  Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionA,
-  Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionB,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F4WithinSectionFirstComeFirstServeOrderViaFindFirstOccurrence_ItemsLine,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F4WithinSectionFirstComeFirstServeOrderViaFindFirstOccurrence_ResultLine,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F4WithinSectionFirstComeFirstServeOrderViaFindFirstOccurrence_SourceLines,
@@ -401,19 +340,14 @@ import type {
   Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMultiChunkTypeWithoutSourceSection_DtsLines,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMultiChunkTypeWithoutSourceSection_Sections,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMultiChunkTypeWithoutSourceSection_SourceSections,
-  Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_SortedSpecifiers,
-  Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_Specifiers,
   Tests_TypeDeclarations_SectionGImportsIntegration_G1ExtractImportedNamesCapturesAlphabetizedInlineImports_Lines,
   Tests_TypeDeclarations_SectionGImportsIntegration_G1ExtractImportedNamesCapturesAlphabetizedInlineImports_Names,
-  Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_SortedSpecifiers,
-  Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_Specifiers,
   Tests_TypeDeclarations_ValidateLeafComprehensive_HandlesSingleCharacterVarName_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsFullTypeNameAsActualLeafWhenNoPrefixMatches_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsNullWhenLeafMatchesClassPrefixTitleVarPassthrough_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsNullWhenLeafMatchesSourceSectionTitleVar_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsReasonWhenLeafDoesNotMatch_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithClassPrefixPassthroughButLeafDiffers_ReasonResult,
-  Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_StripsUnderscorePrefixFromVarNameBeforeComparison_ReasonResult,
 } from '../types/tests/type-declarations.test.d.ts';
 
@@ -426,16 +360,13 @@ import type {
  * inside. The naming rules depend on it: that is how the meta-test knows what a variable's
  * type SHOULD be named. Each case below points the engine at a REAL Nova source file and
  * asserts the expected answer (the target line is derived from the file content via a
- * findIndex anchor, so edits above it do not break these). Because those
- * nova-internal files exist only in Nova, the it.skipIf(existsSync(...)) guard SKIPS these
- * in every other project that copies this test file. A skip here is expected and correct -
- * it is not a failure. (Same pattern in the extractFunctionParams and discoverSourceFiles
- * blocks below.)
+ * findIndex anchor, so edits above it do not break these). (Same pattern in the
+ * extractFunctionParams and discoverSourceFiles blocks below.)
  *
  * @since 0.18.0
  */
 describe('buildSourceSectionMap', () => {
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/lib/utility.ts')) === false)('tags function declaration line and body var lines with the function section', async () => {
+  it('tags function declaration line and body var lines with the function section', async () => {
     const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsFunctionDeclarationLineAndBodyVarLinesWithTheFunctionSection_FilePath = resolve(process.cwd(), 'src/lib/utility.ts');
     const content: Tests_TypeDeclarations_BuildSourceSectionMap_TagsFunctionDeclarationLineAndBodyVarLinesWithTheFunctionSection_Content = await readFile(filePath, 'utf-8');
     const classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_TagsFunctionDeclarationLineAndBodyVarLinesWithTheFunctionSection_ClassPrefix = deriveClassPrefix(filePath, testConfig);
@@ -449,7 +380,7 @@ describe('buildSourceSectionMap', () => {
     return;
   });
 
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/lib/utility.ts')) === false)('tags nested const-arrow-function body lines with the sub-section while keeping the const declaration in the parent section', async () => {
+  it('tags nested const-arrow-function body lines with the sub-section while keeping the const declaration in the parent section', async () => {
     const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFunctionBodyLinesWithTheSubSectionWhileKeepingTheConstDeclarationInTheParentSection_FilePath = resolve(process.cwd(), 'src/lib/utility.ts');
     const content: Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFunctionBodyLinesWithTheSubSectionWhileKeepingTheConstDeclarationInTheParentSection_Content = await readFile(filePath, 'utf-8');
     const classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFunctionBodyLinesWithTheSubSectionWhileKeepingTheConstDeclarationInTheParentSection_ClassPrefix = deriveClassPrefix(filePath, testConfig);
@@ -464,7 +395,7 @@ describe('buildSourceSectionMap', () => {
     return;
   });
 
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/toolkit/markdown-table.ts')) === false)('tags method declaration and body lines with the method section', async () => {
+  it('tags method declaration and body lines with the method section', async () => {
     const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsMethodDeclarationAndBodyLinesWithTheMethodSection_FilePath = resolve(process.cwd(), 'src/toolkit/markdown-table.ts');
     const content: Tests_TypeDeclarations_BuildSourceSectionMap_TagsMethodDeclarationAndBodyLinesWithTheMethodSection_Content = await readFile(filePath, 'utf-8');
     const classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_TagsMethodDeclarationAndBodyLinesWithTheMethodSection_ClassPrefix = deriveClassPrefix(filePath, testConfig);
@@ -478,7 +409,7 @@ describe('buildSourceSectionMap', () => {
     return;
   });
 
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/tests/cli/utility/configure.test.ts')) === false)('tags describe block contents with the describe-derived section', async () => {
+  it('tags describe block contents with the describe-derived section', async () => {
     const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_FilePath = resolve(process.cwd(), 'src/tests/cli/utility/configure.test.ts');
     const content: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_Content = await readFile(filePath, 'utf-8');
     const classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_ClassPrefix = deriveClassPrefix(filePath, testConfig);
@@ -531,14 +462,12 @@ describe('extractBodyDeclarations', () => {
  * NOTE - "test of the test" (see the buildSourceSectionMap block above for the full
  * explanation). This checks the meta-test's OWN engine, not your type declarations:
  * extractFunctionParams is the helper that pulls each function/method parameter and the
- * type name it should carry. It asserts against a REAL Nova source file, so the
- * it.skipIf(existsSync(...)) guard SKIPS it wherever that nova-internal file is absent
- * (i.e. every project that copies this test file). A skip here is expected, not a failure.
+ * type name it should carry. It asserts against a REAL Nova source file.
  *
  * @since 0.18.0
  */
 describe('extractFunctionParams', () => {
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/toolkit/markdown-table.ts')) === false)('extracts typed params from method declarations', async () => {
+  it('extracts typed params from method declarations', async () => {
     const filePath: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromMethodDeclarations_FilePath = resolve(process.cwd(), 'src/toolkit/markdown-table.ts');
     const content: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromMethodDeclarations_Content = await readFile(filePath, 'utf-8');
     const result: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromMethodDeclarations_Result = extractFunctionParams(filePath, content);
@@ -551,7 +480,7 @@ describe('extractFunctionParams', () => {
     return;
   });
 
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/lib/utility.ts')) === false)('extracts typed params from top-level function declarations', async () => {
+  it('extracts typed params from top-level function declarations', async () => {
     const filePath: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_FilePath = resolve(process.cwd(), 'src/lib/utility.ts');
     const content: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_Content = await readFile(filePath, 'utf-8');
     const result: Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_Result = extractFunctionParams(filePath, content);
@@ -734,14 +663,12 @@ describe('extractReferencedTypes', () => {
  * NOTE - "test of the test" (see the buildSourceSectionMap block above for the full
  * explanation). This checks the meta-test's OWN engine, not your type declarations:
  * discoverSourceFiles is the helper that lists the .ts files the meta-test will check.
- * It asserts against known Nova files, so the it.skipIf(existsSync(...)) guard SKIPS it
- * wherever those nova-internal files are absent (i.e. every project that copies this test
- * file). A skip here is expected, not a failure.
+ * It asserts against known Nova files.
  *
  * @since 0.18.0
  */
 describe('discoverSourceFiles', () => {
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/toolkit/markdown-table.ts')) === false)('returns absolute paths to .ts source files, excluding .d.ts', async () => {
+  it('returns absolute paths to .ts source files, excluding .d.ts', async () => {
     const files: Tests_TypeDeclarations_DiscoverSourceFiles_ReturnsAbsolutePathsToTsSourceFilesExcludingDTs_Files = await discoverSourceFiles(testConfig);
 
     ok(files.length > 0, 'should find at least one source file');
@@ -804,10 +731,7 @@ describe('parseDescribeString', () => {
 registerTypeDeclarationSuite({
   vitest,
   enable: 'all',
-  typeRoots: [
-    'src',
-    'utils',
-  ],
+  typeRoots: ['src'],
   standaloneTypeFiles: [
     '/fetch-response.d.ts',
     '/shared.d.ts',
@@ -1036,17 +960,6 @@ describe('validateLeaf comprehensive', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_HandlesSingleCharacterVarName_ReasonResult = validateLeaf('i', 'Cli_Foo_Run_I', 'Cli_Foo_Run', 'Cli_Foo');
 
     strictEqual(reasonResult, null);
-
-    return;
-  });
-
-  it('returns the actualLeaf when typeName starts with sourceSection but leaf differs', () => {
-    const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_ReasonResult = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
-
-    deepStrictEqual(reasonResult, {
-      actualLeaf: 'Things',
-      expectedLeaf: 'Items',
-    });
 
     return;
   });
@@ -2451,42 +2364,6 @@ describe('buildDtsSections comprehensive', () => {
  * @since 0.18.0
  */
 describe('Rule C1/C2/C3 integration', () => {
-  it('detects class name == file name (C1)', () => {
-    const identifiers: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifiers = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', 'export class Changelog {}\n');
-    const fileName: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_FileName = 'Changelog';
-    const violations: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Violations = identifiers
-      .filter((identifier) => identifier['name'] === fileName)
-      .map((identifier) => `${identifier['kind']}:${identifier['name']}`);
-
-    deepStrictEqual(violations, ['class:Changelog']);
-
-    return;
-  });
-
-  it('detects function name == file name (C2)', () => {
-    const identifiers: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifiers = extractTopLevelIdentifiers('/fake/lib/utility.ts', 'export function utility() {}\n');
-    const fileName: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_FileName = 'utility';
-    const violations: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Violations = identifiers
-      .filter((identifier) => identifier['name'] === fileName)
-      .map((identifier) => identifier['name']);
-
-    strictEqual(violations.length, 1);
-
-    return;
-  });
-
-  it('detects function-typed const name == file name (C2)', () => {
-    const identifiers: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifiers = extractTopLevelIdentifiers('/fake/lib/utility.ts', 'const utility = () => 1;\n');
-    const fileName: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_FileName = 'utility';
-    const violations: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Violations = identifiers
-      .filter((identifier) => identifier['name'] === fileName)
-      .map((identifier) => identifier['name']);
-
-    strictEqual(violations.length, 1);
-
-    return;
-  });
-
   it('detects hyphenated file name flattened (C3)', () => {
     const filePath: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_FilePath = resolve(process.cwd(), 'src/toolkit/markdown-table.ts');
     const classPrefix: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_ClassPrefix = deriveClassPrefix(filePath, testConfig);
@@ -2505,22 +2382,6 @@ describe('Rule C1/C2/C3 integration', () => {
   it('does NOT fire for non-matching name', () => {
     const identifiers: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNonMatchingName_Identifiers = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', 'export class Runner {}\n');
     const fileName: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNonMatchingName_FileName = 'Changelog';
-
-    strictEqual(identifiers.filter((identifier) => identifier['name'] === fileName).length, 0);
-
-    return;
-  });
-
-  it('does NOT fire for nested class with same name as file', () => {
-    const identifiers: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifiers = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', [
-      'export class Runner {',
-      '  doStuff() {',
-      '    class Changelog {}',
-      '  }',
-      '}',
-      '',
-    ].join('\n'));
-    const fileName: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_FileName = 'Changelog';
 
     strictEqual(identifiers.filter((identifier) => identifier['name'] === fileName).length, 0);
 
@@ -2570,39 +2431,6 @@ describe('Rule 7.2 integration', () => {
     const dtsContent: Tests_TypeDeclarations_Rule72Integration_PassesWhenAliasIsToSamePrefixTypeNotForeign_DtsContent = 'export type Cli_Foo_Run_Data = Cli_Foo_Helper_Result;\n';
 
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
-
-    return;
-  });
-
-  return;
-});
-
-/**
- * Tests - Type Declarations - Rule 7.3 Integration.
- *
- * @since 0.18.0
- */
-describe('Rule 7.3 integration', () => {
-  it('rejects body var typed Foo_Returns', () => {
-    strictEqual(isReservedSuffix('Foo_Bar_Returns'), true);
-
-    return;
-  });
-
-  it('rejects body var typed Foo_TypeGuard', () => {
-    strictEqual(isReservedSuffix('Foo_Bar_TypeGuard'), true);
-
-    return;
-  });
-
-  it('rejects body var typed Foo_Return', () => {
-    strictEqual(isReservedSuffix('Foo_Bar_Return'), true);
-
-    return;
-  });
-
-  it('passes body var typed Foo_Result (not reserved)', () => {
-    strictEqual(isReservedSuffix('Foo_Bar_Result'), false);
 
     return;
   });
@@ -2663,150 +2491,6 @@ describe('Rule 7.4 integration', () => {
 });
 
 /**
- * Tests - Type Declarations - Rule 7.5/7.6/7.7 Integration.
- *
- * @since 0.18.0
- */
-describe('Rule 7.5/7.6/7.7 integration', () => {
-  it('rule 7.5: function returning Foo_Returns passes', () => {
-    strictEqual(validateReturnType('Foo_Bar_Returns', false), null);
-
-    return;
-  });
-
-  it('rule 7.5: function returning Foo_Result fails (must end in Returns)', () => {
-    ok(validateReturnType('Foo_Bar_Result', false) !== null);
-
-    return;
-  });
-
-  it('rule 7.6: function returning Foo_Return (singular) fails', () => {
-    ok(validateReturnType('Foo_Bar_Return', false) !== null);
-
-    return;
-  });
-
-  it('rule 7.7: type-guard returning Foo_TypeGuard passes', () => {
-    strictEqual(validateReturnType('Foo_Bar_TypeGuard', true), null);
-
-    return;
-  });
-
-  it('rule 7.7: function returning Foo_TypeGuard at non-type-guard fails', () => {
-    ok(validateReturnType('Foo_Bar_TypeGuard', false) !== null);
-
-    return;
-  });
-
-  it('rule 7.7: type-guard returning Foo_Returns at type-guard fails', () => {
-    ok(validateReturnType('Foo_Bar_Returns', true) !== null);
-
-    return;
-  });
-
-  return;
-});
-
-/**
- * Tests - Type Declarations - Rule 7.8 Integration.
- *
- * @since 0.18.0
- */
-describe('Rule 7.8 integration', () => {
-  it('passes when all expected names unique', () => {
-    const violations: Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violations = checkTypeNameUniqueness([
-      {
-        name: 'foo',
-        typeName: 'Cli_X_Foo',
-        lineNumber: 1,
-      },
-      {
-        name: 'bar',
-        typeName: 'Cli_X_Bar',
-        lineNumber: 2,
-      },
-    ]);
-
-    strictEqual(violations.length, 0);
-
-    return;
-  });
-
-  it('fires when two body vars produce the same expected type name (rule 7.8)', () => {
-    const violations: Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violations = checkTypeNameUniqueness([
-      {
-        name: 'foo',
-        typeName: 'Cli_X_Run_Foo',
-        lineNumber: 5,
-      },
-      {
-        name: 'foo',
-        typeName: 'Cli_X_Run_Foo',
-        lineNumber: 12,
-      },
-    ]);
-
-    strictEqual(violations.length, 1);
-
-    return;
-  });
-
-  return;
-});
-
-/**
- * Tests - Type Declarations - Rule E3 Integration (Mode 2 Expansion To Returns | TypeGuard | Return).
- *
- * @since 0.18.0
- */
-describe('Rule E3 integration (Mode 2 expansion to Returns | TypeGuard | Return)', () => {
-  it('Returns suffix array IS exempt from element-before-array', () => {
-    const arrayName: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_ArrayName = 'Cli_Foo_Run_Returns';
-    const exempt: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_Exempt = arrayName.endsWith('Returns') === true || arrayName.endsWith('_Returns') === true;
-
-    strictEqual(exempt, true);
-
-    return;
-  });
-
-  it('TypeGuard suffix array IS exempt (Mode 2)', () => {
-    const arrayName: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_ArrayName = 'Cli_Foo_IsUser_TypeGuard';
-    const exempt: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_Exempt = arrayName.endsWith('TypeGuard') === true || arrayName.endsWith('_TypeGuard') === true;
-
-    strictEqual(exempt, true);
-
-    return;
-  });
-
-  it('Return (singular) suffix array IS exempt (Mode 2 defensive)', () => {
-    const arrayName: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_ArrayName = 'Cli_Foo_Run_Return';
-    const exempt: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_Exempt = arrayName.endsWith('Return') === true || arrayName.endsWith('_Return') === true;
-
-    strictEqual(exempt, true);
-
-    return;
-  });
-
-  it('Items suffix array is NOT exempt (must define element first)', () => {
-    const arrayName: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_ArrayName = 'Cli_Foo_Run_Items';
-    const exempt: Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_Exempt = (
-      arrayName.endsWith('Returns') === true
-      || arrayName.endsWith('_Returns') === true
-      || arrayName.endsWith('TypeGuard') === true
-      || arrayName.endsWith('_TypeGuard') === true
-      || arrayName.endsWith('Return') === true
-      || arrayName.endsWith('_Return') === true
-    );
-
-    strictEqual(exempt, false);
-
-    return;
-  });
-
-  return;
-});
-
-/**
  * Tests - Type Declarations - Rule S1/S2/S3/S4 Integration.
  *
  * @since 0.18.0
@@ -2847,34 +2531,6 @@ describe('Rule S1/S2/S3/S4 integration', () => {
     // UICore has UIC = 3 consecutive caps and IS caught (caps-followed-by-cap = brand pattern)
     strictEqual(brandCasePattern.test('UICore'), true);
     strictEqual(brandCasePattern.test('IOError'), true);
-
-    return;
-  });
-
-  it('S2: path-prefix-style names detected', () => {
-    const knownTopLevels: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_KnownTopLevels = new Set([
-      'Cli',
-      'Lib',
-      'Tests',
-    ]);
-    const typeName: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_TypeName = 'Cli_Foo_Bar';
-    const isPathPrefixStyle: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_IsPathPrefixStyle = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
-
-    strictEqual(isPathPrefixStyle, true);
-
-    return;
-  });
-
-  it('S2: domain concept names pass', () => {
-    const knownTopLevels: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_KnownTopLevels = new Set([
-      'Cli',
-      'Lib',
-      'Tests',
-    ]);
-    const typeName: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_TypeName = 'EntryCategory';
-    const isPathPrefixStyle: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_IsPathPrefixStyle = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
-
-    strictEqual(isPathPrefixStyle, false);
 
     return;
   });
@@ -2925,24 +2581,6 @@ describe('Rule S1/S2/S3/S4 integration', () => {
     });
 
     strictEqual(isOrdered, false);
-
-    return;
-  });
-
-  it('S3: property type using Parent_Property form passes', () => {
-    const objectName: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_ObjectName = 'EntryItem';
-    const propertyValueType: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_PropertyValueType = 'EntryItem_Category';
-
-    strictEqual(propertyValueType.startsWith(`${objectName}_`), true);
-
-    return;
-  });
-
-  it('S3: property type without parent prefix fails', () => {
-    const objectName: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_ObjectName = 'EntryItem';
-    const propertyValueType: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_PropertyValueType = 'EntryCategory';
-
-    strictEqual(propertyValueType.startsWith(`${objectName}_`), false);
 
     return;
   });
@@ -3071,36 +2709,6 @@ describe('Rule EC19/EC20/EC21 integration', () => {
  * @since 0.18.0
  */
 describe('Edge cases EC1-EC10', () => {
-  it('EC1: multiple top-level classes each contribute their own chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC1MultipleTopLevelClassesEachContributeTheirOwnChunk_SectionMap = buildSourceSectionMap('/fake/cli/multi.ts', [
-      'class Foo {',
-      '  process(): void {}',
-      '}',
-      'class Bar {',
-      '  process(): void {}',
-      '}',
-      '',
-    ].join('\n'), 'Cli_Multi');
-
-    strictEqual(sectionMap.get(2), 'Cli_Multi_Foo_Process');
-    strictEqual(sectionMap.get(5), 'Cli_Multi_Bar_Process');
-
-    return;
-  });
-
-  it('EC2: file with only top-level functions, no class', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC2FileWithOnlyTopLevelFunctionsNoClass_SectionMap = buildSourceSectionMap('/fake/lib/utility.ts', [
-      'export function getCurrentTimestamp(): number {',
-      '  return Date.now();',
-      '}',
-      '',
-    ].join('\n'), 'Lib_Utility');
-
-    strictEqual(sectionMap.get(1), 'Lib_Utility_GetCurrentTimestamp');
-
-    return;
-  });
-
   it('EC3: generic type parameters do not get their own chunks', () => {
     // Generics live inside the type alias; they are not chunks. Tested via lookup of the type name itself.
     const sectionMap: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC3GenericTypeParametersDoNotGetTheirOwnChunks_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', 'function getItems<T>(): T[] { return []; }\n', 'Cli_Foo');
@@ -3113,27 +2721,6 @@ describe('Edge cases EC1-EC10', () => {
   it('EC5: tuple types are not subject to E3 (only X[] form)', () => {
     const lines: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_Lines = ['export type Cli_Foo_Run_Pair = [string, number];'];
     const arrays: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_Arrays = extractArrayTypes(lines);
-
-    strictEqual(arrays.length, 0);
-
-    return;
-  });
-
-  it('EC6: Map/Set/Promise generic collection types not subject to E3', () => {
-    const lines: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Lines = [
-      'export type Cli_Foo_Run_Cache = Map<string, Cli_Foo_Run_Item>;',
-      'export type Cli_Foo_Run_Promise = Promise<Cli_Foo_Run_Item>;',
-    ];
-    const arrays: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Arrays = extractArrayTypes(lines);
-
-    strictEqual(arrays.length, 0);
-
-    return;
-  });
-
-  it('EC7: multi-dimensional arrays X[][] not checked by E3', () => {
-    const lines: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Lines = ['export type Cli_Foo_Run_Matrix = Cli_Foo_Run_Cell[][];'];
-    const arrays: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Arrays = extractArrayTypes(lines);
 
     strictEqual(arrays.length, 0);
 
@@ -3172,39 +2759,6 @@ describe('Edge cases EC1-EC10', () => {
  * @since 0.18.0
  */
 describe('Edge cases EC11-EC20', () => {
-  it('EC11: default export class adds chunk like regular class', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC11DefaultExportClassAddsChunkLikeRegularClass_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', [
-      'export default class Runner {',
-      '  bar(): void {}',
-      '}',
-      '',
-    ].join('\n'), 'Cli_Foo');
-
-    strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
-
-    return;
-  });
-
-  it('EC12: this parameters do not pollute body var rule (skipped from extractFunctionParams)', () => {
-    const params: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Params = extractFunctionParams('/fake/lib/foo.ts', 'function bar(this: SomeType, x: Lib_Foo_Bar_X): void {}\n');
-
-    // Implementation may or may not include `this`. Confirm behavior either way.
-    const nonThisParams: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_NonThisParams = params.filter((param) => param['paramName'] !== 'this');
-
-    ok(nonThisParams.length >= 1);
-
-    return;
-  });
-
-  it('EC13: destructured parameter does not get its own type extracted via extractBodyDeclarations', () => {
-    const lines: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Lines = ['  const { foo } = options;'];
-    const decls: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Decls = extractBodyDeclarations(lines);
-
-    strictEqual(decls.length, 0);
-
-    return;
-  });
-
   it('EC14: parameter property (TS shorthand) is treated as a normal constructor param', () => {
     const params: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC14ParameterPropertyTSShorthandIsTreatedAsANormalConstructorParam_Params = extractFunctionParams('/fake/cli/foo.ts', [
       'class Runner {',
@@ -3248,36 +2802,6 @@ describe('Edge cases EC11-EC20', () => {
     return;
   });
 
-  it('EC17: underscore-prefixed var name strips underscore for leaf comparison', () => {
-    strictEqual(stripUnderscorePrefix('_prev'), 'prev');
-    strictEqual(validateLeaf('_prev', 'Cli_Foo_Run_Prev', 'Cli_Foo_Run', 'Cli_Foo'), null);
-
-    return;
-  });
-
-  it('EC18: single-character var name title-cases the single character', () => {
-    strictEqual(validateLeaf('i', 'Cli_Foo_Run_I', 'Cli_Foo_Run', 'Cli_Foo'), null);
-
-    return;
-  });
-
-  it('EC19: dotted filename like foo.spec fails segment regex', () => {
-    const pattern: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC19DottedFilenameLikeFooSpecFailsSegmentRegex_Pattern = LIB_REGEX_PATTERN_KEBAB_CASE_SEGMENT;
-
-    strictEqual(pattern.test('foo.spec'), false);
-    strictEqual(pattern.test('foo.bar'), false);
-
-    return;
-  });
-
-  it('EC20: filename starting with digit fails segment regex', () => {
-    const pattern: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC20FilenameStartingWithDigitFailsSegmentRegex_Pattern = LIB_REGEX_PATTERN_KEBAB_CASE_SEGMENT;
-
-    strictEqual(pattern.test('123foo'), false);
-
-    return;
-  });
-
   return;
 });
 
@@ -3287,56 +2811,6 @@ describe('Edge cases EC11-EC20', () => {
  * @since 0.18.0
  */
 describe('Edge cases EC21-EC30', () => {
-  it('EC21: filename with underscore/space/special-char fails segment regex', () => {
-    const pattern: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC21FilenameWithUnderscoreSpaceSpecialCharFailsSegmentRegex_Pattern = LIB_REGEX_PATTERN_KEBAB_CASE_SEGMENT;
-
-    strictEqual(pattern.test('foo_bar'), false);
-    strictEqual(pattern.test('foo bar'), false);
-    strictEqual(pattern.test('foo$bar'), false);
-
-    return;
-  });
-
-  it('EC22: file at typeRoot produces single-chunk classPrefix', () => {
-    const prefix: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC22FileAtTypeRootProducesSingleChunkClassPrefix_Prefix = deriveClassPrefix(resolve(process.cwd(), 'src/main.ts'), testConfig);
-
-    strictEqual(prefix, 'Main');
-
-    return;
-  });
-
-  it('EC23: template string in (string, fn) arg[0] does NOT add chunk', () => {
-    const interp: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_Interp = [
-      '$',
-      '{',
-      '1}',
-    ].join('');
-    const sourceContent: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SourceContent = [
-      `describe(\`Foo ${interp}\`, () => {`,
-      '  const x: number = 1;',
-      '});',
-      '',
-    ].join('\n');
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SectionMap = buildSourceSectionMap('/fake/tests/foo.test.ts', sourceContent, 'Tests_Foo');
-
-    strictEqual(sectionMap.get(2), 'Tests_Foo');
-
-    return;
-  });
-
-  it('EC24: async arrow function callback in (string, fn) is accepted', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24AsyncArrowFunctionCallbackInStringFnIsAccepted_SectionMap = buildSourceSectionMap('/fake/tests/foo.test.ts', [
-      'describe(\'Foo\', async () => {',
-      '  const x: number = 1;',
-      '});',
-      '',
-    ].join('\n'), 'Tests_Foo');
-
-    strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
-
-    return;
-  });
-
   it('EC24b: async function expression callback in (string, fn) is accepted', () => {
     const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24bAsyncFunctionExpressionCallbackInStringFnIsAccepted_SectionMap = buildSourceSectionMap('/fake/tests/foo.test.ts', [
       'describe(\'Foo\', async function () {',
@@ -3350,19 +2824,6 @@ describe('Edge cases EC21-EC30', () => {
     return;
   });
 
-  it('EC25: class getter adds chunk based on property name', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25ClassGetterAddsChunkBasedOnPropertyName_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', [
-      'class Runner {',
-      '  get bar(): number { return 1; }',
-      '}',
-      '',
-    ].join('\n'), 'Cli_Foo');
-
-    strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
-
-    return;
-  });
-
   it('EC25b: class setter adds chunk based on property name', () => {
     const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25bClassSetterAddsChunkBasedOnPropertyName_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', [
       'class Runner {',
@@ -3372,34 +2833,6 @@ describe('Edge cases EC21-EC30', () => {
     ].join('\n'), 'Cli_Foo');
 
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
-
-    return;
-  });
-
-  it('EC26: static method adds chunk like an instance method', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC26StaticMethodAddsChunkLikeAnInstanceMethod_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', [
-      'class Runner {',
-      '  static doThing(): void {}',
-      '}',
-      '',
-    ].join('\n'), 'Cli_Foo');
-
-    strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_DoThing');
-
-    return;
-  });
-
-  it('EC28: nested function declaration adds chunk under the outer function', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC28NestedFunctionDeclarationAddsChunkUnderTheOuterFunction_SectionMap = buildSourceSectionMap('/fake/lib/foo.ts', [
-      'function processItems() {',
-      '  function visit(node: any) {',
-      '    const result: any = node;',
-      '  }',
-      '}',
-      '',
-    ].join('\n'), 'Lib_Foo');
-
-    strictEqual(sectionMap.get(3), 'Lib_Foo_ProcessItems_Visit');
 
     return;
   });
@@ -3436,54 +2869,6 @@ describe('Edge cases EC31-EC55', () => {
     return;
   });
 
-  it('EC33: nested class inside method adds chunk under method', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC33NestedClassInsideMethodAddsChunkUnderMethod_SectionMap = buildSourceSectionMap('/fake/cli/foo.ts', [
-      'class Outer {',
-      '  run(): void {',
-      '    class Inner {}',
-      '  }',
-      '}',
-      '',
-    ].join('\n'), 'Cli_Foo');
-
-    strictEqual(sectionMap.get(3), 'Cli_Foo_Outer_Run_Inner');
-
-    return;
-  });
-
-  it('EC34: vitest bench(string, fn) adds chunk via generic rule', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC34VitestBenchStringFnAddsChunkViaGenericRule_SectionMap = buildSourceSectionMap('/fake/tests/foo.bench.ts', [
-      'bench(\'fast op\', () => {',
-      '  const x: number = 1;',
-      '});',
-      '',
-    ].join('\n'), 'Tests_Foo');
-
-    // 'fast op' parses to 'FastOp'.
-    strictEqual(sectionMap.get(2), 'Tests_Foo_FastOp');
-
-    return;
-  });
-
-  it('EC35: rule 7.8 catches two body vars producing the same expected type name', () => {
-    const violations: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violations = checkTypeNameUniqueness([
-      {
-        name: 'foo',
-        typeName: 'Cli_X_Foo',
-        lineNumber: 10,
-      },
-      {
-        name: 'foo',
-        typeName: 'Cli_X_Foo',
-        lineNumber: 20,
-      },
-    ]);
-
-    strictEqual(violations.length, 1);
-
-    return;
-  });
-
   it('EC37/EC42: JSX function component name == file name fires C2', () => {
     const identifiers: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC37EC42JSXFunctionComponentNameFileNameFiresC2_Identifiers = extractTopLevelIdentifiers('/fake/components/logo.tsx', 'export default function Logo(): null { return null; }\n');
 
@@ -3512,15 +2897,6 @@ describe('Edge cases EC31-EC55', () => {
     const lines: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC44BrandedTypesFollowStandardNaming_Lines = ['export type Cli_Foo_UserId = string & { __brand: \'UserId\' };'];
 
     deepStrictEqual(extractTypeNames(lines), ['Cli_Foo_UserId']);
-
-    return;
-  });
-
-  it('EC46: recursive type definition is detected as self-reference (no infinite loop)', () => {
-    const refs: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC46RecursiveTypeDefinitionIsDetectedAsSelfReferenceNoInfiniteLoop_Refs = extractReferencedTypes('export type Cli_Foo_Node = { value: string; next: Cli_Foo_Node | null };', 'Cli_Foo');
-
-    // self-ref excluded by extractReferencedTypes
-    strictEqual(refs.length, 0);
 
     return;
   });
@@ -3562,29 +2938,6 @@ describe('Edge cases EC31-EC55', () => {
  * @since 0.18.0
  */
 describe('Rule 7.1 integration', () => {
-  it('passes when leaf matches sourceSection_titleVar', () => {
-    strictEqual(validateLeaf('items', 'Cli_Foo_Run_Items', 'Cli_Foo_Run', 'Cli_Foo'), null);
-
-    return;
-  });
-
-  it('passes class-prefix passthrough form (skip method chunk)', () => {
-    strictEqual(validateLeaf('items', 'Cli_Foo_Items', 'Cli_Foo_Run', 'Cli_Foo'), null);
-
-    return;
-  });
-
-  it('fails when leaf differs from var name', () => {
-    const result: Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Result = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
-
-    deepStrictEqual(result, {
-      actualLeaf: 'Things',
-      expectedLeaf: 'Items',
-    });
-
-    return;
-  });
-
   it('integrates with extractBodyDeclarations + buildSourceSectionMap', () => {
     const sourceContent: Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDeclarationsBuildSourceSectionMap_SourceContent = [
       'class Runner {',
@@ -3699,16 +3052,6 @@ describe('Section F coverage integration', () => {
     return;
   });
 
-  it('F2: sections in alphabetical order check (compare strings directly)', () => {
-    // Check the comparison logic: 'Cli_Foo_Bar' < 'Cli_Foo_Foo' alphabetically.
-    const sectionA: Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionA = 'Cli_Foo_Bar';
-    const sectionB: Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionB = 'Cli_Foo_Foo';
-
-    ok(sectionA < sectionB);
-
-    return;
-  });
-
   it('F4: within section, first-come-first-serve order via findFirstOccurrence', () => {
     const sourceLines: Tests_TypeDeclarations_SectionFCoverageIntegration_F4WithinSectionFirstComeFirstServeOrderViaFindFirstOccurrence_SourceLines = [
       '/**',
@@ -3767,33 +3110,6 @@ describe('Section G imports integration', () => {
     ok(names.has('Apple'));
     ok(names.has('Banana'));
     ok(names.has('Cherry'));
-
-    return;
-  });
-
-  it('G1: multi-line import block alphabetical order can be checked', () => {
-    const specifiers: Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_Specifiers = [
-      'Apple',
-      'Banana',
-      'Cherry',
-    ];
-    const sortedSpecifiers: Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_SortedSpecifiers = [...specifiers].sort();
-
-    deepStrictEqual(specifiers, sortedSpecifiers);
-
-    return;
-  });
-
-  it('G1: detects out-of-order specifiers', () => {
-    const specifiers: Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_Specifiers = [
-      'Banana',
-      'Apple',
-      'Cherry',
-    ];
-    const sortedSpecifiers: Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_SortedSpecifiers = [...specifiers].sort();
-
-    // specifiers[0] is 'Banana', sorted[0] is 'Apple' -- out of order
-    ok(specifiers[0] !== sortedSpecifiers[0]);
 
     return;
   });

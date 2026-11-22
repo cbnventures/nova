@@ -1,8 +1,21 @@
 /**
  * Signal - `Navbar/More` theme overlay.
  *
- * Inherits the shared trigger + popover chrome; no preset-specific
- * overrides needed at this time.
+ * Inherits the shared trigger + popover chrome. This overlay only tunes
+ * the dropdown group heading so it matches this preset's
+ * `.nova-content-footer-section-label` (mono face), and keeps the group
+ * separator the only line between a row and the group below it.
  *
  * @since 0.18.0
  */
+
+/* Signal rules every row with a bottom border; the group's top border
+   already separates it, so the row above a group drops its own line. */
+.nova-navbar-more-item:has(+ .nova-navbar-more-group) {
+  border-bottom: none;
+}
+
+.nova-navbar-more-group-label {
+  font-family: var(--nova-font-code);
+  letter-spacing: 0.06em;
+}

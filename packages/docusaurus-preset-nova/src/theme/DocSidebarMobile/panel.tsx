@@ -16,6 +16,8 @@ import {
 } from '../../lib/sidebar-mobile-store.js';
 import { useOverlayPanel } from '../../lib/use-overlay-panel.js';
 
+import { sidebarMobilePanelContext } from './panel-context.js';
+
 import type {
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_AnimationEvent,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_CloseAriaLabel,
@@ -133,12 +135,14 @@ function DocSidebarMobilePanel() {
           </button>
         </div>
         <div className="nova-sidebar-mobile-content">
-          <DocSidebar
-            sidebar={sidebarItems}
-            path={pathname}
-            onCollapse={() => undefined}
-            isHidden={false}
-          />
+          <sidebarMobilePanelContext.Provider value={true}>
+            <DocSidebar
+              sidebar={sidebarItems}
+              path={pathname}
+              onCollapse={() => undefined}
+              isHidden={false}
+            />
+          </sidebarMobilePanelContext.Provider>
         </div>
       </div>
     </div>,

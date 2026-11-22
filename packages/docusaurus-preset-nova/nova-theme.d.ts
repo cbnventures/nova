@@ -27,6 +27,18 @@ declare module '@theme/BackToTopButton' {
   export default function BackToTopButton(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/BlockPlayground' {
+  import type { CSSProperties } from 'react';
+
+  export interface Props {
+    readonly code: string;
+    readonly className?: string | undefined;
+    readonly style?: CSSProperties | undefined;
+  }
+
+  export default function BlockPlayground(props: Props): React.JSX.Element;
+}
+
 declare module '@theme/Blog/Components/Author' {
   export interface Props {
     readonly author: {

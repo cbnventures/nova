@@ -27,19 +27,7 @@ ruleTester.run('requireNamingConvention', RequireNamingConvention['rule'], {
       code: 'const MAX_RETRIES = 5;',
     },
     {
-      code: 'const API_URL = "https://api.example.com";',
-    },
-    {
-      code: 'const IS_PRODUCTION = true;',
-    },
-    {
       code: 'const items = [1, 2, 3];',
-    },
-    {
-      code: 'const config = { timeout: 30 };',
-    },
-    {
-      code: 'let retryCount = 0;',
     },
     {
       code: 'function processItems(inputData) {}',

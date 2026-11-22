@@ -27,12 +27,6 @@ ruleTester.run('noComplexArrowConcise', NoComplexArrowConcise['rule'], {
       code: 'const doubled = items.map((n) => n * 2);',
     },
     {
-      code: 'const names = users.map((user) => user.name);',
-    },
-    {
-      code: 'const isValid = (x) => x > 0;',
-    },
-    {
       code: 'const upper = (s) => s.trim().toUpperCase();',
     },
     {

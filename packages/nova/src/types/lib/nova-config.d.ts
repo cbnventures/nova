@@ -44,6 +44,12 @@ import type {
   Shared_NovaConfig_Project_Name_Slug,
   Shared_NovaConfig_ReadMe,
   Shared_NovaConfig_ReadMe_Badges,
+  Shared_NovaConfig_ReadMe_Profile,
+  Shared_NovaConfig_ReadMe_Profile_BadgeGroups,
+  Shared_NovaConfig_ReadMe_Profile_Heading,
+  Shared_NovaConfig_ReadMe_Profile_Introduction,
+  Shared_NovaConfig_ReadMe_Profile_LinkGroups,
+  Shared_NovaConfig_ReadMe_Profile_Paragraph,
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
@@ -92,6 +98,31 @@ import type {
   Shared_NovaConfigOperatingSystemFileSettings,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigReadMeBadge,
+  Shared_NovaConfigReadMeProfileBadge,
+  Shared_NovaConfigReadMeProfileBadge_Color,
+  Shared_NovaConfigReadMeProfileBadge_Label,
+  Shared_NovaConfigReadMeProfileBadge_Link,
+  Shared_NovaConfigReadMeProfileBadge_Logo,
+  Shared_NovaConfigReadMeProfileBadgeGroup,
+  Shared_NovaConfigReadMeProfileBadgeGroup_Emoji,
+  Shared_NovaConfigReadMeProfileBadgeGroup_Title,
+  Shared_NovaConfigReadMeProfileLink,
+  Shared_NovaConfigReadMeProfileLink_Description,
+  Shared_NovaConfigReadMeProfileLink_Label,
+  Shared_NovaConfigReadMeProfileLink_Url,
+  Shared_NovaConfigReadMeProfileLinkGroup,
+  Shared_NovaConfigReadMeProfileLinkGroup_Column,
+  Shared_NovaConfigReadMeProfileLinkGroup_Columns,
+  Shared_NovaConfigReadMeProfileLinkGroup_Emoji,
+  Shared_NovaConfigReadMeProfileLinkGroup_Links,
+  Shared_NovaConfigReadMeProfileLinkGroup_Title,
+  Shared_NovaConfigReadMeProfileSupport,
+  Shared_NovaConfigReadMeProfileSupport_Badges,
+  Shared_NovaConfigReadMeProfileSupport_Emoji,
+  Shared_NovaConfigReadMeProfileSupport_Message,
+  Shared_NovaConfigReadMeProfileSupport_Title,
+  Shared_NovaConfigSettings_Changelog,
+  Shared_NovaConfigSettings_Changelog_WorkspaceOrder,
   Shared_NovaConfigSettings_Coverage,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
@@ -1429,6 +1460,139 @@ export type Lib_NovaConfig_Runner_ParseReadMe_Badge = Shared_NovaConfigReadMeBad
 
 export type Lib_NovaConfig_Runner_ParseReadMe_MissingSource = boolean;
 
+export type Lib_NovaConfig_Runner_ParseReadMe_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+/**
+ * Lib - Nova Config - Parse Read Me Profile.
+ *
+ * @since 0.50.0
+ */
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Urls = Shared_NovaConfig_Urls | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Returns = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Result = Shared_NovaConfig_ReadMe_Profile;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Heading = Shared_NovaConfig_ReadMe_Profile_Heading | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Introduction = Shared_NovaConfig_ReadMe_Profile_Introduction | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_ValueBadgeGroups = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroups = Shared_NovaConfig_ReadMe_Profile_BadgeGroups;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadgeGroup = Record<string, unknown>;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Title = Shared_NovaConfigReadMeProfileBadgeGroup_Title | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Emoji = Shared_NovaConfigReadMeProfileBadgeGroup_Emoji | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadges = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Badges = Shared_NovaConfigReadMeProfileBadge[];
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Badge = Shared_NovaConfigReadMeProfileBadge | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroup = Shared_NovaConfigReadMeProfileBadgeGroup;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_ValueLinkGroups = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroups = Shared_NovaConfig_ReadMe_Profile_LinkGroups;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinkGroup = Record<string, unknown>;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupTitle = Shared_NovaConfigReadMeProfileLinkGroup_Title | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupEmoji = Shared_NovaConfigReadMeProfileLinkGroup_Emoji | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawColumns = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinks = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Columns = Shared_NovaConfigReadMeProfileLinkGroup_Columns | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_FirstColumn = Shared_NovaConfigReadMeProfileLinkGroup_Column | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SecondColumn = Shared_NovaConfigReadMeProfileLinkGroup_Column | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Links = Shared_NovaConfigReadMeProfileLinkGroup_Links;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawLink = Record<string, unknown>;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkLabel = Shared_NovaConfigReadMeProfileLink_Label | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkUrl = Shared_NovaConfigReadMeProfileLink_Url | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkDescription = Shared_NovaConfigReadMeProfileLink_Description | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_ProfileLink = Shared_NovaConfigReadMeProfileLink;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroup = Shared_NovaConfigReadMeProfileLinkGroup;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_ValueSupport = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupport = Record<string, unknown>;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_Support = Shared_NovaConfigReadMeProfileSupport;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SupportTitle = Shared_NovaConfigReadMeProfileSupport_Title | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SupportEmoji = Shared_NovaConfigReadMeProfileSupport_Emoji | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SupportMessage = Shared_NovaConfigReadMeProfileSupport_Message | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupportBadges = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadges = Shared_NovaConfigReadMeProfileSupport_Badges;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadge = Shared_NovaConfigReadMeProfileBadge | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfile_HasFundingSource = boolean;
+
+/**
+ * Lib - Nova Config - Parse Read Me Profile Badge.
+ *
+ * @since 0.50.0
+ */
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Section = string;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Returns = Shared_NovaConfigReadMeProfileBadge | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_RawBadge = Record<string, unknown>;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Label = Shared_NovaConfigReadMeProfileBadge_Label | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_LogoCandidate = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_IsDataUriLogo = boolean;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Logo = Shared_NovaConfigReadMeProfileBadge_Logo | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_ColorCandidate = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Color = Shared_NovaConfigReadMeProfileBadge_Color | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Link = Shared_NovaConfigReadMeProfileBadge_Link | undefined;
+
+/**
+ * Lib - Nova Config - Parse Read Me Profile Paragraphs.
+ *
+ * @since 0.50.0
+ */
+export type Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Field = string;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Returns = Shared_NovaConfig_ReadMe_Profile_Paragraph[] | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraphs = Shared_NovaConfig_ReadMe_Profile_Paragraph[];
+
+export type Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraph = Shared_NovaConfig_ReadMe_Profile_Paragraph | undefined;
+
 /**
  * Lib - Nova Config - Parse Recipes.
  *
@@ -1469,7 +1633,11 @@ export type Lib_NovaConfig_Runner_ParseRecipes_PackageJson = Shared_NovaConfig_R
  */
 export type Lib_NovaConfig_Runner_ParseSettings_Value = unknown;
 
+export type Lib_NovaConfig_Runner_ParseSettings_Workspaces = Shared_NovaConfig_Workspaces | undefined;
+
 export type Lib_NovaConfig_Runner_ParseSettings_Returns = Shared_NovaConfig_Settings | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Result_Changelog = Shared_NovaConfigSettings_Changelog;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Result_Coverage = Shared_NovaConfigSettings_Coverage;
 
@@ -1480,11 +1648,24 @@ export type Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces = Shared_No
 export type Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Result = {
+  changelog?: Lib_NovaConfig_Runner_ParseSettings_Result_Changelog;
   coverage?: Lib_NovaConfig_Runner_ParseSettings_Result_Coverage;
   lockStepVersioning?: Lib_NovaConfig_Runner_ParseSettings_Result_LockStepVersioning;
   runWorkspaces?: Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces;
   versionStrategy?: Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy;
 };
+
+export type Lib_NovaConfig_Runner_ParseSettings_ChangelogValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Changelog = Shared_NovaConfigSettings_Changelog | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrderValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrder = Shared_NovaConfigSettings_Changelog_WorkspaceOrder | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_WorkspaceNames = Set<string>;
+
+export type Lib_NovaConfig_Runner_ParseSettings_UnknownWorkspaceName = string | undefined;
 
 export type Lib_NovaConfig_Runner_ParseSettings_CoverageValue = unknown;
 

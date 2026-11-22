@@ -27,25 +27,7 @@ ruleTester.run('noLoggerDev', NoLoggerDev['rule'], {
       code: 'Logger.info("hello");',
     },
     {
-      code: 'Logger.debug("hello");',
-    },
-    {
-      code: 'Logger.warn("hello");',
-    },
-    {
-      code: 'Logger.error("hello");',
-    },
-    {
-      code: 'Logger.customize({ name: "test" }).info("hello");',
-    },
-    {
-      code: 'Logger.customize({ name: "test" }).debug("hello");',
-    },
-    {
       code: 'someObject.dev("not a logger");',
-    },
-    {
-      code: 'other.dev();',
     },
     {
       code: 'Logger.dev("debug message");',

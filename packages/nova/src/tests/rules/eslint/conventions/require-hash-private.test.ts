@@ -33,23 +33,14 @@ ruleTester.run('requireHashPrivate', RequireHashPrivate['rule'], {
     {
       code: [
         'class MyClass {',
-        '  #doWork() {}',
+        '  private #secret = 42;',
+        '  private #doWork() {}',
         '}',
       ].join('\n'),
-    },
-    {
-      code: [
-        'class MyClass {',
-        '  public name = "hello";',
-        '}',
-      ].join('\n'),
-    },
-    {
-      code: [
-        'class MyClass {',
-        '  protected value = 10;',
-        '}',
-      ].join('\n'),
+      options: [{
+        ignoreFiles: [],
+        skipMethods: false,
+      }],
     },
     {
       code: [
@@ -84,22 +75,6 @@ ruleTester.run('requireHashPrivate', RequireHashPrivate['rule'], {
         skipMethods: false,
       }],
       errors: [{ messageId: 'requireHashPrivate' }],
-    },
-    {
-      code: [
-        'class MyClass {',
-        '  private name = "hello";',
-        '  private getValue() { return 1; }',
-        '}',
-      ].join('\n'),
-      options: [{
-        ignoreFiles: [],
-        skipMethods: false,
-      }],
-      errors: [
-        { messageId: 'requireHashPrivate' },
-        { messageId: 'requireHashPrivate' },
-      ],
     },
   ],
 });

@@ -340,11 +340,11 @@
   color: var(--nova-color-accent-500);
 }
 
-.nova-navbar-bridge-menu-dropdown-summary svg {
+.nova-navbar-bridge-menu-dropdown-summary .nova-navbar-bridge-menu-dropdown-icon {
   color: var(--nova-color-accent-700);
 }
 
-[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary svg {
+[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary .nova-navbar-bridge-menu-dropdown-icon {
   color: var(--nova-color-accent-500);
 }
 

@@ -51,7 +51,6 @@ export default defineConfig({
 ```json title="package.json"
 {
   "scripts": {
-    "check:test": "vitest run",
     "check:coverage": "vitest run --coverage"
   },
   "devDependencies": {
@@ -60,7 +59,7 @@ export default defineConfig({
 }
 ```
 
-Coverage only runs with `--coverage`, so `check:test` stays fast and `check:coverage` writes the summary. Keep `@vitest/coverage-v8` on the same version as `vitest`.
+Coverage only runs with `--coverage`. The `check:coverage` script runs the whole suite and writes the summary, and a failing test fails it too, so a package that has it needs no separate `check:test` script. Keep `@vitest/coverage-v8` on the same version as `vitest`.
 
 ```json title="nova.config.json"
 {

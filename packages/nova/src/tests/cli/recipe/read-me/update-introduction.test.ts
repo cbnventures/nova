@@ -52,12 +52,6 @@ import type {
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DisabledFlagSkipsAndDoesNotWrite_Output,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DisabledFlagSkipsAndDoesNotWrite_ProjectDirectory,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DisabledFlagSkipsAndDoesNotWrite_ReadmePath,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_IsProjectRootSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_LoadSpy,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_OnDiskContent,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_Output,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ProjectDirectory,
-  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ReadmePath,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy,
@@ -117,6 +111,14 @@ import type {
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_SandboxPath,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_SandboxRoot,
   Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_TemporaryDirectory,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppOutput,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppPath,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_IsProjectRootSpy,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_LoadSpy,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_ProjectDirectory,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootOutput,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootPath,
+  Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_StaleContent,
 } from '../../../../types/tests/cli/recipe/read-me/update-introduction.test.d.ts';
 
 /**
@@ -458,57 +460,6 @@ describe('CliRecipeReadMeUpdateIntroduction.run', async () => {
     return;
   });
 
-  it('dry run does not write', async () => {
-    const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'dry-run-'));
-    const readmePath: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_ReadmePath = join(projectDirectory, 'README.md');
-
-    // Stale but nova-generated, so the recipe would rewrite it if not for dry run.
-    const onDiskContent: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_OnDiskContent = [
-      '<div align="center">',
-      '',
-      wrapReadMeRegion('introduction', 'STALE INTRODUCTION'),
-      '',
-      '</div>',
-      '',
-    ].join('\n');
-
-    await writeFile(readmePath, onDiskContent, 'utf-8');
-
-    const isProjectRootSpy: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-
-    const loadSpy: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      project: {
-        description: {
-          long: 'Nova ships opinionated tooling for TypeScript monorepos.',
-        },
-      },
-      recipes: {
-        'read-me': {
-          'update-introduction': {
-            enabled: true,
-          },
-        },
-      },
-    });
-
-    process.chdir(projectDirectory);
-
-    await CliRecipeReadMeUpdateIntroduction.run({
-      dryRun: true,
-    });
-
-    const output: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_DryRunDoesNotWrite_Output = await readFile(readmePath, 'utf-8');
-
-    // The file is unchanged because dry run never writes.
-    strictEqual(output, onDiskContent);
-
-    isProjectRootSpy.mockRestore();
-
-    loadSpy.mockRestore();
-
-    return;
-  });
-
   it('fans out to every consumer workspace README', async () => {
     const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_FansOutToEveryConsumerWorkspaceREADME_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'fan-out-'));
 
@@ -604,6 +555,98 @@ describe('CliRecipeReadMeUpdateIntroduction.run', async () => {
     strictEqual(rootOutput, expectedContent);
     strictEqual(appOutput, expectedContent);
     strictEqual(packageOutput, expectedContent);
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    return;
+  });
+
+  it('uses the project introduction for consumer workspaces in profile mode', async () => {
+    const projectDirectory: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'profile-split-'));
+    const rootPath: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootPath = join(projectDirectory, 'README.md');
+    const appPath: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppPath = join(projectDirectory, 'apps', 'website', 'README.md');
+    const staleContent: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_StaleContent = [
+      '# Project',
+      '',
+      wrapReadMeRegion('introduction', 'STALE INTRODUCTION'),
+      '',
+    ].join('\n');
+
+    await mkdir(join(projectDirectory, 'apps', 'website'), {
+      recursive: true,
+    });
+
+    await writeFile(rootPath, staleContent, 'utf-8');
+
+    await writeFile(appPath, staleContent, 'utf-8');
+
+    const isProjectRootSpy: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      project: {
+        description: {
+          long: 'Example project description.',
+        },
+      },
+      readme: {
+        profile: {
+          introduction: [
+            'Welcome to my profile.',
+            'Second paragraph.',
+          ],
+        },
+      },
+      recipes: {
+        'read-me': {
+          'update-introduction': {
+            enabled: true,
+          },
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'example-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/website': {
+          name: 'example-app-website',
+          role: 'app',
+          policy: 'freezable',
+        },
+      },
+    });
+
+    process.chdir(projectDirectory);
+
+    await CliRecipeReadMeUpdateIntroduction.run({
+      replaceFile: true,
+    });
+
+    const rootOutput: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_RootOutput = await readFile(rootPath, 'utf-8');
+    const appOutput: Tests_Cli_Recipe_ReadMe_UpdateIntroduction_CliRecipeReadMeUpdateIntroductionRun_UsesTheProjectIntroductionForConsumerWorkspacesInProfileMode_AppOutput = await readFile(appPath, 'utf-8');
+
+    strictEqual(rootOutput, [
+      '# Project',
+      '',
+      wrapReadMeRegion('introduction', [
+        'Welcome to my profile.',
+        '',
+        'Second paragraph.',
+      ].join('\n')),
+      '',
+    ].join('\n'));
+    strictEqual(appOutput, [
+      '# Project',
+      '',
+      wrapReadMeRegion('introduction', [
+        '## Introduction',
+        '',
+        'Example project description.',
+      ].join('\n')),
+      '',
+    ].join('\n'));
 
     isProjectRootSpy.mockRestore();
 

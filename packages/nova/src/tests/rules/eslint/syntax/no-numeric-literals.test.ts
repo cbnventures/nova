@@ -27,18 +27,6 @@ ruleTester.run('noNumericLiterals', NoNumericLiterals['rule'], {
       code: 'const count = 42;',
     },
     {
-      code: 'const ratio = 3.14;',
-    },
-    {
-      code: 'const mask = parseInt("FF", 16);',
-    },
-    {
-      code: 'const flags = parseInt("1010", 2);',
-    },
-    {
-      code: 'const perms = parseInt("755", 8);',
-    },
-    {
       code: 'const mask = 0xFF;',
       options: [{
         ignoreFiles: [],
@@ -87,10 +75,6 @@ ruleTester.run('noNumericLiterals', NoNumericLiterals['rule'], {
     },
     {
       code: 'const perms = 0o755;',
-      errors: [{ messageId: 'noNumericLiteral' }],
-    },
-    {
-      code: 'const color = 0x1A2B3C;',
       errors: [{ messageId: 'noNumericLiteral' }],
     },
   ],

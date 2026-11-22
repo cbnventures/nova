@@ -500,58 +500,6 @@ export type Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_Skips
 export type Tests_TypeDeclarations_DiscoverSourceFiles_ReturnsAbsolutePathsToTsSourceFilesExcludingDTs_Files = string[];
 
 /**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC11 Default Export Class Adds Chunk Like Regular Class.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC11DefaultExportClassAddsChunkLikeRegularClass_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC12 This Parameters Do Not Pollute Body Var Rule Skipped From Extract Function Params.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_ParamName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_TypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_LineNumber = number;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param = {
-  paramName: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_ParamName;
-  typeName: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_TypeName;
-  lineNumber: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param_LineNumber;
-};
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Params = Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param[];
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_NonThisParams = Tests_TypeDeclarations_EdgeCasesEC11EC20_EC12ThisParametersDoNotPolluteBodyVarRuleSkippedFromExtractFunctionParams_Param[];
-
-/**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC13 Destructured Parameter Does Not Get Its Own Type Extracted Via Extract Body Declarations.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Lines = string[];
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_Keyword = 'const' | 'let';
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_VarName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_TypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_LineNumber = number;
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration = {
-  keyword: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_Keyword;
-  varName: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_VarName;
-  typeName: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_TypeName;
-  lineNumber: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration_LineNumber;
-};
-
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Decls = Tests_TypeDeclarations_EdgeCasesEC11EC20_EC13DestructuredParameterDoesNotGetItsOwnTypeExtractedViaExtractBodyDeclarations_Declaration[];
-
-/**
  * Tests - Type Declarations - Edge Cases EC11 EC20 - EC14 Parameter Property TSShorthand Is Treated As ANormal Constructor Param.
  *
  * @since 0.18.0
@@ -637,48 +585,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndRead
 export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_ObjectTypes = Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_ObjectType[];
 
 /**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC17 Underscore Prefixed Var Name Strips Underscore For Leaf Comparison.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC17UnderscorePrefixedVarNameStripsUnderscoreForLeafComparison_Coverage = string;
-
-/**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC18 Single Character Var Name Title Cases The Single Character.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC18SingleCharacterVarNameTitleCasesTheSingleCharacter_Coverage = string;
-
-/**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC19 Dotted Filename Like Foo Spec Fails Segment Regex.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC19DottedFilenameLikeFooSpecFailsSegmentRegex_Pattern = RegExp;
-
-/**
- * Tests - Type Declarations - Edge Cases EC11 EC20 - EC20 Filename Starting With Digit Fails Segment Regex.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC11EC20_EC20FilenameStartingWithDigitFailsSegmentRegex_Pattern = RegExp;
-
-/**
- * Tests - Type Declarations - Edge Cases EC1 EC10 - EC1 Multiple Top Level Classes Each Contribute Their Own Chunk.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC1MultipleTopLevelClassesEachContributeTheirOwnChunk_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC1 EC10 - EC2 File With Only Top Level Functions No Class.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC2FileWithOnlyTopLevelFunctionsNoClass_SectionMap = Map<number, string>;
-
-/**
  * Tests - Type Declarations - Edge Cases EC1 EC10 - EC3 Generic Type Parameters Do Not Get Their Own Chunks.
  *
  * @since 0.18.0
@@ -707,48 +613,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectTo
 export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_Arrays = Tests_TypeDeclarations_EdgeCasesEC1EC10_EC5TupleTypesAreNotSubjectToE3OnlyXForm_ArrayType[];
 
 /**
- * Tests - Type Declarations - Edge Cases EC1 EC10 - EC6 Map Set Promise Generic Collection Types Not Subject To E3.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Lines = string[];
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_ArrayTypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_ElementTypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_LineIndex = number;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType_LineIndex;
-};
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_Arrays = Tests_TypeDeclarations_EdgeCasesEC1EC10_EC6MapSetPromiseGenericCollectionTypesNotSubjectToE3_ArrayType[];
-
-/**
- * Tests - Type Declarations - Edge Cases EC1 EC10 - EC7 Multi Dimensional Arrays XNot Checked By E3.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Lines = string[];
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_ArrayTypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_ElementTypeName = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_LineIndex = number;
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType_LineIndex;
-};
-
-export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_Arrays = Tests_TypeDeclarations_EdgeCasesEC1EC10_EC7MultiDimensionalArraysXNotCheckedByE3_ArrayType[];
-
-/**
  * Tests - Type Declarations - Edge Cases EC1 EC10 - EC8 Type Level Operations Extends Conditional Inside Body Do Not Add Chunks.
  *
  * @since 0.18.0
@@ -763,38 +627,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC8TypeLevelOperationsExtend
 export type Tests_TypeDeclarations_EdgeCasesEC1EC10_EC9AnonymousClassExpressionInConstUsesConstNameAsChunkMode2ClosesPriorGap_SectionMap = Map<number, string>;
 
 /**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC21 Filename With Underscore Space Special Char Fails Segment Regex.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC21FilenameWithUnderscoreSpaceSpecialCharFailsSegmentRegex_Pattern = RegExp;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC22 File At Type Root Produces Single Chunk Class Prefix.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC22FileAtTypeRootProducesSingleChunkClassPrefix_Prefix = string;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC23 Template String In String Fn Arg0 Does NOTAdd Chunk.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_Interp = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SourceContent = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC23TemplateStringInStringFnArg0DoesNOTAddChunk_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC24 Async Arrow Function Callback In String Fn Is Accepted.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24AsyncArrowFunctionCallbackInStringFnIsAccepted_SectionMap = Map<number, string>;
-
-/**
  * Tests - Type Declarations - Edge Cases EC21 EC30 - EC24b Async Function Expression Callback In String Fn Is Accepted.
  *
  * @since 0.18.0
@@ -807,27 +639,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC24bAsyncFunctionExpressio
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25bClassSetterAddsChunkBasedOnPropertyName_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC25 Class Getter Adds Chunk Based On Property Name.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC25ClassGetterAddsChunkBasedOnPropertyName_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC26 Static Method Adds Chunk Like An Instance Method.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC26StaticMethodAddsChunkLikeAnInstanceMethod_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC21 EC30 - EC28 Nested Function Declaration Adds Chunk Under The Outer Function.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC21EC30_EC28NestedFunctionDeclarationAddsChunkUnderTheOuterFunction_SectionMap = Map<number, string>;
 
 /**
  * Tests - Type Declarations - Edge Cases EC21 EC30 - EC30b Describe Only String Fn Adds Chunk Via Generic Rule.
@@ -851,31 +662,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC31PrimitiveLikeReturnType
   actualLeaf: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC31PrimitiveLikeReturnTypesVoidNeverEtcPassValidateLeafAtBodyVar_Reason_ActualLeaf;
   expectedLeaf: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC31PrimitiveLikeReturnTypesVoidNeverEtcPassValidateLeafAtBodyVar_Reason_ExpectedLeaf;
 };
-
-/**
- * Tests - Type Declarations - Edge Cases EC31 EC55 - EC33 Nested Class Inside Method Adds Chunk Under Method.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC33NestedClassInsideMethodAddsChunkUnderMethod_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC31 EC55 - EC34 Vitest Bench String Fn Adds Chunk Via Generic Rule.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC34VitestBenchStringFnAddsChunkViaGenericRule_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Edge Cases EC31 EC55 - EC35 Rule78 Catches Two Body Vars Producing The Same Expected Type Name.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violations = Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_ViolationsCheckTypeNameUniqueness;
-
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violation = string;
-
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_ViolationsCheckTypeNameUniqueness = Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violation[];
 
 /**
  * Tests - Type Declarations - Edge Cases EC31 EC55 - EC37 EC42 JSXFunction Component Name File Name Fires C2.
@@ -921,13 +707,6 @@ export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC43JSXClassComponentNameFi
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC44BrandedTypesFollowStandardNaming_Lines = string[];
-
-/**
- * Tests - Type Declarations - Edge Cases EC31 EC55 - EC46 Recursive Type Definition Is Detected As Self Reference No Infinite Loop.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_EdgeCasesEC31EC55_EC46RecursiveTypeDefinitionIsDetectedAsSelfReferenceNoInfiniteLoop_Refs = string[];
 
 /**
  * Tests - Type Declarations - Edge Cases EC31 EC55 - EC47 Enum Declaration Is Not Subject To Type Naming Rules Out Of Helper Scope.
@@ -2119,22 +1898,6 @@ export type Tests_TypeDeclarations_ParseDescribeStringComprehensive_PreservesCam
 export type Tests_TypeDeclarations_ParseDescribeStringComprehensive_ReturnsEmptyStringForPurelyNonAlphanumericInput_Coverage = string;
 
 /**
- * Tests - Type Declarations - Rule71 Integration - Fails When Leaf Differs From Var Name.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Result = Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason | null;
-
-export type Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason = {
-  actualLeaf: Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Reason_ExpectedLeaf;
-};
-
-/**
  * Tests - Type Declarations - Rule71 Integration - Integrates With Extract Body Declarations Build Source Section Map.
  *
  * @since 0.18.0
@@ -2165,20 +1928,6 @@ export type Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDe
 export type Tests_TypeDeclarations_Rule71Integration_IntegratesWithExtractBodyDeclarationsBuildSourceSectionMap_SourceSection = string;
 
 /**
- * Tests - Type Declarations - Rule71 Integration - Passes Class Prefix Passthrough Form Skip Method Chunk.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule71Integration_PassesClassPrefixPassthroughFormSkipMethodChunk_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule71 Integration - Passes When Leaf Matches Source Section Title Var.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule71Integration_PassesWhenLeafMatchesSourceSectionTitleVar_Coverage = string;
-
-/**
  * Tests - Type Declarations - Rule72 Integration - Fires When Locally Defined As Alias To Foreign Type Mode2 Tightening.
  *
  * @since 0.18.0
@@ -2205,34 +1954,6 @@ export type Tests_TypeDeclarations_Rule72Integration_PassesWhenAliasIsToSamePref
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_Rule72Integration_PassesWhenTypeIsLocallyDefinedAsAConcreteShape_DtsContent = string;
-
-/**
- * Tests - Type Declarations - Rule73 Integration - Passes Body Var Typed Foo Result Not Reserved.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule73Integration_PassesBodyVarTypedFooResultNotReserved_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule73 Integration - Rejects Body Var Typed Foo Return.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule73Integration_RejectsBodyVarTypedFooReturn_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule73 Integration - Rejects Body Var Typed Foo Returns.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule73Integration_RejectsBodyVarTypedFooReturns_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule73 Integration - Rejects Body Var Typed Foo Type Guard.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule73Integration_RejectsBodyVarTypedFooTypeGuard_Coverage = string;
 
 /**
  * Tests - Type Declarations - Rule74 Integration - Detects Typed Inline Arrow Callback.
@@ -2292,139 +2013,6 @@ export type Tests_TypeDeclarations_Rule74Integration_PassesUntypedInlineCallback
 export type Tests_TypeDeclarations_Rule74Integration_PassesUntypedInlineCallbackRuleH2Exemption_Callbacks = Tests_TypeDeclarations_Rule74Integration_PassesUntypedInlineCallbackRuleH2Exemption_Callback[];
 
 /**
- * Tests - Type Declarations - Rule757677 Integration - 75 Function Returning Foo Result Fails Must End In Returns.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule75FunctionReturningFooResultFailsMustEndInReturns_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule757677 Integration - 75 Function Returning Foo Returns Passes.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule75FunctionReturningFooReturnsPasses_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule757677 Integration - 76 Function Returning Foo Return Singular Fails.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule76FunctionReturningFooReturnSingularFails_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule757677 Integration - 77 Function Returning Foo Type Guard At Non Type Guard Fails.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule77FunctionReturningFooTypeGuardAtNonTypeGuardFails_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule757677 Integration - 77 Type Guard Returning Foo Returns At Type Guard Fails.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule77TypeGuardReturningFooReturnsAtTypeGuardFails_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule757677 Integration - 77 Type Guard Returning Foo Type Guard Passes.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule757677Integration_Rule77TypeGuardReturningFooTypeGuardPasses_Coverage = string;
-
-/**
- * Tests - Type Declarations - Rule78 Integration - Fires When Two Body Vars Produce The Same Expected Type Name Rule78.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violations = Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_ViolationsCheckTypeNameUniqueness;
-
-export type Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violation = string;
-
-export type Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_ViolationsCheckTypeNameUniqueness = Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violation[];
-
-/**
- * Tests - Type Declarations - Rule78 Integration - Passes When All Expected Names Unique.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violations = Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_ViolationsCheckTypeNameUniqueness;
-
-export type Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violation = string;
-
-export type Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_ViolationsCheckTypeNameUniqueness = Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violation[];
-
-/**
- * Tests - Type Declarations - Rule C1 C2 C3 Integration - Detects Class Name File Name C1.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier = {
-  name: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_Name;
-  kind: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifiers = Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Identifier[];
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_FileName = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsClassNameFileNameC1_Violations = string[];
-
-/**
- * Tests - Type Declarations - Rule C1 C2 C3 Integration - Detects Function Name File Name C2.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier = {
-  name: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_Name;
-  kind: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifiers = Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Identifier[];
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_FileName = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionNameFileNameC2_Violations = string[];
-
-/**
- * Tests - Type Declarations - Rule C1 C2 C3 Integration - Detects Function Typed Const Name File Name C2.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier = {
-  name: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_Name;
-  kind: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifiers = Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Identifier[];
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_FileName = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsFunctionTypedConstNameFileNameC2_Violations = string[];
-
-/**
  * Tests - Type Declarations - Rule C1 C2 C3 Integration - Detects Hyphenated File Name Flattened C3.
  *
  * @since 0.18.0
@@ -2450,27 +2038,6 @@ export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNa
 };
 
 export type Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_Identifiers = Tests_TypeDeclarations_RuleC1C2C3Integration_DetectsHyphenatedFileNameFlattenedC3_Identifier[];
-
-/**
- * Tests - Type Declarations - Rule C1 C2 C3 Integration - Does NOTFire For Nested Class With Same Name As File.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier = {
-  name: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_Name;
-  kind: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifiers = Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_Identifier[];
-
-export type Tests_TypeDeclarations_RuleC1C2C3Integration_DoesNOTFireForNestedClassWithSameNameAsFile_FileName = string;
 
 /**
  * Tests - Type Declarations - Rule C1 C2 C3 Integration - Does NOTFire For Non Matching Name.
@@ -2642,42 +2209,6 @@ export type Tests_TypeDeclarations_RuleE1E2Integration_E2PropertyTypeDefinedBefo
 export type Tests_TypeDeclarations_RuleE1E2Integration_E2PropertyTypeDefinedBeforeParentPasses_ParentLine = number;
 
 /**
- * Tests - Type Declarations - Rule E3 Integration Mode2 Expansion To Returns Type Guard Return - Items Suffix Array Is NOTExempt Must Define Element First.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_ArrayName = string;
-
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ItemsSuffixArrayIsNOTExemptMustDefineElementFirst_Exempt = boolean;
-
-/**
- * Tests - Type Declarations - Rule E3 Integration Mode2 Expansion To Returns Type Guard Return - Return Singular Suffix Array ISExempt Mode2 Defensive.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_ArrayName = string;
-
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnSingularSuffixArrayISExemptMode2Defensive_Exempt = boolean;
-
-/**
- * Tests - Type Declarations - Rule E3 Integration Mode2 Expansion To Returns Type Guard Return - Returns Suffix Array ISExempt From Element Before Array.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_ArrayName = string;
-
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_ReturnsSuffixArrayISExemptFromElementBeforeArray_Exempt = boolean;
-
-/**
- * Tests - Type Declarations - Rule E3 Integration Mode2 Expansion To Returns Type Guard Return - Type Guard Suffix Array ISExempt Mode2.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_ArrayName = string;
-
-export type Tests_TypeDeclarations_RuleE3IntegrationMode2ExpansionToReturnsTypeGuardReturn_TypeGuardSuffixArrayISExemptMode2_Exempt = boolean;
-
-/**
  * Tests - Type Declarations - Rule EC19 EC20 EC21 Integration - Fails Dotted Segment After Stripping Recognized Suffixes EC19.
  *
  * @since 0.18.0
@@ -2762,28 +2293,6 @@ export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S1SnakeCaseFails_Pasc
 export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S1Standalone2CapAcronymsPassWhenFollowedByLowercase_BrandCasePattern = RegExp;
 
 /**
- * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S2 Domain Concept Names Pass.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_KnownTopLevels = Set<string>;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_TypeName = string;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2DomainConceptNamesPass_IsPathPrefixStyle = boolean;
-
-/**
- * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S2 Path Prefix Style Names Detected.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_KnownTopLevels = Set<string>;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_TypeName = string;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_IsPathPrefixStyle = boolean;
-
-/**
  * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S3 Named Property Types Follow Object Property Order.
  *
  * @since 0.32.0
@@ -2856,24 +2365,6 @@ export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyT
 export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_PropertyTypeLineIndexes = number[];
 
 export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_IsOrdered = boolean;
-
-/**
- * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S3 Property Type Using Parent Property Form Passes.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_ObjectName = string;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_PropertyValueType = string;
-
-/**
- * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S3 Property Type Without Parent Prefix Fails.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_ObjectName = string;
-
-export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_PropertyValueType = string;
 
 /**
  * Tests - Type Declarations - Rule S1 S2 S3 S4 Integration - S4 Array Element Types Defined Before Array.
@@ -2961,15 +2452,6 @@ export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArra
 export type Tests_TypeDeclarations_SectionFCoverageIntegration_F1SameSectionReferencesAreAllowed_Refs = string[];
 
 /**
- * Tests - Type Declarations - Section FCoverage Integration - F2 Sections In Alphabetical Order Check Compare Strings Directly.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionA = string;
-
-export type Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionB = string;
-
-/**
  * Tests - Type Declarations - Section FCoverage Integration - F4 Within Section First Come First Serve Order Via Find First Occurrence.
  *
  * @since 0.18.0
@@ -3021,15 +2503,6 @@ export type Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMu
 export type Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMultiChunkTypeWithoutSourceSection_Sections = Tests_TypeDeclarations_SectionFCoverageIntegration_F6ReverseOrphanMultiChunkTypeWithoutSourceSection_Section[];
 
 /**
- * Tests - Type Declarations - Section GImports Integration - G1 Detects Out Of Order Specifiers.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_Specifiers = string[];
-
-export type Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrderSpecifiers_SortedSpecifiers = string[];
-
-/**
  * Tests - Type Declarations - Section GImports Integration - G1 Extract Imported Names Captures Alphabetized Inline Imports.
  *
  * @since 0.18.0
@@ -3037,15 +2510,6 @@ export type Tests_TypeDeclarations_SectionGImportsIntegration_G1DetectsOutOfOrde
 export type Tests_TypeDeclarations_SectionGImportsIntegration_G1ExtractImportedNamesCapturesAlphabetizedInlineImports_Lines = string[];
 
 export type Tests_TypeDeclarations_SectionGImportsIntegration_G1ExtractImportedNamesCapturesAlphabetizedInlineImports_Names = Set<string>;
-
-/**
- * Tests - Type Declarations - Section GImports Integration - G1 Multi Line Import Block Alphabetical Order Can Be Checked.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_Specifiers = string[];
-
-export type Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_SortedSpecifiers = string[];
 
 /**
  * Tests - Type Declarations - Strip Underscore Prefix Comprehensive - Does Not Strip Non Prefix Underscores.
@@ -3176,22 +2640,6 @@ export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLea
 export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithClassPrefixPassthroughButLeafDiffers_Reason = {
   actualLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithClassPrefixPassthroughButLeafDiffers_Reason_ActualLeaf;
   expectedLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithClassPrefixPassthroughButLeafDiffers_Reason_ExpectedLeaf;
-};
-
-/**
- * Tests - Type Declarations - Validate Leaf Comprehensive - Returns The Actual Leaf When Type Name Starts With Source Section But Leaf Differs.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_ReasonResult = Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason | null;
-
-export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason = {
-  actualLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_Reason_ExpectedLeaf;
 };
 
 /**

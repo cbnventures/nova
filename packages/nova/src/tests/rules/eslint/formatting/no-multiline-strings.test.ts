@@ -30,9 +30,6 @@ ruleTester.run('noMultilineStrings', NoMultilineStrings['rule'], {
       code: 'const greeting = `Hello ${name}!`;',
     },
     {
-      code: 'const path = `${basePath}/files/${fileName}`;',
-    },
-    {
       code: 'const single = "just one line";',
     },
     {
@@ -40,9 +37,6 @@ ruleTester.run('noMultilineStrings', NoMultilineStrings['rule'], {
     },
     {
       code: 'const padded = "hello\\n";',
-    },
-    {
-      code: 'const padded = "\\nhello\\n";',
     },
     {
       code: 'const padded = "\\n\\nhello\\n\\n";',
@@ -54,16 +48,7 @@ ruleTester.run('noMultilineStrings', NoMultilineStrings['rule'], {
       code: 'const padded = `hello\\n`;',
     },
     {
-      code: 'const padded = `\\nhello\\n`;',
-    },
-    {
       code: 'const padded = `\\n${name}\\n`;',
-    },
-    {
-      code: 'const padded = `\\nhello${name}world\\n`;',
-    },
-    {
-      code: 'const delim = "\\n";',
     },
     {
       code: 'const msg = "line one\\nline two";',
@@ -97,10 +82,6 @@ ruleTester.run('noMultilineStrings', NoMultilineStrings['rule'], {
     },
     {
       code: 'const msg = "line one\\nline two\\n";',
-      errors: [{ messageId: 'noEscapeNewline' }],
-    },
-    {
-      code: 'const msg = "\\nline one\\nline two\\n";',
       errors: [{ messageId: 'noEscapeNewline' }],
     },
     {

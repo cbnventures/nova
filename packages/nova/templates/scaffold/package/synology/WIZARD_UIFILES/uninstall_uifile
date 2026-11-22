@@ -1,0 +1,23 @@
+[
+  {
+    "step_title": "Package Data",
+    "items": [
+      {
+        "type": "singleselect",
+        "desc": "Choose what happens to the greeting and logs in the package data folder.",
+        "subitems": [
+          {
+            "key": "wizard_keep_data",
+            "desc": "Keep them for a later reinstall",
+            "defaultValue": true
+          },
+          {
+            "key": "wizard_delete_data",
+            "desc": "Delete them",
+            "defaultValue": false
+          }
+        ]
+      }
+    ]
+  }
+]

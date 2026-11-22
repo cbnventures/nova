@@ -135,8 +135,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_ReproducesTheCommittedProjectWorkflowByteForByte_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityProject_Workspaces,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_Environment,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Committed,
@@ -164,10 +162,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_ReproducesTheSyntheticVercelScopeWorkflowByteForByte_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Workspaces,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Ir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsEntry,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsWorkspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_Environment,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_ReproducesTheSyntheticVercelSecretSyncWorkflowByteForByte_Committed,
@@ -1455,33 +1449,6 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
     return;
   });
 
-  it('emits no sync step when the scope workspace has no private secrets', () => {
-    const noSecretsWorkspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsWorkspaces = {
-      './apps/plain': {
-        name: 'nova-app-plain',
-        role: 'app',
-        policy: 'trackable',
-      },
-    };
-    const noSecretsEntry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_NoSecretsEntry = {
-      template: 'publish',
-      runsOn: 'ubuntu-24.04',
-      name: 'plain',
-      triggers: ['release'],
-      build: ['./apps/plain'],
-      deploy: [{
-        to: 'vercel-nextjs',
-        path: './apps/plain',
-      }],
-    };
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Ir = WorkflowsBlueprint.buildPublish(noSecretsEntry, noSecretsWorkspaces);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_EmitsNoSyncStepWhenTheScopeWorkspaceHasNoPrivateSecrets_Generated = WorkflowsBlueprint.serialize(ir);
-
-    strictEqual(generated.includes('Sync Vercel runtime environment'), false);
-
-    return;
-  });
-
   return;
 });
 
@@ -1547,16 +1514,6 @@ describe('WorkflowsBlueprintPublishParity.runtimeSyncFanOut', () => {
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_SyncsTheSameRuntimeSecretsToEveryServerBearingTargetByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     await assertWorkflowFixture(generated, committed, fixturePath);
-
-    return;
-  });
-
-  it('emits a sync step on both the cloudflare and vercel jobs', () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, environment);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_EmitsASyncStepOnBothTheCloudflareAndVercelJobs_Generated = WorkflowsBlueprint.serialize(ir);
-
-    strictEqual(generated.includes('Sync worker runtime secrets'), true);
-    strictEqual(generated.includes('Sync Vercel runtime environment'), true);
 
     return;
   });

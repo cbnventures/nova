@@ -3,6 +3,13 @@ import type { InspectOptions } from 'node:util';
 import type { Shared_LoggerCustomizeReturns, Shared_LogLevel, Shared_LogOptions } from '../shared.d.ts';
 
 /**
+ * Toolkit - Logger - Stdout Redirected.
+ *
+ * @since 0.50.0
+ */
+export type Toolkit_Logger_Runner_StdoutRedirected = true | undefined;
+
+/**
  * Toolkit - Logger - Contains Error.
  *
  * @since 0.49.0
@@ -191,6 +198,13 @@ export type Toolkit_Logger_Runner_Prefix_ScopeTag = string;
 export type Toolkit_Logger_Runner_Prefix_ColoredLevelLabel = string | undefined;
 
 export type Toolkit_Logger_Runner_Prefix_Timestamp = string;
+
+/**
+ * Toolkit - Logger - Redirect Stdout To Stderr.
+ *
+ * @since 0.50.0
+ */
+export type Toolkit_Logger_Runner_RedirectStdoutToStderr_Returns = void;
 
 /**
  * Toolkit - Logger - Scope Label.

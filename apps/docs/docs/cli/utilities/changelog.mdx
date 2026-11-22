@@ -1,7 +1,7 @@
 ---
 id: "changelog"
 title: "Changelog"
-description: "Record changes, correct existing sections, merge older sections, and release versioned changelogs with one guided command."
+description: "Record changes, correct existing sections, print GitHub release bodies, and release versioned changelogs with one command."
 keywords:
   - "nova"
   - "nova changelog"
@@ -24,17 +24,18 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Record individual changes, fold corrections into existing sections, and release versioned changelogs with a single command that guides you through each step.
+Record individual changes, fold corrections into existing sections, print GitHub release bodies, and release versioned changelogs with one command.
 
 ## Summary
 
-The `changelog` command combines three workflows into one guided flow:
+The `changelog` command combines four workflows:
 
 - **Recording** a change (what happened).
 - **Folding** a correction into an existing version section without cutting a new version.
 - **Releasing** accumulated changes (bump versions and write a `CHANGELOG.md`).
+- **Printing notes** for a GitHub release from every workspace `CHANGELOG.md`.
 
-In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record`, `--fold`, and `--release` flags drive the same workflows from scripts and <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines.
+In interactive mode, a menu lets you record, fold, or release. In non-interactive mode, the `--record`, `--fold`, `--release`, and `--notes` flags drive the workflows from scripts and <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines.
 
 Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the <Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory.
 
@@ -42,8 +43,9 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 
 - Combines the record-and-release lifecycle into one command instead of separate tools.
 - Corrects or consolidates an existing changelog section without manually editing `CHANGELOG.md` or creating a replacement release.
+- Builds the exact multi-workspace GitHub release body without copying bullets by hand.
 - Interactive prompts guide you through package selection, category, description, and <Terminology title="Version numbers that tell you if an update will break you" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
-- The `--record`, `--fold`, and `--release` flags enable the same workflow in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
+- The `--record`, `--fold`, `--release`, and `--notes` flags enable the same workflows in <Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
 - The **dry run** option lets you preview every change before any file is touched.
 - Supports both **<Terminology title="Version numbers that tell you if an update will break you" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology>** and **CalVer** strategies, configured per-project in `nova.config.json`.
 
@@ -53,6 +55,7 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 - **Team workflows** — Each contributor records changes in their PR. A maintainer runs the release step when ready.
 - **Release corrections** — Add, edit, or remove an entry from an existing version section after a publishing mistake, without cutting another version.
 - **Pre-release consolidation** — Merge older unreleased sections into the intended version, such as folding several work-in-progress app sections into `1.0.0`.
+- **GitHub releases** — Pipe `--notes` directly into `gh release create --notes-file -` for a selected version.
 - **<Terminology title="Every change is built, tested, and shipped automatically" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
 - **Migration from Changesets** — Replace `changeset add` with `nova utility changelog --record` and `changeset version` with `nova utility changelog --release`.
 
@@ -102,10 +105,11 @@ You can run this command in two ways:
 | `--record`                      | Record a pending change. Prompts for missing values unless all flags are provided.                                                                          |
 | `--fold`                        | Change an existing version section directly without touching pending `.changelog/` entries.                                                                 |
 | `--release`                     | Release accumulated changes.                                                                                                                                |
+| `--notes`                       | Print the GitHub release body to stdout without a CLI banner or status logs.                                                                                |
 | `--add`                         | Add an entry during a fold.                                                                                                                                 |
 | `--edit`                        | Edit an entry during a fold.                                                                                                                                |
 | `--remove`                      | Remove an entry during a fold.                                                                                                                              |
-| `--version <version>`           | Existing target version for a fold. Defaults to the newest section.                                                                                         |
+| `--version <version>`           | Target version for a fold or release notes. Notes accept `1.4.3`, `v1.4.3`, `1.4.3+458`, or `v1.4.3+458` and default to the newest released version.        |
 | `--entry <number>`              | Select an entry for edit or removal by its 1-based index within the category.                                                                               |
 | `--match <text>`                | Select an entry for edit or removal by exact text. Fails if the text is missing or ambiguous.                                                               |
 | `--merge-from <versions>`       | Merge comma-separated older sections into the target section, then remove those older sections.                                                             |
@@ -138,6 +142,31 @@ Fold changes a section that already exists in one package's `CHANGELOG.md`. It n
 5. **Correct native builds** — Add, edit, and remove advance Android `versionCode` or Apple `CURRENT_PROJECT_VERSION` by one and update the section heading. The target must match the workspace's current package version. Use `--no-build-bump` when correcting an older section or when no corrected native build is needed.
 6. **Merge sections** — `--merge-from` moves every source entry into the target category, removes identical bullets, and deletes the source sections while preserving the target heading and build number. Use `--uncategorized-as` to classify legacy bullets without headings; interactive merges prompt for that category, and a merge never changes native builds.
 7. **Preview or write** — `--dry-run` prints the exact before-and-after section diff and native build change without writing files.
+
+### Notes Flow
+
+Notes mode reads each configured workspace that has a `CHANGELOG.md`; a freezable workspace without one is skipped. It never changes a file.
+
+1. **Select the version** — Pass a plain version, a `v`-prefixed tag, or either form with a numeric `+build` suffix; omit it to use the newest released version. A requested build must match `(build)` in native headings, while workspaces without a heading build match the plain version.
+2. **Order workspaces** — Names are alphabetical by default. Set `settings.changelog.workspaceOrder` in [`nova.config.json`](/docs/quickstart/nova-config#settings) to put selected names first; unlisted workspaces remain alphabetical.
+3. **Copy release sections** — Each `### HEADING`, bullet, and multi-line bullet continuation is copied from that workspace's exact `## <version>` section. A missing or empty version section prints `No changes.`.
+4. **Write only the body** — Stdout contains no Nova banner or status lines, so it can be redirected to a file or piped directly to GitHub CLI.
+
+```md title="Output"
+## example-api
+
+### UPDATED
+
+- Keeps the original changelog wording.
+
+### FIXED
+
+- Fixes the reported issue.
+
+## example-docs
+
+No changes.
+```
 
 ### Release Flow
 
@@ -439,6 +468,26 @@ These examples are fully non-interactive. Add `--dry-run` to any command to prev
   </TabItem>
 </Tabs>
 
+### Notes Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash title="Create a GitHub release with generated notes"
+    nova utility changelog --notes --version v1.4.3+458 |
+      gh release create v1.4.3+458 --notes-file -
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash title="Print the newest release body"
+    npx --yes @cbnventures/nova@latest utility changelog --notes
+    ```
+
+  </TabItem>
+</Tabs>
+
 ## Migration from Changesets
 
 For users migrating from the [Changesets](https://github.com/changesets/changesets) workflow, Nova provides equivalent flags under `nova utility changelog`:
@@ -456,18 +505,20 @@ Nova bundles many tools in one package, so commands can be verbose. Shorten them
   "scripts": {
     "changelog:record": "nova utility changelog --record",
     "changelog:fold": "nova utility changelog --fold",
+    "changelog:notes": "nova utility changelog --notes",
     "changelog:release": "nova utility changelog --release"
   }
 }
 ```
 
-Then run `npm run changelog:record`, `npm run changelog:fold`, or `npm run changelog:release`.
+Then run `npm run changelog:record`, `npm run changelog:fold`, `npm run changelog:notes`, or `npm run changelog:release`.
 :::
 
 ## Troubleshooting
 
 - **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="The one file that tells Nova how your repo is laid out" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="One folder in the repo with its own package.json" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="Gets real version bumps but stays off the registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="Versioned and ready to publish to a package registry" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="Decides if Nova freezes, tracks, or publishes a workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
-- **"Choose only one changelog mode"** — `--record`, `--fold`, and `--release` are mutually exclusive. Run them as separate commands.
+- **"Choose only one changelog mode"** — `--record`, `--fold`, `--release`, and `--notes` are mutually exclusive. Run them as separate commands.
+- **"settings.changelog.workspaceOrder ... unknown workspace name"** — Every listed name must exactly match a workspace `name` in `nova.config.json`.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — In semver mode, all four flags are required when using `--record`. In CalVer mode, only `--package`, `--category`, and `--message` are required (no `--bump`). Omit `--record` for interactive mode.
 - **"Entry text ... is ambiguous"** — The same bullet appears more than once in the selected category. Repeat the fold with `--entry` and its 1-based position instead of `--match`.
 - **"Selected changelog sections contain bullets outside category headings"** — Add `--uncategorized-as updated`, `fixed`, `added`, or `removed` to classify legacy bullets during a non-interactive merge. Interactive merges ask for the category when needed.

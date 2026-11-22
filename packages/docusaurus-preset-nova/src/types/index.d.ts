@@ -8,7 +8,10 @@ import type {
   Options_PluginOptions,
   Options_PluginOptions_Search,
 } from './options.d.ts';
-import type { Shared_Preset } from './shared.d.ts';
+import type {
+  Shared_PostCssRoot,
+  Shared_Preset,
+} from './shared.d.ts';
 
 /**
  * Index - Docusaurus Theme Nova - Default.
@@ -427,6 +430,17 @@ export type Index_Runner_Default_ConfigurePostCss_PostCssOptions_Plugins = unkno
 export type Index_Runner_Default_ConfigurePostCss_PostCssOptions = {
   plugins: Index_Runner_Default_ConfigurePostCss_PostCssOptions_Plugins;
   [key: string]: unknown;
+};
+
+export type Index_Runner_Default_ConfigurePostCss_StylesDirectory = string;
+
+export type Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin_PostcssPlugin = string;
+
+export type Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin_Once = (root: Shared_PostCssRoot) => void;
+
+export type Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin = {
+  postcssPlugin: Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin_PostcssPlugin;
+  Once: Index_Runner_Default_ConfigurePostCss_ProseShieldPlugin_Once;
 };
 
 export type Index_Runner_Default_ConfigurePostCss_RtlPlugin_PostcssPlugin = string;

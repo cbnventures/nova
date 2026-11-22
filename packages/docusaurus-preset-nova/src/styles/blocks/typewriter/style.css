@@ -22,3 +22,51 @@
 .nova-typewriter-measure {
   visibility: hidden;
 }
+
+/**
+ * ============================
+ * Typewriter - Words and Caret
+ *
+ * The cycling words take the preset's primary color, and a blinking caret
+ * follows the typed text so the animation reads as typing.
+ * ============================
+ */
+
+.nova-typewriter {
+  --nova-typewriter-word-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-typewriter {
+  --nova-typewriter-word-color: var(--nova-color-primary-400);
+}
+
+.nova-typewriter-words {
+  color: var(--nova-typewriter-word-color);
+}
+
+.nova-typewriter-visible::after {
+  content: "";
+
+  display: inline-block;
+  width: 0.08em;
+  height: 0.9em;
+  margin-left: 0.08em;
+
+  vertical-align: -0.08em;
+
+  background-color: var(--nova-typewriter-word-color);
+
+  animation: nova-typewriter-caret 1s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-typewriter-visible::after {
+    animation: none;
+  }
+}
+
+@keyframes nova-typewriter-caret {
+  50% {
+    opacity: 0;
+  }
+}

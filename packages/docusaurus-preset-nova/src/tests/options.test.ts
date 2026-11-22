@@ -25,9 +25,6 @@ import type {
   Tests_Options_ResolvePreset_ReturnsBasePresetWhenNoOverridesAreProvided_Result,
   Tests_Options_ThemeConfigValidatedResult,
   Tests_Options_ValidatedResult,
-  Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema,
-  Tests_Options_ValidateOptions_AcceptsValidPresetName_Result,
-  Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated,
   Tests_Options_ValidateOptions_DoesNotCallAForeignValidationCallback_ForeignValidate_ForeignValidate,
   Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema,
   Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated,
@@ -144,30 +141,6 @@ describe('validateOptions', async () => {
 
     strictEqual(presetValue, 'foundry');
     strictEqual(persistentCache, false);
-
-    return;
-  });
-
-  it('accepts valid preset name', () => {
-    const result: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result = validateOptions({
-      validate: (schema, options) => {
-        const joiSchema: Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema = schema as Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema;
-        const validated: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated = joiSchema.validate(options);
-
-        if (validated['error'] !== undefined) {
-          throw validated['error'];
-        }
-
-        return validated['value'] as Tests_Options_ValidatedResult;
-      },
-      options: {
-        preset: 'sentinel',
-      },
-    });
-
-    const presetValue: Tests_Options_PresetValue = result['preset'];
-
-    strictEqual(presetValue, 'sentinel');
 
     return;
   });

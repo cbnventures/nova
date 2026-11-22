@@ -31,7 +31,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_TemplateName = 'check
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_TargetType = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_TargetType = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'synology' | 'vercel-nextjs';
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Trigger Name.
@@ -391,7 +391,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'synology' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = unknown;
 
@@ -453,7 +453,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Liter
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'synology' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 
@@ -473,7 +473,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Uniqu
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetType = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'vercel-nextjs';
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetTypeName = 'npm' | 'github-action' | 'github-packages' | 'cloudflare-pages' | 'cloudflare-workers' | 'docker-hub' | 'ghcr' | 'github-pages' | 'pfsense' | 'synology' | 'vercel-nextjs';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTargetSettings = Shared_NovaConfigWorkflow_Settings | undefined;
 

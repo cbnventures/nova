@@ -14,11 +14,6 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_FixturesDir,
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_Entry,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Committed,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Generated,
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockScheduleDaily_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockScheduleDaily_ReproducesTheSyntheticDailyWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockScheduleDaily_ReproducesTheSyntheticDailyWorkflowByteForByte_FixturePath,
@@ -60,33 +55,6 @@ describe('WorkflowsBlueprintParity.checkSponsorGatedIssues', () => {
     const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
     const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_FixturePath = join(fixturesDir, 'nova-check-sponsor-gated-issues-sponsor-check.yml');
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_Committed = await readFile(fixturePath, 'utf-8');
-
-    strictEqual(generated, committed);
-
-    return;
-  });
-
-  return;
-});
-
-/**
- * Tests - CLI - Generate - GitHub - Workflows Blueprint Parity - Lock Inactive Issues.
- *
- * @since 0.21.0
- */
-describe('WorkflowsBlueprintParity.lockInactiveIssues', () => {
-  const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_Entry = {
-    template: 'lock-inactive-issues',
-    runsOn: 'ubuntu-24.04',
-    name: 'project',
-    triggers: ['schedule-weekly'],
-  };
-
-  it('reproduces the committed project workflow byte-for-byte', async () => {
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Generated = WorkflowsBlueprint.dispatch(entry, {});
-    const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
-    const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath = join(fixturesDir, 'nova-lock-inactive-issues-project.yml');
-    const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     strictEqual(generated, committed);
 

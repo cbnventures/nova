@@ -1,0 +1,35 @@
+/*
+ * Page-list icons, following Synology's own pattern (OAuthService's style.css):
+ * 22x44 sprites scoped to this app's window class, with 2x images on high-DPI
+ * screens. The sprites are Synology's own, served by DSM from its built-in
+ * Resource Monitor and Log Center modules; this package ships no images.
+ * icon-overview comes from DSM's desktop.css.
+ */
+.syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-service {
+  background-image: url("/webman/modules/ResourceMonitor/images/default/1x/cate_icn_monitor.png");
+}
+
+.syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-settings {
+  background-image: url("/webman/modules/ResourceMonitor/images/default/1x/cate_icn_setting.png");
+}
+
+.syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-records {
+  background-image: url("/webman/modules/LogCenter/images/c_icon_search.png");
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  .synohdpack .syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-service {
+    background-image: url("/webman/modules/ResourceMonitor/images/default/2x/cate_icn_monitor.png");
+    background-size: 22px 44px;
+  }
+
+  .synohdpack .syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-settings {
+    background-image: url("/webman/modules/ResourceMonitor/images/default/2x/cate_icn_setting.png");
+    background-size: 22px 44px;
+  }
+
+  .synohdpack .syno-app-[__WORKSPACE_PACKAGE_NAME__] .syno-ux-modulelist .x-tree-node-icon.icon-records {
+    background-image: url("/synohdpack/images/dsm/modules/LogCenter/images/c_icon_search.png");
+    background-size: 22px 44px;
+  }
+}

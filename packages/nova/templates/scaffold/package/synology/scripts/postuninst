@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -eu
+
+package_name=${SYNOPKG_PKGNAME:-[__WORKSPACE_PACKAGE_NAME__]}
+package_var=${SYNOPKG_PKGVAR:-/var/packages/${package_name}/var}
+
+# The uninstall wizard exports "wizard_delete_data"; upgrades also run postuninst, so check SYNOPKG_PKG_STATUS too.
+if [ "${SYNOPKG_PKG_STATUS:-}" = 'UNINSTALL' ] && [ "${wizard_delete_data:-false}" = 'true' ]; then
+  find "${package_var}" -mindepth 1 -delete
+  exit 0
+fi
+
+if mkdir -p "${package_var}" 2> /dev/null; then
+  printf '%s\n' 'postuninst' >> "${package_var}/lifecycle.log"
+fi
+
+exit 0

@@ -1,26 +1,31 @@
-import { strictEqual } from 'node:assert/strict';
+import {
+  ok,
+  rejects,
+  strictEqual,
+} from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import * as vitest from 'vitest';
-import { describe, it } from 'vitest';
+import {
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
-import { discoverContentFiles } from '../../../lib/file-discovery.js';
+import { resetActiveVitest, setActiveVitest } from '../../../rules/vitest/internal/active-vitest.js';
 import { registerMarkdownTableSuite } from '../../../rules/vitest/markdown-table/register.js';
+import { tablesMatchMarkdownTableOutput } from '../../../rules/vitest/markdown-table/rules.js';
 import { MarkdownTable } from '../../../toolkit/index.js';
 
 import type {
-  Tests_Rules_Vitest_MarkdownTable_BadDelimiter,
-  Tests_Rules_Vitest_MarkdownTable_BadFiles,
-  Tests_Rules_Vitest_MarkdownTable_BadHeader,
+  Tests_Rules_Vitest_MarkdownTable_BadFactory,
+  Tests_Rules_Vitest_MarkdownTable_BadIts,
   Tests_Rules_Vitest_MarkdownTable_BadRootDir,
-  Tests_Rules_Vitest_MarkdownTable_BadRow,
-  Tests_Rules_Vitest_MarkdownTable_BadTable,
+  Tests_Rules_Vitest_MarkdownTable_BadSentinel,
   Tests_Rules_Vitest_MarkdownTable_DocsDir,
   Tests_Rules_Vitest_MarkdownTable_FixtureRoot,
-  Tests_Rules_Vitest_MarkdownTable_GoodFiles,
-  Tests_Rules_Vitest_MarkdownTable_GoodHeader,
   Tests_Rules_Vitest_MarkdownTable_GoodTable,
 } from '../../../types/tests/rules/vitest/markdown-table.test.d.ts';
 
@@ -29,8 +34,8 @@ import type {
  *
  * Isolated kit test: builds a temp fixture project with one VALID page whose table is rendered
  * by the canonical `MarkdownTable` class (so it is byte-exact) and a separate root with a page
- * whose table is intentionally misaligned. Direct assertions prove the good table round-trips and
- * the planted bad table does not, file discovery sees the fixtures, and a single-key
+ * whose table is intentionally misaligned. A direct run of the rule over the bad root proves the
+ * planted table fails, and a single-key
  * `registerMarkdownTableSuite` call over the good-only root proves the enable gating stays green.
  *
  * @since 0.20.0
@@ -92,72 +97,47 @@ writeFileSync(
 );
 
 describe(`markdown table kit helpers${''}`, () => {
-  it(`discovers the good fixture page${''}`, async () => {
-    const goodFiles: Tests_Rules_Vitest_MarkdownTable_GoodFiles = await discoverContentFiles({
-      rootDir: fixtureRoot,
-      contentDirs: ['docs'],
-      fileExtensions: [
-        '.md',
-        '.mdx',
-      ],
-    });
-
-    strictEqual(goodFiles.includes('docs/good.md'), true);
-
-    return;
-  });
-
-  it(`the canonical good table round-trips through MarkdownTable${''}`, () => {
-    const goodHeader: Tests_Rules_Vitest_MarkdownTable_GoodHeader = new MarkdownTable([
-      'Name',
-      'Value',
-    ]);
-
-    goodHeader.addRow([
-      'alpha',
-      'one',
-    ]);
-    goodHeader.addRow([
-      'beta',
-      'two',
-    ]);
-
-    strictEqual(goodHeader.render(), goodTable.render());
+  afterEach(() => {
+    resetActiveVitest();
 
     return;
   });
 
   it(`flags a planted misaligned table as not matching MarkdownTable output${''}`, async () => {
-    const badFiles: Tests_Rules_Vitest_MarkdownTable_BadFiles = await discoverContentFiles({
-      rootDir: badRootDir,
+    const badIts: Tests_Rules_Vitest_MarkdownTable_BadIts = [];
+    const badSentinel: Tests_Rules_Vitest_MarkdownTable_BadSentinel = {
+      describe: () => {
+        return;
+      },
+      it: (_name, factory) => {
+        badIts.push(factory);
+
+        return;
+      },
+    };
+
+    resetActiveVitest();
+    setActiveVitest(badSentinel);
+
+    await tablesMatchMarkdownTableOutput({
       contentDirs: ['docs'],
+      rootDir: badRootDir,
       fileExtensions: [
         '.md',
         '.mdx',
       ],
-    });
+    }, ['tables-match-markdowntable-output']);
 
-    strictEqual(badFiles.includes('docs/bad.md'), true);
+    const badFactory: Tests_Rules_Vitest_MarkdownTable_BadFactory = badIts[0];
 
-    const badHeader: Tests_Rules_Vitest_MarkdownTable_BadHeader = '| Name | Value |';
-    const badDelimiter: Tests_Rules_Vitest_MarkdownTable_BadDelimiter = '|-|-|';
-    const badRow: Tests_Rules_Vitest_MarkdownTable_BadRow = '| alpha | one |';
+    strictEqual(badIts.length, 1);
+    ok(badFactory !== undefined);
 
-    const badTable: Tests_Rules_Vitest_MarkdownTable_BadTable = new MarkdownTable([
-      'Name',
-      'Value',
-    ]);
+    await rejects(async () => {
+      await badFactory();
 
-    badTable.addRow([
-      'alpha',
-      'one',
-    ]);
-
-    strictEqual(badTable.render() !== [
-      badHeader,
-      badDelimiter,
-      badRow,
-    ].join('\n'), true);
+      return;
+    }, (error) => error instanceof Error && error.message.includes('docs/bad.md (table 1)'));
 
     return;
   });

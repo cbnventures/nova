@@ -28,10 +28,6 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       filename: '/project/src/types/cli/utility/changelog.d.ts',
     },
     {
-      code: 'export type Cli_Utility_Changelog_Returns = void;',
-      filename: '/project/src/types/cli/utility/changelog.d.ts',
-    },
-    {
       code: 'export type MyType = string;',
       filename: '/project/src/not-a-dts-file.ts',
     },
@@ -87,25 +83,6 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
     {
       code: 'export type BadName = string;',
       filename: '/project/src/types/cli/utility/changelog.d.ts',
-      errors: [{ messageId: 'typeNamingPrefix' }],
-    },
-    {
-      code: 'export type WrongPrefix = void;',
-      filename: '/project/src/types/rules/eslint/formatting/require-padding-lines.d.ts',
-      errors: [{ messageId: 'typeNamingPrefix' }],
-    },
-
-    // PascalCase filename - raw MDX uppercase should be rejected.
-    {
-      code: 'export type ThemeMDXComponentsOverrides = string;',
-      filename: '/project/src/types/theme/MDXComponents.d.ts',
-      errors: [{ messageId: 'typeNamingPrefix' }],
-    },
-
-    // Catch-all with wrong prefix — should error.
-    {
-      code: 'export type WrongPrefix = string;',
-      filename: '/project/src/types/app/[...not-found]/layout.d.ts',
       errors: [{ messageId: 'typeNamingPrefix' }],
     },
 

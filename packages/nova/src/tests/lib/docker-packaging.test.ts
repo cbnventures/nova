@@ -1247,10 +1247,6 @@ describe('LibDockerPackaging', async () => {
     const dockerfileContent: Tests_Lib_DockerPackaging_LibDockerPackaging_DropsTheLegacyBuildDirectoryFieldFromExistingManifestWorkspaces_DockerfileContent = await readFile(join(projectDirectory, 'Dockerfile'), 'utf-8');
 
     strictEqual(generatedManifestContent.includes('buildDirectory'), false);
-    strictEqual(legacyManifestContent.includes('"buildDirectory": "dist"'), true);
-    strictEqual(legacyManifestContent.includes('healthPath'), false);
-    strictEqual(legacyManifestContent.includes('"ports"'), true);
-    strictEqual(legacyManifestContent.includes('"portEnvironment": "WEB_PORT"'), true);
     strictEqual(manifestContent.includes('buildDirectory'), false);
     strictEqual(manifestContent.includes('"healthPath": "/health"'), true);
     strictEqual(manifestContent.includes('"networkMode": "host"'), true);

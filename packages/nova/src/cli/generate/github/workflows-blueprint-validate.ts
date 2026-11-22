@@ -213,7 +213,7 @@ const allowedTemplates: Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedTe
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Buildable Target Types.
  *
- * The ten publish target types with concrete deploy builders. Targets of any
+ * The publish target types with concrete deploy builders. Targets of any
  * other type are rejected because the generator has no job to emit for them.
  *
  * @since 0.21.0
@@ -228,6 +228,7 @@ const buildableTargetTypes: Cli_Generate_Github_WorkflowsBlueprintValidate_Build
   'ghcr',
   'github-pages',
   'pfsense',
+  'synology',
   'vercel-nextjs',
 ];
 
@@ -1158,7 +1159,7 @@ export class Runner {
               ) {
                 diagnostics.push({
                   severity: 'error',
-                  message: `Target "${String(targetType)}" in workflow "${workflowKey}" must reference a pfSense package workspace whose role is "package" and whose name starts with "pfsense-pkg-". Skipping.`,
+                  message: `Target "${String(targetType)}" in workflow "${workflowKey}" must reference a workspace whose role is "${String(targetMetadata['workspaceRole'])}" and whose name starts with "${String(targetMetadata['workspaceNamePrefix'])}". Skipping.`,
                 });
 
                 hasError = true;

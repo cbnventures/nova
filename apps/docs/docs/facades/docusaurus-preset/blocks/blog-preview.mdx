@@ -21,11 +21,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import blogPreviewPreviewLight from './_assets_/blog-preview-preview-light.png';
-import blogPreviewPreviewDark from './_assets_/blog-preview-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Responsive grid of blog post cards showing date, title, description, and a "Read more" link. Use it on a landing page to surface recent content.
 
@@ -41,11 +37,38 @@ Dates are formatted using the site's current locale with the year, long month, a
 - **Consistent card layout** across all presets — spacing, typography, and depth are preset-aware.
 - **Formatted dates** — pass a date string and the block handles locale-aware formatting.
 
-## Preview
+## Try It
 
-<Frame caption="Blog Preview block — light and dark mode preview">
-  <ThemedImage sources={{ light: blogPreviewPreviewLight, dark: blogPreviewPreviewDark }} alt="Blog Preview block preview" width={1280} height={297} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<BlogPreview
+  heading="From the Blog"
+  description="Lessons learned from building with Nova."
+  posts={[
+    {
+      date: '2025-06-05',
+      title: 'Retry Logic Done Right',
+      description: 'Exponential backoff with jitter.',
+      permalink: '/blog/2025/06/05/retry-logic',
+    },
+    {
+      date: '2025-08-22',
+      title: 'The 3 MB Container',
+      description: 'How we shrank our container image.',
+      permalink: '/blog/2025/08/22/3mb-container',
+    },
+    {
+      date: '2025-10-14',
+      title: 'Caching Without Regrets',
+      description: 'When to cache, and when to let it go.',
+      permalink: '/blog/2025/10/14/caching-without-regrets',
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

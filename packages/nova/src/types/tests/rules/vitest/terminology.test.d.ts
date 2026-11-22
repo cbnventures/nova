@@ -1,3 +1,5 @@
+import type { Shared_ActiveVitest_Factory } from '../../../shared.d.ts';
+
 /**
  * Tests - Rules - Vitest - Terminology.
  *
@@ -36,7 +38,18 @@ export type Tests_Rules_Vitest_Terminology_ResolvedConfig = {
 
 export type Tests_Rules_Vitest_Terminology_GoodAnchors = Set<string>;
 
-export type Tests_Rules_Vitest_Terminology_BadAnchors = Set<string>;
+export type Tests_Rules_Vitest_Terminology_BadIts = Shared_ActiveVitest_Factory[];
+
+export type Tests_Rules_Vitest_Terminology_BadSentinel_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_Terminology_BadSentinel_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Tests_Rules_Vitest_Terminology_BadSentinel = {
+  describe: Tests_Rules_Vitest_Terminology_BadSentinel_Describe;
+  it: Tests_Rules_Vitest_Terminology_BadSentinel_It;
+};
+
+export type Tests_Rules_Vitest_Terminology_BadFactory = Shared_ActiveVitest_Factory | undefined;
 
 export type Tests_Rules_Vitest_Terminology_BareMatch = RegExpExecArray | null;
 

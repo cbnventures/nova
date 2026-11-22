@@ -13,8 +13,5 @@ import * as vitest from 'vitest';
 registerTypeDeclarationSuite({
   vitest,
   enable: 'all',
-  typeRoots: [
-    'src',
-    'utils',
-  ],
+  typeRoots: ['src'],
 });

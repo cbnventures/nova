@@ -4,8 +4,39 @@
  * The popover menu, item link, and active-item styling are grouped with
  * `.nova-locale-dropdown-menu` / `.nova-version-dropdown-menu` /
  * `.nova-dropdown-menu` in this preset's `Navbar/style.css` so all four
- * navbar dropdowns share one surface treatment. No per-component
- * overrides needed here.
+ * navbar dropdowns share one surface treatment. This overlay only tunes
+ * the dropdown group heading and separator so they match the popover
+ * border and this preset's `.nova-content-footer-section-label` (italic
+ * display face instead of small caps).
  *
  * @since 0.18.0
  */
+
+.nova-navbar-more-group:not(:first-child),
+.nova-navbar-more-group + .nova-navbar-more-item {
+  border-top-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-navbar-more-group:not(:first-child),
+[data-theme="dark"] .nova-navbar-more-group + .nova-navbar-more-item {
+  border-top-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+.nova-navbar-more-group-label {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-navbar-more-group--active > .nova-navbar-more-group-label {
+  color: var(--nova-color-primary-800);
+}
+
+[data-theme="dark"] .nova-navbar-more-group--active > .nova-navbar-more-group-label {
+  color: var(--nova-color-primary-200);
+}

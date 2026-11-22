@@ -25,21 +25,6 @@ export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Violat
 export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Message = string;
 
 /**
- * Tests - Folder Axis - Folder Axis - Every Blocks Index Ts Export Points To An Existing Directory.
- *
- * @since 0.18.0
- */
-export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs = readonly string[];
-
-export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported = ReadonlySet<string>;
-
-export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet = ReadonlySet<string>;
-
-export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale = string[];
-
-export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message = string;
-
-/**
  * Tests - Folder Axis - Folder Axis - Every Theme Directory Uses Pascal Case.
  *
  * @since 0.18.0

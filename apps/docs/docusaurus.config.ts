@@ -1,4 +1,8 @@
-import { NovaIdentity } from '@cbnventures/nova/toolkit';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { stripVTControlCharacters } from 'node:util';
+
+import { CLIHeader, NovaIdentity } from '@cbnventures/nova/toolkit';
 
 import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/types/config';
 
@@ -8,6 +12,41 @@ import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/t
  * @since 0.0.0
  */
 const identity = new NovaIdentity().forDocs();
+
+/**
+ * Nova Package.
+ *
+ * Reads the Nova CLI's package.json so the homepage terminal views show the
+ * version the CLI prints.
+ *
+ * @since 0.0.0
+ */
+const novaPackage = JSON.parse(readFileSync(fileURLToPath(new URL('../../packages/nova/package.json', import.meta.url)), 'utf-8'));
+
+/**
+ * Nova CLI Header.
+ *
+ * Renders the same boxed banner the Nova CLI prints at the top of every
+ * command and help menu, without colors, for the homepage terminal views.
+ *
+ * @since 0.0.0
+ */
+const novaCliHeader = stripVTControlCharacters(CLIHeader.render(
+  [
+    `Nova v${String(Reflect.get(novaPackage, 'version'))}`,
+    'CLI for the Common Developer',
+  ],
+  {
+    align: 'center',
+    interactive: true,
+    marginBottom: 1,
+    marginTop: 0,
+    paddingX: 1,
+    paddingY: 0,
+    style: 'round',
+    width: 50,
+  },
+));
 
 /**
  * Docusaurus Configuration.
@@ -46,7 +85,9 @@ const config: DocusaurusNovaConfig = {
   themes: [],
 
   // Custom Fields.
-  customFields: {},
+  customFields: {
+    novaCliHeader,
+  },
 
   // Head Tags.
   headTags: [
@@ -280,55 +321,52 @@ const config: DocusaurusNovaConfig = {
       hideOnScroll: false,
       items: [
         {
-          label: 'Docs',
-          position: 'left',
-          type: 'dropdown',
-          icon: 'lucide:book-open',
-          items: [
-            {
-              label: 'Overview',
-              to: '/docs/quickstart/',
-              icon: 'lucide:rocket',
-              activeBaseRegex: '^/docs/(quickstart/|tags/)',
-            },
-            {
-              label: 'Presets',
-              to: '/docs/presets/',
-              icon: 'lucide:palette',
-              activeBaseRegex: '^/docs/presets/',
-            },
-            {
-              label: 'Rules',
-              to: '/docs/rules/',
-              icon: 'lucide:shield-check',
-              activeBaseRegex: '^/docs/rules/',
-            },
-            {
-              label: 'Toolkit',
-              to: '/docs/toolkit/',
-              icon: 'lucide:wrench',
-              activeBaseRegex: '^/docs/toolkit/',
-            },
-            {
-              label: 'Facades',
-              to: '/docs/facades/',
-              icon: 'lucide:layers',
-              activeBaseRegex: '^/docs/facades/',
-            },
-            {
-              label: 'CLI',
-              to: '/docs/cli/',
-              icon: 'lucide:terminal',
-              activeBaseRegex: '^/docs/cli/',
-            },
-          ],
-        },
-        {
           label: 'Quick Start',
           position: 'left',
           type: undefined,
-          to: '/docs/quickstart/setup/',
-          icon: 'lucide:play',
+          to: '/docs/quickstart/',
+          icon: 'lucide:rocket',
+          activeBaseRegex: '^/docs/(quickstart/|tags/)',
+        },
+        {
+          label: 'Presets',
+          position: 'left',
+          type: undefined,
+          to: '/docs/presets/',
+          icon: 'lucide:palette',
+          activeBaseRegex: '^/docs/presets/',
+        },
+        {
+          label: 'Rules',
+          position: 'left',
+          type: undefined,
+          to: '/docs/rules/',
+          icon: 'lucide:shield-check',
+          activeBaseRegex: '^/docs/rules/',
+        },
+        {
+          label: 'Toolkit',
+          position: 'left',
+          type: undefined,
+          to: '/docs/toolkit/',
+          icon: 'lucide:wrench',
+          activeBaseRegex: '^/docs/toolkit/',
+        },
+        {
+          label: 'Facades',
+          position: 'left',
+          type: undefined,
+          to: '/docs/facades/',
+          icon: 'lucide:layers',
+          activeBaseRegex: '^/docs/facades/',
+        },
+        {
+          label: 'CLI',
+          position: 'left',
+          type: undefined,
+          to: '/docs/cli/',
+          icon: 'lucide:terminal',
+          activeBaseRegex: '^/docs/cli/',
         },
         {
           label: 'Blog',

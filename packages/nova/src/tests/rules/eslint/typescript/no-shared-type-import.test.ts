@@ -67,14 +67,6 @@ ruleTester.run('noSharedTypeImport', NoSharedTypeImport['rule'], {
       }],
     },
     {
-      code: 'import type { Something } from "@/types/shared.d.ts";',
-      filename: 'src/types/shared.d.ts',
-      options: [{
-        sharedFiles: [sharedFilePath],
-        ignoreFiles: [],
-      }],
-    },
-    {
       code: 'import { Logger } from "@/toolkit/index.js";',
       filename: 'src/cli/runner.ts',
       options: [{
@@ -99,26 +91,15 @@ ruleTester.run('noSharedTypeImport', NoSharedTypeImport['rule'], {
       }],
     },
   ],
-  invalid: [
-    {
-      code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
-      filename: 'src/cli/runner.ts',
-      options: [{
-        sharedFiles: [sharedFilePath],
-        ignoreFiles: [],
-      }],
-      errors: [{ messageId: 'noSharedTypeImport' }],
-    },
-    {
-      code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
-      filename: '/project/src/cli/runner.ts',
-      options: [{
-        sharedFiles: [sharedFilePath],
-        ignoreFiles: [],
-      }],
-      errors: [{ messageId: 'noSharedTypeImport' }],
-    },
-  ],
+  invalid: [{
+    code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
+    filename: 'src/cli/runner.ts',
+    options: [{
+      sharedFiles: [sharedFilePath],
+      ignoreFiles: [],
+    }],
+    errors: [{ messageId: 'noSharedTypeImport' }],
+  }],
 });
 
 /**

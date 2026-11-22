@@ -18,13 +18,6 @@ export type Tests_Presets_Eslint_RuntimeNode_HashbangMessages_Results = ESLint.L
 export type Tests_Presets_Eslint_RuntimeNode_HashbangMessages_Messages = string[];
 
 /**
- * Tests - Presets - ESLint - Runtime Node - Runtime Node - Allows A Script Without A Shebang.
- *
- * @since 0.49.0
- */
-export type Tests_Presets_Eslint_RuntimeNode_RuntimeNode_AllowsAScriptWithoutAShebang_Messages = string[];
-
-/**
  * Tests - Presets - ESLint - Runtime Node - Runtime Node - Allows A Shebang In A Script.
  *
  * @since 0.49.0

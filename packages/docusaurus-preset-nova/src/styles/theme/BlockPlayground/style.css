@@ -1,0 +1,429 @@
+/**
+ * ============================
+ * Block Playground - Tokens
+ *
+ * Editor syntax colors read from the preset palette. Per-preset overlays
+ * can retune any of these without touching the editor theme object.
+ * ============================
+ */
+
+.nova-block-playground {
+  --nova-block-playground-radius: var(--nova-shape-radius, 0.5rem);
+  --nova-block-playground-border: var(--nova-color-border);
+  --nova-block-playground-code-bg: var(--nova-color-surface-raised);
+  --nova-block-playground-code-bg-focus: color-mix(in srgb, var(--nova-color-surface-raised), var(--nova-color-text) 4%);
+  --nova-block-playground-canvas-padding: 1rem;
+  --nova-block-playground-token-plain: var(--nova-color-text);
+  --nova-block-playground-token-comment: var(--nova-color-text-muted);
+  --nova-block-playground-token-punctuation: var(--nova-color-text-soft, var(--nova-color-text-muted));
+  --nova-block-playground-token-tag: var(--nova-color-primary-600);
+  --nova-block-playground-token-attribute: var(--nova-color-accent-700);
+  --nova-block-playground-token-string: var(--nova-color-primary-800);
+  --nova-block-playground-token-keyword: var(--nova-color-accent-600);
+
+  margin-block: 1.5rem;
+}
+
+[data-theme="dark"] .nova-block-playground {
+  --nova-block-playground-token-tag: var(--nova-color-primary-300);
+  --nova-block-playground-token-attribute: var(--nova-color-accent-300);
+  --nova-block-playground-token-string: var(--nova-color-primary-200);
+  --nova-block-playground-token-keyword: var(--nova-color-accent-400);
+}
+
+@media (min-width: 640px) {
+  .nova-block-playground {
+    --nova-block-playground-canvas-padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-block-playground {
+    --nova-block-playground-canvas-padding: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * Block Playground - Unit
+ *
+ * Preview, toolbar, editor, and error share one border so the preview reads
+ * as the output of the code directly below it.
+ * ============================
+ */
+
+.nova-block-playground-unit {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--nova-color-background);
+  border: 1px solid var(--nova-block-playground-border);
+  border-radius: var(--nova-block-playground-radius);
+
+  overflow: hidden;
+}
+
+/**
+ * ============================
+ * Block Playground - Preview
+ * ============================
+ */
+
+/* The canvas clips at its own edge, so content cropped above and below the
+   preview stays out of the toolbar, while shadows still fade into the padding. */
+.nova-block-playground-canvas {
+  display: block;
+  min-height: 4rem;
+  padding: var(--nova-block-playground-canvas-padding);
+
+  background-color: var(--nova-color-background);
+
+  overflow: hidden;
+}
+
+/* Blocks keep a section gap between them on a page; the canvas padding
+   replaces it at the edges. */
+.nova-block-playground-canvas > :first-child {
+  margin-top: 0;
+}
+
+.nova-block-playground-canvas > :last-child {
+  margin-bottom: 0;
+}
+
+/* Links in the example are inert, so they shouldn't look clickable. */
+.nova-block-playground-canvas a {
+  cursor: default;
+}
+
+/**
+ * ============================
+ * Block Playground - Scaled Preview
+ *
+ * The stage lays the block out at up to desktop width and is zoomed out
+ * from the top-left corner. Script sets the stage width, the zoom, and the
+ * viewport height so the scaled content fits with no gap or overflow.
+ * ============================
+ */
+
+/* The viewport doesn't clip: soft shadow tails fade out into the canvas
+   padding, and the canvas clips at its own outer edge instead. It stays
+   invisible (but measurable) until the layout settles, then fades in. */
+.nova-block-playground-viewport {
+  position: relative;
+
+  display: flow-root;
+
+  opacity: 0;
+}
+
+.nova-block-playground-viewport[data-ready="true"] {
+  opacity: 1;
+
+  transition: opacity 150ms ease, height 200ms ease;
+}
+
+.nova-block-playground-stage {
+  display: flow-root;
+
+  transform-origin: top left;
+}
+
+.nova-block-playground-viewport[data-ready="true"] > .nova-block-playground-stage {
+  transition: margin-top 200ms ease, transform 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-block-playground-viewport[data-ready="true"],
+  .nova-block-playground-viewport[data-ready="true"] > .nova-block-playground-stage {
+    transition: none;
+  }
+}
+
+/* The block's own section gap is replaced by the canvas padding. */
+.nova-block-playground-stage > :first-child {
+  margin-top: 0;
+}
+
+.nova-block-playground-stage > :last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * ============================
+ * Block Playground - Full-Size Preview
+ *
+ * A native modal dialog that shows the example at real size, up to the
+ * desktop width. It fills the screen on phones.
+ * ============================
+ */
+
+.nova-block-playground-modal {
+  width: min(calc(100vw - 2rem), 1280px);
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+
+  color: var(--nova-color-text);
+
+  background-color: var(--nova-color-background);
+  border: 1px solid var(--nova-block-playground-border);
+  border-radius: var(--nova-block-playground-radius);
+  box-shadow: 0 24px 48px rgb(0 0 0 / 0.25);
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 0.5);
+  }
+}
+
+.nova-block-playground-modal-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 2rem);
+}
+
+.nova-block-playground-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  background-color: var(--nova-block-playground-code-bg);
+  border-bottom: 1px solid var(--nova-block-playground-border);
+}
+
+.nova-block-playground-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+
+  color: var(--nova-color-text);
+
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--nova-block-playground-radius);
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--nova-block-playground-border);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nova-color-text-muted);
+    outline-offset: 2px;
+  }
+}
+
+.nova-block-playground-modal-canvas {
+  overflow: auto;
+}
+
+@media (max-width: 767.98px) {
+  .nova-block-playground-modal {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+
+    border: none;
+    border-radius: 0;
+  }
+
+  .nova-block-playground-modal-panel {
+    height: 100%;
+    max-height: none;
+  }
+}
+
+/**
+ * ============================
+ * Block Playground - Toolbar
+ * ============================
+ */
+
+.nova-block-playground-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--nova-color-text-muted);
+
+  background-color: var(--nova-block-playground-code-bg);
+  border-top: 1px solid var(--nova-block-playground-border);
+  border-bottom: 1px solid var(--nova-block-playground-border);
+}
+
+/* Phones show icons only; the text stays readable to screen readers. */
+.nova-block-playground-label {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(50%);
+  border: 0;
+
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .nova-block-playground-toolbar {
+    gap: 0.75rem;
+    padding-left: 1rem;
+  }
+
+  .nova-block-playground-button {
+    padding: 0.375rem 0.625rem;
+  }
+
+  .nova-block-playground-label {
+    position: static;
+
+    width: auto;
+    height: auto;
+    margin: 0;
+
+    clip-path: none;
+
+    overflow: visible;
+  }
+}
+
+.nova-block-playground-lang {
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nova-block-playground-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-right: auto;
+}
+
+.nova-block-playground-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+
+  font: inherit;
+  color: var(--nova-color-text);
+
+  background: none;
+  border: 1px solid var(--nova-block-playground-border);
+  border-radius: var(--nova-block-playground-radius);
+
+  transition: border-color var(--nova-motion-duration, 150ms) ease, color var(--nova-motion-duration, 150ms) ease;
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--nova-color-primary-600);
+    border-color: var(--nova-color-primary-500);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nova-color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
+[data-theme="dark"] .nova-block-playground-button:hover {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * Block Playground - Editor
+ * ============================
+ */
+
+.nova-block-playground-code {
+  padding: 0.5rem 0.625rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  line-height: 1.7;
+
+  background-color: var(--nova-block-playground-code-bg);
+
+  transition: background-color var(--nova-motion-duration, 150ms) ease;
+
+  overflow-x: auto;
+
+  /* A neutral shift in tone shows where typing lands without a colored ring. */
+  &:focus-within {
+    background-color: var(--nova-block-playground-code-bg-focus);
+  }
+}
+
+/* Keyboard focus still gets a visible, neutral outline. */
+.nova-block-playground-code pre:focus-visible {
+  outline: 1px dashed var(--nova-color-text-muted);
+  outline-offset: -4px;
+}
+
+.nova-block-playground-code pre {
+  min-width: max-content;
+}
+
+/**
+ * ============================
+ * Block Playground - Error
+ * ============================
+ */
+
+.nova-block-playground-error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-color-danger-500);
+  white-space: pre-wrap;
+
+  background-color: var(--nova-color-danger-bg);
+  border-top: 1px solid var(--nova-color-danger-500);
+  border-radius: 0;
+}
+
+/**
+ * ============================
+ * Block Playground - Fallback
+ * ============================
+ */
+
+.nova-block-playground-fallback {
+  margin: 0;
+  padding: 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  line-height: 1.7;
+
+  background-color: var(--nova-block-playground-code-bg);
+  border: 1px solid var(--nova-block-playground-border);
+  border-radius: var(--nova-block-playground-radius);
+
+  overflow-x: auto;
+}

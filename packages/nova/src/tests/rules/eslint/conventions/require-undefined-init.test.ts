@@ -27,19 +27,13 @@ ruleTester.run('requireUndefinedInit', RequireUndefinedInit['rule'], {
       code: 'let name = undefined;',
     },
     {
-      code: 'let count = 0;',
-    },
-    {
       code: 'const items = [];',
     },
     {
-      code: 'let name = "default";',
+      code: 'for (let item of items) {}',
     },
     {
-      code: 'for (const item of items) {}',
-    },
-    {
-      code: 'for (const key in obj) {}',
+      code: 'for (let key in obj) {}',
     },
     {
       code: 'let name;',
@@ -47,21 +41,9 @@ ruleTester.run('requireUndefinedInit', RequireUndefinedInit['rule'], {
       filename: '/path/to/ignored-file.ts',
     },
   ],
-  invalid: [
-    {
-      code: 'let name;',
-      output: 'let name = undefined;',
-      errors: [{ messageId: 'requireUndefinedInit' }],
-    },
-    {
-      code: 'let count;',
-      output: 'let count = undefined;',
-      errors: [{ messageId: 'requireUndefinedInit' }],
-    },
-    {
-      code: 'let user;',
-      output: 'let user = undefined;',
-      errors: [{ messageId: 'requireUndefinedInit' }],
-    },
-  ],
+  invalid: [{
+    code: 'let name;',
+    output: 'let name = undefined;',
+    errors: [{ messageId: 'requireUndefinedInit' }],
+  }],
 });

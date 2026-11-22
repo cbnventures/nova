@@ -22,11 +22,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import featuresPreviewLight from './_assets_/features-preview-light.png';
-import featuresPreviewDark from './_assets_/features-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Responsive grid of feature cards with optional icons, titles, and descriptions.
 
@@ -44,11 +40,34 @@ The grid adapts from one column on mobile to three columns on desktop.
 - **Iconify integration** — pass any Iconify icon identifier for visual variety.
 - **Preset-aware** — card styling, spacing, and typography adapt to the active preset.
 
-## Preview
+## Try It
 
-<Frame caption="Features block — light and dark mode preview">
-  <ThemedImage sources={{ light: featuresPreviewLight, dark: featuresPreviewDark }} alt="Features block preview" width={1280} height={258} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Features
+  heading="Why Nova?"
+  items={[
+    {
+      icon: 'lucide:shield-check',
+      title: 'Strict Defaults',
+      description: 'Lower setup overhead and reduce drift.',
+    },
+    {
+      icon: 'lucide:wand-2',
+      title: 'Guided Generators',
+      description: 'Scaffold and maintain project files.',
+    },
+    {
+      icon: 'lucide:repeat',
+      title: 'Predictable Builds',
+      description: 'Same inputs, same outputs, every time.',
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

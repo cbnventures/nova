@@ -19,11 +19,7 @@ tags:
   - "tabs"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import showcasePreviewLight from './_assets_/showcase-preview-light.png';
-import showcasePreviewDark from './_assets_/showcase-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 One section that shows several product views, one at a time. Each view has its own heading, description, link, and content, usually a Browser Frame or Terminal Frame. A tab pill switches between them.
 
@@ -38,11 +34,51 @@ The Showcase block renders a `<div class="nova-showcase">` with a tab pill (`rol
 - **Accessible tabs** — buttons carry `role="tab"`, `aria-selected`, and `aria-controls`, and the panel is labelled by the selected tab.
 - **Fits narrow screens** — the tab pill stays on one line down to 320px.
 
-## Preview
+## Try It
 
-<Frame caption="Showcase block — light and dark mode preview">
-  <ThemedImage sources={{ light: showcasePreviewLight, dark: showcasePreviewDark }} alt="Showcase block preview" width={800} height={868} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<Showcase
+  tabsLabel="Dashboard pages"
+  items={[
+    {
+      label: 'Overview',
+      heading: 'Every project on one page',
+      description: 'The Overview shows the next scheduled job and every result from the last run.',
+      link: { label: 'Tour the Dashboard', to: '/docs/features/dashboard/' },
+      content: (
+        <div
+          role="img"
+          aria-label="Overview page"
+          style={{
+            aspectRatio: '1280 / 800',
+            background: 'linear-gradient(135deg, var(--nova-color-primary-100), var(--nova-color-primary-300))',
+            borderRadius: 'var(--nova-shape-radius)',
+          }}
+        />
+      ),
+    },
+    {
+      label: 'History',
+      heading: 'A record of every run',
+      content: (
+        <div
+          role="img"
+          aria-label="History page"
+          style={{
+            aspectRatio: '1280 / 800',
+            background: 'linear-gradient(135deg, var(--nova-color-accent-100), var(--nova-color-accent-300))',
+            borderRadius: 'var(--nova-shape-radius)',
+          }}
+        />
+      ),
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

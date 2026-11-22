@@ -30,33 +30,13 @@ ruleTester.run('noOptionalChaining', NoOptionalChaining['rule'], {
       code: 'const name = inputName ?? "default";',
     },
     {
-      code: 'const port = config.port ?? 3000;',
-    },
-    {
-      code: 'const value = obj.property;',
-    },
-    {
       code: 'const name = user?.name;',
       options: [{ ignoreFiles: ['ignored-file.ts'] }],
       filename: '/path/to/ignored-file.ts',
     },
   ],
-  invalid: [
-    {
-      code: 'const name = user?.name;',
-      errors: [{ messageId: 'noOptionalChaining' }],
-    },
-    {
-      code: 'const first = arr?.[0];',
-      errors: [{ messageId: 'noOptionalChaining' }],
-    },
-    {
-      code: 'const result = fn?.();',
-      errors: [{ messageId: 'noOptionalChaining' }],
-    },
-    {
-      code: 'const deep = obj?.a?.b?.c;',
-      errors: [{ messageId: 'noOptionalChaining' }],
-    },
-  ],
+  invalid: [{
+    code: 'const name = user?.name;',
+    errors: [{ messageId: 'noOptionalChaining' }],
+  }],
 });

@@ -1,0 +1,95 @@
+#!/bin/sh
+
+set -eu
+
+package_name=${SYNOPKG_PKGNAME:-[__WORKSPACE_PACKAGE_NAME__]}
+package_target=${SYNOPKG_PKGDEST:-/var/packages/${package_name}/target}
+package_var=${SYNOPKG_PKGVAR:-/var/packages/${package_name}/var}
+service_path=${package_target}/bin/example-service
+pid_file=${package_var}/example-service.pid
+service_log=${package_var}/example-service.log
+lifecycle_log=${package_var}/lifecycle.log
+settings_file=${package_var}/settings.conf
+status_file=${package_var}/status.json
+action=${1:-}
+service_pid=''
+
+mkdir -p "${package_var}"
+
+is_running() {
+  if [ ! -f "${pid_file}" ]; then
+    return 1
+  fi
+
+  service_pid=$(cat "${pid_file}")
+
+  if [ -z "${service_pid}" ]; then
+    return 1
+  fi
+
+  kill -0 "${service_pid}" 2> /dev/null
+}
+
+json_string() {
+  escaped_value=$(printf '%s' "${1}" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')
+
+  printf '"%s"' "${escaped_value}"
+}
+
+# Writes the state "ui/status.cgi" returns to the DSM window, so it shows the service stopping and starting.
+write_status() {
+  greeting=$(sed -n 's/^greeting=//p' "${settings_file}" 2> /dev/null | head -n 1)
+  state_json=$(json_string "${1}")
+  started_json=$(json_string "${3:-}")
+  greeting_json=$(json_string "${greeting:-[__WORKSPACE_TITLE__]}")
+
+  printf '{"state":%s,"pid":%s,"started":%s,"greeting":%s}\n' "${state_json}" "${2:-0}" "${started_json}" "${greeting_json}" > "${status_file}.tmp"
+  mv -f "${status_file}.tmp" "${status_file}"
+}
+
+case "${action}" in
+  start)
+    if is_running; then
+      printf '%s\n' 'start: already running' >> "${lifecycle_log}"
+      exit 0
+    fi
+
+    if [ ! -x "${service_path}" ]; then
+      printf '%s\n' "start: missing executable ${service_path}" >> "${lifecycle_log}"
+      exit 1
+    fi
+
+    nohup "${service_path}" >> "${service_log}" 2>&1 &
+    service_pid=$!
+    printf '%s\n' "${service_pid}" > "${pid_file}"
+    started_at=$(date '+%Y-%m-%d %H:%M:%S')
+    write_status 'running' "${service_pid}" "${started_at}"
+    printf '%s\n' "start: ${service_pid}" >> "${lifecycle_log}"
+    ;;
+  stop)
+    write_status 'stopped'
+
+    if ! is_running; then
+      rm -f "${pid_file}"
+      printf '%s\n' 'stop: already stopped' >> "${lifecycle_log}"
+      exit 0
+    fi
+
+    kill "${service_pid}" 2> /dev/null || true
+    rm -f "${pid_file}"
+    printf '%s\n' "stop: ${service_pid}" >> "${lifecycle_log}"
+    ;;
+  status)
+    if is_running; then
+      exit 0
+    fi
+
+    # DSM's documented status codes: 0 running, 3 not running.
+    exit 3
+    ;;
+  *)
+    printf '%s\n' "ignored action: ${action:-none}" >> "${lifecycle_log}"
+    ;;
+esac
+
+exit 0

@@ -141,6 +141,12 @@ import type {
   Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_TypedEntry,
   Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Value,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Diagnostics,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parsed,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parser,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Returns,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsReadMeProfileInput_Value,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Parsed,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Returns,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Trimmed,
@@ -210,6 +216,9 @@ import type {
   Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns,
   Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value,
+  Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Returns,
+  Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Trimmed,
+  Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Value,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Returns,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Trimmed,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Value,
@@ -923,12 +932,23 @@ import type {
   Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutputResult,
   Cli_Utility_Configure_Runner_PromptReadMe_Config,
   Cli_Utility_Configure_Runner_PromptReadMe_ExistingBadges,
+  Cli_Utility_Configure_Runner_PromptReadMe_ExistingProfile,
   Cli_Utility_Configure_Runner_PromptReadMe_ExistingReadMe,
   Cli_Utility_Configure_Runner_PromptReadMe_FundSources,
   Cli_Utility_Configure_Runner_PromptReadMe_Github,
   Cli_Utility_Configure_Runner_PromptReadMe_HasExplicitBadges,
+  Cli_Utility_Configure_Runner_PromptReadMe_Mode,
+  Cli_Utility_Configure_Runner_PromptReadMe_ModeOutput,
+  Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputKey,
+  Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputResult,
   Cli_Utility_Configure_Runner_PromptReadMe_Platforms,
+  Cli_Utility_Configure_Runner_PromptReadMe_Profile,
+  Cli_Utility_Configure_Runner_PromptReadMe_ProfileInput,
+  Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutput,
+  Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputKey,
+  Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputResult,
   Cli_Utility_Configure_Runner_PromptReadMe_Project,
+  Cli_Utility_Configure_Runner_PromptReadMe_ReadMe,
   Cli_Utility_Configure_Runner_PromptReadMe_Returns,
   Cli_Utility_Configure_Runner_PromptReadMe_SelectedBadges,
   Cli_Utility_Configure_Runner_PromptReadMe_SuggestedBadges,
@@ -1006,8 +1026,10 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_CurrentDirectory,
   Cli_Utility_Configure_Runner_PromptSettings_CurrentStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingCache,
+  Cli_Utility_Configure_Runner_PromptSettings_ExistingChangelog,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingCoverage,
+  Cli_Utility_Configure_Runner_PromptSettings_HasDuplicateWorkspaceName,
   Cli_Utility_Configure_Runner_PromptSettings_LockedStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningInitial,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput,
@@ -1030,7 +1052,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputKey,
   Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputResult,
   Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputValue,
+  Cli_Utility_Configure_Runner_PromptSettings_UnknownWorkspaceName,
   Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceNames,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrder,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInitial,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInput,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutput,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputKey,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputResult,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputValue,
+  Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderValidationValue,
   Cli_Utility_Configure_Runner_PromptUrls_Config,
   Cli_Utility_Configure_Runner_PromptUrls_ExistingUrls,
   Cli_Utility_Configure_Runner_PromptUrls_QuestionsOutput,
@@ -2040,6 +2072,59 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Is Read Me Profile Input.
+   *
+   * Validates the compact profile README editor through the config parser used on load.
+   * A temporary funding source isolates validation from the current URL section.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsReadMeProfileInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsReadMeProfileInput_Returns}
+   *
+   * @since 0.50.0
+   */
+  public static isReadMeProfileInput(value: Cli_Utility_Configure_Runner_IsReadMeProfileInput_Value): Cli_Utility_Configure_Runner_IsReadMeProfileInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a JSON object for the profile README.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsReadMeProfileInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return true;
+    }
+
+    try {
+      const parsed: Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parsed = JSON.parse(trimmed) as Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parsed;
+
+      if (isPlainObject(parsed) === false) {
+        return 'Enter a JSON object for the profile README.';
+      }
+
+      const parser: Cli_Utility_Configure_Runner_IsReadMeProfileInput_Parser = new LibNovaConfig();
+
+      parser.set({
+        urls: {
+          fundSources: ['https://example.com/support'],
+        },
+        readme: {
+          profile: parsed,
+        },
+      });
+
+      const diagnostics: Cli_Utility_Configure_Runner_IsReadMeProfileInput_Diagnostics = parser.diagnostics();
+
+      if (diagnostics.length > 0) {
+        return 'Use valid heading, introduction (paragraph array), badgeGroups, linkGroups, and support (title, emoji, message paragraph array, badges) values.';
+      }
+    } catch {
+      return 'Enter valid JSON for the profile README.';
+    }
+
+    return true;
+  }
+
+  /**
    * CLI - Utility - Configure - Is String Array Input.
    *
    * Validates an optional compact JSON array and ensures every entry is a
@@ -2181,6 +2266,30 @@ export class Runner {
    */
   private static parsePositiveIntegerRecordInput(value: Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value): Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns {
     const trimmed: Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return {};
+    }
+
+    return JSON.parse(trimmed);
+  }
+
+  /**
+   * CLI - Utility - Configure - Parse Read Me Profile Input.
+   *
+   * Converts the validated compact profile editor value into the profile object.
+   * A blank value is the empty object, which still declares profile README mode.
+   *
+   * @param {Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static parseReadMeProfileInput(value: Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Value): Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Returns {
+    const trimmed: Cli_Utility_Configure_Runner_ParseReadMeProfileInput_Trimmed = value.trim();
 
     if (trimmed === '') {
       return {};
@@ -5977,6 +6086,7 @@ export class Runner {
   private static async promptReadMe(config: Cli_Utility_Configure_Runner_PromptReadMe_Config): Cli_Utility_Configure_Runner_PromptReadMe_Returns {
     const existingReadMe: Cli_Utility_Configure_Runner_PromptReadMe_ExistingReadMe = config['readme'];
     const existingBadges: Cli_Utility_Configure_Runner_PromptReadMe_ExistingBadges = (existingReadMe !== undefined) ? (existingReadMe['badges'] ?? []) : [];
+    const existingProfile: Cli_Utility_Configure_Runner_PromptReadMe_ExistingProfile = (existingReadMe !== undefined) ? existingReadMe['profile'] : undefined;
     const hasExplicitBadges: Cli_Utility_Configure_Runner_PromptReadMe_HasExplicitBadges = (existingReadMe !== undefined) ? existingReadMe['badges'] !== undefined : false;
     const suggestedBadges: Cli_Utility_Configure_Runner_PromptReadMe_SuggestedBadges = [];
     const project: Cli_Utility_Configure_Runner_PromptReadMe_Project = config['project'];
@@ -6077,9 +6187,51 @@ export class Runner {
     }
 
     const badges: Cli_Utility_Configure_Runner_PromptReadMe_Badges = badgesOutput['result'].readMeBadges ?? [];
+    const modeOutput: Cli_Utility_Configure_Runner_PromptReadMe_ModeOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputKey, Cli_Utility_Configure_Runner_PromptReadMe_ModeOutputResult>({
+      type: 'select',
+      name: 'readMeMode',
+      message: 'README style',
+      choices: [
+        {
+          title: 'Project README',
+          value: 'project',
+        },
+        {
+          title: 'GitHub profile README',
+          value: 'profile',
+        },
+      ],
+      initial: (existingProfile === undefined) ? 0 : 1,
+    });
+
+    if (modeOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const mode: Cli_Utility_Configure_Runner_PromptReadMe_Mode = modeOutput['result'].readMeMode ?? 'project';
+    const readMe: Cli_Utility_Configure_Runner_PromptReadMe_ReadMe = { badges };
+
+    if (mode === 'profile') {
+      const profileOutput: Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputKey, Cli_Utility_Configure_Runner_PromptReadMe_ProfileOutputResult>({
+        type: 'text',
+        name: 'readMeProfile',
+        message: 'Profile JSON: heading, introduction paragraphs, ordered badgeGroups, ordered linkGroups, support object (support without badges requires urls.fundSources)',
+        initial: JSON.stringify(existingProfile ?? {}),
+        validate: Runner['isReadMeProfileInput'],
+      });
+
+      if (profileOutput['cancelled'] === true) {
+        return 'back';
+      }
+
+      const profileInput: Cli_Utility_Configure_Runner_PromptReadMe_ProfileInput = profileOutput['result'].readMeProfile ?? '';
+      const profile: Cli_Utility_Configure_Runner_PromptReadMe_Profile = Runner.parseReadMeProfileInput(profileInput);
+
+      readMe.profile = profile;
+    }
 
     Object.assign(config, {
-      readme: { badges },
+      readme: readMe,
     });
 
     Logger.customize({
@@ -10214,8 +10366,8 @@ export class Runner {
   /**
    * CLI - Utility - Configure - Prompt Settings.
    *
-   * Presents the version strategy selector. Existing release history in the root or
-   * a non-freezable workspace locks the strategy and makes the pane read-only.
+   * Presents project-wide version, changelog, workspace-runner, and coverage settings.
+   * Existing release history locks the version strategy and makes that choice read-only.
    *
    * @param {Cli_Utility_Configure_Runner_PromptSettings_Config} config - Config.
    *
@@ -10296,6 +10448,42 @@ export class Runner {
     }
 
     const lockStepVersioningOutputResult: Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult = lockStepVersioningOutput['result'];
+    const workspaceNames: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceNames = Object.values(config['workspaces'] ?? {}).map((workspace) => workspace['name']).sort();
+    const existingChangelog: Cli_Utility_Configure_Runner_PromptSettings_ExistingChangelog = settings['changelog'];
+    const workspaceOrderInitial: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInitial = (existingChangelog === undefined || existingChangelog['workspaceOrder'] === undefined) ? '' : existingChangelog['workspaceOrder'].join(', ');
+    const workspaceOrderOutput: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputKey, Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputValue>({
+      type: 'text',
+      name: 'workspaceOrder',
+      message: 'Release-note workspace order (comma-separated, blank uses alphabetical):',
+      initial: workspaceOrderInitial,
+      validate: (value) => {
+        if (typeof value !== 'string') {
+          return 'Enter comma-separated workspace names, or leave it blank.';
+        }
+
+        const workspaceOrderValidationValue: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderValidationValue = value.split(',').map((workspaceName) => workspaceName.trim()).filter((workspaceName) => workspaceName !== '');
+        const unknownWorkspaceName: Cli_Utility_Configure_Runner_PromptSettings_UnknownWorkspaceName = workspaceOrderValidationValue.find((workspaceName) => workspaceNames.includes(workspaceName) === false);
+        const hasDuplicateWorkspaceName: Cli_Utility_Configure_Runner_PromptSettings_HasDuplicateWorkspaceName = new Set(workspaceOrderValidationValue).size !== workspaceOrderValidationValue.length;
+
+        if (unknownWorkspaceName !== undefined) {
+          return `Workspace "${unknownWorkspaceName}" is not configured. Use: ${workspaceNames.join(', ')}.`;
+        }
+
+        if (hasDuplicateWorkspaceName === true) {
+          return 'List each workspace at most once.';
+        }
+
+        return true;
+      },
+    });
+
+    if (workspaceOrderOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const workspaceOrderOutputResult: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderOutputResult = workspaceOrderOutput['result'];
+    const workspaceOrderInput: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrderInput = workspaceOrderOutputResult.workspaceOrder.trim();
+    const workspaceOrder: Cli_Utility_Configure_Runner_PromptSettings_WorkspaceOrder = (workspaceOrderInput === '') ? [] : workspaceOrderInput.split(',').map((workspaceName) => workspaceName.trim()).filter((workspaceName) => workspaceName !== '');
     const runWorkspacesSettings: Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings = settings['runWorkspaces'];
     const existingConcurrency: Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency = (runWorkspacesSettings === undefined || runWorkspacesSettings['concurrency'] === undefined) ? {} : runWorkspacesSettings['concurrency'];
     const concurrencyInitial: Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyInitial = JSON.stringify(existingConcurrency);
@@ -10448,6 +10636,15 @@ export class Runner {
       runWorkspaces,
       versionStrategy: strategyInput,
     };
+
+    if (workspaceOrder.length === 0) {
+      Reflect.deleteProperty(updatedSettings, 'changelog');
+    } else {
+      updatedSettings.changelog = {
+        ...existingChangelog,
+        workspaceOrder,
+      };
+    }
 
     if (coverageMinimumInput === '') {
       Reflect.deleteProperty(updatedSettings, 'coverage');

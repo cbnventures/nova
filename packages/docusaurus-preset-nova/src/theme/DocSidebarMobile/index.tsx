@@ -61,7 +61,7 @@ function DocSidebarMobile(props: Theme_DocSidebarMobile_Index_DocSidebarMobile_P
         {breadcrumbs.map((item: Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem, index: Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex) => (
           <span className="nova-sidebar-mobile-trigger-segment" key={index}>
             {(index > 0) && separator}
-            {item['label']}
+            <span className="nova-sidebar-mobile-trigger-label">{item['label']}</span>
           </span>
         ))}
       </span>

@@ -1293,6 +1293,16 @@ export const LIB_REGEX_PATTERN_SLUG_SCOPED = /^@[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])
 export const LIB_REGEX_PATTERN_SLUG_SIMPLE = /^[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])?$/;
 
 /**
+ * Lib - Regex - Pattern Svg Data URI.
+ *
+ * Validates a base64-encoded SVG data URI used as a custom profile badge logo
+ * when a brand is missing from Simple Icons. Used by nova-config.
+ *
+ * @since 0.50.0
+ */
+export const LIB_REGEX_PATTERN_SVG_DATA_URI = /^data:image\/svg\+xml;base64,[A-Za-z0-9+/]+={0,2}$/;
+
+/**
  * Lib - Regex - Pattern Terminology Component.
  *
  * Captures the attributes and children of Terminology JSX elements so the terminology
@@ -2268,6 +2278,16 @@ export const LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE = /\[__WORKSPACE_TITLE__\]/;
  * @since 0.34.0
  */
 export const LIB_REGEX_PLACEHOLDER_WORKSPACE_VERSION = /\[__WORKSPACE_VERSION__\]/;
+
+/**
+ * Lib - Regex - Placeholder Synology Usr Local Link.
+ *
+ * Matches the optional /usr/local linker selection used by the Synology
+ * package scaffold to decide whether conf/resource is generated.
+ *
+ * @since 0.50.0
+ */
+export const LIB_REGEX_PLACEHOLDER_SYNOLOGY_USR_LOCAL_LINK = /\[__SYNOLOGY_USR_LOCAL_LINK__\]/;
 
 /**
  * Lib - Regex - Placeholder Terms Of Use.

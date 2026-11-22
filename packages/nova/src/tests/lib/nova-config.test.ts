@@ -1,6 +1,5 @@
 import {
   deepStrictEqual,
-  doesNotThrow,
   fail,
   ok,
   strictEqual,
@@ -280,8 +279,6 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigContents,
@@ -512,6 +509,11 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_TemporaryDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_OriginalCwd,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigContents,
@@ -524,6 +526,22 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Loaded,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Messages,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Messages,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyConfig,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyLoaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyMessages,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Messages,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigReadme_TemporaryDirectory,
@@ -568,37 +586,6 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SetAcceptsValidWorkspaceConfig_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_TemporaryDirectory,
 } from '../../types/tests/lib/nova-config.test.d.ts';
-
-/**
- * Tests - Lib - Nova Config - Shared_NovaConfig Constructor.
- *
- * @since 0.13.0
- */
-describe('Shared_NovaConfig constructor', async () => {
-  it('creates instance without errors', () => {
-    doesNotThrow(() => {
-      const config: Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config = new LibNovaConfig();
-
-      void config;
-
-      return;
-    });
-
-    return;
-  });
-
-  it('instance has expected public methods', () => {
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config = new LibNovaConfig();
-
-    strictEqual(typeof config.load, 'function');
-    strictEqual(typeof config.set, 'function');
-    strictEqual(typeof config.save, 'function');
-
-    return;
-  });
-
-  return;
-});
 
 /**
  * Tests - Lib - Nova Config - Shared_NovaConfig Set And Save.
@@ -3536,6 +3523,377 @@ describe('Shared_NovaConfig readme', async () => {
         'github-release',
       ],
     });
+
+    return;
+  });
+
+  it('normalizes profile content', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ProjectDirectory = join(sandboxRoot, 'profile-normalized');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigContents = JSON.stringify({
+      urls: {
+        fundSources: ['https://github.com/sponsors/example'],
+      },
+      readme: {
+        profile: {
+          heading: 'Hi there 👋',
+          introduction: [
+            'Hello from my profile.',
+            ' Second paragraph. ',
+          ],
+          badgeGroups: [
+            {
+              title: 'Tools',
+              emoji: '🛠️',
+              badges: [
+                {
+                  label: 'Visual Studio Code',
+                  logo: 'VisualStudioCode',
+                  color: '007ACC',
+                  link: 'https://code.visualstudio.com',
+                },
+                {
+                  label: 'Codex',
+                  logo: 'data:image/svg+xml;base64,PHN2Zy8+AbC=',
+                  color: '000000',
+                  link: 'https://example.com/codex',
+                },
+              ],
+            },
+            {
+              title: 'Languages',
+              badges: [{
+                label: 'TypeScript',
+                logo: 'TypeScript',
+                color: '3178C6',
+                link: 'https://www.typescriptlang.org',
+              }],
+            },
+          ],
+          linkGroups: [
+            {
+              title: 'Projects',
+              emoji: '📦',
+              columns: [
+                'Project',
+                'Summary',
+              ],
+              links: [{
+                label: 'Widget',
+                url: 'https://example.com/widget',
+                description: 'A small widget',
+              }],
+            },
+            {
+              title: 'Links',
+              links: [
+                {
+                  label: 'Website',
+                  url: 'https://example.com',
+                },
+                {
+                  label: 'Biography',
+                  url: 'https://example.com/about',
+                },
+              ],
+            },
+          ],
+          support: {
+            title: 'Support',
+            emoji: '🍩',
+            message: ['Thank you.'],
+            badges: [{
+              label: 'Ko-fi',
+              logo: 'Kofi',
+              color: 'FF5E5B',
+              link: 'https://example.com/kofi',
+            }],
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Loaded = await config.load();
+
+    deepStrictEqual(loaded['readme'], {
+      profile: {
+        heading: 'Hi there 👋',
+        introduction: [
+          'Hello from my profile.',
+          'Second paragraph.',
+        ],
+        badgeGroups: [
+          {
+            title: 'Tools',
+            emoji: '🛠️',
+            badges: [
+              {
+                label: 'Visual Studio Code',
+                logo: 'visualstudiocode',
+                color: '007acc',
+                link: 'https://code.visualstudio.com',
+              },
+              {
+                label: 'Codex',
+                logo: 'data:image/svg+xml;base64,PHN2Zy8+AbC=',
+                color: '000000',
+                link: 'https://example.com/codex',
+              },
+            ],
+          },
+          {
+            title: 'Languages',
+            badges: [{
+              label: 'TypeScript',
+              logo: 'typescript',
+              color: '3178c6',
+              link: 'https://www.typescriptlang.org',
+            }],
+          },
+        ],
+        linkGroups: [
+          {
+            title: 'Projects',
+            emoji: '📦',
+            columns: [
+              'Project',
+              'Summary',
+            ],
+            links: [{
+              label: 'Widget',
+              url: 'https://example.com/widget',
+              description: 'A small widget',
+            }],
+          },
+          {
+            title: 'Links',
+            links: [
+              {
+                label: 'Website',
+                url: 'https://example.com',
+              },
+              {
+                label: 'Biography',
+                url: 'https://example.com/about',
+              },
+            ],
+          },
+        ],
+        support: {
+          title: 'Support',
+          emoji: '🍩',
+          message: ['Thank you.'],
+          badges: [{
+            label: 'Ko-fi',
+            logo: 'kofi',
+            color: 'ff5e5b',
+            link: 'https://example.com/kofi',
+          }],
+        },
+      },
+    });
+
+    return;
+  });
+
+  it('rejects invalid profile content', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ProjectDirectory = join(sandboxRoot, 'profile-invalid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigContents = JSON.stringify({
+      readme: {
+        profile: {
+          heading: ' ',
+          introduction: 'A plain string is not accepted.',
+          badgeGroups: [{
+            title: 'Invalid Badges',
+            badges: [
+              {
+                label: 'Bad Badge',
+                logo: 'not a slug!',
+                color: '123',
+                link: 'ftp://example.com',
+              },
+              {
+                label: 'Bad Data URI',
+                logo: 'data:image/svg+xml;base64,not base64!',
+                color: '000000',
+                link: 'https://example.com',
+              },
+            ],
+          }],
+          linkGroups: [
+            {
+              links: [{
+                label: 'Untitled',
+                url: 'https://example.com',
+              }],
+            },
+            {
+              title: 'Broken Links',
+              links: [{
+                label: '',
+                url: 'not-a-url',
+              }],
+            },
+            {
+              title: 'Partial',
+              emoji: ' ',
+              columns: ['Only One'],
+              links: [{
+                label: 'Website',
+                url: 'https://example.com',
+                description: ' ',
+              }],
+            },
+          ],
+          support: {},
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Loaded = await config.load();
+
+    deepStrictEqual(loaded['readme'], {
+      profile: {
+        badgeGroups: [],
+        linkGroups: [{
+          title: 'Partial',
+          links: [{
+            label: 'Website',
+            url: 'https://example.com',
+          }],
+        }],
+      },
+    });
+
+    const messages: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"heading" must be a non-empty string')));
+    ok(messages.some((message) => message.includes('"introduction" must be an array of paragraph strings')));
+    ok(messages.filter((message) => message.includes('requires label, a Simple Icons slug or base64 SVG data URI logo')).length === 2);
+    ok(messages.some((message) => message.includes('has no valid badges')));
+    ok(messages.some((message) => message.includes('link group requires a non-empty title and a links array')));
+    ok(messages.some((message) => message.includes('link in "Broken Links" requires a non-empty label and an HTTP URL')));
+    ok(messages.some((message) => message.includes('link group "Broken Links" has no valid links')));
+    ok(messages.some((message) => message.includes('link group "Partial" has an invalid emoji')));
+    ok(messages.some((message) => message.includes('link group "Partial" columns must be two non-empty strings')));
+    ok(messages.some((message) => message.includes('link "Website" in "Partial" has an invalid description')));
+    ok(messages.some((message) => message.includes('support without badges requires urls.fundSources')));
+
+    return;
+  });
+
+  it('rejects invalid profile paragraphs and support values', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ProjectDirectory = join(sandboxRoot, 'profile-invalid-support');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigContents = JSON.stringify({
+      readme: {
+        profile: {
+          introduction: [
+            ' ',
+            'Kept paragraph.',
+            42,
+          ],
+          linkGroups: 'not an array',
+          support: {
+            title: ' ',
+            emoji: 7,
+            message: [],
+            badges: [{
+              label: 'Ko-fi',
+              logo: 'kofi',
+              color: 'ff5e5b',
+              link: 'https://example.com/kofi',
+            }],
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Loaded = await config.load();
+
+    deepStrictEqual(loaded['readme'], {
+      profile: {
+        introduction: ['Kept paragraph.'],
+        support: {
+          badges: [{
+            label: 'Ko-fi',
+            logo: 'kofi',
+            color: 'ff5e5b',
+            link: 'https://example.com/kofi',
+          }],
+        },
+      },
+    });
+
+    const messages: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.filter((message) => message.includes('"introduction" paragraphs must be non-empty strings')).length === 2);
+    ok(messages.some((message) => message.includes('"linkGroups" must be an array')));
+    ok(messages.some((message) => message.includes('support "title" must be a non-empty string')));
+    ok(messages.some((message) => message.includes('support "emoji" must be a non-empty string')));
+    ok(messages.some((message) => message.includes('support "message" has no valid paragraphs')));
+    ok(messages.some((message) => message.includes('support without badges requires urls.fundSources')) === false);
+
+    const emptyDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyDirectory = join(sandboxRoot, 'profile-invalid-support-empty');
+
+    await mkdir(emptyDirectory, { recursive: true });
+
+    await writeFile(join(emptyDirectory, 'nova.config.json'), JSON.stringify({
+      urls: {
+        fundSources: ['https://github.com/sponsors/example'],
+      },
+      readme: {
+        profile: {
+          introduction: [],
+          support: {
+            message: 'A plain string is not accepted.',
+            badges: [],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(emptyDirectory);
+
+    const emptyConfig: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyConfig = new LibNovaConfig();
+    const emptyLoaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyLoaded = await emptyConfig.load();
+
+    deepStrictEqual(emptyLoaded['readme'], {
+      profile: {
+        support: {},
+      },
+    });
+
+    const emptyMessages: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyMessages = emptyConfig.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(emptyMessages.some((message) => message.includes('"introduction" has no valid paragraphs')));
+    ok(emptyMessages.some((message) => message.includes('support "message" must be an array of paragraph strings')));
+    ok(emptyMessages.some((message) => message.includes('support has no valid badges')));
 
     return;
   });

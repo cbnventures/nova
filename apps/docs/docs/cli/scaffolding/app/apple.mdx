@@ -1,7 +1,7 @@
 ---
 id: "apple"
 title: "Apple"
-description: "Scaffold a universal SwiftUI application for iOS and macOS with XcodeGen, Swift Testing, and Nova-managed project scripts."
+description: "Scaffold a universal SwiftUI application for iOS, macOS, tvOS, and visionOS with per-platform sample UI, XcodeGen, Swift Testing, and Nova-managed project scripts."
 keywords:
   - "nova"
   - "nova scaffold"
@@ -9,6 +9,8 @@ keywords:
   - "xcodegen"
   - "ios"
   - "macos"
+  - "tvos"
+  - "visionos"
 tags:
   - "cli"
   - "scaffold"
@@ -19,23 +21,24 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Scaffold a universal **SwiftUI** application that shares one codebase across iOS and macOS.
+Scaffold a universal **SwiftUI** application that shares one feature across iOS, macOS, tvOS, and visionOS, with a sample interface for each platform.
 
 Nova stores the Xcode project as a readable `project.yml` definition, then generates the disposable `.xcodeproj` file with XcodeGen.
 The generated `package.json` and `MARKETING_VERSION` share the strategy-aware initial version: `0.0.1` for SemVer or the current UTC `YYYY.M.0` period for CalVer. In an existing lock-step project, the app inherits the shared non-freezable version instead. Nova's changelog release flow keeps the two versions synchronized and advances the Apple build number from its initial value of `1`.
 
 ## Why Use This Command?
 
-1. Creates iOS and macOS targets together with a generated iOS launch screen so one workspace can serve both Apple platforms.
-2. Includes a Swift Testing target so the generated app starts with a working verification path.
-3. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
-4. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
-5. Seeds editable App Store Connect metadata and asset directories under the repository's root `assets/` folder.
-6. Includes an English Xcode String Catalog and uses SwiftUI's native localizable string types across both Apple destinations.
+1. Creates one app target for iOS, macOS, tvOS, and visionOS, with a generated iOS launch screen, so one workspace serves every Apple platform.
+2. Starts each platform with its own sample interface built on a shared feature, so you can see how a screen should feel on each device before writing your own.
+3. Includes a Swift Testing target so the generated app starts with a working verification path.
+4. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
+5. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
+6. Seeds editable App Store Connect metadata and asset directories under the repository's root `assets/` folder.
+7. Includes an English Xcode String Catalog and uses SwiftUI's native localizable string types across every Apple destination.
 
 ## Requirements
 
-- **macOS and Xcode** — Xcode supplies the Swift compiler, platform SDKs, and `xcodebuild`.
+- **macOS and Xcode** — Xcode supplies the Swift compiler, platform SDKs, and `xcodebuild`. Building for tvOS or visionOS also needs that platform's component installed in Xcode.
 - **XcodeGen** — Install XcodeGen and make `xcodegen` available on your `PATH`.
 - **Empty directory** or **<Terminology title="The top folder of the repo, where the root package.json lives" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a workspace.
 
@@ -83,12 +86,17 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 
 | File                                    | Description                                                                                                                                             |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project.yml`                           | XcodeGen definition for the app, tests, scheme, icon, and iOS launch screen.                                                                            |
-| `Sources/App.swift`                     | SwiftUI application entry point.                                                                                                                        |
+| `project.yml`                           | XcodeGen definition for the app, tests, scheme, icon, iOS launch screen, and the source folder each platform compiles.                                  |
+| `Sources/App/`                          | SwiftUI application entry point that opens each platform's root view.                                                                                   |
+| `Sources/Shared/`                       | Sample model, view model, and views that every platform reuses.                                                                                         |
+| `Sources/iOS/`                          | Tab bar and navigation stack interface for iPhone and iPad.                                                                                             |
+| `Sources/MacOS/`                        | Sidebar split view, Settings window, and menu commands for macOS 13 and later.                                                                          |
+| `Sources/MacOS_12/`                     | The same macOS screens built with APIs that macOS 12 supports.                                                                                          |
+| `Sources/tvOS/`                         | Tab bar and focusable card row for Apple TV.                                                                                                            |
+| `Sources/VisionOS/`                     | Split view with a control ornament and a separate settings window for Apple Vision Pro.                                                                 |
 | `Sources/Assets.xcassets/`              | Nova app icon, launchpad mark, and social-link vector assets.                                                                                           |
-| `Sources/ContentView.swift`             | Starter interface shared by iOS and macOS.                                                                                                              |
-| `Sources/Localizable.xcstrings`         | English String Catalog shared by the iOS and macOS targets.                                                                                             |
-| `Tests/AppTests.swift`                  | Swift Testing smoke test.                                                                                                                               |
+| `Sources/Localizable.xcstrings`         | English String Catalog shared by every platform.                                                                                                        |
+| `Tests/AppTests.swift`                  | Swift Testing suite for the shared view model.                                                                                                          |
 | `package.json`                          | Nova script groups for project generation, checking, and building.                                                                                      |
 | `eslint.config.mts`                     | Nova ESLint presets and custom rules for the Node.js lifecycle helper.                                                                                  |
 | `scripts/run-apple.mjs`                 | Lifecycle helper that maps each command to its XcodeGen or `xcodebuild` call.                                                                           |
@@ -98,9 +106,40 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 | `vitest.config.mts`                     | Helper-test discovery under `scripts/tests`, since Xcode owns the `Tests` folder.                                                                       |
 | `assets/app-store-connect/{workspace}/` | Root-owned App Store Connect metadata, screenshots, and creative assets.                                                                                |
 
+## Platform Folders
+
+Each platform folder holds only the screens that platform needs, while `Sources/Shared/` holds everything they have in common.
+This keeps one platform's layout choices from leaking into another and lets you delete a platform without touching shared code.
+
+### How the Folders Are Wired
+
+- **Shared sources** — `project.yml` compiles `Sources/` for every platform but excludes the five platform folders.
+- **Platform sources** — Each platform folder is added back with a `destinationFilters` entry, so Xcode compiles it only for its own destination.
+- **Root view** — `Sources/App/App.swift` opens `iOS_RootView`, `MacOS_RootView`, `MacOS_12_RootView`, `tvOS_RootView`, or `VisionOS_RootView` for the platform being built.
+
+Folder and type names follow Apple's platform spelling. Names that start with a lowercase prefix keep it (`iOS`, `tvOS`), and the rest start with a capital letter (`MacOS`, `VisionOS`).
+
+### macOS and macOS 12
+
+Both macOS folders compile for macOS. `MacOS` types are marked `@available(macOS 13.0, *)`, and `App.swift` checks `if #available(macOS 13.0, *)` to choose between `MacOS_RootView` and `MacOS_12_RootView`.
+
+The generated macOS deployment target is newer than macOS 13, so `MacOS_12` stays dormant until you lower `options.deploymentTarget.macOS` in `project.yml` to `12.0`. The shared views already avoid newer APIs or check for them, so lowering the target needs no other change.
+
+### Add or Remove a Platform
+
+To remove a platform, it is recommended to change these places together:
+
+1. Delete its folder under `Sources/`.
+2. Remove the folder's `excludes` entry and its `path` entry from `project.yml`.
+3. Remove the destination from `supportedDestinations` on the app and test targets.
+4. Remove the matching branch from `rootView` in `Sources/App/App.swift`.
+
+To add a platform, reverse the same steps: create the folder with a root view, add the `path` entry with `destinationFilters`, exclude the folder from the shared `Sources` entry, add the destination, and open the root view in `App.swift`.
+Run `npm run dev` afterward so XcodeGen regenerates the Xcode project.
+
 ## Localization
 
-Xcode discovers localizable SwiftUI literals during builds and keeps their source language in `Sources/Localizable.xcstrings`. Add languages and translations through Xcode's String Catalog editor; the same catalog serves the generated iOS and macOS application.
+Xcode discovers localizable SwiftUI literals during builds and keeps their source language in `Sources/Localizable.xcstrings`. Add languages and translations through Xcode's String Catalog editor; the same catalog serves every platform.
 
 Nova types reusable launch-step and accessibility copy as `LocalizedStringKey` so moving a literal through a helper view does not silently make it untranslatable. No runtime localization dependency is required.
 

@@ -21,21 +21,6 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprin
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityCheckSponsorGatedIssues_ReproducesTheSponsorCheckWorkflowWithPrefixedKeysByteForByte_Committed = string;
 
 /**
- * Tests - CLI - Generate - GitHub - Workflows Blueprint Parity - Lock Inactive Issues.
- *
- * @since 0.21.0
- */
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_Entry = Shared_BlueprintConfigWorkflow;
-
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Generated = string;
-
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturesDir = string;
-
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_FixturePath = string;
-
-export type Tests_Cli_Generate_Github_WorkflowsBlueprintParity_WorkflowsBlueprintParityLockInactiveIssues_ReproducesTheCommittedProjectWorkflowByteForByte_Committed = string;
-
-/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Parity - Lock Schedule Daily.
  *
  * @since 0.21.0

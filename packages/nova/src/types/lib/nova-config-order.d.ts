@@ -1,8 +1,15 @@
 import type {
   Shared_NovaConfig_DockerHub,
+  Shared_NovaConfig_ReadMe,
+  Shared_NovaConfig_ReadMe_Profile,
   Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Settings,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigReadMeProfileBadge,
+  Shared_NovaConfigReadMeProfileBadgeGroup,
+  Shared_NovaConfigReadMeProfileLink,
+  Shared_NovaConfigReadMeProfileLinkGroup,
+  Shared_NovaConfigReadMeProfileSupport,
 } from '../shared.d.ts';
 
 /**
@@ -11,6 +18,25 @@ import type {
  * @since 0.40.0
  */
 export type Lib_NovaConfigOrder_LibNovaConfigDockerHubKeys = readonly (keyof Shared_NovaConfig_DockerHub)[];
+
+/**
+ * Lib - Nova Config Order - Lib Nova Config Read Me Keys.
+ *
+ * @since 0.50.0
+ */
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeKeys = readonly (keyof Shared_NovaConfig_ReadMe)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileKeys = readonly (keyof Shared_NovaConfig_ReadMe_Profile)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileSupportKeys = readonly (keyof Shared_NovaConfigReadMeProfileSupport)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileBadgeGroupKeys = readonly (keyof Shared_NovaConfigReadMeProfileBadgeGroup)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileBadgeKeys = readonly (keyof Shared_NovaConfigReadMeProfileBadge)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileLinkGroupKeys = readonly (keyof Shared_NovaConfigReadMeProfileLinkGroup)[];
+
+export type Lib_NovaConfigOrder_LibNovaConfigReadMeProfileLinkKeys = readonly (keyof Shared_NovaConfigReadMeProfileLink)[];
 
 /**
  * Lib - Nova Config Order - Lib Nova Config Recipes Keys.
@@ -59,6 +85,51 @@ export type Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_TypedConfigEntr
 export type Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_ConfigKey = string;
 
 export type Lib_NovaConfigOrder_NormalizeNovaConfigTopLevelOrder_ConfigValue = unknown;
+
+/**
+ * Lib - Nova Config Order - Normalize Read Me Order.
+ *
+ * @since 0.50.0
+ */
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Value = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Returns = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_ReadMe = Record<string, unknown>;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_ProfileValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Profile = Record<string, unknown>;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_BadgeGroupsValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_BadgeGroups = unknown[];
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_BadgeGroup = Record<string, unknown>;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_BadgesValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Badges = unknown[];
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_LinkGroupsValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_LinkGroups = unknown[];
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_LinkGroup = Record<string, unknown>;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_LinksValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Links = unknown[];
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_SupportValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_Support = Record<string, unknown>;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_SupportBadgesValue = unknown;
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_SupportBadges = unknown[];
+
+export type Lib_NovaConfigOrder_NormalizeReadMeOrder_NormalizedProfile = unknown;
 
 /**
  * Lib - Nova Config Order - Normalize Section Order.

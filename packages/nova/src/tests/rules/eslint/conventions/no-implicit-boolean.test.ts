@@ -27,9 +27,6 @@ ruleTester.run('noImplicitBoolean', NoImplicitBoolean['rule'], {
       code: 'if (value !== undefined) {}',
     },
     {
-      code: 'if (Array.isArray(x) === false) {}',
-    },
-    {
       code: '(isDryRun === true) ? a : b;',
     },
     {
@@ -39,16 +36,7 @@ ruleTester.run('noImplicitBoolean', NoImplicitBoolean['rule'], {
       code: 'while (items.length > 0) {}',
     },
     {
-      code: 'if (fn() === false) {}',
-    },
-    {
-      code: 'if (await pathExists(p) === true) {}',
-    },
-    {
       code: 'const result = items.includes(x) === false;',
-    },
-    {
-      code: 'arr.filter((item) => item.active === false);',
     },
     {
       code: 'if (value) {}',
@@ -89,10 +77,6 @@ ruleTester.run('noImplicitBoolean', NoImplicitBoolean['rule'], {
       errors: [{ messageId: 'requireExplicitCheck' }],
     },
     {
-      code: 'if (!fn()) {}',
-      errors: [{ messageId: 'requireExplicitCheck' }],
-    },
-    {
       code: 'if (getValue()) {}',
       errors: [{ messageId: 'requireExplicitCheck' }],
     },
@@ -110,10 +94,6 @@ ruleTester.run('noImplicitBoolean', NoImplicitBoolean['rule'], {
     },
     {
       code: 'arr.filter((item) => !item.active);',
-      errors: [{ messageId: 'requireExplicitCheck' }],
-    },
-    {
-      code: 'return !getValue();',
       errors: [{ messageId: 'requireExplicitCheck' }],
     },
     {

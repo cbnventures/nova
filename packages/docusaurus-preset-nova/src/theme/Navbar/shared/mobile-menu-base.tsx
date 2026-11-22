@@ -25,6 +25,7 @@ import type {
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ChildTo,
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_CloseButton,
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_DefaultIcon,
+  Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_DropdownDefaultIcon,
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_FocusSelector,
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_FocusTarget,
   Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_HandleClickOutsideFunction,
@@ -240,12 +241,15 @@ function MobileMenuBase(props: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase
                     )
                   ) {
                     const dropdownIcon: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ItemIcon = navItem['icon'] as Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_ItemIcon;
+                    const dropdownDefaultIcon: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_DropdownDefaultIcon = 'lucide:folder';
 
+                    // The native summary exposes the expanded state; the trailing chevron shows it visually.
                     return (
                       <details key={navItem['label']} className={`${variantPrefix}-dropdown`} style={itemStyle}>
                         <summary className={`${variantPrefix}-dropdown-summary`}>
-                          <Icon icon={dropdownIcon ?? 'lucide:chevron-down'} width="18" height="18" aria-hidden="true" />
+                          <Icon className={`${variantPrefix}-dropdown-icon`} icon={dropdownIcon ?? dropdownDefaultIcon} width="18" height="18" aria-hidden="true" />
                           <span>{navItem['label']}</span>
+                          <Icon className={`${variantPrefix}-dropdown-chevron`} icon="lucide:chevron-down" width="14" height="14" aria-hidden="true" />
                         </summary>
                         <div className={`${variantPrefix}-dropdown-children`}>
                           {

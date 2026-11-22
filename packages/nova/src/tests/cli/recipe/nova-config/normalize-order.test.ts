@@ -31,6 +31,18 @@ import type {
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_PackageJsonPath,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ParsedOutput,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ProjectDirectory,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_BadgeGroups,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Badges,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ConfigPath,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_LinkGroups,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Links,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Output,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ParsedOutput,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Profile,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ProjectDirectory,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ReadMe,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Support,
+  Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_SupportBadges,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ConfigPath,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_Output,
   Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersRecipeGroupsAndSettingsWhileKeepingUnknownKeysLast_ParsedOutput,
@@ -197,6 +209,9 @@ describe.sequential('CliRecipeNovaConfigNormalizeOrder.run', async () => {
       settings: {
         versionStrategy: 'semver',
         experimentalSetting: true,
+        changelog: {
+          workspaceOrder: [],
+        },
         coverage: {
           minimum: 80,
         },
@@ -225,14 +240,147 @@ describe.sequential('CliRecipeNovaConfigNormalizeOrder.run', async () => {
       'experimentalGroup',
     ]);
     deepStrictEqual(Object.keys(settings), [
+      'changelog',
       'coverage',
       'lockStepVersioning',
       'versionStrategy',
       'experimentalSetting',
     ]);
+    deepStrictEqual(settings['changelog'], {
+      workspaceOrder: [],
+    });
     deepStrictEqual(settings['coverage'], {
       minimum: 80,
     });
+
+    return;
+  });
+
+  it('orders profile README fields', async () => {
+    const projectDirectory: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ProjectDirectory = join(sandboxRoot, 'profile-readme-order');
+
+    await mkdir(projectDirectory, { recursive: true });
+    await writeFile(join(projectDirectory, 'package.json'), '{"name":"profile-readme-order"}\n', 'utf-8');
+
+    const configPath: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, `${JSON.stringify({
+      readme: {
+        experimentalReadMe: true,
+        profile: {
+          support: {
+            badges: [{
+              link: 'https://example.com/kofi',
+              color: 'ff5e5b',
+              logo: 'kofi',
+              label: 'Ko-fi',
+            }],
+            message: ['Thank you.'],
+            emoji: '🍩',
+            title: 'Support',
+          },
+          linkGroups: [{
+            links: [{
+              description: 'My website',
+              url: 'https://example.com',
+              label: 'Website',
+            }],
+            columns: [
+              'Link',
+              'About',
+            ],
+            emoji: '🔗',
+            title: 'Links',
+          }],
+          badgeGroups: [{
+            badges: [{
+              link: 'https://www.typescriptlang.org',
+              color: '3178c6',
+              logo: 'typescript',
+              label: 'TypeScript',
+            }],
+            emoji: '👨🏻‍💻',
+            title: 'Language Palette',
+          }],
+          introduction: ['Hello.'],
+          experimentalProfile: true,
+        },
+        badges: [],
+      },
+      recipes: {
+        'nova-config': {
+          'normalize-order': {
+            enabled: true,
+          },
+        },
+      },
+    }, null, 2)}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipeNovaConfigNormalizeOrder.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Output = await readFile(configPath, 'utf-8');
+    const parsedOutput: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ParsedOutput = JSON.parse(output) as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ParsedOutput;
+    const readMe: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ReadMe = parsedOutput['readme'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_ReadMe;
+    const profile: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Profile = readMe['profile'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Profile;
+    const badgeGroups: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_BadgeGroups = profile['badgeGroups'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_BadgeGroups;
+    const badges: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Badges = badgeGroups[0]['badges'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Badges;
+    const linkGroups: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_LinkGroups = profile['linkGroups'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_LinkGroups;
+    const links: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Links = linkGroups[0]['links'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Links;
+    const support: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Support = profile['support'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_Support;
+    const supportBadges: Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_SupportBadges = support['badges'] as Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersProfileREADMEFields_SupportBadges;
+
+    deepStrictEqual(Object.keys(readMe), [
+      'badges',
+      'profile',
+      'experimentalReadMe',
+    ]);
+    deepStrictEqual(Object.keys(profile), [
+      'introduction',
+      'badgeGroups',
+      'linkGroups',
+      'support',
+      'experimentalProfile',
+    ]);
+    deepStrictEqual(Object.keys(linkGroups[0]), [
+      'title',
+      'emoji',
+      'columns',
+      'links',
+    ]);
+    deepStrictEqual(Object.keys(support), [
+      'title',
+      'emoji',
+      'message',
+      'badges',
+    ]);
+    deepStrictEqual(Object.keys(supportBadges[0]), [
+      'label',
+      'logo',
+      'color',
+      'link',
+    ]);
+    deepStrictEqual(Object.keys(badgeGroups[0]), [
+      'title',
+      'emoji',
+      'badges',
+    ]);
+    deepStrictEqual(Object.keys(badges[0]), [
+      'label',
+      'logo',
+      'color',
+      'link',
+    ]);
+    deepStrictEqual(Object.keys(links[0]), [
+      'label',
+      'url',
+      'description',
+    ]);
 
     return;
   });

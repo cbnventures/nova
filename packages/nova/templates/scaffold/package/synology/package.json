@@ -1,0 +1,38 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "[__WORKSPACE_VERSION__]",
+  "description": "[__PROJECT_DESCRIPTION__]",
+  "keywords": [
+    "dsm",
+    "spk",
+    "synology"
+  ],
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "nova utility run-scripts --sequential \"check:*\"",
+    "check:lint-scripts": "eslint ./ --max-warnings=0",
+    "check:types-scripts": "nova utility type-check --project tsconfig.scripts.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test-scripts": "vitest run",
+    "check:package": "node ./scripts/check-package.mjs",
+    "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
+    "build:reset": "shx rm -rf ./build",
+    "build:package": "node ./scripts/build-package.mjs",
+    "clean": "nova utility run-scripts --sequential \"clean:*\"",
+    "clean:build": "shx rm -rf ./build"
+  },
+  "engines": {
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.50.0"
+  },
+  "devDependencies": {
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
+  }
+}

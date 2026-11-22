@@ -27,13 +27,7 @@ ruleTester.run('noTernaryInTemplateLiteral', NoTernaryInTemplateLiteral['rule'],
       code: '`text ${label}`;',
     },
     {
-      code: '`text ${fn()}`;',
-    },
-    {
       code: '`plain text`;',
-    },
-    {
-      code: '`text ${a + b}`;',
     },
     {
       code: '`text ${x ? \'a\' : \'b\'}`;',

@@ -788,20 +788,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnkn
 export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'ignoreFiles' | 'agents'>;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigConstructor - CreatesInstanceWithoutErrors.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config = LibNovaConfig;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigConstructor - InstanceHasExpectedPublicMethods.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config = LibNovaConfig;
-
-/**
  * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate.
  *
  * @since 0.20.0
@@ -1508,6 +1494,21 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxPrefix = string;
 export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxRoot = string;
 
 /**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme - Normalizes Profile Content.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_NormalizesProfileContent_Loaded = Shared_NovaConfigConfig;
+
+/**
  * Tests - Lib - Nova Config - SharedNovaConfigReadme - Preserves Exact Badge Order.
  *
  * @since 0.29.0
@@ -1538,6 +1539,48 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateA
 export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Loaded = Shared_NovaConfigConfig;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme - Rejects Invalid Profile Content.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Loaded = Shared_NovaConfigConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileContent_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme - Rejects Invalid Profile Paragraphs And Support Values.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Loaded = Shared_NovaConfigConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_Messages = string[];
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyConfig = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyLoaded = Shared_NovaConfigConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidProfileParagraphsAndSupportValues_EmptyMessages = string[];
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigSetAndSave.

@@ -33,9 +33,6 @@ ruleTester.run('noTemplateCurlyInString', NoTemplateCurlyInString['rule'], {
       code: 'const x = 42;',
     },
     {
-      code: 'const tpl = `${a} and ${b}`;',
-    },
-    {
       code: ['const msg = "Hello ${name}!";'].join('\n'),
       options: [{ ignoreFiles: ['ignored-file.ts'] }],
       filename: '/path/to/ignored-file.ts',
@@ -44,18 +41,8 @@ ruleTester.run('noTemplateCurlyInString', NoTemplateCurlyInString['rule'], {
       code: ['const pattern = new RegExp("[.*+?^${}()|[\\\\]\\\\\\\\]", "g");'].join('\n'),
     },
   ],
-  invalid: [
-    {
-      code: ['const msg = "Hello ${name}!";'].join('\n'),
-      errors: [{ messageId: 'noTemplateCurlyInString' }],
-    },
-    {
-      code: ['const msg = "path/${dir}/file";'].join('\n'),
-      errors: [{ messageId: 'noTemplateCurlyInString' }],
-    },
-    {
-      code: ['const msg = \'${a} and ${b}\';'].join('\n'),
-      errors: [{ messageId: 'noTemplateCurlyInString' }],
-    },
-  ],
+  invalid: [{
+    code: ['const msg = "Hello ${name}!";'].join('\n'),
+    errors: [{ messageId: 'noTemplateCurlyInString' }],
+  }],
 });

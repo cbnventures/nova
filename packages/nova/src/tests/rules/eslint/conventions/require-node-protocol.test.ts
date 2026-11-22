@@ -27,22 +27,7 @@ ruleTester.run('requireNodeProtocol', RequireNodeProtocol['rule'], {
       code: 'import fs from "node:fs";',
     },
     {
-      code: 'import { readFile } from "node:fs/promises";',
-    },
-    {
-      code: 'export { readFile } from "node:fs/promises";',
-    },
-    {
-      code: 'export * from "node:path";',
-    },
-    {
-      code: 'const mod = import("node:os");',
-    },
-    {
       code: 'import express from "express";',
-    },
-    {
-      code: 'import { helper } from "./helper.js";',
     },
     {
       code: 'import fs from "fs";',

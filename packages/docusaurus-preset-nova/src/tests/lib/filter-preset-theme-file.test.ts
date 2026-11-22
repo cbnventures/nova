@@ -15,6 +15,8 @@ import type {
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNonNavbarNonFooterStyleFiles_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheActiveNavbarVariantWhenGivenAWindowsPath_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheFooterWrapperFileRegardlessOfActiveVariant_Result,
+  Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileRegardlessOfActiveVariant_Result,
+  Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileWhenGivenAWindowsPath_Result,
   Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarWrapperFileRegardlessOfActiveVariant_Result,
 } from '../../types/tests/lib/filter-preset-theme-file.test.d.ts';
 
@@ -42,6 +44,22 @@ describe('filterPresetThemeFile', async () => {
 
   it('keeps Navbar files in the active variant subfolder', () => {
     const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsNavbarFilesInTheActiveVariantSubfolder_Result = filterPresetThemeFile('Navbar/Bridge/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+
+    strictEqual(result, true);
+
+    return;
+  });
+
+  it('keeps the Navbar More file regardless of active variant', () => {
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileRegardlessOfActiveVariant_Result = filterPresetThemeFile('Navbar/More/style.css', 'Navbar/Compass/', 'Footer/Commons/');
+
+    strictEqual(result, true);
+
+    return;
+  });
+
+  it('keeps the Navbar More file when given a Windows path', () => {
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_KeepsTheNavbarMoreFileWhenGivenAWindowsPath_Result = filterPresetThemeFile('Navbar\\More\\style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 

@@ -573,6 +573,13 @@ export type Lib_Regex_PatternSlugScoped = RegExp;
 export type Lib_Regex_PatternSlugSimple = RegExp;
 
 /**
+ * Lib - Regex - Pattern Svg Data URI.
+ *
+ * @since 0.50.0
+ */
+export type Lib_Regex_PatternSvgDataUri = RegExp;
+
+/**
  * Lib - Regex - Pattern Terminology Component.
  *
  * @since 0.20.0
@@ -1043,6 +1050,13 @@ export type Lib_Regex_PlaceholderWorkspaceName = RegExp;
  * @since 0.29.0
  */
 export type Lib_Regex_PlaceholderWorkspaceTitle = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Synology Usr Local Link.
+ *
+ * @since 0.50.0
+ */
+export type Lib_Regex_PlaceholderSynologyUsrLocalLink = RegExp;
 
 export type Lib_Regex_PlaceholderViteFramework = RegExp;
 

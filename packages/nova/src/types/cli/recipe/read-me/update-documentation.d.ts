@@ -39,11 +39,26 @@ export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_ReadMeRecipes = Sha
 
 export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_UpdateDocumentation = Shared_NovaConfig_RecipeEntry | undefined;
 
-export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_NewInnerContent = string | undefined;
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_RootInnerContent = string | undefined;
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_WorkspaceConfig = Shared_NovaConfigConfig;
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_WorkspaceInnerContent = string | undefined;
 
 export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_RootPath = string;
 
-export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_TargetPaths = string[];
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_WorkspacePaths = string[];
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target_Path = string;
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target_Content = string;
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target = {
+  path: Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target_Path;
+  content: Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target_Content;
+};
+
+export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Targets = Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_Target[];
 
 export type Cli_Recipe_ReadMe_UpdateDocumentation_Runner_Run_UpdatedCount = number;
 

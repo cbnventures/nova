@@ -2,6 +2,200 @@ import type {
   TranslationFile,
   TranslationFileContent,
 } from '@docusaurus/types';
+import type { ComponentType } from 'react';
+
+/**
+ * Shared - Block Playground Entry.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundEntry_Id = number;
+
+export type Shared_BlockPlaygroundEntry_Component = ComponentType;
+
+export type Shared_BlockPlaygroundEntry = {
+  id: Shared_BlockPlaygroundEntry_Id;
+  component: Shared_BlockPlaygroundEntry_Component;
+};
+
+/**
+ * Shared - Block Playground Paint Extents.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundPaintExtents_Top = number;
+
+export type Shared_BlockPlaygroundPaintExtents_Bottom = number;
+
+export type Shared_BlockPlaygroundPaintExtents = {
+  top: Shared_BlockPlaygroundPaintExtents_Top;
+  bottom: Shared_BlockPlaygroundPaintExtents_Bottom;
+};
+
+/**
+ * Shared - Block Playground Paint Style.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundPaintStyle_BoxShadow = string;
+
+export type Shared_BlockPlaygroundPaintStyle_OutlineStyle = string;
+
+export type Shared_BlockPlaygroundPaintStyle_OutlineWidth = string;
+
+export type Shared_BlockPlaygroundPaintStyle_OutlineOffset = string;
+
+export type Shared_BlockPlaygroundPaintStyle = {
+  boxShadow: Shared_BlockPlaygroundPaintStyle_BoxShadow;
+  outlineStyle: Shared_BlockPlaygroundPaintStyle_OutlineStyle;
+  outlineWidth: Shared_BlockPlaygroundPaintStyle_OutlineWidth;
+  outlineOffset: Shared_BlockPlaygroundPaintStyle_OutlineOffset;
+};
+
+/**
+ * Shared - Block Playground Preview Layout.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundPreviewLayout_Size = Shared_BlockPlaygroundPreviewSize;
+
+export type Shared_BlockPlaygroundPreviewLayout_Crop = Shared_BlockPlaygroundVisibleCrop;
+
+export type Shared_BlockPlaygroundPreviewLayout = {
+  size: Shared_BlockPlaygroundPreviewLayout_Size;
+  crop: Shared_BlockPlaygroundPreviewLayout_Crop;
+};
+
+/**
+ * Shared - Block Playground Preview Size.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundPreviewSize_Scale = number;
+
+export type Shared_BlockPlaygroundPreviewSize_Width = number;
+
+export type Shared_BlockPlaygroundPreviewSize_Height = number;
+
+export type Shared_BlockPlaygroundPreviewSize = {
+  scale: Shared_BlockPlaygroundPreviewSize_Scale;
+  width: Shared_BlockPlaygroundPreviewSize_Width;
+  height: Shared_BlockPlaygroundPreviewSize_Height;
+};
+
+/**
+ * Shared - Block Playground State.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundState_Candidate = Shared_BlockPlaygroundEntry | undefined;
+
+export type Shared_BlockPlaygroundState_LastGood = Shared_BlockPlaygroundEntry | undefined;
+
+export type Shared_BlockPlaygroundState_Error = string | undefined;
+
+export type Shared_BlockPlaygroundState = {
+  candidate: Shared_BlockPlaygroundState_Candidate;
+  lastGood: Shared_BlockPlaygroundState_LastGood;
+  error: Shared_BlockPlaygroundState_Error;
+};
+
+/**
+ * Shared - Block Playground Update.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundUpdate_Compiled_Type = 'compiled';
+
+export type Shared_BlockPlaygroundUpdate_Compiled_Entry = Shared_BlockPlaygroundEntry;
+
+export type Shared_BlockPlaygroundUpdate_Compiled = {
+  type: Shared_BlockPlaygroundUpdate_Compiled_Type;
+  entry: Shared_BlockPlaygroundUpdate_Compiled_Entry;
+};
+
+export type Shared_BlockPlaygroundUpdate_CompileFailed_Type = 'compileFailed';
+
+export type Shared_BlockPlaygroundUpdate_CompileFailed_Message = string;
+
+export type Shared_BlockPlaygroundUpdate_CompileFailed = {
+  type: Shared_BlockPlaygroundUpdate_CompileFailed_Type;
+  message: Shared_BlockPlaygroundUpdate_CompileFailed_Message;
+};
+
+export type Shared_BlockPlaygroundUpdate_RenderFailed_Type = 'renderFailed';
+
+export type Shared_BlockPlaygroundUpdate_RenderFailed_Id = number;
+
+export type Shared_BlockPlaygroundUpdate_RenderFailed_Message = string;
+
+export type Shared_BlockPlaygroundUpdate_RenderFailed = {
+  type: Shared_BlockPlaygroundUpdate_RenderFailed_Type;
+  id: Shared_BlockPlaygroundUpdate_RenderFailed_Id;
+  message: Shared_BlockPlaygroundUpdate_RenderFailed_Message;
+};
+
+export type Shared_BlockPlaygroundUpdate = Shared_BlockPlaygroundUpdate_Compiled | Shared_BlockPlaygroundUpdate_CompileFailed | Shared_BlockPlaygroundUpdate_RenderFailed;
+
+/**
+ * Shared - Block Playground Visible Crop.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundVisibleCrop_Offset = number;
+
+export type Shared_BlockPlaygroundVisibleCrop_Height = number;
+
+export type Shared_BlockPlaygroundVisibleCrop = {
+  offset: Shared_BlockPlaygroundVisibleCrop_Offset;
+  height: Shared_BlockPlaygroundVisibleCrop_Height;
+};
+
+/**
+ * Shared - Block Playground Visible Edge.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundVisibleEdge_Top = number;
+
+export type Shared_BlockPlaygroundVisibleEdge_Bottom = number;
+
+export type Shared_BlockPlaygroundVisibleEdge_Reach = number;
+
+export type Shared_BlockPlaygroundVisibleEdge = {
+  top: Shared_BlockPlaygroundVisibleEdge_Top;
+  bottom: Shared_BlockPlaygroundVisibleEdge_Bottom;
+  reach: Shared_BlockPlaygroundVisibleEdge_Reach;
+};
+
+/**
+ * Shared - Block Playground Visible Style.
+ *
+ * @since 0.50.0
+ */
+export type Shared_BlockPlaygroundVisibleStyle_BackgroundColor = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BackgroundImage = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BoxShadow = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BorderTopWidth = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BorderRightWidth = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BorderBottomWidth = string;
+
+export type Shared_BlockPlaygroundVisibleStyle_BorderLeftWidth = string;
+
+export type Shared_BlockPlaygroundVisibleStyle = {
+  backgroundColor: Shared_BlockPlaygroundVisibleStyle_BackgroundColor;
+  backgroundImage: Shared_BlockPlaygroundVisibleStyle_BackgroundImage;
+  boxShadow: Shared_BlockPlaygroundVisibleStyle_BoxShadow;
+  borderTopWidth: Shared_BlockPlaygroundVisibleStyle_BorderTopWidth;
+  borderRightWidth: Shared_BlockPlaygroundVisibleStyle_BorderRightWidth;
+  borderBottomWidth: Shared_BlockPlaygroundVisibleStyle_BorderBottomWidth;
+  borderLeftWidth: Shared_BlockPlaygroundVisibleStyle_BorderLeftWidth;
+};
 
 /**
  * Shared - Color Scale.
@@ -120,6 +314,73 @@ export type Shared_MermaidViewportPosition_Y = number;
 export type Shared_MermaidViewportPosition = {
   x: Shared_MermaidViewportPosition_X;
   y: Shared_MermaidViewportPosition_Y;
+};
+
+/**
+ * Shared - Post Css Node.
+ *
+ * @since 0.50.0
+ */
+export type Shared_PostCssNode_Type = string;
+
+export type Shared_PostCssNode_Selector = string | undefined;
+
+export type Shared_PostCssNode_Name = string | undefined;
+
+export type Shared_PostCssNode_Parent = Shared_PostCssNode | undefined;
+
+export type Shared_PostCssNode = {
+  type: Shared_PostCssNode_Type;
+  selector?: Shared_PostCssNode_Selector;
+  name?: Shared_PostCssNode_Name;
+  parent?: Shared_PostCssNode_Parent;
+};
+
+/**
+ * Shared - Post Css Plugin.
+ *
+ * @since 0.50.0
+ */
+export type Shared_PostCssPlugin_PostcssPlugin = string;
+
+export type Shared_PostCssPlugin_Once = (root: Shared_PostCssRoot) => void;
+
+export type Shared_PostCssPlugin = {
+  postcssPlugin: Shared_PostCssPlugin_PostcssPlugin;
+  Once: Shared_PostCssPlugin_Once;
+};
+
+/**
+ * Shared - Post Css Root.
+ *
+ * @since 0.50.0
+ */
+export type Shared_PostCssRoot_Source_Input_File = string | undefined;
+
+export type Shared_PostCssRoot_Source_Input = {
+  file?: Shared_PostCssRoot_Source_Input_File;
+} | undefined;
+
+export type Shared_PostCssRoot_Source = {
+  input?: Shared_PostCssRoot_Source_Input;
+} | undefined;
+
+export type Shared_PostCssRoot_WalkRules = (callback: (rule: Shared_PostCssRule) => void) => void;
+
+export type Shared_PostCssRoot = {
+  source?: Shared_PostCssRoot_Source;
+  walkRules: Shared_PostCssRoot_WalkRules;
+};
+
+/**
+ * Shared - Post Css Rule.
+ *
+ * @since 0.50.0
+ */
+export type Shared_PostCssRule_Selectors = string[];
+
+export type Shared_PostCssRule = Shared_PostCssNode & {
+  selectors: Shared_PostCssRule_Selectors;
 };
 
 /**
@@ -549,6 +810,26 @@ export type Shared_ShadeLevel = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 8
  * @since 0.15.0
  */
 export type Shared_Surface = 'alt';
+
+/**
+ * Shared - Terminology Tooltip Position.
+ *
+ * @since 0.50.0
+ */
+export type Shared_TerminologyTooltipPosition_Top = number;
+
+export type Shared_TerminologyTooltipPosition_Left = number;
+
+export type Shared_TerminologyTooltipPosition_Placement = 'top' | 'bottom';
+
+export type Shared_TerminologyTooltipPosition_ArrowLeft = number;
+
+export type Shared_TerminologyTooltipPosition = {
+  top: Shared_TerminologyTooltipPosition_Top;
+  left: Shared_TerminologyTooltipPosition_Left;
+  placement: Shared_TerminologyTooltipPosition_Placement;
+  arrowLeft: Shared_TerminologyTooltipPosition_ArrowLeft;
+};
 
 /**
  * Shared - Toc Heading.

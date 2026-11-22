@@ -80,34 +80,6 @@ export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Crea
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_Urls = Record<string, unknown>;
 
 /**
- * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Exits With Error For Standalone Project.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorForStandaloneProject_PackageJson = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = string;
-
-/**
- * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Exits With Error When Inside Child Workspace.
- *
- * @since 0.15.0
- */
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = string;
-
-export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
-
-/**
  * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Respects Dry Run.
  *
  * @since 0.15.0

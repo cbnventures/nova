@@ -41,26 +41,6 @@ export type Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_Result = {
 export type Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_PluginCount = number;
 
 /**
- * Tests - Preset - Preset - Excludes Gtm Plugin When Gtm Is Undefined.
- *
- * @since 0.15.0
- */
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultPlugin = [string, Record<string, unknown>] | string;
-
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultPlugins = Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultPlugin[];
-
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultTheme = [string, Record<string, unknown>] | string;
-
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultThemes = Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultTheme[];
-
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_Result = {
-  plugins: Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultPlugins;
-  themes: Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_ResultThemes;
-};
-
-export type Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_PluginCount = number;
-
-/**
  * Tests - Preset - Preset - Excludes Pages Plugin When Pages Is False.
  *
  * @since 0.15.0

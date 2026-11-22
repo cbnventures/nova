@@ -13,7 +13,6 @@
     "check:astro": "astro check --tsconfig tsconfig.astro.json",
     "check:types-config": "nova utility type-check --project tsconfig.config.json",
     "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
-    "check:test": "vitest run",
     "check:coverage": "vitest run --coverage",
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:site": "astro build",
@@ -24,7 +23,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.49.0",
+    "@cbnventures/nova": "0.50.0",
     "astro": "[__SCAFFOLD_VERSION_ASTRO__]",
     "cookie": "[__SCAFFOLD_VERSION_COOKIE__]"
   },

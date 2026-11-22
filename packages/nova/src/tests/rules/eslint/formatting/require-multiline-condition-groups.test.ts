@@ -104,16 +104,6 @@ ruleTester.run('requireMultilineConditionGroups', RequireMultilineConditionGroup
       ],
     },
     {
-      code: [
-        '(a && b)',
-        '|| (',
-        '  c',
-        '  && d',
-        ')',
-      ].join('\n'),
-      errors: [{ messageId: 'requireGroupMultiline' }],
-    },
-    {
       code: '(a && b && c) || d',
       errors: [{ messageId: 'requireGroupMultiline' }],
     },

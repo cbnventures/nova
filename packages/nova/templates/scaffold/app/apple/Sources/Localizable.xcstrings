@@ -7,13 +7,25 @@
     "A native Apple workspace with strict checks, tests, and a clean path from first view to release." : {
 
     },
+    "About" : {
+
+    },
+    "Add to Favorites" : {
+
+    },
     "Build the same production artifact Nova already validates." : {
+
+    },
+    "Each view ships with an Xcode preview, so you can change a screen and see the result in the canvas right away." : {
 
     },
     "Explore SwiftUI" : {
 
     },
     "Facebook" : {
+
+    },
+    "Favorite" : {
 
     },
     "Generated with Nova" : {
@@ -25,6 +37,9 @@
     "Google Play" : {
 
     },
+    "Home" : {
+
+    },
     "Instagram" : {
 
     },
@@ -34,7 +49,25 @@
     "LAUNCH SEQUENCE" : {
 
     },
+    "Library" : {
+
+    },
     "LinkedIn" : {
+
+    },
+    "Localization" : {
+
+    },
+    "Mark an item as a favorite, or turn off Show Favorites Only in Settings." : {
+
+    },
+    "Models and views every platform reuses." : {
+
+    },
+    "Move focus to an item to read about it." : {
+
+    },
+    "No Favorites Yet" : {
 
     },
     "Nova" : {
@@ -43,10 +76,22 @@
     "Nova × Apple" : {
 
     },
-    "Ship confidently" : {
+    "One folder per Apple platform." : {
+
+    },
+    "Platform Folders" : {
+
+    },
+    "Previews" : {
+
+    },
+    "Put models, view models, and reusable views in Sources/Shared so each platform folder only decides how they are arranged." : {
 
     },
     "Read Nova Docs ↗" : {
+
+    },
+    "Remove from Favorites" : {
 
     },
     "Replace this starter with your first real product experience." : {
@@ -55,13 +100,61 @@
     "Run the workspace checks while the project takes shape." : {
 
     },
+    "See every screen without launching the app." : {
+
+    },
+    "Select an item to see its details." : {
+
+    },
+    "Settings" : {
+
+    },
     "Shape the experience" : {
 
     },
-    "Start in Sources/ContentView.swift" : {
+    "Shared Code" : {
+
+    },
+    "Ship confidently" : {
+
+    },
+    "Show Favorites Only" : {
+
+    },
+    "Show Home" : {
+
+    },
+    "Show Summaries" : {
+
+    },
+    "Sources/iOS, Sources/MacOS, Sources/MacOS_12, Sources/tvOS, and Sources/VisionOS compile only for their own destination." : {
+
+    },
+    "Start in Sources/Shared" : {
 
     },
     "starts here." : {
+
+    },
+    "Strings ready for translation." : {
+
+    },
+    "Swift Testing from the first commit." : {
+
+    },
+    "Testing" : {
+
+    },
+    "The Tests folder covers the shared view model, and the workspace check script runs it on every change." : {
+
+    },
+    "Toggle Favorite" : {
+
+    },
+    "Version" : {
+
+    },
+    "Visible copy flows through Sources/Localizable.xcstrings, so adding a language starts in Xcode's String Catalog editor." : {
 
     },
     "X" : {

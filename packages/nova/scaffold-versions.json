@@ -843,6 +843,24 @@
         "reason": "Deployment targets are Nova support policy."
       }
     },
+    "appleTvosDeploymentTarget": {
+      "value": "17.0",
+      "placeholder": "[__SCAFFOLD_VERSION_APPLE_TVOS_DEPLOYMENT_TARGET__]",
+      "group": "apple",
+      "source": {
+        "type": "manual",
+        "reason": "Deployment targets are Nova support policy."
+      }
+    },
+    "appleVisionosDeploymentTarget": {
+      "value": "1.0",
+      "placeholder": "[__SCAFFOLD_VERSION_APPLE_VISIONOS_DEPLOYMENT_TARGET__]",
+      "group": "apple",
+      "source": {
+        "type": "manual",
+        "reason": "Deployment targets are Nova support policy."
+      }
+    },
     "appleSwiftVersion": {
       "value": "6.0",
       "placeholder": "[__SCAFFOLD_VERSION_APPLE_SWIFT__]",

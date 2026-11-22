@@ -70,6 +70,7 @@ import { Runner as CliScaffoldDocsDocusaurus } from './scaffold/docs/docusaurus.
 import { Runner as CliScaffoldPackageGithubAction } from './scaffold/package/github-action.js';
 import { Runner as CliScaffoldPackageHomebridge } from './scaffold/package/homebridge.js';
 import { Runner as CliScaffoldPackagePfSense } from './scaffold/package/pfsense.js';
+import { Runner as CliScaffoldPackageSynology } from './scaffold/package/synology.js';
 import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
 import { Runner as CliScaffoldToolServerless } from './scaffold/tool/serverless.js';
 import { Runner as CliUtilityChangelog } from './utility/changelog.js';
@@ -163,7 +164,32 @@ import type {
   Cli_Index_EnvProfileFileName,
   Cli_Index_EnvSearchOrder,
   Cli_Index_PackageJson,
+  Cli_Index_StartupArguments,
 } from '../types/cli/index.d.ts';
+
+/**
+ * CLI - Startup Arguments.
+ *
+ * Captures the requested command before dotenv loading so output routing can be
+ * selected before bootstrap or shared command code emits a log line.
+ *
+ * @since 0.50.0
+ */
+const startupArguments: Cli_Index_StartupArguments = process.argv.slice(2);
+
+if (
+  (
+    startupArguments[0] === 'utility'
+    || startupArguments[0] === 'util'
+  )
+  && (
+    startupArguments[1] === 'changelog'
+    || startupArguments[1] === 'log'
+  )
+  && startupArguments.includes('--notes') === true
+) {
+  Logger.redirectStdoutToStderr();
+}
 
 /**
  * CLI - package.json.
@@ -1397,6 +1423,24 @@ class CLI {
         return;
       });
 
+    scaffoldPackage
+      .command('synology')
+      .usage('[options]')
+      .description('Scaffold a noarch Synology DSM 7 package')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--install', 'Install dependencies after scaffolding')
+      .option('--no-install', 'Skip dependency installation')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name; synology-pkg- is added to the package name')
+      .option('--output <dir>', 'Output directory')
+      .option('--usr-local-link', 'Expose the example service through /usr/local/bin with conf/resource')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldPackageSynology['run']);
+
+        return;
+      });
+
     const scaffoldStarter: Cli_Index_CLI_RegisterCommands_ScaffoldStarter = scaffold
       .command('starter')
       .alias('start')
@@ -1467,10 +1511,11 @@ class CLI {
       .command('changelog')
       .alias('log')
       .usage('[options]')
-      .description('Record, fold, and release versioned changelogs')
+      .description('Record, fold, release, and print versioned changelogs')
       .option('--record', 'Record a change')
       .option('--release', 'Release accumulated changes')
       .option('--fold', 'Fold changes into an existing version section')
+      .option('--notes', 'Print a GitHub release body')
       .option('--add', 'Add an entry while folding')
       .option('--edit', 'Edit an entry while folding')
       .option('--remove', 'Remove an entry while folding')
@@ -1478,7 +1523,7 @@ class CLI {
       .option('-c, --category <category>', 'Category (updated, fixed, added, removed)')
       .option('-b, --bump <type>', 'Bump type (major, minor, patch)')
       .option('-m, --message <message>', 'Change description')
-      .option('--version <version>', 'Existing changelog version (defaults to newest)')
+      .option('--version <version>', 'Changelog version; --notes accepts v and +build tag forms')
       .option('--entry <number>', 'One-based entry number within the category')
       .option('--match <text>', 'Exact entry text within the category')
       .option('--merge-from <versions>', 'Comma-separated versions to merge into the target')
@@ -1486,6 +1531,12 @@ class CLI {
       .option('--no-build-bump', 'Keep the current native build number while folding')
       .option('-d, --dry-run', 'Run without writing any files')
       .action(async (options) => {
+        if (options['notes'] === true) {
+          await CliUtilityChangelog.run(options);
+
+          return;
+        }
+
         await this.executeCommand<typeof options>(options, CliUtilityChangelog['run']);
 
         return;

@@ -17,11 +17,7 @@ tags:
   - "screen-gallery"
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-import screenGalleryPreviewLight from './_assets_/screen-gallery-preview-light.png';
-import screenGalleryPreviewDark from './_assets_/screen-gallery-preview-dark.png';
+import BlockPlayground from '@theme/BlockPlayground';
 
 Show app screens side by side, each with a heading, a short description, and an optional link.
 
@@ -35,11 +31,49 @@ The Screen Gallery block renders a `<div class="nova-screen-gallery">` with one 
 - **Any device** — you pass the image, so phone, tablet, or watch shots work the same way, framed or not.
 - **Readable on phones** — tall screenshots don't shrink into slivers; the row scrolls instead.
 
-## Preview
+## Try It
 
-<Frame caption="Screen Gallery block — light and dark mode preview">
-  <ThemedImage sources={{ light: screenGalleryPreviewLight, dark: screenGalleryPreviewDark }} alt="Screen Gallery block preview" width={480} height={819} />
-</Frame>
+Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
+
+export const tryItCode = `
+<ScreenGallery
+  items={[
+    {
+      image: (
+        <div
+          role="img"
+          aria-label="The home screen"
+          style={{
+            aspectRatio: '1350 / 2760',
+            background: 'linear-gradient(180deg, var(--nova-color-primary-100), var(--nova-color-primary-300))',
+            borderRadius: '1.5rem',
+          }}
+        />
+      ),
+      heading: 'Everything on One Screen',
+      description: 'Your items, sorted by what needs attention first.',
+      link: { label: 'Tour the App', to: '/docs/app-tour/' },
+    },
+    {
+      image: (
+        <div
+          role="img"
+          aria-label="The settings screen"
+          style={{
+            aspectRatio: '1350 / 2760',
+            background: 'linear-gradient(180deg, var(--nova-color-accent-100), var(--nova-color-accent-300))',
+            borderRadius: '1.5rem',
+          }}
+        />
+      ),
+      heading: 'Settings That Stay Out of the Way',
+      description: 'Change what you need and get back to work.',
+    },
+  ]}
+/>
+`;
+
+<BlockPlayground code={tryItCode} />
 
 ## Usage
 

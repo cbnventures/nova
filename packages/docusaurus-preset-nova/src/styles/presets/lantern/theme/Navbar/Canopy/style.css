@@ -63,6 +63,11 @@
   transition: color var(--nova-lantern-transition);
 }
 
+/* The italic display face paints past its last glyph, so leave room before the clipped edge. */
+.nova-navbar-canopy-brand a > span {
+  padding-inline-end: 0.25em;
+}
+
 .nova-navbar-canopy-brand a:hover,
 .nova-navbar-canopy-brand a:focus-visible {
   color: var(--nova-color-primary-700);
@@ -302,6 +307,10 @@
   color: var(--nova-lantern-ink);
 }
 
+.nova-navbar-canopy-menu-brand a > span {
+  padding-inline-end: 0.25em;
+}
+
 /* ============================
  * 11. Mobile menu close
  * ============================ */
@@ -409,12 +418,12 @@
 }
 
 .nova-navbar-canopy-menu-item svg,
-.nova-navbar-canopy-menu-dropdown-summary svg {
+.nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-primary-600);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item svg,
-[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary svg {
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary .nova-navbar-canopy-menu-dropdown-icon {
   color: var(--nova-color-primary-400);
 }
 

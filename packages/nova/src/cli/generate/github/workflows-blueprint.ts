@@ -43,6 +43,12 @@ import { Runner as Validator } from './workflows-blueprint-validate.js';
 import { Runner as Variables } from './workflows-blueprint-variables.js';
 
 import type {
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Outputs,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryRows,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Workflow,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_WorkJobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_BuildValue,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment,
@@ -325,6 +331,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasGithubActionTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasRootContainerTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasSynologyTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ImageWorkspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget,
@@ -401,6 +408,17 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_SelectedNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Env,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Rows,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_BuildRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_ReleaseDirectory,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_TagPushPrereleaseExpression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Workspace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_WorkspaceName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Tags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_AppPath,
@@ -419,6 +437,12 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Workflows,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Env,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Jobs,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_RowIndex,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_SummaryRow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_CorepackVersion,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackBootstrapRun_PackageManager,
@@ -602,6 +626,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkspacePrefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspaces,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Workspace,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_IsPrefixable,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_Prefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_ResolvedName,
@@ -634,6 +661,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_IsEnvAfterRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobIf,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobNeeds,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobOutputs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobPermissions,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_Jobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobSteps,
@@ -1043,12 +1071,14 @@ export class Runner {
       workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces, coverageBadge);
     }
 
+    Runner.addWorkflowSummary(workflow);
+
     const runsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = entry['runsOn'];
 
     for (const jobEntry of workflow['jobs']) {
       const job: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job = jobEntry;
 
-      if (runsOn !== undefined) {
+      if (runsOn !== undefined && job['id'].startsWith('publish-synology-') === false) {
         const runnerArchitecture: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunnerArchitecture = job['runnerArchitecture'];
         let jobRunsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_JobRunsOn = runsOn;
 
@@ -1282,6 +1312,13 @@ export class Runner {
         },
         step,
       ],
+      summaryRows: [{
+        work: 'Check support issues',
+        workspace: '-',
+        destination: 'GitHub issues',
+        detail: '',
+        publish: false,
+      }],
     };
 
     return {
@@ -1420,6 +1457,13 @@ export class Runner {
       runsOn: 'ubuntu-latest',
       timeoutMinutes: entry['timeoutMinutes'] ?? 5,
       steps: [step],
+      summaryRows: [{
+        work: 'Lock inactive threads',
+        workspace: '-',
+        destination: 'GitHub issues and pull requests',
+        detail: '',
+        publish: false,
+      }],
     };
 
     return {
@@ -1478,6 +1522,7 @@ export class Runner {
     const profileAware: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ProfileAware = environmentSelection !== undefined;
     const hasContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = targets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
     const hasPfsenseTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget = targets.some((target) => target['to'] === 'pfsense');
+    const hasSynologyTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasSynologyTarget = targets.some((target) => target['to'] === 'synology');
     const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = entry['containerPlatforms'] ?? [
       'linux/amd64',
       'linux/arm64',
@@ -1644,7 +1689,7 @@ export class Runner {
       default: true,
     }];
 
-    if (hasPfsenseTarget === true) {
+    if (hasPfsenseTarget === true || hasSynologyTarget === true) {
       dispatchInputs.push({
         name: 'tag',
         description: (hasContainerTarget === true) ? 'Existing GitHub release tag and image tag used when manually publishing' : 'Existing GitHub release tag that receives the package',
@@ -2033,6 +2078,28 @@ export class Runner {
         contents: 'read',
       },
       steps,
+      summaryRows: (names.length === 0) ? [{
+        work: 'Check project',
+        workspace: (checkNames.length === 0) ? './' : checkNames.join(', '),
+        destination: 'Nova checks',
+        detail: '',
+        publish: false,
+      }] : [
+        {
+          work: 'Check project',
+          workspace: (checkNames.length === 0) ? './' : checkNames.join(', '),
+          destination: 'Nova checks',
+          detail: '',
+          publish: false,
+        },
+        {
+          work: 'Build project',
+          workspace: names.join(', '),
+          destination: 'Build artifacts',
+          detail: '',
+          publish: false,
+        },
+      ],
     };
 
     const jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs = [buildJob];
@@ -2101,6 +2168,8 @@ export class Runner {
         jobs.push(Runner.buildGithubActionTarget(context));
       } else if (deployTarget['to'] === 'pfsense') {
         jobs.push(Runner.buildPfsenseTarget(context));
+      } else if (deployTarget['to'] === 'synology') {
+        jobs.push(Runner.buildSynologyTarget(context));
       } else if (deployTarget['to'] === 'vercel-nextjs') {
         jobs.push(Runner.buildVercelNextjsTarget(context));
       }
@@ -2145,6 +2214,13 @@ export class Runner {
             runBlock: true,
           },
         ],
+        summaryRows: [{
+          work: 'Publish coverage badge',
+          workspace: '-',
+          destination: 'badges branch',
+          detail: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+          publish: true,
+        }],
       });
     }
 
@@ -2690,6 +2766,13 @@ export class Runner {
           workingDirectory: deployDirectory,
         },
       ],
+      summaryRows: [{
+        work: 'Publish package',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: `https://www.npmjs.com/package/${Runner.resolveSummaryWorkspace(context)}`,
+        detail: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+        publish: true,
+      }],
     };
   }
 
@@ -3015,6 +3098,163 @@ export class Runner {
           runBlock: true,
         },
       ],
+      summaryRows: [{
+        work: 'Publish pfSense package',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'GitHub release assets',
+        detail: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+        publish: true,
+      }],
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Synology Target.
+   *
+   * Returns the Ubuntu job that builds and validates one noarch SPK, uploads
+   * it as a workflow artifact, and attaches it to the GitHub release.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Context} context - Context.
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Returns}
+   *
+   * @since 0.50.0
+   */
+  public static buildSynologyTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Returns {
+    const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Workspace = context['workspace'];
+    const workspaceName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_WorkspaceName = (workspace === undefined) ? basename(context['workingDir']) : workspace['name'];
+    const releaseDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_ReleaseDirectory = `${context['workingDir']}/build/release`;
+    const tagPushPrereleaseExpression: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_TagPushPrereleaseExpression = context['tagPushPrereleaseExpression'];
+    const buildRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_BuildRun = Runner.runScriptCommand(context['packageManager'], 'build');
+
+    return {
+      id: `publish-synology-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      needs: context['needs'],
+      runsOn: 'ubuntu-latest',
+      timeoutMinutes: context['timeoutMinutes'],
+      permissions: {
+        contents: 'write',
+      },
+      steps: [
+        {
+          name: 'Checkout repository',
+          kind: 'checkout',
+          uses: getScaffoldVersion('workflowActionCheckout'),
+        },
+        {
+          name: 'Setup Node.js',
+          kind: 'setup',
+          uses: getScaffoldVersion('workflowActionSetupNode'),
+          with: [
+            {
+              key: 'node-version-file',
+              value: `${Runner.expr('env.ROOT_DIR')}/package.json`,
+            },
+            {
+              key: 'package-manager-cache',
+              value: false,
+            },
+          ],
+        },
+        {
+          name: 'Install packages',
+          kind: 'install',
+          run: Runner.installPackagesRun(context['packageManager']),
+          workingDirectory: Runner.expr('env.ROOT_DIR'),
+        },
+        {
+          name: 'Build Synology package',
+          kind: 'build',
+          run: buildRun,
+          workingDirectory: context['workingDir'],
+        },
+        {
+          name: 'Check Synology package',
+          kind: 'check',
+          run: 'node ./scripts/check-package.mjs',
+          workingDirectory: context['workingDir'],
+        },
+        {
+          name: 'Upload workflow artifact',
+          kind: 'artifact',
+          uses: getScaffoldVersion('workflowActionUploadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: `synology-${workspaceName}`,
+            },
+            {
+              key: 'path',
+              value: `${releaseDirectory}/*.spk`,
+            },
+            {
+              key: 'if-no-files-found',
+              value: 'error',
+            },
+            {
+              key: 'retention-days',
+              value: 7,
+            },
+          ],
+        },
+        (tagPushPrereleaseExpression === undefined) ? {
+          name: 'Upload GitHub release assets',
+          kind: 'deploy',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          env: [
+            {
+              key: 'GH_TOKEN',
+              value: Runner.expr('github.token'),
+            },
+            {
+              key: 'RELEASE_TAG',
+              value: Runner.expr('github.event.release.tag_name || inputs.tag'),
+            },
+          ],
+          run: `gh release upload "$RELEASE_TAG" "${releaseDirectory}/"*.spk --clobber`,
+          runBlock: true,
+        } : {
+          name: 'Upload GitHub release assets',
+          kind: 'deploy',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          env: [
+            {
+              key: 'GH_TOKEN',
+              value: Runner.expr('github.token'),
+            },
+            {
+              key: 'IS_PRERELEASE',
+              value: Runner.expr(`github.event.release.prerelease || (${tagPushPrereleaseExpression})`),
+            },
+            {
+              key: 'RELEASE_TAG',
+              value: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+            },
+          ],
+          run: [
+            'set -euo pipefail',
+            '',
+            '# A pushed tag has no GitHub release yet, so create one to hold the package.',
+            'if ! gh release view "$RELEASE_TAG" > /dev/null 2>&1; then',
+            '  if [ "$IS_PRERELEASE" = "true" ]; then',
+            '    gh release create "$RELEASE_TAG" --verify-tag --title "$RELEASE_TAG" --notes "" --prerelease',
+            '  else',
+            '    gh release create "$RELEASE_TAG" --verify-tag --title "$RELEASE_TAG" --notes ""',
+            '  fi',
+            'fi',
+            '',
+            `gh release upload "$RELEASE_TAG" "${releaseDirectory}/"*.spk --clobber`,
+          ].join('\n'),
+          runBlock: true,
+        },
+      ],
+      summaryRows: [{
+        work: 'Publish Synology package',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'GitHub release assets',
+        detail: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+        publish: true,
+      }],
     };
   }
 
@@ -3141,6 +3381,13 @@ export class Runner {
           workingDirectory: deployDirectory,
         },
       ],
+      summaryRows: [{
+        work: 'Publish package',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: `https://github.com/${Runner.expr('github.repository_owner')}?tab=packages`,
+        detail: Runner.expr('github.event.release.tag_name || inputs.tag || github.ref_name'),
+        publish: true,
+      }],
     };
   }
 
@@ -3239,6 +3486,13 @@ export class Runner {
           run: Runner.corepackDownloadCommand(context['packageManager'], 'wrangler@3', `pages deploy ${deployDirectory} --project-name="$CLOUDFLARE_PROJECT_NAME" --branch="$DEFAULT_BRANCH"`),
         },
       ],
+      summaryRows: [{
+        work: 'Deploy site',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'Cloudflare Pages',
+        detail: `https://${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)}.pages.dev`,
+        publish: true,
+      }],
     };
   }
 
@@ -3370,6 +3624,13 @@ export class Runner {
         contents: 'read',
       },
       steps,
+      summaryRows: [{
+        work: 'Deploy worker',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'Cloudflare Workers',
+        detail: '',
+        publish: true,
+      }],
     };
   }
 
@@ -3564,10 +3825,320 @@ export class Runner {
         {
           name: 'Deploy to GitHub Pages',
           kind: 'deploy',
+          id: 'deploy-pages',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
           uses: getScaffoldVersion('workflowActionDeployPages'),
         },
       ],
+      summaryRows: [{
+        work: 'Deploy site',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'GitHub Pages',
+        detail: Runner.expr('steps.deploy-pages.outputs.page_url || \'\''),
+        publish: true,
+      }],
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Add Workflow Summary.
+   *
+   * Exposes each work job's non-secret row values, then appends one fan-in job
+   * that renders the complete run in original job and row order.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Workflow} workflow - Workflow.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static addWorkflowSummary(workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Workflow): Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Returns {
+    const workJobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_WorkJobs = workflow['jobs'];
+
+    if (workJobs.length === 0) {
+      return;
+    }
+
+    for (const workJob of workJobs) {
+      const summaryRows: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryRows = workJob['summaryRows'] ?? [];
+      const outputs: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Outputs = [];
+
+      if (summaryRows.length === 0) {
+        continue;
+      }
+
+      for (let summaryRowIndex = 0; summaryRowIndex < summaryRows.length; summaryRowIndex += 1) {
+        outputs.push(
+          {
+            key: `summary_work_${summaryRowIndex}`,
+            value: Runner.expr(`steps.nova-summary.outputs.summary_work_${summaryRowIndex}`),
+          },
+          {
+            key: `summary_workspace_${summaryRowIndex}`,
+            value: Runner.expr(`steps.nova-summary.outputs.summary_workspace_${summaryRowIndex}`),
+          },
+          {
+            key: `summary_destination_${summaryRowIndex}`,
+            value: Runner.expr(`steps.nova-summary.outputs.summary_destination_${summaryRowIndex}`),
+          },
+          {
+            key: `summary_detail_${summaryRowIndex}`,
+            value: Runner.expr(`steps.nova-summary.outputs.summary_detail_${summaryRowIndex}`),
+          },
+        );
+      }
+
+      const summaryStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryStep = Runner.buildSummaryOutputStep(summaryRows);
+
+      Reflect.set(workJob, 'outputs', outputs);
+
+      workJob['steps'].push(summaryStep);
+    }
+
+    workJobs.push(Runner.buildWorkflowSummaryJob(workJobs));
+
+    return;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Summary Output Step.
+   *
+   * Writes each row field to the job output file so the final summary can read
+   * dynamic details without exposing credentials or injecting values in shell.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Rows} rows - Rows.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static buildSummaryOutputStep(rows: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Rows): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Returns {
+    const env: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Env = [];
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Lines = ['{'];
+
+    rows.forEach((row, rowIndex) => {
+      env.push(
+        {
+          key: `NOVA_SUMMARY_ROW_${rowIndex}_WORK`,
+          value: row['work'],
+        },
+        {
+          key: `NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE`,
+          value: row['workspace'],
+        },
+        {
+          key: `NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION`,
+          value: row['destination'],
+        },
+        {
+          key: `NOVA_SUMMARY_ROW_${rowIndex}_DETAIL`,
+          value: row['detail'],
+        },
+      );
+
+      lines.push(
+        `  printf ${shellQuote(`summary_work_${rowIndex}=%s\\n`)} "$NOVA_SUMMARY_ROW_${rowIndex}_WORK"`,
+        `  printf ${shellQuote(`summary_workspace_${rowIndex}=%s\\n`)} "$NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE"`,
+        `  printf ${shellQuote(`summary_destination_${rowIndex}=%s\\n`)} "$NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION"`,
+        `  printf ${shellQuote(`summary_detail_${rowIndex}=%s\\n`)} "$NOVA_SUMMARY_ROW_${rowIndex}_DETAIL"`,
+      );
+
+      return;
+    });
+
+    lines.push('} >> "$GITHUB_OUTPUT"');
+
+    return {
+      name: 'Expose Nova summary rows',
+      kind: 'summary',
+      id: 'nova-summary',
+      if: Runner.expr('always()'),
+      env,
+      run: lines.join('\n'),
+      runBlock: true,
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Workflow Summary Job.
+   *
+   * Collects every work job result and output through environment variables,
+   * preserving static row fields when a failed or skipped job has no outputs.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Jobs} jobs - Jobs.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static buildWorkflowSummaryJob(jobs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Jobs): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Returns {
+    const env: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Env = [
+      {
+        key: 'NOVA_SUMMARY_PROJECT',
+        value: Runner.expr('github.repository'),
+      },
+      {
+        key: 'NOVA_SUMMARY_PUBLISH',
+        value: Runner.expr('env.PUBLISH || \'false\''),
+      },
+      {
+        key: 'NOVA_SUMMARY_VERSION',
+        value: Runner.expr('github.event.release.tag_name || inputs.tag || github.event.workflow_run.head_branch || github.ref || github.sha'),
+      },
+    ];
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Lines = [
+      'set -euo pipefail',
+      '',
+      'sanitize_summary_value() {',
+      '  local value="$1"',
+      '',
+      [
+        '  value="$',
+        '{value//$\'',
+        '\\',
+        'r\'/ }"',
+      ].join(''),
+      [
+        '  value="$',
+        '{value//$\'',
+        '\\',
+        'n\'/ }"',
+      ].join(''),
+      [
+        '  value="$',
+        '{value//|/\\\\|}"',
+      ].join(''),
+      '',
+      '  printf \'%s\' "$value"',
+      '}',
+      '',
+      [
+        'NOVA_SUMMARY_DISPLAY_VERSION="$',
+        '{NOVA_SUMMARY_VERSION#refs/tags/}"',
+      ].join(''),
+      [
+        'NOVA_SUMMARY_DISPLAY_VERSION="$',
+        '{NOVA_SUMMARY_DISPLAY_VERSION#refs/heads/}"',
+      ].join(''),
+      '',
+      '{',
+      `  printf ${shellQuote('## Nova · %s · %s\\n')} "$NOVA_SUMMARY_PROJECT" "$NOVA_SUMMARY_DISPLAY_VERSION"`,
+      `  printf ${shellQuote('\\n')}`,
+      `  printf ${shellQuote('| Work | Workspace | Destination | Result |\\n')}`,
+      `  printf ${shellQuote('| --- | --- | --- | --- |\\n')}`,
+    ];
+    let rowIndex: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_RowIndex = 0;
+
+    for (const job of jobs) {
+      if (job['summaryRows'] === undefined) {
+        continue;
+      }
+
+      for (let summaryRowIndex = 0; summaryRowIndex < job['summaryRows'].length; summaryRowIndex += 1) {
+        const summaryRow: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_SummaryRow = job['summaryRows'][summaryRowIndex]!;
+
+        env.push(
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_WORK`,
+            value: summaryRow['work'],
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_WORK_OUTPUT`,
+            value: Runner.expr(`needs['${job['id']}'].outputs.summary_work_${summaryRowIndex} || ''`),
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE`,
+            value: summaryRow['workspace'],
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE_OUTPUT`,
+            value: Runner.expr(`needs['${job['id']}'].outputs.summary_workspace_${summaryRowIndex} || ''`),
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION`,
+            value: summaryRow['destination'],
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION_OUTPUT`,
+            value: Runner.expr(`needs['${job['id']}'].outputs.summary_destination_${summaryRowIndex} || ''`),
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_DETAIL_OUTPUT`,
+            value: Runner.expr(`needs['${job['id']}'].outputs.summary_detail_${summaryRowIndex} || ''`),
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_RESULT`,
+            value: Runner.expr(`needs['${job['id']}'].result`),
+          },
+          {
+            key: `NOVA_SUMMARY_ROW_${rowIndex}_PUBLISH`,
+            value: (summaryRow['publish'] === true) ? 'true' : 'false',
+          },
+        );
+
+        lines.push(
+          '',
+          `  NOVA_SUMMARY_WORK="$NOVA_SUMMARY_ROW_${rowIndex}_WORK_OUTPUT"`,
+          '  if [[ -z "$NOVA_SUMMARY_WORK" ]]; then',
+          `    NOVA_SUMMARY_WORK="$NOVA_SUMMARY_ROW_${rowIndex}_WORK"`,
+          '  fi',
+          '',
+          `  NOVA_SUMMARY_WORKSPACE="$NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE_OUTPUT"`,
+          '  if [[ -z "$NOVA_SUMMARY_WORKSPACE" ]]; then',
+          `    NOVA_SUMMARY_WORKSPACE="$NOVA_SUMMARY_ROW_${rowIndex}_WORKSPACE"`,
+          '  fi',
+          '',
+          `  NOVA_SUMMARY_DESTINATION="$NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION_OUTPUT"`,
+          '  if [[ -z "$NOVA_SUMMARY_DESTINATION" ]]; then',
+          `    NOVA_SUMMARY_DESTINATION="$NOVA_SUMMARY_ROW_${rowIndex}_DESTINATION"`,
+          '  fi',
+          '',
+          `  NOVA_SUMMARY_DETAIL="$NOVA_SUMMARY_ROW_${rowIndex}_DETAIL_OUTPUT"`,
+          '  if [[ -n "$NOVA_SUMMARY_DETAIL" ]]; then',
+          '    NOVA_SUMMARY_DESTINATION="$NOVA_SUMMARY_DESTINATION · $NOVA_SUMMARY_DETAIL"',
+          '  fi',
+          '',
+          `  NOVA_SUMMARY_RESULT="$NOVA_SUMMARY_ROW_${rowIndex}_RESULT"`,
+          `  if [[ "$NOVA_SUMMARY_ROW_${rowIndex}_PUBLISH" == "true" && "$NOVA_SUMMARY_PUBLISH" != "true" ]]; then`,
+          '    NOVA_SUMMARY_RESULT="dry run ($NOVA_SUMMARY_RESULT)"',
+          '  fi',
+          '',
+          '  NOVA_SUMMARY_WORK="$(sanitize_summary_value "$NOVA_SUMMARY_WORK")"',
+          '  NOVA_SUMMARY_WORKSPACE="$(sanitize_summary_value "$NOVA_SUMMARY_WORKSPACE")"',
+          '  NOVA_SUMMARY_DESTINATION="$(sanitize_summary_value "$NOVA_SUMMARY_DESTINATION")"',
+          '  NOVA_SUMMARY_RESULT="$(sanitize_summary_value "$NOVA_SUMMARY_RESULT")"',
+          '',
+          `  printf ${shellQuote('| %s | %s | %s | %s |\\n')} "$NOVA_SUMMARY_WORK" "$NOVA_SUMMARY_WORKSPACE" "$NOVA_SUMMARY_DESTINATION" "$NOVA_SUMMARY_RESULT"`,
+        );
+
+        rowIndex += 1;
+      }
+    }
+
+    lines.push('} >> "$GITHUB_STEP_SUMMARY"');
+
+    return {
+      id: 'summary',
+      needs: jobs.map((job) => job['id']),
+      runsOn: jobs[0]!['runsOn'],
+      timeoutMinutes: 5,
+      permissions: {
+        contents: 'read',
+      },
+      if: Runner.expr('always()'),
+      steps: [{
+        name: 'Write Nova workflow summary',
+        kind: 'summary',
+        env,
+        run: lines.join('\n'),
+        runBlock: true,
+      }],
     };
   }
 
@@ -3823,12 +4394,25 @@ export class Runner {
           kind: 'attest',
           if: Runner.expr('env.PUBLISH == \'true\''),
           uses: getScaffoldVersion('workflowActionAttest'),
-          with: [{
-            key: 'subject-path',
-            value: (context['artifactDirectory'] === undefined) ? `${actionOutputPath}/${actionEntryPoint}` : `${deployDirectory}/action/${actionEntryPoint}`,
-          }],
+          with: [
+            {
+              key: 'subject-path',
+              value: (context['artifactDirectory'] === undefined) ? `${actionOutputPath}/${actionEntryPoint}` : `${deployDirectory}/action/${actionEntryPoint}`,
+            },
+            {
+              key: 'show-summary',
+              value: false,
+            },
+          ],
         },
       ],
+      summaryRows: [{
+        work: 'Publish GitHub Action',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: `${releaseBranchName} branch and release tags`,
+        detail: Runner.expr(tagNameExpression),
+        publish: true,
+      }],
     };
   }
 
@@ -3977,6 +4561,13 @@ export class Runner {
         contents: 'read',
       },
       steps,
+      summaryRows: [{
+        work: 'Deploy app',
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: 'Vercel',
+        detail: `project ${Runner.resolveScopedCredExpr(variables, 'VERCEL_PROJECT_ID', targetSettings, workflowSettings, environment, appPath)}`,
+        publish: true,
+      }],
     };
   }
 
@@ -4172,6 +4763,16 @@ export class Runner {
           kind: 'build',
           id: 'build-oci',
           uses: getScaffoldVersion('workflowActionDockerBuildPush'),
+          env: [
+            {
+              key: 'DOCKER_BUILD_RECORD_UPLOAD',
+              value: 'false',
+            },
+            {
+              key: 'DOCKER_BUILD_SUMMARY',
+              value: 'false',
+            },
+          ],
           with: [
             {
               key: 'context',
@@ -4267,6 +4868,13 @@ export class Runner {
           contents: 'read',
         },
         steps: platformSteps,
+        summaryRows: [{
+          work: 'Build container',
+          workspace: platform,
+          destination: 'Immutable OCI artifact',
+          detail: Runner.expr('steps.build-oci.outputs.digest || \'\''),
+          publish: false,
+        }],
       });
 
       platformJobIds.push(platformJobId);
@@ -4311,6 +4919,7 @@ export class Runner {
         {
           name: 'Merge per-platform images',
           kind: 'build',
+          id: 'merge-oci',
           run: Runner.mergeContainerArtifactsRun(),
           runBlock: true,
         },
@@ -4347,6 +4956,13 @@ export class Runner {
           ],
         },
       ],
+      summaryRows: [{
+        work: 'Merge containers',
+        workspace: platforms.join(', '),
+        destination: 'Multi-platform OCI artifact',
+        detail: '',
+        publish: false,
+      }],
     });
 
     return jobs;
@@ -4528,6 +5144,10 @@ export class Runner {
               key: 'push-to-registry',
               value: true,
             },
+            {
+              key: 'show-summary',
+              value: false,
+            },
           ],
         },
         ...postAttestationSteps,
@@ -4538,6 +5158,13 @@ export class Runner {
           run: 'oras tag "$IMAGE@$IMAGE_DIGEST" latest',
         },
       ],
+      summaryRows: [{
+        work: `Publish ${registrySlug}`,
+        workspace: Runner.resolveSummaryWorkspace(context),
+        destination: `${registryHost}/${imageNamespace}/${imageRepository}`,
+        detail: Runner.expr('format(\'tags: {0}, {1}; digest: {2}\', env.SHA_TAG || \'none\', env.ADDITIONAL_TAGS || \'none\', env.IMAGE_DIGEST || \'not published\')'),
+        publish: true,
+      }],
     };
   }
 
@@ -6110,12 +6737,22 @@ export class Runner {
         lines.push(...Runner.serializePermissions(jobPermissions, '      '));
       }
 
-      // A job-level if sits between permissions and steps, gating the job
+      // A job-level if sits between permissions and outputs, gating the job
       // on the upstream conclusion for workflow-run triggered publishes.
       const jobIf: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobIf = job['if'];
 
       if (jobIf !== undefined) {
         lines.push(`    if: ${Runner.quote(jobIf)}`);
+      }
+
+      const jobOutputs: Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobOutputs = job['outputs'];
+
+      if (jobOutputs !== undefined) {
+        lines.push('    outputs:');
+
+        for (const output of jobOutputs) {
+          lines.push(`      ${output['key']}: ${Runner.quote(output['value'])}`);
+        }
       }
 
       lines.push('    steps:');
@@ -6518,6 +7155,26 @@ export class Runner {
     }
 
     return Runner.resolveVariableExpr(variables, variableName, targetSettings, workflowSettings, prefix);
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Summary Workspace.
+   *
+   * Returns the configured workspace name, falling back to its path when the
+   * target context has no workspace metadata.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Context} context - Context.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static resolveSummaryWorkspace(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Context): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Returns {
+    const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Workspace = context['workspace'];
+
+    return (workspace === undefined) ? context['workingDir'] : workspace['name'];
   }
 
   /**

@@ -46,12 +46,37 @@ import {
   LIB_REGEX_PATTERN_SWIFT_SINCE_UNRELEASED,
 } from '../../lib/regex.js';
 import { Runner as LibReleaseHistory } from '../../lib/release-history.js';
+import { compareSemver } from '../../lib/utility.js';
 import { Runner as LibVersionContract } from '../../lib/version-contract.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_CoreComparison,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_I,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_IdentifierCount,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_Left,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftBuildIndex,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftCore,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifier,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifiers,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftNumeric,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrerelease,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrereleaseIndex,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftWithoutBuild,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_Returns,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_Right,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightBuildIndex,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightCore,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifier,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifiers,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightNumeric,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrerelease,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrereleaseIndex,
+  Cli_Utility_Changelog_Runner_CompareNotesVersions_RightWithoutBuild,
   Cli_Utility_Changelog_Runner_FailFold_Message,
   Cli_Utility_Changelog_Runner_FailFold_Returns,
+  Cli_Utility_Changelog_Runner_FailNotes_Message,
+  Cli_Utility_Changelog_Runner_FailNotes_Returns,
   Cli_Utility_Changelog_Runner_Fold_Action,
   Cli_Utility_Changelog_Runner_Fold_ActionOutput,
   Cli_Utility_Changelog_Runner_Fold_ActionOutputKey,
@@ -167,29 +192,90 @@ import type {
   Cli_Utility_Changelog_Runner_FormatChangelogSection_Returns,
   Cli_Utility_Changelog_Runner_FormatChangelogSection_Section,
   Cli_Utility_Changelog_Runner_FormatChangelogSection_SectionParts,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_BulletLines,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_FirstBulletIndex,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_Heading,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_LastContentIndex,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_Lines,
+  Cli_Utility_Changelog_Runner_FormatNotesBlock_Returns,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_Blocks,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_BuildSeparatorIndex,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_BuildValue,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_Content,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentHeading,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentLines,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_EndIndex,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_FinalBlock,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_I,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_Lines,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_LineSection,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_MatchingIndexes,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_ParsedBuild,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_PreviousBlock,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_Returns,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_SectionLines,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_StartIndex,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_TargetBuild,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_TargetVersion,
+  Cli_Utility_Changelog_Runner_FormatNotesSection_Version,
   Cli_Utility_Changelog_Runner_GenerateFileName_Adjective,
   Cli_Utility_Changelog_Runner_GenerateFileName_Noun,
   Cli_Utility_Changelog_Runner_GenerateFileName_Returns,
   Cli_Utility_Changelog_Runner_GenerateFileName_Verb,
-  Cli_Utility_Changelog_Runner_ParseChangelog_BuildEndIndex,
-  Cli_Utility_Changelog_Runner_ParseChangelog_BuildPrefix,
-  Cli_Utility_Changelog_Runner_ParseChangelog_BuildValue,
+  Cli_Utility_Changelog_Runner_GetNotesVersions_Content,
+  Cli_Utility_Changelog_Runner_GetNotesVersions_Lines,
+  Cli_Utility_Changelog_Runner_GetNotesVersions_Returns,
+  Cli_Utility_Changelog_Runner_GetNotesVersions_Section,
+  Cli_Utility_Changelog_Runner_GetNotesVersions_Versions,
+  Cli_Utility_Changelog_Runner_Notes_ChangelogSettings,
+  Cli_Utility_Changelog_Runner_Notes_ChangelogWorkspaces,
+  Cli_Utility_Changelog_Runner_Notes_Config,
+  Cli_Utility_Changelog_Runner_Notes_ConfigLoader,
+  Cli_Utility_Changelog_Runner_Notes_CurrentDirectory,
+  Cli_Utility_Changelog_Runner_Notes_ErrorMessage,
+  Cli_Utility_Changelog_Runner_Notes_FilterWorkspaceTypeGuard,
+  Cli_Utility_Changelog_Runner_Notes_HasConfigErrors,
+  Cli_Utility_Changelog_Runner_Notes_LeftIndex,
+  Cli_Utility_Changelog_Runner_Notes_Options,
+  Cli_Utility_Changelog_Runner_Notes_Output,
+  Cli_Utility_Changelog_Runner_Notes_OutputBlocks,
+  Cli_Utility_Changelog_Runner_Notes_ReadWorkspaces,
+  Cli_Utility_Changelog_Runner_Notes_Returns,
+  Cli_Utility_Changelog_Runner_Notes_RightIndex,
+  Cli_Utility_Changelog_Runner_Notes_Settings,
+  Cli_Utility_Changelog_Runner_Notes_TargetVersion,
+  Cli_Utility_Changelog_Runner_Notes_TypedLeftWorkspace,
+  Cli_Utility_Changelog_Runner_Notes_TypedRightWorkspace,
+  Cli_Utility_Changelog_Runner_Notes_Versions,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceEntries,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceName,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceOrder,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndex,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndexes,
+  Cli_Utility_Changelog_Runner_Notes_Workspaces,
+  Cli_Utility_Changelog_Runner_Notes_WorkspaceSection,
   Cli_Utility_Changelog_Runner_ParseChangelog_Category,
   Cli_Utility_Changelog_Runner_ParseChangelog_CategoryValue,
   Cli_Utility_Changelog_Runner_ParseChangelog_Content,
   Cli_Utility_Changelog_Runner_ParseChangelog_CurrentCategory,
   Cli_Utility_Changelog_Runner_ParseChangelog_CurrentSection,
-  Cli_Utility_Changelog_Runner_ParseChangelog_HeaderBody,
   Cli_Utility_Changelog_Runner_ParseChangelog_Lines,
   Cli_Utility_Changelog_Runner_ParseChangelog_Message,
   Cli_Utility_Changelog_Runner_ParseChangelog_Messages,
   Cli_Utility_Changelog_Runner_ParseChangelog_PackageHeading,
-  Cli_Utility_Changelog_Runner_ParseChangelog_ParsedBuild,
+  Cli_Utility_Changelog_Runner_ParseChangelog_ParsedSection,
   Cli_Utility_Changelog_Runner_ParseChangelog_Returns,
-  Cli_Utility_Changelog_Runner_ParseChangelog_Section,
   Cli_Utility_Changelog_Runner_ParseChangelog_Sections,
-  Cli_Utility_Changelog_Runner_ParseChangelog_Version,
-  Cli_Utility_Changelog_Runner_ParseChangelog_VersionSeparatorIndex,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildEndIndex,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildPrefix,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildValue,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_HeaderBody,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_Line,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_ParsedBuild,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_Returns,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_Section,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_Version,
+  Cli_Utility_Changelog_Runner_ParseChangelogHeading_VersionSeparatorIndex,
   Cli_Utility_Changelog_Runner_ParseEntries_ChangelogDirectory,
   Cli_Utility_Changelog_Runner_ParseEntries_ColonIndex,
   Cli_Utility_Changelog_Runner_ParseEntries_Content,
@@ -212,6 +298,14 @@ import type {
   Cli_Utility_Changelog_Runner_PromptWithCancel_Questions,
   Cli_Utility_Changelog_Runner_PromptWithCancel_Result,
   Cli_Utility_Changelog_Runner_PromptWithCancel_Returns,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_ChangelogPath,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Content,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_CurrentDirectory,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Returns,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceConfig,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceEntry,
+  Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspacePath,
   Cli_Utility_Changelog_Runner_Record_BumpOutput,
   Cli_Utility_Changelog_Runner_Record_BumpOutputKey,
   Cli_Utility_Changelog_Runner_Record_BumpOutputResult,
@@ -359,6 +453,8 @@ import type {
   Cli_Utility_Changelog_Runner_Run_ModeOutputValue,
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
+  Cli_Utility_Changelog_Runner_Run_SelectedModeCount,
+  Cli_Utility_Changelog_Runner_Run_SelectedModes,
   Cli_Utility_Changelog_Runner_StampUnreleased_CandidateBytesRead,
   Cli_Utility_Changelog_Runner_StampUnreleased_CandidateFileHandle,
   Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath,
@@ -524,8 +620,8 @@ export class Runner {
   /**
    * CLI - Utility - Changelog - Run.
    *
-   * Entry point invoked by the CLI. Routes to record, fold, or release mode based on flags,
-   * falling back to an interactive prompt when no mode flag is provided.
+   * Entry point invoked by the CLI. Routes to record, fold, release, or notes mode based on
+   * flags, falling back to an interactive prompt when no mode flag is provided.
    *
    * @param {Cli_Utility_Changelog_Runner_Run_Options} options - Options.
    *
@@ -543,17 +639,20 @@ export class Runner {
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
+    const selectedModes: Cli_Utility_Changelog_Runner_Run_SelectedModes = [
+      Number(options['record'] === true),
+      Number(options['release'] === true),
+      Number(options['fold'] === true),
+      Number(options['notes'] === true),
+    ];
+    const selectedModeCount: Cli_Utility_Changelog_Runner_Run_SelectedModeCount = selectedModes.reduce((count, selectedMode) => count + selectedMode, 0);
+
     // Mutually exclusive mode check.
-    if (
-      Number(options['record'] === true)
-      + Number(options['release'] === true)
-      + Number(options['fold'] === true)
-      > 1
-    ) {
+    if (selectedModeCount > 1) {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'validate',
-      }).error('Cannot use --record, --release, and --fold together.');
+      }).error('Cannot use --record, --release, --fold, and --notes together.');
 
       process.exitCode = 1;
 
@@ -570,7 +669,10 @@ export class Runner {
         || options['match'] !== undefined
         || options['mergeFrom'] !== undefined
         || options['uncategorizedAs'] !== undefined
-        || options['version'] !== undefined
+        || (
+          options['version'] !== undefined
+          && options['notes'] !== true
+        )
         || options['buildBump'] === false
       )
     ) {
@@ -580,6 +682,13 @@ export class Runner {
       }).error('Fold action flags require --fold.');
 
       process.exitCode = 1;
+
+      return;
+    }
+
+    // Release-note output mode.
+    if (options['notes'] === true) {
+      await Runner.notes(options);
 
       return;
     }
@@ -668,6 +777,167 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Notes.
+   *
+   * Renders a pipe-safe GitHub release body from the selected version in every configured
+   * workspace changelog. Workspaces without that version receive a "No changes." block.
+   *
+   * @param {Cli_Utility_Changelog_Runner_Notes_Options} options - Options.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_Notes_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static async notes(options: Cli_Utility_Changelog_Runner_Notes_Options): Cli_Utility_Changelog_Runner_Notes_Returns {
+    const configLoader: Cli_Utility_Changelog_Runner_Notes_ConfigLoader = new LibNovaConfig();
+    const config: Cli_Utility_Changelog_Runner_Notes_Config = await configLoader.load();
+    const hasConfigErrors: Cli_Utility_Changelog_Runner_Notes_HasConfigErrors = configLoader.diagnostics().some((diagnostic) => diagnostic['severity'] === 'error');
+
+    if (hasConfigErrors === true) {
+      process.exitCode = 1;
+
+      return;
+    }
+
+    const workspaces: Cli_Utility_Changelog_Runner_Notes_Workspaces = config['workspaces'] ?? {};
+    const currentDirectory: Cli_Utility_Changelog_Runner_Notes_CurrentDirectory = process.cwd();
+    const workspaceEntries: Cli_Utility_Changelog_Runner_Notes_WorkspaceEntries = Object.entries(workspaces);
+
+    try {
+      const readWorkspaces: Cli_Utility_Changelog_Runner_Notes_ReadWorkspaces = await Promise.all(workspaceEntries.map(async (workspaceEntry) => Runner.readNotesWorkspace(currentDirectory, workspaceEntry)));
+      const changelogWorkspaces: Cli_Utility_Changelog_Runner_Notes_ChangelogWorkspaces = readWorkspaces.filter((workspace): workspace is Cli_Utility_Changelog_Runner_Notes_FilterWorkspaceTypeGuard => workspace !== undefined);
+      const settings: Cli_Utility_Changelog_Runner_Notes_Settings = config['settings'];
+      const changelogSettings: Cli_Utility_Changelog_Runner_Notes_ChangelogSettings = (settings !== undefined) ? settings['changelog'] : undefined;
+      const workspaceOrder: Cli_Utility_Changelog_Runner_Notes_WorkspaceOrder = (changelogSettings !== undefined && changelogSettings['workspaceOrder'] !== undefined) ? changelogSettings['workspaceOrder'] : [];
+      const workspaceOrderIndexes: Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndexes = new Map();
+
+      for (let workspaceOrderIndex: Cli_Utility_Changelog_Runner_Notes_WorkspaceOrderIndex = 0; workspaceOrderIndex < workspaceOrder.length; workspaceOrderIndex += 1) {
+        const workspaceName: Cli_Utility_Changelog_Runner_Notes_WorkspaceName = workspaceOrder[workspaceOrderIndex];
+
+        if (workspaceName !== undefined) {
+          workspaceOrderIndexes.set(workspaceName, workspaceOrderIndex);
+        }
+      }
+
+      changelogWorkspaces.sort((leftWorkspace, rightWorkspace) => {
+        const typedLeftWorkspace: Cli_Utility_Changelog_Runner_Notes_TypedLeftWorkspace = leftWorkspace;
+        const typedRightWorkspace: Cli_Utility_Changelog_Runner_Notes_TypedRightWorkspace = rightWorkspace;
+        const leftIndex: Cli_Utility_Changelog_Runner_Notes_LeftIndex = workspaceOrderIndexes.get(typedLeftWorkspace['name']);
+        const rightIndex: Cli_Utility_Changelog_Runner_Notes_RightIndex = workspaceOrderIndexes.get(typedRightWorkspace['name']);
+
+        if (leftIndex !== undefined && rightIndex !== undefined) {
+          return leftIndex - rightIndex;
+        }
+
+        if (leftIndex !== undefined) {
+          return -1;
+        }
+
+        if (rightIndex !== undefined) {
+          return 1;
+        }
+
+        return typedLeftWorkspace['name'].localeCompare(typedRightWorkspace['name']);
+      });
+
+      let targetVersion: Cli_Utility_Changelog_Runner_Notes_TargetVersion = options['version'];
+
+      if (targetVersion === undefined) {
+        const versions: Cli_Utility_Changelog_Runner_Notes_Versions = [];
+
+        for (const changelogWorkspace of changelogWorkspaces) {
+          versions.push(...Runner.getNotesVersions(changelogWorkspace['content']));
+        }
+
+        versions.sort(Runner['compareNotesVersions']);
+        targetVersion = versions.at(-1);
+      }
+
+      if (targetVersion === undefined) {
+        Runner.failNotes('No released changelog versions were found.');
+
+        return;
+      }
+
+      const outputBlocks: Cli_Utility_Changelog_Runner_Notes_OutputBlocks = [];
+
+      for (const changelogWorkspace of changelogWorkspaces) {
+        const workspaceSection: Cli_Utility_Changelog_Runner_Notes_WorkspaceSection = Runner.formatNotesSection(changelogWorkspace['content'], targetVersion);
+
+        if (workspaceSection === undefined) {
+          outputBlocks.push([
+            `## ${changelogWorkspace['name']}`,
+            '',
+            'No changes.',
+          ].join('\n'));
+        } else {
+          outputBlocks.push([
+            `## ${changelogWorkspace['name']}`,
+            '',
+            workspaceSection,
+          ].join('\n'));
+        }
+      }
+
+      const output: Cli_Utility_Changelog_Runner_Notes_Output = (outputBlocks.length > 0) ? `${outputBlocks.join('\n\n')}\n` : '';
+
+      if (output !== '') {
+        process.stdout.write(output);
+      }
+    } catch (error) {
+      const errorMessage: Cli_Utility_Changelog_Runner_Notes_ErrorMessage = (error instanceof Error) ? error.message : 'Unable to build release notes from workspace changelogs.';
+
+      Runner.failNotes(errorMessage);
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Read Notes Workspace.
+   *
+   * Reads one configured workspace's changelog and skips only a missing changelog file.
+   * Other read failures retain their path in the reported error.
+   *
+   * @param {Cli_Utility_Changelog_Runner_ReadNotesWorkspace_CurrentDirectory} currentDirectory - Current directory.
+   * @param {Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceEntry}   workspaceEntry   - Workspace entry.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static async readNotesWorkspace(currentDirectory: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_CurrentDirectory, workspaceEntry: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceEntry): Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Returns {
+    const workspacePath: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspacePath = workspaceEntry[0];
+    const workspaceConfig: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceConfig = workspaceEntry[1];
+    const workspaceDirectory: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_WorkspaceDirectory = resolve(currentDirectory, workspacePath);
+    const changelogPath: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+
+    try {
+      const content: Cli_Utility_Changelog_Runner_ReadNotesWorkspace_Content = await fs.readFile(changelogPath, 'utf-8');
+
+      return {
+        name: workspaceConfig['name'],
+        content,
+      };
+    } catch (error) {
+      if (
+        typeof error === 'object'
+        && error !== null
+        && 'code' in error
+        && error.code === 'ENOENT'
+      ) {
+        return undefined;
+      }
+
+      throw new Error(`Unable to read "${changelogPath}".`);
+    }
   }
 
   /**
@@ -3409,6 +3679,92 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Changelog - Compare Notes Versions.
+   *
+   * Compares numeric SemVer or CalVer cores, then applies SemVer prerelease precedence.
+   * Build metadata does not affect which released version is newest.
+   *
+   * @param {Cli_Utility_Changelog_Runner_CompareNotesVersions_Left}  left  - Left.
+   * @param {Cli_Utility_Changelog_Runner_CompareNotesVersions_Right} right - Right.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_CompareNotesVersions_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static compareNotesVersions(left: Cli_Utility_Changelog_Runner_CompareNotesVersions_Left, right: Cli_Utility_Changelog_Runner_CompareNotesVersions_Right): Cli_Utility_Changelog_Runner_CompareNotesVersions_Returns {
+    const leftBuildIndex: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftBuildIndex = left.indexOf('+');
+    const rightBuildIndex: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightBuildIndex = right.indexOf('+');
+    const leftWithoutBuild: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftWithoutBuild = (leftBuildIndex === -1) ? left : left.slice(0, leftBuildIndex);
+    const rightWithoutBuild: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightWithoutBuild = (rightBuildIndex === -1) ? right : right.slice(0, rightBuildIndex);
+    const leftPrereleaseIndex: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrereleaseIndex = leftWithoutBuild.indexOf('-');
+    const rightPrereleaseIndex: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrereleaseIndex = rightWithoutBuild.indexOf('-');
+    const leftCore: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftCore = (leftPrereleaseIndex === -1) ? leftWithoutBuild : leftWithoutBuild.slice(0, leftPrereleaseIndex);
+    const rightCore: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightCore = (rightPrereleaseIndex === -1) ? rightWithoutBuild : rightWithoutBuild.slice(0, rightPrereleaseIndex);
+    const coreComparison: Cli_Utility_Changelog_Runner_CompareNotesVersions_CoreComparison = compareSemver(leftCore, rightCore);
+
+    if (coreComparison !== 0) {
+      return coreComparison;
+    }
+
+    const leftPrerelease: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftPrerelease = (leftPrereleaseIndex === -1) ? undefined : leftWithoutBuild.slice(leftPrereleaseIndex + 1);
+    const rightPrerelease: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightPrerelease = (rightPrereleaseIndex === -1) ? undefined : rightWithoutBuild.slice(rightPrereleaseIndex + 1);
+
+    if (leftPrerelease === undefined && rightPrerelease === undefined) {
+      return 0;
+    }
+
+    if (leftPrerelease === undefined) {
+      return 1;
+    }
+
+    if (rightPrerelease === undefined) {
+      return -1;
+    }
+
+    const leftIdentifiers: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifiers = leftPrerelease.split('.');
+    const rightIdentifiers: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifiers = rightPrerelease.split('.');
+    const identifierCount: Cli_Utility_Changelog_Runner_CompareNotesVersions_IdentifierCount = Math.max(leftIdentifiers.length, rightIdentifiers.length);
+
+    for (let i: Cli_Utility_Changelog_Runner_CompareNotesVersions_I = 0; i < identifierCount; i += 1) {
+      const leftIdentifier: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftIdentifier = leftIdentifiers[i];
+      const rightIdentifier: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightIdentifier = rightIdentifiers[i];
+
+      if (leftIdentifier === rightIdentifier) {
+        continue;
+      }
+
+      if (leftIdentifier === undefined) {
+        return -1;
+      }
+
+      if (rightIdentifier === undefined) {
+        return 1;
+      }
+
+      const leftNumeric: Cli_Utility_Changelog_Runner_CompareNotesVersions_LeftNumeric = [...leftIdentifier].every((character) => character >= '0' && character <= '9');
+      const rightNumeric: Cli_Utility_Changelog_Runner_CompareNotesVersions_RightNumeric = [...rightIdentifier].every((character) => character >= '0' && character <= '9');
+
+      if (leftNumeric === true && rightNumeric === true) {
+        return Number(leftIdentifier) - Number(rightIdentifier);
+      }
+
+      if (leftNumeric === true) {
+        return -1;
+      }
+
+      if (rightNumeric === true) {
+        return 1;
+      }
+
+      return leftIdentifier.localeCompare(rightIdentifier);
+    }
+
+    return 0;
+  }
+
+  /**
    * CLI - Utility - Changelog - Fail Fold.
    *
    * Reports one fold validation error through the command's shared logger.
@@ -3425,6 +3781,31 @@ export class Runner {
   private static failFold(message: Cli_Utility_Changelog_Runner_FailFold_Message): Cli_Utility_Changelog_Runner_FailFold_Returns {
     Logger.customize({
       name: 'Runner.fold',
+      purpose: 'validate',
+    }).error(message);
+
+    process.exitCode = 1;
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Fail Notes.
+   *
+   * Reports one release-note error on stderr.
+   * Applies the command's non-zero exit contract at the same boundary.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FailNotes_Message} message - Message.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FailNotes_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static failNotes(message: Cli_Utility_Changelog_Runner_FailNotes_Message): Cli_Utility_Changelog_Runner_FailNotes_Returns {
+    Logger.customize({
+      name: 'Runner.notes',
       purpose: 'validate',
     }).error(message);
 
@@ -3550,6 +3931,184 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Changelog - Format Notes Block.
+   *
+   * Adds the release-body spacing around one category heading while leaving every bullet and
+   * continuation line unchanged. A category without a bullet does not produce a block.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FormatNotesBlock_Heading} heading - Heading.
+   * @param {Cli_Utility_Changelog_Runner_FormatNotesBlock_Lines}   lines   - Lines.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FormatNotesBlock_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static formatNotesBlock(heading: Cli_Utility_Changelog_Runner_FormatNotesBlock_Heading, lines: Cli_Utility_Changelog_Runner_FormatNotesBlock_Lines): Cli_Utility_Changelog_Runner_FormatNotesBlock_Returns {
+    const firstBulletIndex: Cli_Utility_Changelog_Runner_FormatNotesBlock_FirstBulletIndex = lines.findIndex((line) => line.startsWith('- ') === true);
+
+    if (firstBulletIndex === -1) {
+      return undefined;
+    }
+
+    let lastContentIndex: Cli_Utility_Changelog_Runner_FormatNotesBlock_LastContentIndex = lines.length - 1;
+
+    while (
+      lastContentIndex >= firstBulletIndex
+      && (lines[lastContentIndex] ?? '').trim() === ''
+    ) {
+      lastContentIndex -= 1;
+    }
+
+    const bulletLines: Cli_Utility_Changelog_Runner_FormatNotesBlock_BulletLines = lines.slice(firstBulletIndex, lastContentIndex + 1);
+
+    return [
+      heading,
+      '',
+      ...bulletLines,
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Utility - Changelog - Format Notes Section.
+   *
+   * Finds one exact version section and renders its category blocks without reparsing bullet
+   * text. Duplicate version headings use the same ambiguity failure as fold mode.
+   *
+   * @param {Cli_Utility_Changelog_Runner_FormatNotesSection_Content} content - Content.
+   * @param {Cli_Utility_Changelog_Runner_FormatNotesSection_Version} version - Version.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_FormatNotesSection_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static formatNotesSection(content: Cli_Utility_Changelog_Runner_FormatNotesSection_Content, version: Cli_Utility_Changelog_Runner_FormatNotesSection_Version): Cli_Utility_Changelog_Runner_FormatNotesSection_Returns {
+    const lines: Cli_Utility_Changelog_Runner_FormatNotesSection_Lines = content.split('\n');
+    let targetVersion: Cli_Utility_Changelog_Runner_FormatNotesSection_TargetVersion = (version.startsWith('v') === true) ? version.slice(1) : version;
+    let targetBuild: Cli_Utility_Changelog_Runner_FormatNotesSection_TargetBuild = undefined;
+    const buildSeparatorIndex: Cli_Utility_Changelog_Runner_FormatNotesSection_BuildSeparatorIndex = targetVersion.lastIndexOf('+');
+
+    if (buildSeparatorIndex !== -1) {
+      const buildValue: Cli_Utility_Changelog_Runner_FormatNotesSection_BuildValue = targetVersion.slice(buildSeparatorIndex + 1);
+      const parsedBuild: Cli_Utility_Changelog_Runner_FormatNotesSection_ParsedBuild = Number(buildValue);
+
+      if (
+        buildValue !== ''
+        && [...buildValue].every((character) => character >= '0' && character <= '9') === true
+        && Number.isSafeInteger(parsedBuild) === true
+      ) {
+        targetVersion = targetVersion.slice(0, buildSeparatorIndex);
+        targetBuild = parsedBuild;
+      }
+    }
+
+    const matchingIndexes: Cli_Utility_Changelog_Runner_FormatNotesSection_MatchingIndexes = [];
+
+    for (let i: Cli_Utility_Changelog_Runner_FormatNotesSection_I = 0; i < lines.length; i += 1) {
+      const lineSection: Cli_Utility_Changelog_Runner_FormatNotesSection_LineSection = Runner.parseChangelogHeading(lines[i] ?? '');
+
+      if (
+        lineSection !== undefined
+        && lineSection['version'] === targetVersion
+        && (
+          targetBuild === undefined
+          || lineSection['build'] === undefined
+          || lineSection['build'] === targetBuild
+        )
+      ) {
+        matchingIndexes.push(i);
+      }
+    }
+
+    if (matchingIndexes.length === 0) {
+      return undefined;
+    }
+
+    if (matchingIndexes.length > 1) {
+      throw new Error(`Version "${version}" is ambiguous because it appears more than once in a workspace changelog.`);
+    }
+
+    const startIndex: Cli_Utility_Changelog_Runner_FormatNotesSection_StartIndex = matchingIndexes[0] ?? 0;
+    let endIndex: Cli_Utility_Changelog_Runner_FormatNotesSection_EndIndex = lines.length;
+
+    for (let i: Cli_Utility_Changelog_Runner_FormatNotesSection_I = startIndex + 1; i < lines.length; i += 1) {
+      if (Runner.parseChangelogHeading(lines[i] ?? '') !== undefined) {
+        endIndex = i;
+
+        break;
+      }
+    }
+
+    const sectionLines: Cli_Utility_Changelog_Runner_FormatNotesSection_SectionLines = lines.slice(startIndex + 1, endIndex);
+    const blocks: Cli_Utility_Changelog_Runner_FormatNotesSection_Blocks = [];
+    let currentHeading: Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentHeading = undefined;
+    let currentLines: Cli_Utility_Changelog_Runner_FormatNotesSection_CurrentLines = [];
+
+    for (const line of sectionLines) {
+      if (line.startsWith('### ') === true) {
+        if (currentHeading !== undefined) {
+          const previousBlock: Cli_Utility_Changelog_Runner_FormatNotesSection_PreviousBlock = Runner.formatNotesBlock(currentHeading, currentLines);
+
+          if (previousBlock !== undefined) {
+            blocks.push(previousBlock);
+          }
+        }
+
+        currentHeading = line;
+        currentLines = [];
+
+        continue;
+      }
+
+      if (currentHeading !== undefined) {
+        currentLines.push(line);
+      }
+    }
+
+    if (currentHeading !== undefined) {
+      const finalBlock: Cli_Utility_Changelog_Runner_FormatNotesSection_FinalBlock = Runner.formatNotesBlock(currentHeading, currentLines);
+
+      if (finalBlock !== undefined) {
+        blocks.push(finalBlock);
+      }
+    }
+
+    return (blocks.length > 0) ? blocks.join('\n\n') : undefined;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Get Notes Versions.
+   *
+   * Collects numeric release versions from one changelog.
+   * The caller compares them repository-wide to select the default.
+   *
+   * @param {Cli_Utility_Changelog_Runner_GetNotesVersions_Content} content - Content.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_GetNotesVersions_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static getNotesVersions(content: Cli_Utility_Changelog_Runner_GetNotesVersions_Content): Cli_Utility_Changelog_Runner_GetNotesVersions_Returns {
+    const lines: Cli_Utility_Changelog_Runner_GetNotesVersions_Lines = content.split('\n');
+    const versions: Cli_Utility_Changelog_Runner_GetNotesVersions_Versions = [];
+
+    for (const line of lines) {
+      const section: Cli_Utility_Changelog_Runner_GetNotesVersions_Section = Runner.parseChangelogHeading(line);
+
+      if (section !== undefined && Number.isNaN(Number.parseInt(section['version'], 10)) === false) {
+        versions.push(section['version']);
+      }
+    }
+
+    return versions;
+  }
+
+  /**
    * CLI - Utility - Changelog - Parse Changelog.
    *
    * Reads Nova's generated package heading and ordered release sections.
@@ -3580,43 +4139,12 @@ export class Runner {
     let currentCategory: Cli_Utility_Changelog_Runner_ParseChangelog_CurrentCategory = undefined;
 
     for (const line of lines.slice(1)) {
-      if (line.startsWith('## ') === true) {
-        const headerBody: Cli_Utility_Changelog_Runner_ParseChangelog_HeaderBody = line.slice(3);
-        const versionSeparatorIndex: Cli_Utility_Changelog_Runner_ParseChangelog_VersionSeparatorIndex = headerBody.indexOf(' ');
-        const version: Cli_Utility_Changelog_Runner_ParseChangelog_Version = (versionSeparatorIndex === -1) ? headerBody : headerBody.slice(0, versionSeparatorIndex);
+      const parsedSection: Cli_Utility_Changelog_Runner_ParseChangelog_ParsedSection = Runner.parseChangelogHeading(line);
 
-        if (version === '') {
-          throw new Error(`Invalid changelog section heading "${line}".`);
-        }
+      if (parsedSection !== undefined) {
+        sections.push(parsedSection);
 
-        const section: Cli_Utility_Changelog_Runner_ParseChangelog_Section = {
-          header: line,
-          version,
-          categories: new Map(),
-          uncategorized: [],
-        };
-        const buildPrefix: Cli_Utility_Changelog_Runner_ParseChangelog_BuildPrefix = `${version} (`;
-
-        if (headerBody.startsWith(buildPrefix) === true) {
-          const buildEndIndex: Cli_Utility_Changelog_Runner_ParseChangelog_BuildEndIndex = headerBody.indexOf(')', buildPrefix.length);
-
-          if (buildEndIndex === -1) {
-            throw new Error(`Invalid native build in changelog heading "${line}".`);
-          }
-
-          const buildValue: Cli_Utility_Changelog_Runner_ParseChangelog_BuildValue = headerBody.slice(buildPrefix.length, buildEndIndex);
-          const parsedBuild: Cli_Utility_Changelog_Runner_ParseChangelog_ParsedBuild = Number(buildValue);
-
-          if (Number.isSafeInteger(parsedBuild) === false) {
-            throw new Error(`Invalid native build "${buildValue}" in changelog heading "${line}".`);
-          }
-
-          Reflect.set(section, 'build', parsedBuild);
-        }
-
-        sections.push(section);
-
-        currentSection = section;
+        currentSection = parsedSection;
         currentCategory = undefined;
 
         continue;
@@ -3681,6 +4209,61 @@ export class Runner {
       packageHeading,
       sections,
     };
+  }
+
+  /**
+   * CLI - Utility - Changelog - Parse Changelog Heading.
+   *
+   * Parses the version and optional native build from one H2 release heading.
+   * Fold and notes mode share this boundary so they interpret headings identically.
+   *
+   * @param {Cli_Utility_Changelog_Runner_ParseChangelogHeading_Line} line - Line.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_ParseChangelogHeading_Returns}
+   *
+   * @since 0.50.0
+   */
+  private static parseChangelogHeading(line: Cli_Utility_Changelog_Runner_ParseChangelogHeading_Line): Cli_Utility_Changelog_Runner_ParseChangelogHeading_Returns {
+    if (line.startsWith('## ') === false) {
+      return undefined;
+    }
+
+    const headerBody: Cli_Utility_Changelog_Runner_ParseChangelogHeading_HeaderBody = line.slice(3);
+    const versionSeparatorIndex: Cli_Utility_Changelog_Runner_ParseChangelogHeading_VersionSeparatorIndex = headerBody.indexOf(' ');
+    const version: Cli_Utility_Changelog_Runner_ParseChangelogHeading_Version = (versionSeparatorIndex === -1) ? headerBody : headerBody.slice(0, versionSeparatorIndex);
+
+    if (version === '') {
+      throw new Error(`Invalid changelog section heading "${line}".`);
+    }
+
+    const section: Cli_Utility_Changelog_Runner_ParseChangelogHeading_Section = {
+      header: line,
+      version,
+      categories: new Map(),
+      uncategorized: [],
+    };
+    const buildPrefix: Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildPrefix = `${version} (`;
+
+    if (headerBody.startsWith(buildPrefix) === true) {
+      const buildEndIndex: Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildEndIndex = headerBody.indexOf(')', buildPrefix.length);
+
+      if (buildEndIndex === -1) {
+        throw new Error(`Invalid native build in changelog heading "${line}".`);
+      }
+
+      const buildValue: Cli_Utility_Changelog_Runner_ParseChangelogHeading_BuildValue = headerBody.slice(buildPrefix.length, buildEndIndex);
+      const parsedBuild: Cli_Utility_Changelog_Runner_ParseChangelogHeading_ParsedBuild = Number(buildValue);
+
+      if (Number.isSafeInteger(parsedBuild) === false) {
+        throw new Error(`Invalid native build "${buildValue}" in changelog heading "${line}".`);
+      }
+
+      Reflect.set(section, 'build', parsedBuild);
+    }
+
+    return section;
   }
 
   /**

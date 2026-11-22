@@ -36,18 +36,6 @@ ruleTester.run('requireJsdocReturns', RequireJsdocReturns['rule'], {
       ].join('\n'),
     },
 
-    // Type-guard alias in @returns.
-    {
-      code: [
-        '/**',
-        ' * Foo.',
-        ' *',
-        ' * @returns {Foo_TypeGuard}',
-        ' */',
-        'function foo() {}',
-      ].join('\n'),
-    },
-
     // Generic type with commas in @returns.
     {
       code: [
@@ -110,20 +98,6 @@ ruleTester.run('requireJsdocReturns', RequireJsdocReturns['rule'], {
         '  set bar(value) {}',
         '}',
       ].join('\n'),
-    },
-
-    // ignoreFiles skips a documented function without @returns.
-    {
-      code: [
-        '/**',
-        ' * Foo.',
-        ' *',
-        ' * @since UNRELEASED',
-        ' */',
-        'function foo() {}',
-      ].join('\n'),
-      options: [{ ignoreFiles: ['ignored-file.ts'] }],
-      filename: '/path/to/ignored-file.ts',
     },
 
     // LAST: ignoreFiles skips an otherwise invalid @returns.

@@ -31,6 +31,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'BlockPlayground': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'Blog/Components/Author': {
         actions: {
           eject: 'safe',

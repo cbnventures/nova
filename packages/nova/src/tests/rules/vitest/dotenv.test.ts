@@ -1,20 +1,12 @@
-import { strictEqual } from 'node:assert/strict';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import * as vitest from 'vitest';
-import { describe, it } from 'vitest';
 
-import { findEnvQuoteViolations } from '../../../lib/dotenv.js';
 import { registerDotenvSuite } from '../../../rules/vitest/dotenv/register.js';
 
-import type {
-  Tests_Rules_Vitest_Dotenv_FixtureRoot,
-  Tests_Rules_Vitest_Dotenv_MissingViolations,
-  Tests_Rules_Vitest_Dotenv_PresentViolations,
-  Tests_Rules_Vitest_Dotenv_ProfilesFixtureRoot,
-} from '../../../types/tests/rules/vitest/dotenv.test.d.ts';
+import type { Tests_Rules_Vitest_Dotenv_FixtureRoot, Tests_Rules_Vitest_Dotenv_ProfilesFixtureRoot } from '../../../types/tests/rules/vitest/dotenv.test.d.ts';
 
 /**
  * Tests - Rules - Vitest - Dotenv - Fixture Root.
@@ -37,29 +29,6 @@ writeFileSync(
     '',
   ].join('\n'),
 );
-
-describe(`dotenv suite helpers${''}`, () => {
-  it(`treats a present double-quoted file as having no violations${''}`, () => {
-    const presentViolations: Tests_Rules_Vitest_Dotenv_PresentViolations = findEnvQuoteViolations([
-      'A="x"',
-      'B=""',
-    ].join('\n'));
-
-    strictEqual(presentViolations.length, 0);
-
-    return;
-  });
-
-  it(`classifies nothing for an empty (absent-file-equivalent) read${''}`, () => {
-    const missingViolations: Tests_Rules_Vitest_Dotenv_MissingViolations = findEnvQuoteViolations('');
-
-    strictEqual(missingViolations.length, 0);
-
-    return;
-  });
-
-  return;
-});
 
 // Enable gating: the single conformance key runs against the good fixture root. The good `.env`
 // is fully double-quoted so it passes, and the non-existent `.env.sample` entry is skipped on

@@ -11,7 +11,7 @@ import type {
  * Lists the supported timeout categories for generated workflow steps.
  * The order also drives validation and interactive configuration output.
  *
- * @since 0.39.0
+ * @since 0.50.0
  */
 export const libWorkflowStepKinds: Lib_WorkflowTemplates_StepKinds = [
   'checkout',
@@ -23,6 +23,7 @@ export const libWorkflowStepKinds: Lib_WorkflowTemplates_StepKinds = [
   'registry',
   'deploy',
   'attest',
+  'summary',
 ];
 
 /**
@@ -31,7 +32,7 @@ export const libWorkflowStepKinds: Lib_WorkflowTemplates_StepKinds = [
  * Assigns short ceilings to quick steps and the job ceiling to long steps.
  * The serializer clamps every resolved value to its containing job timeout.
  *
- * @since 0.39.0
+ * @since 0.50.0
  */
 export const libWorkflowStepTimeoutDefaults: Lib_WorkflowTemplates_StepTimeoutDefaults = {
   checkout: 5,
@@ -43,6 +44,7 @@ export const libWorkflowStepTimeoutDefaults: Lib_WorkflowTemplates_StepTimeoutDe
   registry: 5,
   deploy: 'job',
   attest: 10,
+  summary: 5,
 };
 
 /**
@@ -371,6 +373,16 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
         },
         workspaceRole: 'package',
         workspaceNamePrefix: 'pfsense-pkg-',
+      },
+      'synology': {
+        description: 'Build a Synology DSM package and attach it to a GitHub release',
+        artifactPaths: [],
+        variables: {},
+        permissions: {
+          contents: 'write',
+        },
+        workspaceRole: 'package',
+        workspaceNamePrefix: 'synology-pkg-',
       },
       'vercel-nextjs': {
         description: 'Deploy Next.js to Vercel',

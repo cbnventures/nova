@@ -1,3 +1,5 @@
+import type MarkdownTable from '../../../../toolkit/markdown-table.js';
+
 import type {
   Shared_FundPlatform,
   Shared_GeneratorRunResult,
@@ -9,11 +11,18 @@ import type {
   Shared_NovaConfig_Project_Pronouns,
   Shared_NovaConfig_ReadMe,
   Shared_NovaConfig_ReadMe_Badges,
+  Shared_NovaConfig_ReadMe_Profile,
+  Shared_NovaConfig_ReadMe_Profile_BadgeGroups,
+  Shared_NovaConfig_ReadMe_Profile_LinkGroups,
+  Shared_NovaConfig_ReadMe_Profile_Support,
   Shared_NovaConfig_Urls,
   Shared_NovaConfigConfig,
   Shared_NovaConfigEntity,
   Shared_NovaConfigEntity_Roles,
   Shared_NovaConfigReadMeBadge,
+  Shared_NovaConfigReadMeProfileBadge,
+  Shared_NovaConfigReadMeProfileLinkGroup_Columns,
+  Shared_NovaConfigReadMeProfileSupport_Badges,
 } from '../../../shared.d.ts';
 
 /**
@@ -54,6 +63,8 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Return
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
 
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_BadgeIds = Shared_NovaConfig_ReadMe_Badges;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls = Shared_NovaConfig_Urls | undefined;
@@ -88,6 +99,18 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Config = Shared_NovaConfigConfig;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Returns = string | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProfileSupport = Shared_NovaConfig_ReadMe_Profile_Support | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProfileUrls = Shared_NovaConfig_Urls | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProfileFundSources = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProfileSupportSection = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Project = Shared_NovaConfig_Project | undefined;
 
@@ -145,6 +168,12 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Returns = string | undefined;
 
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_ProfileLinkGroups = string;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Urls = Shared_NovaConfig_Urls | undefined;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_DocumentationUrl = string;
@@ -175,6 +204,12 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Projec
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProjectName = string;
 
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProfileHeading = string;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Urls = Shared_NovaConfig_Urls | undefined;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_HomepageUrl = string;
@@ -192,6 +227,12 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Returns = string | undefined;
 
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Profile = Shared_NovaConfig_ReadMe_Profile | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProfileIntroduction = string;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Project = Shared_NovaConfig_Project | undefined;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProjectDescriptionRecord = Shared_NovaConfig_Project_Description | undefined;
@@ -208,6 +249,122 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionSection_ProjectDescription = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionSection_Returns = string;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Profile Badge.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadge_Badge = Shared_NovaConfigReadMeProfileBadge;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadge_Returns = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadge_EscapedLabel = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadge_Logo = string;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Profile Badge Groups.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadgeGroups_BadgeGroups = Shared_NovaConfig_ReadMe_Profile_BadgeGroups;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadgeGroups_Returns = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadgeGroups_Sections = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadgeGroups_Heading = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileBadgeGroups_Lines = string[];
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Profile Links Section.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_LinkGroups = Shared_NovaConfig_ReadMe_Profile_LinkGroups;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Returns = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Sections = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Heading = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Lines = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_IsTable = boolean;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Columns = Shared_NovaConfigReadMeProfileLinkGroup_Columns;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileLinkGroups_Table = MarkdownTable;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Profile Support Section.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Support = Shared_NovaConfig_ReadMe_Profile_Support;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_FundSources = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Returns = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_SupportBadges = Shared_NovaConfigReadMeProfileSupport_Badges;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Title = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Emoji = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Message = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Lines = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Platform = Shared_FundPlatform;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Label = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProfileSupportSection_Badge = Shared_NovaConfigReadMeProfileBadge;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Project Read Me Config.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProjectReadMeConfig_Config = Shared_NovaConfigConfig;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProjectReadMeConfig_Returns = Shared_NovaConfigConfig;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProjectReadMeConfig_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildProjectReadMeConfig_ProjectReadMe = Shared_NovaConfig_ReadMe;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Read Me Content.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_Config = Shared_NovaConfigConfig;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_Returns = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_HeaderContent = string | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_BadgesContent = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_IntroductionContent = string | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_DocumentationContent = string | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_CreditsContent = string | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_Sections = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_IsProfileReadMe = boolean;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildReadMeContent_HeaderLines = string[];
 
 /**
  * CLI - Generate - Must Haves - Read Me - Detect Fund Platform.
@@ -246,21 +403,11 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_Run_ReplaceFileNotice = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderContent = string | undefined;
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_RootContent = string;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_BadgesContent = string;
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkspaceConfig = Shared_NovaConfigConfig;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionContent = string | undefined;
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationContent = string | undefined;
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_CreditsContent = string | undefined;
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_Sections = string[];
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderLines = string[];
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_Content = string;
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkspaceContent = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_TargetPath = string;
 

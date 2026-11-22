@@ -59,12 +59,8 @@ describe('Import validation', async () => {
       // Convert "./rules/eslint" to "@cbnventures/nova/rules/eslint".
       const specifier: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Specifier = exportKey.replace(new RegExp(PATTERN_EXPORT_DOT_SLASH), '@cbnventures/nova/');
 
-      // Handle wildcard patterns.
-      if (specifier.includes('*') === true) {
-        validSpecifiers.add(specifier);
-      } else {
-        validSpecifiers.add(specifier);
-      }
+      // Wildcard patterns are stored as-is and matched against imports below.
+      validSpecifiers.add(specifier);
     }
 
     // Also add the bare package specifier for root exports.

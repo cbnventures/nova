@@ -1,7 +1,5 @@
 import type { vi } from 'vitest';
 
-import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../../toolkit/logger.d.ts';
-
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - All Three Undefined Logs Warn And Makes No Mutation Calls.
  *
@@ -68,44 +66,6 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_DryRunTrueRunsPrecheckCallsButSkipsMutationCalls_ViewCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Not Authenticated Logs Error And Sets Exit Code1.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_HasAuthError = boolean;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Not On PATH Logs Error And Sets Exit Code1.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_HasGhNotInstalled = boolean;
-
-/**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Repo Edit Returns Code1 Sets Exit Code1 And Logs Error.
  *
  * @since 0.19.0
@@ -117,99 +77,6 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditReturnsCode1SetsExitCode1AndLogsError_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
 
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditReturnsCode1SetsExitCode1AndLogsError_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Repo Edit With Rate Limit In Stderr Logs Rate Limit Specific Error.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock = {
-  debug: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Debug;
-  dev: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Dev;
-  info: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Info;
-  warn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Warn;
-  error: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedLoggerMock_Error;
-};
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_CustomizedErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_HasRateLimitError = boolean;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Version Below Minimum Logs Error And Sets Exit Code1.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_HasVersionError = boolean;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Version Output Unparseable Logs Error And Sets Exit Code1.
- *
- * @since 0.20.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError = boolean;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - GitHub Block Missing Logs Warn And Returns Without Exit Code.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_WarnCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_HasGithubBlockWarn = boolean;
 
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - GitHub Topics Empty Array Fires API Call Clearing Topics.
@@ -354,23 +221,6 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyTopicsFromGithubTopicsSetFiresOnlyGhApiPUTTopicsCall_TopicsCall = unknown[] | undefined;
 
 /**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Owner Or Repo Missing Logs Warn And Returns Without Exit Code.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_WarnCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_HasOwnerRepoWarn = boolean;
-
-/**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Recipe Disabled Returns Silently Without Execute Shell Mutation Calls.
  *
  * @since 0.19.0
@@ -380,122 +230,6 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Repo View Non Zero Exit Logs Error And Sets Exit Code1.
- *
- * @since 0.20.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError = boolean;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Repo View Returns READ Permission Logs Error And Sets Exit Code1.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_HasWriteError = boolean;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Sets Exit Code1 When Gh Repo View Returns Malformed J S O N.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock = {
-  debug: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Debug;
-  dev: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Dev;
-  info: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Info;
-  warn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Warn;
-  error: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedLoggerMock_Error;
-};
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_CustomizedErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_HasMalformedJsonError = boolean;
-
-/**
- * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Sets Exit Code1 When Gh Repo View Returns Valid JSON Without Viewer Permission.
- *
- * @since 0.19.0
- */
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_IsCommandExistsSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_ExecuteShellSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock = {
-  debug: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Debug;
-  dev: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Dev;
-  info: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Info;
-  warn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Warn;
-  error: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedLoggerMock_Error;
-};
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_CustomizedErrorCalls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_HasUndefinedPermissionError = boolean;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_Calls = unknown[][];
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_EditCall = unknown[] | undefined;
-
-export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_TopicsCall = unknown[] | undefined;
 
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Topics Derived From Project Keywords Are Sent In API Call.

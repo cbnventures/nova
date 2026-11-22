@@ -5,12 +5,14 @@
  *
  * A macOS 26 Terminal window, measured from a real 80x24 window that is
  * 890pt wide. Every size is in --nova-terminal-u, one point of that window,
- * so the window keeps its proportions at any width. Set
- * --nova-terminal-frame-width on the block to use another reference width.
+ * so the window follows the frame's width. The unit is clamped: text never
+ * grows past real size on wide pages and never drops below 0.7 of it, and
+ * narrow frames wrap long lines instead. Set --nova-terminal-frame-width on
+ * the block to use another reference width.
  */
 
 .nova-terminal-frame {
-  --nova-terminal-u: calc(100cqw / var(--nova-terminal-frame-width, 890));
+  --nova-terminal-u: clamp(0.7px, 100cqw / var(--nova-terminal-frame-width, 890), 1px);
   --nova-terminal-frame-bar: #ffffff;
   --nova-terminal-frame-title: #585858;
 
@@ -137,7 +139,8 @@
   font-size: calc(18 * var(--nova-terminal-u));
   line-height: calc(23 * var(--nova-terminal-u));
   text-align: left;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   color: #ffffff;
 
   overflow-x: auto;
@@ -148,4 +151,13 @@
 
 .nova-terminal-frame-body > * {
   min-height: calc(23 * var(--nova-terminal-u));
+}
+
+/* Wide frames keep real terminal lines; narrow ones wrap them instead of
+   scrolling sideways (see the base rule). */
+@container (min-width: 560px) {
+  .nova-terminal-frame-body {
+    white-space: pre;
+    overflow-wrap: normal;
+  }
 }

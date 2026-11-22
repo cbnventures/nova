@@ -445,3 +445,13 @@ export const LIB_REGEX_PATTERN_IMPORT_STATEMENT = /^import\s/;
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_SEMVER_LEADING = /^(\d+\.\d+\.\d+)(?:\s|$)/;
+
+/**
+ * Lib - Regex - Prose Article Type Selector.
+ *
+ * Matches `article` used as a type selector inside a CSS selector. The prose
+ * shield uses it to find doc and blog prose rules scoped under `<article>`.
+ *
+ * @since 0.50.0
+ */
+export const LIB_REGEX_PROSE_ARTICLE_TYPE_SELECTOR = /(?:^|[\s>+~(,])article(?![\w-])/;

@@ -71,6 +71,7 @@ import type {
   Toolkit_Logger_Runner_Prefix_ScopeTag,
   Toolkit_Logger_Runner_Prefix_ShowScope,
   Toolkit_Logger_Runner_Prefix_Timestamp,
+  Toolkit_Logger_Runner_RedirectStdoutToStderr_Returns,
   Toolkit_Logger_Runner_ScopeLabel_Options,
   Toolkit_Logger_Runner_ScopeLabel_Returns,
   Toolkit_Logger_Runner_ScopeLabel_Segments,
@@ -85,6 +86,7 @@ import type {
   Toolkit_Logger_Runner_ShouldLog_PreferredLogLevelCurrentLogLevel,
   Toolkit_Logger_Runner_ShouldLog_Returns,
   Toolkit_Logger_Runner_ShouldLog_Weights,
+  Toolkit_Logger_Runner_StdoutRedirected,
   Toolkit_Logger_Runner_StripAnsiColors_Pattern,
   Toolkit_Logger_Runner_StripAnsiColors_Returns,
   Toolkit_Logger_Runner_StripAnsiColors_Value,
@@ -101,6 +103,18 @@ import type {
  * @since 0.11.0
  */
 class Runner {
+  /**
+   * Toolkit - Logger - Stdout Redirected.
+   *
+   * Tracks whether informational output must share stderr with warnings and errors.
+   * Pipe-safe commands enable this before bootstrap emits its first log line.
+   *
+   * @private
+   *
+   * @since 0.50.0
+   */
+  static #stdoutRedirected: Toolkit_Logger_Runner_StdoutRedirected;
+
   /**
    * Toolkit - Logger - Debug.
    *
@@ -234,6 +248,22 @@ class Runner {
   }
 
   /**
+   * Toolkit - Logger - Redirect Stdout To Stderr.
+   *
+   * Routes debug, dev, and info output through stderr when stdout is reserved for
+   * machine-readable content. Existing warning and error routing remains unchanged.
+   *
+   * @returns {Toolkit_Logger_Runner_RedirectStdoutToStderr_Returns}
+   *
+   * @since 0.50.0
+   */
+  public static redirectStdoutToStderr(): Toolkit_Logger_Runner_RedirectStdoutToStderr_Returns {
+    Runner.#stdoutRedirected = true;
+
+    return;
+  }
+
+  /**
    * Toolkit - Logger - Emit.
    *
    * Core output method called by every log level. Checks
@@ -259,7 +289,11 @@ class Runner {
     const padTop: Toolkit_Logger_Runner_Emit_PadTop = '\n'.repeat(padTopCount);
     const padBottom: Toolkit_Logger_Runner_Emit_PadBottom = '\n'.repeat(padBottomCount);
 
-    const stream: Toolkit_Logger_Runner_Emit_Stream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
+    const stream: Toolkit_Logger_Runner_Emit_Stream = (
+      Runner.#stdoutRedirected === true
+      || level === 'warn'
+      || level === 'error'
+    ) ? process.stderr : process.stdout;
     let formattedMessage: Toolkit_Logger_Runner_Emit_FormattedMessage = '';
 
     // Non-interactive output (Workers logs, CI, pipes) stores each line as its own entry, so inspected objects and stack traces stay on one line.

@@ -4,8 +4,32 @@
  * The popover menu, item link, and active-item styling are grouped with
  * `.nova-locale-dropdown-menu` / `.nova-version-dropdown-menu` /
  * `.nova-dropdown-menu` in this preset's `Navbar/style.css` so all four
- * navbar dropdowns share one surface treatment. No per-component
- * overrides needed here.
+ * navbar dropdowns share one surface treatment. This overlay only tunes
+ * the dropdown group heading and separator so they match the popover
+ * border and this preset's `.nova-content-footer-section-label`.
+ *
+ * Envoy has no universal `:focus-visible` outline, so the trigger takes
+ * the focus ring of this preset's bordered navbar controls (locale
+ * dropdown, color-mode toggle) instead of the browser default.
  *
  * @since 0.18.0
  */
+
+.nova-navbar-more-summary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--nova-color-primary-300), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-more-summary:focus-visible {
+  box-shadow: 0 0 0 1px var(--nova-color-primary-600), 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-navbar-more-group:not(:first-child),
+.nova-navbar-more-group + .nova-navbar-more-item {
+  border-top-color: var(--nova-envoy-border);
+}
+
+.nova-navbar-more-group-label {
+  font-family: var(--nova-font-body);
+  color: var(--nova-envoy-text-muted);
+}

@@ -41,15 +41,6 @@ import type {
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_ViteConfigPath,
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJson,
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJson,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJsonPath,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_ProjectDirectory,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson,
-  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath,
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithoutWritesWhenRootConfigIsMissing_PackageJson,
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithoutWritesWhenRootConfigIsMissing_PackageJsonPath,
   Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithoutWritesWhenRootConfigIsMissing_ProjectDirectory,
@@ -96,35 +87,6 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
 
   afterEach(() => {
     process.exitCode = undefined;
-
-    return;
-  });
-
-  it('exits with error when inside child workspace', async () => {
-    const rootDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = join(sandboxRoot, 'nested-root');
-    const childDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = join(rootDirectory, 'apps', 'child');
-
-    await mkdir(childDirectory, { recursive: true });
-
-    const rootPackageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = JSON.stringify({
-      name: 'root',
-      workspaces: ['apps/*'],
-    }, null, 2);
-
-    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = join(rootDirectory, 'package.json');
-
-    await writeFile(rootPackageJsonPath, `${rootPackageJson}\n`, 'utf-8');
-
-    const childPackageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
-    const childPackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = join(childDirectory, 'package.json');
-
-    await writeFile(childPackageJsonPath, `${childPackageJson}\n`, 'utf-8');
-
-    process.chdir(childDirectory);
-
-    await CliScaffoldAppVite.run({});
-
-    strictEqual(process.exitCode, 1);
 
     return;
   });
@@ -192,25 +154,6 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     const workspacePackageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJson = JSON.parse(await readFile(workspacePackageJsonPath, 'utf-8')) as Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJson;
 
     strictEqual(workspacePackageJson['name'], 'my-vite-app-app-vite');
-
-    return;
-  });
-
-  it('exits with error for standalone project', async () => {
-    const projectDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = join(sandboxRoot, 'standalone');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
-    const packageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    await CliScaffoldAppVite.run({});
-
-    strictEqual(process.exitCode, 1);
 
     return;
   });

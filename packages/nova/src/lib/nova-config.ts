@@ -34,6 +34,7 @@ import {
   LIB_REGEX_PATTERN_GITHUB_REPO,
   LIB_REGEX_PATTERN_SLUG_SCOPED,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
+  LIB_REGEX_PATTERN_SVG_DATA_URI,
 } from './regex.js';
 import { libSchemaGithubIssueFormQuestion } from './schema.js';
 import {
@@ -441,11 +442,71 @@ import type {
   Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource,
   Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource,
   Lib_NovaConfig_Runner_ParseReadMe_MissingSource,
+  Lib_NovaConfig_Runner_ParseReadMe_Profile,
+  Lib_NovaConfig_Runner_ParseReadMe_Result,
   Lib_NovaConfig_Runner_ParseReadMe_Returns,
   Lib_NovaConfig_Runner_ParseReadMe_SeenBadges,
   Lib_NovaConfig_Runner_ParseReadMe_Urls,
   Lib_NovaConfig_Runner_ParseReadMe_Value,
   Lib_NovaConfig_Runner_ParseReadMe_ValueBadges,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Badge,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroup,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroups,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Badges,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Columns,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Emoji,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_FirstColumn,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_HasFundingSource,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Heading,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Introduction,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkDescription,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroup,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupEmoji,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroups,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupTitle,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkLabel,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Links,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_LinkUrl,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_ProfileLink,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadgeGroup,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadges,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawColumns,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawLink,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinkGroup,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinks,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupport,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupportBadges,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Result,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Returns,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SecondColumn,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Support,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadge,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadges,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SupportEmoji,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SupportMessage,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_SupportTitle,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Title,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Urls,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_Value,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_ValueBadgeGroups,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_ValueLinkGroups,
+  Lib_NovaConfig_Runner_ParseReadMeProfile_ValueSupport,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Color,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_ColorCandidate,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_IsDataUriLogo,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Label,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Link,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Logo,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_LogoCandidate,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_RawBadge,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Returns,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Section,
+  Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Value,
+  Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Field,
+  Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraph,
+  Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraphs,
+  Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Returns,
+  Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Value,
   Lib_NovaConfig_Runner_ParseRecipes_Docker,
   Lib_NovaConfig_Runner_ParseRecipes_DockerHub,
   Lib_NovaConfig_Runner_ParseRecipes_Github,
@@ -466,6 +527,8 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_CacheScripts,
   Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue,
   Lib_NovaConfig_Runner_ParseSettings_CacheValue,
+  Lib_NovaConfig_Runner_ParseSettings_Changelog,
+  Lib_NovaConfig_Runner_ParseSettings_ChangelogValue,
   Lib_NovaConfig_Runner_ParseSettings_Concurrency,
   Lib_NovaConfig_Runner_ParseSettings_ConcurrencyEntries,
   Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit,
@@ -481,9 +544,14 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces,
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue,
   Lib_NovaConfig_Runner_ParseSettings_TypedConcurrencyEntry,
+  Lib_NovaConfig_Runner_ParseSettings_UnknownWorkspaceName,
   Lib_NovaConfig_Runner_ParseSettings_Value,
   Lib_NovaConfig_Runner_ParseSettings_VersionStrategy,
   Lib_NovaConfig_Runner_ParseSettings_VersionStrategyValue,
+  Lib_NovaConfig_Runner_ParseSettings_WorkspaceNames,
+  Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrder,
+  Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrderValue,
+  Lib_NovaConfig_Runner_ParseSettings_Workspaces,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
   Lib_NovaConfig_Runner_ParseUrls_LoopIndex,
   Lib_NovaConfig_Runner_ParseUrls_ParsedUrl,
@@ -830,7 +898,7 @@ export class Runner {
     const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
     const environment: Lib_NovaConfig_Runner_Parse_Environment = this.parseEnvironment(value['environment'], workspaces, workflows);
-    const settings: Lib_NovaConfig_Runner_Parse_Settings = this.parseSettings(value['settings']);
+    const settings: Lib_NovaConfig_Runner_Parse_Settings = this.parseSettings(value['settings'], workspaces);
 
     // Cross-check deploy-credential scope against the environment namespaces so a
     // scoped target without its required prefix fails at load instead of silently
@@ -1128,9 +1196,8 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Read Me.
    *
-   * Validates the exact ordered README badge list. Badge identifiers are explicit:
-   * missing or empty lists produce no badges, and source-backed badges are rejected
-   * when their required GitHub, npm, Docker, or funding setting is unavailable.
+   * Validates exact ordered project badges and optional GitHub profile content while
+   * retaining profile array order after invalid entries are removed.
    *
    * @param {Lib_NovaConfig_Runner_ParseReadMe_Value}  value  - Value.
    * @param {Lib_NovaConfig_Runner_ParseReadMe_Github} github - Github.
@@ -1147,96 +1214,492 @@ export class Runner {
       return undefined;
     }
 
+    const result: Lib_NovaConfig_Runner_ParseReadMe_Result = {};
     const valueBadges: Lib_NovaConfig_Runner_ParseReadMe_ValueBadges = value['badges'];
 
-    if (valueBadges === undefined) {
+    if (valueBadges !== undefined) {
+      if (Array.isArray(valueBadges) === false) {
+        this.pushError('Runner.parseReadMe', 'readme', 'README "badges" must be an array. Skipping ...');
+      } else {
+        const allowedBadges: Lib_NovaConfig_Runner_ParseReadMe_AllowedBadges = new Set([
+          'homebridge',
+          'homebridge-verified',
+          'npm-version',
+          'npm-downloads',
+          'docker-pulls',
+          'docker-image-size',
+          'github-release',
+          'github-top-language',
+          'github-license',
+          'coverage',
+          'funding',
+        ]);
+        const seenBadges: Lib_NovaConfig_Runner_ParseReadMe_SeenBadges = new Set();
+        const badges: Lib_NovaConfig_Runner_ParseReadMe_Badges = [];
+        const hasGithubSource: Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource = (github !== undefined) ? (github['owner'] !== undefined && github['repo'] !== undefined) : false;
+        const hasNpmSource: Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource = (urls !== undefined) ? urls['npm'] !== undefined : false;
+        const hasDockerSource: Lib_NovaConfig_Runner_ParseReadMe_HasDockerSource = (urls !== undefined) ? urls['docker'] !== undefined : false;
+        const hasFundingSource: Lib_NovaConfig_Runner_ParseReadMe_HasFundingSource = (urls !== undefined && urls['fundSources'] !== undefined) ? urls['fundSources'].length > 0 : false;
+
+        for (const item of valueBadges) {
+          if (typeof item !== 'string' || allowedBadges.has(item) === false) {
+            this.pushError('Runner.parseReadMe', 'readme', `README badge "${String(item)}" is not supported. Skipping ...`);
+
+            continue;
+          }
+
+          if (seenBadges.has(item) === true) {
+            this.pushError('Runner.parseReadMe', 'readme', `README badge "${item}" is duplicated. Skipping ...`);
+
+            continue;
+          }
+
+          seenBadges.add(item);
+
+          const badge: Lib_NovaConfig_Runner_ParseReadMe_Badge = item as Lib_NovaConfig_Runner_ParseReadMe_Badge;
+          let missingSource: Lib_NovaConfig_Runner_ParseReadMe_MissingSource = false;
+
+          switch (badge) {
+            case 'npm-version':
+            case 'npm-downloads': {
+              missingSource = hasNpmSource === false;
+              break;
+            }
+
+            case 'docker-pulls':
+            case 'docker-image-size': {
+              missingSource = hasDockerSource === false;
+              break;
+            }
+
+            case 'github-release':
+            case 'github-top-language':
+            case 'github-license': {
+              missingSource = hasGithubSource === false;
+              break;
+            }
+
+            case 'funding': {
+              missingSource = hasFundingSource === false;
+              break;
+            }
+
+            default: {
+              break;
+            }
+          }
+
+          if (missingSource === true) {
+            this.pushError('Runner.parseReadMe', 'readme', `README badge "${badge}" is missing its required configuration source. Skipping ...`);
+
+            continue;
+          }
+
+          badges.push(badge);
+        }
+
+        result.badges = badges;
+      }
+    }
+
+    const profile: Lib_NovaConfig_Runner_ParseReadMe_Profile = this.parseReadMeProfile(value['profile'], urls);
+
+    if (profile !== undefined) {
+      result.profile = profile;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Read Me Profile.
+   *
+   * Validates and normalizes the content used by a GitHub profile README. Array order is
+   * retained, paragraphs stay as arrays, and support falls back to fundSources badges.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfile_Value} value - Value.
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfile_Urls}  urls  - Urls.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseReadMeProfile_Returns}
+   *
+   * @since 0.50.0
+   */
+  private parseReadMeProfile(value: Lib_NovaConfig_Runner_ParseReadMeProfile_Value, urls: Lib_NovaConfig_Runner_ParseReadMeProfile_Urls): Lib_NovaConfig_Runner_ParseReadMeProfile_Returns {
+    if (value === undefined) {
       return undefined;
     }
 
-    if (Array.isArray(valueBadges) === false) {
-      this.pushError('Runner.parseReadMe', 'readme', 'README "badges" must be an array. Skipping ...');
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile must be an object. Skipping ...');
 
       return undefined;
     }
 
-    const allowedBadges: Lib_NovaConfig_Runner_ParseReadMe_AllowedBadges = new Set([
-      'homebridge',
-      'homebridge-verified',
-      'npm-version',
-      'npm-downloads',
-      'docker-pulls',
-      'docker-image-size',
-      'github-release',
-      'github-top-language',
-      'github-license',
-      'coverage',
-      'funding',
-    ]);
-    const seenBadges: Lib_NovaConfig_Runner_ParseReadMe_SeenBadges = new Set();
-    const badges: Lib_NovaConfig_Runner_ParseReadMe_Badges = [];
-    const hasGithubSource: Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource = (github !== undefined) ? (github['owner'] !== undefined && github['repo'] !== undefined) : false;
-    const hasNpmSource: Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource = (urls !== undefined) ? urls['npm'] !== undefined : false;
-    const hasDockerSource: Lib_NovaConfig_Runner_ParseReadMe_HasDockerSource = (urls !== undefined) ? urls['docker'] !== undefined : false;
-    const hasFundingSource: Lib_NovaConfig_Runner_ParseReadMe_HasFundingSource = (urls !== undefined && urls['fundSources'] !== undefined) ? urls['fundSources'].length > 0 : false;
+    const result: Lib_NovaConfig_Runner_ParseReadMeProfile_Result = {};
+    const heading: Lib_NovaConfig_Runner_ParseReadMeProfile_Heading = this.getNonEmptyString(value['heading']);
 
-    for (const item of valueBadges) {
-      if (typeof item !== 'string' || allowedBadges.has(item) === false) {
-        this.pushError('Runner.parseReadMe', 'readme', `README badge "${String(item)}" is not supported. Skipping ...`);
-
-        continue;
+    if (value['heading'] !== undefined) {
+      if (heading === undefined) {
+        this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile "heading" must be a non-empty string. Skipping ...');
+      } else {
+        result.heading = heading;
       }
-
-      if (seenBadges.has(item) === true) {
-        this.pushError('Runner.parseReadMe', 'readme', `README badge "${item}" is duplicated. Skipping ...`);
-
-        continue;
-      }
-
-      seenBadges.add(item);
-
-      const badge: Lib_NovaConfig_Runner_ParseReadMe_Badge = item as Lib_NovaConfig_Runner_ParseReadMe_Badge;
-      let missingSource: Lib_NovaConfig_Runner_ParseReadMe_MissingSource = false;
-
-      switch (badge) {
-        case 'npm-version':
-        case 'npm-downloads': {
-          missingSource = hasNpmSource === false;
-          break;
-        }
-
-        case 'docker-pulls':
-        case 'docker-image-size': {
-          missingSource = hasDockerSource === false;
-          break;
-        }
-
-        case 'github-release':
-        case 'github-top-language':
-        case 'github-license': {
-          missingSource = hasGithubSource === false;
-          break;
-        }
-
-        case 'funding': {
-          missingSource = hasFundingSource === false;
-          break;
-        }
-
-        default: {
-          break;
-        }
-      }
-
-      if (missingSource === true) {
-        this.pushError('Runner.parseReadMe', 'readme', `README badge "${badge}" is missing its required configuration source. Skipping ...`);
-
-        continue;
-      }
-
-      badges.push(badge);
     }
 
-    return { badges };
+    const introduction: Lib_NovaConfig_Runner_ParseReadMeProfile_Introduction = this.parseReadMeProfileParagraphs(value['introduction'], '"introduction"');
+
+    if (introduction !== undefined) {
+      result.introduction = introduction;
+    }
+
+    const valueBadgeGroups: Lib_NovaConfig_Runner_ParseReadMeProfile_ValueBadgeGroups = value['badgeGroups'];
+
+    if (valueBadgeGroups !== undefined) {
+      if (Array.isArray(valueBadgeGroups) === false) {
+        this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile "badgeGroups" must be an array. Skipping ...');
+      } else {
+        const badgeGroups: Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroups = [];
+
+        for (const badgeGroupValue of valueBadgeGroups) {
+          if (isPlainObject(badgeGroupValue) === false) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile badge group must be an object. Skipping ...');
+
+            continue;
+          }
+
+          const rawBadgeGroup: Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadgeGroup = badgeGroupValue;
+          const title: Lib_NovaConfig_Runner_ParseReadMeProfile_Title = this.getNonEmptyString(rawBadgeGroup['title']);
+          const emoji: Lib_NovaConfig_Runner_ParseReadMeProfile_Emoji = this.getNonEmptyString(rawBadgeGroup['emoji']);
+          const rawBadges: Lib_NovaConfig_Runner_ParseReadMeProfile_RawBadges = rawBadgeGroup['badges'];
+
+          if (title === undefined || Array.isArray(rawBadges) === false) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile badge group requires a non-empty title and a badges array. Skipping ...');
+
+            continue;
+          }
+
+          if (rawBadgeGroup['emoji'] !== undefined && emoji === undefined) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile badge group "${title}" has an invalid emoji. Skipping the emoji ...`);
+          }
+
+          const badges: Lib_NovaConfig_Runner_ParseReadMeProfile_Badges = [];
+
+          for (const badgeValue of rawBadges) {
+            const badge: Lib_NovaConfig_Runner_ParseReadMeProfile_Badge = this.parseReadMeProfileBadge(badgeValue, `"${title}"`);
+
+            if (badge !== undefined) {
+              badges.push(badge);
+            }
+          }
+
+          if (badges.length === 0) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile badge group "${title}" has no valid badges. Skipping ...`);
+
+            continue;
+          }
+
+          const badgeGroup: Lib_NovaConfig_Runner_ParseReadMeProfile_BadgeGroup = {
+            title,
+            badges,
+          };
+
+          if (emoji !== undefined) {
+            badgeGroup.emoji = emoji;
+          }
+
+          badgeGroups.push(badgeGroup);
+        }
+
+        result.badgeGroups = badgeGroups;
+      }
+    }
+
+    const valueLinkGroups: Lib_NovaConfig_Runner_ParseReadMeProfile_ValueLinkGroups = value['linkGroups'];
+
+    if (valueLinkGroups !== undefined) {
+      if (Array.isArray(valueLinkGroups) === false) {
+        this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile "linkGroups" must be an array. Skipping ...');
+      } else {
+        const linkGroups: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroups = [];
+
+        for (const linkGroupValue of valueLinkGroups) {
+          if (isPlainObject(linkGroupValue) === false) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile link group must be an object. Skipping ...');
+
+            continue;
+          }
+
+          const rawLinkGroup: Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinkGroup = linkGroupValue;
+          const linkGroupTitle: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupTitle = this.getNonEmptyString(rawLinkGroup['title']);
+          const linkGroupEmoji: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroupEmoji = this.getNonEmptyString(rawLinkGroup['emoji']);
+          const rawColumns: Lib_NovaConfig_Runner_ParseReadMeProfile_RawColumns = rawLinkGroup['columns'];
+          const rawLinks: Lib_NovaConfig_Runner_ParseReadMeProfile_RawLinks = rawLinkGroup['links'];
+
+          if (linkGroupTitle === undefined || Array.isArray(rawLinks) === false) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile link group requires a non-empty title and a links array. Skipping ...');
+
+            continue;
+          }
+
+          if (rawLinkGroup['emoji'] !== undefined && linkGroupEmoji === undefined) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link group "${linkGroupTitle}" has an invalid emoji. Skipping the emoji ...`);
+          }
+
+          let columns: Lib_NovaConfig_Runner_ParseReadMeProfile_Columns = undefined;
+
+          if (rawColumns !== undefined) {
+            const firstColumn: Lib_NovaConfig_Runner_ParseReadMeProfile_FirstColumn = (Array.isArray(rawColumns) === true) ? this.getNonEmptyString(rawColumns[0]) : undefined;
+            const secondColumn: Lib_NovaConfig_Runner_ParseReadMeProfile_SecondColumn = (Array.isArray(rawColumns) === true) ? this.getNonEmptyString(rawColumns[1]) : undefined;
+
+            if (
+              Array.isArray(rawColumns) === false
+              || rawColumns.length !== 2
+              || firstColumn === undefined
+              || secondColumn === undefined
+            ) {
+              this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link group "${linkGroupTitle}" columns must be two non-empty strings. Skipping the columns ...`);
+            } else {
+              columns = [
+                firstColumn,
+                secondColumn,
+              ];
+            }
+          }
+
+          const links: Lib_NovaConfig_Runner_ParseReadMeProfile_Links = [];
+
+          for (const linkValue of rawLinks) {
+            if (isPlainObject(linkValue) === false) {
+              this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link in "${linkGroupTitle}" must be an object. Skipping ...`);
+
+              continue;
+            }
+
+            const rawLink: Lib_NovaConfig_Runner_ParseReadMeProfile_RawLink = linkValue;
+            const linkLabel: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkLabel = this.getNonEmptyString(rawLink['label']);
+            const linkUrl: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkUrl = this.getUrl(rawLink['url']);
+            const linkDescription: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkDescription = this.getNonEmptyString(rawLink['description']);
+
+            if (linkLabel === undefined || linkUrl === undefined) {
+              this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link in "${linkGroupTitle}" requires a non-empty label and an HTTP URL. Skipping ...`);
+
+              continue;
+            }
+
+            if (rawLink['description'] !== undefined && linkDescription === undefined) {
+              this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link "${linkLabel}" in "${linkGroupTitle}" has an invalid description. Skipping the description ...`);
+            }
+
+            const profileLink: Lib_NovaConfig_Runner_ParseReadMeProfile_ProfileLink = {
+              label: linkLabel,
+              url: linkUrl,
+            };
+
+            if (linkDescription !== undefined) {
+              profileLink.description = linkDescription;
+            }
+
+            links.push(profileLink);
+          }
+
+          if (links.length === 0) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile link group "${linkGroupTitle}" has no valid links. Skipping ...`);
+
+            continue;
+          }
+
+          const linkGroup: Lib_NovaConfig_Runner_ParseReadMeProfile_LinkGroup = {
+            title: linkGroupTitle,
+            links,
+          };
+
+          if (linkGroupEmoji !== undefined) {
+            linkGroup.emoji = linkGroupEmoji;
+          }
+
+          if (columns !== undefined) {
+            linkGroup.columns = columns;
+          }
+
+          linkGroups.push(linkGroup);
+        }
+
+        result.linkGroups = linkGroups;
+      }
+    }
+
+    const valueSupport: Lib_NovaConfig_Runner_ParseReadMeProfile_ValueSupport = value['support'];
+
+    if (valueSupport !== undefined) {
+      if (isPlainObject(valueSupport) === false) {
+        this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile "support" must be an object. Skipping ...');
+      } else {
+        const rawSupport: Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupport = valueSupport;
+        const support: Lib_NovaConfig_Runner_ParseReadMeProfile_Support = {};
+        const supportTitle: Lib_NovaConfig_Runner_ParseReadMeProfile_SupportTitle = this.getNonEmptyString(rawSupport['title']);
+        const supportEmoji: Lib_NovaConfig_Runner_ParseReadMeProfile_SupportEmoji = this.getNonEmptyString(rawSupport['emoji']);
+        const supportMessage: Lib_NovaConfig_Runner_ParseReadMeProfile_SupportMessage = this.parseReadMeProfileParagraphs(rawSupport['message'], 'support "message"');
+        const rawSupportBadges: Lib_NovaConfig_Runner_ParseReadMeProfile_RawSupportBadges = rawSupport['badges'];
+
+        if (rawSupport['title'] !== undefined) {
+          if (supportTitle === undefined) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile support "title" must be a non-empty string. Skipping the title ...');
+          } else {
+            support.title = supportTitle;
+          }
+        }
+
+        if (rawSupport['emoji'] !== undefined) {
+          if (supportEmoji === undefined) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile support "emoji" must be a non-empty string. Skipping the emoji ...');
+          } else {
+            support.emoji = supportEmoji;
+          }
+        }
+
+        if (supportMessage !== undefined) {
+          support.message = supportMessage;
+        }
+
+        if (rawSupportBadges !== undefined) {
+          if (Array.isArray(rawSupportBadges) === false) {
+            this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile support "badges" must be an array. Skipping the badges ...');
+          } else {
+            const supportBadges: Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadges = [];
+
+            for (const badgeValue of rawSupportBadges) {
+              const supportBadge: Lib_NovaConfig_Runner_ParseReadMeProfile_SupportBadge = this.parseReadMeProfileBadge(badgeValue, 'support');
+
+              if (supportBadge !== undefined) {
+                supportBadges.push(supportBadge);
+              }
+            }
+
+            if (supportBadges.length === 0) {
+              this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile support has no valid badges. Skipping the badges ...');
+            } else {
+              support.badges = supportBadges;
+            }
+          }
+        }
+
+        const hasFundingSource: Lib_NovaConfig_Runner_ParseReadMeProfile_HasFundingSource = (urls !== undefined && urls['fundSources'] !== undefined) ? urls['fundSources'].length > 0 : false;
+
+        if (support['badges'] === undefined && hasFundingSource === false) {
+          this.pushError('Runner.parseReadMeProfile', 'readme.profile', 'README profile support without badges requires urls.fundSources. Skipping ...');
+        } else {
+          result.support = support;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Read Me Profile Badge.
+   *
+   * Validates one profile badge shared by badge groups and the support section. Simple Icons
+   * slugs and colors are lowercased, while base64 SVG data URI logos are kept as written.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Value}   value   - Value.
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Section} section - Section.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Returns}
+   *
+   * @since 0.50.0
+   */
+  private parseReadMeProfileBadge(value: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Value, section: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Section): Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Returns {
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile badge in ${section} must be an object. Skipping ...`);
+
+      return undefined;
+    }
+
+    const rawBadge: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_RawBadge = value;
+    const label: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Label = this.getNonEmptyString(rawBadge['label']);
+    const logoCandidate: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_LogoCandidate = this.getNonEmptyString(rawBadge['logo']);
+    const isDataUriLogo: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_IsDataUriLogo = logoCandidate !== undefined && LIB_REGEX_PATTERN_SVG_DATA_URI.test(logoCandidate) === true;
+    const logo: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Logo = (logoCandidate !== undefined && isDataUriLogo === false) ? logoCandidate.toLowerCase() : logoCandidate;
+    const colorCandidate: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_ColorCandidate = this.getNonEmptyString(rawBadge['color']);
+    const color: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Color = (colorCandidate !== undefined) ? colorCandidate.toLowerCase() : undefined;
+    const link: Lib_NovaConfig_Runner_ParseReadMeProfileBadge_Link = this.getUrl(rawBadge['link']);
+
+    if (
+      label === undefined
+      || logo === undefined
+      || (
+        isDataUriLogo === false
+        && LIB_REGEX_PATTERN_SLUG_SIMPLE.test(logo) === false
+      )
+      || color === undefined
+      || LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR.test(color) === false
+      || link === undefined
+    ) {
+      this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile badge in ${section} requires label, a Simple Icons slug or base64 SVG data URI logo, a six-character color, and an HTTP link. Skipping ...`);
+
+      return undefined;
+    }
+
+    return {
+      label,
+      logo,
+      color,
+      link,
+    };
+  }
+
+  /**
+   * Lib - Nova Config - Parse Read Me Profile Paragraphs.
+   *
+   * Validates a profile field written as one Markdown paragraph per array item, so the
+   * config never needs escaped line breaks. Empty items are skipped with a diagnostic.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Value} value - Value.
+   * @param {Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Field} field - Field.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Returns}
+   *
+   * @since 0.50.0
+   */
+  private parseReadMeProfileParagraphs(value: Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Value, field: Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Field): Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(value) === false) {
+      this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile ${field} must be an array of paragraph strings. Skipping ...`);
+
+      return undefined;
+    }
+
+    const paragraphs: Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraphs = [];
+
+    for (const paragraphValue of value) {
+      const paragraph: Lib_NovaConfig_Runner_ParseReadMeProfileParagraphs_Paragraph = this.getNonEmptyString(paragraphValue);
+
+      if (paragraph === undefined) {
+        this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile ${field} paragraphs must be non-empty strings. Skipping the paragraph ...`);
+
+        continue;
+      }
+
+      paragraphs.push(paragraph);
+    }
+
+    if (paragraphs.length === 0) {
+      this.pushError('Runner.parseReadMeProfile', 'readme.profile', `README profile ${field} has no valid paragraphs. Skipping ...`);
+
+      return undefined;
+    }
+
+    return paragraphs;
   }
 
   /**
@@ -3314,7 +3777,8 @@ export class Runner {
    * Parses the top-level "settings" field into project-wide behavior toggles.
    * Returns undefined when the input is not a plain object or holds no recognized keys.
    *
-   * @param {Lib_NovaConfig_Runner_ParseSettings_Value} value - Value.
+   * @param {Lib_NovaConfig_Runner_ParseSettings_Value}      value      - Value.
+   * @param {Lib_NovaConfig_Runner_ParseSettings_Workspaces} workspaces - Workspaces.
    *
    * @private
    *
@@ -3322,12 +3786,45 @@ export class Runner {
    *
    * @since 0.22.0
    */
-  private parseSettings(value: Lib_NovaConfig_Runner_ParseSettings_Value): Lib_NovaConfig_Runner_ParseSettings_Returns {
+  private parseSettings(value: Lib_NovaConfig_Runner_ParseSettings_Value, workspaces: Lib_NovaConfig_Runner_ParseSettings_Workspaces): Lib_NovaConfig_Runner_ParseSettings_Returns {
     if (isPlainObject(value) === false) {
       return undefined;
     }
 
     const result: Lib_NovaConfig_Runner_ParseSettings_Result = {};
+    const changelogValue: Lib_NovaConfig_Runner_ParseSettings_ChangelogValue = value['changelog'];
+    let changelog: Lib_NovaConfig_Runner_ParseSettings_Changelog = undefined;
+
+    if (isPlainObject(changelogValue) === true) {
+      const workspaceOrderValue: Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrderValue = changelogValue['workspaceOrder'];
+      let workspaceOrder: Lib_NovaConfig_Runner_ParseSettings_WorkspaceOrder = undefined;
+
+      if (Array.isArray(workspaceOrderValue) === true) {
+        workspaceOrder = (workspaceOrderValue.length === 0) ? [] : this.getArrayOfNonEmptyStrings(workspaceOrderValue);
+      }
+
+      if (
+        Array.isArray(workspaceOrderValue) === true
+        && workspaceOrder !== undefined
+        && workspaceOrder.length === workspaceOrderValue.length
+      ) {
+        const workspaceNames: Lib_NovaConfig_Runner_ParseSettings_WorkspaceNames = new Set(Object.values(workspaces ?? {}).map((workspace) => workspace['name']));
+        const unknownWorkspaceName: Lib_NovaConfig_Runner_ParseSettings_UnknownWorkspaceName = workspaceOrder.find((workspaceName) => workspaceNames.has(workspaceName) === false);
+
+        if (unknownWorkspaceName === undefined) {
+          changelog = {
+            workspaceOrder,
+          };
+        } else {
+          this.pushError('Runner.parseSettings', 'settings', `The "settings.changelog.workspaceOrder" field contains unknown workspace name "${unknownWorkspaceName}". Skipping ...`);
+        }
+      } else if (workspaceOrderValue !== undefined) {
+        this.pushError('Runner.parseSettings', 'settings', 'The "settings.changelog.workspaceOrder" field must be an array of non-empty workspace names. Skipping ...');
+      }
+    } else if (changelogValue !== undefined) {
+      this.pushError('Runner.parseSettings', 'settings', 'The "settings.changelog" field must be an object. Skipping ...');
+    }
+
     const coverageValue: Lib_NovaConfig_Runner_ParseSettings_CoverageValue = value['coverage'];
     let coverage: Lib_NovaConfig_Runner_ParseSettings_Coverage = undefined;
 
@@ -3431,6 +3928,10 @@ export class Runner {
 
     if (versionStrategyValue !== undefined && versionStrategy === undefined) {
       this.pushError('Runner.parseSettings', 'settings', 'The "settings.versionStrategy" field must be "semver" or "calver". Skipping ...');
+    }
+
+    if (changelog !== undefined) {
+      result.changelog = changelog;
     }
 
     if (coverage !== undefined) {

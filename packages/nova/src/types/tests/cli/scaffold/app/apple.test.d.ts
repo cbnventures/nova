@@ -83,6 +83,33 @@ export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCust
 export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_MacosMetadata = string;
 
 /**
+ * Tests - CLI - Scaffold - App - Apple - Run - Renders Platform Source Folders.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_OutputPath = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_WorkspacePath = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_Folder = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_Destination = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_RootView = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder = Readonly<{
+  folder: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_Folder;
+  destination: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_Destination;
+  rootView: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder_RootView;
+}>;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolders = Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_PlatformFolder[];
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_ProjectYml = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersPlatformSourceFolders_AppSwift = string;
+
+/**
  * Tests - CLI - Scaffold - App - Apple - Run - Validates Dry Run Without Writing.
  *
  * @since 0.32.0

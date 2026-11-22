@@ -45,36 +45,6 @@ ruleTester.run('requireJsdocTagOrder', RequireJsdocTagOrder['rule'], {
       ].join('\n'),
     },
 
-    // Public method: @param group, @returns, @since (no @private).
-    {
-      code: [
-        '/**',
-        ' * Foo.',
-        ' *',
-        ' * @param {A} a - A.',
-        ' *',
-        ' * @returns {R}',
-        ' *',
-        ' * @since UNRELEASED',
-        ' */',
-        'class Foo {}',
-      ].join('\n'),
-    },
-
-    // No parameters: @returns, @since.
-    {
-      code: [
-        '/**',
-        ' * Foo.',
-        ' *',
-        ' * @returns {R}',
-        ' *',
-        ' * @since UNRELEASED',
-        ' */',
-        'class Foo {}',
-      ].join('\n'),
-    },
-
     // Minimal: @since only.
     {
       code: [

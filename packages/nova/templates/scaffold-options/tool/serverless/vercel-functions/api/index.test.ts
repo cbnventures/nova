@@ -40,7 +40,7 @@ describe('Function handler', () => {
 
     expect(html).toContain('<title>[__PROJECT_SLUG__]</title>');
 
-    expect(html).toContain('Your Worker is running. Edit src/worker/index.ts to make it yours.');
+    expect(html).toContain('Your function is running. Edit api/index.ts to make it yours.');
 
     expect(html).toContain('>Running</span>');
 

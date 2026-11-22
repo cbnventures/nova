@@ -46,8 +46,10 @@
   align-items: center;
 }
 
+/* Pinned right even when a preset hides the items on narrow screens and nothing else fills the bar. */
 .nova-navbar-compass-actions {
   flex-shrink: 0;
+  margin-left: auto;
 
   display: flex;
   align-items: center;
@@ -263,12 +265,29 @@
   display: none;
 }
 
-.nova-navbar-compass-menu-dropdown-summary svg {
+.nova-navbar-compass-menu-dropdown-icon {
+  flex-shrink: 0;
+}
+
+/* Trailing chevron - marks the row as expandable, flips on the inline end in RTL */
+.nova-navbar-compass-menu-dropdown-chevron {
+  display: block;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+
+  color: currentColor;
+
   transition: transform var(--nova-motion-duration) var(--nova-motion-easing);
 }
 
-.nova-navbar-compass-menu-dropdown[open] > .nova-navbar-compass-menu-dropdown-summary svg {
+.nova-navbar-compass-menu-dropdown[open] > .nova-navbar-compass-menu-dropdown-summary .nova-navbar-compass-menu-dropdown-chevron {
   transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-navbar-compass-menu-dropdown-chevron {
+    transition: none;
+  }
 }
 
 .nova-navbar-compass-menu-dropdown-children {

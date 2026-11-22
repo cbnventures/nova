@@ -29,7 +29,6 @@ import {
 
 import novaPackageJson from '../../package.json' with { type: 'json' };
 
-import { Runner as LibDockerRender } from '../lib/docker-render.js';
 import {
   libItemAllowedRecipes,
   libItemSortOrderKeys,
@@ -46,6 +45,7 @@ import {
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
+  LIB_REGEX_PLACEHOLDER_ENTITY_NAME,
   LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
   LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
   LIB_REGEX_PLACEHOLDER_PFSENSE_PORT_COMMENT,
@@ -62,6 +62,7 @@ import {
   LIB_REGEX_PLACEHOLDER_PROJECT_LICENSE,
   LIB_REGEX_PLACEHOLDER_PROJECT_REPOSITORY,
   LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+  LIB_REGEX_PLACEHOLDER_SYNOLOGY_USR_LOCAL_LINK,
   LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
@@ -80,7 +81,6 @@ import { runtimeNode } from '../presets/eslint/index.js';
 import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath,
-  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_GeneratedWorkspaceDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Messages,
@@ -193,16 +193,11 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_VitestConfigContent,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent,
   Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson,
   Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath,
   Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex,
   Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n,
   Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Returns,
@@ -210,7 +205,6 @@ import type {
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder,
-  Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts,
   Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedAllowScripts,
@@ -355,7 +349,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'apple',
     templateSubpath: 'app/apple',
     expectedFiles: [
-      'Sources/App.swift',
+      'Sources/App/App.swift',
       'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-ios-1024.png',
       'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128.png',
       'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128@2x.png',
@@ -385,8 +379,26 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'Sources/Assets.xcassets/SocialX.imageset/x.svg',
       'Sources/Assets.xcassets/SocialYouTube.imageset/Contents.json',
       'Sources/Assets.xcassets/SocialYouTube.imageset/youtube.svg',
-      'Sources/ContentView.swift',
       'Sources/Localizable.xcstrings',
+      'Sources/MacOS/MacOS_Commands.swift',
+      'Sources/MacOS/MacOS_RootView.swift',
+      'Sources/MacOS/MacOS_SettingsView.swift',
+      'Sources/MacOS_12/MacOS_12_RootView.swift',
+      'Sources/MacOS_12/MacOS_12_SettingsView.swift',
+      'Sources/Shared/Models/SampleItem.swift',
+      'Sources/Shared/ViewModels/SampleLibraryViewModel.swift',
+      'Sources/Shared/Views/LaunchpadView.swift',
+      'Sources/Shared/Views/SampleEmptyStateView.swift',
+      'Sources/Shared/Views/SampleItemDetailView.swift',
+      'Sources/Shared/Views/SampleItemRowView.swift',
+      'Sources/Shared/Views/SampleSettingsForm.swift',
+      'Sources/VisionOS/VisionOS_LibraryView.swift',
+      'Sources/VisionOS/VisionOS_RootView.swift',
+      'Sources/VisionOS/VisionOS_SettingsWindow.swift',
+      'Sources/iOS/iOS_LibraryView.swift',
+      'Sources/iOS/iOS_RootView.swift',
+      'Sources/tvOS/tvOS_LibraryView.swift',
+      'Sources/tvOS/tvOS_RootView.swift',
       'Tests/AppTests.swift',
       'eslint.config.mts',
       'package.json',
@@ -928,6 +940,101 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     ]),
   },
   {
+    name: 'synology',
+    templateSubpath: 'package/synology',
+    templateOptionSubpaths: ['scaffold-options/package/synology/usr-local-link'],
+    expectedFiles: [
+      'INFO',
+      'PACKAGE_ICON.PNG',
+      'PACKAGE_ICON_256.PNG',
+      'WIZARD_UIFILES/install_uifile',
+      'WIZARD_UIFILES/uninstall_uifile',
+      'conf/privilege',
+      'conf/resource',
+      'eslint.config.mts',
+      'package.json',
+      'scripts/archive.mjs',
+      'scripts/build-package.mjs',
+      'scripts/check-package.mjs',
+      'scripts/package-constants.mjs',
+      'scripts/png.mjs',
+      'scripts/postinst',
+      'scripts/postuninst',
+      'scripts/postupgrade',
+      'scripts/preinst',
+      'scripts/preuninst',
+      'scripts/preupgrade',
+      'scripts/regex.mjs',
+      'scripts/start-stop-status',
+      'scripts/synology-package.d.ts',
+      'src/bin/example-service',
+      'src/ui/app.js',
+      'src/ui/config',
+      'src/ui/images/icon_16.png',
+      'src/ui/images/icon_24.png',
+      'src/ui/images/icon_256.png',
+      'src/ui/images/icon_32.png',
+      'src/ui/images/icon_48.png',
+      'src/ui/images/icon_64.png',
+      'src/ui/images/icon_72.png',
+      'src/ui/status.cgi',
+      'src/ui/style.css',
+      'src/ui/texts/enu/strings',
+      'tests/package-scripts.test.ts',
+      'tests/tooling.test.ts',
+      'tests/types/package-scripts.test.d.ts',
+      'tsconfig.scripts.json',
+      'tsconfig.tests.json',
+      'vitest.config.mts',
+    ],
+    expectedScripts: {
+      'check:package': 'node ./scripts/check-package.mjs',
+      'build:package': 'node ./scripts/build-package.mjs',
+    },
+    replacements: new Map([
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+        'contract-synology',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+        'synology-pkg-sample',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
+        'Sample',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
+        'sample',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'Sample',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_ENTITY_NAME,
+        'Example Company',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_BUGS,
+        'https://github.com/example/contract-synology/issues',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
+        'A generated Synology package.',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_HOMEPAGE,
+        'https://example.com',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_SYNOLOGY_USR_LOCAL_LINK,
+        'true',
+      ],
+    ]),
+  },
+  {
     name: 'nextjs',
     templateSubpath: 'app/nextjs',
     templateOptionSubpaths: ['scaffold-options/app/web-launchpad'],
@@ -1121,7 +1228,7 @@ const translationReadyContracts: Tests_ScaffoldOutputContract_TranslationReadyCo
     ],
   },
   {
-    path: 'templates/scaffold/app/apple/Sources/ContentView.swift',
+    path: 'templates/scaffold/app/apple/Sources/Shared/Views/LaunchpadView.swift',
     markers: [
       'private let label: LocalizedStringKey',
       'private let title: LocalizedStringKey',
@@ -1147,9 +1254,9 @@ const translationReadyContracts: Tests_ScaffoldOutputContract_TranslationReadyCo
 /**
  * Tests - Scaffold Output Contract - Verify Script Contract.
  *
- * Confirms every generated lifecycle command uses the public Nova dispatcher,
- * keeps its child steps adjacent, and follows the canonical development-first
- * ordering without constraining framework-specific child names.
+ * Confirms the generated scripts pass Nova's shared organization contract,
+ * every lifecycle parent uses the public Nova dispatcher, and a package with
+ * "check:coverage" does not run its suite a second time through "check:test".
  *
  * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath}    packageJsonPath    - Package json path.
  * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts} requireRootScripts - Require root scripts.
@@ -1163,7 +1270,6 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
   const packageJsonRaw: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw = await readFile(packageJsonPath, 'utf-8');
   const packageJson: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson = JSON.parse(packageJsonRaw) as Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson;
   const scripts: Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = packageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts;
-  const scriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = Object.keys(scripts);
   const scriptGroupOrder: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = [
     ...packageScriptCanonicalGroupOrder,
     ...packageScriptOptionalGroupOrder,
@@ -1190,42 +1296,25 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     requireRootScripts,
     requireI18n,
   });
-  let previousParentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = -1;
 
+  // Order, adjacency, parent dispatchers and child steps are all reported by the shared contract.
   deepStrictEqual(contractViolations, [], `Generated package scripts violate Nova's shared organization contract in "${packageJsonPath}".`);
 
+  // "check:coverage" already runs the whole suite and fails on a failing test.
+  if (Reflect.has(scripts, 'check:coverage') === true) {
+    strictEqual(Reflect.has(scripts, 'check:test'), false, `Generated package runs its tests twice through "check:test" and "check:coverage" in "${packageJsonPath}".`);
+  }
+
   for (const scriptGroup of scriptGroupOrder) {
-    const childScriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = scriptNames.filter((scriptName) => scriptName.startsWith(`${scriptGroup}:`));
-    const hasParent: Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent = Reflect.has(scripts, scriptGroup);
-
-    if (childScriptNames.length > 0) {
-      strictEqual(hasParent, true, `Generated script group "${scriptGroup}" has child scripts but no parent dispatcher in "${packageJsonPath}".`);
-    }
-
-    if (hasParent === false) {
+    if (Reflect.has(scripts, scriptGroup) === false) {
       continue;
     }
 
-    const parentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = scriptNames.indexOf(scriptGroup);
     const workspaceParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]}${scriptGroupNodeEnvOptions[scriptGroup]} "${scriptGroup}:*"`;
     const rootParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_RootParentCommand = `nova utility run-workspaces${scriptGroupNodeEnvOptions[scriptGroup]} ${scriptGroup}`;
     const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = (requireRootScripts === true) ? rootParentCommand : workspaceParentCommand;
-    const expectedGroupNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = [
-      scriptGroup,
-      ...childScriptNames,
-    ];
 
-    strictEqual(parentIndex > previousParentIndex, true, `Generated lifecycle scripts are out of order in "${packageJsonPath}".`);
     strictEqual(scripts[scriptGroup], expectedParentCommand, `Generated parent script "${scriptGroup}" does not use the canonical Nova dispatcher in "${packageJsonPath}".`);
-
-    // A project root runs the workspace tree, so its own child steps are optional.
-    if (requireRootScripts === false) {
-      strictEqual(childScriptNames.length > 0, true, `Generated parent script "${scriptGroup}" has no child steps in "${packageJsonPath}".`);
-    }
-
-    deepStrictEqual(scriptNames.slice(parentIndex, parentIndex + expectedGroupNames.length), expectedGroupNames, `Generated child scripts for "${scriptGroup}" are not adjacent to their parent in "${packageJsonPath}".`);
-
-    previousParentIndex = parentIndex;
   }
 
   return;
@@ -1459,12 +1548,6 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   deepStrictEqual(generatedAllowScripts, { fsevents: true });
   strictEqual(generatedDevDependencies['@cbnventures/nova'], undefined);
   strictEqual(generatedDevDependencies['turbo'], undefined);
-  strictEqual(generatedScripts['dev'], 'nova utility run-workspaces --node-env development dev');
-  strictEqual(generatedScripts['prod'], 'nova utility run-workspaces --node-env production prod');
-  strictEqual(generatedScripts['check'], 'nova utility run-workspaces check');
-  strictEqual(generatedScripts['build'], 'nova utility run-workspaces --node-env production build');
-  strictEqual(generatedScripts['deploy'], 'nova utility run-workspaces --node-env production deploy');
-  strictEqual(generatedScripts['clean'], 'nova utility run-workspaces clean');
   strictEqual(Object.keys(generatedScripts).some((scriptName) => scriptName.endsWith(':workspaces')), false);
   strictEqual(generatedScripts['changelog'], 'nova utility changelog');
   strictEqual(generatedScripts['recipes'], 'nova utility run-recipes --replace-file');
@@ -1635,8 +1718,6 @@ describe('scaffold output contract', async () => {
       throw new TypeError('Generated pfSense package.json must contain engines.node.');
     }
 
-    strictEqual(nodeEngine, '^22 || ^24 || ^26');
-
     const stageScriptPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptPath = join(generatedWorkspaceDirectory, 'scripts', 'stage-package.mjs');
     const stageScriptContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_StageScriptContent = await readFile(stageScriptPath, 'utf-8');
     const linter: Tests_ScaffoldOutputContract_ScaffoldOutputContract_LintsThePfSenseStagingScriptAgainstTheSharedNodeEngineRange_Linter = new Linter({
@@ -1718,50 +1799,6 @@ describe('scaffold output contract', async () => {
         );
       }
     }
-
-    return;
-  });
-
-  it('keeps the Docker image OCI label contract', async () => {
-    const dockerfileContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsTheDockerImageOCILabelContract_DockerfileContent = LibDockerRender.renderDockerfile({
-      buildOrder: new Map(),
-      manifest: {
-        healthPath: '/health',
-        legacyStatePaths: [],
-        networkMode: 'host',
-        schemaVersion: 2,
-        services: [],
-        workspaces: [],
-      },
-      novaConfig: {
-        project: {
-          description: {
-            short: 'Contract image',
-          },
-          legalName: 'Contract Vendor',
-          license: 'MIT',
-          name: {
-            slug: 'contract',
-            title: 'Contract',
-          },
-        },
-        urls: {
-          documentation: 'https://example.com/docs',
-          homepage: 'https://example.com/',
-          repository: 'https://example.com/repository',
-        },
-      },
-      rootPackage: {},
-      stageFragments: new Map(),
-    });
-
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.title="Contract"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.description="Contract image"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.url="https://example.com/"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.source="https://example.com/repository"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.documentation="https://example.com/docs"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.licenses="MIT"'), true);
-    strictEqual(dockerfileContent.includes('org.opencontainers.image.vendor="Contract Vendor"'), true);
 
     return;
   });

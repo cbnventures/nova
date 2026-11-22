@@ -1,0 +1,72 @@
+import type { Shared_ChangelogOptions } from '../../../shared.d.ts';
+
+/**
+ * Tests - CLI - Utility - Changelog Notes - CLI Utility Changelog Run Notes.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_OriginalCwd = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_SandboxRoot = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_ExpectedOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_PlainVersionOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_TagVersionOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_NativeVersionOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_AcceptsAllReleaseVersionFormsInAMixedNativeAndPlainRepository_NativeTagVersionOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_ChoosesTheNewestReleasedVersionAcrossChangelogs_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_ChoosesTheNewestReleasedVersionAcrossChangelogs_Output = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_PrintsAlphabeticalSectionsWithExactSpacingAndVerbatimMultiLineBullets_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_PrintsAlphabeticalSectionsWithExactSpacingAndVerbatimMultiLineBullets_Output = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RejectsAnUnknownConfiguredWorkspaceName_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RejectsAnUnknownConfiguredWorkspaceName_StderrChunks = string[];
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RejectsAnUnknownConfiguredWorkspaceName_Output = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RequiresAMatchingNativeBuildWhilePlainWorkspacesUseTheBaseVersion_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RequiresAMatchingNativeBuildWhilePlainWorkspacesUseTheBaseVersion_ExpectedOutput = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_RequiresAMatchingNativeBuildWhilePlainWorkspacesUseTheBaseVersion_Output = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_UsesConfiguredOrderThenAppendsUnlistedWorkspacesAlphabetically_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_UsesConfiguredOrderThenAppendsUnlistedWorkspacesAlphabetically_ChangelogContent = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_CliUtilityChangelogRunNotes_UsesConfiguredOrderThenAppendsUnlistedWorkspacesAlphabetically_Output = string;
+
+/**
+ * Tests - CLI - Utility - Changelog Notes - Run Notes.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Utility_ChangelogNotes_RunNotes_Options = Shared_ChangelogOptions;
+
+export type Tests_Cli_Utility_ChangelogNotes_RunNotes_Returns = Promise<string>;
+
+export type Tests_Cli_Utility_ChangelogNotes_RunNotes_StdoutChunks = string[];
+
+/**
+ * Tests - CLI - Utility - Changelog Notes - Write Notes Project.
+ *
+ * @since 0.50.0
+ */
+export type Tests_Cli_Utility_ChangelogNotes_WriteNotesProject_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_ChangelogNotes_WriteNotesProject_Config = Record<string, unknown>;
+
+export type Tests_Cli_Utility_ChangelogNotes_WriteNotesProject_Changelogs = Record<string, string>;
+
+export type Tests_Cli_Utility_ChangelogNotes_WriteNotesProject_Returns = Promise<void>;

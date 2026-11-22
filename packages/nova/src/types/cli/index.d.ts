@@ -5,6 +5,13 @@ import type { Shared_GeneratorRunResult, Shared_RunScriptsOptions, Shared_RunWor
 import type { Cli_Utility_CrossEnv_Runner_Run_Options } from './utility/cross-env.d.ts';
 
 /**
+ * CLI - Startup Arguments.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Index_StartupArguments = string[];
+
+/**
  * CLI - Env Dir.
  *
  * @since 0.14.0

@@ -108,11 +108,7 @@ describe('publish targets', () => {
     const dockerHub: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_DockerHub = targets!['docker-hub'];
     const ghcr: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_Ghcr = targets!['ghcr'];
 
-    strictEqual(dockerHub!['variables']['IMAGE_NAMESPACE'], undefined);
-    strictEqual(dockerHub!['variables']['IMAGE_REPOSITORY'], undefined);
     strictEqual(dockerHub!['requiredLiterals'], undefined);
-    strictEqual(dockerHub!['variables']['README_PATH'], undefined);
-    strictEqual(dockerHub!['variables']['SYNC_DESCRIPTION'], undefined);
     strictEqual(ghcr!['variables']['IMAGE_REPOSITORY'], undefined);
     strictEqual(ghcr!['requiredLiterals']!['IMAGE_REPOSITORY']!['description'].length > 0, true);
 

@@ -85,23 +85,6 @@ export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRu
 export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DisabledFlagSkipsAndDoesNotWrite_Output = string;
 
 /**
- * Tests - CLI - Recipe - Read Me - Update Credits - CLI Recipe Read Me Update Credits Run - Dry Run Does Not Write.
- *
- * @since 0.21.0
- */
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_ProjectDirectory = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_ReadmePath = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_OnDiskContent = string;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
-
-export type Tests_Cli_Recipe_ReadMe_UpdateCredits_CliRecipeReadMeUpdateCreditsRun_DryRunDoesNotWrite_Output = string;
-
-/**
  * Tests - CLI - Recipe - Read Me - Update Credits - CLI Recipe Read Me Update Credits Run - Dry Run Writes Nothing Anywhere In A Fan Out Tree.
  *
  * @since 0.21.0

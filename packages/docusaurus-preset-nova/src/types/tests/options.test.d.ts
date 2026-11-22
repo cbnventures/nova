@@ -137,47 +137,6 @@ export type Tests_Options_ResolvePreset_ReturnsBasePresetWhenNoOverridesAreProvi
 };
 
 /**
- * Tests - Options - Validate Options - Accepts Valid Preset Name.
- *
- * @since 0.15.0
- */
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Preset = string;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Overrides = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Plugins = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Analytics = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_ProgressBar = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Search = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Result = {
-  preset: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Preset;
-  overrides: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Overrides;
-  plugins: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Plugins;
-  analytics: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Analytics;
-  progressBar: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_ProgressBar;
-  search: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result_Search;
-};
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema_Validate = (value: unknown) => Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema = {
-  validate: Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema_Validate;
-};
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Value = unknown;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Error = Error;
-
-export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated = {
-  value: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Value;
-  error?: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Error;
-};
-
-/**
  * Tests - Options - Validate Options - Does Not Call A Foreign Validation Callback.
  *
  * @since 0.37.0

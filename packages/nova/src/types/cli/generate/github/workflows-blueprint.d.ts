@@ -20,15 +20,19 @@ import type {
   Shared_BlueprintJob,
   Shared_BlueprintJob_If,
   Shared_BlueprintJob_Needs,
+  Shared_BlueprintJob_Outputs,
   Shared_BlueprintJob_RunnerArchitecture,
   Shared_BlueprintJob_RunsOn,
   Shared_BlueprintJob_TimeoutMinutes,
+  Shared_BlueprintJobOutputs,
   Shared_BlueprintJobs,
   Shared_BlueprintPermission,
   Shared_BlueprintPermissions,
   Shared_BlueprintPublishTargetContext,
   Shared_BlueprintStep,
   Shared_BlueprintSteps,
+  Shared_BlueprintSummaryRow,
+  Shared_BlueprintSummaryRows,
   Shared_BlueprintTrigger,
   Shared_BlueprintTriggerDispatch,
   Shared_BlueprintTriggerIssues,
@@ -87,6 +91,23 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Result_Diagnostics,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Result_Workflows,
 } from './workflows-blueprint-validate.d.ts';
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Add Workflow Summary.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Workflow = Shared_BlueprintWorkflow;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Returns = void;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_WorkJobs = Shared_BlueprintJobs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryRows = Shared_BlueprintSummaryRows;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Outputs = Shared_BlueprintJobOutputs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryStep = Shared_BlueprintStep;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - App Build Values.
@@ -764,6 +785,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContai
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasPfsenseTarget = boolean;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasSynologyTarget = boolean;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn = Shared_NovaConfigWorkflowTriggerObject_Workflows;
@@ -987,6 +1010,38 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Work
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ArtifactFlags = string;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Summary Output Step.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Rows = Shared_BlueprintSummaryRows;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Returns = Shared_BlueprintStep;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Env = Shared_BlueprintEnvMap;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSummaryOutputStep_Lines = string[];
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Synology Target.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Context = Shared_BlueprintPublishTargetContext;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Returns = Shared_BlueprintJob;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_Workspace = Shared_NovaConfigWorkspace | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_WorkspaceName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_ReleaseDirectory = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_TagPushPrereleaseExpression = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildSynologyTarget_BuildRun = string;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -1036,6 +1091,23 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarge
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Workflows = Shared_BlueprintTriggerWorkflowRun_Workflows;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns = Shared_BlueprintTriggerWorkflowRun;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Workflow Summary Job.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Jobs = Shared_BlueprintJobs;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Returns = Shared_BlueprintJob;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Env = Shared_BlueprintEnvMap;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_Lines = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_RowIndex = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowSummaryJob_SummaryRow = Shared_BlueprintSummaryRow;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Check Immutable Container Tags Run.
@@ -1583,6 +1655,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkspacePrefix = Shared_NovaConfigEnvironmentWorkspace_Prefix | undefined;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Resolve Summary Workspace.
+ *
+ * @since 0.50.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Context = Shared_BlueprintPublishTargetContext;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Returns = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveSummaryWorkspace_Workspace = Shared_NovaConfigWorkspace | undefined;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -1702,6 +1785,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobNeeds
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobPermissions = Shared_BlueprintPermissions | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobIf = Shared_BlueprintJob_If | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobOutputs = Shared_BlueprintJob_Outputs | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_SerializeJobs_JobSteps = Shared_BlueprintSteps;
 

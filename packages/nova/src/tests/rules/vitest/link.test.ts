@@ -1,27 +1,39 @@
-import { strictEqual } from 'node:assert/strict';
+import {
+  ok,
+  rejects,
+  strictEqual,
+} from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import * as vitest from 'vitest';
-import { describe, it } from 'vitest';
+import {
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
+import { resetActiveVitest, setActiveVitest } from '../../../rules/vitest/internal/active-vitest.js';
 import { registerLinkSuite } from '../../../rules/vitest/link/register.js';
 import {
   buildLinkIndex,
-  collectProseLinks,
+  internalDocTargetExists,
   linkContentDirs,
 } from '../../../rules/vitest/link/rules.js';
 
 import type {
   Tests_Rules_Vitest_Link_BadFiles,
   Tests_Rules_Vitest_Link_BadIndex,
-  Tests_Rules_Vitest_Link_BadLinks,
+  Tests_Rules_Vitest_Link_BadIts,
+  Tests_Rules_Vitest_Link_BadSentinel,
+  Tests_Rules_Vitest_Link_BrokenFactory,
   Tests_Rules_Vitest_Link_DocsDir,
   Tests_Rules_Vitest_Link_FixtureRoot,
   Tests_Rules_Vitest_Link_GoodFiles,
   Tests_Rules_Vitest_Link_GoodIndex,
+  Tests_Rules_Vitest_Link_OverviewFactory,
   Tests_Rules_Vitest_Link_OverviewHeadings,
   Tests_Rules_Vitest_Link_ResolvedConfig,
 } from '../../../types/tests/rules/vitest/link.test.d.ts';
@@ -32,7 +44,7 @@ import type {
  * Isolated kit test: builds a temp fixture project under a docs dir with one VALID page (its
  * `/docs/...` link resolves and its `#anchor` matches a heading) and one page whose `/docs/...`
  * link points at a missing target. Direct helper assertions prove the index resolves good links
- * and exposes the planted broken target, and a single-key `registerLinkSuite` call proves the
+ * and the doc-target rule fails the planted broken target, and a single-key `registerLinkSuite` call proves the
  * enable gating: with only `link-self-anchor-exists` enabled the broken doc target does not run.
  *
  * @since 0.20.0
@@ -116,6 +128,12 @@ const resolvedConfig: Tests_Rules_Vitest_Link_ResolvedConfig = {
 };
 
 describe(`link kit helpers${''}`, () => {
+  afterEach(() => {
+    resetActiveVitest();
+
+    return;
+  });
+
   it(`resolves good doc targets and anchors from the fixture index${''}`, async () => {
     const goodFiles: Tests_Rules_Vitest_Link_GoodFiles = await discoverContentFiles({
       rootDir: resolvedConfig['projectRoot'],
@@ -141,11 +159,36 @@ describe(`link kit helpers${''}`, () => {
       fileExtensions: resolvedConfig['fileExtensions'],
     });
     const badIndex: Tests_Rules_Vitest_Link_BadIndex = await buildLinkIndex(resolvedConfig, badFiles);
-    const badLinks: Tests_Rules_Vitest_Link_BadLinks = collectProseLinks('[nothing](/docs/does-not-exist)');
+    const badIts: Tests_Rules_Vitest_Link_BadIts = new Map();
+    const badSentinel: Tests_Rules_Vitest_Link_BadSentinel = {
+      describe: () => {
+        return;
+      },
+      it: (name, factory) => {
+        badIts.set(name, factory);
 
-    strictEqual(badLinks.includes('/docs/does-not-exist'), true);
-    strictEqual(badIndex['existingPaths'].has('does-not-exist'), false);
-    strictEqual(badIndex['idPaths'].has('does-not-exist'), false);
+        return;
+      },
+    };
+
+    resetActiveVitest();
+    setActiveVitest(badSentinel);
+
+    await internalDocTargetExists(resolvedConfig, badFiles, badIndex, ['link-internal-doc-target-exists']);
+
+    const overviewFactory: Tests_Rules_Vitest_Link_OverviewFactory = badIts.get('internal doc link targets exist in docs/overview.md');
+    const brokenFactory: Tests_Rules_Vitest_Link_BrokenFactory = badIts.get('internal doc link targets exist in docs/broken.md');
+
+    ok(overviewFactory !== undefined);
+    ok(brokenFactory !== undefined);
+
+    await overviewFactory();
+
+    await rejects(async () => {
+      await brokenFactory();
+
+      return;
+    }, (error) => error instanceof Error && error.message.includes('docs/broken.md: link target "/docs/does-not-exist" does not exist'));
 
     return;
   });

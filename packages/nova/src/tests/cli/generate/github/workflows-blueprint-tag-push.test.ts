@@ -65,7 +65,7 @@ describe('tag push publish targets', () => {
 
     strictEqual(releaseOnly.includes('github.ref_name'), false);
     ok(releaseOnly.includes('requires a release.published event with a tag name.'));
-    strictEqual(tagPush.split('github.event.release.tag_name || (github.ref_type == \'tag\' && github.ref_name) || \'\' }}').length - 1, 4);
+    strictEqual(tagPush.split('github.event.release.tag_name || (github.ref_type == \'tag\' && github.ref_name) || \'\' }}').length - 1, 5);
     ok(tagPush.includes('requires a release.published event or a pushed tag.'));
     ok(tagPush.includes('github.event_name == \'release\' && github.event.release.prerelease || github.event_name == \'push\' && (contains(github.ref_name, \'0-\')) }}'));
 

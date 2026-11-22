@@ -1,3 +1,4 @@
+import { VitestReporters } from '@cbnventures/nova/toolkit';
 import { defineConfig } from 'vitest/config';
 
 /**
@@ -21,6 +22,7 @@ export default defineConfig({
       '**/node_modules/**',
     ],
     globals: false,
+    reporters: VitestReporters.options(),
     testTimeout: 30000, // 30 seconds.
   },
 });

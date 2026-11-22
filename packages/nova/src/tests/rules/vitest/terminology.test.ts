@@ -1,18 +1,33 @@
-import { strictEqual } from 'node:assert/strict';
+import {
+  ok,
+  rejects,
+  strictEqual,
+} from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import * as vitest from 'vitest';
-import { describe, it } from 'vitest';
+import {
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
+import { resetActiveVitest, setActiveVitest } from '../../../rules/vitest/internal/active-vitest.js';
 import { registerTerminologySuite } from '../../../rules/vitest/terminology/register.js';
-import { buildValidAnchors, componentPattern } from '../../../rules/vitest/terminology/rules.js';
+import {
+  anchorResolves,
+  buildValidAnchors,
+  componentPattern,
+} from '../../../rules/vitest/terminology/rules.js';
 
 import type {
   Tests_Rules_Vitest_Terminology_AttrMatch,
-  Tests_Rules_Vitest_Terminology_BadAnchors,
+  Tests_Rules_Vitest_Terminology_BadFactory,
+  Tests_Rules_Vitest_Terminology_BadIts,
   Tests_Rules_Vitest_Terminology_BadRootDir,
+  Tests_Rules_Vitest_Terminology_BadSentinel,
   Tests_Rules_Vitest_Terminology_BareMatch,
   Tests_Rules_Vitest_Terminology_DocsDir,
   Tests_Rules_Vitest_Terminology_FixtureRoot,
@@ -28,8 +43,8 @@ import type {
  * Isolated kit test: builds a temp fixture project with a terminology source page whose two h2
  * headings define the valid anchor set, one VALID content page (correct title/to/children and a
  * resolvable anchor), and a separate root with a page whose `to` points at an unknown anchor.
- * Direct helper assertions prove the anchors build from the headings and the planted bad anchor
- * is absent, and a single-key `registerTerminologySuite` call over the good-only root proves the
+ * Direct helper assertions prove the anchors build from the headings and the anchor-resolves
+ * rule fails the page with the planted bad anchor, and a single-key `registerTerminologySuite` call over the good-only root proves the
  * enable gating stays green while leaving the broken-anchor rule off.
  *
  * @since 0.20.0
@@ -118,6 +133,12 @@ const resolvedConfig: Tests_Rules_Vitest_Terminology_ResolvedConfig = {
 };
 
 describe(`terminology kit helpers${''}`, () => {
+  afterEach(() => {
+    resetActiveVitest();
+
+    return;
+  });
+
   it(`builds valid anchors from the fixture terminology headings${''}`, async () => {
     const goodAnchors: Tests_Rules_Vitest_Terminology_GoodAnchors = await buildValidAnchors(resolvedConfig);
 
@@ -128,9 +149,40 @@ describe(`terminology kit helpers${''}`, () => {
   });
 
   it(`flags a planted unknown anchor as unresolvable${''}`, async () => {
-    const badAnchors: Tests_Rules_Vitest_Terminology_BadAnchors = await buildValidAnchors(resolvedConfig);
+    const badIts: Tests_Rules_Vitest_Terminology_BadIts = [];
+    const badSentinel: Tests_Rules_Vitest_Terminology_BadSentinel = {
+      describe: () => {
+        return;
+      },
+      it: (_name, factory) => {
+        badIts.push(factory);
 
-    strictEqual(badAnchors.has('does-not-exist'), false);
+        return;
+      },
+    };
+
+    resetActiveVitest();
+    setActiveVitest(badSentinel);
+
+    await anchorResolves({
+      contentDirs: ['docs'],
+      terminologyPath: join(badRootDir, 'docs', 'quickstart', 'terminology.mdx'),
+      expectedBase: '/docs/quickstart/terminology',
+      rootDir: badRootDir,
+      componentName: 'Terminology',
+      files: ['docs/bad.mdx'],
+    }, ['terminology-anchor-resolves']);
+
+    const badFactory: Tests_Rules_Vitest_Terminology_BadFactory = badIts[0];
+
+    strictEqual(badIts.length, 1);
+    ok(badFactory !== undefined);
+
+    await rejects(async () => {
+      await badFactory();
+
+      return;
+    }, (error) => error instanceof Error && error.message.includes('references unknown anchor "#does-not-exist"'));
 
     return;
   });
