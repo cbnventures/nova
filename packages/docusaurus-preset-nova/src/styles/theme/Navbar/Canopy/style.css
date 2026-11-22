@@ -77,10 +77,17 @@
   gap: 8px;
 }
 
+/* Two-row layout: the actions cell stretches to the top row's height and
+   becomes the positioning context, so the locale menu opens below the
+   row its trigger sits in (see "Navbar - Menu Placement" in
+   `Navbar/style.css`). Items in the bottom row open below the bar. */
 @media (min-width: 1024px) {
   .nova-navbar-canopy-actions {
+    position: relative;
+
     grid-column: 3;
     grid-row: 1;
+    align-self: stretch;
     justify-self: end;
   }
 }

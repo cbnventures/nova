@@ -22,12 +22,8 @@
 }
 
 /* ============================
- * 2. Inner - anchor for absolute actions
+ * 2. Inner
  * ============================ */
-
-.nova-navbar-canopy {
-  position: relative;
-}
 
 @media (min-width: 768px) {
   .nova-navbar-canopy > .nova-container {

@@ -52,10 +52,11 @@
   transform: rotate(180deg);
 }
 
-/* Same block offset as `.nova-dropdown-menu` (`NavbarItem/style.css`) so
-   both navbar popovers open the same distance below their trigger. The
-   menu opens towards the inline start, so its inline-end edge lines up
-   with the trigger's (the right edge, or the left edge in RTL). */
+/* Trigger-relative fallback, matching `.nova-dropdown-menu`
+   (`NavbarItem/style.css`). Inside the navbar, "Navbar - Menu Placement"
+   (`Navbar/style.css`) opens the menu below the bar instead. The menu
+   opens towards the inline start, so its inline-end edge lines up with
+   the trigger's (the right edge, or the left edge in RTL). */
 .nova-navbar-more-menu {
   position: absolute;
   top: calc(100% + 0.5rem);

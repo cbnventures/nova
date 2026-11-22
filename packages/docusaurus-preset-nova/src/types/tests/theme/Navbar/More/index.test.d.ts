@@ -80,6 +80,86 @@ export type Tests_Theme_Navbar_More_Index_IconifyReactOffline_MockModule = Reado
 }>;
 
 /**
+ * Tests - Theme - Navbar - More - Menu Placement Across Presets And Variants.
+ *
+ * @since 0.50.1
+ */
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PackageRoot = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantNames = readonly string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClasses = readonly string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClasses = readonly string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndWrapperClasses = readonly string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockProperties = readonly string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PresetName = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantName = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantSource = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_Scope = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSources = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule_Selectors = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule_Declarations = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule = {
+  selectors: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule_Selectors;
+  declarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule_Declarations;
+};
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules = Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor_Process = (css: string) => string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor = {
+  process: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor_Process;
+};
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlPlacementRules = Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_DirectionRules = Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules_Rule[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_DirectionRuleSets = Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_DirectionRules[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSelectors = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedSelectors = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BarDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClass = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndAligned = boolean;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuTops = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClass = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BaseDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClasses = string[];
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClass = string;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainDeclarations = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockDeclarations = string[];
+
+/**
  * Tests - Theme - Navbar - More - More - Lists A Dropdown Item As A Group Of Links.
  *
  * @since 0.50.0
@@ -151,10 +231,6 @@ export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PackageRoot = 
 export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_NavbarCssNames = readonly string[];
 
 export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_FocusControls = readonly string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_BlockProperties = readonly string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetProperties = readonly string[];
 
 export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PresetName = string;
 
@@ -245,37 +321,6 @@ export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DrawsTop = boo
 
 export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DrawsBottom = boolean;
 
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetSources = string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule_Selectors = string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule_Declarations = string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule = {
-  selectors: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule_Selectors;
-  declarations: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule_Declarations;
-};
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules = Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownOffset = Record<string, string>;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreOffset = Record<string, string>;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRule = Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules_Rule;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Declaration = string;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_SeparatorIndex = number;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Property = string;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Value = string;
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownBlockOffset = string[];
-
-export type Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreBlockOffset = string[];
-
 /**
  * Tests - Theme - Navbar - More - Render Link.
  *
@@ -290,6 +335,30 @@ export type Tests_Theme_Navbar_More_Index_RenderLink_Href = string | undefined;
 export type Tests_Theme_Navbar_More_Index_RenderLink_AriaCurrent = 'page' | undefined;
 
 export type Tests_Theme_Navbar_More_Index_RenderLink_Label = string;
+
+/**
+ * Tests - Theme - Navbar - More - Resolve Declarations.
+ *
+ * @since 0.50.1
+ */
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule_Selectors = string[];
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule_Declarations = string[];
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule = {
+  selectors: Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule_Selectors;
+  declarations: Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule_Declarations;
+};
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules = Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules_Rule[];
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Selectors = string[];
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Returns = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_Resolved = Record<string, string>;
+
+export type Tests_Theme_Navbar_More_Index_ResolveDeclarations_SeparatorIndex = number;
 
 /**
  * Tests - Theme - Navbar - More - Theme Navbar Item - Mock Module.

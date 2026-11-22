@@ -197,3 +197,123 @@
   height: 2.25rem;
   padding: 0 0.625rem;
 }
+
+/**
+ * ============================
+ * Navbar - Menu Placement
+ *
+ * In variants with inline dropdowns (Bridge / Compass / Canopy), every
+ * navbar popover (dropdown, docs version, locale, and More) opens a fixed
+ * gap below the navbar bar instead of below its own trigger. Triggers are
+ * shorter than the bar, so measuring from the trigger left each menu at a
+ * different height relative to the bar's bottom line.
+ *
+ * The trigger wrappers step out of the positioning chain (`position:
+ * static`), so each menu's containing block is the bar itself - the
+ * `.navbar` wrapper around the variant's `<nav>` (relative, or sticky in
+ * preset overlays), or the Canopy top row (see `Canopy/style.css`).
+ * `top: 100%` is then the bar's bottom edge. The `<nav>` and everything
+ * inside it must stay static and free of transforms, filters, and
+ * containment, or it captures the menus inside the bar's padding.
+ * Because the containing block sits above the items cluster, no
+ * `overflow` on the cluster can clip an open menu.
+ *
+ * Inline position comes from the menu's static position (`inset-inline:
+ * auto`), which is its trigger wrapper's inline-start edge. Locale and
+ * More open towards the inline start, so their wrappers flip `direction`
+ * and the static position becomes the wrapper's inline-end edge; the
+ * wrapper's children restore the page direction so text and padding
+ * render as written. Both cases follow the page direction in RTL.
+ *
+ * The `direction` rules already cover both page directions, so the
+ * `rtl:begin/end:ignore` directives keep the RTL build's `rtlcss` pass
+ * from flipping them; the leading `!` keeps the comments through minify.
+ *
+ * Monolith has no inline dropdowns and keeps the trigger-relative
+ * placement from `NavbarItem/style.css`.
+ * ============================
+ */
+
+.navbar {
+  --nova-navbar-menu-offset: 0.5rem;
+}
+
+.nova-navbar-bridge .nova-dropdown,
+.nova-navbar-bridge .nova-version-dropdown,
+.nova-navbar-bridge .nova-locale-dropdown,
+.nova-navbar-bridge .nova-navbar-more,
+.nova-navbar-compass .nova-dropdown,
+.nova-navbar-compass .nova-version-dropdown,
+.nova-navbar-compass .nova-locale-dropdown,
+.nova-navbar-compass .nova-navbar-more,
+.nova-navbar-canopy .nova-dropdown,
+.nova-navbar-canopy .nova-version-dropdown,
+.nova-navbar-canopy .nova-locale-dropdown,
+.nova-navbar-canopy .nova-navbar-more {
+  position: static;
+}
+
+/* A disclosure listed inside the More menu keeps opening below its own
+   trigger - the bar is not in view inside the scrolling menu. */
+.nova-navbar-more-menu .nova-dropdown,
+.nova-navbar-more-menu .nova-version-dropdown {
+  position: relative;
+}
+
+.nova-navbar-bridge .nova-dropdown-menu,
+.nova-navbar-bridge .nova-version-dropdown-menu,
+.nova-navbar-bridge .nova-locale-dropdown-menu,
+.nova-navbar-bridge .nova-navbar-more-menu,
+.nova-navbar-compass .nova-dropdown-menu,
+.nova-navbar-compass .nova-version-dropdown-menu,
+.nova-navbar-compass .nova-locale-dropdown-menu,
+.nova-navbar-compass .nova-navbar-more-menu,
+.nova-navbar-canopy .nova-dropdown-menu,
+.nova-navbar-canopy .nova-version-dropdown-menu,
+.nova-navbar-canopy .nova-locale-dropdown-menu,
+.nova-navbar-canopy .nova-navbar-more-menu {
+  top: calc(100% + var(--nova-navbar-menu-offset));
+  inset-inline: auto;
+}
+
+/*! rtl:begin:ignore */
+
+/* Inline-end anchoring for locale and More (left-to-right pages). */
+.nova-navbar-bridge .nova-locale-dropdown,
+.nova-navbar-bridge .nova-navbar-more,
+.nova-navbar-compass .nova-locale-dropdown,
+.nova-navbar-compass .nova-navbar-more,
+.nova-navbar-canopy .nova-locale-dropdown,
+.nova-navbar-canopy .nova-navbar-more {
+  direction: rtl;
+}
+
+.nova-navbar-bridge .nova-locale-dropdown > *,
+.nova-navbar-bridge .nova-navbar-more > *,
+.nova-navbar-compass .nova-locale-dropdown > *,
+.nova-navbar-compass .nova-navbar-more > *,
+.nova-navbar-canopy .nova-locale-dropdown > *,
+.nova-navbar-canopy .nova-navbar-more > * {
+  direction: ltr;
+}
+
+/* Inline-end anchoring for locale and More (right-to-left pages). */
+[dir="rtl"] .nova-navbar-bridge .nova-locale-dropdown,
+[dir="rtl"] .nova-navbar-bridge .nova-navbar-more,
+[dir="rtl"] .nova-navbar-compass .nova-locale-dropdown,
+[dir="rtl"] .nova-navbar-compass .nova-navbar-more,
+[dir="rtl"] .nova-navbar-canopy .nova-locale-dropdown,
+[dir="rtl"] .nova-navbar-canopy .nova-navbar-more {
+  direction: ltr;
+}
+
+[dir="rtl"] .nova-navbar-bridge .nova-locale-dropdown > *,
+[dir="rtl"] .nova-navbar-bridge .nova-navbar-more > *,
+[dir="rtl"] .nova-navbar-compass .nova-locale-dropdown > *,
+[dir="rtl"] .nova-navbar-compass .nova-navbar-more > *,
+[dir="rtl"] .nova-navbar-canopy .nova-locale-dropdown > *,
+[dir="rtl"] .nova-navbar-canopy .nova-navbar-more > * {
+  direction: rtl;
+}
+
+/*! rtl:end:ignore */

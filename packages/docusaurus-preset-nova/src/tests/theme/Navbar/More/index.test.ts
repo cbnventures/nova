@@ -8,6 +8,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, it, vi } from 'vitest';
 
+import { loadCommonJsModule } from '../../../../lib/module-loader.js';
 import { LIB_REGEX_CSS_BLOCK_COMMENT, LIB_REGEX_WHITESPACE_RUN } from '../../../../lib/regex.js';
 import { presetsIndexNames } from '../../../../presets/index.js';
 import More from '../../../../theme/Navbar/More/index.js';
@@ -26,6 +27,36 @@ import type {
   Tests_Theme_Navbar_More_Index_GetPackageRoot_CurrentFileDirectory,
   Tests_Theme_Navbar_More_Index_GetPackageRoot_CurrentFilePath,
   Tests_Theme_Navbar_More_Index_GetPackageRoot_Returns,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BarDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BaseDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClass,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClasses,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockProperties,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_DirectionRuleSets,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndAligned,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndWrapperClasses,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClass,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClasses,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuTops,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PackageRoot,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSelectors,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSources,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PresetName,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlPlacementRules,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_Scope,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedDeclarations,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedSelectors,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantName,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantNames,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantSource,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClass,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClasses,
+  Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperDeclarations,
   Tests_Theme_Navbar_More_Index_More_ListsADropdownItemAsAGroupOfLinks_GroupLabelIdCount,
   Tests_Theme_Navbar_More_Index_More_ListsADropdownItemAsAGroupOfLinks_Items,
   Tests_Theme_Navbar_More_Index_More_ListsADropdownItemAsAGroupOfLinks_Markup,
@@ -45,15 +76,11 @@ import type {
   Tests_Theme_Navbar_More_Index_MoreAcrossPresetsAndVariants_VariantNames,
   Tests_Theme_Navbar_More_Index_MoreAcrossPresetsAndVariants_VariantSource,
   Tests_Theme_Navbar_More_Index_MoreAcrossPresetsAndVariants_VariantSourcePath,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_BlockProperties,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_ControlRinged,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DarkMatch,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DarkRing,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Declaration,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DrawsBottom,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DrawsTop,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownBlockOffset,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownOffset,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_FocusControls,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_FocusFreeSelector,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_FocusSelector,
@@ -62,16 +89,10 @@ import type {
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_LastRowYield,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_LightMatch,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_LightRing,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreBlockOffset,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreOffset,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MouseRing,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_NavbarCssNames,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_NavbarRules,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_NavbarSources,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetProperties,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRule,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetSources,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OutlineDeclarations,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PackageRoot,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PlainDeclarations,
@@ -80,23 +101,25 @@ import type {
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PresetName,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PresetRules,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_PresetSelectors,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Property,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_RingCleared,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_RingDeclarations,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_RowBottom,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_RowTop,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_RowYield,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_SeparatorIndex,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_SeparatorRules,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_SeparatorSources,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_UniversalRing,
   Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_UnringedControls,
-  Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Value,
   Tests_Theme_Navbar_More_Index_RenderLink_AriaCurrent,
   Tests_Theme_Navbar_More_Index_RenderLink_Href,
   Tests_Theme_Navbar_More_Index_RenderLink_Label,
   Tests_Theme_Navbar_More_Index_RenderLink_LinkProps,
   Tests_Theme_Navbar_More_Index_RenderLink_Returns,
+  Tests_Theme_Navbar_More_Index_ResolveDeclarations_Resolved,
+  Tests_Theme_Navbar_More_Index_ResolveDeclarations_Returns,
+  Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules,
+  Tests_Theme_Navbar_More_Index_ResolveDeclarations_Selectors,
+  Tests_Theme_Navbar_More_Index_ResolveDeclarations_SeparatorIndex,
 } from '../../../../types/tests/theme/Navbar/More/index.test.d.ts';
 
 vi.mock('@docusaurus/router', () => ({
@@ -195,6 +218,42 @@ function renderLink(linkProps: Tests_Theme_Navbar_More_Index_RenderLink_LinkProp
     href,
     'aria-current': ariaCurrent,
   }, label);
+}
+
+/**
+ * Tests - Theme - Navbar - More - Resolve Declarations.
+ *
+ * Folds the declarations of every rule that lists one of the given
+ * selectors into a property map. Rules are read in cascade order, so a
+ * later declaration of the same property replaces an earlier one.
+ *
+ * @param {Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules}     rules     - Rules.
+ * @param {Tests_Theme_Navbar_More_Index_ResolveDeclarations_Selectors} selectors - Selectors.
+ *
+ * @returns {Tests_Theme_Navbar_More_Index_ResolveDeclarations_Returns}
+ *
+ * @since 0.50.1
+ */
+function resolveDeclarations(rules: Tests_Theme_Navbar_More_Index_ResolveDeclarations_Rules, selectors: Tests_Theme_Navbar_More_Index_ResolveDeclarations_Selectors): Tests_Theme_Navbar_More_Index_ResolveDeclarations_Returns {
+  const resolved: Tests_Theme_Navbar_More_Index_ResolveDeclarations_Resolved = {};
+
+  for (const rule of rules) {
+    if (rule['selectors'].some((selector) => selectors.includes(selector)) === false) {
+      continue;
+    }
+
+    for (const declaration of rule['declarations']) {
+      const separatorIndex: Tests_Theme_Navbar_More_Index_ResolveDeclarations_SeparatorIndex = declaration.indexOf(': ');
+
+      if (separatorIndex === -1) {
+        continue;
+      }
+
+      Reflect.set(resolved, declaration.slice(0, separatorIndex), declaration.slice(separatorIndex + 2));
+    }
+  }
+
+  return resolved;
 }
 
 /**
@@ -348,9 +407,8 @@ describe('More across presets and variants', async () => {
  * Judges each preset's navbar focus rings and More group separators from
  * its CSS. Every navbar control, the More trigger included, must ring on
  * `:focus-visible` with the preset's own color tokens (never the browser
- * default, never on mouse focus), a group must sit one line away from its
- * neighbouring rows, and the More menu must open at the dropdown menu's
- * offset, anchored to its trigger's inline-end edge.
+ * default, never on mouse focus), and a group must sit one line away from
+ * its neighbouring rows.
  *
  * @since 0.50.0
  */
@@ -397,23 +455,6 @@ describe('More chrome across presets', async () => {
     '.nova-navbar-monolith-menu-close',
     '.nova-navbar-monolith-menu-item',
     '.nova-navbar-monolith-menu-dropdown-summary',
-  ];
-  const blockProperties: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_BlockProperties = [
-    'top',
-    'inset-block-start',
-    'margin',
-    'margin-top',
-    'margin-block',
-    'margin-block-start',
-  ];
-  const offsetProperties: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetProperties = [
-    ...blockProperties,
-    'inset',
-    'left',
-    'right',
-    'inset-inline',
-    'inset-inline-start',
-    'inset-inline-end',
   ];
 
   for (const presetNameEntry of presetsIndexNames) {
@@ -585,50 +626,206 @@ describe('More chrome across presets', async () => {
 
       return;
     });
+  }
 
-    it(`'${presetName}' preset opens the More menu at its dropdown offset`, async () => {
-      const offsetSources: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetSources = await Promise.all([
-        readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'NavbarItem', 'style.css'), 'utf-8'),
-        readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'Navbar', 'More', 'style.css'), 'utf-8'),
-        ...navbarCssNames.map((navbarCssName) => readFile(resolve(packageRoot, 'src', 'styles', 'presets', presetName, 'theme', 'Navbar', navbarCssName), 'utf-8')),
-      ]);
-      const offsetRules: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRules = offsetSources.flatMap((offsetSource) => collectRules(offsetSource));
-      const dropdownOffset: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownOffset = {};
-      const moreOffset: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreOffset = {};
+  return;
+});
 
-      // Later rules win, so each map ends with the declared value the menu renders with.
-      for (const offsetRuleEntry of offsetRules) {
-        const offsetRule: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_OffsetRule = offsetRuleEntry;
+/**
+ * Tests - Theme - Navbar - More - Menu Placement Across Presets And Variants.
+ *
+ * Walks every preset with every navbar variant and resolves, from the
+ * shared and preset stylesheets, where each navbar popover (dropdown,
+ * docs version, locale, and More) opens. Variants with inline dropdowns
+ * must open every menu the same shared gap below the bar: the trigger
+ * wrappers leave the positioning chain, nothing between them and the bar
+ * becomes a positioning context (except the Canopy top row, which
+ * stretches to the row height), and the menus anchor on the inline axis
+ * through their static position - inline-start for dropdown and version,
+ * inline-end for locale and More - in both page directions. Variants
+ * without inline dropdowns keep the trigger-relative placement.
+ *
+ * @since 0.50.1
+ */
+describe('Menu placement across presets and variants', async () => {
+  const packageRoot: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PackageRoot = getPackageRoot();
+  const variantNames: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantNames = [
+    'Bridge',
+    'Canopy',
+    'Compass',
+    'Monolith',
+  ];
+  const menuClasses: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClasses = [
+    '.nova-dropdown-menu',
+    '.nova-version-dropdown-menu',
+    '.nova-locale-dropdown-menu',
+    '.nova-navbar-more-menu',
+  ];
+  const wrapperClasses: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClasses = [
+    '.nova-dropdown',
+    '.nova-version-dropdown',
+    '.nova-locale-dropdown',
+    '.nova-navbar-more',
+  ];
+  const endWrapperClasses: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndWrapperClasses = [
+    '.nova-locale-dropdown',
+    '.nova-navbar-more',
+  ];
+  const containingBlockProperties: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockProperties = [
+    'transform',
+    'translate',
+    'rotate',
+    'scale',
+    'perspective',
+    'filter',
+    'backdrop-filter',
+    '-webkit-backdrop-filter',
+    'contain',
+    'container-type',
+    'will-change',
+  ];
 
-        for (const declarationEntry of offsetRule['declarations']) {
-          const declaration: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Declaration = declarationEntry;
-          const separatorIndex: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_SeparatorIndex = declaration.indexOf(': ');
-          const property: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Property = declaration.slice(0, separatorIndex);
-          const value: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_Value = declaration.slice(separatorIndex + 2);
+  for (const presetNameEntry of presetsIndexNames) {
+    for (const variantNameEntry of variantNames) {
+      const presetName: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PresetName = presetNameEntry;
+      const variantName: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantName = variantNameEntry;
 
-          if (separatorIndex === -1 || offsetProperties.includes(property) === false) {
+      it(`'${presetName}' preset with the '${variantName}' navbar opens every navbar menu below the bar`, async () => {
+        const variantSource: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_VariantSource = await readFile(resolve(packageRoot, 'src', 'theme', 'Navbar', variantName, 'index.tsx'), 'utf-8');
+        const scope: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_Scope = `.nova-navbar-${variantName.toLowerCase()}`;
+        const placementSources: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSources = await Promise.all([
+          readFile(resolve(packageRoot, 'src', 'styles', 'grid.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'NavbarItem', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'Navbar', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'Navbar', 'More', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'theme', 'Navbar', variantName, 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'presets', presetName, 'theme', 'NavbarItem', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'presets', presetName, 'theme', 'Navbar', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'presets', presetName, 'theme', 'Navbar', 'More', 'style.css'), 'utf-8'),
+          readFile(resolve(packageRoot, 'src', 'styles', 'presets', presetName, 'theme', 'Navbar', variantName, 'style.css'), 'utf-8'),
+        ]);
+        const placementRules: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementRules = placementSources.flatMap((placementSource) => collectRules(placementSource));
+        const rtlProcessor: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor = loadCommonJsModule('rtlcss') as Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlProcessor;
+
+        // Right-to-left builds run every stylesheet through `rtlcss`, so the direction rules must survive it.
+        const rtlPlacementRules: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_RtlPlacementRules = placementSources.flatMap((placementSource) => collectRules(rtlProcessor.process(placementSource)));
+        const directionRuleSets: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_DirectionRuleSets = [
+          placementRules,
+          rtlPlacementRules,
+        ];
+        const placementSelectors: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_PlacementSelectors = placementRules.flatMap((placementRule) => placementRule['selectors']);
+
+        // Variants without inline dropdowns keep every menu below its own trigger.
+        if (variantSource.includes('<More ') === false) {
+          const scopedSelectors: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedSelectors = placementSelectors
+            .filter((selector) => selector.includes(`${scope} `) === true)
+            .filter((selector) => [
+              ...menuClasses,
+              ...wrapperClasses,
+            ].some((placementClass) => selector.endsWith(placementClass) === true || selector.endsWith(`${placementClass} > *`) === true));
+
+          strictEqual(JSON.stringify(scopedSelectors), '[]', `Expected the '${variantName}' navbar to keep trigger-relative menus.`);
+
+          return;
+        }
+
+        const barDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BarDeclarations = resolveDeclarations(placementRules, ['.navbar']);
+
+        // The bar (the `.navbar` wrapper around the variant's `<nav>`) is the positioning context and owns the shared gap.
+        strictEqual([
+          'relative',
+          'sticky',
+        ].includes(barDeclarations['position'] ?? ''), true, `Expected the '${presetName}' '${variantName}' bar to be a positioning context.`);
+        strictEqual(barDeclarations['--nova-navbar-menu-offset'] !== undefined, true, 'Expected the bar to declare the shared menu gap.');
+
+        // Every trigger wrapper leaves the positioning chain.
+        for (const wrapperClassEntry of wrapperClasses) {
+          const wrapperClass: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperClass = wrapperClassEntry;
+          const wrapperDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_WrapperDeclarations = {
+            ...resolveDeclarations(placementRules, [wrapperClass]),
+            ...resolveDeclarations(placementRules, [`${scope} ${wrapperClass}`]),
+          };
+          const endAligned: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_EndAligned = endWrapperClasses.includes(wrapperClass);
+
+          strictEqual(wrapperDeclarations['position'], 'static', `Expected '${presetName}' to take '${wrapperClass}' out of the positioning chain in the '${variantName}' navbar.`);
+
+          if (endAligned === true) {
+            for (const directionRules of directionRuleSets) {
+              strictEqual(resolveDeclarations(directionRules, [`${scope} ${wrapperClass}`])['direction'], 'rtl', `Expected '${wrapperClass}' to anchor its menu to the trigger's inline-end edge.`);
+              strictEqual(resolveDeclarations(directionRules, [`${scope} ${wrapperClass} > *`])['direction'], 'ltr', `Expected '${wrapperClass}' to restore the page direction on its children.`);
+              strictEqual(resolveDeclarations(directionRules, [`[dir="rtl"] ${scope} ${wrapperClass}`])['direction'], 'ltr', `Expected '${wrapperClass}' to anchor its menu to the trigger's inline-end edge in right-to-left.`);
+              strictEqual(resolveDeclarations(directionRules, [`[dir="rtl"] ${scope} ${wrapperClass} > *`])['direction'], 'rtl', `Expected '${wrapperClass}' to restore the page direction on its children in right-to-left.`);
+            }
+          } else {
+            strictEqual(wrapperDeclarations['direction'], undefined, `Expected '${wrapperClass}' to anchor its menu to the trigger's inline-start edge.`);
+          }
+        }
+
+        const menuTops: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuTops = [];
+
+        // Every menu opens the shared gap below the bar, anchored with logical insets.
+        for (const menuClassEntry of menuClasses) {
+          const menuClass: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuClass = menuClassEntry;
+          const baseDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_BaseDeclarations = resolveDeclarations(placementRules, [menuClass]);
+          const scopedDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ScopedDeclarations = resolveDeclarations(placementRules, [`${scope} ${menuClass}`]);
+          const menuDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_MenuDeclarations = {
+            ...baseDeclarations,
+            ...scopedDeclarations,
+          };
+
+          menuTops.push(menuDeclarations['top'] ?? '');
+
+          strictEqual(menuDeclarations['position'], 'absolute', `Expected '${menuClass}' to be an absolute popover.`);
+          strictEqual(menuDeclarations['top'], 'calc(100% + var(--nova-navbar-menu-offset))', `Expected '${presetName}' to open '${menuClass}' the shared gap below the '${variantName}' bar.`);
+          strictEqual(scopedDeclarations['inset-inline'], 'auto', `Expected '${menuClass}' to take its inline position from its trigger.`);
+          strictEqual(scopedDeclarations['inset-inline-start'] === undefined && scopedDeclarations['inset-inline-end'] === undefined, true, `Expected '${menuClass}' to leave both inline insets to its trigger.`);
+          strictEqual(menuDeclarations['left'] === undefined && menuDeclarations['right'] === undefined, true, `Expected '${menuClass}' to anchor with logical properties so it flips in right-to-left.`);
+        }
+
+        strictEqual(new Set(menuTops).size, 1, `Expected '${presetName}' to open every '${variantName}' navbar menu the same distance below the bar.`);
+
+        const chainClasses: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClasses = [
+          scope,
+          '.nova-container',
+          `${scope} > .nova-container`,
+          '.nova-navbar-item',
+          `${scope}-items`,
+          `${scope}-actions`,
+        ];
+
+        // Nothing between a trigger wrapper and the bar becomes a positioning context.
+        for (const chainClassEntry of chainClasses) {
+          const chainClass: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainClass = chainClassEntry;
+          const chainDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ChainDeclarations = resolveDeclarations(placementRules, [chainClass]);
+          const containingBlockDeclarations: Tests_Theme_Navbar_More_Index_MenuPlacementAcrossPresetsAndVariants_ContainingBlockDeclarations = containingBlockProperties
+            .filter((containingBlockProperty) => chainDeclarations[containingBlockProperty] !== undefined)
+            .filter((containingBlockProperty) => [
+              'none',
+              'normal',
+              'auto',
+            ].includes(chainDeclarations[containingBlockProperty] ?? '') === false)
+            .map((containingBlockProperty) => `${containingBlockProperty}: ${chainDeclarations[containingBlockProperty] ?? ''}`);
+
+          // A transform, filter, containment, or similar would capture the menus as well.
+          strictEqual(JSON.stringify(containingBlockDeclarations), '[]', `Expected '${presetName}' to keep '${chainClass}' from becoming a containing block in the '${variantName}' navbar.`);
+
+          // The Canopy top row places the locale menu under that row.
+          if (chainClass === '.nova-navbar-canopy-actions') {
+            strictEqual(chainDeclarations['position'], 'relative', `Expected '${presetName}' to make the Canopy top row the locale menu's positioning context.`);
+            strictEqual(chainDeclarations['align-self'], 'stretch', `Expected '${presetName}' to stretch the Canopy actions to the top row's height.`);
+
             continue;
           }
 
-          if (offsetRule['selectors'].includes('.nova-dropdown-menu') === true) {
-            Reflect.set(dropdownOffset, property, value);
-          }
-
-          if (offsetRule['selectors'].includes('.nova-navbar-more-menu') === true) {
-            Reflect.set(moreOffset, property, value);
-          }
+          strictEqual([
+            'static',
+            '',
+          ].includes(chainDeclarations['position'] ?? ''), true, `Expected '${presetName}' to keep '${chainClass}' out of the positioning chain in the '${variantName}' navbar.`);
         }
-      }
 
-      const dropdownBlockOffset: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_DropdownBlockOffset = blockProperties.map((blockProperty) => `${blockProperty}: ${dropdownOffset[blockProperty] ?? ''}`);
-      const moreBlockOffset: Tests_Theme_Navbar_More_Index_MoreChromeAcrossPresets_MoreBlockOffset = blockProperties.map((blockProperty) => `${blockProperty}: ${moreOffset[blockProperty] ?? ''}`);
-
-      strictEqual(JSON.stringify(moreBlockOffset), JSON.stringify(dropdownBlockOffset), `Expected '${presetName}' to open the More menu the same distance below its trigger as the dropdown menu.`);
-      strictEqual(moreOffset['inset-inline-end'], '0', `Expected '${presetName}' to anchor the More menu to its trigger's inline-end edge.`);
-      strictEqual(moreOffset['right'] === undefined && moreOffset['left'] === undefined, true, `Expected '${presetName}' to anchor the More menu with logical properties so it flips in right-to-left.`);
-
-      return;
-    });
+        return;
+      });
+    }
   }
 
   return;

@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.50.1 - 2026-11-22
+
+### FIXED
+- Navbar dropdown, docs version, locale, and More menus open just below the navbar instead of overlapping its bottom edge.
+
 ## 0.50.0 - 2026-11-22
 
 ### UPDATED

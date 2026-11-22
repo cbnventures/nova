@@ -1,5 +1,9 @@
 # @cbnventures/nova
 
+## 0.50.1 - 2026-11-22
+
+No changes.
+
 ## 0.50.0 - 2026-11-22
 
 ### UPDATED

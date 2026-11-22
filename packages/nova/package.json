@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.50.0",
+  "version": "0.50.1",
   "description": "Strict presets, guided tooling, and project scaffolds for JavaScript and TypeScript developers",
   "keywords": [
     "eslint",

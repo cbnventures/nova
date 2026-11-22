@@ -47,7 +47,7 @@
 .nova-locale-dropdown-menu {
   position: absolute;
   top: calc(100% + 0.5rem);
-  right: 0;
+  inset-inline-end: 0;
   z-index: 100;
 
   margin: 0;
@@ -104,7 +104,7 @@
 .nova-version-dropdown-menu {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: 0;
+  inset-inline-start: 0;
   z-index: 100;
 
   margin: 0;
@@ -172,7 +172,7 @@
 .nova-dropdown-menu {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: 0;
+  inset-inline-start: 0;
   z-index: 100;
 
   margin: 0;
