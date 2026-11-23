@@ -6,6 +6,7 @@ coverage/
 dist/
 out/
 .output/
+*.log
 local.properties
 .env
 .env.*
