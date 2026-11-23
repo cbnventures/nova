@@ -7,6 +7,7 @@ import { getShikiThemes } from './lib/shiki-themes.js';
 
 import type {
   Preset_Preset_AnalyticsOptions,
+  Preset_Preset_AnalyticsPlugin,
   Preset_Preset_BlogPlugin,
   Preset_Preset_BlogRehypePlugins,
   Preset_Preset_BundleGuardPlugin,
@@ -183,6 +184,24 @@ function preset(context: Preset_Preset_Context, options: Preset_Preset_Options):
     ];
 
     plugins.push(gtmPlugin);
+  }
+
+  // Direct analytics plugin (if any of Google Analytics, Meta Pixel or Clarity is provided).
+  if (
+    analyticsOptions['googleAnalytics'] !== undefined
+    || analyticsOptions['metaPixel'] !== undefined
+    || analyticsOptions['clarity'] !== undefined
+  ) {
+    const analyticsPlugin: Preset_Preset_AnalyticsPlugin = [
+      resolve(currentDirectory, 'plugins/analytics/index.js'),
+      {
+        googleAnalytics: analyticsOptions['googleAnalytics'],
+        metaPixel: analyticsOptions['metaPixel'],
+        clarity: analyticsOptions['clarity'],
+      },
+    ];
+
+    plugins.push(analyticsPlugin);
   }
 
   // Nova theme (always included).

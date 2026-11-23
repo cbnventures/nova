@@ -28,7 +28,10 @@ import type {
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_StaleInSchema,
   Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Analytics,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsClarityProjectId,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGoogleAnalyticsMeasurementId,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGtmContainerId,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsMetaPixelPixelId,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_IconSafelist,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_MaxBundleFileSize,
@@ -232,6 +235,15 @@ describe('configDrift validateOptions', async () => {
           gtm: {
             containerId: 'GTM-XXXXXX',
           },
+          googleAnalytics: {
+            measurementId: 'G-XXXXXXXXXX',
+          },
+          metaPixel: {
+            pixelId: '000000000000000',
+          },
+          clarity: {
+            projectId: 'xxxxxxxxxx',
+          },
         },
         persistentCache: true,
         progressBar: {
@@ -318,6 +330,14 @@ describe('configDrift validateOptions', async () => {
     const analyticsGtmContainerId: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGtmContainerId = analytics['gtm']!['containerId'];
 
     strictEqual(analyticsGtmContainerId, 'GTM-XXXXXX');
+
+    const analyticsGoogleAnalyticsMeasurementId: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGoogleAnalyticsMeasurementId = analytics['googleAnalytics']!['measurementId'];
+    const analyticsMetaPixelPixelId: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsMetaPixelPixelId = analytics['metaPixel']!['pixelId'];
+    const analyticsClarityProjectId: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsClarityProjectId = analytics['clarity']!['projectId'];
+
+    strictEqual(analyticsGoogleAnalyticsMeasurementId, 'G-XXXXXXXXXX');
+    strictEqual(analyticsMetaPixelPixelId, '000000000000000');
+    strictEqual(analyticsClarityProjectId, 'xxxxxxxxxx');
 
     const persistentCache: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PersistentCache = result['persistentCache'];
 

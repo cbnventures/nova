@@ -41,8 +41,29 @@ export type Preset_Preset_OptionsPlugins = {
 
 export type Preset_Preset_OptionsAnalyticsGtm = Record<string, unknown> | undefined;
 
+export type Preset_Preset_OptionsAnalyticsGoogleAnalyticsMeasurementId = string;
+
+export type Preset_Preset_OptionsAnalyticsGoogleAnalytics = {
+  measurementId: Preset_Preset_OptionsAnalyticsGoogleAnalyticsMeasurementId;
+} | undefined;
+
+export type Preset_Preset_OptionsAnalyticsMetaPixelPixelId = string;
+
+export type Preset_Preset_OptionsAnalyticsMetaPixel = {
+  pixelId: Preset_Preset_OptionsAnalyticsMetaPixelPixelId;
+} | undefined;
+
+export type Preset_Preset_OptionsAnalyticsClarityProjectId = string;
+
+export type Preset_Preset_OptionsAnalyticsClarity = {
+  projectId: Preset_Preset_OptionsAnalyticsClarityProjectId;
+} | undefined;
+
 export type Preset_Preset_OptionsAnalytics = {
   gtm?: Preset_Preset_OptionsAnalyticsGtm;
+  googleAnalytics?: Preset_Preset_OptionsAnalyticsGoogleAnalytics;
+  metaPixel?: Preset_Preset_OptionsAnalyticsMetaPixel;
+  clarity?: Preset_Preset_OptionsAnalyticsClarity;
 };
 
 export type Preset_Preset_OptionsPersistentCache = boolean | undefined;
@@ -141,6 +162,8 @@ export type Preset_Preset_IconsPlugin = Preset_Preset_Plugin;
 export type Preset_Preset_BundleGuardPlugin = Preset_Preset_Plugin;
 
 export type Preset_Preset_GtmPlugin = Preset_Preset_Plugin;
+
+export type Preset_Preset_AnalyticsPlugin = Preset_Preset_Plugin;
 
 export type Preset_Preset_ThemeOptionsPreset = Options_PluginOptions_Preset;
 

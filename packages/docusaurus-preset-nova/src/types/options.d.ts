@@ -169,6 +169,30 @@ export type Options_PluginOptions_Analytics_Gtm_Value = {
 
 export type Options_PluginOptions_Analytics_Gtm = Options_PluginOptions_Analytics_Gtm_Value | undefined;
 
+export type Options_PluginOptions_Analytics_GoogleAnalytics_Value_MeasurementId = string;
+
+export type Options_PluginOptions_Analytics_GoogleAnalytics_Value = {
+  measurementId: Options_PluginOptions_Analytics_GoogleAnalytics_Value_MeasurementId;
+};
+
+export type Options_PluginOptions_Analytics_GoogleAnalytics = Options_PluginOptions_Analytics_GoogleAnalytics_Value | undefined;
+
+export type Options_PluginOptions_Analytics_MetaPixel_Value_PixelId = string;
+
+export type Options_PluginOptions_Analytics_MetaPixel_Value = {
+  pixelId: Options_PluginOptions_Analytics_MetaPixel_Value_PixelId;
+};
+
+export type Options_PluginOptions_Analytics_MetaPixel = Options_PluginOptions_Analytics_MetaPixel_Value | undefined;
+
+export type Options_PluginOptions_Analytics_Clarity_Value_ProjectId = string;
+
+export type Options_PluginOptions_Analytics_Clarity_Value = {
+  projectId: Options_PluginOptions_Analytics_Clarity_Value_ProjectId;
+};
+
+export type Options_PluginOptions_Analytics_Clarity = Options_PluginOptions_Analytics_Clarity_Value | undefined;
+
 /**
  * Options - Plugin Options Plugins.
  *
@@ -191,6 +215,9 @@ export type Options_PluginOptions_Plugins = {
 
 export type Options_PluginOptions_Analytics = {
   gtm: Options_PluginOptions_Analytics_Gtm;
+  googleAnalytics?: Options_PluginOptions_Analytics_GoogleAnalytics;
+  metaPixel?: Options_PluginOptions_Analytics_MetaPixel;
+  clarity?: Options_PluginOptions_Analytics_Clarity;
 };
 
 export type Options_PluginOptions_PersistentCache = boolean;
@@ -349,8 +376,35 @@ export type Options_ResolvePreset_Options_Analytics_Gtm_Value = {
 
 export type Options_ResolvePreset_Options_Analytics_Gtm = Options_ResolvePreset_Options_Analytics_Gtm_Value | undefined;
 
+export type Options_ResolvePreset_Options_Analytics_GoogleAnalytics_Value_MeasurementId = string;
+
+export type Options_ResolvePreset_Options_Analytics_GoogleAnalytics_Value = {
+  measurementId: Options_ResolvePreset_Options_Analytics_GoogleAnalytics_Value_MeasurementId;
+};
+
+export type Options_ResolvePreset_Options_Analytics_GoogleAnalytics = Options_ResolvePreset_Options_Analytics_GoogleAnalytics_Value | undefined;
+
+export type Options_ResolvePreset_Options_Analytics_MetaPixel_Value_PixelId = string;
+
+export type Options_ResolvePreset_Options_Analytics_MetaPixel_Value = {
+  pixelId: Options_ResolvePreset_Options_Analytics_MetaPixel_Value_PixelId;
+};
+
+export type Options_ResolvePreset_Options_Analytics_MetaPixel = Options_ResolvePreset_Options_Analytics_MetaPixel_Value | undefined;
+
+export type Options_ResolvePreset_Options_Analytics_Clarity_Value_ProjectId = string;
+
+export type Options_ResolvePreset_Options_Analytics_Clarity_Value = {
+  projectId: Options_ResolvePreset_Options_Analytics_Clarity_Value_ProjectId;
+};
+
+export type Options_ResolvePreset_Options_Analytics_Clarity = Options_ResolvePreset_Options_Analytics_Clarity_Value | undefined;
+
 export type Options_ResolvePreset_Options_Analytics = {
   gtm: Options_ResolvePreset_Options_Analytics_Gtm;
+  googleAnalytics?: Options_ResolvePreset_Options_Analytics_GoogleAnalytics;
+  metaPixel?: Options_ResolvePreset_Options_Analytics_MetaPixel;
+  clarity?: Options_ResolvePreset_Options_Analytics_Clarity;
 };
 
 export type Options_ResolvePreset_Options_ProgressBar = boolean | Record<string, unknown>;
@@ -717,8 +771,35 @@ export type Options_ValidateOptions_Returns_Analytics_Gtm_Value = {
 
 export type Options_ValidateOptions_Returns_Analytics_Gtm = Options_ValidateOptions_Returns_Analytics_Gtm_Value | undefined;
 
+export type Options_ValidateOptions_Returns_Analytics_GoogleAnalytics_Value_MeasurementId = string;
+
+export type Options_ValidateOptions_Returns_Analytics_GoogleAnalytics_Value = {
+  measurementId: Options_ValidateOptions_Returns_Analytics_GoogleAnalytics_Value_MeasurementId;
+};
+
+export type Options_ValidateOptions_Returns_Analytics_GoogleAnalytics = Options_ValidateOptions_Returns_Analytics_GoogleAnalytics_Value | undefined;
+
+export type Options_ValidateOptions_Returns_Analytics_MetaPixel_Value_PixelId = string;
+
+export type Options_ValidateOptions_Returns_Analytics_MetaPixel_Value = {
+  pixelId: Options_ValidateOptions_Returns_Analytics_MetaPixel_Value_PixelId;
+};
+
+export type Options_ValidateOptions_Returns_Analytics_MetaPixel = Options_ValidateOptions_Returns_Analytics_MetaPixel_Value | undefined;
+
+export type Options_ValidateOptions_Returns_Analytics_Clarity_Value_ProjectId = string;
+
+export type Options_ValidateOptions_Returns_Analytics_Clarity_Value = {
+  projectId: Options_ValidateOptions_Returns_Analytics_Clarity_Value_ProjectId;
+};
+
+export type Options_ValidateOptions_Returns_Analytics_Clarity = Options_ValidateOptions_Returns_Analytics_Clarity_Value | undefined;
+
 export type Options_ValidateOptions_Returns_Analytics = {
   gtm: Options_ValidateOptions_Returns_Analytics_Gtm;
+  googleAnalytics?: Options_ValidateOptions_Returns_Analytics_GoogleAnalytics;
+  metaPixel?: Options_ValidateOptions_Returns_Analytics_MetaPixel;
+  clarity?: Options_ValidateOptions_Returns_Analytics_Clarity;
 };
 
 export type Options_ValidateOptions_Returns_PersistentCache = boolean;

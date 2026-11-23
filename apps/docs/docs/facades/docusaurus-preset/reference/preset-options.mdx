@@ -102,10 +102,32 @@ The `primary` and `secondary` colors expand to 11-level shade scales (50 through
 
 ## Analytics
 
-| Option                      | Type                  | Default     | Description                               |
-|-----------------------------|-----------------------|-------------|-------------------------------------------|
-| `analytics.gtm`             | `object \| undefined` | `undefined` | Google Tag Manager configuration.         |
-| `analytics.gtm.containerId` | `string`              | —           | GTM container ID (e.g., `'GTM-XXXXXXX'`). |
+| Option                                    | Type                  | Default     | Description                               |
+|-------------------------------------------|-----------------------|-------------|-------------------------------------------|
+| `analytics.gtm`                           | `object \| undefined` | `undefined` | Google Tag Manager configuration.         |
+| `analytics.gtm.containerId`               | `string`              | —           | GTM container ID (e.g., `'GTM-XXXXXXX'`). |
+| `analytics.googleAnalytics`               | `object \| undefined` | `undefined` | Google Analytics configuration.           |
+| `analytics.googleAnalytics.measurementId` | `string`              | —           | Measurement ID (e.g., `'G-XXXXXXXXXX'`).  |
+| `analytics.metaPixel`                     | `object \| undefined` | `undefined` | Meta Pixel configuration.                 |
+| `analytics.metaPixel.pixelId`             | `string`              | —           | Pixel ID (e.g., `'000000000000000'`).     |
+| `analytics.clarity`                       | `object \| undefined` | `undefined` | Microsoft Clarity configuration.          |
+| `analytics.clarity.projectId`             | `string`              | —           | Project ID (e.g., `'xxxxxxxxxx'`).        |
+
+Google Analytics, Meta Pixel, and Microsoft Clarity load directly on every page, without Tag Manager, and each one only when its ID is set. Each counts page changes inside the site on its own, so no extra setup is needed. `gtm` still works alongside them. Setting `gtm` together with a direct option loads both, so leave out any tag the container already loads.
+
+```ts title="docusaurus.config.ts"
+analytics: {
+  googleAnalytics: {
+    measurementId: 'G-XXXXXXXXXX',
+  },
+  metaPixel: {
+    pixelId: '000000000000000',
+  },
+  clarity: {
+    projectId: 'xxxxxxxxxx',
+  },
+},
+```
 
 ## Webpack Cache
 

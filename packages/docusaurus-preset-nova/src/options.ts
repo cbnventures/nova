@@ -99,6 +99,15 @@ export const pluginOptionsSchema = joi.object({
     gtm: joi.object({
       containerId: joi.string().required(),
     }).optional(),
+    googleAnalytics: joi.object({
+      measurementId: joi.string().required(),
+    }).optional(),
+    metaPixel: joi.object({
+      pixelId: joi.string().required(),
+    }).optional(),
+    clarity: joi.object({
+      projectId: joi.string().required(),
+    }).optional(),
   }).default(),
   persistentCache: joi.boolean().default(false),
   progressBar: joi.alternatives()
