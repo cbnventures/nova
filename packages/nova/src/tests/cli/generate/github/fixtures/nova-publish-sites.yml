@@ -47,6 +47,36 @@ jobs:
       summary_destination_1: "${{ steps.nova-summary.outputs.summary_destination_1 }}"
       summary_detail_1: "${{ steps.nova-summary.outputs.summary_detail_1 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          CBN_PUBLIC_GOOGLE_TAG_MANAGER_ID: "${{ vars.CBN_PUBLIC_GOOGLE_TAG_MANAGER_ID }}"
+          CBN_PUBLIC_STRIPE_PUBLISHABLE_KEY: "${{ vars.CBN_PUBLIC_STRIPE_PUBLISHABLE_KEY }}"
+          CBN_PUBLIC_TURNSTILE_SITE_KEY: "${{ vars.CBN_PUBLIC_TURNSTILE_SITE_KEY }}"
+          MJL_PUBLIC_GOOGLE_TAG_MANAGER_ID: "${{ vars.MJL_PUBLIC_GOOGLE_TAG_MANAGER_ID }}"
+          MJL_PUBLIC_TURNSTILE_SITE_KEY: "${{ vars.MJL_PUBLIC_TURNSTILE_SITE_KEY }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "CBN_PUBLIC_GOOGLE_TAG_MANAGER_ID" "$CBN_PUBLIC_GOOGLE_TAG_MANAGER_ID"
+          check_nova_placeholder "CBN_PUBLIC_STRIPE_PUBLISHABLE_KEY" "$CBN_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+          check_nova_placeholder "CBN_PUBLIC_TURNSTILE_SITE_KEY" "$CBN_PUBLIC_TURNSTILE_SITE_KEY"
+          check_nova_placeholder "MJL_PUBLIC_GOOGLE_TAG_MANAGER_ID" "$MJL_PUBLIC_GOOGLE_TAG_MANAGER_ID"
+          check_nova_placeholder "MJL_PUBLIC_TURNSTILE_SITE_KEY" "$MJL_PUBLIC_TURNSTILE_SITE_KEY"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5
@@ -257,6 +287,42 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          CBN_AMAZON_ACCESS_KEY_ID: "${{ secrets.CBN_AMAZON_ACCESS_KEY_ID }}"
+          CBN_AMAZON_ACCESS_KEY_SECRET: "${{ secrets.CBN_AMAZON_ACCESS_KEY_SECRET }}"
+          CBN_AMAZON_REGION: "${{ secrets.CBN_AMAZON_REGION }}"
+          CBN_STRIPE_SECRET_KEY: "${{ secrets.CBN_STRIPE_SECRET_KEY }}"
+          CBN_STRIPE_WEBHOOK_SECRET: "${{ secrets.CBN_STRIPE_WEBHOOK_SECRET }}"
+          CBN_TURNSTILE_SECRET_KEY: "${{ secrets.CBN_TURNSTILE_SECRET_KEY }}"
+          CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
+          CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "CBN_AMAZON_ACCESS_KEY_ID" "$CBN_AMAZON_ACCESS_KEY_ID"
+          check_nova_placeholder "CBN_AMAZON_ACCESS_KEY_SECRET" "$CBN_AMAZON_ACCESS_KEY_SECRET"
+          check_nova_placeholder "CBN_AMAZON_REGION" "$CBN_AMAZON_REGION"
+          check_nova_placeholder "CBN_STRIPE_SECRET_KEY" "$CBN_STRIPE_SECRET_KEY"
+          check_nova_placeholder "CBN_STRIPE_WEBHOOK_SECRET" "$CBN_STRIPE_WEBHOOK_SECRET"
+          check_nova_placeholder "CBN_TURNSTILE_SECRET_KEY" "$CBN_TURNSTILE_SECRET_KEY"
+          check_nova_placeholder "CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_ACCOUNT_ID"
+          check_nova_placeholder "CLOUDFLARE_API_TOKEN" "$CLOUDFLARE_API_TOKEN"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5
@@ -342,6 +408,38 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          CLOUDFLARE_ACCOUNT_ID: "${{ vars.CLOUDFLARE_ACCOUNT_ID }}"
+          CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
+          MJL_AMAZON_ACCESS_KEY_ID: "${{ secrets.MJL_AMAZON_ACCESS_KEY_ID }}"
+          MJL_AMAZON_ACCESS_KEY_SECRET: "${{ secrets.MJL_AMAZON_ACCESS_KEY_SECRET }}"
+          MJL_AMAZON_REGION: "${{ secrets.MJL_AMAZON_REGION }}"
+          MJL_TURNSTILE_SECRET_KEY: "${{ secrets.MJL_TURNSTILE_SECRET_KEY }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_ACCOUNT_ID"
+          check_nova_placeholder "CLOUDFLARE_API_TOKEN" "$CLOUDFLARE_API_TOKEN"
+          check_nova_placeholder "MJL_AMAZON_ACCESS_KEY_ID" "$MJL_AMAZON_ACCESS_KEY_ID"
+          check_nova_placeholder "MJL_AMAZON_ACCESS_KEY_SECRET" "$MJL_AMAZON_ACCESS_KEY_SECRET"
+          check_nova_placeholder "MJL_AMAZON_REGION" "$MJL_AMAZON_REGION"
+          check_nova_placeholder "MJL_TURNSTILE_SECRET_KEY" "$MJL_TURNSTILE_SECRET_KEY"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5

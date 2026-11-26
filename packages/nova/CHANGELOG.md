@@ -1,5 +1,14 @@
 # @cbnventures/nova
 
+## 0.52.0 - 2026-11-26
+
+### FIXED
+- The sponsor-check workflow's `SPONSOR_MINIMUM` variable is now described as an amount in cents, matching what sponsor-gated-support expects, instead of dollars.
+- The `check-sponsor-gated-issues` workflow now treats its nine defaulted sponsor-gated-support settings (issue labels, commenter limit, lock on close, both messages, organization flag, active-only, exempt file, and minimum) as optional, so `nova utility configure --status` reports an unset one as optional-absent and "Create missing" no longer stubs it with `NOVA_PLACEHOLDER`. Only the personal access token stays required.
+
+### ADDED
+- Generated workflows start every job that reads repository variables or secrets with a "Check for Nova placeholders" step. It fails the job and names each value that still holds the `NOVA_PLACEHOLDER` stub from "Create missing", passes values through `env:` so secrets stay masked, and lets an empty optional value through.
+
 ## 0.51.0 - 2026-11-26
 
 ### UPDATED

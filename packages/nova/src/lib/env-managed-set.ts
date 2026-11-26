@@ -14,6 +14,7 @@ import type {
   Lib_EnvManagedSet_IsProfiledWorkflow,
   Lib_EnvManagedSet_LibEnvManagedSet,
   Lib_EnvManagedSet_ManagedCred,
+  Lib_EnvManagedSet_ManagedVariable,
   Lib_EnvManagedSet_ProfiledManagedCred,
   Lib_EnvManagedSet_ProfilesEnabled,
   Lib_EnvManagedSet_Project,
@@ -141,11 +142,19 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
 
         const resolvedVariable: Lib_EnvManagedSet_ResolvedVariable = (workflowPrefix !== undefined && workflowPrefix !== '') ? libEnvNamespace.githubName(workflowPrefix, variableName) : (variableMeta['default'] ?? variableName);
 
-        candidates.push({
+        // An action input with its own default can be left unset (the sponsor gate's labels), so
+        // carry the optional flag like deploy creds do and let status report it as optional-absent.
+        const managedVariable: Lib_EnvManagedSet_ManagedVariable = {
           name: resolvedVariable,
           secret: variableMeta['format'] === 'secret',
           kind: 'workflow',
-        });
+        };
+
+        if (variableMeta['optional'] === true) {
+          Reflect.set(managedVariable, 'optional', true);
+        }
+
+        candidates.push(managedVariable);
       }
 
       const templateTargets: Lib_EnvManagedSet_TemplateTargets = templateMeta['targets'];

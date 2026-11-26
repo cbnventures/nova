@@ -24,6 +24,8 @@ import {
   LIB_REGEX_PATTERN_DOUBLE_QUOTE,
   LIB_REGEX_PATTERN_LEADING_DOT_SLASH,
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
+  LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_EXPRESSION,
+  LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_STORE_REFERENCE,
 } from '../../../lib/regex.js';
 import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
@@ -43,6 +45,17 @@ import { Runner as Validator } from './workflows-blueprint-validate.js';
 import { Runner as Variables } from './workflows-blueprint-variables.js';
 
 import type {
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Expression,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_ExpressionPattern,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_IsWorkflowEnvRead,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_JobValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Name,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_References,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Store,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_StoreReferencePattern,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Workflow,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_WorkflowEnvKey,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Outputs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AddWorkflowSummary_SummaryRows,
@@ -278,6 +291,12 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_WorkspaceName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Env,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Lines,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Names,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_References,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Store,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Collides,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_Digits,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPreReleaseRefExpression_GlobCharacters,
@@ -1070,6 +1089,8 @@ export class Runner {
     } else {
       workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager, artifacts, dockerHub, workspaceGraph, imageWorkspaces, coverageBadge);
     }
+
+    Runner.addPlaceholderChecks(workflow);
 
     Runner.addWorkflowSummary(workflow);
 
@@ -3837,6 +3858,163 @@ export class Runner {
         detail: Runner.expr('steps.deploy-pages.outputs.page_url || \'\''),
         publish: true,
       }],
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Add Placeholder Checks.
+   *
+   * Prepends a check to each job that reads repository variables or secrets, so a
+   * value still holding the configure stub fails the run and names what to replace.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Workflow} workflow - Workflow.
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Returns}
+   *
+   * @since 0.52.0
+   */
+  public static addPlaceholderChecks(workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Workflow): Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Returns {
+    const expressionPattern: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_ExpressionPattern = new RegExp(LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_EXPRESSION.source, 'g');
+    const storeReferencePattern: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_StoreReferencePattern = new RegExp(LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_STORE_REFERENCE.source, 'g');
+
+    for (const job of workflow['jobs']) {
+      const jobValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_JobValues = [];
+      const references: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_References = new Map();
+
+      if (job['if'] !== undefined) {
+        jobValues.push(job['if']);
+      }
+
+      for (const step of job['steps']) {
+        if (step['if'] !== undefined) {
+          jobValues.push(step['if']);
+        }
+
+        for (const envEntry of step['env'] ?? []) {
+          jobValues.push(envEntry['value']);
+        }
+
+        for (const withEntry of step['with'] ?? []) {
+          if (typeof withEntry['value'] === 'string') {
+            jobValues.push(withEntry['value']);
+          }
+        }
+
+        if (step['run'] !== undefined) {
+          jobValues.push(step['run']);
+        }
+      }
+
+      // Workflow-level env reaches every job, so its values count only for a job that reads
+      // the key through an env expression or a shell expansion inside one of its run scripts.
+      for (const workflowEnvEntry of workflow['env']) {
+        const workflowEnvKey: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_WorkflowEnvKey = workflowEnvEntry['key'];
+        const isWorkflowEnvRead: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_IsWorkflowEnvRead = jobValues.some((jobValue) => (
+          jobValue.includes(`env.${workflowEnvKey}`) === true
+          || jobValue.includes(`$${workflowEnvKey}`) === true
+          || jobValue.includes(`${Runner.dollar()}${workflowEnvKey}}`) === true
+        ));
+
+        if (isWorkflowEnvRead === true) {
+          jobValues.push(workflowEnvEntry['value']);
+        }
+      }
+
+      for (const jobValue of jobValues) {
+        for (const expressionMatch of jobValue.matchAll(expressionPattern)) {
+          const expression: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Expression = expressionMatch[1] ?? '';
+
+          for (const storeReferenceMatch of expression.matchAll(storeReferencePattern)) {
+            const store: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Store = storeReferenceMatch[1];
+            const name: Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Name = storeReferenceMatch[2];
+
+            // GitHub issues GITHUB_TOKEN itself, so it can never hold the configure stub.
+            if (
+              store === undefined
+              || name === undefined
+              || name === 'GITHUB_TOKEN'
+            ) {
+              continue;
+            }
+
+            // A secret keeps a name shared with a variable, so the check step's value stays masked.
+            if (references.get(name) !== 'secrets') {
+              references.set(name, store);
+            }
+          }
+        }
+      }
+
+      if (references.size === 0) {
+        continue;
+      }
+
+      job['steps'].unshift(Runner.buildPlaceholderCheckStep(references));
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Placeholder Check Step.
+   *
+   * Passes each referenced value through env so secrets stay masked, then names
+   * every value still equal to the stub and exits before the job does real work.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_References} references - References.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Returns}
+   *
+   * @since 0.52.0
+   */
+  private static buildPlaceholderCheckStep(references: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_References): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Returns {
+    const names: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Names = [...references.keys()].sort();
+    const env: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Env = [];
+    const lines: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Lines = [
+      'set -euo pipefail',
+      '',
+      'NOVA_PLACEHOLDER_FOUND="false"',
+      '',
+      'check_nova_placeholder() {',
+      '  if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then',
+      [
+        '    printf \'::error::%s still holds the Nova placeholder; set its real value in the repository settings.',
+        '\\',
+        'n\' "$1"',
+      ].join(''),
+      '    NOVA_PLACEHOLDER_FOUND="true"',
+      '  fi',
+      '}',
+      '',
+    ];
+
+    // An empty value passes, because an optional variable left unset reaches the job as "".
+    for (const name of names) {
+      const store: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Store = references.get(name) ?? 'vars';
+
+      env.push({
+        key: name,
+        value: Runner.expr(`${store}.${name}`),
+      });
+
+      lines.push(`check_nova_placeholder "${name}" "$${name}"`);
+    }
+
+    lines.push(
+      '',
+      'if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then',
+      '  exit 1',
+      'fi',
+    );
+
+    return {
+      name: 'Check for Nova placeholders',
+      kind: 'setup',
+      env,
+      run: lines.join('\n'),
+      runBlock: true,
     };
   }
 

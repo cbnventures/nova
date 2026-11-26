@@ -49,6 +49,46 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 5
+        env:
+          SGI_ISSUE_LABELS: "${{ vars.SGI_ISSUE_LABELS }}"
+          SGI_ISSUE_LIMIT_COMMENTER: "${{ vars.SGI_ISSUE_LIMIT_COMMENTER }}"
+          SGI_ISSUE_LOCK_ON_CLOSE: "${{ vars.SGI_ISSUE_LOCK_ON_CLOSE }}"
+          SGI_ISSUE_MESSAGE_NOT_SPONSOR: "${{ vars.SGI_ISSUE_MESSAGE_NOT_SPONSOR }}"
+          SGI_ISSUE_MESSAGE_WELCOME: "${{ vars.SGI_ISSUE_MESSAGE_WELCOME }}"
+          SGI_IS_ORGANIZATION: "${{ vars.SGI_IS_ORGANIZATION }}"
+          SGI_PERSONAL_ACCESS_TOKEN: "${{ secrets.SGI_PERSONAL_ACCESS_TOKEN }}"
+          SGI_SPONSOR_ACTIVE_ONLY: "${{ vars.SGI_SPONSOR_ACTIVE_ONLY }}"
+          SGI_SPONSOR_EXEMPT_FILE_LOCATION: "${{ vars.SGI_SPONSOR_EXEMPT_FILE_LOCATION }}"
+          SGI_SPONSOR_MINIMUM: "${{ vars.SGI_SPONSOR_MINIMUM }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "SGI_ISSUE_LABELS" "$SGI_ISSUE_LABELS"
+          check_nova_placeholder "SGI_ISSUE_LIMIT_COMMENTER" "$SGI_ISSUE_LIMIT_COMMENTER"
+          check_nova_placeholder "SGI_ISSUE_LOCK_ON_CLOSE" "$SGI_ISSUE_LOCK_ON_CLOSE"
+          check_nova_placeholder "SGI_ISSUE_MESSAGE_NOT_SPONSOR" "$SGI_ISSUE_MESSAGE_NOT_SPONSOR"
+          check_nova_placeholder "SGI_ISSUE_MESSAGE_WELCOME" "$SGI_ISSUE_MESSAGE_WELCOME"
+          check_nova_placeholder "SGI_IS_ORGANIZATION" "$SGI_IS_ORGANIZATION"
+          check_nova_placeholder "SGI_PERSONAL_ACCESS_TOKEN" "$SGI_PERSONAL_ACCESS_TOKEN"
+          check_nova_placeholder "SGI_SPONSOR_ACTIVE_ONLY" "$SGI_SPONSOR_ACTIVE_ONLY"
+          check_nova_placeholder "SGI_SPONSOR_EXEMPT_FILE_LOCATION" "$SGI_SPONSOR_EXEMPT_FILE_LOCATION"
+          check_nova_placeholder "SGI_SPONSOR_MINIMUM" "$SGI_SPONSOR_MINIMUM"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5

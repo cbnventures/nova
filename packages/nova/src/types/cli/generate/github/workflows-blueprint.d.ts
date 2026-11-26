@@ -93,6 +93,33 @@ import type {
 } from './workflows-blueprint-validate.d.ts';
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Add Placeholder Checks.
+ *
+ * @since 0.52.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Workflow = Shared_BlueprintWorkflow;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Returns = void;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_ExpressionPattern = RegExp;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_StoreReferencePattern = RegExp;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_JobValues = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_References = Map<string, string>;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_WorkflowEnvKey = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_IsWorkflowEnvRead = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Expression = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Store = string | undefined;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AddPlaceholderChecks_Name = string | undefined;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint - Add Workflow Summary.
  *
  * @since 0.50.0
@@ -702,6 +729,23 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_Fre
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_SignReleaseRun = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPfsenseTarget_ReleaseSigningKey = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Build Placeholder Check Step.
+ *
+ * @since 0.52.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_References = Map<string, string>;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Returns = Shared_BlueprintStep;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Names = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Env = Shared_BlueprintEnvMap;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Lines = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPlaceholderCheckStep_Store = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint - Build Pre Release Ref Expression.

@@ -49,6 +49,46 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 5
+        env:
+          ISSUE_LABELS: "${{ vars.ISSUE_LABELS }}"
+          ISSUE_LIMIT_COMMENTER: "${{ vars.ISSUE_LIMIT_COMMENTER }}"
+          ISSUE_LOCK_ON_CLOSE: "${{ vars.ISSUE_LOCK_ON_CLOSE }}"
+          ISSUE_MESSAGE_NOT_SPONSOR: "${{ vars.ISSUE_MESSAGE_NOT_SPONSOR }}"
+          ISSUE_MESSAGE_WELCOME: "${{ vars.ISSUE_MESSAGE_WELCOME }}"
+          IS_ORGANIZATION: "${{ vars.IS_ORGANIZATION }}"
+          PERSONAL_ACCESS_TOKEN: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+          SPONSOR_ACTIVE_ONLY: "${{ vars.SPONSOR_ACTIVE_ONLY }}"
+          SPONSOR_EXEMPT_FILE_LOCATION: "${{ vars.SPONSOR_EXEMPT_FILE_LOCATION }}"
+          SPONSOR_MINIMUM: "${{ vars.SPONSOR_MINIMUM }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "ISSUE_LABELS" "$ISSUE_LABELS"
+          check_nova_placeholder "ISSUE_LIMIT_COMMENTER" "$ISSUE_LIMIT_COMMENTER"
+          check_nova_placeholder "ISSUE_LOCK_ON_CLOSE" "$ISSUE_LOCK_ON_CLOSE"
+          check_nova_placeholder "ISSUE_MESSAGE_NOT_SPONSOR" "$ISSUE_MESSAGE_NOT_SPONSOR"
+          check_nova_placeholder "ISSUE_MESSAGE_WELCOME" "$ISSUE_MESSAGE_WELCOME"
+          check_nova_placeholder "IS_ORGANIZATION" "$IS_ORGANIZATION"
+          check_nova_placeholder "PERSONAL_ACCESS_TOKEN" "$PERSONAL_ACCESS_TOKEN"
+          check_nova_placeholder "SPONSOR_ACTIVE_ONLY" "$SPONSOR_ACTIVE_ONLY"
+          check_nova_placeholder "SPONSOR_EXEMPT_FILE_LOCATION" "$SPONSOR_EXEMPT_FILE_LOCATION"
+          check_nova_placeholder "SPONSOR_MINIMUM" "$SPONSOR_MINIMUM"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5

@@ -232,6 +232,34 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          API_DATABASE_URL: "${{ secrets.API_DATABASE_URL }}"
+          API_SESSION_SECRET: "${{ secrets.API_SESSION_SECRET }}"
+          PF_CLOUDFLARE_ACCOUNT_ID: "${{ vars.PF_CLOUDFLARE_ACCOUNT_ID }}"
+          PF_CLOUDFLARE_API_TOKEN: "${{ secrets.PF_CLOUDFLARE_API_TOKEN }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "API_DATABASE_URL" "$API_DATABASE_URL"
+          check_nova_placeholder "API_SESSION_SECRET" "$API_SESSION_SECRET"
+          check_nova_placeholder "PF_CLOUDFLARE_ACCOUNT_ID" "$PF_CLOUDFLARE_ACCOUNT_ID"
+          check_nova_placeholder "PF_CLOUDFLARE_API_TOKEN" "$PF_CLOUDFLARE_API_TOKEN"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5
@@ -313,6 +341,36 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          API_DATABASE_URL: "${{ secrets.API_DATABASE_URL }}"
+          API_SESSION_SECRET: "${{ secrets.API_SESSION_SECRET }}"
+          API_VERCEL_PROJECT_ID: "${{ vars.API_VERCEL_PROJECT_ID }}"
+          PF_VERCEL_ORG_ID: "${{ vars.PF_VERCEL_ORG_ID }}"
+          PF_VERCEL_TOKEN: "${{ secrets.PF_VERCEL_TOKEN }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "API_DATABASE_URL" "$API_DATABASE_URL"
+          check_nova_placeholder "API_SESSION_SECRET" "$API_SESSION_SECRET"
+          check_nova_placeholder "API_VERCEL_PROJECT_ID" "$API_VERCEL_PROJECT_ID"
+          check_nova_placeholder "PF_VERCEL_ORG_ID" "$PF_VERCEL_ORG_ID"
+          check_nova_placeholder "PF_VERCEL_TOKEN" "$PF_VERCEL_TOKEN"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5

@@ -76,6 +76,8 @@ export type Lib_EnvManagedSet_VariableMeta = Shared_WorkflowTemplateVariable;
 
 export type Lib_EnvManagedSet_ResolvedVariable = string;
 
+export type Lib_EnvManagedSet_ManagedVariable = Lib_EnvManagedSet_LibEnvManagedSet_ManagedKey;
+
 export type Lib_EnvManagedSet_TemplateTargets = Shared_WorkflowTemplateTargets | undefined;
 
 export type Lib_EnvManagedSet_TargetMeta = Shared_WorkflowTemplateTarget | undefined;

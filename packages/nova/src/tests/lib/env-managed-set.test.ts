@@ -63,7 +63,7 @@ describe('libEnvManagedSet', () => {
     return;
   });
 
-  it('derives workflow config keys and excludes the automatic token', () => {
+  it('derives workflow config keys, marks the defaulted action inputs optional, and excludes the automatic token', () => {
     deepStrictEqual(
       libEnvManagedSet.compute({
         environment: {
@@ -88,46 +88,55 @@ describe('libEnvManagedSet', () => {
           name: 'SP_ISSUE_LABELS',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_ISSUE_LIMIT_COMMENTER',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_ISSUE_LOCK_ON_CLOSE',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_ISSUE_MESSAGE_NOT_SPONSOR',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_ISSUE_MESSAGE_WELCOME',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_IS_ORGANIZATION',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_SPONSOR_ACTIVE_ONLY',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_SPONSOR_EXEMPT_FILE_LOCATION',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
         {
           name: 'SP_SPONSOR_MINIMUM',
           secret: false,
           kind: 'workflow',
+          optional: true,
         },
       ],
     );

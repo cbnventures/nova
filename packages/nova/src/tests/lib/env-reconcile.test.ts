@@ -10,7 +10,9 @@ import {
 } from 'vitest';
 
 import { libEnvGithub } from '../../lib/env-github.js';
+import { libEnvManagedSet } from '../../lib/env-managed-set.js';
 import { libEnvReconcile } from '../../lib/env-reconcile.js';
+import { libEnvStatus } from '../../lib/env-status.js';
 
 /**
  * Tests - Lib - Env Reconcile - Lib Env Reconcile.
@@ -70,6 +72,43 @@ describe('libEnvReconcile', () => {
       ]),
       {
         create: ['G_CLOUDFLARE_API_TOKEN'],
+        delete: [],
+        restore: [],
+      },
+    );
+
+    return;
+  });
+
+  it('stubs only the sponsor token when a fresh sponsor workflow has no GitHub values yet', () => {
+    deepStrictEqual(
+      libEnvReconcile.plan(libEnvStatus.classify(
+        libEnvManagedSet.compute({
+          environment: {
+            workflows: {
+              sponsor: { prefix: 'SP_' },
+            },
+          },
+          workflows: [{
+            template: 'check-sponsor-gated-issues',
+            runsOn: 'ubuntu-24.04',
+            name: 'sponsor',
+            triggers: ['schedule'],
+          }],
+        }),
+        {
+          available: true,
+          variables: [],
+          secrets: [],
+        },
+        {
+          workflows: {
+            sponsor: { prefix: 'SP_' },
+          },
+        },
+      )),
+      {
+        create: ['SP_PERSONAL_ACCESS_TOKEN'],
         delete: [],
         restore: [],
       },

@@ -1,5 +1,9 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.52.0 - 2026-11-26
+
+No changes.
+
 ## 0.51.0 - 2026-11-26
 
 ### ADDED

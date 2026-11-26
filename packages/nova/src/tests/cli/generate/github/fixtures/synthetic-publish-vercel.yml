@@ -221,6 +221,32 @@ jobs:
       summary_destination_0: "${{ steps.nova-summary.outputs.summary_destination_0 }}"
       summary_detail_0: "${{ steps.nova-summary.outputs.summary_detail_0 }}"
     steps:
+      - name: "Check for Nova placeholders"
+        timeout-minutes: 10
+        env:
+          VERCEL_ORG_ID: "${{ vars.VERCEL_ORG_ID }}"
+          VERCEL_PROJECT_ID: "${{ vars.VERCEL_PROJECT_ID }}"
+          VERCEL_TOKEN: "${{ secrets.VERCEL_TOKEN }}"
+        run: |
+          set -euo pipefail
+
+          NOVA_PLACEHOLDER_FOUND="false"
+
+          check_nova_placeholder() {
+            if [[ "$2" == "NOVA_PLACEHOLDER" ]]; then
+              printf '::error::%s still holds the Nova placeholder; set its real value in the repository settings.\n' "$1"
+              NOVA_PLACEHOLDER_FOUND="true"
+            fi
+          }
+
+          check_nova_placeholder "VERCEL_ORG_ID" "$VERCEL_ORG_ID"
+          check_nova_placeholder "VERCEL_PROJECT_ID" "$VERCEL_PROJECT_ID"
+          check_nova_placeholder "VERCEL_TOKEN" "$VERCEL_TOKEN"
+
+          if [[ "$NOVA_PLACEHOLDER_FOUND" == "true" ]]; then
+            exit 1
+          fi
+
       - name: "Checkout repository"
         uses: "actions/checkout@v7"
         timeout-minutes: 5

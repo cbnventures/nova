@@ -2451,6 +2451,17 @@ export const LIB_REGEX_URL_PREFIX_PAYPAL = /^https?:\/\/(?:www\.)?paypal\.(?:com
 export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_EXPRESSION = /\$\{\{\s*(.+?)\s*\}\}/;
 
 /**
+ * Lib - Regex - Pattern Workflow Context Store Reference.
+ *
+ * Captures the context and name of each `vars.NAME` or `secrets.NAME` read
+ * inside a GitHub Actions expression. Used by the workflows generator to list
+ * the values a job's placeholder check covers.
+ *
+ * @since 0.52.0
+ */
+export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_STORE_REFERENCE = /(?<![\w.])(secrets|vars)\.(\w+)/;
+
+/**
  * Lib - Regex - Pattern Workflow Context Separator.
  *
  * Splits a GitHub Actions expression on top-level `||` operators.
