@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.51.0 - 2026-11-26
+
+### ADDED
+- Google Analytics, Meta Pixel, and Microsoft Clarity options under `analytics` (`googleAnalytics.measurementId`, `metaPixel.pixelId`, `clarity.projectId`), which load each tag directly on every page without Google Tag Manager. `analytics.gtm` keeps working alongside them.
+
 ## 0.50.1 - 2026-11-22
 
 ### FIXED

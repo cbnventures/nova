@@ -25,7 +25,7 @@ import type {
  *
  * @returns {Plugins_Analytics_Index_GoogleAnalyticsTags_Returns}
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export function googleAnalyticsTags(measurementId: Plugins_Analytics_Index_GoogleAnalyticsTags_MeasurementId): Plugins_Analytics_Index_GoogleAnalyticsTags_Returns {
   return [
@@ -58,7 +58,7 @@ export function googleAnalyticsTags(measurementId: Plugins_Analytics_Index_Googl
  *
  * @returns {Plugins_Analytics_Index_MetaPixelTags_Returns}
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export function metaPixelTags(pixelId: Plugins_Analytics_Index_MetaPixelTags_PixelId): Plugins_Analytics_Index_MetaPixelTags_Returns {
   return [{
@@ -87,7 +87,7 @@ export function metaPixelTags(pixelId: Plugins_Analytics_Index_MetaPixelTags_Pix
  *
  * @returns {Plugins_Analytics_Index_ClarityTags_Returns}
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export function clarityTags(projectId: Plugins_Analytics_Index_ClarityTags_ProjectId): Plugins_Analytics_Index_ClarityTags_Returns {
   return [{
@@ -113,7 +113,7 @@ export function clarityTags(projectId: Plugins_Analytics_Index_ClarityTags_Proje
  *
  * @returns {Plugins_Analytics_Index_Analytics_Returns}
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export function analytics(_context: Plugins_Analytics_Index_Analytics_Context, options: Plugins_Analytics_Index_Analytics_Options): Plugins_Analytics_Index_Analytics_Returns {
   return {

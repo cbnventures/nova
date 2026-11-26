@@ -127,7 +127,9 @@ The following shared files are written whenever at least one agent is selected:
 | `conventions/swift.md`         | Swift conventions                        |
 | `conventions/typescript.md`    | TypeScript and JavaScript conventions    |
 
-The language convention files instruct authors to tag new or changed API with an unreleased sentinel rather than a hard-coded version number. JSDoc, Javadoc, KDoc, and PHPDoc use `@since UNRELEASED`; Swift DocC uses `- Since: UNRELEASED`; Go and Rust use `Since: UNRELEASED` in their native documentation comments; C# uses `<remarks>Since: UNRELEASED</remarks>`; and Python uses a Google-style `Since:` section containing `UNRELEASED`. The real version is stamped automatically when you run `nova utility changelog --release` at release time.
+The language convention files instruct authors to tag new declarations with an unreleased sentinel rather than a hard-coded version number, while keeping the original released version on existing declarations without stacking or replacing it. JSDoc, Javadoc, KDoc, and PHPDoc use `@since UNRELEASED`; Swift DocC uses `- Since: UNRELEASED`; Go and Rust use `Since: UNRELEASED` in their native documentation comments; C# uses `<remarks>Since: UNRELEASED</remarks>`; and Python uses a Google-style `Since:` section containing `UNRELEASED`.
+
+The real version is stamped automatically when you run `nova utility changelog --release` at release time.
 
 :::info
 

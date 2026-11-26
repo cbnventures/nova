@@ -3,7 +3,7 @@ import type { HtmlTagObject, LoadContext, Plugin } from '@docusaurus/types';
 /**
  * Plugins - Analytics - Index - Analytics.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Plugins_Analytics_Index_Analytics_Context = LoadContext | Record<string, never>;
 
@@ -55,7 +55,7 @@ export type Plugins_Analytics_Index_Analytics_Returns = Plugin & {
 /**
  * Plugins - Analytics - Index - Analytics - Inject Html Tags.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Plugins_Analytics_Index_Analytics_InjectHtmlTags_ReturnsHeadTags = HtmlTagObject[];
 
@@ -92,7 +92,7 @@ export type Plugins_Analytics_Index_Analytics_InjectHtmlTags_Clarity = Plugins_A
 /**
  * Plugins - Analytics - Index - Clarity Tags.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Plugins_Analytics_Index_ClarityTags_ProjectId = string;
 
@@ -101,7 +101,7 @@ export type Plugins_Analytics_Index_ClarityTags_Returns = HtmlTagObject[];
 /**
  * Plugins - Analytics - Index - Google Analytics Tags.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Plugins_Analytics_Index_GoogleAnalyticsTags_MeasurementId = string;
 
@@ -110,7 +110,7 @@ export type Plugins_Analytics_Index_GoogleAnalyticsTags_Returns = HtmlTagObject[
 /**
  * Plugins - Analytics - Index - Meta Pixel Tags.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Plugins_Analytics_Index_MetaPixelTags_PixelId = string;
 

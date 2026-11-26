@@ -1,5 +1,14 @@
 # @cbnventures/nova
 
+## 0.51.0 - 2026-11-26
+
+### UPDATED
+- Generated `.gitignore` files now ignore `*.log` files, so build and check logs written at a project root are no longer committed by accident.
+- Agent convention templates and documentation now allow one `since` tag per declaration. New declarations get the `UNRELEASED` sentinel, and existing declarations keep their original released version instead of stacking a second tag or being reset to `UNRELEASED`.
+
+### FIXED
+- Swift agent conventions now wrap each `switch` case body in `do { … }`. The previous bare `{ … }` blocks are unused closures that Swift refuses to compile.
+
 ## 0.50.1 - 2026-11-22
 
 No changes.

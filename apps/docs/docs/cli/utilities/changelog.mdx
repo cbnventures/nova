@@ -192,7 +192,7 @@ The command exits with code **1** when validation fails (invalid flags, missing 
 
 ### UNRELEASED Sentinel Convention
 
-When you add or change a public API member, use the language's literal `UNRELEASED` documentation sentinel rather than a hand-written version number. The release step stamps the real version at release time, so you never have to guess or update the tag manually.
+When you add a new declaration or deprecate an existing member, use the language's literal `UNRELEASED` documentation sentinel rather than a hand-written version number. Keep the original released version on existing declarations when modifying them without stacking or replacing it, and let the release step stamp the real version automatically.
 
 - JavaScript, TypeScript, CSS, Astro, Java, Kotlin, PHP, Svelte, and Vue use `@since UNRELEASED`; supported JSDoc-style languages may also use `@deprecated UNRELEASED`.
 - C# XML documentation uses `<remarks>Since: UNRELEASED</remarks>`.

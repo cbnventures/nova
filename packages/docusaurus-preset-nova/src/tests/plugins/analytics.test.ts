@@ -26,7 +26,7 @@ import type {
  *
  * @returns {Tests_Plugins_Analytics_PluginNames_Returns}
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 function pluginNames(plugins: Tests_Plugins_Analytics_PluginNames_Plugins): Tests_Plugins_Analytics_PluginNames_Returns {
   const names: Tests_Plugins_Analytics_PluginNames_Names = [];
@@ -45,7 +45,7 @@ function pluginNames(plugins: Tests_Plugins_Analytics_PluginNames_Plugins): Test
 /**
  * Tests - Plugins - Analytics - Analytics.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 describe('analytics', () => {
   it('adds only the configured trackers', () => {

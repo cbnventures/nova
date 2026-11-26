@@ -3,7 +3,7 @@ import type { HtmlTagObject } from '@docusaurus/types';
 /**
  * Tests - Plugins - Analytics - Analytics - Adds Only The Configured Trackers.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Tests_Plugins_Analytics_Analytics_AddsOnlyTheConfiguredTrackers_TagsHeadTags = HtmlTagObject[];
 
@@ -16,7 +16,7 @@ export type Tests_Plugins_Analytics_Analytics_AddsOnlyTheConfiguredTrackers_Sour
 /**
  * Tests - Plugins - Analytics - Analytics - Adds The Analytics Plugin Only When A Tracker Is Set.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Tests_Plugins_Analytics_Analytics_AddsTheAnalyticsPluginOnlyWhenATrackerIsSet_ResultPlugin = [string, Record<string, unknown>] | string;
 
@@ -36,7 +36,7 @@ export type Tests_Plugins_Analytics_Analytics_AddsTheAnalyticsPluginOnlyWhenATra
 /**
  * Tests - Plugins - Analytics - Plugin Names.
  *
- * @since UNRELEASED
+ * @since 0.51.0
  */
 export type Tests_Plugins_Analytics_PluginNames_Plugin = [string, Record<string, unknown>] | string;
 
