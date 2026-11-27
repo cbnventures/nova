@@ -1,5 +1,14 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.54.0 - 2026-11-27
+
+### FIXED
+- Site `warning` and `danger` color overrides now apply in the Envoy, Foundry, Marshal and Sentinel presets, which had been replacing them with their own values, and in Lantern's warning and danger callouts.
+
+### ADDED
+- TerminalFrame line classes (`info`, `prompt`, `muted`, `heading`, `body`) color captured CLI output without site CSS.
+- A `success` color, set per site like `warning` and `danger`, gives sites a themed green for OK and passed states in every preset.
+
 ## 0.53.0 - 2026-11-27
 
 ### FIXED

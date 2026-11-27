@@ -39,6 +39,10 @@ export const presetsSamplePresetSample: Presets_Sample_Preset_Sample = {
       light: '#ef4444',
       dark: '#ef4444',
     },
+    success: {
+      light: '#16a34a',
+      dark: '#16a34a',
+    },
   },
   fonts: {
     display: 'Source Serif 4',

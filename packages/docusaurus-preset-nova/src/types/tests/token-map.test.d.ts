@@ -99,25 +99,6 @@ export type Tests_TokenMap_ColorBg_Semantics = readonly Tests_TokenMap_ColorBg_S
 export type Tests_TokenMap_ColorBg_Returns = readonly string[];
 
 /**
- * Tests - Token Map - Color Scale.
- *
- * @since 0.18.0
- */
-export type Tests_TokenMap_ColorScale_Preset = string;
-
-export type Tests_TokenMap_ColorScale_Semantic = string;
-
-export type Tests_TokenMap_ColorScale_Semantics = readonly Tests_TokenMap_ColorScale_Semantic[];
-
-export type Tests_TokenMap_ColorScale_Level = string;
-
-export type Tests_TokenMap_ColorScale_Levels = readonly Tests_TokenMap_ColorScale_Level[];
-
-export type Tests_TokenMap_ColorScale_Returns = readonly string[];
-
-export type Tests_TokenMap_ColorScale_Suffixes = readonly string[];
-
-/**
  * Tests - Token Map - Depth.
  *
  * @since 0.18.0
@@ -219,3 +200,22 @@ export type Tests_TokenMap_Skip_Returns = readonly string[];
 export type Tests_TokenMap_TokenMap_File = string;
 
 export type Tests_TokenMap_TokenMap_Tokens = readonly string[];
+
+/**
+ * Tests - Token Map - Token Map Semantic State Colors.
+ *
+ * @since 0.54.0
+ */
+export type Tests_TokenMap_TokenMapSemanticStateColors_Presets = readonly string[];
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_Label = string;
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_FilePath = string;
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_Content = string;
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_Pattern = RegExp;
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_Matches = RegExpMatchArray | null;
+
+export type Tests_TokenMap_TokenMapSemanticStateColors_Message = string;

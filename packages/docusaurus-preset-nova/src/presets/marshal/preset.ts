@@ -39,6 +39,10 @@ export const presetsMarshalPresetMarshal: Presets_Marshal_Preset_Marshal = {
       light: '#ef4444',
       dark: '#ef4444',
     },
+    success: {
+      light: '#3d7a4a',
+      dark: '#3d7a4a',
+    },
   },
   fonts: {
     display: 'IBM Plex Serif',

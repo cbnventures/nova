@@ -112,8 +112,8 @@
 /* ============================
  * 4. Type variants - colored rails + tinted titles
  *
- * The defaults (amber, from primary) cover note + warning + caution.
- * Info, tip, and danger override via component-tier
+ * The defaults (amber, from primary) cover note. Info, tip,
+ * warning + caution, and danger override via component-tier
  * --nova-admonition-{type}-{rail,fill,ink} tokens; per-preset values +
  * light/dark fill mix ratios live in lantern/preset.css.
  * ============================ */
@@ -138,9 +138,18 @@
   color: var(--nova-admonition-tip-ink);
 }
 
+/* Caution shares the warning tokens. */
 .nova-admonition[data-admonition-type="warning"],
 .nova-admonition[data-admonition-type="caution"] {
-  /* warning + caution use the default amber rail - leave as-is */
+  border-left-color: var(--nova-admonition-warning-rail);
+  background-color: var(--nova-admonition-warning-fill);
+}
+
+.nova-admonition[data-admonition-type="warning"] .nova-admonition-heading strong,
+.nova-admonition[data-admonition-type="warning"] .nova-admonition-icon,
+.nova-admonition[data-admonition-type="caution"] .nova-admonition-heading strong,
+.nova-admonition[data-admonition-type="caution"] .nova-admonition-icon {
+  color: var(--nova-admonition-warning-ink);
 }
 
 .nova-admonition[data-admonition-type="danger"] {

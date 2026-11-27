@@ -85,6 +85,17 @@ export type Options_PluginOptions_Overrides_Colors_Danger_Value = {
 
 export type Options_PluginOptions_Overrides_Colors_Danger = Options_PluginOptions_Overrides_Colors_Danger_Value | undefined;
 
+export type Options_PluginOptions_Overrides_Colors_Success_Value_Light = Shared_HexColor | undefined;
+
+export type Options_PluginOptions_Overrides_Colors_Success_Value_Dark = Shared_HexColor | undefined;
+
+export type Options_PluginOptions_Overrides_Colors_Success_Value = {
+  light: Options_PluginOptions_Overrides_Colors_Success_Value_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Success_Value_Dark;
+};
+
+export type Options_PluginOptions_Overrides_Colors_Success = Options_PluginOptions_Overrides_Colors_Success_Value | undefined;
+
 export type Options_PluginOptions_Overrides_Colors = {
   primary: Options_PluginOptions_Overrides_Colors_Primary;
   secondary: Options_PluginOptions_Overrides_Colors_Secondary;
@@ -92,6 +103,7 @@ export type Options_PluginOptions_Overrides_Colors = {
   border: Options_PluginOptions_Overrides_Colors_Border;
   warning: Options_PluginOptions_Overrides_Colors_Warning;
   danger: Options_PluginOptions_Overrides_Colors_Danger;
+  success: Options_PluginOptions_Overrides_Colors_Success;
 };
 
 export type Options_PluginOptions_Overrides_Fonts_Display = Shared_Preset_Fonts_Display | undefined;
@@ -321,6 +333,17 @@ export type Options_ResolvePreset_Options_Overrides_Colors_Danger_Value = {
 
 export type Options_ResolvePreset_Options_Overrides_Colors_Danger = Options_ResolvePreset_Options_Overrides_Colors_Danger_Value | undefined;
 
+export type Options_ResolvePreset_Options_Overrides_Colors_Success_Value_Light = Shared_HexColor | undefined;
+
+export type Options_ResolvePreset_Options_Overrides_Colors_Success_Value_Dark = Shared_HexColor | undefined;
+
+export type Options_ResolvePreset_Options_Overrides_Colors_Success_Value = {
+  light: Options_ResolvePreset_Options_Overrides_Colors_Success_Value_Light;
+  dark: Options_ResolvePreset_Options_Overrides_Colors_Success_Value_Dark;
+};
+
+export type Options_ResolvePreset_Options_Overrides_Colors_Success = Options_ResolvePreset_Options_Overrides_Colors_Success_Value | undefined;
+
 export type Options_ResolvePreset_Options_Overrides_Colors = {
   primary: Options_ResolvePreset_Options_Overrides_Colors_Primary;
   secondary: Options_ResolvePreset_Options_Overrides_Colors_Secondary;
@@ -328,6 +351,7 @@ export type Options_ResolvePreset_Options_Overrides_Colors = {
   border: Options_ResolvePreset_Options_Overrides_Colors_Border;
   warning: Options_ResolvePreset_Options_Overrides_Colors_Warning;
   danger: Options_ResolvePreset_Options_Overrides_Colors_Danger;
+  success: Options_ResolvePreset_Options_Overrides_Colors_Success;
 };
 
 export type Options_ResolvePreset_Options_Overrides_Fonts_Display = Shared_Preset_Fonts_Display | undefined;
@@ -618,6 +642,26 @@ export type Options_ResolvePreset_ResolvedColorsDanger = {
   dark: Options_ResolvePreset_ResolvedColorsDanger_Dark;
 };
 
+export type Options_ResolvePreset_OverrideSuccess_Value_Light = Shared_HexColor | undefined;
+
+export type Options_ResolvePreset_OverrideSuccess_Value_Dark = Shared_HexColor | undefined;
+
+export type Options_ResolvePreset_OverrideSuccess_Value = {
+  light: Options_ResolvePreset_OverrideSuccess_Value_Light;
+  dark: Options_ResolvePreset_OverrideSuccess_Value_Dark;
+};
+
+export type Options_ResolvePreset_OverrideSuccess = Options_ResolvePreset_OverrideSuccess_Value | undefined;
+
+export type Options_ResolvePreset_ResolvedColorsSuccess_Light = Shared_HexColor;
+
+export type Options_ResolvePreset_ResolvedColorsSuccess_Dark = Shared_HexColor;
+
+export type Options_ResolvePreset_ResolvedColorsSuccess = {
+  light: Options_ResolvePreset_ResolvedColorsSuccess_Light;
+  dark: Options_ResolvePreset_ResolvedColorsSuccess_Dark;
+};
+
 export type Options_ResolvePreset_ResolvedFontsDisplay = string;
 
 export type Options_ResolvePreset_ResolvedFontsBody = string;
@@ -716,6 +760,17 @@ export type Options_ValidateOptions_Returns_Overrides_Colors_Danger_Value = {
 
 export type Options_ValidateOptions_Returns_Overrides_Colors_Danger = Options_ValidateOptions_Returns_Overrides_Colors_Danger_Value | undefined;
 
+export type Options_ValidateOptions_Returns_Overrides_Colors_Success_Value_Light = Shared_HexColor | undefined;
+
+export type Options_ValidateOptions_Returns_Overrides_Colors_Success_Value_Dark = Shared_HexColor | undefined;
+
+export type Options_ValidateOptions_Returns_Overrides_Colors_Success_Value = {
+  light: Options_ValidateOptions_Returns_Overrides_Colors_Success_Value_Light;
+  dark: Options_ValidateOptions_Returns_Overrides_Colors_Success_Value_Dark;
+};
+
+export type Options_ValidateOptions_Returns_Overrides_Colors_Success = Options_ValidateOptions_Returns_Overrides_Colors_Success_Value | undefined;
+
 export type Options_ValidateOptions_Returns_Overrides_Colors = {
   primary: Options_ValidateOptions_Returns_Overrides_Colors_Primary;
   secondary: Options_ValidateOptions_Returns_Overrides_Colors_Secondary;
@@ -723,6 +778,7 @@ export type Options_ValidateOptions_Returns_Overrides_Colors = {
   border: Options_ValidateOptions_Returns_Overrides_Colors_Border;
   warning: Options_ValidateOptions_Returns_Overrides_Colors_Warning;
   danger: Options_ValidateOptions_Returns_Overrides_Colors_Danger;
+  success: Options_ValidateOptions_Returns_Overrides_Colors_Success;
 };
 
 export type Options_ValidateOptions_Returns_Overrides_Fonts_Display = Shared_Preset_Fonts_Display | undefined;

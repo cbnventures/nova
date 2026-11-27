@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.53.0",
+  "version": "0.54.0",
   "description": "Strict presets, guided tooling, and project scaffolds for JavaScript and TypeScript developers",
   "keywords": [
     "eslint",
@@ -104,7 +104,7 @@
     "node": "^22 || ^24 || ^26"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.53.0",
+    "@cbnventures/nova": "0.54.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.2",
     "@docusaurus/plugin-content-docs": "3.10.2",

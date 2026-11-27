@@ -216,6 +216,10 @@ describe('configDrift validateOptions', async () => {
               light: '#ef4444',
               dark: '#f87171',
             },
+            success: {
+              light: '#16a34a',
+              dark: '#22c55e',
+            },
           },
           fonts: {
             display: 'Plus Jakarta Sans',

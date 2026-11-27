@@ -20,6 +20,8 @@ import type {
   Tests_Options_ResolvePreset_AppliesColorOverrideWhenProvided_Result,
   Tests_Options_ResolvePreset_AppliesFontOverrideWhenProvided_Result,
   Tests_Options_ResolvePreset_AppliesNavbarOverrideWhenProvided_Result,
+  Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess,
+  Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result,
   Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_JoiSchema,
   Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated,
   Tests_Options_ResolvePreset_ReturnsBasePresetWhenNoOverridesAreProvided_Result,
@@ -455,6 +457,7 @@ describe('resolvePreset', async () => {
           border: undefined,
           warning: undefined,
           danger: undefined,
+          success: undefined,
         },
         fonts: {
           display: undefined,
@@ -497,6 +500,7 @@ describe('resolvePreset', async () => {
           border: undefined,
           warning: undefined,
           danger: undefined,
+          success: undefined,
         },
         fonts: {
           display: 'Inter',
@@ -540,6 +544,7 @@ describe('resolvePreset', async () => {
           border: undefined,
           warning: undefined,
           danger: undefined,
+          success: undefined,
         },
         fonts: {
           display: undefined,
@@ -577,6 +582,53 @@ describe('resolvePreset', async () => {
     return;
   });
 
+  it('applies success override per side when provided', () => {
+    const result: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result = resolvePreset({
+      preset: 'foundry',
+      overrides: {
+        colors: {
+          primary: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
+          success: {
+            light: '#15803d',
+            dark: undefined,
+          },
+        },
+        fonts: {
+          display: undefined,
+          body: undefined,
+          code: undefined,
+        },
+        navbar: undefined,
+        footer: undefined,
+      },
+      plugins: {
+        docs: undefined,
+        blog: undefined,
+        pages: undefined,
+        sitemap: undefined,
+      },
+      analytics: {
+        gtm: undefined,
+      },
+      progressBar: true,
+      search: false,
+    });
+
+    const resolvedColorsSuccess: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess = result['colors']['success'];
+
+    deepStrictEqual(resolvedColorsSuccess, {
+      light: '#15803d',
+      dark: '#16a34a',
+    });
+
+    return;
+  });
+
   it('applies navbar override when provided', () => {
     const result: Tests_Options_ResolvePreset_AppliesNavbarOverrideWhenProvided_Result = resolvePreset({
       preset: 'foundry',
@@ -588,6 +640,7 @@ describe('resolvePreset', async () => {
           border: undefined,
           warning: undefined,
           danger: undefined,
+          success: undefined,
         },
         fonts: {
           display: undefined,

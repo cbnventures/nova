@@ -39,6 +39,10 @@ export const presetsEnvoyPresetEnvoy: Presets_Envoy_Preset_Envoy = {
       light: '#ef4444',
       dark: '#ef4444',
     },
+    success: {
+      light: '#059669',
+      dark: '#059669',
+    },
   },
   fonts: {
     display: 'Plus Jakarta Sans',

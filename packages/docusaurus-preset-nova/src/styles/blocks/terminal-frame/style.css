@@ -161,3 +161,33 @@
     overflow-wrap: normal;
   }
 }
+
+/**
+ * ============================
+ * Terminal Frame - Line Tones
+ * ============================
+ *
+ * Fixed colors for captured CLI output, one class per line. The body is
+ * always black, so each tone keeps the same value in light and dark.
+ */
+
+.nova-terminal-frame-line-info {
+  color: #8aa0b4;
+}
+
+.nova-terminal-frame-line-prompt {
+  color: #7ad67a;
+}
+
+.nova-terminal-frame-line-muted {
+  color: #6f7f8f;
+}
+
+.nova-terminal-frame-line-heading {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.nova-terminal-frame-line-body {
+  color: #d4d4d4;
+}

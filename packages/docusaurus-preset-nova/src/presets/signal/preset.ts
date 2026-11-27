@@ -39,6 +39,10 @@ export const presetsSignalPresetSignal: Presets_Signal_Preset_Signal = {
       light: '#ef4444',
       dark: '#ef4444',
     },
+    success: {
+      light: '#16a34a',
+      dark: '#16a34a',
+    },
   },
   fonts: {
     display: 'Space Grotesk',

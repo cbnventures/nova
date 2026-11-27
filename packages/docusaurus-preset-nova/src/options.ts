@@ -14,12 +14,14 @@ import type {
   Options_ResolvePreset_OverrideDanger,
   Options_ResolvePreset_OverridePrimary,
   Options_ResolvePreset_OverrideSecondary,
+  Options_ResolvePreset_OverrideSuccess,
   Options_ResolvePreset_OverrideText,
   Options_ResolvePreset_OverrideWarning,
   Options_ResolvePreset_ResolvedColorsAccent,
   Options_ResolvePreset_ResolvedColorsBorder,
   Options_ResolvePreset_ResolvedColorsDanger,
   Options_ResolvePreset_ResolvedColorsPrimary,
+  Options_ResolvePreset_ResolvedColorsSuccess,
   Options_ResolvePreset_ResolvedColorsText,
   Options_ResolvePreset_ResolvedColorsWarning,
   Options_ResolvePreset_ResolvedFontsBody,
@@ -71,6 +73,10 @@ export const pluginOptionsSchema = joi.object({
         dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
       danger: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      success: joi.object({
         light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
         dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
@@ -343,6 +349,12 @@ export function resolvePreset(options: Options_ResolvePreset_Options): Options_R
     dark: (overrideDanger !== undefined && overrideDanger['dark'] !== undefined) ? overrideDanger['dark'] : basePreset['colors']['danger']['dark'],
   };
 
+  const overrideSuccess: Options_ResolvePreset_OverrideSuccess = options['overrides']['colors']['success'];
+  const resolvedColorsSuccess: Options_ResolvePreset_ResolvedColorsSuccess = {
+    light: (overrideSuccess !== undefined && overrideSuccess['light'] !== undefined) ? overrideSuccess['light'] : basePreset['colors']['success']['light'],
+    dark: (overrideSuccess !== undefined && overrideSuccess['dark'] !== undefined) ? overrideSuccess['dark'] : basePreset['colors']['success']['dark'],
+  };
+
   let resolvedFontsDisplay: Options_ResolvePreset_ResolvedFontsDisplay = basePreset['fonts']['display'];
 
   if (options['overrides']['fonts']['display'] !== undefined) {
@@ -382,6 +394,7 @@ export function resolvePreset(options: Options_ResolvePreset_Options): Options_R
       border: resolvedColorsBorder,
       warning: resolvedColorsWarning,
       danger: resolvedColorsDanger,
+      success: resolvedColorsSuccess,
     },
     fonts: {
       display: resolvedFontsDisplay,

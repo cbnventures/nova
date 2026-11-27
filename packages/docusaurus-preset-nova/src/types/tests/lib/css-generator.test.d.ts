@@ -1,4 +1,27 @@
 /**
+ * Tests - Lib - CSS Generator - Css Generator Generate - EmitsSuccessVariablesInTheLightAndDarkBlocks.
+ *
+ * @since 0.54.0
+ */
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Result = string;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Sections = string[];
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_LightBlock = string;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_DarkBlock = string;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBase = boolean;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightSoft = boolean;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBackground = boolean;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBase = boolean;
+
+export type Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBackground = boolean;
+
+/**
  * Tests - Lib - CSS Generator - Css Generator Generate - IncludesAllElevenShadeLevelsForEachColor.
  *
  * @since 0.15.0

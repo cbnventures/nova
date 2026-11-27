@@ -15,12 +15,6 @@
   --nova-sentinel-layout-docs-max: 100%;
   --nova-sentinel-layout-blog-max: 100%;
   --nova-sentinel-color-info-bg: rgba(99, 102, 241, 0.04);
-  --nova-sentinel-color-warning-500: #f59e0b;
-  --nova-sentinel-color-warning-bg: rgba(245, 158, 11, 0.04);
-  --nova-sentinel-color-danger-500: #ef4444;
-  --nova-sentinel-color-danger-bg: rgba(239, 68, 68, 0.04);
-  --nova-color-warning-500: var(--nova-sentinel-color-warning-500);
-  --nova-color-danger-500: var(--nova-sentinel-color-danger-500);
   --nova-grid-padding: var(--nova-sentinel-grid-padding);
   --nova-grid-gutter: var(--nova-sentinel-grid-gutter);
   --nova-section-gap: var(--nova-sentinel-section-gap);
@@ -39,8 +33,6 @@
   --nova-sentinel-layout-sticky-top: 127px;
   --nova-layout-sticky-top: var(--nova-sentinel-layout-sticky-top);
   --nova-color-info-bg: var(--nova-sentinel-color-info-bg);
-  --nova-color-warning-bg: var(--nova-sentinel-color-warning-bg);
-  --nova-color-danger-bg: var(--nova-sentinel-color-danger-bg);
 
   /* Ambient backdrop - fine teal dot grid evoking a console / observability
      dashboard. 1px dots on a 24px lattice, fixed to the viewport so the
@@ -187,8 +179,6 @@
 
   /* Semantic palette - dark-mode swap of admonition fills. */
   --nova-sentinel-color-info-bg: rgba(99, 102, 241, 0.06);
-  --nova-sentinel-color-warning-bg: rgba(245, 158, 11, 0.06);
-  --nova-sentinel-color-danger-bg: rgba(239, 68, 68, 0.06);
 
   /* SkipToContent - dark-mode swap of skip-bg recipe (slight deepen). */
   --nova-sentinel-skip-bg: color-mix(in srgb, var(--nova-color-background), #000000 8%);
@@ -209,9 +199,10 @@
   --nova-sentinel-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 90%);
   --nova-sentinel-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
 
-  /* Admonition - dark-mode swap of tip-fill. info/warning/danger fills
-     auto-resolve via the --nova-sentinel-color-{info,warning,danger}-bg
-     overrides earlier in this block. Rails are stable across modes. */
+  /* Admonition - dark-mode swap of tip-fill. The info fill auto-resolves via
+     the --nova-sentinel-color-info-bg override earlier in this block; the
+     warning/danger fills follow the generated dark --nova-color-{warning,danger}-bg.
+     Rails are stable across modes. */
   --nova-sentinel-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 
   /* Code surface - dark-mode override. Near-black tinted with primary-500

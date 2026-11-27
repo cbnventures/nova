@@ -5,6 +5,15 @@ import { describe, it } from 'vitest';
 import { Runner as CssGenerator } from '../../lib/css-generator.js';
 
 import type {
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_DarkBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBackground,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBase,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBackground,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBase,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightSoft,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_LightBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Sections,
   Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesFifty,
   Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineFifty,
   Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineHundred,
@@ -123,6 +132,10 @@ describe('CssGenerator generate', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -209,6 +222,10 @@ describe('CssGenerator generate', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -243,6 +260,87 @@ describe('CssGenerator generate', async () => {
     ok(includesFifty);
     ok(includesNineHundred);
     ok(includesNineFifty);
+
+    return;
+  });
+
+  it('emits success variables in the light and dark blocks', () => {
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Result = CssGenerator.generate({
+      preset: {
+        logo: {
+          alt: 'Test',
+          src: '/test/logo.svg',
+        },
+        colors: {
+          primary: {
+            light: '#ea580c',
+            dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24',
+            dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917',
+            dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1',
+            dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b',
+            dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444',
+            dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
+        },
+        fonts: {
+          display: 'Sora',
+          body: 'DM Sans',
+          code: 'JetBrains Mono',
+        },
+        shape: {
+          radius: 'rounded',
+          density: 'comfortable',
+        },
+        depth: {
+          cards: 'flat',
+          codeBlocks: 'flat',
+        },
+        motion: {
+          speed: 'none',
+          staggeredReveals: false,
+          hoverEffects: false,
+        },
+        navbar: 'bridge',
+        footer: 'commons',
+        cta: {
+          contained: false,
+        },
+      },
+    });
+
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_Sections = result.split(':root[data-theme="dark"] {');
+    const lightBlock: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_LightBlock = sections[0] ?? '';
+    const darkBlock: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_DarkBlock = sections[1] ?? '';
+    const includesLightBase: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBase = lightBlock.includes('--nova-color-success-500: #16a34a;');
+    const includesLightSoft: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightSoft = lightBlock.includes('--nova-color-success-400: color-mix(in srgb, var(--nova-color-success-500), var(--nova-color-background) 30%);');
+    const includesLightBackground: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesLightBackground = lightBlock.includes('--nova-color-success-bg: color-mix(in srgb, var(--nova-color-success-500), transparent 94%);');
+    const includesDarkBase: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBase = darkBlock.includes('--nova-color-success-500: #22c55e;');
+    const includesDarkBackground: Tests_Lib_CssGenerator_CssGeneratorGenerate_EmitsSuccessVariablesInTheLightAndDarkBlocks_IncludesDarkBackground = darkBlock.includes('--nova-color-success-bg: color-mix(in srgb, var(--nova-color-success-500), transparent 90%);');
+
+    ok(includesLightBase);
+    ok(includesLightSoft);
+    ok(includesLightBackground);
+    ok(includesDarkBase);
+    ok(includesDarkBackground);
 
     return;
   });
@@ -287,6 +385,10 @@ describe('CssGenerator generate depth variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -354,6 +456,10 @@ describe('CssGenerator generate depth variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -419,6 +525,10 @@ describe('CssGenerator generate depth variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -495,6 +605,10 @@ describe('CssGenerator generate grid variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -565,6 +679,10 @@ describe('CssGenerator generate grid variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -637,6 +755,10 @@ describe('CssGenerator generate grid variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -707,6 +829,10 @@ describe('CssGenerator generate grid variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -784,6 +910,10 @@ describe('CssGenerator generate grid variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -859,6 +989,10 @@ describe('CssGenerator generate grid variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -936,6 +1070,10 @@ describe('CssGenerator generate grid variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -1003,6 +1141,10 @@ describe('CssGenerator generate grid variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -1083,6 +1225,10 @@ describe('CssGenerator generate motion variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -1149,6 +1295,10 @@ describe('CssGenerator generate motion variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -1214,6 +1364,10 @@ describe('CssGenerator generate motion variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {
@@ -1290,6 +1444,10 @@ describe('CssGenerator generate shape variables', async () => {
             light: '#ef4444',
             dark: '#f87171',
           },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -1355,6 +1513,10 @@ describe('CssGenerator generate shape variables', async () => {
           danger: {
             light: '#ef4444',
             dark: '#f87171',
+          },
+          success: {
+            light: '#16a34a',
+            dark: '#22c55e',
           },
         },
         fonts: {

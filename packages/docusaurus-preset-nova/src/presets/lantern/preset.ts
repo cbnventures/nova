@@ -39,6 +39,10 @@ export const presetsLanternPresetLantern: Presets_Lantern_Preset_Lantern = {
       light: '#b91c1c',
       dark: '#b91c1c',
     },
+    success: {
+      light: '#4d7c0f',
+      dark: '#4d7c0f',
+    },
   },
   fonts: {
     display: 'Fraunces',

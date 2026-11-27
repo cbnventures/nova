@@ -31,20 +31,19 @@ The Terminal Frame block renders a `<figure class="nova-terminal-frame">` with t
 
 - **Real output, no images** — paste the actual text your CLI prints; nothing goes stale the way a screenshot does.
 - **Real proportions** — the title bar, lights, and font size match an 80x24 Terminal window.
-- **Your own colors** — pass one element per line and give each line its own class to color it the way your CLI does.
+- **Built-in line tones** — pass one element per line and pick a tone class for each, so captured output is colored without any site CSS.
 
 ## Try It
 
 Edit the code and the preview updates as you type. Every block is already in scope, so the example needs no imports.
 
 export const tryItCode = `
-<TerminalFrame title="project — mytool — 80×24" label="mytool's main menu">
-  {[
-    '? What would you like to do? › - Use arrow-keys. Return to submit.',
-    '❯   Add',
-    '    Edit',
-    '    Exit',
-  ].join('\\n')}
+<TerminalFrame title="project — mytool deploy — 80×24" label="mytool deploy output">
+  <span className="nova-terminal-frame-line-prompt">$ mytool deploy</span>
+  <span className="nova-terminal-frame-line-heading">Deploying mytool</span>
+  <span className="nova-terminal-frame-line-info">→ Building 12 pages</span>
+  <span className="nova-terminal-frame-line-body">  Uploaded 12 files to the server.</span>
+  <span className="nova-terminal-frame-line-muted">  Finished in 3.2s</span>
 </TerminalFrame>
 `;
 
@@ -67,13 +66,15 @@ import { TerminalFrame } from '@cbnventures/docusaurus-preset-nova/blocks';
 </TerminalFrame>
 ```
 
-Or one element per line, each with its own class:
+Or one element per line, each with a [line tone](#line-tones) class:
 
 ```tsx title="src/pages/index.tsx"
-<TerminalFrame title="project — mytool deploy — 80×24">
-  {lines.map((line) => (
-    <span key={line} className={toneFor(line)}>{line}</span>
-  ))}
+<TerminalFrame title="project — mytool deploy — 80×24" label="mytool deploy output">
+  <span className="nova-terminal-frame-line-prompt">$ mytool deploy</span>
+  <span className="nova-terminal-frame-line-heading">Deploying mytool</span>
+  <span className="nova-terminal-frame-line-info">→ Building 12 pages</span>
+  <span className="nova-terminal-frame-line-body">  Uploaded 12 files to the server.</span>
+  <span className="nova-terminal-frame-line-muted">  Finished in 3.2s</span>
 </TerminalFrame>
 ```
 
@@ -86,6 +87,20 @@ Or one element per line, each with its own class:
 | `label`     | `string \| undefined`        | `undefined` | Accessible label for the output, read by screen readers.                 |
 | `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-terminal-frame` class. |
 | `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer `<figure>` element.          |
+
+## Line Tones
+
+Give each line element one of these classes to color captured CLI output. The body is always black, so each tone looks the same in light and dark mode.
+
+| Class                              | Description                                         |
+|------------------------------------|-----------------------------------------------------|
+| `nova-terminal-frame-line-info`    | Soft blue-gray (`#8aa0b4`) for status and progress. |
+| `nova-terminal-frame-line-prompt`  | Green (`#7ad67a`) for prompts and typed commands.   |
+| `nova-terminal-frame-line-muted`   | Dim gray (`#6f7f8f`) for hints and timings.         |
+| `nova-terminal-frame-line-heading` | Bold white (`#ffffff`) for section headings.        |
+| `nova-terminal-frame-line-body`    | Light gray (`#d4d4d4`) for regular output.          |
+
+Lines without a tone class stay white.
 
 ## Width
 

@@ -47,17 +47,17 @@ The scaffold mirrors the full surface of the shared structural CSS — **all 10 
 
 A preset is configured through one object that matches the `Shared_Preset` type. Every preset declares values for these nine slots:
 
-| Slot     | Type                                                                                                | Purpose                                                                                                                                                                                                                                                      |
-|----------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `logo`   | `{ title, alt, src }`                                                                               | Brand mark shown in the navbar.                                                                                                                                                                                                                              |
-| `colors` | `{ primary, accent, text, border, warning, danger }` (each a `{ light, dark }` pair of hex strings) | Six color categories. `primary` and `accent` are expanded to 11-stop scales (`50` through `950`); `text`, `border`, `warning`, and `danger` emit a single base token per category plus derived `color-mix` variants. Each category has a light and dark hex. |
-| `fonts`  | `{ display, body, code }`                                                                           | Three Google Font families that the runtime auto-injects via `<link>` tag at build time.                                                                                                                                                                     |
-| `shape`  | `{ radius, density }`                                                                               | Toggles which shared shape variants apply (rounded vs sharp, comfortable vs compact).                                                                                                                                                                        |
-| `depth`  | `{ cards, codeBlocks }`                                                                             | Toggles which shared depth variants apply (flat vs elevated cards, etc.).                                                                                                                                                                                    |
-| `motion` | `{ speed, staggeredReveals, hoverEffects }`                                                         | Controls animation cadence and whether decorative motion is enabled.                                                                                                                                                                                         |
-| `navbar` | `'bridge' \| 'canopy' \| 'compass' \| 'monolith'`                                                   | Which navbar layout variant to activate.                                                                                                                                                                                                                     |
-| `footer` | `'commons' \| 'embassy' \| 'ledger' \| 'launchpad'`                                                 | Which footer layout variant to activate.                                                                                                                                                                                                                     |
-| `cta`    | `{ contained }`                                                                                     | Whether the footer CTA banner is width-constrained via `nova-container` (`true`) or runs full-bleed (`false`).                                                                                                                                               |
+| Slot     | Type                                                                                              | Purpose                                                                                                                                                                                                                           |
+|----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `logo`   | `{ title, alt, src }`                                                                             | Brand mark shown in the navbar.                                                                                                                                                                                                   |
+| `colors` | `{ primary, accent, text, border, warning, danger, success }` (each a `{ light, dark }` hex pair) | Seven color categories. `primary` and `accent` are expanded to 11-stop scales (`50` through `950`); `text`, `border`, `warning`, `danger`, and `success` emit a single base token per category plus derived `color-mix` variants. |
+| `fonts`  | `{ display, body, code }`                                                                         | Three Google Font families that the runtime auto-injects via `<link>` tag at build time.                                                                                                                                          |
+| `shape`  | `{ radius, density }`                                                                             | Toggles which shared shape variants apply (rounded vs sharp, comfortable vs compact).                                                                                                                                             |
+| `depth`  | `{ cards, codeBlocks }`                                                                           | Toggles which shared depth variants apply (flat vs elevated cards, etc.).                                                                                                                                                         |
+| `motion` | `{ speed, staggeredReveals, hoverEffects }`                                                       | Controls animation cadence and whether decorative motion is enabled.                                                                                                                                                              |
+| `navbar` | `'bridge' \| 'canopy' \| 'compass' \| 'monolith'`                                                 | Which navbar layout variant to activate.                                                                                                                                                                                          |
+| `footer` | `'commons' \| 'embassy' \| 'ledger' \| 'launchpad'`                                               | Which footer layout variant to activate.                                                                                                                                                                                          |
+| `cta`    | `{ contained }`                                                                                   | Whether the footer CTA banner is width-constrained via `nova-container` (`true`) or runs full-bleed (`false`).                                                                                                                    |
 
 Note: the preset's internal `colors.accent` key is exposed to consumers under the name `colors.secondary` in `overrides`. Inside the preset source you use `accent`; consumers writing `docusaurus.config.ts` use `secondary`.
 
@@ -118,6 +118,7 @@ export const presetsFooPresetFoo: Presets_Foo_Preset_Foo = {
     border:  { light: '#000000', dark: '#000000' },  // dividers and outlines
     warning: { light: '#000000', dark: '#000000' },  // warning admonition base
     danger:  { light: '#000000', dark: '#000000' },  // danger/error admonition base
+    success: { light: '#000000', dark: '#000000' },  // success/passed state base
   },
   fonts: {
     display: 'Font Name',  // headings (Google Fonts only)
@@ -197,7 +198,7 @@ The CSS load order at runtime:
 ```text
 shared global vars
   → generated --nova-color-{primary,accent}-{50..950} scales
-  → generated --nova-color-{text,border,warning,danger} base tokens + derived color-mix tokens
+  → generated --nova-color-{text,border,warning,danger,success} base tokens + derived color-mix tokens
   → shared block CSS      (src/styles/blocks/**)
   → shared theme CSS      (src/styles/theme/**)
   → preset's preset.css         (your tokens, accessibility floor, scrollbar, etc.)
@@ -208,7 +209,8 @@ shared global vars
 Conventions:
 
 - **No `@import` statements** in `preset.css`. The runtime auto-loads your three Google Fonts via `<link>` tag injection. Adding `@import` bypasses the consumer's `overrides.fonts.*` mechanics.
-- Reference brand color shades via `var(--nova-color-{primary,accent}-{50..950})`, body text and surfaces via `var(--nova-color-{text,text-muted,text-soft,text-inverse,border,border-subtle,surface-raised})`, and admonition colors via `var(--nova-color-{warning,danger}-{500,400,bg})` — or compose via `color-mix(in srgb, ...)`. Avoid raw hex inside `theme/` overlays; declare hex only in `preset.css` for surface tokens.
+- Reference brand color shades via `var(--nova-color-{primary,accent}-{50..950})`, body text and surfaces via `var(--nova-color-{text,text-muted,text-soft,text-inverse,border,border-subtle,surface-raised})`, and admonition and state colors via `var(--nova-color-{warning,danger,success}-{500,400,bg})` — or compose via `color-mix(in srgb, ...)`. Avoid raw hex inside `theme/` overlays; declare hex only in `preset.css` for surface tokens.
+- **Never redeclare `--nova-color-{warning,danger,success}-{500,400,bg}`** in `preset.css`. It loads after the generated tokens, so a redeclaration replaces the consumer's `overrides.colors.*` values. Set your defaults in `preset.ts` instead.
 - Reference fonts via `var(--nova-font-{display,body,code})`. Never hardcode font names in selectors.
 - Provide light + dark mode parity for every visible color (`:root` defaults, `[data-theme="dark"]` overrides).
 - Keep `:focus-visible` outlines and the `prefers-reduced-motion` block from `sample/preset.css`. They are the accessibility floor.

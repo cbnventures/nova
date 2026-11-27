@@ -61,6 +61,10 @@ export type Lib_CssGenerator_Runner_Generate_DangerLight = string;
 
 export type Lib_CssGenerator_Runner_Generate_DangerDark = string;
 
+export type Lib_CssGenerator_Runner_Generate_SuccessLight = string;
+
+export type Lib_CssGenerator_Runner_Generate_SuccessDark = string;
+
 export type Lib_CssGenerator_Runner_Generate_FontLines = string[];
 
 export type Lib_CssGenerator_Runner_Generate_ShapeLines = string[];

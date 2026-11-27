@@ -52,18 +52,6 @@
      category-toggle its own slightly languid rhythm.
      Component-scoped (DocSidebar only). */
   --nova-envoy-sidebar-caret-duration: 250ms;
-  --nova-envoy-color-warning-500: #f59e0b;
-  --nova-envoy-color-warning-400: #fbbf24;
-  --nova-envoy-color-warning-bg: rgba(245, 158, 11, 0.06);
-  --nova-envoy-color-danger-500: #ef4444;
-  --nova-envoy-color-danger-400: #f87171;
-  --nova-envoy-color-danger-bg: rgba(239, 68, 68, 0.06);
-  --nova-color-warning-500: var(--nova-envoy-color-warning-500);
-  --nova-color-warning-400: var(--nova-envoy-color-warning-400);
-  --nova-color-warning-bg: var(--nova-envoy-color-warning-bg);
-  --nova-color-danger-500: var(--nova-envoy-color-danger-500);
-  --nova-color-danger-400: var(--nova-envoy-color-danger-400);
-  --nova-color-danger-bg: var(--nova-envoy-color-danger-bg);
 
   --nova-envoy-depth-card-border: 1px solid var(--nova-envoy-border);
   --nova-depth-card-border: var(--nova-envoy-depth-card-border);
@@ -183,10 +171,6 @@ html {
   --nova-envoy-shadow-card: 0 2px 8px rgb(0 0 0 / 0.2), 0 8px 24px rgb(0 0 0 / 0.15);
   --nova-envoy-shadow-card-hover: 0 8px 32px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), 0 4px 16px rgb(0 0 0 / 0.2);
 
-  /* Semantic palette - dark-mode swap of admonition fills. */
-  --nova-envoy-color-warning-bg: rgba(245, 158, 11, 0.1);
-  --nova-envoy-color-danger-bg: rgba(239, 68, 68, 0.1);
-
   --nova-envoy-depth-card-border: 1px solid var(--nova-color-border);
   --nova-envoy-depth-code-border: 1px solid var(--nova-color-border);
   --nova-depth-code-border: var(--nova-envoy-depth-code-border);
@@ -209,8 +193,8 @@ html {
   --nova-envoy-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
 
   /* Admonition - dark-mode swap of rail + fill. warning-fill and danger-fill
-     re-resolve to dark via the existing --nova-envoy-color-warning-bg /
-     -danger-bg overrides earlier in this block. */
+     re-resolve to dark via the generated --nova-color-warning-bg /
+     -danger-bg dark values. */
   --nova-envoy-admonition-tip-rail: var(--nova-color-primary-400);
   --nova-envoy-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
   --nova-envoy-admonition-info-rail: var(--nova-color-accent-400);

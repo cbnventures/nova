@@ -39,6 +39,10 @@ export const presetsFoundryPresetFoundry: Presets_Foundry_Preset_Foundry = {
       light: '#ef4444',
       dark: '#ef4444',
     },
+    success: {
+      light: '#16a34a',
+      dark: '#16a34a',
+    },
   },
   fonts: {
     display: 'Plus Jakarta Sans',

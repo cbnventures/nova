@@ -36,20 +36,6 @@
      marshal's "ledger square" voice on per-author affordances. */
   --nova-marshal-radius-ledger: 4px;
 
-  /* Semantic palette - amber warning + red danger for admonitions. */
-  --nova-marshal-color-warning-500: #f59e0b;
-  --nova-marshal-color-warning-400: #fbbf24;
-  --nova-marshal-color-warning-bg: rgba(245, 158, 11, 0.06);
-  --nova-marshal-color-danger-500: #ef4444;
-  --nova-marshal-color-danger-400: #f87171;
-  --nova-marshal-color-danger-bg: rgba(239, 68, 68, 0.06);
-  --nova-color-warning-500: var(--nova-marshal-color-warning-500);
-  --nova-color-warning-400: var(--nova-marshal-color-warning-400);
-  --nova-color-warning-bg: var(--nova-marshal-color-warning-bg);
-  --nova-color-danger-500: var(--nova-marshal-color-danger-500);
-  --nova-color-danger-400: var(--nova-marshal-color-danger-400);
-  --nova-color-danger-bg: var(--nova-marshal-color-danger-bg);
-
   --nova-marshal-section-gap: 1.5rem;
   --nova-section-gap: var(--nova-marshal-section-gap);
 
@@ -134,10 +120,6 @@
   --nova-color-background: color-mix(in oklab, var(--nova-color-text), #000000 95%);
 
   --nova-marshal-active-rail-color: var(--nova-color-accent-500);
-
-  /* Semantic palette - dark-mode swap of admonition fills. */
-  --nova-marshal-color-warning-bg: rgba(245, 158, 11, 0.1);
-  --nova-marshal-color-danger-bg: rgba(239, 68, 68, 0.1);
 
   --nova-marshal-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 

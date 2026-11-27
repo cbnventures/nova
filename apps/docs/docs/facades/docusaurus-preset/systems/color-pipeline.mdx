@@ -20,9 +20,9 @@ tags:
   - "design tokens"
 ---
 
-Each preset declares six color categories, each as a `{ light, dark }` hex pair. The two brand colors — `primary` and `secondary` — pass through a generation pipeline to produce 11-level shade scales.
+Each preset declares seven color categories, each as a `{ light, dark }` hex pair. The two brand colors — `primary` and `secondary` — pass through a generation pipeline to produce 11-level shade scales.
 
-The remaining four (`text`, `border`, `warning`, `danger`) are used as single values plus a handful of derived `color-mix` tokens.
+The remaining five (`text`, `border`, `warning`, `danger`, `success`) are used as single values plus a handful of derived `color-mix` tokens.
 
 ## Summary
 
@@ -99,7 +99,7 @@ The same shade-scale pipeline runs for `secondary`, which is emitted under the `
 
 ### Non-Brand Color Tokens
 
-The remaining four color categories (`text`, `border`, `warning`, `danger`) write a single base token per category plus a small set of derived tokens computed at the CSS layer via `color-mix`:
+The remaining five color categories (`text`, `border`, `warning`, `danger`, `success`) write a single base token per category plus a small set of derived tokens computed at the CSS layer via `color-mix`:
 
 | Property                      | Source                                                      |
 |-------------------------------|-------------------------------------------------------------|
@@ -116,8 +116,11 @@ The remaining four color categories (`text`, `border`, `warning`, `danger`) writ
 | `--nova-color-danger-500`     | `danger.light` (and `danger.dark` in dark mode)             |
 | `--nova-color-danger-400`     | `color-mix` of `--nova-color-danger-500` and background     |
 | `--nova-color-danger-bg`      | `color-mix` of `--nova-color-danger-500` and transparent    |
+| `--nova-color-success-500`    | `success.light` (and `success.dark` in dark mode)           |
+| `--nova-color-success-400`    | `color-mix` of `--nova-color-success-500` and background    |
+| `--nova-color-success-bg`     | `color-mix` of `--nova-color-success-500` and transparent   |
 
-In total, a single resolved preset emits 22 brand shade tokens (11 primary + 11 secondary/accent) plus 13 non-brand color tokens under `:root`, for 35 color custom properties.
+In total, a single resolved preset emits 22 brand shade tokens (11 primary + 11 secondary/accent) plus 16 non-brand color tokens under `:root`, for 38 color custom properties.
 
 ## Using Color Tokens
 

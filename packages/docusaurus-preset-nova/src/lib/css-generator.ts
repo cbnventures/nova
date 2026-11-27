@@ -26,6 +26,8 @@ import type {
   Lib_CssGenerator_Runner_Generate_PrimaryLightScale,
   Lib_CssGenerator_Runner_Generate_Returns,
   Lib_CssGenerator_Runner_Generate_ShapeLines,
+  Lib_CssGenerator_Runner_Generate_SuccessDark,
+  Lib_CssGenerator_Runner_Generate_SuccessLight,
   Lib_CssGenerator_Runner_Generate_TextDark,
   Lib_CssGenerator_Runner_Generate_TextLight,
   Lib_CssGenerator_Runner_Generate_WarningDark,
@@ -109,6 +111,8 @@ export class Runner {
     const warningDark: Lib_CssGenerator_Runner_Generate_WarningDark = options['preset']['colors']['warning']['dark'];
     const dangerLight: Lib_CssGenerator_Runner_Generate_DangerLight = options['preset']['colors']['danger']['light'];
     const dangerDark: Lib_CssGenerator_Runner_Generate_DangerDark = options['preset']['colors']['danger']['dark'];
+    const successLight: Lib_CssGenerator_Runner_Generate_SuccessLight = options['preset']['colors']['success']['light'];
+    const successDark: Lib_CssGenerator_Runner_Generate_SuccessDark = options['preset']['colors']['success']['dark'];
 
     const fontLines: Lib_CssGenerator_Runner_Generate_FontLines = Runner.generateFontVariables(options['preset']['fonts']);
     const shapeLines: Lib_CssGenerator_Runner_Generate_ShapeLines = Runner.generateShapeVariables(options['preset']['shape']);
@@ -133,6 +137,9 @@ export class Runner {
       `  --nova-color-danger-500: ${dangerLight};`,
       '  --nova-color-danger-400: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-color-background) 30%);',
       '  --nova-color-danger-bg: color-mix(in srgb, var(--nova-color-danger-500), transparent 94%);',
+      `  --nova-color-success-500: ${successLight};`,
+      '  --nova-color-success-400: color-mix(in srgb, var(--nova-color-success-500), var(--nova-color-background) 30%);',
+      '  --nova-color-success-bg: color-mix(in srgb, var(--nova-color-success-500), transparent 94%);',
       ...fontLines,
       ...shapeLines,
       ...depthLines,
@@ -149,6 +156,8 @@ export class Runner {
       '  --nova-color-warning-bg: color-mix(in srgb, var(--nova-color-warning-500), transparent 90%);',
       `  --nova-color-danger-500: ${dangerDark};`,
       '  --nova-color-danger-bg: color-mix(in srgb, var(--nova-color-danger-500), transparent 90%);',
+      `  --nova-color-success-500: ${successDark};`,
+      '  --nova-color-success-bg: color-mix(in srgb, var(--nova-color-success-500), transparent 90%);',
       '}',
     ];
 

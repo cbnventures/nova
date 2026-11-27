@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, it } from 'vitest';
 
+import { LIB_REGEX_GENERATED_STATE_COLOR_DECLARATION } from '../lib/regex.js';
+
 import type {
   Tests_TokenMap_Admonition_Facets,
   Tests_TokenMap_Admonition_Preset,
@@ -30,11 +32,6 @@ import type {
   Tests_TokenMap_ColorBg_Preset,
   Tests_TokenMap_ColorBg_Returns,
   Tests_TokenMap_ColorBg_Semantics,
-  Tests_TokenMap_ColorScale_Levels,
-  Tests_TokenMap_ColorScale_Preset,
-  Tests_TokenMap_ColorScale_Returns,
-  Tests_TokenMap_ColorScale_Semantics,
-  Tests_TokenMap_ColorScale_Suffixes,
   Tests_TokenMap_Depth_Preset,
   Tests_TokenMap_Depth_Returns,
   Tests_TokenMap_Depth_Suffixes,
@@ -60,6 +57,13 @@ import type {
   Tests_TokenMap_Skip_Returns,
   Tests_TokenMap_TokenMap_File,
   Tests_TokenMap_TokenMap_Tokens,
+  Tests_TokenMap_TokenMapSemanticStateColors_Content,
+  Tests_TokenMap_TokenMapSemanticStateColors_FilePath,
+  Tests_TokenMap_TokenMapSemanticStateColors_Label,
+  Tests_TokenMap_TokenMapSemanticStateColors_Matches,
+  Tests_TokenMap_TokenMapSemanticStateColors_Message,
+  Tests_TokenMap_TokenMapSemanticStateColors_Pattern,
+  Tests_TokenMap_TokenMapSemanticStateColors_Presets,
 } from '../types/tests/token-map.test.d.ts';
 
 /**
@@ -278,10 +282,11 @@ function admonition(preset: Tests_TokenMap_Admonition_Preset, types: Tests_Token
 /**
  * Tests - Token Map - Color Bg.
  *
- * Semantic color background tokens (info-bg, warning-bg,
- * danger-bg) - soft tinted fills used by admonition and
- * other surface variants. Not all presets define all
- * semantics.
+ * Semantic color background tokens (info-bg) - soft
+ * tinted fills used by admonition and other surface
+ * variants. Not all presets define all semantics.
+ * Warning, danger, and success colors are generated
+ * from the resolved preset, never owned by preset.css.
  *
  * @returns {Tests_TokenMap_ColorBg_Returns}
  *
@@ -289,23 +294,6 @@ function admonition(preset: Tests_TokenMap_Admonition_Preset, types: Tests_Token
  */
 function colorBg(preset: Tests_TokenMap_ColorBg_Preset, semantics: Tests_TokenMap_ColorBg_Semantics): Tests_TokenMap_ColorBg_Returns {
   return rename(preset, semantics.map((s) => `color-${s}-bg`));
-}
-
-/**
- * Tests - Token Map - Color Scale.
- *
- * Semantic color scale overrides - semantics x levels
- * matrix. Each (semantic, level) pair becomes a
- * preset-prefixed owner + canonical alias.
- *
- * @returns {Tests_TokenMap_ColorScale_Returns}
- *
- * @since 0.18.0
- */
-function colorScale(preset: Tests_TokenMap_ColorScale_Preset, semantics: Tests_TokenMap_ColorScale_Semantics, levels: Tests_TokenMap_ColorScale_Levels): Tests_TokenMap_ColorScale_Returns {
-  const suffixes: Tests_TokenMap_ColorScale_Suffixes = semantics.flatMap((s) => levels.map((l) => `color-${s}-${l}`));
-
-  return rename(preset, suffixes);
 }
 
 /**
@@ -393,10 +381,6 @@ const expectations: Tests_TokenMap_Expectations = [
         'edge-stroke',
         'node-radius',
       ]),
-      ...colorBg('envoy', [
-        'warning',
-        'danger',
-      ]),
       ...depth('envoy', [
         'card-border',
         'code-border',
@@ -406,13 +390,6 @@ const expectations: Tests_TokenMap_Expectations = [
         'gutter',
       ]),
       ...sectionGap('envoy'),
-      ...colorScale('envoy', [
-        'warning',
-        'danger',
-      ], [
-        '500',
-        '400',
-      ]),
       ...admonition('envoy', [
         'tip',
         'info',
@@ -438,10 +415,6 @@ const expectations: Tests_TokenMap_Expectations = [
         'edge-stroke',
         'node-radius',
       ]),
-      ...colorBg('foundry', [
-        'warning',
-        'danger',
-      ]),
       ...depth('foundry', [
         'card-border',
         'code-border',
@@ -451,13 +424,6 @@ const expectations: Tests_TokenMap_Expectations = [
         'gutter',
       ]),
       ...sectionGap('foundry'),
-      ...colorScale('foundry', [
-        'warning',
-        'danger',
-      ], [
-        '500',
-        '400',
-      ]),
       ...admonition('foundry', [
         'note',
         'tip',
@@ -493,6 +459,7 @@ const expectations: Tests_TokenMap_Expectations = [
       ...admonition('lantern', [
         'tip',
         'info',
+        'warning',
         'danger',
       ], [
         'rail',
@@ -514,18 +481,7 @@ const expectations: Tests_TokenMap_Expectations = [
         'edge-stroke',
         'node-radius',
       ]),
-      ...colorBg('marshal', [
-        'warning',
-        'danger',
-      ]),
       ...sectionGap('marshal'),
-      ...colorScale('marshal', [
-        'warning',
-        'danger',
-      ], [
-        '500',
-        '400',
-      ]),
       ...admonition('marshal', ['note'], [
         'rail',
         'ink',
@@ -555,11 +511,7 @@ const expectations: Tests_TokenMap_Expectations = [
         'edge-stroke',
         'node-radius',
       ]),
-      ...colorBg('sentinel', [
-        'info',
-        'warning',
-        'danger',
-      ]),
+      ...colorBg('sentinel', ['info']),
       ...grid('sentinel', [
         'padding',
         'gutter',
@@ -574,10 +526,6 @@ const expectations: Tests_TokenMap_Expectations = [
         'card-border',
         'code-border',
       ]),
-      ...colorScale('sentinel', [
-        'warning',
-        'danger',
-      ], ['500']),
       ...admonition('sentinel', ['note'], ['rail']),
       ...admonition('sentinel', [
         'tip',
@@ -719,6 +667,46 @@ describe('token map', () => {
 
     it(`${file} declares all expected tokens`, async () => {
       await assertTokensPresent(file, tokens);
+
+      return;
+    });
+  }
+
+  return;
+});
+
+/**
+ * Tests - Token Map - Token Map Semantic State Colors.
+ *
+ * Warning, danger, and success tokens come from the generated
+ * CSS, which carries the resolved preset default or the site
+ * override. A preset.css that redeclares them loads later and
+ * silently replaces the site's colors, so no preset may.
+ *
+ * @since 0.54.0
+ */
+describe('token map semantic state colors', () => {
+  const presets: Tests_TokenMap_TokenMapSemanticStateColors_Presets = [
+    'envoy',
+    'foundry',
+    'lantern',
+    'marshal',
+    'sample',
+    'sentinel',
+    'signal',
+  ];
+
+  for (const preset of presets) {
+    const label: Tests_TokenMap_TokenMapSemanticStateColors_Label = `${preset} preset.css`;
+
+    it(`${label} leaves warning, danger, and success to the generated CSS`, async () => {
+      const filePath: Tests_TokenMap_TokenMapSemanticStateColors_FilePath = resolve(getPackageRoot(), 'src', 'styles', 'presets', preset, 'preset.css');
+      const content: Tests_TokenMap_TokenMapSemanticStateColors_Content = await readFile(filePath, 'utf-8');
+      const pattern: Tests_TokenMap_TokenMapSemanticStateColors_Pattern = new RegExp(LIB_REGEX_GENERATED_STATE_COLOR_DECLARATION, 'g');
+      const matches: Tests_TokenMap_TokenMapSemanticStateColors_Matches = content.match(pattern);
+      const message: Tests_TokenMap_TokenMapSemanticStateColors_Message = `${label} redeclares generated state colors: ${(matches ?? []).join(', ')}`;
+
+      strictEqual(matches, null, message);
 
       return;
     });

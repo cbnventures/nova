@@ -542,6 +542,15 @@ export type Shared_Preset_Colors_Danger = {
   dark: Shared_Preset_Colors_Danger_Dark;
 };
 
+export type Shared_Preset_Colors_Success_Light = Shared_HexColor;
+
+export type Shared_Preset_Colors_Success_Dark = Shared_HexColor;
+
+export type Shared_Preset_Colors_Success = {
+  light: Shared_Preset_Colors_Success_Light;
+  dark: Shared_Preset_Colors_Success_Dark;
+};
+
 export type Shared_Preset_Colors = {
   primary: Shared_Preset_Colors_Primary;
   accent: Shared_Preset_Colors_Accent;
@@ -549,6 +558,7 @@ export type Shared_Preset_Colors = {
   border: Shared_Preset_Colors_Border;
   warning: Shared_Preset_Colors_Warning;
   danger: Shared_Preset_Colors_Danger;
+  success: Shared_Preset_Colors_Success;
 };
 
 export type Shared_Preset_Fonts_Display = string;

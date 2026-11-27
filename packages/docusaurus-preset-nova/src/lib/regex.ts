@@ -455,3 +455,14 @@ export const LIB_REGEX_PATTERN_SEMVER_LEADING = /^(\d+\.\d+\.\d+)(?:\s|$)/;
  * @since 0.50.0
  */
 export const LIB_REGEX_PROSE_ARTICLE_TYPE_SELECTOR = /(?:^|[\s>+~(,])article(?![\w-])/;
+
+/**
+ * Lib - Regex - Generated State Color Declaration.
+ *
+ * Matches a declaration of a generated warning, danger, or success token
+ * (`-500`, `-400`, or `-bg`). The token-map test uses it to keep preset.css
+ * files from replacing the colors a site sets through `overrides.colors`.
+ *
+ * @since 0.54.0
+ */
+export const LIB_REGEX_GENERATED_STATE_COLOR_DECLARATION = /--nova-color-(?:warning|danger|success)-(?:500|400|bg)\s*:/;

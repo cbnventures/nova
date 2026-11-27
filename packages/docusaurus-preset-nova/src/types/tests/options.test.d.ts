@@ -99,6 +99,37 @@ export type Tests_Options_ResolvePreset_AppliesNavbarOverrideWhenProvided_Result
 };
 
 /**
+ * Tests - Options - Resolve Preset - Applies Success Override Per Side When Provided.
+ *
+ * @since 0.54.0
+ */
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success_Light = string;
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success_Dark = string;
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success = {
+  light: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success_Light;
+  dark: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success_Dark;
+};
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors = {
+  success: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors_Success;
+};
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result = {
+  colors: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_Result_Colors;
+};
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess_Light = string;
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess_Dark = string;
+
+export type Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess = {
+  light: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess_Light;
+  dark: Tests_Options_ResolvePreset_AppliesSuccessOverridePerSideWhenProvided_ResolvedColorsSuccess_Dark;
+};
+
+/**
  * Tests - Options - Resolve Preset - Rejects Invalid Navbar Variant.
  *
  * @since 0.15.0

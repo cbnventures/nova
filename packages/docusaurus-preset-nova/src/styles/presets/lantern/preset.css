@@ -24,14 +24,13 @@
   --nova-lantern-app-market-bg: #000000;
   --nova-lantern-app-market-text: #ffffff;
 
-  /* Admonition palette - type-keyed accents outside lantern's amber/indigo identity. */
+  /* Admonition palette - type-keyed accents outside lantern's amber/indigo
+     identity. Warning and danger derive from the generated state colors
+     instead, so a site's overrides.colors reach those callouts. */
   --nova-lantern-info-rail: #3b82f6;
   --nova-lantern-info-ink: #2563eb;
   --nova-lantern-tip-rail: #10b981;
   --nova-lantern-tip-ink: #059669;
-  --nova-lantern-danger-rail: #b91c1c;
-  --nova-lantern-danger-fill: #dc2626;
-  --nova-lantern-danger-ink: #b91c1c;
 
   /* SkipToContent - color tokens (shape lives in the SkipToContent overlay). */
   --nova-lantern-skip-bg: var(--nova-lantern-bg);
@@ -65,24 +64,30 @@
   --nova-lantern-sidebar-caret-duration: 250ms;
 
   /* Admonition - per-type rail + fill + ink (consumed by the Admonition
-     overlay). Note + warning/caution inherit the container's amber default;
-     only info/tip/danger override (lantern's signature is the type-keyed
-     palette outside the amber/indigo identity). */
+     overlay). Note inherits the container's amber default; info/tip use
+     lantern's type-keyed palette; warning/caution and danger derive from
+     --nova-color-{warning,danger}-500 so site overrides reach them. */
   --nova-lantern-admonition-info-rail: var(--nova-lantern-info-rail);
   --nova-lantern-admonition-info-fill: color-mix(in srgb, var(--nova-lantern-info-rail), var(--nova-lantern-bg) 95%);
   --nova-lantern-admonition-info-ink: var(--nova-lantern-info-ink);
   --nova-lantern-admonition-tip-rail: var(--nova-lantern-tip-rail);
   --nova-lantern-admonition-tip-fill: color-mix(in srgb, var(--nova-lantern-tip-rail), var(--nova-lantern-bg) 95%);
   --nova-lantern-admonition-tip-ink: var(--nova-lantern-tip-ink);
-  --nova-lantern-admonition-danger-rail: var(--nova-lantern-danger-rail);
-  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-lantern-danger-fill), var(--nova-lantern-bg) 94%);
-  --nova-lantern-admonition-danger-ink: var(--nova-lantern-danger-ink);
+  --nova-lantern-admonition-warning-rail: color-mix(in srgb, var(--nova-color-warning-500), #ffffff 20%);
+  --nova-lantern-admonition-warning-fill: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-lantern-bg) 96%);
+  --nova-lantern-admonition-warning-ink: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-color-text) 40%);
+  --nova-lantern-admonition-danger-rail: var(--nova-color-danger-500);
+  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-lantern-bg) 94%);
+  --nova-lantern-admonition-danger-ink: var(--nova-color-danger-500);
   --nova-admonition-info-rail: var(--nova-lantern-admonition-info-rail);
   --nova-admonition-info-fill: var(--nova-lantern-admonition-info-fill);
   --nova-admonition-info-ink: var(--nova-lantern-admonition-info-ink);
   --nova-admonition-tip-rail: var(--nova-lantern-admonition-tip-rail);
   --nova-admonition-tip-fill: var(--nova-lantern-admonition-tip-fill);
   --nova-admonition-tip-ink: var(--nova-lantern-admonition-tip-ink);
+  --nova-admonition-warning-rail: var(--nova-lantern-admonition-warning-rail);
+  --nova-admonition-warning-fill: var(--nova-lantern-admonition-warning-fill);
+  --nova-admonition-warning-ink: var(--nova-lantern-admonition-warning-ink);
   --nova-admonition-danger-rail: var(--nova-lantern-admonition-danger-rail);
   --nova-admonition-danger-fill: var(--nova-lantern-admonition-danger-fill);
   --nova-admonition-danger-ink: var(--nova-lantern-admonition-danger-ink);
@@ -101,7 +106,6 @@
   /* Admonition palette - dark-mode ink overrides for type-keyed accents. */
   --nova-lantern-info-ink: #93c5fd;
   --nova-lantern-tip-ink: #6ee7b7;
-  --nova-lantern-danger-ink: #fca5a5;
 
   /* Mermaid identity - dark-mode overrides. */
   --nova-lantern-mermaid-edge-stroke: var(--nova-color-primary-300);
@@ -109,11 +113,15 @@
   --nova-lantern-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
 
   /* Admonition - dark-mode swap of fill mix ratios (denser tint against the
-     deep cream backdrop). Rails + inks auto-switch via --nova-lantern-info-ink
-     etc. dark overrides above. */
+     deep cream backdrop). Info/tip inks auto-switch via the
+     --nova-lantern-{info,tip}-ink dark overrides above; warning and danger
+     inks lift toward the light text / white so they read on the dark card. */
   --nova-lantern-admonition-info-fill: color-mix(in srgb, var(--nova-lantern-info-rail), var(--nova-lantern-bg) 90%);
   --nova-lantern-admonition-tip-fill: color-mix(in srgb, var(--nova-lantern-tip-rail), var(--nova-lantern-bg) 90%);
-  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-lantern-danger-fill), var(--nova-lantern-bg) 88%);
+  --nova-lantern-admonition-warning-fill: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-lantern-bg) 92%);
+  --nova-lantern-admonition-warning-ink: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-color-text) 80%);
+  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-lantern-bg) 88%);
+  --nova-lantern-admonition-danger-ink: color-mix(in srgb, var(--nova-color-danger-500), #ffffff 62%);
 }
 
 /* ============================

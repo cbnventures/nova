@@ -84,6 +84,18 @@ export type NovaPresetOverridesColorsDanger = {
   dark: NovaPresetOverridesColorsDangerDark;
 };
 
+// Success/passed state color - light mode hex (e.g., "#16A34A").
+export type NovaPresetOverridesColorsSuccessLight = string | undefined;
+
+// Success/passed state color - dark mode hex (e.g., "#22C55E").
+export type NovaPresetOverridesColorsSuccessDark = string | undefined;
+
+// Success/passed state color override - light/dark hex pair.
+export type NovaPresetOverridesColorsSuccess = {
+  light: NovaPresetOverridesColorsSuccessLight;
+  dark: NovaPresetOverridesColorsSuccessDark;
+};
+
 // Brand color overrides - each category is a light/dark hex pair.
 export type NovaPresetOverridesColors = {
   primary: NovaPresetOverridesColorsPrimary;
@@ -92,6 +104,7 @@ export type NovaPresetOverridesColors = {
   border: NovaPresetOverridesColorsBorder;
   warning: NovaPresetOverridesColorsWarning;
   danger: NovaPresetOverridesColorsDanger;
+  success: NovaPresetOverridesColorsSuccess;
 };
 
 // Display/heading font family (e.g., "Sora", "Plus Jakarta Sans").

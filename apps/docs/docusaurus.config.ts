@@ -178,17 +178,33 @@ const config: DocusaurusNovaConfig = {
       overrides: {
         colors: {
           primary: {
-            light: '#DC2626',
-            dark: '#DC2626',
+            light: '#C83737',
+            dark: '#E25050',
           },
           secondary: {
             light: '#FFBA33',
             dark: '#FFBA33',
           },
-          text: undefined,
-          border: undefined,
-          warning: undefined,
-          danger: undefined,
+          text: {
+            light: '#2F1D1D',
+            dark: '#E9DDDD',
+          },
+          border: {
+            light: '#DAC8C8',
+            dark: '#4D3838',
+          },
+          warning: {
+            light: '#B06111',
+            dark: '#F19941',
+          },
+          danger: {
+            light: '#B82327',
+            dark: '#EF5D60',
+          },
+          success: {
+            light: '#1F8433',
+            dark: '#4ED068',
+          },
         },
         fonts: {
           display: 'Sora',
