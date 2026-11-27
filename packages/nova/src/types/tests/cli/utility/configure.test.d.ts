@@ -388,6 +388,30 @@ export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAV
 export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_ErrorCalls = unknown[][];
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Environment Section - Saves An Explicit Empty Sample Value.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_CapturedQuestions = unknown[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_PromptEnvironmentValueForm = (existing: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace) => Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Result = Awaited<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Environment Section - Saves Sample Only Values For A Workspace Secret.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_PromptEnvironmentValueForm = (existing: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace) => Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Result = Awaited<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns>;
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Environment Section - Saves The Build And Runtime Choice As A Reach List.
  *
  * @since 0.41.0

@@ -80,6 +80,60 @@ describe('libEnvStatus', () => {
     return;
   });
 
+  it('reports a value with only sample values as missing', () => {
+    deepStrictEqual(
+      libEnvStatus.classify(
+        [
+          {
+            name: 'CBN_STAGING_TURNSTILE_SITE_KEY',
+            secret: false,
+            kind: 'workspace',
+          },
+          {
+            name: 'CBN_PRODUCTION_TURNSTILE_SITE_KEY',
+            secret: false,
+            kind: 'workspace',
+          },
+        ],
+        {
+          available: true,
+          variables: [],
+          secrets: [],
+        },
+        {
+          profiles: { enabled: true },
+          workspaces: {
+            './apps/a': {
+              prefix: 'CBN_',
+              variables: [{
+                key: 'TURNSTILE_SITE_KEY',
+                reach: 'build',
+                secret: false,
+                sampleValues: {
+                  development: '1x00000000000000000000AA',
+                  staging: '1x00000000000000000000AA',
+                  production: '1x00000000000000000000AA',
+                },
+              }],
+            },
+          },
+        },
+      ),
+      [
+        {
+          name: 'CBN_STAGING_TURNSTILE_SITE_KEY',
+          state: 'missing',
+        },
+        {
+          name: 'CBN_PRODUCTION_TURNSTILE_SITE_KEY',
+          state: 'missing',
+        },
+      ],
+    );
+
+    return;
+  });
+
   it('reports a secret managed key stored as a Variable as a type mismatch', () => {
     deepStrictEqual(
       libEnvStatus.classify(

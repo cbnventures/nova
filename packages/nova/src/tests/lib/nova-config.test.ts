@@ -102,6 +102,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Messages,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Serialized,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Config,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Messages,
@@ -129,6 +133,10 @@ import type {
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_Serialized,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Serialized,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_Config,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ConfigPath,
   Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesValidPrefixShapes_ProjectDirectory,
@@ -4083,6 +4091,145 @@ describe('parseEnvironment (via load)', async () => {
     const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
 
     ok(messages.some((message) => message.includes('"K"') === true && message.includes('defaultValue') === true), `expected a defaultValue-on-secret error naming K; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('parses per-profile sample values on workspace values', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_ProjectDirectory = join(sandboxRoot, 'env-sample-values-valid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        workspaces: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'TURNSTILE_SITE_KEY',
+                reach: 'build',
+                secret: false,
+                sampleValues: {
+                  development: '1x00000000000000000000AA',
+                },
+              },
+              {
+                key: 'TURNSTILE_SECRET_KEY',
+                reach: 'build',
+                secret: true,
+                sampleValues: {
+                  development: '1x0000000000000000000000000000000AA',
+                },
+              },
+              {
+                key: 'SENTRY_PROJECT',
+                reach: 'managed',
+                secret: false,
+                sampleValues: {
+                  staging: 'example-staging',
+                },
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Serialized = JSON.stringify(await config.load());
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('sampleValues') === true) === false, `expected no sampleValues errors; got: ${messages.join(' | ')}`);
+    ok(serialized.includes('"key":"TURNSTILE_SITE_KEY","reach":"build","secret":false,"sampleValues":{"development":"1x00000000000000000000AA"}') === true, `expected the site key to keep its sample value; got: ${serialized}`);
+    ok(serialized.includes('"key":"TURNSTILE_SECRET_KEY","reach":"build","secret":true,"sampleValues":{"development":"1x0000000000000000000000000000000AA"}') === true, `expected the secret to keep its sample value; got: ${serialized}`);
+    ok(serialized.includes('"key":"SENTRY_PROJECT","reach":"managed","secret":false,"sampleValues":{"staging":"example-staging"}') === true, `expected the workspace managed value to keep its sample value; got: ${serialized}`);
+
+    return;
+  });
+
+  it('errors when sample values use an invalid shape', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_ProjectDirectory = join(sandboxRoot, 'env-sample-values-invalid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        project: {
+          prefix: 'ACCT_',
+          variables: [{
+            key: 'PROJECT_TOKEN',
+            reach: 'managed',
+            secret: true,
+            sampleValues: {
+              development: 'test-token',
+            },
+          }],
+        },
+        workspaces: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'UNKNOWN_PROFILE',
+                reach: 'local',
+                sampleValues: {
+                  preview: 'x',
+                },
+              },
+              {
+                key: 'NON_STRING',
+                reach: 'local',
+                sampleValues: {
+                  development: 1,
+                },
+              },
+              {
+                key: 'NOT_AN_OBJECT',
+                reach: 'local',
+                sampleValues: 'x',
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Config = new LibNovaConfig();
+    const serialized: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Serialized = JSON.stringify(await config.load());
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"PROJECT_TOKEN"') === true && message.includes('project values are never written') === true), `expected a project sampleValues error; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('"UNKNOWN_PROFILE"') === true && message.includes('unknown profile "preview"') === true), `expected an unknown-profile error; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('"NON_STRING"') === true && message.includes('non-string') === true), `expected a non-string error; got: ${messages.join(' | ')}`);
+    ok(messages.some((message) => message.includes('"NOT_AN_OBJECT"') === true && message.includes('invalid "sampleValues"') === true), `expected an invalid-shape error; got: ${messages.join(' | ')}`);
+
+    for (const droppedKey of [
+      'PROJECT_TOKEN',
+      'UNKNOWN_PROFILE',
+      'NON_STRING',
+      'NOT_AN_OBJECT',
+    ]) {
+      ok(serialized.includes(droppedKey) === false, `expected ${droppedKey} to be dropped; got: ${serialized}`);
+    }
 
     return;
   });

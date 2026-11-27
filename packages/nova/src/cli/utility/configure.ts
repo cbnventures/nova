@@ -37,6 +37,7 @@ import {
   libItemAllowedAgents,
   libItemAllowedPoliciesByRole,
   libItemAllowedRecipes,
+  libItemEnvironmentProfiles,
   libItemOperatingSystemFilePatterns,
   libItemOperatingSystemFilesByPlatform,
   libItemRecipesByCategory,
@@ -496,9 +497,13 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValueOutput,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValueOutputKey,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValueOutputValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_EnteredSampleValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_EnteredSampleValues,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Existing,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachChoice,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingReachIndex,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingSampleValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingSampleValues,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsLocal,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_IsWorkspace,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Key,
@@ -512,6 +517,22 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachOutputValue,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ReachValues,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Returns,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoiceInitial,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoiceQuestions,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoices,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutput,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutputKey,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutputValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleFileName,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValueInitial,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValueQuestions,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValues,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutput,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutputKey,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutputValue,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutput,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutputKey,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutputValue,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Secret,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretInitial,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretOutput,
@@ -519,6 +540,8 @@ import type {
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SecretOutputValue,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SelectedReach,
   Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_Value,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ValueFileName,
+  Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ValueProfiles,
   Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Config,
   Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Environment,
   Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Existing,
@@ -10357,6 +10380,106 @@ export class Runner {
         if (defaultValue !== '') {
           Reflect.set(value, 'defaultValue', defaultValue);
         }
+      }
+    }
+
+    // Sample values are public or test values for the committed sample files only, so a secret
+    // may carry them too. A project value never writes a sample file, so it is not offered any.
+    if (isWorkspace === true) {
+      const existingSampleValues: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingSampleValues = (existing !== undefined) ? existing['sampleValues'] : undefined;
+      let sampleValues: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValues = existingSampleValues;
+
+      const sampleValuesToggleOutput: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesToggleOutputValue>({
+        type: 'confirm',
+        name: 'sampleValues',
+        message: 'Set sample-only values per profile? Use public or test values only, never real credentials.',
+        initial: existingSampleValues !== undefined,
+      });
+
+      // A cancelled prompt keeps the saved sample values, while an explicit no clears them.
+      if (sampleValuesToggleOutput['cancelled'] === false && sampleValuesToggleOutput['result'].sampleValues !== true) {
+        sampleValues = undefined;
+      } else if (sampleValuesToggleOutput['cancelled'] === false) {
+        // Each profile picks skip, a value, or an explicit empty value, so a blank sample line
+        // is never confused with no entry; only "Set a value" asks for text afterward.
+        const sampleChoiceQuestions: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoiceQuestions = libItemEnvironmentProfiles.map((environmentProfile) => {
+          const existingSampleValue: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ExistingSampleValue = (existingSampleValues !== undefined) ? existingSampleValues[environmentProfile] : undefined;
+          const sampleFileName: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleFileName = (environmentProfile === 'development') ? '".env.development.sample" or ".env.sample"' : `".env.${environmentProfile}.sample"`;
+          let sampleChoiceInitial: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoiceInitial = 0;
+
+          if (existingSampleValue === '') {
+            sampleChoiceInitial = 2;
+          } else if (existingSampleValue !== undefined) {
+            sampleChoiceInitial = 1;
+          }
+
+          return {
+            type: 'select' as const,
+            name: environmentProfile,
+            message: `Sample-only value for ${sampleFileName}:`,
+            choices: [
+              {
+                title: 'Skip',
+                value: 'skip',
+              },
+              {
+                title: 'Set a value',
+                value: 'value',
+              },
+              {
+                title: 'Set empty',
+                value: 'empty',
+              },
+            ],
+            initial: sampleChoiceInitial,
+          };
+        });
+        const sampleChoicesOutput: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoicesOutputValue>(sampleChoiceQuestions);
+
+        if (sampleChoicesOutput['cancelled'] === false) {
+          const sampleChoices: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleChoices = sampleChoicesOutput['result'];
+          const valueProfiles: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ValueProfiles = libItemEnvironmentProfiles.filter((environmentProfile) => sampleChoices[environmentProfile] === 'value');
+          const sampleValueQuestions: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValueQuestions = valueProfiles.map((valueProfile) => {
+            const sampleValueInitial: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValueInitial = (existingSampleValues !== undefined) ? existingSampleValues[valueProfile] ?? '' : '';
+            const valueFileName: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_ValueFileName = (valueProfile === 'development') ? '".env.development.sample" or ".env.sample"' : `".env.${valueProfile}.sample"`;
+
+            return {
+              type: 'text' as const,
+              name: valueProfile,
+              message: `Value for ${valueFileName}:`,
+              initial: sampleValueInitial,
+              validate: Runner['isNonEmptyLiteralInput'],
+            };
+          });
+          const sampleValuesOutput: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutput = (sampleValueQuestions.length > 0) ? await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_SampleValuesOutputValue>(sampleValueQuestions) : undefined;
+
+          // A cancelled value prompt keeps the saved sample values unchanged.
+          if (sampleValuesOutput === undefined || sampleValuesOutput['cancelled'] === false) {
+            const enteredSampleValues: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_EnteredSampleValues = {};
+
+            for (const environmentProfile of libItemEnvironmentProfiles) {
+              if (sampleChoices[environmentProfile] === 'empty') {
+                Reflect.set(enteredSampleValues, environmentProfile, '');
+              }
+
+              if (
+                sampleChoices[environmentProfile] === 'value'
+                && sampleValuesOutput !== undefined
+                && sampleValuesOutput['cancelled'] === false
+              ) {
+                const enteredSampleValue: Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_EnteredSampleValue = String(sampleValuesOutput['result'][environmentProfile] ?? '').trim();
+
+                Reflect.set(enteredSampleValues, environmentProfile, enteredSampleValue);
+              }
+            }
+
+            sampleValues = (Object.keys(enteredSampleValues).length > 0) ? enteredSampleValues : undefined;
+          }
+        }
+      }
+
+      if (sampleValues !== undefined) {
+        Reflect.set(value, 'sampleValues', sampleValues);
       }
     }
 

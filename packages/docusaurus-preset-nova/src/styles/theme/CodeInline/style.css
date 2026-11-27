@@ -25,6 +25,12 @@
      aligned with the surrounding text the same way the default inline does. */
   display: inline-block;
   vertical-align: baseline;
+
+  /* As an inline-block, a long identifier or URL becomes one unbreakable box
+     that pushes the page sideways on narrow screens. Capping it at the line
+     width and letting it break anywhere wraps it inside its own box instead. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 [data-theme="dark"] .nova-code-inline {

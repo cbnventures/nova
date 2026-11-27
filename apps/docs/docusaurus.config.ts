@@ -250,8 +250,14 @@ const config: DocusaurusNovaConfig = {
 
       // Analytics.
       analytics: {
-        gtm: {
-          containerId: 'GTM-KZGTWKXH',
+        googleAnalytics: {
+          measurementId: 'G-C45E9B7D4L',
+        },
+        metaPixel: {
+          pixelId: '1133590612756559',
+        },
+        clarity: {
+          projectId: 'zid1vtbaef',
         },
       },
 

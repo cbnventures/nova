@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.53.0 - 2026-11-27
+
+### FIXED
+- Long inline code, such as a URL or a method name, wraps inside its box instead of making docs pages scroll sideways on phones.
+
 ## 0.52.0 - 2026-11-26
 
 No changes.

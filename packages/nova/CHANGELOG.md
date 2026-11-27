@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.53.0 - 2026-11-27
+
+### ADDED
+- Workspace environment values, secrets included, take an optional `sampleValues` object keyed by profile that fills only the matching committed sample file (`.env.sample` uses `development` when profiles are off), so public test keys such as Cloudflare Turnstile's can ship in `.env.development.sample` without reaching `.env`, GitHub, CI, or `configure --status`.
+
 ## 0.52.0 - 2026-11-26
 
 ### FIXED

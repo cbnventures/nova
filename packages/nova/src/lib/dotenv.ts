@@ -2,7 +2,10 @@ import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 
 import { Logger } from '../toolkit/index.js';
-import { libItemEnvironmentProfileDotenvFiles } from './item.js';
+import {
+  libItemEnvironmentProfileDotenvFiles,
+  libItemEnvironmentProfiles,
+} from './item.js';
 import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
@@ -61,7 +64,7 @@ import type {
   Lib_Dotenv_WriteDotenvFiles_ContentLineKey,
   Lib_Dotenv_WriteDotenvFiles_ContentLines,
   Lib_Dotenv_WriteDotenvFiles_CustomSection,
-  Lib_Dotenv_WriteDotenvFiles_CustomSectionSample,
+  Lib_Dotenv_WriteDotenvFiles_DotenvVariables,
   Lib_Dotenv_WriteDotenvFiles_EnvLines,
   Lib_Dotenv_WriteDotenvFiles_ExistingEnv,
   Lib_Dotenv_WriteDotenvFiles_ExistingEnvPath,
@@ -77,9 +80,13 @@ import type {
   Lib_Dotenv_WriteDotenvFiles_OrphanKeys,
   Lib_Dotenv_WriteDotenvFiles_OrphanLines,
   Lib_Dotenv_WriteDotenvFiles_PreservedLines,
+  Lib_Dotenv_WriteDotenvFiles_ProfileSampleValue,
   Lib_Dotenv_WriteDotenvFiles_ProfilesEnabled,
   Lib_Dotenv_WriteDotenvFiles_Returns,
   Lib_Dotenv_WriteDotenvFiles_SampleLines,
+  Lib_Dotenv_WriteDotenvFiles_SampleProfile,
+  Lib_Dotenv_WriteDotenvFiles_SampleValue,
+  Lib_Dotenv_WriteDotenvFiles_SampleValues,
   Lib_Dotenv_WriteDotenvFiles_SeenKeys,
   Lib_Dotenv_WriteDotenvFiles_ShouldReport,
   Lib_Dotenv_WriteDotenvFiles_TargetDirectory,
@@ -87,7 +94,6 @@ import type {
   Lib_Dotenv_WriteDotenvFiles_TemplateDirectory,
   Lib_Dotenv_WriteDotenvFiles_TemplateFileName,
   Lib_Dotenv_WriteDotenvFiles_TemplatePath,
-  Lib_Dotenv_WriteDotenvFiles_VariableDefault,
   Lib_Dotenv_WriteDotenvFiles_Variables,
 } from '../types/lib/dotenv.d.ts';
 
@@ -392,7 +398,7 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
   }
 
   const envLines: Lib_Dotenv_WriteDotenvFiles_EnvLines = [];
-  const sampleLines: Lib_Dotenv_WriteDotenvFiles_SampleLines = [];
+  const dotenvVariables: Lib_Dotenv_WriteDotenvFiles_DotenvVariables = [];
 
   for (const variable of variables) {
     if (baselineKeys.has(variable['key']) === true) {
@@ -401,13 +407,10 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
 
     envLines.push(`${variable['key']}=""`);
 
-    const variableDefault: Lib_Dotenv_WriteDotenvFiles_VariableDefault = ('defaultValue' in variable && variable['defaultValue'] !== undefined) ? variable['defaultValue'] : '';
-
-    sampleLines.push(`${variable['key']}="${escapeSampleValue(variableDefault)}"`);
+    dotenvVariables.push(variable);
   }
 
   const customSection: Lib_Dotenv_WriteDotenvFiles_CustomSection = envLines.join('\n');
-  const customSectionSample: Lib_Dotenv_WriteDotenvFiles_CustomSectionSample = sampleLines.join('\n');
 
   for (const fileName of files) {
     const isSample: Lib_Dotenv_WriteDotenvFiles_IsSample = fileName.endsWith('.sample');
@@ -429,7 +432,26 @@ export async function writeDotenvFiles(options: Lib_Dotenv_WriteDotenvFiles_Opti
       continue;
     }
 
-    const appendSection: Lib_Dotenv_WriteDotenvFiles_AppendSection = (isSample === true) ? customSectionSample : customSection;
+    let appendSection: Lib_Dotenv_WriteDotenvFiles_AppendSection = customSection;
+
+    // A sample file takes its profile from its name, and the plain ".env.sample" uses the
+    // development entry. Sample values beat the default here and never reach a real ".env".
+    if (isSample === true) {
+      const sampleProfile: Lib_Dotenv_WriteDotenvFiles_SampleProfile = libItemEnvironmentProfiles.find((environmentProfile) => fileName === `.env.${environmentProfile}.sample`) ?? 'development';
+      const sampleLines: Lib_Dotenv_WriteDotenvFiles_SampleLines = dotenvVariables.map((dotenvVariable) => {
+        const sampleValues: Lib_Dotenv_WriteDotenvFiles_SampleValues = dotenvVariable['sampleValues'];
+        const profileSampleValue: Lib_Dotenv_WriteDotenvFiles_ProfileSampleValue = (sampleValues !== undefined) ? sampleValues[sampleProfile] : undefined;
+        let sampleValue: Lib_Dotenv_WriteDotenvFiles_SampleValue = ('defaultValue' in dotenvVariable && dotenvVariable['defaultValue'] !== undefined) ? dotenvVariable['defaultValue'] : '';
+
+        if (profileSampleValue !== undefined) {
+          sampleValue = profileSampleValue;
+        }
+
+        return `${dotenvVariable['key']}="${escapeSampleValue(sampleValue)}"`;
+      });
+
+      appendSection = sampleLines.join('\n');
+    }
 
     if (appendSection !== '') {
       content = `${content}${appendSection}\n`;

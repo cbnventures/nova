@@ -2947,6 +2947,26 @@ export type Shared_NovaConfigEnvironmentValue_Secret = boolean;
 export type Shared_NovaConfigEnvironmentValue_DefaultValue = string;
 
 /**
+ * Shared - Nova Config Environment Value Sample Values.
+ *
+ * Public or test values keyed by profile, written only into the matching committed
+ * sample file; they never reach ".env", GitHub, CI, or environment status.
+ *
+ * @since 0.53.0
+ */
+export type Shared_NovaConfigEnvironmentValue_SampleValues_Development = string;
+
+export type Shared_NovaConfigEnvironmentValue_SampleValues_Staging = string;
+
+export type Shared_NovaConfigEnvironmentValue_SampleValues_Production = string;
+
+export type Shared_NovaConfigEnvironmentValue_SampleValues = {
+  development?: Shared_NovaConfigEnvironmentValue_SampleValues_Development;
+  staging?: Shared_NovaConfigEnvironmentValue_SampleValues_Staging;
+  production?: Shared_NovaConfigEnvironmentValue_SampleValues_Production;
+};
+
+/**
  * Shared - Nova Config Environment Value Reach.
  *
  * @since 0.22.0
@@ -2967,10 +2987,13 @@ export type Shared_NovaConfigEnvironmentValueLocal_Reach = 'local';
 
 export type Shared_NovaConfigEnvironmentValueLocal_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
 
+export type Shared_NovaConfigEnvironmentValueLocal_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues;
+
 export type Shared_NovaConfigEnvironmentValueLocal = {
   key: Shared_NovaConfigEnvironmentValueLocal_Key;
   reach: Shared_NovaConfigEnvironmentValueLocal_Reach;
   defaultValue?: Shared_NovaConfigEnvironmentValueLocal_DefaultValue;
+  sampleValues?: Shared_NovaConfigEnvironmentValueLocal_SampleValues;
 };
 
 /**
@@ -2988,10 +3011,13 @@ export type Shared_NovaConfigEnvironmentValueManaged_Reach = 'managed';
 
 export type Shared_NovaConfigEnvironmentValueManaged_Secret = Shared_NovaConfigEnvironmentValue_Secret;
 
+export type Shared_NovaConfigEnvironmentValueManaged_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues;
+
 export type Shared_NovaConfigEnvironmentValueManaged = {
   key: Shared_NovaConfigEnvironmentValueManaged_Key;
   reach: Shared_NovaConfigEnvironmentValueManaged_Reach;
   secret: Shared_NovaConfigEnvironmentValueManaged_Secret;
+  sampleValues?: Shared_NovaConfigEnvironmentValueManaged_SampleValues;
 };
 
 /**
@@ -3009,11 +3035,14 @@ export type Shared_NovaConfigEnvironmentValueBuild_Secret = Shared_NovaConfigEnv
 
 export type Shared_NovaConfigEnvironmentValueBuild_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
 
+export type Shared_NovaConfigEnvironmentValueBuild_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues;
+
 export type Shared_NovaConfigEnvironmentValueBuild = {
   key: Shared_NovaConfigEnvironmentValueBuild_Key;
   reach: Shared_NovaConfigEnvironmentValueBuild_Reach;
   secret: Shared_NovaConfigEnvironmentValueBuild_Secret;
   defaultValue?: Shared_NovaConfigEnvironmentValueBuild_DefaultValue;
+  sampleValues?: Shared_NovaConfigEnvironmentValueBuild_SampleValues;
 };
 
 /**
@@ -3031,11 +3060,14 @@ export type Shared_NovaConfigEnvironmentValueRuntime_Secret = Shared_NovaConfigE
 
 export type Shared_NovaConfigEnvironmentValueRuntime_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
 
+export type Shared_NovaConfigEnvironmentValueRuntime_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues;
+
 export type Shared_NovaConfigEnvironmentValueRuntime = {
   key: Shared_NovaConfigEnvironmentValueRuntime_Key;
   reach: Shared_NovaConfigEnvironmentValueRuntime_Reach;
   secret: Shared_NovaConfigEnvironmentValueRuntime_Secret;
   defaultValue?: Shared_NovaConfigEnvironmentValueRuntime_DefaultValue;
+  sampleValues?: Shared_NovaConfigEnvironmentValueRuntime_SampleValues;
 };
 
 /**
@@ -3054,11 +3086,14 @@ export type Shared_NovaConfigEnvironmentValueBuildRuntime_Secret = Shared_NovaCo
 
 export type Shared_NovaConfigEnvironmentValueBuildRuntime_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
 
+export type Shared_NovaConfigEnvironmentValueBuildRuntime_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues;
+
 export type Shared_NovaConfigEnvironmentValueBuildRuntime = {
   key: Shared_NovaConfigEnvironmentValueBuildRuntime_Key;
   reach: Shared_NovaConfigEnvironmentValueBuildRuntime_Reach;
   secret: Shared_NovaConfigEnvironmentValueBuildRuntime_Secret;
   defaultValue?: Shared_NovaConfigEnvironmentValueBuildRuntime_DefaultValue;
+  sampleValues?: Shared_NovaConfigEnvironmentValueBuildRuntime_SampleValues;
 };
 
 export type Shared_NovaConfigEnvironmentValue =

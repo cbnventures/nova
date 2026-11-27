@@ -81,9 +81,11 @@ The repo root gets `.env`/`.env.sample` only when you declare `environment.works
 |-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | `environment.workspaces.<path>.variables` | The variables appended to that workspace's generated `.env` files. See [Value Fields](/docs/quickstart/nova-config#value-fields). |
 
-This command writes every workspace value regardless of its `reach`. It reads `key` and `defaultValue` for the files; the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses `reach` and `secret` for GitHub provisioning and CI delivery.
+This command writes every workspace value regardless of its `reach`. It reads `key`, `defaultValue`, and `sampleValues` for the files; the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses `reach` and `secret` for GitHub provisioning and CI delivery.
 
 A permitted `defaultValue` seeds `.env.sample`; the `.env` entry is always left blank so real values stay out of version control. Managed values accept no default, so they appear blank in both files for local input.
+
+A [`sampleValues`](/docs/quickstart/nova-config#sample-values) entry fills only the sample file for its profile and wins over `defaultValue` there. It's meant for public or test values, such as a provider's documented test keys, and it's allowed on secrets and managed values because it never reaches `.env`, GitHub, or CI.
 
 The `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys are reserved. The template manages them, so declaring any of them under `environment.workspaces.<path>.variables` is rejected when the config loads, with a warning naming the reserved key.
 
@@ -108,7 +110,7 @@ This command writes the double-quoted values; the [Dotenv Suite](/docs/rules/vit
 
 ### Template Output
 
-Each generated file starts from a built-in template that ships three reserved keys with sensible defaults and an inline comment listing their valid values: `NODE_ENV` (`development` | `production` | `test`, default `development`), `LOG_LEVEL` (`debug` | `info` | `warn` | `error` | `auto`, default `auto`, where `auto` derives the level from `NODE_ENV`), and `LOG_TIME` (`true` | `false`, default `false`). Each variable under `environment.workspaces.<path>.variables` is appended as `KEY=""` to `.env` and `KEY="<defaultValue>"` to `.env.sample`.
+Each generated file starts from a built-in template that ships three reserved keys with sensible defaults and an inline comment listing their valid values: `NODE_ENV` (`development` | `production` | `test`, default `development`), `LOG_LEVEL` (`debug` | `info` | `warn` | `error` | `auto`, default `auto`, where `auto` derives the level from `NODE_ENV`), and `LOG_TIME` (`true` | `false`, default `false`). Each variable under `environment.workspaces.<path>.variables` is appended as `KEY=""` to `.env` and `KEY="<defaultValue>"` to `.env.sample`, or `KEY="<sample value>"` when `sampleValues` has an entry for that file's profile.
 
 When a workspace declares no `variables`, the generator emits the template only.
 
@@ -116,7 +118,7 @@ When a workspace declares no `variables`, the generator emits the template only.
 
 For `.env`, the generator reads any existing file in the workspace first and keeps the values already filled in for every declared key — including the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys. Only newly-added keys are written blank as `KEY=""`, so regenerating after editing the config never overwrites a real secret.
 
-The `.env.sample` file is always rebuilt from the config defaults, since it holds no secrets.
+The `.env.sample` file is always rebuilt from the config defaults and sample values, since it holds no real secrets.
 
 ### Pruning Undeclared Keys
 

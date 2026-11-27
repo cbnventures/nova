@@ -1,3 +1,5 @@
+import type { Shared_NovaConfigEnvironmentWorkspace_Variables } from '../../shared.d.ts';
+
 /**
  * Tests - Lib - Dotenv - FindEnvQuoteViolations - FlagsBareEmptyValues.
  *
@@ -93,3 +95,40 @@ export type Tests_Lib_Dotenv_FindEnvQuoteViolations_PassesCorrectlyDoubleQuotedV
  * @since 0.20.0
  */
 export type Tests_Lib_Dotenv_FindEnvQuoteViolations_ReportsOneViolationPerOffendingKeyAndIgnoresCommentsBlanks_Content = string;
+
+/**
+ * Tests - Lib - Dotenv - Write Dotenv Files.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Lib_Dotenv_WriteDotenvFiles_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Dotenv - Write Dotenv Files - Uses The Development Sample Value For The Plain Sample File.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Lib_Dotenv_WriteDotenvFiles_UsesTheDevelopmentSampleValueForThePlainSampleFile_TargetDirectory = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_UsesTheDevelopmentSampleValueForThePlainSampleFile_Variables = Shared_NovaConfigEnvironmentWorkspace_Variables;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_UsesTheDevelopmentSampleValueForThePlainSampleFile_SampleContents = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_UsesTheDevelopmentSampleValueForThePlainSampleFile_EnvContents = string;
+
+/**
+ * Tests - Lib - Dotenv - Write Dotenv Files - Writes Per Profile Sample Values And Leaves The Real Env Files Blank.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_TargetDirectory = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_Variables = Shared_NovaConfigEnvironmentWorkspace_Variables;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_DevelopmentSample = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_StagingSample = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_ProductionSample = string;
+
+export type Tests_Lib_Dotenv_WriteDotenvFiles_WritesPerProfileSampleValuesAndLeavesTheRealEnvFilesBlank_EnvContents = string[];

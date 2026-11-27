@@ -18,6 +18,7 @@ import {
   libItemAllowedPoliciesByRole,
   libItemAllowedRoles,
   libItemEmailFields,
+  libItemEnvironmentProfiles,
   libItemGenericProtocols,
   libItemOperatingSystemFilesByPlatform,
   libItemRecipesByCategory,
@@ -371,15 +372,20 @@ import type {
   Lib_NovaConfig_Runner_ParseEnvironmentValues_HasError,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_IsLocal,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Key,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_MatchedProfile,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Name,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Raw,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_RawReach,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_RawSampleValues,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachList,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Returns,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValue,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValueProfile,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValuesCandidate,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SecretCandidate,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SeenNames,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Value,
@@ -2270,7 +2276,7 @@ export class Runner {
    * Lib - Nova Config - Parse Environment Values.
    *
    * Validates one group's environment values against the per-value rules for the required
-   * reach discriminant, the secret flag, defaultValue, prefix repetition, and GitHub name;
+   * reach discriminant, secret flag, defaultValue, sampleValues, prefix, and GitHub name;
    * drops invalid values.
    *
    * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables} rawVariables - Raw variables.
@@ -2392,6 +2398,47 @@ export class Runner {
         hasError = true;
       }
 
+      // Sample values are public or test values written only into the matching committed sample
+      // file, so secrets may carry them. Project values never reach a dotenv file, so they cannot.
+      const rawSampleValues: Lib_NovaConfig_Runner_ParseEnvironmentValues_RawSampleValues = raw['sampleValues'];
+      const sampleValuesCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValuesCandidate = {};
+
+      if (rawSampleValues !== undefined) {
+        if (context === 'project') {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" cannot declare "sampleValues" because project values are never written to a dotenv file. Skipping ...`);
+
+          hasError = true;
+        } else if (isPlainObject(rawSampleValues) === false) {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has an invalid "sampleValues"; expected an object keyed by profile (development | staging | production). Skipping ...`);
+
+          hasError = true;
+        } else {
+          for (const rawSampleValueEntry of Object.entries(rawSampleValues)) {
+            const sampleValueProfile: Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValueProfile = rawSampleValueEntry[0];
+            const sampleValue: Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValue = rawSampleValueEntry[1];
+            const matchedProfile: Lib_NovaConfig_Runner_ParseEnvironmentValues_MatchedProfile = libItemEnvironmentProfiles.find((environmentProfile) => environmentProfile === sampleValueProfile);
+
+            if (matchedProfile === undefined) {
+              this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has a "sampleValues" entry for unknown profile "${sampleValueProfile}" (development | staging | production). Skipping ...`);
+
+              hasError = true;
+
+              continue;
+            }
+
+            if (typeof sampleValue !== 'string') {
+              this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has a non-string "sampleValues.${matchedProfile}". Skipping ...`);
+
+              hasError = true;
+
+              continue;
+            }
+
+            Reflect.set(sampleValuesCandidate, matchedProfile, sampleValue);
+          }
+        }
+      }
+
       // Prefix, GitHub name, and within-namespace uniqueness only apply to a key that gets a
       // GitHub name; a local key has none, so these checks are skipped for it (spec 2.4).
       if (isLocal === false) {
@@ -2441,6 +2488,10 @@ export class Runner {
 
       if (reachCandidate !== 'managed' && defaultValueCandidate !== undefined) {
         Reflect.set(value, 'defaultValue', defaultValueCandidate);
+      }
+
+      if (Object.keys(sampleValuesCandidate).length > 0) {
+        Reflect.set(value, 'sampleValues', sampleValuesCandidate);
       }
 
       values.push(value);

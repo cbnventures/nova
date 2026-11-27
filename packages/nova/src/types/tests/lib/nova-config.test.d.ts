@@ -282,6 +282,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseIn
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenPrefixesUseInvalidShapes_Messages = string[];
 
 /**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenSampleValuesUseAnInvalidShape.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Serialized = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenSampleValuesUseAnInvalidShape_Messages = string[];
+
+/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly.
  *
  * @since 0.21.0
@@ -372,6 +385,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueW
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory = string;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_Serialized = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesPerProfileSampleValuesOnWorkspaceValues.
+ *
+ * @since 0.53.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Serialized = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesPerProfileSampleValuesOnWorkspaceValues_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesValidPrefixShapes.

@@ -2,8 +2,6 @@ import { libEnvNamespace } from './env-namespace.js';
 import { libItemReservedDotenvKeys } from './item.js';
 
 import type {
-  Lib_EnvStatus_DeclaredDefaults,
-  Lib_EnvStatus_DeployProfiles,
   Lib_EnvStatus_InSecrets,
   Lib_EnvStatus_InVariables,
   Lib_EnvStatus_LibEnvStatus,
@@ -17,9 +15,7 @@ import type {
   Lib_EnvStatus_OrphanWorkspacePath,
   Lib_EnvStatus_OrphanWorkspaces,
   Lib_EnvStatus_Prefixes,
-  Lib_EnvStatus_ProfilesEnabled,
   Lib_EnvStatus_Project,
-  Lib_EnvStatus_ProjectProfile,
   Lib_EnvStatus_Results,
   Lib_EnvStatus_Secrets,
   Lib_EnvStatus_State,
@@ -29,7 +25,6 @@ import type {
   Lib_EnvStatus_VariableValues,
   Lib_EnvStatus_WorkflowEnvironments,
   Lib_EnvStatus_Workspace,
-  Lib_EnvStatus_WorkspaceProfile,
   Lib_EnvStatus_Workspaces,
 } from '../types/lib/env-status.d.ts';
 
@@ -50,62 +45,19 @@ export const libEnvStatus: Lib_EnvStatus_LibEnvStatus = {
     const variableValues: Lib_EnvStatus_VariableValues = githubState['variableValues'];
     const managedNames: Lib_EnvStatus_ManagedNames = new Set(managedSet.map((entry) => entry['name']));
     const project: Lib_EnvStatus_Project = environment['project'];
-    const profilesEnabled: Lib_EnvStatus_ProfilesEnabled = environment['profiles'] !== undefined && environment['profiles']['enabled'] === true;
-    const deployProfiles: Lib_EnvStatus_DeployProfiles = [
-      'staging',
-      'production',
-    ];
     const workspaces: Lib_EnvStatus_Workspaces = environment['workspaces'] ?? {};
     const workflowEnvironments: Lib_EnvStatus_WorkflowEnvironments = environment['workflows'] ?? {};
     const prefixes: Lib_EnvStatus_Prefixes = [];
-    const declaredDefaults: Lib_EnvStatus_DeclaredDefaults = new Set();
 
-    // Collect every Nova prefix, used later for stale-name detection, and every managed name
-    // that carries a non-empty default value into declaredDefaults.
+    // Collect every Nova prefix, used later for stale-name detection.
     if (project !== undefined) {
       prefixes.push(project['prefix']);
-
-      for (const projectVariable of project['variables'] ?? []) {
-        if (
-          'defaultValue' in projectVariable
-          && projectVariable['defaultValue'] !== undefined
-          && projectVariable['defaultValue'] !== ''
-        ) {
-          if (profilesEnabled === true) {
-            for (const projectProfileValue of deployProfiles) {
-              const projectProfile: Lib_EnvStatus_ProjectProfile = projectProfileValue;
-
-              declaredDefaults.add(libEnvNamespace.githubProfileName(project['prefix'], projectProfile, projectVariable['key']));
-            }
-          } else {
-            declaredDefaults.add(libEnvNamespace.githubName(project['prefix'], projectVariable['key']));
-          }
-        }
-      }
     }
 
     for (const workspaceEntry of Object.entries(workspaces)) {
       const workspace: Lib_EnvStatus_Workspace = workspaceEntry[1];
 
       prefixes.push(workspace['prefix']);
-
-      for (const workspaceVariable of workspace['variables'] ?? []) {
-        if (
-          'defaultValue' in workspaceVariable
-          && workspaceVariable['defaultValue'] !== undefined
-          && workspaceVariable['defaultValue'] !== ''
-        ) {
-          if (profilesEnabled === true) {
-            for (const workspaceProfileValue of deployProfiles) {
-              const workspaceProfile: Lib_EnvStatus_WorkspaceProfile = workspaceProfileValue;
-
-              declaredDefaults.add(libEnvNamespace.githubProfileName(workspace['prefix'], workspaceProfile, workspaceVariable['key']));
-            }
-          } else {
-            declaredDefaults.add(libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']));
-          }
-        }
-      }
     }
 
     for (const workflowEntry of Object.entries(workflowEnvironments)) {

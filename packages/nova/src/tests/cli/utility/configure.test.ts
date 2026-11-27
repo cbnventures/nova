@@ -101,6 +101,13 @@ import type {
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_PromptEnvironmentValueForm,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Result,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_PromptEnvironmentValueForm,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Responses,
+  Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Result,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_CapturedQuestions,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_Next,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesTheBuildAndRuntimeChoiceAsAReachList_PromptEnvironmentValueForm,
@@ -751,6 +758,11 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
           reach: 'promptEnvironmentValueForm',
           secret: 'promptEnvironmentValueForm',
           defaultValue: 'promptEnvironmentValueForm',
+          sampleValues: {
+            development: 'promptEnvironmentValueForm',
+            staging: 'promptEnvironmentValueForm',
+            production: 'promptEnvironmentValueForm',
+          },
         },
       },
     },
@@ -763,6 +775,11 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
             reach: 'promptEnvironmentValueForm',
             secret: 'promptEnvironmentValueForm',
             defaultValue: 'promptEnvironmentValueForm',
+            sampleValues: {
+              development: 'promptEnvironmentValueForm',
+              staging: 'promptEnvironmentValueForm',
+              production: 'promptEnvironmentValueForm',
+            },
           },
         },
       },
@@ -1269,6 +1286,75 @@ describe('prompt environment section', () => {
       'Expected a rejection telling the user to set a prefix before adding values',
     );
     ok(config['environment'] === undefined, 'Expected no namespace to persist without a prefix');
+
+    return;
+  });
+
+  it('saves sample-only values for a workspace secret', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Responses = [
+      { key: 'TURNSTILE_SECRET_KEY' },
+      { reach: 'runtime' },
+      { secret: true },
+      { sampleValues: true },
+      {
+        development: 'value',
+        staging: 'skip',
+        production: 'skip',
+      },
+      { development: '1x0000000000000000000000000000000AA' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => Promise.resolve(responses.shift() ?? {}));
+
+    const promptEnvironmentValueForm: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_PromptEnvironmentValueForm = Reflect.get(CliUtilityConfigure, 'promptEnvironmentValueForm') as Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_PromptEnvironmentValueForm;
+    const result: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesSampleOnlyValuesForAWorkspaceSecret_Result = await promptEnvironmentValueForm(undefined, true);
+
+    deepStrictEqual(result, {
+      key: 'TURNSTILE_SECRET_KEY',
+      reach: 'runtime',
+      secret: true,
+      sampleValues: {
+        development: '1x0000000000000000000000000000000AA',
+      },
+    });
+
+    return;
+  });
+
+  it('saves an explicit empty sample value', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Responses = [
+      { key: 'TURNSTILE_SITE_KEY' },
+      { reach: 'build' },
+      { secret: false },
+      { defaultValue: 'site-key-default' },
+      { sampleValues: true },
+      {
+        development: 'skip',
+        staging: 'empty',
+        production: 'skip',
+      },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      capturedQuestions.push(questions);
+
+      return Promise.resolve(responses.shift() ?? {});
+    });
+
+    const promptEnvironmentValueForm: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_PromptEnvironmentValueForm = Reflect.get(CliUtilityConfigure, 'promptEnvironmentValueForm') as Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_PromptEnvironmentValueForm;
+    const result: Tests_Cli_Utility_Configure_PromptEnvironmentSection_SavesAnExplicitEmptySampleValue_Result = await promptEnvironmentValueForm(undefined, true);
+
+    deepStrictEqual(result, {
+      key: 'TURNSTILE_SITE_KEY',
+      reach: 'build',
+      secret: false,
+      defaultValue: 'site-key-default',
+      sampleValues: {
+        staging: '',
+      },
+    });
+    strictEqual(capturedQuestions.length, 6, 'Expected no text prompt when no profile chose "Set a value"');
 
     return;
   });

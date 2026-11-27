@@ -76,10 +76,12 @@ import type {
   Shared_NovaConfigEnvironment,
   Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentProfile,
   Shared_NovaConfigEnvironmentProfiles,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentValue_Reach,
+  Shared_NovaConfigEnvironmentValue_SampleValues,
   Shared_NovaConfigEnvironmentValueBuildRuntime_Reach,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
@@ -1235,6 +1237,16 @@ export type Lib_NovaConfig_Runner_ParseEnvironmentValues_SecretCandidate = boole
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_HasError = boolean;
 
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_DefaultValueCandidate = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_RawSampleValues = unknown;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValuesCandidate = Shared_NovaConfigEnvironmentValue_SampleValues;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValueProfile = string;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_SampleValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseEnvironmentValues_MatchedProfile = Shared_NovaConfigEnvironmentProfile | undefined;
 
 export type Lib_NovaConfig_Runner_ParseEnvironmentValues_Name = string;
 

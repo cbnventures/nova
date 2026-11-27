@@ -1,4 +1,8 @@
-import type { Shared_NovaConfigEnvironmentWorkspace_Variables } from '../shared.d.ts';
+import type {
+  Shared_NovaConfigEnvironmentProfile,
+  Shared_NovaConfigEnvironmentValue_SampleValues,
+  Shared_NovaConfigEnvironmentWorkspace_Variables,
+} from '../shared.d.ts';
 
 /**
  * Lib - Dotenv - Classify Env Value.
@@ -187,13 +191,9 @@ export type Lib_Dotenv_WriteDotenvFiles_BaselineKeyMatch = RegExpMatchArray | nu
 
 export type Lib_Dotenv_WriteDotenvFiles_EnvLines = string[];
 
-export type Lib_Dotenv_WriteDotenvFiles_SampleLines = string[];
-
-export type Lib_Dotenv_WriteDotenvFiles_VariableDefault = string;
+export type Lib_Dotenv_WriteDotenvFiles_DotenvVariables = Shared_NovaConfigEnvironmentWorkspace_Variables;
 
 export type Lib_Dotenv_WriteDotenvFiles_CustomSection = string;
-
-export type Lib_Dotenv_WriteDotenvFiles_CustomSectionSample = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_IsSample = boolean;
 
@@ -210,6 +210,16 @@ export type Lib_Dotenv_WriteDotenvFiles_ExistingEnv = Map<string, string>;
 export type Lib_Dotenv_WriteDotenvFiles_Content = string | undefined;
 
 export type Lib_Dotenv_WriteDotenvFiles_AppendSection = string;
+
+export type Lib_Dotenv_WriteDotenvFiles_SampleProfile = Shared_NovaConfigEnvironmentProfile;
+
+export type Lib_Dotenv_WriteDotenvFiles_SampleLines = string[];
+
+export type Lib_Dotenv_WriteDotenvFiles_SampleValues = Shared_NovaConfigEnvironmentValue_SampleValues | undefined;
+
+export type Lib_Dotenv_WriteDotenvFiles_ProfileSampleValue = string | undefined;
+
+export type Lib_Dotenv_WriteDotenvFiles_SampleValue = string;
 
 export type Lib_Dotenv_WriteDotenvFiles_ContentLines = string[];
 

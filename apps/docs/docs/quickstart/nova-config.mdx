@@ -1041,6 +1041,40 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 | `reach`        | `string` or `array` | Required. One of `"local"`, `"managed"`, `"build"`, or `"runtime"`, or the list `["build", "runtime"]` to deliver one value both ways. See [Reach Values](#reach-values).                                                                                         |
 | `secret`       | `boolean`           | Required for `managed`, `build`, `runtime`, and `["build", "runtime"]`; forbidden for `local`. `true` stores the GitHub value as a Secret, while `false` stores it as a Variable.                                                                                 |
 | `defaultValue` | `string`            | Optional for non-secret `local`, `build`, `runtime`, and `["build", "runtime"]` values. Seeds `.env.sample`; for each CI delivery, it is also the fallback when the GitHub Variable is unset. Forbidden for `managed` values and every value with `secret: true`. |
+| `sampleValues` | `object`            | Optional for workspace values of any `reach`, including `secret: true` values. Maps `development`, `staging`, or `production` to a string written only into that profile's sample file. Forbidden for project values. See [Sample Values](#sample-values).        |
+
+### Sample Values
+
+`sampleValues` lets you ship public test values, such as a provider's documented test keys, in one committed sample file without touching anything else. Each entry is written only into the sample file for its profile, and it takes the place of `defaultValue` in that file.
+
+- **Profiles on** — `development`, `staging`, and `production` go into `.env.development.sample`, `.env.staging.sample`, and `.env.production.sample`.
+- **Profiles off** — The `development` entry goes into `.env.sample`, and the other entries are ignored.
+- **Everything else** — Real `.env` files stay blank, and the value never reaches GitHub, CI builds, deploy targets, or `nova utility configure --status`, so the key still reports as missing until you set it on GitHub.
+
+:::warning
+
+Use `sampleValues` only for public or test values. Sample files are committed, so never put a real credential in one.
+
+:::
+
+```json
+{
+  "environment": {
+    "profiles": {
+      "enabled": true
+    },
+    "workspaces": {
+      "./apps/web": {
+        "prefix": "WEB_",
+        "variables": [
+          { "key": "PUBLIC_TURNSTILE_SITE_KEY", "reach": "build", "secret": false, "sampleValues": { "development": "1x00000000000000000000AA" } },
+          { "key": "TURNSTILE_SECRET_KEY", "reach": "runtime", "secret": true, "sampleValues": { "development": "1x0000000000000000000000000000000AA" } }
+        ]
+      }
+    }
+  }
+}
+```
 
 ### Reach Values
 
